@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" >
+        <ImageView
+            android:id="@+id/show_image"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:scaleType="fitXY" 
+        />
+    </LinearLayout>
+              
+	<LinearLayout
+	    android:id="@+id/buttons_line"
+	    android:layout_width="fill_parent"
+		android:layout_height="80dp"	   
+		android:orientation="horizontal"
+		android:layout_alignParentBottom="true">
+	    <Button
+	        android:id="@+id/user_regi_btn"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:padding="0dp"
+	        android:layout_margin="0dp"
+	        android:background="@drawable/tb_button_login"
+	        android:text="@string/string_user_regi"
+	        android:textColor="@drawable/tb_gray_white_btn_txt"
+        /> 
+	    <Button
+	        android:id="@+id/login_btn"
+	        android:layout_width="0dp"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1"
+	        android:padding="0dp"
+	        android:layout_margin="0dp"
+	        android:background="@drawable/tb_button_login_rev"
+			android:text="@string/string_login"
+	        android:textColor="@drawable/tb_white_gray_btn_txt"
+        /> 
+	</LinearLayout>     
+</RelativeLayout>

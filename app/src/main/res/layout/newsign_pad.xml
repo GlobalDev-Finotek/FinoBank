@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+    <LinearLayout
+	    android:id="@+id/bg_layout"
+	    android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"	
+	    android:orientation="vertical"
+		android:background="#FFebf1f1" >
+	</LinearLayout>	
+    <ImageView
+	    android:id="@+id/panelBack"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:visibility="visible" />
+    
+	<ImageView
+	    android:id="@+id/regiSign"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:visibility="visible" />
+    
+	<ImageView
+	    android:id="@+id/signPanel"
+	    android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:visibility="visible" />
+
+	<include
+    	android:id="@+id/title_layout"
+  		android:layout_width="fill_parent"
+  		android:layout_height="wrap_content"
+  		android:layout_alignParentTop="true"
+    	layout="@layout/include_title_prev"	
+    />
+    
+    <LinearLayout
+	    android:id="@+id/bottom_buttons_layout"
+	    android:layout_width="fill_parent"
+	    android:layout_height="60dp"	    
+		android:orientation="horizontal"
+		android:layout_alignParentBottom="true">
+	    <Button
+	        android:id="@+id/bottom_left_button"
+	        android:layout_width="0dp"
+	        android:layout_height="fill_parent"
+	        android:padding="0dp"
+	        android:background="@drawable/border_dkgray_blank"
+	        android:layout_weight="1"
+	        android:textAllCaps="false"
+	        /> 
+	    <Button
+	        android:id="@+id/bottom_right_button"
+	        android:layout_width="0dp"
+	        android:layout_height="fill_parent"
+	        android:padding="0dp"
+	        android:background="@drawable/border_dkgray_fill"
+	        android:layout_weight="1"
+	        android:textAllCaps="false"
+	        /> 
+    </LinearLayout>
+    
+	<ImageView
+	    android:id="@+id/resultPanel"
+        android:layout_alignParentTop="true"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:visibility="gone" />
+    
+</RelativeLayout>

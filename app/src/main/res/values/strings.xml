@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Talk Bank</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="action_edit">Edit</string>
+    <string name="string_user_regi">사용자 등록</string>
+    <string name="string_login">로그인</string>
+    <string name="string_cancel">취소</string>
+    <string name="string_sign_regi">서명등록</string>
+    <string name="string_next">다음</string>
+    <string name="string_comm_sign_regi1">거래용 전자서명 등록(1/2)</string>
+    <string name="string_comm_sign_regi2">거래용 전자서명 등록(2/2)</string>
+    <string name="string_comm_sign_input">거래용 전자서명 입력</string>
+    <string name="string_complete">완료</string>
+    <string name="button_description">Emoticons Button</string>
+    <string name="string_hi">Hi</string>
+    <string name="string_remittance">Remittance</string>
+    <string name="string_verify_account">Verify account</string>
+    <string name="string_talk_bank">톡뱅크</string>
+
+
+
+
+
+    <string name="hello_world">Hello world!</string>
+    <string name="button_save">저장</string>
+    <string name="button_not_save">not save</string>
+
+    <string name="button_sign">전자서명</string>
+    <string name="button_cancel">취소</string>
+    <string name="title_notice">알림</string>
+    <string name="title_check">전자서명 진위 확인 중</string>
+    <string name="title_check2"> </string>
+    <string name="title_wait">잠시만 기다려주시기 바랍니다.</string>
+    <string name="title_complete_fail1">전자서명 진위 여부 확인결과</string>
+    <string name="title_complete_fail2">전자서명에 실패하였습니다.</string>
+    <string name="title_complete_success1">전자서명 진위여부가 확인되어</string>
+    <string name="title_complete_success2">전자서명이 되었습니다.</string>
+    <string name="title_emergence_success1">시스템상의 문제로 서명진위확인이 불가능합니다.</string>
+    <string name="title_emergence_success2">10분 후 재서명이 가능합니다.</string>
+    <string name="title_emergence_notice">비상용 전자서명은 긴급 상황\n(제 3자의 강압, 협박 등)시 사용하십시오</string>
+    <string name="button_confirm">확인</string>
+    <string name="title_pin_number">PIN 코드 입력</string>
+    <string name="button_password">확인</string>
+    <string name="init_signcount">서명횟수 초기화</string>
+    <string name="sign_re_registration">전자서명 재등록</string>
+    <string name="docu_sign">문서 서명</string>
+    <string name="digit4_notice"> </string>
+    <string name="seek_desc_text">신뢰도가 높을 수록 서명인증시 난이도가 올라갑니다.\n서명이 복잡할 수록 난이도 는 낮게,\n서명이 단순할 수록 신뢰도는 높게 설정하시기를 권장합니다.</string>
+    <string name="complex_sign_text">복잡한 서명</string>
+    <string name="simple_sign_text">단순한 서명</string>
+
+<!--
+    <string name="app_name">Talk Bank</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_search">Search</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="button_save">Save</string>
+    <string name="button_not_save">not save</string>
+    
+    <string name="button_sign">Sign</string>
+    <string name="button_cancel">Cancel</string>
+    <string name="title_notice">Notice</string>
+    <string name="title_check">Checking the E-signature authenticity</string>
+    <string name="title_check2">we are verifying the authenticity through\n the comparison of registered E-signature.</string>
+    <string name="title_wait">Please wait a second.</string>
+    <string name="title_complete_fail1">The E-signature authenticity checking</string>
+    <string name="title_complete_fail2">has been failed.</string>
+    <string name="title_complete_success1">The E-signature authenticity checking</string>
+    <string name="title_complete_success2">has been completed.</string>
+    <string name="title_emergence_success1">시스템상의 문제로 서명진위확인이 불가능합니다.</string>
+    <string name="title_emergence_success2">10분 후 재서명이 가능합니다.</string>
+    <string name="button_confirm">Confirm</string>
+    <string name="title_pin_number">Password</string>
+    <string name="button_password">Password</string>
+    <string name="init_signcount">Retry the signature</string>
+    <string name="sign_re_registration">Re-register the signature</string>
+    <string name="docu_sign">Electronic Signature</string>
+    <string name="digit4_notice"> </string>
+-->
+</resources>

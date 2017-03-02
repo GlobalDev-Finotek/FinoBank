@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:orientation="vertical"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent"
+	android:background="#FFebf1f1" >
+	
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.1">
+	    <TextView
+	        android:id="@+id/title_text"
+	        android:layout_width="fill_parent"
+	        android:layout_height="fill_parent"
+	        android:gravity="center"/>
+	    <LinearLayout 
+	        android:id="@+id/logo_finotech_layout"
+	        android:layout_width="90dp"
+	        android:layout_height="fill_parent"
+	        android:layout_alignParentLeft="true"
+	        android:layout_marginLeft="10dp">
+		    <ImageView 
+		        android:id="@+id/logo_finotech"
+		        android:layout_width="fill_parent"
+		        android:layout_height="fill_parent"
+		        android:scaleType="fitCenter"
+		        android:src="@drawable/logo_finotek"
+		        />	        
+        </LinearLayout>
+	</RelativeLayout>
+	<LinearLayout 
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8" >
+	</LinearLayout>    	    
+	
+    <TextView
+        android:id="@+id/descript_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="bottom|center_horizontal"/>
+	
+    <ImageView 
+        android:id="@+id/div_line"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9"
+        android:src="@drawable/list_div_line"
+        android:scaleType="fitCenter"
+        />	    
+        
+    <LinearLayout 
+        android:id="@+id/buttons_line"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:orientation="horizontal"
+        >
+	    <Button
+	        android:id="@+id/regi_btn"
+	        android:layout_width="0dp"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="4"
+	        android:gravity="center"
+        	android:background="@drawable/button_navy"
+	        />
+	    <LinearLayout
+	        android:layout_width="0dp"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="1" >
+	    </LinearLayout>
+	    <Button
+	        android:id="@+id/login_btn"
+	        android:layout_width="0dp"
+	        android:layout_height="fill_parent"
+	        android:layout_weight="4"
+	        android:gravity="center"
+        	android:background="@drawable/button_blue"
+	        />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.9" >
+    </LinearLayout>
+    <Button
+        android:id="@+id/degree_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2" 
+        android:gravity="center"
+        android:background="@drawable/button_gray"
+        />
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.4" >
+    </LinearLayout>
+</LinearLayout>

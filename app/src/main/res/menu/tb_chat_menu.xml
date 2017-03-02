@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/action_search"
+        android:icon="@drawable/tb_search"
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom" />
+    <!-- Settings, should always be in the overflow -->
+    <item android:id="@+id/action_hi"
+        android:title="@string/string_hi"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_remittanc"
+        android:title="@string/string_remittance"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <item android:id="@+id/action_verify"
+        android:title="@string/string_verify_account"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+</menu>

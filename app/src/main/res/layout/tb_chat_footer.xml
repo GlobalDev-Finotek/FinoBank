@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:orientation="horizontal" >
+
+    <LinearLayout android:id="@+id/message_input"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:layout_height="50dip"
+        android:layout_width="fill_parent"
+        android:background="#CC555555">
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+            <Button
+                android:id="@+id/attach_button"
+                android:text="+"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/tb_button_att"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="60">
+            <EditText android:id="@+id/input_message"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="24px"
+                android:maxLength="255"
+                android:minLines="1"
+                android:maxLines="3"
+                android:layout_gravity="center_vertical"
+                android:scrollbars="vertical"
+                android:background="@drawable/tb_button_login"
+                android:padding="5dp"
+                />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/emoticons_button"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="10"
+            android:contentDescription="@string/button_description"
+            android:src="@drawable/ic_smiley"
+            android:layout_gravity="center"
+            android:background="@drawable/tb_button_login"/>
+
+        <LinearLayout android:layout_width="0dip"
+            android:layout_height="match_parent"
+            android:layout_weight="15">
+            <Button android:id="@+id/message_send"
+                android:text="전송"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/tb_button_att" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

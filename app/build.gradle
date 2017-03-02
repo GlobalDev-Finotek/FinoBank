@@ -1,0 +1,51 @@
+//apply plugin: 'com.android.library'
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion '23.0.1'
+    defaultConfig {
+        applicationId 'com.cocolap.talkbank'
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode 1
+        versionName "1.0.3"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.each {
+                    output->
+                        def apk = output.outputFile
+                        output.outputFile = new File(apk.parent, "talkBank_" + defaultConfig.versionName + ".apk")
+                }
+            }
+
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            applicationVariants.all { variant ->
+//                variant.outputs.each {
+//                    output->
+//                        def apk = output.outputFile
+//                        def formattedDate = new Date().format('yyMMdd_hhmm')
+//                        def fileName = "talkBank_" + formattedDate + ".apk"
+//                        //def fileName = "talkBank_" + defaultConfig.versionCode + "_" + formattedDate + "_" + buildType + ".apk"
+//                        output.outputFile = new File(apk.parent, fileName)
+//                }
+//            }
+        }
+    }
+    repositories {
+        maven {
+            url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
+        }
+    }
+    productFlavors {
+    }
+}
+
+dependencies {
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.android.support:design:23.0.1'
+}

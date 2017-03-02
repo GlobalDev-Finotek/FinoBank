@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="fill_parent"
+	android:layout_height="fill_parent">
+	<LinearLayout android:id="@+id/message_input"
+		android:layout_alignParentBottom="true"
+		android:orientation="horizontal"
+		android:layout_height="50dip"
+		android:layout_width="fill_parent"
+		android:background="#CC555555">
+		<LinearLayout
+			android:layout_width="0dip"
+			android:layout_height="match_parent"
+			android:layout_weight="15">
+			<Button
+				android:id="@+id/attach_button"
+				android:text="+"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_gravity="center_vertical"
+				android:background="@drawable/tb_button_att"/>
+		</LinearLayout>
+		<LinearLayout
+			android:layout_width="0dip"
+			android:layout_height="match_parent"
+			android:layout_weight="70">
+			<EditText android:id="@+id/input_message"
+				android:layout_width="fill_parent"
+				android:layout_height="match_parent"
+				android:textSize="24px"
+				android:maxLength="255"
+				android:minLines="1"
+				android:maxLines="3"
+				android:layout_gravity="center_vertical"
+				android:scrollbars="vertical"
+				android:background="@drawable/tb_button_login"
+				android:padding="5dp"
+				/>
+		</LinearLayout>
+		<LinearLayout android:layout_width="0dip"
+			android:layout_height="match_parent"
+			android:layout_weight="15">
+			<Button android:id="@+id/message_send"
+				android:text="전송"
+				android:layout_width="wrap_content"
+				android:layout_height="match_parent"
+				android:layout_gravity="center_vertical"
+				android:background="@drawable/tb_button_att" />
+		</LinearLayout>
+	</LinearLayout>
+	<LinearLayout
+		android:layout_height="fill_parent"
+		android:layout_width="fill_parent"
+		android:background="#CC555555"
+		android:layout_above="@+id/message_input">
+		<ListView
+			android:id="@+id/msg_list"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent"
+			android:cacheColorHint="#00000000"
+			android:transcriptMode="alwaysScroll"
+			/>
+	</LinearLayout>
+</RelativeLayout>

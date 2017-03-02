@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/color_foreground</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Dark" />
+
+
+
+    <style name="CustomAppTheme" parent="@style/AppBaseTheme">
+    </style>
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <item name="titleTextStyle">@style/MyActionBarTitleText</item>
+        <item name="actionBarTabTextStyle">@style/MyActionBarTabText</item>
+    </style>
+
+    <style name="MyActionBarTitleText" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textColor">#ffff0000</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="MyActionBarTabText" parent="@style/Widget.AppCompat.ActionBar.TabText">
+        <item name="android:textColor">#fff</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
+    <style name="CustomActionBarTheme" parent="android:style/Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/CustomActionBar</item>
+    </style>
+    <style name="CustomActionBar" parent="android:style/Widget.Holo.ActionBar">
+        <item name="android:titleTextStyle">@style/CustomActionBarTitleText</item>
+    </style>
+    <style name="CustomActionBarTitleText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+</resources>

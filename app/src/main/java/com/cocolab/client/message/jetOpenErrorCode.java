@@ -1,6 +1,6 @@
 package com.cocolab.client.message;
 
-public class jetOpenErrorCode {
+public class JetOpenErrorCode {
 	/* JET Engine 오류 코드*/
 	public static final int OPEN_SUCCESS = 1;				// Open 성공
 	public static final int CLOSE_SUCCESS = 1;				// Close 성공

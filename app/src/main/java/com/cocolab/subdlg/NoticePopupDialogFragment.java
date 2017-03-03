@@ -6,6 +6,7 @@ import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -21,7 +22,7 @@ import android.widget.TextView;
 import com.cocolap.talkbank.MainApplication;
 import com.cocolap.talkbank.R;
 
-public class notice_Popup_Dialog extends Dialog {
+public class NoticePopupDialogFragment extends DialogFragment  {
 	private Context CTX;
 	private MainApplication mainApp;
 	private int displayWidth, displayHeight, bgColor;
@@ -31,15 +32,20 @@ public class notice_Popup_Dialog extends Dialog {
 	private String ButtonName;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-		this.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+//	protected void onCreate(Bundle savedInstanceState) {
+	public Dialog onCreateDialog(Bundle savedInstanceState) {	
+		// 아래 두개 아무거나 해도 된다.
+		//Dialog dialog = super.onCreateDialog(savedInstanceState);
+		CTX = getActivity();
+		Dialog dialog = new Dialog(CTX);
+		
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+		dialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
 
-		DisplayMetrics metrics = getContext().getResources().getDisplayMetrics();
-		displayWidth = getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.max(metrics.widthPixels, metrics.heightPixels) : Math.min(metrics.widthPixels, metrics.heightPixels);
-		displayHeight = getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.min(metrics.widthPixels, metrics.heightPixels) : Math.max(metrics.widthPixels, metrics.heightPixels);
+		DisplayMetrics metrics = dialog.getContext().getResources().getDisplayMetrics();
+		displayWidth = dialog.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.max(metrics.widthPixels, metrics.heightPixels) : Math.min(metrics.widthPixels, metrics.heightPixels);
+		displayHeight = dialog.getContext().getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.min(metrics.widthPixels, metrics.heightPixels) : Math.max(metrics.widthPixels, metrics.heightPixels);
 
 		mainLayout = new LinearLayout(CTX);
 		LayoutParams linLayoutParam = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
@@ -94,17 +100,19 @@ public class notice_Popup_Dialog extends Dialog {
 		mainLayout.addView(imageLayout);
 		mainLayout.addView(buttonTV);
 		
-		setContentView(mainLayout);
+		dialog.setContentView(mainLayout);
+		
+		return dialog;
 	}
 
-	public notice_Popup_Dialog(Context context, String title, String message, int bgColor, View.OnClickListener confirmListener, String ButtonName) {
-		super(context);
-		CTX = context;
+	public NoticePopupDialogFragment(Context context, String title, String message, int bgColor, View.OnClickListener confirmListener, String ButtonName) {
+		super();
+		//CTX = context;
 		mainApp = (MainApplication) context.getApplicationContext();
 		this.popupTitle = title;
 		this.messageText = message;
 		this.bgColor = bgColor;
 		this.confirmClickListener = confirmListener;
 		this.ButtonName = ButtonName;
-}
+	}
 }

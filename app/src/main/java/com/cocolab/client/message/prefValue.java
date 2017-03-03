@@ -1,6 +1,6 @@
 package com.cocolab.client.message;
 
-public class prefValue {
+public class PrefValue {
 	public static final String PIN_NUM = "pin_number";
 	public static final String REALIABILITY_DEGREE = "Reliability_degree";
 	public static final String CERT_PHOTO = "certphoto.jpg";

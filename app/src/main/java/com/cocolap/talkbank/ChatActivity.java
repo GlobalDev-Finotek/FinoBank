@@ -40,7 +40,7 @@ import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.cocolab.client.message.prefValue;
+import com.cocolab.client.message.PrefValue;
 import com.cocolap.talkbank.EmoticonsGridAdapter.KeyClickListener;
 
 import java.io.InputStream;
@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.StringTokenizer;
 import java.util.TimerTask;
 
-public class tbChatActivity extends AppCompatActivity implements KeyClickListener {
+public class ChatActivity extends AppCompatActivity implements KeyClickListener {
 	
 	private MainApplication mainApp;
 	private final int editMargin = 50;
@@ -251,7 +251,7 @@ public class tbChatActivity extends AppCompatActivity implements KeyClickListene
 			paths.add(i + ".png");
 		}
 
-		EmoticonsPagerAdapter adapter = new EmoticonsPagerAdapter(tbChatActivity.this, paths, this);
+		EmoticonsPagerAdapter adapter = new EmoticonsPagerAdapter(ChatActivity.this, paths, this);
 		pager.setAdapter(adapter);
 
 		// Creating a pop window for emoticons keyboard
@@ -360,8 +360,8 @@ public class tbChatActivity extends AppCompatActivity implements KeyClickListene
 							int ttt = Integer.parseInt(v.getTag().toString());
 							switch (ttt) {
 								case 2:
-									Intent intent1 = new Intent(tbChatActivity.this, tbSignInputActivity.class);
-									intent1.putExtra(prefValue.SimpleSign, true);
+									Intent intent1 = new Intent(ChatActivity.this, SignInputActivity.class);
+									intent1.putExtra(PrefValue.SimpleSign, true);
 									startActivityForResult(intent1, REQ_SIGN_INPUT);
 									break;
 								case 3:

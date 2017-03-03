@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.cocolap.talkbank.MainApplication;
 import com.cocolap.talkbank.R;
 
-public class progress_Popup_Dialog extends Dialog {
+public class ProgressPopupDialog extends Dialog {
 	private Context CTX;
 	private MainApplication mainApp;
 	private int displayWidth, displayHeight;
@@ -120,7 +120,7 @@ public class progress_Popup_Dialog extends Dialog {
 		setContentView(mainLayout);
 	}
 
-	public progress_Popup_Dialog(Context context, String title, String message1, String message2) {
+	public ProgressPopupDialog(Context context, String title, String message1, String message2) {
 		super(context);
 		CTX = context;
 		mainApp = (MainApplication) context.getApplicationContext();

@@ -46,7 +46,7 @@ public class ActivityStart extends Activity {
 		
 		userRegiBtn.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(ActivityStart.this, tbUserRegiActivity.class);
+				Intent intent = new Intent(ActivityStart.this, UserRegiActivity.class);
 				startActivity(intent);				
 			}
 		});
@@ -60,7 +60,7 @@ public class ActivityStart extends Activity {
 
 		loginBtn.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(ActivityStart.this, tbSignInputActivity.class);
+				Intent intent = new Intent(ActivityStart.this, SignInputActivity.class);
 				startActivity(intent);
 			}
 		});

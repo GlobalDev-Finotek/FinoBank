@@ -20,7 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-public class List_Popup_Dialog extends Dialog {
+public class ListPopupDialog extends Dialog {
 	private Context CTX;
 	private MainApplication mainApp;
 	private int displayWidth, displayHeight;
@@ -88,7 +88,7 @@ public class List_Popup_Dialog extends Dialog {
 		setContentView(mainLayout);
 	}
 
-	public List_Popup_Dialog(Context context, String title, List<String> popupList, View.OnClickListener selectListener) {
+	public ListPopupDialog(Context context, String title, List<String> popupList, View.OnClickListener selectListener) {
 		super(context);
 		CTX = context;
 		mainApp = (MainApplication) context.getApplicationContext();

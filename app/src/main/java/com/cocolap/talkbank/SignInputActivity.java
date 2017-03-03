@@ -1,5 +1,6 @@
 package com.cocolap.talkbank;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -20,21 +21,22 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import com.cocolab.client.message.PrefValue;
 import com.cocolab.drawing.ConCanvas;
 import com.cocolab.subdlg.DiagramType;
 
 import java.util.ArrayList;
 
 
-public class tbSignRegiActivity extends AppCompatActivity  implements ConCanvas.OnCanvasListener {
+public class SignInputActivity extends AppCompatActivity  implements ConCanvas.OnCanvasListener {
 	
 	private MainApplication mainApp;
-	private ImageView signPanel, panelBack, bgImage;
+	private ImageView signPanel, panelBack;
 	private ConCanvas ccCanvas;
 	private int signColor = Color.rgb(51, 51, 51);
 	private int penWidth = 5, actionHeight = 0;
-	private boolean isFirst = true;
 	private ActionBar actionBar;
+	private boolean simpleSign = false;
 	ArrayList<xyClass> xyArray = new ArrayList<xyClass>();
 
 	@Override
@@ -46,22 +48,15 @@ public class tbSignRegiActivity extends AppCompatActivity  implements ConCanvas.
 		int displayWidth = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.max(metrics.widthPixels, metrics.heightPixels) : Math.min(metrics.widthPixels, metrics.heightPixels);
 		int displayHeight = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE ? Math.min(metrics.widthPixels, metrics.heightPixels) : Math.max(metrics.widthPixels, metrics.heightPixels);
 
-		setContentView(R.layout.tb_sign_regi_layout);
+		Intent intent = getIntent();
+		Bundle bundle = intent.getExtras();
+		if (bundle != null) {
+			simpleSign = bundle.getBoolean(PrefValue.SimpleSign, false);
+		}
+
+		setContentView(R.layout.tb_sign_input_layout);
 		signPanel = (ImageView) findViewById(R.id.signPanel);
 		panelBack = (ImageView) findViewById(R.id.panelBack);
-		bgImage = (ImageView) findViewById(R.id.bg_image);
-
-//		Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-//		TextView title=(TextView) findViewById(R.id.title);
-//
-//		title.setTextSize(TypedValue.COMPLEX_UNIT_PX, 60);
-//		title.setText(getString(R.string.string_comm_sign_regi1));
-//		title.setTextColor(Color.RED);
-//
-//		//toolbar.setTitleTextColor(Color.BLACK);
-//		//toolbar.setTitle(getString(R.string.string_comm_sign_regi1));
-//		//toolbar.setBackgroundColor(Color.RED);
-//		setSupportActionBar(toolbar);
 
 		mainApp = (MainApplication) getApplication();
 
@@ -73,8 +68,8 @@ public class tbSignRegiActivity extends AppCompatActivity  implements ConCanvas.
 			actionHeight = TypedValue.complexToDimensionPixelSize(tv.data,getResources().getDisplayMetrics());
 		}
 
-//		actionBar.setTitle(getString(R.string.string_comm_sign_regi1));
-		actionBar.setTitle(Html.fromHtml("<big>" + getString(R.string.string_comm_sign_regi1) + "</big>"));
+		//actionBar.setTitle(getString(R.string.string_comm_sign_input));
+		actionBar.setTitle(Html.fromHtml("<big>" + getString(R.string.string_comm_sign_input) + "</big>"));
 		actionBar.setBackgroundDrawable(new ColorDrawable(0xFFFFFFFF));
 		//mainApp.setLocale("us");
 
@@ -87,26 +82,20 @@ public class tbSignRegiActivity extends AppCompatActivity  implements ConCanvas.
 		cancelBtn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 		cancelBtn.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				setResult(RESULT_CANCELED);
 				finish();
 			}
 		});
 
-		Button nextBtn = (Button) findViewById(R.id.next_btn);
+		Button nextBtn = (Button) findViewById(R.id.login_btn);
 		nextBtn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 		nextBtn.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				if (isFirst) {
-					ccCanvas.EraseAll();
-					signPanel.invalidate();
-					xyArray.removeAll(xyArray);
-					actionBar.setTitle(getString(R.string.string_comm_sign_regi2));
-					bgImage.setBackgroundResource(R.drawable.sign_regi_bg1);
-					isFirst = false;
-					((Button)findViewById(v.getId())).setText(R.string.string_complete);
-				} else {
+				if (simpleSign){
 					setResult(RESULT_OK);
 					finish();
+				} else {
+					Intent intent = new Intent(SignInputActivity.this, ChatActivity.class);
+					startActivity(intent);
 				}
 			}
 		});

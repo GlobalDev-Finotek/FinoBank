@@ -1,8 +1,6 @@
 package com.cocolab.drawing;
 
-import java.util.ArrayList;
-
-import com.cocolab.client.message.lineType;
+import com.cocolab.client.message.LineType;
 import com.cocolab.subdlg.DiagramType;
 import com.cocolab.viewer.SerializablePath;
 
@@ -11,7 +9,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -23,7 +20,6 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.RectF;
 import android.graphics.Typeface;
-import android.util.Log;
 import android.view.Display;
 import android.view.MotionEvent;
 import android.view.WindowManager;
@@ -296,7 +292,7 @@ public class ConCanvas {
 				path.addPathPoints(new float[] { x, y});
 				mX = x;
 				mY = y;
-				//canvasListener.sendLine(lineType.DOWN, x, y);
+				//canvasListener.sendLine(LineType.DOWN, x, y);
 			}
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				float dx = Math.abs(x - mX);
@@ -305,7 +301,7 @@ public class ConCanvas {
 					Redraw();
 //					canvas.drawPath(path, paint);
 					foreCanvas.drawLine(sx, sy, x, y, paint);
-					//canvasListener.sendLine(lineType.UP, x, y);
+					//canvasListener.sendLine(LineType.UP, x, y);
 					// paint.set
 					mX = x;
 					mY = y;					
@@ -338,7 +334,7 @@ public class ConCanvas {
 				path.addPathPoints(new float[] { x, y });
 				mX = x;
 				mY = y;
-				canvasListener.sendLine(lineType.DOWN, x, y);
+				canvasListener.sendLine(LineType.DOWN, x, y);
 			}
 			if (event.getAction() == MotionEvent.ACTION_MOVE) {
 				float dx = Math.abs(x - mX);
@@ -348,7 +344,7 @@ public class ConCanvas {
 					path.addPathPoints(new float[] { mX, mY, (x + mX) / 2,
 							(y + mY) / 2 });
 					foreCanvas.drawPath(path, paint);
-					canvasListener.sendLine(lineType.MOVE, x, y);
+					canvasListener.sendLine(LineType.MOVE, x, y);
 					mX = x;
 					mY = y;
 					// canvasListener.updateCanvas();
@@ -358,7 +354,7 @@ public class ConCanvas {
 				path.lineTo(mX, mY);
 				path.addPathPoints(new float[] { mX, mY });
 				foreCanvas.drawPath(path, paint);
-				canvasListener.sendLine(lineType.UP, x, y);
+				canvasListener.sendLine(LineType.UP, x, y);
 
 				Matrix matrix = new Matrix();
 				matrix.postTranslate(-startX, -startY);
@@ -466,7 +462,7 @@ public class ConCanvas {
 					RectF rf = new RectF(x, mY, mX, y);
 					path.addOval(rf, Direction.CCW);
 					foreCanvas.drawPath(path, paint);
-					// canvasListener.sendLine(lineType.MOVE, x, y);
+					// canvasListener.sendLine(LineType.MOVE, x, y);
 				}
 			} else if (event.getAction() == MotionEvent.ACTION_UP) {
 				path.addPathPoints(new float[] { x - startX, mY - startY, mX - startX, y - startY});
@@ -501,7 +497,7 @@ public class ConCanvas {
 					foreCanvas.drawLine((sx+x)/2, sy, sx, y, paint);
 					foreCanvas.drawLine(sx, y, x, y, paint);
 					foreCanvas.drawLine((sx+x)/2, sy, x, y, paint);
-					// canvasListener.sendLine(lineType.MOVE, x, y);
+					// canvasListener.sendLine(LineType.MOVE, x, y);
 					
 				}
 			} else if (event.getAction() == MotionEvent.ACTION_UP) {
@@ -676,7 +672,7 @@ public class ConCanvas {
     	float x = _x;
     	float y = _y;
     
-    	if(linetype == lineType.DOWN){
+    	if(linetype == LineType.DOWN){
     		sx = x*foreZoom;
 			sy = y*foreZoom;
 			path.moveTo((x-startX)*foreZoom, (y-startY)*foreZoom);
@@ -684,7 +680,7 @@ public class ConCanvas {
 			mX = x*foreZoom;
 			mY = y*foreZoom;
     	}
-    	else if(linetype == lineType.MOVE){
+    	else if(linetype == LineType.MOVE){
     		float dx = Math.abs(x*foreZoom - mX);
 			float dy = Math.abs(y*foreZoom - mY);
 			if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
@@ -693,7 +689,7 @@ public class ConCanvas {
 				path.offset(foreStartX < 0 ? foreStartX : 0, foreStartY < 0 ? foreStartY : 0);
 				foreCanvas.drawPath(path, paint);
 				path.offset(foreStartX < 0 ? -foreStartX : 0, foreStartY < 0 ? -foreStartY : 0);
-				canvasListener.sendLine(lineType.MOVE, x, y);
+				canvasListener.sendLine(LineType.MOVE, x, y);
 				mX = x*foreZoom;
 				mY = y*foreZoom;
 				//canvasListener.updateCanvas();
@@ -701,7 +697,7 @@ public class ConCanvas {
  			
  			canvasListener.updateCanvas();
     	}
-    	else if(linetype == lineType.UP){
+    	else if(linetype == LineType.UP){
     		path.lineTo(mX, mY);
 			path.addPathPoints(new float[] { mX, mY });
 			path.offset(foreStartX < 0 ? foreStartX : 0, foreStartY < 0 ? foreStartY : 0);
@@ -772,7 +768,7 @@ public class ConCanvas {
     	float x = _x;
     	float y = _y;
     
-    	if(linetype == lineType.DOWN){
+    	if(linetype == LineType.DOWN){
 			sx = x;
 			sy = y;
 			path.moveTo(x, y);
@@ -780,7 +776,7 @@ public class ConCanvas {
 			mX = x;
  			mY = y;
     	}
-    	else if(linetype == lineType.MOVE){
+    	else if(linetype == LineType.MOVE){
 			float dx = Math.abs(x - mX);
 			float dy = Math.abs(y - mY);
  			if (dx >= TOUCH_TOLERANCE || dy >= TOUCH_TOLERANCE) {
@@ -793,7 +789,7 @@ public class ConCanvas {
  			
  			//canvasListener.updateCanvas();
     	}
-    	else if(linetype == lineType.UP){
+    	else if(linetype == LineType.UP){
 			path.lineTo(mX, mY);
 			path.addPathPoints(new float[] { mX, mY });
 			//canvas.drawPath(path, paint);
@@ -1128,7 +1124,7 @@ public class ConCanvas {
 					foreCanvas.translate(foreStartX < 0 ? foreStartX : 0, foreStartY < 0 ? foreStartY : 0);
 					foreCanvas.drawLine(sx, sy, x*foreZoom, y*foreZoom, paint);
 					foreCanvas.translate(foreStartX < 0 ? -foreStartX : 0, foreStartY < 0 ? -foreStartY : 0);
-					//canvasListener.sendLine(lineType.UP, x, y);
+					//canvasListener.sendLine(LineType.UP, x, y);
 					// paint.set
 					mX = x;
 					mY = y;
@@ -1158,7 +1154,7 @@ public class ConCanvas {
 				path.addPathPoints(new float[] { x*foreZoom, y*foreZoom });
 				mX = x*foreZoom;
 				mY = y*foreZoom;
-				canvasListener.sendLine(lineType.DOWN, x, y);
+				canvasListener.sendLine(LineType.DOWN, x, y);
 			}
 			if (_mAction == MotionEvent.ACTION_MOVE) {
 				float dx = Math.abs(x*foreZoom - mX);
@@ -1169,7 +1165,7 @@ public class ConCanvas {
 					path.offset(foreStartX < 0 ? foreStartX : 0, foreStartY < 0 ? foreStartY : 0);
 					foreCanvas.drawPath(path, paint);
 					path.offset(foreStartX < 0 ? -foreStartX : 0, foreStartY < 0 ? -foreStartY : 0);
-					canvasListener.sendLine(lineType.MOVE, x, y);
+					canvasListener.sendLine(LineType.MOVE, x, y);
 					mX = x*foreZoom;
 					mY = y*foreZoom;
 					//canvasListener.updateCanvas();
@@ -1181,7 +1177,7 @@ public class ConCanvas {
 				path.offset(foreStartX < 0 ? foreStartX : 0, foreStartY < 0 ? foreStartY : 0);
 				foreCanvas.drawPath(path, paint);
 				path.offset(foreStartX < 0 ? -foreStartX : 0, foreStartY < 0 ? -foreStartY : 0);
-				canvasListener.sendLine(lineType.UP, x, y);
+				canvasListener.sendLine(LineType.UP, x, y);
 
 //				Matrix matrix = new Matrix();
 //				matrix.postTranslate(-startX, -startY);
@@ -1206,7 +1202,7 @@ public class ConCanvas {
 				path.addPathPoints(new float[] { x*foreZoom, y*foreZoom });
 				mX = x;
 				mY = y;
-//				canvasListener.sendLine(lineType.DOWN, x, y);
+//				canvasListener.sendLine(LineType.DOWN, x, y);
 //				sx = x;
 //				sy = y;
 //				path.moveTo(x, y);
@@ -1313,7 +1309,7 @@ public class ConCanvas {
 					path.offset(foreStartX < 0 ? foreStartX : 0, foreStartY < 0 ? foreStartY : 0);
 					foreCanvas.drawPath(path, paint);
 					path.offset(foreStartX < 0 ? -foreStartX : 0, -foreStartY < 0 ? foreStartY : 0);
-					// canvasListener.sendLine(lineType.MOVE, x, y);
+					// canvasListener.sendLine(LineType.MOVE, x, y);
 				}
 			} else if (_mAction == MotionEvent.ACTION_UP) {
 				path.addPathPoints(new float[] { x*foreZoom - startX, mY*foreZoom - startY, mX*foreZoom - startX, y*foreZoom - startY});
@@ -1358,7 +1354,7 @@ public class ConCanvas {
 					foreCanvas.drawLine(sx, y*foreZoom, x*foreZoom, y*foreZoom, paint);
 					foreCanvas.drawLine((sx+x*foreZoom)/2, sy, x*foreZoom, y*foreZoom, paint);
 					foreCanvas.translate(foreStartX < 0 ? -foreStartX : 0, foreStartY < 0 ? -foreStartY : 0);
-					// canvasListener.sendLine(lineType.MOVE, x, y);
+					// canvasListener.sendLine(LineType.MOVE, x, y);
 					
 				}
 			} else if (_mAction == MotionEvent.ACTION_UP) {

@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="tbUserRegiActivity"
+            android:name=".UserRegiActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="com.cocolap.talkbank.ActivityStart" >
@@ -33,16 +33,16 @@
                 android:value="com.cocolap.talkbank.ActivityStart" />
         </activity>
         <activity
-            android:name="tbSignRegiActivity"
+            android:name=".SignRegiActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="landscape"
-            android:parentActivityName="com.cocolap.talkbank.tbUserRegiActivity" >
+            android:parentActivityName="com.cocolap.talkbank.UserRegiActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cocolap.talkbank.tbUserRegiActivity" />
+                android:value="com.cocolap.talkbank.UserRegiActivity" />
         </activity>
         <activity
-            android:name="tbSignInputActivity"
+            android:name=".SignInputActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="landscape"
             android:parentActivityName="com.cocolap.talkbank.ActivityStart" >
@@ -51,7 +51,7 @@
                 android:value="com.cocolap.talkbank.ActivityStart" />
         </activity>
         <activity
-            android:name="com.cocolap.talkbank.tbChatActivity"
+            android:name="com.cocolap.talkbank.ChatActivity"
             android:theme="@style/AppTheme"
             android:screenOrientation="portrait"
             android:parentActivityName="com.cocolap.talkbank.ActivityStart" >

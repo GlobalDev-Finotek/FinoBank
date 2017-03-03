@@ -22,7 +22,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 
-public class tbUserRegiActivity extends AppCompatActivity {
+public class UserRegiActivity extends AppCompatActivity {
 	
 	private MainApplication mainApp;
 	private final int editMargin = 50;
@@ -64,7 +64,7 @@ public class tbUserRegiActivity extends AppCompatActivity {
 		signBtn.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 		signBtn.setOnClickListener(new Button.OnClickListener() {
 			public void onClick(View v) {
-				Intent intent = new Intent(tbUserRegiActivity.this, tbSignRegiActivity.class);
+				Intent intent = new Intent(UserRegiActivity.this, SignRegiActivity.class);
 				startActivityForResult(intent, SIGN_RESULT);
 			}
 		});

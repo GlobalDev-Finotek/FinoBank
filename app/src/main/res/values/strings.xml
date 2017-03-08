@@ -21,9 +21,6 @@
     <string name="string_talk_bank">톡뱅크</string>
 
 
-
-
-
     <string name="hello_world">Hello world!</string>
     <string name="button_save">저장</string>
     <string name="button_not_save">not save</string>
@@ -32,7 +29,7 @@
     <string name="button_cancel">취소</string>
     <string name="title_notice">알림</string>
     <string name="title_check">전자서명 진위 확인 중</string>
-    <string name="title_check2"> </string>
+    <string name="title_check2"></string>
     <string name="title_wait">잠시만 기다려주시기 바랍니다.</string>
     <string name="title_complete_fail1">전자서명 진위 여부 확인결과</string>
     <string name="title_complete_fail2">전자서명에 실패하였습니다.</string>
@@ -47,12 +44,28 @@
     <string name="init_signcount">서명횟수 초기화</string>
     <string name="sign_re_registration">전자서명 재등록</string>
     <string name="docu_sign">문서 서명</string>
-    <string name="digit4_notice"> </string>
-    <string name="seek_desc_text">신뢰도가 높을 수록 서명인증시 난이도가 올라갑니다.\n서명이 복잡할 수록 난이도 는 낮게,\n서명이 단순할 수록 신뢰도는 높게 설정하시기를 권장합니다.</string>
+    <string name="digit4_notice"></string>
+    <string name="seek_desc_text">신뢰도가 높을 수록 서명인증시 난이도가 올라갑니다.\n서명이 복잡할 수록 난이도 는 낮게,\n서명이 단순할 수록
+        신뢰도는 높게 설정하시기를 권장합니다.
+    </string>
     <string name="complex_sign_text">복잡한 서명</string>
     <string name="simple_sign_text">단순한 서명</string>
+    <string name="fintek_intro">금융의 새로운 경험을\n디자인하는 핀테크 체인저
+    </string>
+    <string name="basic_inform">기본 정보(필수입력)</string>
+    <string name="user_name">사용자 이름</string>
+    <string name="phone_number">휴대전화 번호</string>
+    <string name="additional_inform">추가 정보(선택 입력)</string>
+    <string name="emergency_phone_number">비상 연락처</string>
+    <string name="email_address">이메일 주소</string>
+    <string name="credit_card_registration">신용카드 등록</string>
+    <string name="capture_credit">신용카드 촬영</string>
+    <string name="profile_registration">인증 사진 등록</string>
+    <string name="capture_profile">사진 촬영</string>
+    <string name="request_permission"/>
+    <string name="take_pic">촬영</string>
 
-<!--
+    <!--
     <string name="app_name">Talk Bank</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>

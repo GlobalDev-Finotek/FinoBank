@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.inject.component;
 
-import android.app.Activity;
 import android.content.Context;
 
 import javax.inject.Singleton;
@@ -14,10 +13,11 @@ import finotek.global.dev.talkbank_ca.inject.module.AppModule;
  */
 
 @Singleton
-@Component(modules = {AppModule.class})
+@Component(modules = AppModule.class)
 public interface AppComponent {
   Context context();
   MyApplication myApplication();
 
-  void inject(Activity activity);
+  void inject(MyApplication app);
+
 }

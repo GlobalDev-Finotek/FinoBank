@@ -16,16 +16,15 @@ import finotek.global.dev.talkbank_ca.databinding.ActivityCaptureProfilePicBindi
 
 public class CaptureProfilePicActivity extends AppCompatActivity {
 
+  private static final int REQUEST_VIDEO_PERMISSIONS = 1;
   private ActivityCaptureProfilePicBinding binding;
   private CaptureProfile presenter;
-  private static final int REQUEST_VIDEO_PERMISSIONS = 1;
 
   @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_capture_profile_pic);
-
+    ActivityCaptureProfilePicBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_capture_profile_pic);
     binding.tvInstruction.setText("");
 
     CapturePicFragment capturePicFragment = new CapturePicFragment();

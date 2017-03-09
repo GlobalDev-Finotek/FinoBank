@@ -15,8 +15,7 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 @Module
 public class AppModule {
 
-  @NonNull
-  MyApplication application;
+  private final MyApplication application;
 
   public AppModule(@NonNull MyApplication application) {
     this.application = application;
@@ -34,6 +33,11 @@ public class AppModule {
     return this.application;
   }
 
+//  @Provides
+//  @Singleton
+//  SharedPreferences provideSharedPreferences() {
+//    return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+//  }
 
 
 }

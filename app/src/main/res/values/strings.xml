@@ -48,8 +48,8 @@
     <string name="seek_desc_text">신뢰도가 높을 수록 서명인증시 난이도가 올라갑니다.\n서명이 복잡할 수록 난이도 는 낮게,\n서명이 단순할 수록
         신뢰도는 높게 설정하시기를 권장합니다.
     </string>
-    <string name="complex_sign_text">복잡한 서명</string>
-    <string name="simple_sign_text">단순한 서명</string>
+    <string name="complex_sign_text">&lt;&lt; 복잡한 서명</string>
+    <string name="simple_sign_text">단순한 서명 &gt;&gt;</string>
     <string name="fintek_intro">금융의 새로운 경험을\n디자인하는 핀테크 체인저
     </string>
     <string name="basic_inform">기본 정보(필수입력)</string>
@@ -67,6 +67,7 @@
     <string name="pin_code">PIN코드</string>
     <string name="select_pin_code_background">PIN 코드 배경색 선택</string>
     <string name="select_pin_code_text_color">PIN 코드 배경색 선택</string>
+    <string name="sign_instruction">서명 신뢰도 설정\n - 신뢰도가 높으면 인증 시 난이도가 올라갑니다.</string>
 
     <!--
     <string name="app_name">Talk Bank</string>

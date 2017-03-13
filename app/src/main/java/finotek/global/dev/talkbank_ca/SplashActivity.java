@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.animation.Animator;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.content.Intent;
@@ -7,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 
@@ -35,12 +37,32 @@ public class SplashActivity extends AppCompatActivity {
         ContextCompat.getColor(this, R.color.color_foreground),
         valueAnimator ->    binding.wrapperSplash
             .setBackgroundColor((int) valueAnimator.getAnimatedValue()));
+    colorAnimation.addListener(new Animator.AnimatorListener() {
+      @Override
+      public void onAnimationStart(Animator animation) {
 
+      }
+
+      @Override
+      public void onAnimationEnd(Animator animation) {
+        binding.btnNext.setVisibility(View.VISIBLE);
+      }
+
+      @Override
+      public void onAnimationCancel(Animator animation) {
+
+      }
+
+      @Override
+      public void onAnimationRepeat(Animator animation) {
+
+      }
+    });
     colorAnimation.start();
 
     ValueAnimator textColorAnim = getColorAnimator(
         ContextCompat.getColor(this, R.color.color_foreground),
-        ContextCompat.getColor(this, R.color.colorPrimary),
+        ContextCompat.getColor(this, R.color.black),
     valueAnimator -> binding.tvIntro
         .setTextColor((Integer) valueAnimator.getAnimatedValue()));
 

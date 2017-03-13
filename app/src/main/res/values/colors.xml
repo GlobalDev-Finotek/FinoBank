@@ -26,4 +26,5 @@
     <color name="pin_purple">#6f359e</color>
     <color name="pin_white">#ffffff</color>
     <color name="pin_black">#000000</color>
+    <color name="black">#000000</color>
 </resources>

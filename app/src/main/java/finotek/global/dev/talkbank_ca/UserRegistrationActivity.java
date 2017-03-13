@@ -34,5 +34,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
 		    .subscribe(aVoid ->
 				    startActivity(new Intent(UserRegistrationActivity.this, CaptureProfilePicActivity.class)));
 
+	  RxView.clicks(binding.llRegiBasic.btnRegiSign)
+			  .throttleFirst(200, TimeUnit.MILLISECONDS)
+			  .subscribe(aVoid -> startActivity(new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class)));
   }
 }

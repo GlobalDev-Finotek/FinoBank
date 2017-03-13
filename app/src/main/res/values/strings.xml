@@ -64,6 +64,9 @@
     <string name="capture_profile">사진 촬영</string>
     <string name="request_permission"/>
     <string name="take_pic">촬영</string>
+    <string name="pin_code">PIN코드</string>
+    <string name="select_pin_code_background">PIN 코드 배경색 선택</string>
+    <string name="select_pin_code_text_color">PIN 코드 배경색 선택</string>
 
     <!--
     <string name="app_name">Talk Bank</string>

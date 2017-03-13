@@ -14,4 +14,16 @@
     <color name="color_background_blue_button_disabled">#EEEEEE</color>
     <!--<color name="color_background_blue_button_disabled">#D0F5FF</color>-->
     <color name="color_background_terms_textview">#EEEEEE</color>
+    <color name="pin_red">#ff0000</color>
+    <color name="pin_orange">#fdbf2d</color>
+    <color name="pin_yellow">#ffe938</color>
+    <color name="pin_light_green">#1aae00</color>
+    <color name="pin_green">#1aa00f</color>
+    <color name="pin_light_blue">#1eb1ed
+    </color>
+    <color name="pin_blue">#1090bd
+    </color>
+    <color name="pin_purple">#6f359e</color>
+    <color name="pin_white">#ffffff</color>
+    <color name="pin_black">#000000</color>
 </resources>

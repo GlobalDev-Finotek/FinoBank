@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="8dp"
+        tools:layout_editor_absoluteY="33dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/pin_code"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="25dp"/>
+
+        <LinearLayout
+            android:id="@+id/ll_pin_code"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:layout_editor_absoluteX="8dp"
+            tools:layout_editor_absoluteY="8dp">
+
+            <TextView
+                android:id="@+id/tv_pin"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:padding="10dp"
+                android:textSize="30dp"/>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:padding="10dp"
+            android:text="@string/select_pin_code_background"/>
+
+        <GridLayout
+            android:id="@+id/gl_pin_background"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="10"
+            android:padding="10dp"
+            android:rowCount="1"
+            android:useDefaultMargins="true">
+
+        </GridLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/select_pin_code_text_color"/>
+
+        <GridLayout
+            android:id="@+id/gl_pin_text_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:columnCount="10"
+            android:padding="10dp"
+            android:rowCount="1"
+            android:useDefaultMargins="true">
+
+        </GridLayout>
+
+    </LinearLayout>
+
+
+</layout>
+

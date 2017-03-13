@@ -1,10 +1,17 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
 import finotek.global.dev.talkbank_ca.databinding.ActivityUserRegistrationBinding;
+import finotek.global.dev.talkbank_ca.profile.CaptureProfilePicActivity;
+import rx.functions.Action1;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
@@ -22,6 +29,10 @@ public class UserRegistrationActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
+    RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
+		    .throttleFirst(200, TimeUnit.MILLISECONDS)
+		    .subscribe(aVoid ->
+				    startActivity(new Intent(UserRegistrationActivity.this, CaptureProfilePicActivity.class)));
 
   }
 }

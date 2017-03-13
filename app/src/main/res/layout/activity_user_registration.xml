@@ -52,8 +52,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
-                <include layout="@layout/activity_user_regi_basic"/>
-                <include layout="@layout/activity_user_regi_additional"/>
+
+                <include
+                    android:id="@+id/ll_regi_basic"
+                    layout="@layout/activity_user_regi_basic"/>
+
+                <include
+                    android:id="@+id/ll_regi_additional"
+                    layout="@layout/activity_user_regi_additional"/>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.constraint.ConstraintLayout>

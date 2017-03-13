@@ -24,13 +24,14 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    ActivityCaptureProfilePicBinding binding = DataBindingUtil.setContentView(this, R.layout.activity_capture_profile_pic);
+    ActivityCaptureProfilePicBinding binding = DataBindingUtil.setContentView(this,
+        R.layout.activity_capture_profile_pic);
     binding.tvInstruction.setText("");
 
     CapturePicFragment capturePicFragment = new CapturePicFragment();
 
     FragmentTransaction transaction = getFragmentManager().beginTransaction();
-    transaction.add(R.id.fl_pic, capturePicFragment);
+    transaction.add(R.id.fl_cam, capturePicFragment);
     transaction.commit();
 
     RxView.clicks(binding.btnTakePic)

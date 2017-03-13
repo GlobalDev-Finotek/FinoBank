@@ -54,6 +54,7 @@ import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.databinding.FragmentCapturePicBinding;
 
 /**
  * Created by kwm on 2017. 3. 6..
@@ -152,7 +153,6 @@ public class CapturePicFragment extends Fragment
 
     /**
      */
-    private TextureView mTextureView;
 
     /**
      * A {@link CameraCaptureSession } for camera preview.
@@ -335,8 +335,9 @@ public class CapturePicFragment extends Fragment
       }
 
     };
+  private FragmentCapturePicBinding binding;
 
-    /**
+  /**
      * Shows a {@link Toast} on the UI thread.
      *
      * @param text The message to show
@@ -409,15 +410,10 @@ public class CapturePicFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-      return DataBindingUtil.inflate(inflater, R.layout.fragment_capture_pic, container, false).getRoot();
+      binding = DataBindingUtil.inflate(inflater, R.layout.fragment_capture_pic, container, false);
+      return binding.getRoot();
     }
 
-    @Override
-    public void onViewCreated(final View view, Bundle savedInstanceState) {
-
-
-      // mTextureView = (TextureView) view.findViewById(R.id.texture);
-    }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -435,10 +431,10 @@ public class CapturePicFragment extends Fragment
       // available, and "onSurfaceTextureAvailable" will not be called. In that case, we can open
       // a camera and start preview from here (otherwise, we wait until the surface is ready in
       // the SurfaceTextureListener).
-      if (mTextureView.isAvailable()) {
-        openCamera(mTextureView.getWidth(), mTextureView.getHeight());
+      if (binding.textureCam.isAvailable()) {
+        openCamera(binding.textureCam.getWidth(), binding.textureCam.getHeight());
       } else {
-        mTextureView.setSurfaceTextureListener(mSurfaceTextureListener);
+        binding.textureCam.setSurfaceTextureListener(mSurfaceTextureListener);
       }
     }
 
@@ -657,7 +653,7 @@ public class CapturePicFragment extends Fragment
      */
     private void createCameraPreviewSession() {
       try {
-        SurfaceTexture texture = mTextureView.getSurfaceTexture();
+        SurfaceTexture texture = binding.textureCam.getSurfaceTexture();
         assert texture != null;
 
         // We configure the size of default buffer to be the size of camera preview we want.
@@ -713,16 +709,16 @@ public class CapturePicFragment extends Fragment
     }
 
     /**
-     * Configures the necessary {@link android.graphics.Matrix} transformation to `mTextureView`.
+     * Configures the necessary {@link android.graphics.Matrix} transformation to `binding.textureCam`.
      * This method should be called after the camera preview size is determined in
-     * setUpCameraOutputs and also the size of `mTextureView` is fixed.
+     * setUpCameraOutputs and also the size of `binding.textureCam` is fixed.
      *
-     * @param viewWidth  The width of `mTextureView`
-     * @param viewHeight The height of `mTextureView`
+     * @param viewWidth  The width of `binding.textureCam`
+     * @param viewHeight The height of `binding.textureCam`
      */
     private void configureTransform(int viewWidth, int viewHeight) {
       Activity activity = getActivity();
-      if (null == mTextureView || null == mPreviewSize || null == activity) {
+      if (null == binding.textureCam || null == mPreviewSize || null == activity) {
         return;
       }
       int rotation = activity.getWindowManager().getDefaultDisplay().getRotation();
@@ -742,7 +738,7 @@ public class CapturePicFragment extends Fragment
       } else if (Surface.ROTATION_180 == rotation) {
         matrix.postRotate(180, centerX, centerY);
       }
-      mTextureView.setTransform(matrix);
+      binding.textureCam.setTransform(matrix);
     }
 
     /**

@@ -31,7 +31,7 @@ public class SplashActivity extends AppCompatActivity {
     binding.tvIntro.setText(R.string.fintek_intro);
 
     ValueAnimator colorAnimation = getColorAnimator(
-        ContextCompat.getColor(this, R.color.colorPrimaryDark),
+        ContextCompat.getColor(this, R.color.colorPrimary),
         ContextCompat.getColor(this, R.color.color_foreground),
         valueAnimator ->    binding.wrapperSplash
             .setBackgroundColor((int) valueAnimator.getAnimatedValue()));
@@ -40,7 +40,7 @@ public class SplashActivity extends AppCompatActivity {
 
     ValueAnimator textColorAnim = getColorAnimator(
         ContextCompat.getColor(this, R.color.color_foreground),
-        ContextCompat.getColor(this, R.color.colorPrimaryDark),
+        ContextCompat.getColor(this, R.color.colorPrimary),
     valueAnimator -> binding.tvIntro
         .setTextColor((Integer) valueAnimator.getAnimatedValue()));
 

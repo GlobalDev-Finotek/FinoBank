@@ -14,6 +14,7 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySplashBinding;
 
 /**
@@ -90,9 +91,9 @@ public class SplashActivity extends AppCompatActivity {
           Intent intent;
 
           if (true) {
-            intent = new Intent(SplashActivity.this, UserRegistrationActivity.class);
+            intent = new Intent(SplashActivity.this, ChatActivity.class);
           } else {
-            intent = new Intent(SplashActivity.this, UserRegistrationActivity.class);
+            intent = new Intent(SplashActivity.this, ChatActivity.class);
           }
 
           startActivity(intent);

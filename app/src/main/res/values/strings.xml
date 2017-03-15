@@ -19,7 +19,7 @@
     <string name="string_remittance">Remittance</string>
     <string name="string_verify_account">Verify account</string>
     <string name="string_talk_bank">톡뱅크</string>
-
+    <string name="string_send">전송</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="button_save">저장</string>

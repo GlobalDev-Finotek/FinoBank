@@ -18,12 +18,10 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".UserRegistrationActivity">
-        </activity>
-        <activity android:name=".SignRegistrationActivity">
-        </activity>
-        <activity android:name=".profile.CaptureProfilePicActivity">
-        </activity>
+        <activity android:name=".UserRegistrationActivity" />
+        <activity android:name=".SignRegistrationActivity" />
+        <activity android:name=".profile.CaptureProfilePicActivity" />
+        <activity android:name=".chat.ChatActivity" />
     </application>
 
 </manifest>

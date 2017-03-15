@@ -117,6 +117,13 @@ public class CapturePicFragment extends Fragment
      */
     private static final int MAX_PREVIEW_HEIGHT = 1080;
 
+
+		interface OnCaptureListener {
+			void onCaptureListener(String path);
+		}
+
+		private OnCaptureListener onCaptureListener;
+
     /**
      * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
      * {@link TextureView}.
@@ -438,6 +445,10 @@ public class CapturePicFragment extends Fragment
       }
     }
 
+    public void unlockCamera() {
+	    unlockFocus();
+    }
+
     @Override
     public void onPause() {
       closeCamera();
@@ -744,8 +755,9 @@ public class CapturePicFragment extends Fragment
     /**
      * Initiate a still image capture.
      */
-    private void takePicture() {
-      lockFocus();
+    public void takePicture(OnCaptureListener onCaptureListener) {
+      this.onCaptureListener = onCaptureListener;
+	    lockFocus();
     }
 
     /**
@@ -814,9 +826,10 @@ public class CapturePicFragment extends Fragment
           public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                          @NonNull CaptureRequest request,
                                          @NonNull TotalCaptureResult result) {
-            showToast("Saved: " + mFile);
 
-            unlockFocus();
+	          onCaptureListener.onCaptureListener(mFile.getPath());
+
+            // unlockFocus();
           }
         };
 

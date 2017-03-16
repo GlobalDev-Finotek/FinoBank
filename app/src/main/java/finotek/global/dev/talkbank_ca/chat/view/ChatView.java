@@ -10,6 +10,9 @@ import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatItem;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatItemWithType;
 
+/**
+ * @author david lee at finotek.
+ * */
 public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
 

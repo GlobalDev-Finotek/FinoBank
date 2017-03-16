@@ -6,6 +6,10 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 
+/**
+ * @author david lee at finotek.
+ * ViewBuilder와 데이터 영역의 책임을 외부로 내보냄으로서 채팅 엘리먼트 요소가 계속 추가될 수 있게끔 구성되어있다
+* */
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private SparseArray<ChatView.ViewBuilder> builders;
     private ArrayList<ChatItemWithType> items;
@@ -42,6 +46,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return items.get(position).getViewType();
     }
 
+    /**
+     * @param viewType RecylcerView의 메서드들에서 쓰일 viewType을 정의한다, SparseArray에 데이터를 넣기 때문에 이 값은 중복되어서는 안된다
+     * @param builder ViewHolder를 생성하는 build메서드와 뷰와 데이터를 연결하는 bind메서드를 구현한 객체
+     *
+     * ChatView.addMessage로 메시지를 넣기 전에 ViewBuilder가 반드시 등록되어야 한다
+     * */
     public void addChatViewBuilder(int viewType, ChatView.ViewBuilder builder) {
         builders.put(viewType, builder);
     }

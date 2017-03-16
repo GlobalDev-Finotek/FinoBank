@@ -25,8 +25,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         ChatView.ViewBuilder builder = builders.get(viewType);
         if(builder != null)
             return builder.build(parent);
-
-        return null;
+        else
+            throw new RuntimeException("No such View Builder Exception \n you should implement a class with the ChatView.ViewHolder and set it into ChatView");
     }
 
     @Override

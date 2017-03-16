@@ -19,13 +19,13 @@
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
                 android:textColor="@color/color_foreground" />
         </RelativeLayout>
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/chat_list"
+        <finotek.global.dev.talkbank_ca.chat.view.ChatView
+            android:id="@+id/chat_view"
             android:layout_below="@id/app_title"
             android:layout_above="@+id/footer_inputs"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+        </finotek.global.dev.talkbank_ca.chat.view.ChatView>
         <LinearLayout
             android:id="@+id/footer_inputs"
             android:orientation="horizontal"

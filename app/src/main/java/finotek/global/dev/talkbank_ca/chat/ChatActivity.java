@@ -7,14 +7,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
+import finotek.global.dev.talkbank_ca.chat.view.ReceiveViewBuilder;
+import finotek.global.dev.talkbank_ca.chat.view.SendViewBuilder;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
-import finotek.global.dev.talkbank_ca.model.ChatElement;
-import finotek.global.dev.talkbank_ca.model.ChatElementReceive;
-import finotek.global.dev.talkbank_ca.model.ChatElementSend;
+import finotek.global.dev.talkbank_ca.model.ChatItemReceive;
+import finotek.global.dev.talkbank_ca.model.ChatItemSend;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
+    private enum ViewType {
+        Send, Receive, Divider, Status
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -23,15 +26,15 @@ public class ChatActivity extends AppCompatActivity {
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setStackFromEnd(true);
-        binding.chatList.setLayoutManager(manager);
+        binding.chatView.setLayoutManager(manager);
 
-        ChatElement[] elements = new ChatElement[]{
-            new ChatElementReceive("System", "Hi david."),
-            new ChatElementReceive("System", "It's me"),
-            new ChatElementSend("Me", "good")
-        };
+        // set chat view builders
+        binding.chatView.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
+        binding.chatView.addChatViewBuilder(ViewType.Receive.ordinal(), new ReceiveViewBuilder());
 
-        ChatAdapter adapter = new ChatAdapter(elements);
-        binding.chatList.setAdapter(adapter);
+        // add default items
+        binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatItemReceive("System", "Hi."));
+        binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatItemReceive("System", "David"));
+        binding.chatView.addMessage(ViewType.Send.ordinal(), new ChatItemSend("Me", "Good"));
     }
 }

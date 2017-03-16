@@ -1,11 +1,12 @@
 package finotek.global.dev.talkbank_ca.model;
 
+import finotek.global.dev.talkbank_ca.chat.adapter.ChatItem;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ChatElementReceive extends ChatElement {
+public class ChatItemReceive extends ChatItem {
     private String name;
     private String message;
 }

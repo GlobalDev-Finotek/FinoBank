@@ -87,6 +87,12 @@ public class PinRegistrationActivity extends AppCompatActivity {
 				tvPwd[ptrTvPwd++].setText("*");
 			}
 
+			if (position == secureKeyboardAdapter.getCount() - 1) {
+				if (ptrTvPwd > 0) {
+					tvPwd[--ptrTvPwd].setText(" ");
+				}
+			}
+
 		});
 
 		binding.btnRegistration.setOnClickListener(v -> finish());
@@ -104,6 +110,8 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 		completeSets.add(new Random().nextInt(completeSets.size() - 1), " ");
 		completeSets.add(new Random().nextInt(completeSets.size() - 1), " ");
+
+		completeSets.set(completeSets.size() - 1, "");
 
 		return completeSets;
 	}

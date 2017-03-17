@@ -13,7 +13,6 @@
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
-
         </activity>
         <activity android:name=".user.UserRegistrationActivity">
         </activity>
@@ -29,6 +28,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity">
+        </activity>
+        <activity android:name=".setting.SettingsActivity">
         </activity>
     </application>
 

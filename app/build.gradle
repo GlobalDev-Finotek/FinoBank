@@ -43,19 +43,19 @@ dependencies {
 
 
 
+
+
+
+
+
+
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support:support-v13:25.1.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'com.android.support:design:25.1.0'
-
-
     compile 'com.google.dagger:dagger:2.8'
-
     compile 'org.projectlombok:lombok:1.16.12'
-
-
-
     compile 'io.reactivex:rxjava:1.2.7'
     compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
     compile 'com.jakewharton.rxbinding:rxbinding-support-v4:1.0.1'

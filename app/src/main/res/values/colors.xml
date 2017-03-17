@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2EB8DE</color>
-    <color name="colorPrimaryDark">#1c9fc2</color>
+    <color name="colorPrimary">#3778FF</color>
+    <color name="colorPrimaryDark">#1B356A</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_white">#fff</color>
 
     <color name="color_foreground">#FFFFFF</color>
 
@@ -14,4 +15,11 @@
     <color name="color_background_blue_button_disabled">#EEEEEE</color>
     <!--<color name="color_background_blue_button_disabled">#D0F5FF</color>-->
     <color name="color_background_terms_textview">#EEEEEE</color>
+
+    <color name="color_text_default">#1f2f42</color>
+    <color name="color_chat_background">@color/color_white</color>
+    <color name="color_chat_footer">#F5F4F5</color>
+    <color name="color_send_disabled">#CFCFCF</color>
+    <color name="color_send_enabled">@color/colorPrimary</color>
+    <color name="color_chat_message_received">#F5F4F5</color>
 </resources>

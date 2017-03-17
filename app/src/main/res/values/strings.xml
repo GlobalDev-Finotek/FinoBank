@@ -59,7 +59,9 @@
     <string name="emergency_phone_number">비상 연락처</string>
     <string name="email_address">이메일 주소</string>
     <string name="credit_card_registration">신용카드 등록</string>
+    <string name="re_capture">재촬영</string>
     <string name="capture_credit">신용카드 촬영</string>
+    <string name="capture_registration">등록하시겠습니까?</string>
     <string name="profile_registration">인증 사진 등록</string>
     <string name="capture_profile">사진 촬영</string>
     <string name="request_permission"/>
@@ -68,6 +70,8 @@
     <string name="select_pin_code_background">PIN 코드 배경색 선택</string>
     <string name="select_pin_code_text_color">PIN 코드 배경색 선택</string>
     <string name="sign_instruction">서명 신뢰도 설정\n - 신뢰도가 높으면 인증 시 난이도가 올라갑니다.</string>
+    <string name="yes">네</string>
+    <string name="no">아니요</string>
 
     <!--
     <string name="app_name">Talk Bank</string>

@@ -1,7 +1,6 @@
-package finotek.global.dev.talkbank_ca;
+package finotek.global.dev.talkbank_ca.user;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.Observable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
@@ -10,10 +9,8 @@ import android.widget.Toast;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
-import rx.functions.Action1;
-import rx.functions.Func1;
-import rx.subjects.PublishSubject;
 
 
 public class SignRegistrationActivity extends AppCompatActivity {

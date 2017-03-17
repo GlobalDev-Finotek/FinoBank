@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.profile;
+package finotek.global.dev.talkbank_ca.user.profile;
 
 import android.graphics.Matrix;
 import android.view.Surface;

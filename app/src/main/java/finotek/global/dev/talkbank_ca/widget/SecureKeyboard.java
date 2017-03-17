@@ -18,19 +18,9 @@ public class SecureKeyboard {
 		for (int i = 0; i < 10; ++i) {
 			completeSets.add(String.valueOf(i));
 		}
+
+		Collections.shuffle(completeSets);
 		return completeSets;
 	}
 
-	private List<String> createRandomizedStringSeq() {
-		ArrayList<String> numStrings = new ArrayList<>();
-		List<String> completeSets = getCompleteRandomizedSeq();
-
-		Collections.shuffle(completeSets);
-		LinkedList<String> stringLinkedList = new LinkedList<>(completeSets);
-		while(!stringLinkedList.isEmpty()) {
-			numStrings.add(stringLinkedList.pop());
-		}
-
-		return numStrings;
-	}
 }

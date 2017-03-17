@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="finotek.global.dev.talkbank_ca.UserRegistrationActivity">
+        tools:context="finotek.global.dev.talkbank_ca.user.UserRegistrationActivity">
 
+    <android.support.design.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:weightSum="1"
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="33dp">
 
@@ -16,7 +19,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:layout_weight="1"
             android:fitsSystemWindows="true"
 
             tools:layout_editor_absoluteX="8dp"
@@ -24,27 +26,47 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <android.support.v4.widget.NestedScrollView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-            <LinearLayout
+            <android.support.v4.widget.NestedScrollView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include
+                        android:id="@+id/ll_regi_basic"
+                        layout="@layout/activity_user_regi_basic"/>
+
+                    <include
+                        android:id="@+id/ll_regi_additional"
+                        layout="@layout/activity_user_regi_additional"/>
+
+                </LinearLayout>
+            </android.support.v4.widget.NestedScrollView>
+
+            <Button
+                android:id="@+id/btn_registration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_weight="0.1"
+                android:background="@color/colorPrimary"
+                android:text="@string/string_user_regi"
+                android:textColor="@android:color/white"/>
 
-                <include
-                    android:id="@+id/ll_regi_basic"
-                    layout="@layout/activity_user_regi_basic"/>
-
-                <include
-                    android:id="@+id/ll_regi_additional"
-                    layout="@layout/activity_user_regi_additional"/>
-            </LinearLayout>
-        </android.support.v4.widget.NestedScrollView>
+        </LinearLayout>
 
 
     </LinearLayout>
+    </android.support.design.widget.CoordinatorLayout>
 
 
 </layout>

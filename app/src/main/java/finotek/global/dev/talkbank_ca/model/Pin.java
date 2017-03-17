@@ -12,10 +12,10 @@ public class Pin {
 		ORANGE (R.color.pin_orange),
 		YELLOW (R.color.pin_yellow),
 		LIGHT_GREEN (R.color.pin_light_green),
-		GREEN (R.color.pin_green),
-		LIGHT_BLUE (R.color.pin_light_blue),
-		BLUE (R.color.pin_blue),
-		PURPLE (R.color.pin_purple),
+//		GREEN (R.color.pin_green),
+//		LIGHT_BLUE (R.color.pin_light_blue),
+//		BLUE (R.color.pin_blue),
+//		PURPLE (R.color.pin_purple),
 		WHITE (R.color.pin_white),
 		BLACK (R.color.pin_black);
 

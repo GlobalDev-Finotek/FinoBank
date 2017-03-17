@@ -1,10 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    >
 
-</android.support.constraint.ConstraintLayout>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btn_recapture"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorAccent"
+                android:text="@string/re_capture"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btn_take_pic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:elevation="0dp"
+                android:text="@string/take_pic"
+                android:textColor="@android:color/white"
+                android:textStyle="bold"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/fl_cam"
+                android:layout_width="match_parent"
+                android:layout_height="400dp">
+
+            </FrameLayout>
+
+            <include
+                android:id="@+id/inc_widget"
+                layout="@layout/widget_credit_info"
+                android:layout_width="match_parent"
+                android:visibility="gone"></include>
+
+            <TextView
+                android:id="@+id/tv_instruction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+    </FrameLayout>
+</layout>

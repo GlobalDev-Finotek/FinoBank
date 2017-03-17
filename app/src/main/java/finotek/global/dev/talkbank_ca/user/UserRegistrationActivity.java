@@ -10,9 +10,8 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityUserRegistrationBinding;
-import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
-import rx.functions.Action1;
+import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
@@ -27,7 +26,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
     binding.toolbar.setTitle(R.string.string_user_regi);
 	  binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
 	  binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
-    setSupportActionBar(binding.toolbar);
+	  setSupportActionBar(binding.toolbar);
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
@@ -44,6 +43,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 
 	  RxView.clicks(binding.btnRegistration)
 			  .subscribe(aVoid -> {
+				  // TODO 톡 화면으로 이동
 				  // startActivity(new Intent(UserRegistrationActivity.this, ));
 			  });
   }

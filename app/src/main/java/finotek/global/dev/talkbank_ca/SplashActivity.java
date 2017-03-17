@@ -17,6 +17,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.databinding.ActivitySplashBinding;
+import finotek.global.dev.talkbank_ca.user.UserRegistrationActivity;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.

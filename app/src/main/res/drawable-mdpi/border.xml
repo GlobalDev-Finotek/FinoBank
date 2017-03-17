@@ -6,7 +6,6 @@
                 android:width="1dp"
                 android:color="#FFBBBBBB" />
             <solid android:color="#FFFFFFFF" />
-            <corners android:radius="3dp" />  
         </shape>
     </item>
 </layer-list>

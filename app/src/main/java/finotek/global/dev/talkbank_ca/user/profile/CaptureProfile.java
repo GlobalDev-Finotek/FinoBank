@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.profile;
+package finotek.global.dev.talkbank_ca.user.profile;
 
 import android.Manifest;
 import android.app.Activity;
@@ -145,6 +145,8 @@ public class CaptureProfile extends BasePresenter<CaptureProfileView> implements
       cameraOpenCloseLock.release();
     }
   };
+  private int previewWidth = 0;
+  private int previewHeight = 0;
 
   CaptureProfile(@NonNull Activity context) {
     this.context = context;
@@ -154,6 +156,38 @@ public class CaptureProfile extends BasePresenter<CaptureProfileView> implements
     DisplayMetrics metrics = new DisplayMetrics();
     wm.getDefaultDisplay().getRealMetrics(metrics);
     aspectRatio = ((float) metrics.heightPixels / (float) metrics.widthPixels);
+  }
+
+  private static int sensorToDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
+    int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
+    deviceOrientation = ORIENTATIONS.get(deviceOrientation);
+    return (sensorOrientation + deviceOrientation + 360) % 360;
+  }
+
+  /**
+   * Given {@code choices} of {@code Size}s supported by a camera, chooses the smallest one whose
+   * width and height are at least as large as the respective requested values, and whose aspect
+   * ratio matches with the specified value.
+   *
+   * @param choices     The list of sizes that the camera supports for the intended output class
+   * @param width       The minimum desired width
+   * @param height      The minimum desired height
+   * @param aspectRatio The aspect ratio
+   * @return The optimal {@code Size}, or an arbitrary one if none were big enough
+   */
+  private static Size chooseOptimalSize2(Size[] choices, int width, int height) {
+    List<Size> bigEnough = new ArrayList<>();
+    for (Size option : choices) {
+      if (option.getHeight() == option.getWidth() * height / width &&
+          option.getWidth() >= width && option.getHeight() >= height) {
+        bigEnough.add(option);
+      }
+    }
+    if (bigEnough.size() > 0) {
+      return Collections.min(bigEnough, new CompareSizeByArea());
+    } else {
+      return choices[0];
+    }
   }
 
   void releaseMediaRecorder() {
@@ -233,9 +267,6 @@ public class CaptureProfile extends BasePresenter<CaptureProfileView> implements
 
   }
 
-  private int previewWidth = 0;
-  private int previewHeight = 0;
-
   @Override
   public void onSurfaceTextureAvailable(SurfaceTexture surfaceTexture, int width, int height) {
 
@@ -277,47 +308,6 @@ public class CaptureProfile extends BasePresenter<CaptureProfileView> implements
       }
     }
     return true;
-  }
-
-  private static int sensorToDeviceRotation(CameraCharacteristics cameraCharacteristics, int deviceOrientation) {
-    int sensorOrientation = cameraCharacteristics.get(CameraCharacteristics.SENSOR_ORIENTATION);
-    deviceOrientation = ORIENTATIONS.get(deviceOrientation);
-    return (sensorOrientation + deviceOrientation + 360) % 360;
-  }
-
-  /**
-   * Given {@code choices} of {@code Size}s supported by a camera, chooses the smallest one whose
-   * width and height are at least as large as the respective requested values, and whose aspect
-   * ratio matches with the specified value.
-   *
-   * @param choices     The list of sizes that the camera supports for the intended output class
-   * @param width       The minimum desired width
-   * @param height      The minimum desired height
-   * @param aspectRatio The aspect ratio
-   * @return The optimal {@code Size}, or an arbitrary one if none were big enough
-   */
-  private static Size chooseOptimalSize2(Size[] choices, int width, int height) {
-    List<Size> bigEnough = new ArrayList<>();
-    for (Size option : choices) {
-      if (option.getHeight() == option.getWidth() * height / width &&
-          option.getWidth() >= width && option.getHeight() >= height) {
-        bigEnough.add(option);
-      }
-    }
-    if (bigEnough.size() > 0) {
-      return Collections.min(bigEnough, new CompareSizeByArea());
-    } else {
-      return choices[0];
-    }
-  }
-
-  private static class CompareSizeByArea implements Comparator<Size> {
-
-    @Override
-    public int compare(Size lhs, Size rhs) {
-      return Long.signum((long) (lhs.getWidth() * lhs.getHeight()) -
-          (long) (rhs.getWidth() * rhs.getHeight()));
-    }
   }
 
   private void configureTransform(int viewWidth, int viewHeight) {
@@ -558,5 +548,14 @@ public class CaptureProfile extends BasePresenter<CaptureProfileView> implements
   private String getVideoFilePath(Context context) {
     return context.getExternalFilesDir(null).getAbsolutePath() + "/"
         + System.currentTimeMillis() + ".mp4";
+  }
+
+  private static class CompareSizeByArea implements Comparator<Size> {
+
+    @Override
+    public int compare(Size lhs, Size rhs) {
+      return Long.signum((long) (lhs.getWidth() * lhs.getHeight()) -
+          (long) (rhs.getWidth() * rhs.getHeight()));
+    }
   }
 }

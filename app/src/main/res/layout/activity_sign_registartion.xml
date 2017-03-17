@@ -1,53 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+    >
     <RelativeLayout android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent" >
-            <ImageView
-                android:id="@+id/bg_image"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:scaleType="fitXY"
-                android:src="@drawable/sign_regi_bg"
-            />
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/panelBack"
-            android:layout_alignParentTop="true"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="visible" />
-
-        <ImageView
-            android:id="@+id/signPanel"
-            android:layout_alignParentTop="true"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:visibility="visible" />
 
         <LinearLayout
-            android:id="@+id/buttons_line"
             android:layout_width="fill_parent"
-            android:layout_height="80dp"
-            android:orientation="horizontal"
-            android:layout_alignParentBottom="true">
+            android:layout_height="fill_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.675">
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:text="TextView"/>
+
             <Button
-                android:id="@+id/login_btn"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:id="@+id/btn_registration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_margin="0dp"
-                android:layout_weight="1"
-                android:background="@color/colorPrimaryDark"
+                android:layout_weight="0.025"
+                android:background="@color/colorPrimary"
                 android:padding="0dp"
                 android:text="@string/string_login"
-                android:textColor="@drawable/tb_white_gray_btn_txt"
-            />
+                android:textColor="@drawable/tb_white_gray_btn_txt"/>
+
         </LinearLayout>
+
     </RelativeLayout>
 </layout>
 

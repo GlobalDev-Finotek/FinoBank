@@ -6,6 +6,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ChatItemSend extends ChatItem {
-    private String message;
+public class ChatMessage extends ChatItem {
+    String message;
 }

@@ -8,9 +8,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.model.ChatItemReceive;
+import finotek.global.dev.talkbank_ca.model.ChatMessage;
 
-public class ReceiveViewBuilder implements ChatView.ViewBuilder<ChatItemReceive> {
+public class ReceiveViewBuilder implements ChatView.ViewBuilder<ChatMessage> {
     private class ReceiveViewHolder extends RecyclerView.ViewHolder {
         TextView message;
 
@@ -27,7 +27,7 @@ public class ReceiveViewBuilder implements ChatView.ViewBuilder<ChatItemReceive>
     }
 
     @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, ChatItemReceive data) {
+    public void bind(RecyclerView.ViewHolder viewHolder, ChatMessage data) {
         ReceiveViewHolder holder = (ReceiveViewHolder) viewHolder;
         holder.message.setText(data.getMessage());
     }

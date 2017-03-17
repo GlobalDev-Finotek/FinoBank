@@ -10,11 +10,11 @@ import android.widget.TextView;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.model.ChatMessage;
 
-public class SendViewBuilder implements ChatView.ViewBuilder<ChatMessage> {
-    private class SendViewHolder extends RecyclerView.ViewHolder {
+public class StatusViewBuilder implements ChatView.ViewBuilder<ChatMessage> {
+    private class StatusViewHolder extends RecyclerView.ViewHolder {
         TextView message;
 
-        SendViewHolder(View itemView) {
+        StatusViewHolder(View itemView) {
             super(itemView);
             this.message = (TextView) itemView.findViewById(R.id.message);
         }
@@ -22,13 +22,13 @@ public class SendViewBuilder implements ChatView.ViewBuilder<ChatMessage> {
 
     @Override
     public RecyclerView.ViewHolder build(ViewGroup parent) {
-        RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_send, parent, false);
-        return new SendViewHolder(view);
+        RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_status, parent, false);
+        return new StatusViewBuilder.StatusViewHolder(view);
     }
 
     @Override
     public void bind(RecyclerView.ViewHolder viewHolder, ChatMessage data) {
-        SendViewHolder holder = (SendViewHolder) viewHolder;
+        StatusViewBuilder.StatusViewHolder holder = (StatusViewBuilder.StatusViewHolder) viewHolder;
         holder.message.setText(data.getMessage());
     }
 }

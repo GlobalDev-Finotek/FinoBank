@@ -22,4 +22,5 @@
     <color name="color_send_disabled">#CFCFCF</color>
     <color name="color_send_enabled">@color/colorPrimary</color>
     <color name="color_chat_message_received">#F5F4F5</color>
+    <color name="color_chat_status_message">#00B0E2</color>
 </resources>

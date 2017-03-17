@@ -33,8 +33,8 @@ public class ChatActivity extends AppCompatActivity {
         binding.chatView.addChatViewBuilder(ViewType.Receive.ordinal(), new ReceiveViewBuilder());
 
         // add default items
-        binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatItemReceive("System", "Hi."));
-        binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatItemReceive("System", "David"));
-        binding.chatView.addMessage(ViewType.Send.ordinal(), new ChatItemSend("Me", "Good"));
+        binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatItemReceive("Hi."));
+        binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatItemReceive("David"));
+        binding.chatView.addMessage(ViewType.Send.ordinal(), new ChatItemSend("Good"));
     }
 }

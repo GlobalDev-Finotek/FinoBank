@@ -12,12 +12,10 @@ import finotek.global.dev.talkbank_ca.model.ChatItemSend;
 
 public class SendViewBuilder implements ChatView.ViewBuilder<ChatItemSend> {
     private class SendViewHolder extends RecyclerView.ViewHolder {
-        TextView name;
         TextView message;
 
         SendViewHolder(View itemView) {
             super(itemView);
-            this.name = (TextView) itemView.findViewById(R.id.name);
             this.message = (TextView) itemView.findViewById(R.id.message);
         }
     }
@@ -31,7 +29,6 @@ public class SendViewBuilder implements ChatView.ViewBuilder<ChatItemSend> {
     @Override
     public void bind(RecyclerView.ViewHolder viewHolder, ChatItemSend data) {
         SendViewHolder holder = (SendViewHolder) viewHolder;
-        holder.name.setText(data.getName());
         holder.message.setText(data.getMessage());
     }
 }

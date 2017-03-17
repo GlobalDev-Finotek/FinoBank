@@ -7,6 +7,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ChatItemReceive extends ChatItem {
-    private String name;
     private String message;
 }

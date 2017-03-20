@@ -39,7 +39,6 @@
                 layout="@layout/chat_footer_input" />
             <include
                 android:id="@+id/extended_control"
-                android:visibility="gone"
                 layout="@layout/chat_extended_control" />
         </LinearLayout>
     </RelativeLayout>

@@ -50,4 +50,66 @@
     <style name="CustomActionBarTitleText" parent="android:style/TextAppearance.Holo.Widget.ActionBar.Title">
         <item name="android:textColor">@color/colorAccent</item>
     </style>
+
+    <style name="Header">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/dark_100</item>
+    </style>
+
+    <style name="Stit">
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/dark_70</item>
+        <item name="android:letterSpacing">-0.03</item>
+    </style>
+
+    <style name="BtnWhiteTxt15">
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="BtnWhiteTxt14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="BtnBlueTxt14">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dodger_blue</item>
+        <item name="android:gravity">center_horizontal</item>
+    </style>
+
+    <style name="TextLabelLarge">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dark_70</item>
+    </style>
+
+    <style name="TextStyle3">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dark_50</item>
+    </style>
+
+    <style name="TextChat">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dark_100</item>
+        <item name="android:lineSpacingExtra">6sp</item>
+    </style>
+
+    <style name="TxtMircro">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/dark_70</item>
+    </style>
+
+    <style name="TextStyle">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>

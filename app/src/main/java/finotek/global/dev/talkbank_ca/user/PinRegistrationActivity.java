@@ -83,7 +83,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		binding.gvKeypad.setOnItemClickListener((parent, view, position, id) -> {
 			String key = (String) secureKeyboardAdapter.getItem(position);
 
-			if (ptrTvPwd < tvPwd.length && !TextUtils.isEmpty(key.trim())) {
+			if (ptrTvPwd < PINCODE_LENGTH && !TextUtils.isEmpty(key.trim())) {
 				tvPwd[ptrTvPwd++].setText("*");
 			}
 

@@ -26,5 +26,15 @@
     <color name="pin_purple">#6f359e</color>
     <color name="pin_white">#ffffff</color>
     <color name="pin_black">#000000</color>
-    <color name="black">#000000</color>
+
+    <color name="dodger_blue">#4083ff</color>
+    <color name="coral_pink">#ff585b</color>
+    <color name="dark_70">#b21f2f42</color>
+    <color name="grey">#e0e0e0</color>
+    <color name="dark_50">#7f1f2f42</color>
+    <color name="white">#ffffff</color>
+    <color name="dark_100">#1f2f42</color>
+    <color name="aqua_blue">#00b9e6</color>
+    <color name="dark_30">#4c1f2f42</color>
+    <color name="black">#313131</color>
 </resources>

@@ -21,6 +21,10 @@
     <string name="string_talk_bank">톡뱅크</string>
     <string name="string_send">전송</string>
 
+    <string name="string_register_account">계좌 개설</string>
+    <string name="string_transfer_money">계좌 이체</string>
+    <string name="string_check_account">계좌 조회</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="button_save">저장</string>
     <string name="button_not_save">not save</string>

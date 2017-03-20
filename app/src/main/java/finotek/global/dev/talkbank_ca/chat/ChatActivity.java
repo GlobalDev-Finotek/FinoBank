@@ -37,6 +37,5 @@ public class ChatActivity extends AppCompatActivity {
         // add default items
         binding.chatView.addMessage(ViewType.Status.ordinal(), new ChatMessage("맥락 데이터 분석 결과 87% 확률로 인증되었습니다."));
         binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
-
     }
 }

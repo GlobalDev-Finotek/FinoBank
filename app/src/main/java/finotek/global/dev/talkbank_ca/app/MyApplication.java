@@ -3,9 +3,12 @@ package finotek.global.dev.talkbank_ca.app;
 import android.app.Application;
 import android.content.Context;
 
+import javax.inject.Inject;
+
 import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
+import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 
 
 /**
@@ -14,11 +17,10 @@ import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 
 public class MyApplication extends Application {
 
-  AppComponent appComponent;
+  @Inject
+  SharedPrefsHelper sharedPrefsHelper;
 
-  public static MyApplication getAppInstance(Context context) {
-    return (MyApplication) context.getApplicationContext();
-  }
+  AppComponent appComponent;
 
   @Override
   public void onCreate() {

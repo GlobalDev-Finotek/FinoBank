@@ -26,43 +26,12 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/fl_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:weightSum="1">
+            android:layout_height="match_parent">
 
-            <android.support.v4.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="0.9">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <include
-                        android:id="@+id/ll_regi_basic"
-                        layout="@layout/activity_user_regi_basic"/>
-
-                    <include
-                        android:id="@+id/ll_regi_additional"
-                        layout="@layout/activity_user_regi_additional"/>
-
-                </LinearLayout>
-            </android.support.v4.widget.NestedScrollView>
-
-            <Button
-                android:id="@+id/btn_registration"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.1"
-                android:background="@color/colorPrimary"
-                android:text="@string/string_user_regi"
-                android:textColor="@android:color/white"/>
-
-        </LinearLayout>
+        </FrameLayout>
 
 
     </LinearLayout>

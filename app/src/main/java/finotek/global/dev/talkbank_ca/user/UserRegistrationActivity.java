@@ -1,8 +1,10 @@
 package finotek.global.dev.talkbank_ca.user;
 
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
@@ -31,20 +33,12 @@ public class UserRegistrationActivity extends AppCompatActivity {
     getSupportActionBar().setDisplayShowHomeEnabled(true);
     binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
-    RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
-		    .subscribe(aVoid ->
-				    startActivity(new Intent(UserRegistrationActivity.this, CaptureProfilePicActivity.class)));
+	  UserInfoFragment userInfoFragment = new UserInfoFragment();
 
-	  RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
-			  .subscribe(aVoid -> startActivity(new Intent(UserRegistrationActivity.this, CreditRegistrationActivity.class)));
+	  FragmentTransaction transaction = getFragmentManager().beginTransaction();
+	  transaction.add(R.id.fl_content, userInfoFragment);
+	  transaction.commit();
 
-	  RxView.clicks(binding.llRegiBasic.btnRegiSign)
-			  .subscribe(aVoid -> startActivity(new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class)));
 
-	  RxView.clicks(binding.btnRegistration)
-			  .subscribe(aVoid -> {
-				  // TODO 톡 화면으로 이동
-				  // startActivity(new Intent(UserRegistrationActivity.this, ));
-			  });
   }
 }

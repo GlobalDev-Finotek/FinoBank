@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -32,6 +34,7 @@ public class ChatActivity extends AppCompatActivity {
     private boolean isSendEnabled = false;
     private boolean isExControlAvailable = false;
     private View exControlView = null;
+    private Handler handler;
 
     private ActivityChatBinding binding;
     private enum ViewType {
@@ -42,6 +45,19 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        handler = new Handler(getMainLooper()) {
+            @Override
+            public void handleMessage(Message msg) {
+                if(msg.getData().getBoolean("isExControlEvent")) {
+                    if(isExControlAvailable)
+                        hideExControl();
+                    else
+                        showExControl();
+                } else {
+                    hideExControl();
+                }
+            }
+        };
 
         ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
         exControlView = ExtendedControlBuilder.build(this, parent);
@@ -60,18 +76,26 @@ public class ChatActivity extends AppCompatActivity {
         binding.chatView.addMessage(ViewType.Receive.ordinal(), new ChatMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
 
         RxView.focusChanges(binding.footerInputs.chatEditText)
+                .delay(100, TimeUnit.MILLISECONDS)
                 .subscribe(hasFocus -> {
-                    if(hasFocus)
-                        hideExControl();
+                    if(hasFocus) {
+                        Message msg = new Message();
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isExControlEvent", false);
+                        msg.setData(bundle);
+                        handler.sendMessage(msg);
+                    }
                 });
 
         RxView.clicks(binding.footerInputs.showExControl)
             .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .delay(100, TimeUnit.MILLISECONDS)
             .subscribe(aVoid -> {
-                if(isExControlAvailable)
-                    hideExControl();
-                else
-                    showExControl();
+                Message msg = new Message();
+                Bundle bundle = new Bundle();
+                bundle.putBoolean("isExControlEvent", true);
+                msg.setData(bundle);
+                handler.sendMessage(msg);
             });
     }
 

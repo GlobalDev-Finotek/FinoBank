@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3EC0E0</color>
-    <color name="colorPrimaryDark">#30317b</color>
+    <color name="colorPrimary">#4083ff</color>
+    <color name="colorPrimaryDark">#1B356A</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="color_white">#fff</color>
 
     <color name="color_foreground">#FFFFFF</color>
 
@@ -37,4 +38,14 @@
     <color name="aqua_blue">#00b9e6</color>
     <color name="dark_30">#4c1f2f42</color>
     <color name="black">#313131</color>
+
+    <color name="color_text_default">#1f2f42</color>
+    <color name="color_chat_background">@color/color_white</color>
+    <color name="color_chat_footer">#F5F4F5</color>
+    <color name="color_send_disabled">#CFCFCF</color>
+    <color name="color_send_enabled">@color/colorPrimary</color>
+    <color name="color_chat_message_received">#F5F4F5</color>
+    <color name="color_chat_status_message">#00B0E2</color>
+
+    <color name="color_extended_control_bg">#e0e0e0</color>
 </resources>

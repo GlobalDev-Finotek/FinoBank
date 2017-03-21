@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:background="@color/color_chat_background">
+        <RelativeLayout
+            android:id="@+id/app_title"
+            android:background="@color/colorPrimary"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="56dp">
+            <TextView
+                android:id="@+id/title"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/string_talk_bank"
+                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                android:textColor="@color/color_foreground" />
+        </RelativeLayout>
+        <finotek.global.dev.talkbank_ca.chat.view.ChatView
+            android:id="@+id/chat_view"
+            android:layout_below="@id/app_title"
+            android:layout_above="@+id/footer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </finotek.global.dev.talkbank_ca.chat.view.ChatView>
+
+        <LinearLayout
+            android:id="@+id/footer"
+            android:orientation="vertical"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <include
+                android:id="@+id/footer_inputs"
+                layout="@layout/chat_footer_input" />
+            <include
+                android:id="@+id/extended_control"
+                layout="@layout/chat_extended_control" />
+        </LinearLayout>
+    </RelativeLayout>
+</layout>
+

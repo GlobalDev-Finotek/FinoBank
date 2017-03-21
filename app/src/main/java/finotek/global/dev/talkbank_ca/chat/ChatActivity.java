@@ -45,19 +45,7 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-        handler = new Handler(getMainLooper()) {
-            @Override
-            public void handleMessage(Message msg) {
-                if(msg.getData().getBoolean("isExControlEvent")) {
-                    if(isExControlAvailable)
-                        hideExControl();
-                    else
-                        showExControl();
-                } else {
-                    hideExControl();
-                }
-            }
-        };
+        handler = new Handler(getMainLooper());
 
         ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
         exControlView = ExtendedControlBuilder.build(this, parent);
@@ -78,24 +66,18 @@ public class ChatActivity extends AppCompatActivity {
         RxView.focusChanges(binding.footerInputs.chatEditText)
                 .delay(100, TimeUnit.MILLISECONDS)
                 .subscribe(hasFocus -> {
-                    if(hasFocus) {
-                        Message msg = new Message();
-                        Bundle bundle = new Bundle();
-                        bundle.putBoolean("isExControlEvent", false);
-                        msg.setData(bundle);
-                        handler.sendMessage(msg);
-                    }
+                    if(hasFocus)
+                        handler.post(this::hideExControl);
                 });
 
         RxView.clicks(binding.footerInputs.showExControl)
             .throttleFirst(200, TimeUnit.MILLISECONDS)
             .delay(100, TimeUnit.MILLISECONDS)
             .subscribe(aVoid -> {
-                Message msg = new Message();
-                Bundle bundle = new Bundle();
-                bundle.putBoolean("isExControlEvent", true);
-                msg.setData(bundle);
-                handler.sendMessage(msg);
+                if(isExControlAvailable)
+                    handler.post(this::hideExControl);
+                else
+                    handler.post(this::showExControl);
             });
     }
 

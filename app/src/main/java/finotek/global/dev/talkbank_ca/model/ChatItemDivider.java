@@ -4,8 +4,10 @@ import java.util.Date;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatItem;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper = false)
 public class ChatItemDivider extends ChatItem {
     Date date;
 }

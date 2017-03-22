@@ -9,7 +9,6 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
-import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 
 /**
  * Created by kwm on 2017. 3. 6..
@@ -17,7 +16,7 @@ import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 @Module
 public class AppModule {
 
-  private final MyApplication application;
+	private MyApplication application;
 
   public AppModule(@NonNull MyApplication application) {
     this.application = application;

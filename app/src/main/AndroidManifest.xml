@@ -27,10 +27,11 @@
         <activity android:name=".user.profile.CaptureProfilePicActivity">
         </activity>
         <activity android:name=".user.PinRegistrationActivity">
-               </activity>
+        </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity">
         </activity>
         <activity android:name=".setting.SettingsActivity">
+
         </activity>
         <activity android:name=".MainActivity" />
         <activity android:name=".chat.ChatActivity" />

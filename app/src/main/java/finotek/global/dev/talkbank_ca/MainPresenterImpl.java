@@ -17,13 +17,12 @@ import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 public class MainPresenterImpl extends BasePresenter<MainView> implements MainPresenter {
 
 	@Inject
-	Activity activity;
-
-	@Inject
 	SharedPrefsHelper sharedPrefsHelper;
+	private Activity activity;
 
 	@Inject
-	MainPresenterImpl() {
+	MainPresenterImpl(Activity activity) {
+		this.activity = activity;
 	}
 
 	@Override

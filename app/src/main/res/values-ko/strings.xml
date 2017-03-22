@@ -64,33 +64,4 @@
     <string name="capture_profile">사진 촬영</string>
     <string name="request_permission"/>
     <string name="take_pic">촬영</string>
-
-    <!--
-    <string name="app_name">Talk Bank</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_search">Search</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="button_save">Save</string>
-    <string name="button_not_save">not save</string>
-
-    <string name="button_sign">Sign</string>
-    <string name="button_cancel">Cancel</string>
-    <string name="title_notice">Notice</string>
-    <string name="title_check">Checking the E-signature authenticity</string>
-    <string name="title_check2">we are verifying the authenticity through\n the comparison of registered E-signature.</string>
-    <string name="title_wait">Please wait a second.</string>
-    <string name="title_complete_fail1">The E-signature authenticity checking</string>
-    <string name="title_complete_fail2">has been failed.</string>
-    <string name="title_complete_success1">The E-signature authenticity checking</string>
-    <string name="title_complete_success2">has been completed.</string>
-    <string name="title_emergence_success1">시스템상의 문제로 서명진위확인이 불가능합니다.</string>
-    <string name="title_emergence_success2">10분 후 재서명이 가능합니다.</string>
-    <string name="button_confirm">Confirm</string>
-    <string name="title_pin_number">Password</string>
-    <string name="button_password">Password</string>
-    <string name="init_signcount">Retry the signature</string>
-    <string name="sign_re_registration">Re-register the signature</string>
-    <string name="docu_sign">Electronic Signature</string>
-    <string name="digit4_notice"> </string>
--->
 </resources>

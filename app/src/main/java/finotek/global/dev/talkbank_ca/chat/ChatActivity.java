@@ -78,14 +78,22 @@ public class ChatActivity extends AppCompatActivity {
             });
     }
 
+    /**
+    * 키보드 이외에 화면을 터치한 경우 자동으로 키보드를 dismiss 하기 위한 소스
+    * */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if(ev.getAction() == MotionEvent.ACTION_DOWN) {
             View v = getCurrentFocus();
             if(v instanceof EditText) {
-                Rect outRect = new Rect();
-                v.getGlobalVisibleRect(outRect);
-                if(!outRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                Rect editTextRect = new Rect();
+                v.getGlobalVisibleRect(editTextRect);
+
+                Rect sendButtonRect = new Rect();
+                binding.footerInputs.sendButton.getGlobalVisibleRect(sendButtonRect);
+
+                if(!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
+                        && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
                     v.clearFocus();
                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
                     inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);

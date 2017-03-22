@@ -11,23 +11,29 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="20dp">
 
             <Button
                 android:id="@+id/btn_recapture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorAccent"
+                android:background="@drawable/ex_control_btn_pressed"
                 android:text="@string/re_capture"
+                android:textColor="@color/colorPrimary"
                 android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_take_pic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:layout_weight="1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/btn_round_primary"
                 android:elevation="0dp"
                 android:text="@string/take_pic"
                 android:textColor="@android:color/white"
@@ -42,14 +48,15 @@
             <FrameLayout
                 android:id="@+id/fl_cam"
                 android:layout_width="match_parent"
-                android:layout_height="400dp">
+                android:layout_height="350dp">
 
             </FrameLayout>
 
-            <TextView
-                android:id="@+id/tv_instruction"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+            <include
+                android:id="@+id/inc_widget"
+                layout="@layout/widget_credit_info"
+                android:visibility="gone"></include>
+
         </LinearLayout>
     </FrameLayout>
 </layout>

@@ -8,12 +8,23 @@
             type="java.lang.String"/>
     </data>
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/ll_wrapper"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@drawable/border"
         android:gravity="center"
         android:orientation="vertical">
+
+        <ImageButton
+            android:id="@+id/ib_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@android:color/transparent"
+            android:gravity="center"
+            android:src="@drawable/ic_backspace_black_24dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_key"
@@ -25,7 +36,8 @@
             android:text="@{key.toString()}"
             android:textColor="@color/black"
             android:textSize="30dp"
-            android:textStyle="bold"/>
-    </LinearLayout>
+            android:textStyle="bold"
+            android:visibility="visible"/>
+    </FrameLayout>
 
 </layout>

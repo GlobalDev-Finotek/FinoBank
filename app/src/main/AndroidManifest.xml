@@ -28,10 +28,6 @@
         </activity>
         <activity android:name=".user.PinRegistrationActivity">
         </activity>
-        <activity android:name=".user.UserRegistrationActivity" />
-        <activity android:name=".user.SignRegistrationActivity" />
-        <activity android:name=".user.profile.CaptureProfilePicActivity" />
-        <activity android:name=".user.PinRegistrationActivity" />
         <activity android:name=".user.credit.CreditRegistrationActivity" />
         <activity android:name=".setting.SettingsActivity" />
         <activity android:name=".MainActivity" />

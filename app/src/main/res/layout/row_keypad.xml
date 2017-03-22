@@ -16,7 +16,7 @@
             android:id="@+id/tv_key"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/border"
+            android:background="@android:color/white"
             android:gravity="center"
             android:padding="20dp"
             android:text="@{key}"

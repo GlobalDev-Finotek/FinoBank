@@ -34,5 +34,15 @@ public class ChatView extends RecyclerView {
 
     public void addMessage(int viewType, ChatItem item) {
         adapter.addChatItem(new ChatItemWithType(viewType, item));
+        scrollToBottom();
+    }
+
+    public void removeMessage(int pos) {
+        adapter.removeItem(pos);
+        scrollToBottom();
+    }
+
+    public void scrollToBottom() {
+        getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
     }
 }

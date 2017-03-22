@@ -11,22 +11,22 @@ public class Pin {
 		RED (R.color.pin_red),
 		ORANGE (R.color.pin_orange),
 		YELLOW (R.color.pin_yellow),
-		LIGHT_GREEN (R.color.pin_light_green),
-//		GREEN (R.color.pin_green),
-//		LIGHT_BLUE (R.color.pin_light_blue),
-//		BLUE (R.color.pin_blue),
-//		PURPLE (R.color.pin_purple),
+		// LIGHT_GREEN (R.color.pin_light_green),
+		GREEN(R.color.pin_green),
+		// LIGHT_BLUE (R.color.pin_light_blue),
+		BLUE(R.color.pin_blue),
+		PURPLE(R.color.pin_purple),
 		WHITE (R.color.pin_white),
 		BLACK (R.color.pin_black);
 
 		private int colorId;
 
-		public int getColor() {
-			return this.colorId;
+		Color(int value) {
+			this.colorId = value;
 		}
 
-		private Color(int value) {
-			this.colorId = value;
+		public int getColor() {
+			return this.colorId;
 		}
 	}
 }

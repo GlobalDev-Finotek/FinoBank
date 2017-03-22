@@ -1,56 +1,49 @@
 package finotek.global.dev.talkbank_ca.user;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.GridLayout;
-import android.widget.TableRow;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityPinRegistrationBinding;
 import finotek.global.dev.talkbank_ca.model.Pin;
+import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.widget.SecureKeyboardAdapter;
-import finotek.global.dev.talkbank_ca.widget.SecureKeyboardBottomSheetDialog;
 
 public class PinRegistrationActivity extends AppCompatActivity {
 
-	ActivityPinRegistrationBinding binding;
 	private final int PINCODE_LENGTH = 6;
+	ActivityPinRegistrationBinding binding;
 	private TextView[] tvPwd = new TextView[PINCODE_LENGTH];
+
+
 	private int ptrTvPwd;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_pin_registration);
+		setSupportActionBar(binding.toolbar);
+		getSupportActionBar().setTitle("PIN 코드");
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-		for(Pin.Color c : Pin.Color.values()) {
-			TextView iv = (TextView) crateColoredView(c);
-			binding.glPinBackground.addView(iv);
-			iv.setOnClickListener(v -> binding.glPinCode.setBackgroundColor(iv.getCurrentTextColor()));
-
-			TextView iv2 = (TextView) crateColoredView(c);
-			binding.glPinTextColor.addView(iv2);
-
-			iv2.setOnClickListener(v -> {
-				for(TextView tv : tvPwd) {
-					tv.setTextColor(iv2.getCurrentTextColor());
-				}
-			});
+		for (Pin.Color c : Pin.Color.values()) {
+			setPinBackgroundCircle(c);
+			setTextColorCircle(c);
 		}
 
 		binding.glPinCode.setUseDefaultMargins(false);
@@ -58,8 +51,9 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		binding.glPinCode.setRowOrderPreserved(false);
 
 		for (int i = 0; i < PINCODE_LENGTH; ++i) {
+
 			TextView tv = new TextView(this);
-			tv.setPadding(50, 20, 50, 20);
+			tv.setPadding(60, 20, 60, 20);
 			tv.setTextSize(40f);
 			tv.setText(" ");
 			tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_black_blank));
@@ -88,15 +82,41 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			}
 
 			if (position == secureKeyboardAdapter.getCount() - 1) {
-				if (ptrTvPwd > 0) {
-					tvPwd[--ptrTvPwd].setText(" ");
-				}
+				startActivity(new Intent(PinRegistrationActivity.this, SettingsActivity.class));
 			}
 
 		});
 
-		binding.btnRegistration.setOnClickListener(v -> finish());
+		secureKeyboardAdapter.setOnBackPressListener(() -> {
+			if (ptrTvPwd > 0) {
+				tvPwd[--ptrTvPwd].setText(" ");
+			}
+		});
 
+
+	}
+
+	private void setTextColorCircle(Pin.Color c) {
+		ImageView iv2 = new ImageView(this);
+		iv2.setTag(ContextCompat.getColor(this, c.getColor()));
+		iv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle));
+		DrawableCompat.setTint(iv2.getDrawable(), ContextCompat.getColor(this, c.getColor()));
+		binding.glPinTextColor.addView(iv2);
+
+		iv2.setOnClickListener(v -> {
+			for (TextView tv : tvPwd) {
+				tv.setTextColor((int) iv2.getTag());
+			}
+		});
+	}
+
+	private void setPinBackgroundCircle(Pin.Color c) {
+		ImageView iv = new ImageView(this);
+		iv.setTag(ContextCompat.getColor(this, c.getColor()));
+		iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle));
+		DrawableCompat.setTint(iv.getDrawable(), ContextCompat.getColor(this, c.getColor()));
+		binding.glPinBackground.addView(iv);
+		iv.setOnClickListener(v -> binding.glPinCode.setBackgroundColor((int) iv.getTag()));
 	}
 
 	private List<String> getCompleteRandomizedSeq() {
@@ -108,10 +128,8 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 		Collections.shuffle(completeSets);
 
-		completeSets.add(new Random().nextInt(completeSets.size() - 1), " ");
-		completeSets.add(new Random().nextInt(completeSets.size() - 1), " ");
-
-		completeSets.set(completeSets.size() - 1, "");
+		completeSets.add(7, " ");
+		completeSets.add(" ");
 
 		return completeSets;
 	}

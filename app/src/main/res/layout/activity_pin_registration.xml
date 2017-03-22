@@ -12,10 +12,27 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@android:color/white"
             android:orientation="vertical"
             tools:layout_editor_absoluteX="8dp"
             tools:layout_editor_absoluteY="33dp">
 
+            <android.support.design.widget.AppBarLayout
+                android:id="@+id/appbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_weight="1"
+                    android:background="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+            </android.support.design.widget.AppBarLayout>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -33,48 +50,67 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:horizontalSpacing="10dp"
-                    android:columnCount="6">
+                    android:columnCount="6"
+                    android:horizontalSpacing="40dp">
 
                 </GridLayout>
             </FrameLayout>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:padding="10dp"
-                android:text="@string/select_pin_code_background"/>
+                android:layout_margin="10dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/border_gray"
+                android:orientation="vertical"
+                android:paddingBottom="15dp"
+                android:paddingTop="15dp">
 
-            <GridLayout
-                android:id="@+id/gl_pin_background"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:columnCount="10"
-                android:padding="10dp"
-                android:rowCount="1"
-                android:useDefaultMargins="true">
+                <TextView
+                    android:id="@+id/textView14"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/select_pin_code_background"/>
 
-            </GridLayout>
+                <GridLayout
+                    android:id="@+id/gl_pin_text_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:columnCount="10"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="4dp"
+                    android:rowCount="1"
+                    android:useDefaultMargins="true">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/select_pin_code_text_color"/>
+                </GridLayout>
 
-            <GridLayout
-                android:id="@+id/gl_pin_text_color"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:columnCount="10"
-                android:padding="10dp"
-                android:rowCount="1"
-                android:useDefaultMargins="true">
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="@string/select_pin_code_text_color"/>
 
-            </GridLayout>
+                <GridLayout
+                    android:id="@+id/gl_pin_background"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:columnCount="10"
+                    android:paddingBottom="4dp"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:paddingTop="4dp"
+                    android:rowCount="1"
+                    android:useDefaultMargins="true">
+
+                </GridLayout>
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:id="@+id/ll_secure_keyboard"
@@ -84,29 +120,16 @@
                 android:visibility="invisible">
 
 
-                <LinearLayout
+                <GridView
+                    android:id="@+id/gv_keypad"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:orientation="vertical">
-
-                    <GridView
-                        android:id="@+id/gv_keypad"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:numColumns="4">
-                    </GridView>
-
-                    <Button
-                        android:id="@+id/btn_registration"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="@color/colorPrimaryDark"
-                        android:text="@string/string_sign_regi"/>
-                </LinearLayout>
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="1"
+                    android:background="@color/grey"
+                    android:numColumns="4">
+                </GridView>
 
             </RelativeLayout>
 

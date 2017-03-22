@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.inject.module;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 
 import javax.inject.Singleton;
@@ -15,7 +16,7 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 @Module
 public class AppModule {
 
-  private final MyApplication application;
+	private MyApplication application;
 
   public AppModule(@NonNull MyApplication application) {
     this.application = application;
@@ -33,11 +34,10 @@ public class AppModule {
     return this.application;
   }
 
-//  @Provides
-//  @Singleton
-//  SharedPreferences provideSharedPreferences() {
-//    return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
-//  }
+  @Provides
+  SharedPreferences provideSharedPreferences() {
+    return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+  }
 
 
 }

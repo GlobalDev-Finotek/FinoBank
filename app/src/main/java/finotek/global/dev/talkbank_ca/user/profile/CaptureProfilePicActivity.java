@@ -30,7 +30,6 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		ActivityCaptureProfilePicBinding binding = DataBindingUtil.setContentView(this,
 				R.layout.activity_capture_profile_pic);
-		binding.tvInstruction.setText("");
 
 		CapturePicFragment capturePicFragment = new CapturePicFragment();
 

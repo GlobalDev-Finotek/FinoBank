@@ -1,35 +1,31 @@
 package finotek.global.dev.talkbank_ca.user;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomSheetBehavior;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
 import android.widget.GridLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityPinRegistrationBinding;
 import finotek.global.dev.talkbank_ca.model.Pin;
+import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.widget.SecureKeyboardAdapter;
-import finotek.global.dev.talkbank_ca.widget.SecureKeyboardBottomSheetDialog;
 
 public class PinRegistrationActivity extends AppCompatActivity {
 
-	ActivityPinRegistrationBinding binding;
 	private final int PINCODE_LENGTH = 6;
+	ActivityPinRegistrationBinding binding;
 	private TextView[] tvPwd = new TextView[PINCODE_LENGTH];
 	private int ptrTvPwd;
 
@@ -87,15 +83,16 @@ public class PinRegistrationActivity extends AppCompatActivity {
 				tvPwd[ptrTvPwd++].setText("*");
 			}
 
-			if (position == secureKeyboardAdapter.getCount() - 1) {
+			if (position == 7) {
 				if (ptrTvPwd > 0) {
 					tvPwd[--ptrTvPwd].setText(" ");
 				}
+			} else if (position == secureKeyboardAdapter.getCount() - 1) {
+				startActivity(new Intent(PinRegistrationActivity.this, SettingsActivity.class));
 			}
 
 		});
 
-		binding.btnRegistration.setOnClickListener(v -> finish());
 
 	}
 
@@ -108,10 +105,8 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 		Collections.shuffle(completeSets);
 
-		completeSets.add(new Random().nextInt(completeSets.size() - 1), " ");
-		completeSets.add(new Random().nextInt(completeSets.size() - 1), " ");
-
-		completeSets.set(completeSets.size() - 1, "");
+		completeSets.add(7, " ");
+		completeSets.add(" ");
 
 		return completeSets;
 	}

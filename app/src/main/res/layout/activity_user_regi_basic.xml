@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="match_parent"
@@ -57,9 +57,9 @@
             android:id="@+id/btn_regi_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
+            android:background="@drawable/ex_control_btn_pressed"
             android:text="@string/string_comm_sign_input"
-            android:textColor="@android:color/white"/>
+            android:textColor="@color/colorPrimary"/>
 
         <LinearLayout
             android:layout_width="match_parent"

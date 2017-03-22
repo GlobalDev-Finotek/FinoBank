@@ -50,14 +50,16 @@ public class SecureKeyboardAdapter extends BaseAdapter {
 		RowKeypadBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),
 				R.layout.row_keypad, parent, false);
 
-		if (position == keySeq.size()- 1) {
-
-			binding.tvKey.setBackgroundResource(R.drawable.ic_backspace_black_24dp);
-
-		} else {
-			String key = (String) getItem(position);
-			binding.setKey(key);
+		if (position == keySeq.size() - 1) {
+			binding.llWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
+			binding.tvKey.setText("등록");
+			binding.tvKey.setTextColor(ContextCompat.getColor(context, R.color.white));
+		} else if (position == 7) {
+			binding.llWrapper.setBackgroundResource(R.drawable.ic_backspace_black_24dp);
 		}
+
+		String key = (String) getItem(position);
+		binding.setKey(key);
 
 
 		return binding.getRoot();

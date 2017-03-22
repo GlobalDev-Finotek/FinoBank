@@ -3,12 +3,11 @@ package finotek.global.dev.talkbank_ca.app;
 import android.app.Application;
 import android.content.Context;
 
-import javax.inject.Inject;
-
 import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
+import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
+import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
-import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 
 
 /**
@@ -16,9 +15,6 @@ import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
  */
 
 public class MyApplication extends Application {
-
-  @Inject
-  SharedPrefsHelper sharedPrefsHelper;
 
   AppComponent appComponent;
 
@@ -35,6 +31,11 @@ public class MyApplication extends Application {
   public AppComponent getAppComponent() {
     return appComponent;
   }
+
+	public MainComponent getMainComponent() {
+		return DaggerMainComponent.builder()
+				.appComponent(appComponent).build();
+	}
 
   private void createDaggerInjections() {
     appComponent = DaggerAppComponent

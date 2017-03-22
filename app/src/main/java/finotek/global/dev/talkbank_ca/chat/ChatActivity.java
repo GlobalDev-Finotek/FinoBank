@@ -5,20 +5,17 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -31,7 +28,6 @@ import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.model.ChatMessage;
 
 public class ChatActivity extends AppCompatActivity {
-    private boolean isSendEnabled = false;
     private boolean isExControlAvailable = false;
     private View exControlView = null;
     private Handler handler;
@@ -68,6 +64,11 @@ public class ChatActivity extends AppCompatActivity {
                 .subscribe(hasFocus -> {
                     if(hasFocus)
                         handler.post(this::hideExControl);
+                });
+
+        RxTextView.textChanges(binding.footerInputs.chatEditText)
+                .subscribe(value -> {
+                    binding.footerInputs.sendButton.setEnabled(!value.toString().isEmpty());
                 });
 
         RxView.clicks(binding.footerInputs.showExControl)

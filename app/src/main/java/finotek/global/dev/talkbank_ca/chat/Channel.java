@@ -24,6 +24,14 @@ class Channel {
 
     void sendMessage(String msg) {
         chatView.addMessage(ViewType.Send.ordinal(), new ChatMessage(msg));
+
+        switch (msg) {
+            case "계좌 개설":
+                break;
+            default:
+                receiveMessage("무슨 말씀인지 잘 모르겠어요.");
+                break;
+        }
     }
 
     void sendStatusMessage(String msg) {
@@ -32,5 +40,6 @@ class Channel {
 
     void receiveMessage(String msg) {
         chatView.addMessage(ViewType.Receive.ordinal(), new ChatMessage(msg));
+        chatView.getLayoutManager().scrollToPosition(chatView.itemSize()-1);
     }
 }

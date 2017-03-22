@@ -1,8 +1,14 @@
 package finotek.global.dev.talkbank_ca.chat.adapter;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.util.SparseArray;
+import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+
 import java.util.ArrayList;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 
@@ -37,6 +43,15 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
         ChatView.ViewBuilder builder = builders.get(getItemViewType(position));
         if(builder != null) {
+            if(position == 0) {
+                RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+                DisplayMetrics dm = holder.itemView.getResources().getDisplayMetrics();
+                int top = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, dm);
+                int bottom = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, dm);
+                lp.setMargins(0, top, 0, bottom);
+                holder.itemView.setLayoutParams(lp);
+            }
+
             builder.bind(holder, items.get(position).getItem());
         }
     }

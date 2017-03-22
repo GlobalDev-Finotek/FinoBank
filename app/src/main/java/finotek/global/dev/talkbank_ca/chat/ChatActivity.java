@@ -68,6 +68,14 @@ public class ChatActivity extends AppCompatActivity {
                 else
                     handler.post(this::showExControl);
             });
+
+        RxView.clicks(binding.footerInputs.sendButton)
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .subscribe(aVoid -> {
+                String msg = binding.footerInputs.chatEditText.getText().toString();
+                channel.sendMessage(msg);
+                clearInput();
+            });
     }
 
     @Override
@@ -86,6 +94,11 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         return super.dispatchTouchEvent(ev);
+    }
+
+    private void clearInput() {
+        binding.footerInputs.sendButton.setEnabled(false);
+        binding.footerInputs.chatEditText.setText("");
     }
 
     private void hideExControl() {

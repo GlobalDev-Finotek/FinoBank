@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,13 +21,12 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.view.ExtendedControlBuilder;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 
 public class ChatActivity extends AppCompatActivity {
     private boolean isExControlAvailable = false;
     private View exControlView = null;
-    private Channel channel;
+    private Scenario scenario;
     private Handler handler;
 
     private ActivityChatBinding binding;
@@ -34,18 +34,17 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         handler = new Handler(getMainLooper());
 
         ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
-        exControlView = ExtendedControlBuilder.build(this, parent);
+        exControlView = LayoutInflater.from(this).inflate(R.layout.chat_extended_control, parent, false);
+
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setStackFromEnd(true);
         binding.chatView.setLayoutManager(manager);
-
-        channel = new Channel(binding.chatView);
-        channel.receiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?");
+        scenario = new Scenario(binding.chatView);
 
         RxView.focusChanges(binding.footerInputs.chatEditText)
                 .delay(100, TimeUnit.MILLISECONDS)
@@ -73,7 +72,7 @@ public class ChatActivity extends AppCompatActivity {
             .throttleFirst(200, TimeUnit.MILLISECONDS)
             .subscribe(aVoid -> {
                 String msg = binding.footerInputs.chatEditText.getText().toString();
-                channel.sendMessage(msg);
+                scenario.sendMessage(msg);
                 clearInput();
             });
     }

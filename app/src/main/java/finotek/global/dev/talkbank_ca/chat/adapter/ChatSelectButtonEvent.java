@@ -1,6 +1,5 @@
-package finotek.global.dev.talkbank_ca.model;
+package finotek.global.dev.talkbank_ca.chat.adapter;
 
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatItem;
 import lombok.Data;
 import rx.functions.Action1;
 

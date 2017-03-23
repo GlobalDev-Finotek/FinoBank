@@ -1,14 +1,10 @@
 package finotek.global.dev.talkbank_ca.chat.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.AttributeSet;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
@@ -19,7 +15,7 @@ import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 * */
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private SparseArray<ChatView.ViewBuilder> builders;
-    private ArrayList<ChatItemWithType> items;
+    private ArrayList<DataWithType> items;
 
     public ChatAdapter() {
         builders = new SparseArray<>();
@@ -72,7 +68,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         builders.put(viewType, builder);
     }
 
-    public void addChatItem(ChatItemWithType item){
+    public void addChatItem(DataWithType item){
         items.add(item);
     }
 

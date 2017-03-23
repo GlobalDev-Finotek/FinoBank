@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ChatItemWithType {
+public class DataWithType {
     int viewType;
-    ChatItem item;
+    Object item;
 }

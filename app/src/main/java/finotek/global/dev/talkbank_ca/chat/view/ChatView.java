@@ -7,8 +7,7 @@ import android.util.AttributeSet;
 import android.view.ViewGroup;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatItem;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatItemWithType;
+import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatMessage;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 
@@ -63,8 +62,8 @@ public class ChatView extends RecyclerView {
         adapter.addChatViewBuilder(viewType, builder);
     }
 
-    private void addMessage(int viewType, ChatItem item) {
-        adapter.addChatItem(new ChatItemWithType(viewType, item));
+    private void addMessage(int viewType, Object item) {
+        adapter.addChatItem(new DataWithType(viewType, item));
         scrollToBottom();
     }
 

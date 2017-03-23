@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.databinding.DataBindingUtil;
@@ -7,7 +8,9 @@ import android.net.Uri;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -20,16 +23,14 @@ import java.io.InputStream;
 
 import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
-public class AgreementActivity extends AppCompatActivity {
+public class AgreementActivity extends Fragment {
 
 	ActivityAgreementBinding binding;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_agreement);
-		binding = DataBindingUtil.setContentView(this, R.layout.activity_agreement);
-
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState){
+		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater,R.layout.activity_agreement, container, false);
+		View view = binding.getRoot();
 
 		// check one -> click all
 		binding.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -125,7 +126,7 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 				@Override
 				public void onClick(View v) {
 
-					Intent move = new Intent(getApplicationContext(), eSignature.class);
+					Intent move = new Intent(getActivity().getApplicationContext(), eSignature.class);
 					startActivity(move);
 				}
 			});
@@ -135,7 +136,7 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 			@Override
 			public void onClick(View v) {
 				// open contentAgreement page with sending "num" "[number]"
-				Intent move = new Intent(getApplicationContext(),ContentAgreement.class);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
 				move.putExtra("num",1);
 
 				startActivity(move);
@@ -146,7 +147,7 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(),ContentAgreement.class);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
 				move.putExtra("num",2);
 
 				startActivity(move);
@@ -157,7 +158,7 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(),ContentAgreement.class);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
 				move.putExtra("num",3);
 
 				startActivity(move);
@@ -168,7 +169,7 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(),ContentAgreement.class);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
 				move.putExtra("num",4);
 
 				startActivity(move);
@@ -179,13 +180,13 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(),ContentAgreement.class);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
 				move.putExtra("num",5);
 
 				startActivity(move);
 			}
 		});
 
-
+		return view;
 	}
 }

@@ -1,38 +1,28 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
-import android.content.res.AssetManager;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 
 import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
-public class AgreementActivity extends Fragment {
+/**
+ * Created by JungwonSeo on 2017-03-23.
+ */
 
-	ActivityAgreementBinding binding;
+public class Agreement extends Fragment {
 
-	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState){
-		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater,R.layout.activity_agreement, container, false);
+		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_agreement, container, false);
 		View view = binding.getRoot();
-
-		// check one -> click all
+// check one -> click all
 		binding.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -52,17 +42,17 @@ public class AgreementActivity extends Fragment {
 		});
 
 		//individual check makes check_all button to be true
-binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-		if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
-		{
-			binding.radioButton.setChecked(true);
-		}
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
+				{
+					binding.radioButton.setChecked(true);
+				}
 
-	}
-});
+			}
+		});
 		binding.radioButton4.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -99,7 +89,7 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 			}
 		});
 
-			binding.radioButton6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+		binding.radioButton6.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (binding.radioButton6.isChecked()) {
@@ -110,26 +100,26 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 				if (binding.radioButton6.isChecked() && binding.radioButton.isChecked()) {
 					binding.button.setVisibility(View.VISIBLE);
 				}
-							}
+			}
 		});
 
-			binding.radioButton7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		binding.radioButton7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if(binding.radioButton7.isChecked()) {
 					binding.radioButton6.setChecked(true);
 				}
-				}
-			});
+			}
+		});
 
 		binding.button.setOnClickListener(new Button.OnClickListener() {
-				@Override
-				public void onClick(View v) {
+			@Override
+			public void onClick(View v) {
 
-					Intent move = new Intent(getActivity().getApplicationContext(), eSignature.class);
-					startActivity(move);
-				}
-			});
+				Intent move = new Intent(getActivity().getApplicationContext(), eSignature.class);
+				startActivity(move);
+			}
+		});
 
 
 		binding.agreement1.setOnClickListener(new Button.OnClickListener() {
@@ -187,6 +177,8 @@ binding.radioButton5.setOnCheckedChangeListener(new CompoundButton.OnCheckedChan
 			}
 		});
 
+
 		return view;
 	}
+
 }

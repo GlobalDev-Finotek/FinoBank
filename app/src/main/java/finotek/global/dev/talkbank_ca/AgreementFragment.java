@@ -1,27 +1,28 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 
 import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
-public class AgreementActivity extends AppCompatActivity {
+/**
+ * Created by JungwonSeo on 2017-03-23.
+ */
 
-	ActivityAgreementBinding binding;
+public class AgreementFragment extends Fragment {
 
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_agreement);
-		binding = DataBindingUtil.setContentView(this, R.layout.activity_agreement);
-
-
-		// check one -> click all
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState){
+		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_agreement, container, false);
+		View view = binding.getRoot();
+// check one -> click all
 		binding.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -45,7 +46,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
+				{
 					binding.radioButton.setChecked(true);
 				}
 
@@ -55,7 +57,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
+				{
 					binding.radioButton.setChecked(true);
 				}
 
@@ -66,7 +69,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
+				{
 					binding.radioButton.setChecked(true);
 				}
 
@@ -77,7 +81,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
+				{
 					binding.radioButton.setChecked(true);
 				}
 
@@ -101,7 +106,7 @@ public class AgreementActivity extends AppCompatActivity {
 		binding.radioButton7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (binding.radioButton7.isChecked()) {
+				if(binding.radioButton7.isChecked()) {
 					binding.radioButton6.setChecked(true);
 				}
 			}
@@ -111,7 +116,7 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(), eSignature.class);
+				Intent move = new Intent(getActivity().getApplicationContext(), eSignature.class);
 				startActivity(move);
 			}
 		});
@@ -121,8 +126,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				// open contentAgreement page with sending "num" "[number]"
-				Intent move = new Intent(getApplicationContext(), ContentAgreement.class);
-				move.putExtra("num", 1);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
+				move.putExtra("num",1);
 
 				startActivity(move);
 			}
@@ -132,8 +137,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(), ContentAgreement.class);
-				move.putExtra("num", 2);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
+				move.putExtra("num",2);
 
 				startActivity(move);
 			}
@@ -143,8 +148,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(), ContentAgreement.class);
-				move.putExtra("num", 3);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
+				move.putExtra("num",3);
 
 				startActivity(move);
 			}
@@ -154,8 +159,8 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(), ContentAgreement.class);
-				move.putExtra("num", 4);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
+				move.putExtra("num",4);
 
 				startActivity(move);
 			}
@@ -165,13 +170,15 @@ public class AgreementActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getApplicationContext(), ContentAgreement.class);
-				move.putExtra("num", 5);
+				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
+				move.putExtra("num",5);
 
 				startActivity(move);
 			}
 		});
 
 
+		return view;
 	}
+
 }

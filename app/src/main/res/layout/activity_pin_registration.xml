@@ -41,37 +41,32 @@
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="25dp"/>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/ll_pincode_wrapper"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="horizontal">
 
-                <GridLayout
-                    android:id="@+id/gl_pin_code"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:columnCount="6"
-                    android:horizontalSpacing="40dp">
-
-                </GridLayout>
-            </FrameLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/border_gray"
                 android:orientation="vertical"
                 android:paddingBottom="15dp"
                 android:paddingTop="15dp">
 
                 <TextView
-                    android:id="@+id/textView14"
+                    android:id="@+id/textView15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@string/select_pin_code_background"/>
+                    android:text="@string/select_pin_code_text_color"/>
 
                 <GridLayout
                     android:id="@+id/gl_pin_text_color"
@@ -89,11 +84,11 @@
                 </GridLayout>
 
                 <TextView
-                    android:id="@+id/textView15"
+                    android:id="@+id/textView14"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@string/select_pin_code_text_color"/>
+                    android:text="@string/select_pin_code_background"/>
 
                 <GridLayout
                     android:id="@+id/gl_pin_background"

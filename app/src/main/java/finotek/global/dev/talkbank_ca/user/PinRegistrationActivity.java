@@ -7,10 +7,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.GridLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -46,30 +46,26 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			setTextColorCircle(c);
 		}
 
-		binding.glPinCode.setUseDefaultMargins(false);
-		binding.glPinCode.setAlignmentMode(GridLayout.ALIGN_BOUNDS);
-		binding.glPinCode.setRowOrderPreserved(false);
+		binding.llPincodeWrapper.setOnClickListener(v -> {
+			Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
+					R.anim.slide_up);
 
+			binding.llSecureKeyboard.setVisibility(View.VISIBLE);
+			// Start animation
+			binding.llSecureKeyboard.startAnimation(slide_up);
+
+		});
 		for (int i = 0; i < PINCODE_LENGTH; ++i) {
 
 			TextView tv = new TextView(this);
-			tv.setPadding(60, 20, 60, 20);
-			tv.setTextSize(40f);
-			tv.setText(" ");
 			tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_black_blank));
-			tv.setOnClickListener(v ->  {
-				Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
-						R.anim.slide_up);
-
-				binding.llSecureKeyboard.setVisibility(View.VISIBLE);
-				// Start animation
-				binding.llSecureKeyboard.startAnimation(slide_up);
-
-			});
+			tv.setMinEms(3);
+			tv.setPadding(0, 40, 0, 40);
+			tv.setGravity(Gravity.CENTER);
+			tv.setTextSize(15.8f);
 
 			tvPwd[i] = tv;
-
-			binding.glPinCode.addView(tv);
+			binding.llPincodeWrapper.addView(tv);
 		}
 
 		SecureKeyboardAdapter secureKeyboardAdapter = new SecureKeyboardAdapter(this, getCompleteRandomizedSeq());
@@ -89,7 +85,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 		secureKeyboardAdapter.setOnBackPressListener(() -> {
 			if (ptrTvPwd > 0) {
-				tvPwd[--ptrTvPwd].setText(" ");
+				tvPwd[--ptrTvPwd].setText("");
 			}
 		});
 
@@ -116,7 +112,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle));
 		DrawableCompat.setTint(iv.getDrawable(), ContextCompat.getColor(this, c.getColor()));
 		binding.glPinBackground.addView(iv);
-		iv.setOnClickListener(v -> binding.glPinCode.setBackgroundColor((int) iv.getTag()));
+		iv.setOnClickListener(v -> binding.llPincodeWrapper.setBackgroundColor((int) iv.getTag()));
 	}
 
 	private List<String> getCompleteRandomizedSeq() {

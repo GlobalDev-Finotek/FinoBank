@@ -23,31 +23,21 @@
             android:background="@android:color/darker_gray"
             android:elevation="0dp"></View>
 
-        <android.support.design.widget.TextInputLayout
+
+        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+            android:id="@+id/edt_emergency_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
+            android:hint="@string/emergency_phone_number"
+            android:inputType="phone"/>
 
-            <EditText
-                android:id="@+id/edt_emergency_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/emergency_phone_number"
-                android:inputType="phone"/>
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+            android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp">
-
-            <EditText
-                android:id="@+id/edt_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_address"
-                android:inputType="textEmailAddress"/>
-        </android.support.design.widget.TextInputLayout>
+            android:hint="@string/email_address"
+            android:inputType="textEmailAddress"/>
 
         <LinearLayout
             android:layout_width="match_parent"

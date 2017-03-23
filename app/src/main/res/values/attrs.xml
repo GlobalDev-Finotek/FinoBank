@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RoundButton">
+        <attr name="buttonType" format="enum">
+            <enum name="primary" value="0" />
+            <enum name="danger" value="1" />
+            <enum name="info" value="2" />
+        </attr>
+    </declare-styleable>
+</resources>

@@ -2,10 +2,11 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:orientation="vertical" android:padding="10dp">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
@@ -25,7 +26,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/edt_phone_number"
@@ -37,7 +39,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/edt_user_name"
@@ -46,17 +49,20 @@
                 android:hint="@string/user_name"
                 android:inputType="textPersonName"/>
         </android.support.design.widget.TextInputLayout>
+
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp" android:padding="10dp"
+            android:layout_marginTop="10dp"
+            android:padding="10dp"
             android:text="@string/string_comm_sign_input"/>
 
         <Button
             android:id="@+id/btn_regi_sign"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:background="@drawable/ex_control_btn_pressed"
             android:text="@string/string_comm_sign_input"
             android:textColor="@color/colorPrimary"/>

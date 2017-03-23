@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:id="@+id/activity_user_regi_additional"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent" android:orientation="vertical"
-                  android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/activity_user_regi_additional"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp"
-            android:text="@string/additional_inform" android:textColor="@android:color/black" android:textSize="24sp"/>
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/additional_inform"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -19,7 +25,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/edt_emergency_phone_number"
@@ -31,7 +38,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:padding="10dp">
 
             <EditText
                 android:id="@+id/edt_email"

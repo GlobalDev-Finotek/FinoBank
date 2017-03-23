@@ -4,16 +4,16 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.util.concurrent.TimeUnit;
+
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.databinding.ActivityUserRegistrationBinding;
-import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
-import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 
 public class UserRegistrationActivity extends AppCompatActivity {
 
@@ -39,6 +39,9 @@ public class UserRegistrationActivity extends AppCompatActivity {
 	  transaction.add(R.id.fl_content, userInfoFragment);
 	  transaction.commit();
 
+	  RxView.clicks(binding.btnRegistration)
+			  .throttleFirst(200, TimeUnit.MILLISECONDS)
+			  .subscribe(aVoid -> startActivity(new Intent(UserRegistrationActivity.this, ChatActivity.class)));
 
   }
 }

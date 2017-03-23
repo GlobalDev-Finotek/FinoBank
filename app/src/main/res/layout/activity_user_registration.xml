@@ -26,13 +26,29 @@
 
         </android.support.v7.widget.Toolbar>
 
-        <FrameLayout
-            android:id="@+id/fl_content"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-        </FrameLayout>
+            <FrameLayout
+                android:id="@+id/fl_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="0.9">
 
+            </FrameLayout>
+
+            <Button
+                android:id="@+id/btn_registration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.1"
+                android:background="@color/colorPrimary"
+                android:text="@string/string_user_regi"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
 
     </LinearLayout>
     </android.support.design.widget.CoordinatorLayout>

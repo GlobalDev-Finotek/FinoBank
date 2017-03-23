@@ -10,7 +10,8 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import finotek.global.dev.talkbank_ca.MainActivity;
+import java.util.concurrent.TimeUnit;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.LayoutUserRegistrationBinding;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
@@ -45,8 +46,10 @@ public class UserInfoFragment extends android.app.Fragment {
 		RxView.clicks(binding.llRegiBasic.btnRegiSign)
 				.subscribe(aVoid -> startActivity(new Intent(getActivity(), SignRegistrationActivity.class)));
 
-		RxView.clicks(binding.btnRegistration)
-				.subscribe(aVoid -> startActivity(new Intent(getActivity(), MainActivity.class)));
+		RxView.clicks(binding.btnPinRegistration)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> startActivity(new Intent(getActivity(), PinRegistrationActivity.class)));
+
 		return binding.getRoot();
 	}
 }

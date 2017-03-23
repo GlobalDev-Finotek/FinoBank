@@ -22,11 +22,12 @@
         <activity android:name=".user.UserRegistrationActivity">
         </activity>
         <activity android:name=".user.SignRegistrationActivity">
-
         </activity>
         <activity android:name=".user.profile.CaptureProfilePicActivity">
         </activity>
         <activity android:name=".user.PinRegistrationActivity">
+        </activity>
+        <activity android:name=".AgreementActivity">
         </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity" />
         <activity android:name=".setting.SettingsActivity" />

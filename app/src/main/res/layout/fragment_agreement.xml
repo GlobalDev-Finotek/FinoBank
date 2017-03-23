@@ -144,7 +144,6 @@
 
     <ImageView
         android:id="@+id/bar1"
-        app:srcCompat="@drawable/seek_back_bar2"
         android:layout_width="336dp"
         android:layout_height="19dp"
         android:layout_marginLeft="20dp"
@@ -152,7 +151,6 @@
 
     <ImageView
         android:id="@+id/bar2"
-        app:srcCompat="@drawable/seek_back_bar1"
         android:layout_width="336dp"
         android:layout_height="7dp"
         android:layout_marginLeft="20dp"
@@ -160,7 +158,6 @@
 
     <ImageView
         android:id="@+id/bar3"
-        app:srcCompat="@drawable/seek_back_bar1"
         android:layout_width="336dp"
         android:layout_height="7dp"
         android:layout_marginLeft="20dp"
@@ -168,7 +165,6 @@
 
     <ImageView
         android:id="@+id/bar4"
-        app:srcCompat="@drawable/seek_back_bar1"
         android:layout_width="336dp"
         android:layout_height="7dp"
         android:layout_marginLeft="20dp"
@@ -176,7 +172,6 @@
 
     <ImageView
         android:id="@+id/bar5"
-        app:srcCompat="@drawable/seek_back_bar1"
         android:layout_width="336dp"
         android:layout_height="7dp"
         android:layout_marginLeft="20dp"
@@ -184,7 +179,6 @@
 
     <ImageView
         android:id="@+id/bar6"
-        app:srcCompat="@drawable/seek_back_bar2"
         android:layout_width="336dp"
         android:layout_height="7dp"
         android:layout_marginLeft="20dp"
@@ -192,7 +186,6 @@
 
     <ImageView
         android:id="@+id/bar7"
-        app:srcCompat="@drawable/seek_back_bar1"
         android:layout_width="336dp"
         android:layout_height="7dp"
         android:layout_marginLeft="20dp"

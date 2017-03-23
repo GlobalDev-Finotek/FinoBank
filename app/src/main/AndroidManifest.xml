@@ -3,6 +3,7 @@
           package="finotek.global.dev.talkbank_ca">
 
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera2" />
 
     <application
         android:name=".app.MyApplication"
@@ -34,5 +35,4 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".chat.ChatActivity" />
     </application>
-
 </manifest>

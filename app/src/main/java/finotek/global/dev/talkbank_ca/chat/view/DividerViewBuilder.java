@@ -8,7 +8,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.model.ChatMessage;
+import finotek.global.dev.talkbank_ca.chat.adapter.ChatMessage;
 
 public class DividerViewBuilder implements ChatView.ViewBuilder<ChatMessage> {
     private class DividerViewHolder extends RecyclerView.ViewHolder {

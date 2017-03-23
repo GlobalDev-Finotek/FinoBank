@@ -3,10 +3,12 @@
     <color name="colorPrimary">#4083ff</color>
     <color name="colorPrimaryDark">#1B356A</color>
     <color name="colorAccent">#FF4081</color>
-    <color name="color_white">#fff</color>
+
+    <color name="primary">@color/colorPrimary</color>
+    <color name="danger">#ff585b</color>
+    <color name="info">#00b9e6</color>
 
     <color name="color_foreground">#FFFFFF</color>
-
     <color name="color_foreground_blue_button">#FFFFFF</color>
     <color name="color_foreground_blue_button_disabled">#BBBBBB</color>
 
@@ -20,10 +22,8 @@
     <color name="pin_yellow">#ffe938</color>
     <color name="pin_light_green">#1aae00</color>
     <color name="pin_green">#1aa00f</color>
-    <color name="pin_light_blue">#1eb1ed
-    </color>
-    <color name="pin_blue">#1090bd
-    </color>
+    <color name="pin_light_blue">#1eb1ed</color>
+    <color name="pin_blue">#1090bd</color>
     <color name="pin_purple">#6f359e</color>
     <color name="pin_white">#ffffff</color>
     <color name="pin_black">#000000</color>
@@ -41,7 +41,7 @@
 
     <color name="color_chat_divider">#D2D5D9</color>
     <color name="color_text_default">#1f2f42</color>
-    <color name="color_chat_background">@color/color_white</color>
+    <color name="color_chat_background">@android:color/white</color>
     <color name="color_chat_footer">#F5F4F5</color>
     <color name="color_send_disabled">#CFCFCF</color>
     <color name="color_send_enabled">@color/colorPrimary</color>

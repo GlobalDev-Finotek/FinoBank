@@ -5,6 +5,8 @@ import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
+import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
+import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 
 
@@ -15,10 +17,6 @@ import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 public class MyApplication extends Application {
 
   AppComponent appComponent;
-
-  public static MyApplication getAppInstance(Context context) {
-    return (MyApplication) context.getApplicationContext();
-  }
 
   @Override
   public void onCreate() {
@@ -33,6 +31,11 @@ public class MyApplication extends Application {
   public AppComponent getAppComponent() {
     return appComponent;
   }
+
+	public MainComponent getMainComponent() {
+		return DaggerMainComponent.builder()
+				.appComponent(appComponent).build();
+	}
 
   private void createDaggerInjections() {
     appComponent = DaggerAppComponent

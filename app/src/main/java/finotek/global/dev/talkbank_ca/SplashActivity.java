@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.app.ActivityOptions;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.databinding.ActivitySplashBinding;
 import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -22,11 +24,12 @@ public class SplashActivity extends AppCompatActivity {
 		DataBindingUtil.setContentView(this, R.layout.activity_splash);
 
 		Observable.timer(3, TimeUnit.SECONDS)
+				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(aVoid -> {
 					Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-					startActivity(intent);
-					overridePendingTransition(0, 0);
+					startActivity(intent,
+							ActivityOptions.makeSceneTransitionAnimation(this).toBundle());
 				});
 	}
 }

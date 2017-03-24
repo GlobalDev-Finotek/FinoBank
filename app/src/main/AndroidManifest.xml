@@ -6,6 +6,7 @@
     <uses-feature android:name="android.hardware.camera2" />
 
     <application
+        android:name=".app.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -15,14 +16,20 @@
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".user.UserRegistrationActivity" />
-        <activity android:name=".user.SignRegistrationActivity" />
-        <activity android:name=".user.profile.CaptureProfilePicActivity" />
-        <activity android:name=".user.PinRegistrationActivity" />
+        <activity android:name=".user.UserRegistrationActivity">
+        </activity>
+        <activity android:name=".user.SignRegistrationActivity">
+        </activity>
+        <activity android:name=".user.profile.CaptureProfilePicActivity">
+        </activity>
+        <activity android:name=".user.PinRegistrationActivity">
+        </activity>
+        <activity android:name=".AgreementActivity">
+        </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity" />
         <activity android:name=".setting.SettingsActivity" />
         <activity android:name=".MainActivity" />

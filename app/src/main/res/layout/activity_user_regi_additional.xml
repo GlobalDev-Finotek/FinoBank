@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <LinearLayout android:id="@+id/activity_user_regi_additional"
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent" android:orientation="vertical"
-                  android:padding="10dp">
+
+    <LinearLayout
+        android:id="@+id/activity_user_regi_additional"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp"
-            android:text="@string/additional_inform" android:textColor="@android:color/black" android:textSize="24sp"/>
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/additional_inform"
+            android:textColor="@android:color/black"
+            android:textSize="24sp"/>
 
         <View
             android:layout_width="match_parent"
@@ -17,29 +23,21 @@
             android:background="@android:color/darker_gray"
             android:elevation="0dp"></View>
 
-        <android.support.design.widget.TextInputLayout
+
+        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+            android:id="@+id/edt_emergency_phone_number"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:hint="@string/emergency_phone_number"
+            android:inputType="phone"/>
 
-            <EditText
-                android:id="@+id/edt_emergency_phone_number"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/emergency_phone_number"
-                android:inputType="phone"/>
-        </android.support.design.widget.TextInputLayout>
 
-        <android.support.design.widget.TextInputLayout
+        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+            android:id="@+id/edt_email"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" android:padding="10dp">
-
-            <EditText
-                android:id="@+id/edt_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/email_address"
-                android:inputType="textEmailAddress"/>
-        </android.support.design.widget.TextInputLayout>
+            android:layout_height="wrap_content"
+            android:hint="@string/email_address"
+            android:inputType="textEmailAddress"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -59,9 +57,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/ex_control_btn_pressed"
                 android:text="@string/capture_credit"
-                android:textColor="@android:color/white"/>
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
 
@@ -83,9 +81,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:background="@color/colorAccent"
+                android:background="@drawable/ex_control_btn_pressed"
                 android:text="@string/capture_profile"
-                android:textColor="@android:color/white"/>
+                android:textColor="@color/colorPrimary"/>
 
         </LinearLayout>
 

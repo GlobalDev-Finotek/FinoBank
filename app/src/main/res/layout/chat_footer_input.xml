@@ -5,7 +5,7 @@
         android:background="@color/color_chat_footer"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="42dp"
         android:padding="6dp">
         <ImageButton
             android:id="@+id/show_ex_control"
@@ -19,6 +19,7 @@
             android:contentDescription="Select request as image." />
         <EditText
             android:id="@+id/chat_edit_text"
+            android:padding="0dp"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="9"

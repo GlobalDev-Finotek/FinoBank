@@ -6,7 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestCamera;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
@@ -85,7 +85,7 @@ class Scenario {
             case "예":
                 if(step == 1) {
                     messageBox.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
-                    messageBox.add(new RequestCamera());
+                    messageBox.add(new RequestTakeIDCard());
                 }
                 break;
             case "아니오":

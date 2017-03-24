@@ -1,10 +1,10 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
@@ -20,9 +20,10 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestCamera;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
+import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
@@ -31,13 +32,10 @@ public class ChatActivity extends AppCompatActivity {
 
     private boolean isExControlAvailable = false;
     private View exControlView = null;
-    private Handler handler;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        handler = new Handler(getMainLooper());
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         setSupportActionBar(binding.toolbar);
 
@@ -61,8 +59,17 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void onNewMessageUpdated(Object msg){
-        if(msg instanceof RequestCamera) {
+        if(msg instanceof RequestTakeIDCard) {
+            releaseControls();
 
+            ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
+            View v = LayoutInflater.from(this).inflate(R.layout.chat_capture, parent, false);
+            binding.footer.addView(v);
+
+            CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
+            FragmentTransaction tx = getFragmentManager().beginTransaction();
+            tx.add(R.id.chat_capture, capturePicFragment);
+            tx.commit();
         }
     }
 
@@ -74,14 +81,14 @@ public class ChatActivity extends AppCompatActivity {
 
     private void expandControlClickEvent(Void aVoid){
         if(isExControlAvailable)
-            handler.post(this::hideExControl);
+            runOnUiThread(this::hideExControl);
         else
-            handler.post(this::showExControl);
+            runOnUiThread(this::showExControl);
     }
 
     private void chatEditFieldFocusChanged(boolean hasFocus){
         if(hasFocus)
-            handler.post(this::hideExControl);
+            runOnUiThread(this::hideExControl);
     }
 
     private void chatEditFieldTextChanged(CharSequence value) {
@@ -115,7 +122,10 @@ public class ChatActivity extends AppCompatActivity {
      * */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(ev.getAction() == MotionEvent.ACTION_DOWN) {
+        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+            // dimiss keyboard or hide ex control
+            releaseControls();
+
             View v = getCurrentFocus();
             if(v instanceof EditText) {
                 Rect editTextRect = new Rect();
@@ -126,13 +136,22 @@ public class ChatActivity extends AppCompatActivity {
 
                 if(!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
                         && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-                    v.clearFocus();
-                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    dismissKeyboard(v);
                 }
             }
         }
 
         return super.dispatchTouchEvent(ev);
+    }
+
+    private void dismissKeyboard(View v) {
+        v.clearFocus();
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+    }
+
+    private void releaseControls(){
+        dismissKeyboard(binding.footerInputs.chatEditText);
+        hideExControl();
     }
 }

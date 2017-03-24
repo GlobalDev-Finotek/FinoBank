@@ -1,11 +1,8 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.app.Activity;
-<<<<<<< HEAD
-import android.content.Intent;
-=======
 import android.app.FragmentTransaction;
->>>>>>> develop-dh
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -31,12 +28,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
-<<<<<<< HEAD
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
-
-=======
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
->>>>>>> develop-dh
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;

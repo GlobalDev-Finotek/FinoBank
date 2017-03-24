@@ -23,6 +23,14 @@ import rx.android.schedulers.AndroidSchedulers;
 
 public class ContextAwareAuthFragment extends android.app.Fragment {
 
+	public static ContextAwareAuthFragment newInstance(String title) {
+		ContextAwareAuthFragment fragment = new ContextAwareAuthFragment();
+		Bundle args = new Bundle();
+		args.putString("title", title);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

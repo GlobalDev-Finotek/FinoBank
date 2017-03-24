@@ -16,6 +16,14 @@ import finotek.global.dev.talkbank_ca.databinding.FragmentAbnormalTransactionBin
 
 public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 
+	public static AbnormalTransactionAuthFragment newInstance(String title) {
+		AbnormalTransactionAuthFragment fragment = new AbnormalTransactionAuthFragment();
+		Bundle args = new Bundle();
+		args.putString("title", title);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

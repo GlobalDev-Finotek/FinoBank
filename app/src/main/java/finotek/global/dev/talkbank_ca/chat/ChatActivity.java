@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -9,6 +10,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
-
+import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 
 
 public class ChatActivity extends AppCompatActivity {
@@ -43,6 +47,8 @@ public class ChatActivity extends AppCompatActivity {
         exControlView = LayoutInflater.from(this).inflate(R.layout.chat_extended_control, parent, false);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        setSupportActionBar(binding.toolbar);
+        getSupportActionBar().setTitle("톡뱅");
 
         LinearLayoutManager manager = new LinearLayoutManager(this);
         manager.setStackFromEnd(true);
@@ -122,4 +128,19 @@ public class ChatActivity extends AppCompatActivity {
         binding.footer.addView(exControlView);
         binding.footerInputs.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main, menu);
+        MenuItem item = menu.findItem(R.id.action_settings);
+        item.setOnMenuItemClickListener(item1 -> {
+            startActivity(new Intent(ChatActivity.this, SettingsActivity.class));
+            return false;
+        });
+
+        return true;
+    }
+
+
 }

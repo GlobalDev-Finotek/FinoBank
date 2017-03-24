@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySettingsBinding;
-import finotek.global.dev.talkbank_ca.user.UserRegistrationActivity;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -27,29 +26,35 @@ public class SettingsActivity extends AppCompatActivity {
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
+
+		Intent intent = new Intent(SettingsActivity.this, SettingDetailActivity.class);
+
 		RxView.clicks(binding.llUserinfo)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					startActivity(new Intent(SettingsActivity.this, UserRegistrationActivity.class));
-					finish();
+					intent.putExtra("type", PageType.USER_INFO);
+					startActivity(intent);
 				});
 
 		RxView.clicks(binding.llCa)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					// TODO 맥락 인증 액티비티 생성 및 연결
+					intent.putExtra("type", PageType.CONTEXT_AWARE);
+					startActivity(intent);
 				});
 
 		RxView.clicks(binding.llCost)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					// TODO 금액 별 인증 액티비티 생성 및 연결
+					intent.putExtra("type", PageType.COST_AUTH);
+					startActivity(intent);
 				});
 
 		RxView.clicks(binding.llAbnormal)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					// TODO 이상 거래 시 인증 및 연결
+					intent.putExtra("type", PageType.ABNORMAL_TRANSACTION);
+					startActivity(intent);
 				});
 
 	}

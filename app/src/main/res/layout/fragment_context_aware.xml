@@ -13,10 +13,10 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/textView10"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"/>
+                android:text="맥락데이터 수집 앱"
+                />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -68,10 +68,9 @@
             android:padding="10dp">
 
             <TextView
-                android:id="@+id/textView13"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView"/>
+                android:text="맥락데이터 수집 시간 설정"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -113,30 +112,100 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="4dp">
+                android:layout_height="match_parent"
+                android:layout_marginTop="15dp"
+                android:layout_weight="1"
+                android:background="@color/grey"
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="시작"
+                            />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_start"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:autoText="true"
+                                android:format12Hour="hh:mm:ss a"
+                                android:gravity="center"
+                                android:textSize="30sp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="종료"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:id="@+id/tv_end"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:format12Hour="hh:mm:ss a"
+                                android:gravity="center"
+                                android:textSize="30sp"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
 
                 <TextView
-                    android:id="@+id/tv_start"
+                    android:id="@+id/textView10"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:autoText="true"
-                    android:format12Hour="hh:mm:ss a"
-                    android:gravity="center"
-                    android:textSize="30sp"/>
-
-                <TextView
-                    android:id="@+id/tv_end"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:format12Hour="hh:mm:ss a"
-                    android:gravity="center"
-                    android:textSize="30sp"/>
+                    android:text="해당 시간대에만 맥락데이터 수집을 허용합니다"/>
 
             </LinearLayout>
+
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="15dp"
+            android:background="@drawable/btn_round_primary"
+            android:text="@string/button_save"/>
     </LinearLayout>
 </layout>

@@ -15,6 +15,16 @@ import finotek.global.dev.talkbank_ca.databinding.FragmentCostAuthBinding;
  */
 
 public class CostAuthFragment extends android.app.Fragment {
+
+
+	public static CostAuthFragment newInstance(String title) {
+		CostAuthFragment fragment = new CostAuthFragment();
+		Bundle args = new Bundle();
+		args.putString("title", title);
+		fragment.setArguments(args);
+		return fragment;
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {

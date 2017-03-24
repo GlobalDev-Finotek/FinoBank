@@ -39,6 +39,7 @@ public class ChatActivity extends AppCompatActivity {
         handler = new Handler(getMainLooper());
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+        setSupportActionBar(binding.toolbar);
 
         messageBox = new MessageBox();
         scenario = new Scenario(this, binding.chatView, messageBox);

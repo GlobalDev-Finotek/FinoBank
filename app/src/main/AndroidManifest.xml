@@ -28,11 +28,10 @@
         </activity>
         <activity android:name=".user.PinRegistrationActivity">
         </activity>
-        <activity android:name=".AgreementActivity">
-        </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity" />
         <activity android:name=".setting.SettingsActivity" />
         <activity android:name=".MainActivity" />
-        <activity android:name=".chat.ChatActivity" />
+        <activity android:name=".chat.ChatActivity"
+                  android:label="톡뱅" />
     </application>
 </manifest>

@@ -71,8 +71,10 @@ class Scenario {
     }
 
     private void respondTo(String msg) {
-        if(lastRequestIndex != -1)
+        if(lastRequestIndex != -1) {
             chatView.removeAt(lastRequestIndex);
+            lastRequestIndex = -1;
+        }
 
         switch (msg) {
             case "계좌 개설":
@@ -86,6 +88,11 @@ class Scenario {
                     messageBox.add(new RequestCamera());
                 }
                 break;
+            case "아니오":
+                if(step == 1) {
+                    messageBox.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
+                    step = 0;
+                }
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
                 break;

@@ -25,6 +25,7 @@
             android:inputType="text"
             android:background="@android:color/transparent"
             android:textColor="@color/color_text_default"
+            android:textSize="14sp"
             android:hint="Type Here" />
         <Button
             android:id="@+id/send_button"

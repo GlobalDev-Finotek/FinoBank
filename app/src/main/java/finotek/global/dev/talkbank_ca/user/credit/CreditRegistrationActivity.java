@@ -32,7 +32,6 @@ public class CreditRegistrationActivity extends AppCompatActivity {
 		transaction.add(R.id.fl_cam, capturePicFragment);
 		transaction.commit();
 
-
 		RxView.clicks(binding.btnTakePic)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {

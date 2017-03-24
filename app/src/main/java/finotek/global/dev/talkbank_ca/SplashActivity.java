@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySplashBinding;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -26,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 		Observable.timer(3, TimeUnit.SECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(aVoid -> {
-					Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+					Intent intent = new Intent(SplashActivity.this, ChatActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent,
 							ActivityOptions.makeSceneTransitionAnimation(this).toBundle());

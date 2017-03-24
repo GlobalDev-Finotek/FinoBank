@@ -30,6 +30,7 @@
         </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity" />
         <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".setting.SettingDetailActivity"/>
         <activity android:name=".MainActivity" />
         <activity android:name=".chat.ChatActivity"
                   android:label="톡뱅" />

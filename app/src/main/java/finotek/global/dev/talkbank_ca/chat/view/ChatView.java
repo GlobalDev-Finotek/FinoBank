@@ -10,6 +10,7 @@ import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatMessage;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
+import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 
 /**
  * @author david lee at finotek.
@@ -17,7 +18,9 @@ import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
     enum ViewType {
-        Send, Receive, Divider, Status, Confirm
+        Send, Receive, Divider, Status, Confirm,
+        IDCard, RecentTransaction, AccountList,
+        Agreement, AgreementResult
     }
 
     public interface ViewBuilder<T> {
@@ -36,6 +39,11 @@ public class ChatView extends RecyclerView {
         this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
         this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
         this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
+        this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
+    }
+
+    public void showIdCardInfo(IDCardInfo info){
+        addMessage(ViewType.IDCard.ordinal(), info);
     }
 
     public void sendMessage(String msg) {

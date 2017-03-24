@@ -5,8 +5,8 @@ import android.support.v7.widget.LinearLayoutManager;
 
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
@@ -69,6 +69,10 @@ class Scenario {
             });
             chatView.confirm(ev);
         }
+
+        if(msg instanceof IDCardInfo) {
+            chatView.showIdCardInfo((IDCardInfo) msg);
+        }
     }
 
     private void respondTo(String msg) {
@@ -86,7 +90,7 @@ class Scenario {
             case "예":
                 if(step == 1) {
                     messageBox.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
-                    messageBox.add(new RequestTakeIDCard());
+                    messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
                 }
                 break;
             case "아니오":

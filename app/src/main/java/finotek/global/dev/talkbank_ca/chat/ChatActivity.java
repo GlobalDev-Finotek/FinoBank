@@ -21,65 +21,98 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestCamera;
+import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 
 public class ChatActivity extends AppCompatActivity {
+    private ActivityChatBinding binding;
+    private MessageBox messageBox;
+    private Scenario scenario;
+
     private boolean isExControlAvailable = false;
     private View exControlView = null;
-    private Scenario scenario;
     private Handler handler;
-
-    private ActivityChatBinding binding;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         handler = new Handler(getMainLooper());
 
-        ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
-        exControlView = LayoutInflater.from(this).inflate(R.layout.chat_extended_control, parent, false);
-
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
-        LinearLayoutManager manager = new LinearLayoutManager(this);
-        manager.setStackFromEnd(true);
-        binding.chatView.setLayoutManager(manager);
-        scenario = new Scenario(binding.chatView);
+        messageBox = new MessageBox();
+        scenario = new Scenario(this, binding.chatView, messageBox);
+        messageBox.getObservable().subscribe(this::onNewMessageUpdated);
 
         RxView.focusChanges(binding.footerInputs.chatEditText)
                 .delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(hasFocus -> {
-                    if(hasFocus)
-                        handler.post(this::hideExControl);
-                });
+                .subscribe(this::chatEditFieldFocusChanged);
 
         RxTextView.textChanges(binding.footerInputs.chatEditText)
-                .subscribe(value -> {
-                    binding.footerInputs.sendButton.setEnabled(!value.toString().isEmpty());
-                });
+                .subscribe(this::chatEditFieldTextChanged);
 
         RxView.clicks(binding.footerInputs.showExControl)
             .throttleFirst(200, TimeUnit.MILLISECONDS)
             .delay(100, TimeUnit.MILLISECONDS)
-            .subscribe(aVoid -> {
-                if(isExControlAvailable)
-                    handler.post(this::hideExControl);
-                else
-                    handler.post(this::showExControl);
-            });
+            .subscribe(this::expandControlClickEvent);
 
-        RxView.clicks(binding.footerInputs.sendButton)
-            .throttleFirst(200, TimeUnit.MILLISECONDS)
-            .subscribe(aVoid -> {
-                String msg = binding.footerInputs.chatEditText.getText().toString();
-                scenario.sendMessage(msg);
-                clearInput();
-            });
+        preInitExControlView();
+    }
+
+    private void onNewMessageUpdated(Object msg){
+        if(msg instanceof RequestCamera) {
+
+        }
+    }
+
+    public void onSendButtonClickEvent(View v){
+        String msg = binding.footerInputs.chatEditText.getText().toString();
+        messageBox.add(new SendMessage(msg));
+        clearInput();
+    }
+
+    private void expandControlClickEvent(Void aVoid){
+        if(isExControlAvailable)
+            handler.post(this::hideExControl);
+        else
+            handler.post(this::showExControl);
+    }
+
+    private void chatEditFieldFocusChanged(boolean hasFocus){
+        if(hasFocus)
+            handler.post(this::hideExControl);
+    }
+
+    private void chatEditFieldTextChanged(CharSequence value) {
+        binding.footerInputs.sendButton.setEnabled(!value.toString().isEmpty());
+    }
+
+    private void clearInput() {
+        binding.footerInputs.sendButton.setEnabled(false);
+        binding.footerInputs.chatEditText.setText("");
+    }
+
+    private void hideExControl() {
+        isExControlAvailable = false;
+        binding.footer.removeView(exControlView);
+        binding.footerInputs.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
+    }
+
+    private void showExControl() {
+        isExControlAvailable = true;
+        binding.footer.addView(exControlView);
+        binding.footerInputs.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
+    }
+
+    private void preInitExControlView(){
+        ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
+        exControlView = LayoutInflater.from(this).inflate(R.layout.chat_extended_control, parent, false);
     }
 
     /**
-    * 키보드 이외에 화면을 터치한 경우 자동으로 키보드를 dismiss 하기 위한 소스
-    * */
+     * 키보드 이외에 화면을 터치한 경우 자동으로 키보드를 dismiss 하기 위한 소스
+     * */
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if(ev.getAction() == MotionEvent.ACTION_DOWN) {
@@ -101,22 +134,5 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         return super.dispatchTouchEvent(ev);
-    }
-
-    private void clearInput() {
-        binding.footerInputs.sendButton.setEnabled(false);
-        binding.footerInputs.chatEditText.setText("");
-    }
-
-    private void hideExControl() {
-        isExControlAvailable = false;
-        binding.footer.removeView(exControlView);
-        binding.footerInputs.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
-    }
-
-    private void showExControl() {
-        isExControlAvailable = true;
-        binding.footer.addView(exControlView);
-        binding.footerInputs.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
     }
 }

@@ -20,6 +20,7 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
@@ -62,14 +63,16 @@ public class ChatActivity extends AppCompatActivity {
         if(msg instanceof RequestTakeIDCard) {
             releaseControls();
 
-            ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
-            View v = LayoutInflater.from(this).inflate(R.layout.chat_capture, parent, false);
-            binding.footer.addView(v);
-
+            binding.footer.addView(inflate(R.layout.chat_capture));
             CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
             FragmentTransaction tx = getFragmentManager().beginTransaction();
             tx.add(R.id.chat_capture, capturePicFragment);
             tx.commit();
+        }
+
+        if(msg instanceof RequestSignature) {
+            releaseControls();
+            binding.footer.addView(inflate(R.layout.chat_sign));
         }
     }
 
@@ -113,8 +116,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void preInitExControlView(){
-        ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
-        exControlView = LayoutInflater.from(this).inflate(R.layout.chat_extended_control, parent, false);
+        exControlView = inflate(R.layout.chat_extended_control);
     }
 
     /**
@@ -153,5 +155,10 @@ public class ChatActivity extends AppCompatActivity {
     private void releaseControls(){
         dismissKeyboard(binding.footerInputs.chatEditText);
         hideExControl();
+    }
+
+    private View inflate(int layoutId){
+        ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
+        return LayoutInflater.from(this).inflate(layoutId, parent, false);
     }
 }

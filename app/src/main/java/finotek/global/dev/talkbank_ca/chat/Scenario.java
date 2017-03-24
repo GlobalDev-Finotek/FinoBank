@@ -90,7 +90,7 @@ class Scenario {
             case "예":
                 if(step == 1) {
                     messageBox.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
-                    messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
+                    messageBox.add(new RequestTakeIDCard());
                 }
                 break;
             case "아니오":
@@ -98,6 +98,18 @@ class Scenario {
                     messageBox.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
                     step = 0;
                 }
+                break;
+            case "신분증":
+                messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
+                break;
+            case "약관" :
+                break;
+            case "약관확인" :
+                break;
+            case "최근거래내역" :
+                break;
+            case "계좌이체" :
+                break;
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
                 break;

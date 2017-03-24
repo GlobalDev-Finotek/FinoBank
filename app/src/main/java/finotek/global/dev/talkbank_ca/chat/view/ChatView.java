@@ -8,9 +8,12 @@ import android.view.ViewGroup;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatMessage;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
+import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 
 /**
  * @author david lee at finotek.
@@ -47,19 +50,19 @@ public class ChatView extends RecyclerView {
     }
 
     public void sendMessage(String msg) {
-        addMessage(ViewType.Send.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Send.ordinal(), new SendMessage(msg));
     }
 
     public void receiveMessage(String msg) {
-        addMessage(ViewType.Receive.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Receive.ordinal(), new ReceiveMessage(msg));
     }
 
     public void statusMessage(String msg) {
-        addMessage(ViewType.Status.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Status.ordinal(), new StatusMessage(msg));
     }
 
     public void dividerMessage(String msg) {
-        addMessage(ViewType.Divider.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Divider.ordinal(), new DividerMessage(msg));
     }
 
     public void confirm(ChatSelectButtonEvent ev){

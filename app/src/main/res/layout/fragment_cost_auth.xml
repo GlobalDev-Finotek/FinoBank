@@ -1,10 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:android="http://schemas.android.com/apk/res/android">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="360dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="73dp"
+            android:background="#80E5E5E5"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="금액별 인증 설정"
+                android:textSize="18sp"/>
+
+            <Switch
+                android:id="@+id/switch6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginleft="16dp"
+                android:layout_weight="0.00"
+                android:paddingLeft="143dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="0dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="458dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="14dp"
+                android:text="이체 금액"/>
+
+            <TableLayout
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="0dp"
+                android:background="@drawable/cell_shape"
+                android:stretchColumns="*">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/cell_shape"
+                    >
+
+                    <TextView
+                        android:background="@drawable/cell_shape"
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:text="10만원"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:text="50만원"
+                        android:gravity="center"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/cell_shape">
+
+                    <TextView
+                        android:background="@drawable/cell_shape"
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="100만원"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="500만원"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+                </TableRow>
+
+
+                <TextView
+                    android:layout_width="164dp"
+                    android:layout_height="40dp"
+                    android:gravity="center"
+                    android:text="직접 입력"
+                    android:textAlignment="center"
+                    android:textColor="#80182333"
+                    android:textSize="14sp"/>
+
+
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="328dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/cell_shape">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/cell_shape">
+
+                    <TextView
+                        android:background="@drawable/cell_shape"
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="이하"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp">
+
+                    </TextView>
+
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:text="이상"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+                </TableRow>
+
+
+            </TableLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginTop="20dp"
+            android:text="인증 설정 추가"
+            android:textSize="14sp"
+            android:textColor="#4083ff"
+            android:background="@drawable/btn_cost_auth"
+
+            android:visibility="visible"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="328dp"
+            android:layout_height="50dp"
+            android:layout_marginBottom="30dp"
+
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/btn_cost_auth2"
+            android:text="저장"
+            android:textColor="#FFFFFF"
+            android:textSize="15sp"/>
+        </LinearLayout>
 
     </LinearLayout>
 </layout>

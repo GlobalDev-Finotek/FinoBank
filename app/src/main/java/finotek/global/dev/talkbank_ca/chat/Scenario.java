@@ -73,6 +73,8 @@ class Scenario {
 
         if(msg instanceof IDCardInfo) {
             chatView.showIdCardInfo((IDCardInfo) msg);
+            messageBox.add(new ReceiveMessage("위 내용이 맞으세요?"));
+            messageBox.add(new ConfirmRequest());
         }
 
         if(msg instanceof AgreementResult) {

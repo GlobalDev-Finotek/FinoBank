@@ -4,7 +4,201 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical" >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginTop="73dp"
+            android:background="#80E5E5E5"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/Title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                android:text="이상 거래 시 인증 설정"
+                android:textSize="18sp"/>
+
+            <Switch
+                android:id="@+id/switch6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginleft="16dp"
+                android:layout_weight="0.00"
+                android:paddingLeft="143dp"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="458dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="14dp"
+                android:layout_marginLeft="28dp"
+                android:layout_marginTop="14dp"
+                android:text="인증 다법(다중 선택 가능, 2개 이상 선택 필수)"/>
+
+
+            <TableLayout
+                android:layout_width="328dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:background="@drawable/cell_shape"
+                android:stretchColumns="*">
+
+                <TextView
+                    android:layout_width="164dp"
+                    android:layout_height="40dp"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:text="맥락 인증(기본)"
+                    android:textAlignment="center"
+                    android:textColor="#80182333"
+                    android:textSize="14sp"/>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="자필서명"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="PIN코트"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    >
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="비상 연락처"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="인증 메일"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="인증 메시지"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="신용카드 OCR"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="인증 사진"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="164dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="음성 인식"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+                </TableRow>
+
+
+            </TableLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="328dp"
+                android:layout_height="50dp"
+
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="100dp"
+                android:background="@drawable/btn_cost_auth2"
+                android:text="저장"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"/>
+        </LinearLayout>
     </LinearLayout>
 </layout>

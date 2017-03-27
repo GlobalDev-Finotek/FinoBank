@@ -7,6 +7,7 @@
     <color name="primary">@color/colorPrimary</color>
     <color name="danger">#ff585b</color>
     <color name="info">#00b9e6</color>
+    <color name="white_two">#e5e5e5</color>
 
     <color name="color_foreground">#FFFFFF</color>
     <color name="color_foreground_blue_button">#FFFFFF</color>
@@ -47,6 +48,7 @@
     <color name="color_send_enabled">@color/colorPrimary</color>
     <color name="color_chat_message_received">#F5F4F5</color>
     <color name="color_chat_status_message">#00B0E2</color>
-
     <color name="color_extended_control_bg">#e0e0e0</color>
+
+    <color name="color_chat_agreement_border">#E5E5E5</color>
 </resources>

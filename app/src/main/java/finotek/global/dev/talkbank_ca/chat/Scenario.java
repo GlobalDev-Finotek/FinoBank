@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 
+import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
@@ -73,6 +74,11 @@ class Scenario {
         if(msg instanceof IDCardInfo) {
             chatView.showIdCardInfo((IDCardInfo) msg);
         }
+
+        if(msg instanceof AgreementResult) {
+            chatView.agreementResult();
+            messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
+        }
     }
 
     private void respondTo(String msg) {
@@ -105,6 +111,7 @@ class Scenario {
             case "약관" :
                 break;
             case "약관확인" :
+                messageBox.add(new AgreementResult());
                 break;
             case "최근거래내역" :
                 break;

@@ -5,7 +5,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="10dp"
         android:weightSum="1">
 
         <android.support.v4.widget.NestedScrollView
@@ -44,9 +43,8 @@
                         android:id="@+id/btn_pin_registration"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/ex_control_btn_pressed"
                         android:text="PIN 코드 변경"
-                        android:textColor="@color/colorPrimary"/>
+                        />
 
                 </LinearLayout>
             </LinearLayout>

@@ -12,7 +12,8 @@
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:background="@color/white_two"
+            android:padding="16dp"
             android:text="@string/additional_inform"
             android:textColor="@android:color/black"
             android:textSize="24sp"/>
@@ -28,6 +29,7 @@
             android:id="@+id/edt_emergency_phone_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:hint="@string/emergency_phone_number"
             android:inputType="phone"/>
 
@@ -36,6 +38,7 @@
             android:id="@+id/edt_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:hint="@string/email_address"
             android:inputType="textEmailAddress"/>
 
@@ -57,9 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:background="@drawable/ex_control_btn_pressed"
+                android:elevation="0dp"
                 android:text="@string/capture_credit"
-                android:textColor="@color/colorPrimary"/>
+                />
 
         </LinearLayout>
 
@@ -81,9 +84,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:background="@drawable/ex_control_btn_pressed"
                 android:text="@string/capture_profile"
-                android:textColor="@color/colorPrimary"/>
+                />
 
         </LinearLayout>
 

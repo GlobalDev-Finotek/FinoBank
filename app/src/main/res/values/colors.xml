@@ -38,6 +38,9 @@
     <color name="aqua_blue">#00b9e6</color>
     <color name="dark_30">#4c1f2f42</color>
     <color name="black">#313131</color>
+    <color name="cool_green">#40cd65</color>
+    <color name="white_two">#e5e5e5</color>
+
 
     <color name="color_chat_divider">#D2D5D9</color>
     <color name="color_text_default">#1f2f42</color>
@@ -49,4 +52,5 @@
     <color name="color_chat_status_message">#00B0E2</color>
 
     <color name="color_extended_control_bg">#e0e0e0</color>
+    <color name="white_three">#e0e0e0</color>
 </resources>

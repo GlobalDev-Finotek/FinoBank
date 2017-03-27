@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="49dp"
+        android:height="49dp"
+        android:viewportHeight="49"
+        android:viewportWidth="49">
+    <group android:name="btn_back">
+        <path
+            android:name="Path-181-Copy"
+            android:fillColor="#00000000"
+            android:fillType="evenOdd"
+            android:pathData="M21,17 L29,24.7096292 L21,32z"
+            android:strokeColor="#FFFFFF"
+            android:strokeWidth="2"/>
+    </group>
+</vector>

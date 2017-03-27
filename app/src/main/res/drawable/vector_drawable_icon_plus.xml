@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="30dp"
+        android:height="30dp"
+        android:viewportHeight="30"
+        android:viewportWidth="30">
+    <group android:name="icon_plus">
+        <path
+            android:name="Shape"
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M21,15.8571429 L15.8571429,15.8571429 L15.8571429,21 L14.1428571,21 L14.1428571,15.8571429 L9,15.8571429 L9,14.1428571 L14.1428571,14.1428571 L14.1428571,9 L15.8571429,9 L15.8571429,14.1428571 L21,14.1428571z"
+            android:strokeColor="#00000000"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

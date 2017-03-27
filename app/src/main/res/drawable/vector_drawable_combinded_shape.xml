@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="20dp"
+        android:height="20dp"
+        android:viewportHeight="20"
+        android:viewportWidth="20">
+    <group android:name="icon_x">
+        <path
+            android:name="Combined-Shape"
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M11.2727273,10 L13.5,7.77272727 L12.2272727,6.5 L10,8.72727273 L7.77272727,6.5 L6.5,7.77272727 L8.72727273,10 L6.5,12.2272727 L7.77272727,13.5 L10,11.2727273 L12.2272727,13.5 L13.5,12.2272727 L11.2727273,10 Z"
+            android:strokeColor="#00000000"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

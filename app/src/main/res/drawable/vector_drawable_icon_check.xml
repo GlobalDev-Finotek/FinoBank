@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="32dp"
+        android:height="32dp"
+        android:viewportHeight="32"
+        android:viewportWidth="32">
+    <group android:name="icon_check">
+        <path
+            android:name="Combined-Shape"
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M10.3952972,20.3886541 L4.26882678,14.2621838 L-0.0351853934,18.5661959 L10.364815,28.9661964 L10.3761541,28.9548573 L10.4066362,28.9853394 L32.0733029,7.31867275 L27.7692907,3.01466058 L10.3952972,20.3886541 Z"
+            android:strokeColor="#00000000"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

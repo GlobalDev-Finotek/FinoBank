@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="28dp"
+        android:height="28dp"
+        android:viewportHeight="28"
+        android:viewportWidth="28">
+    <group
+        android:rotation="45"
+        android:translateX="20"
+        android:translateY="20">
+        <path
+            android:name="Path-252"
+            android:fillColor="#FF000000"
+            android:pathData="M10.3157895,18.1256508 L18.8624929,9.57894737"
+            android:strokeColor="#4083FF"/>
+        <path
+            android:name="Path-252-Copy"
+            android:fillColor="#FF000000"
+            android:pathData="M10.3157895,9.57894737 L18.8624929,18.1256508"
+            android:strokeColor="#4083FF"/>
+    </group>
+</vector>

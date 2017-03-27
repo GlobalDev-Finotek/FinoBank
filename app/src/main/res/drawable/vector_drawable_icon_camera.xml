@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="32dp"
+        android:height="32dp"
+        android:viewportHeight="32"
+        android:viewportWidth="32">
+    <group android:name="icon_camera">
+        <path
+            android:name="Fill-149"
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M16,12 C12.687,12 10,14.687 10,18 C10,21.313 12.687,24 16,24 C19.313,24 22,21.313 22,18 C22,14.687 19.313,12 16,12 L16,12 Z M16,26 C11.582,26 8,22.418 8,18 C8,13.582 11.582,10 16,10 C20.418,10 24,13.582 24,18 C24,22.418 20.418,26 16,26 L16,26 Z M28,6 L25,6 L24,4 C23.411,2.837 23.104,2 22,2 L10,2 C8.896,2 8.53,2.954 8,4 L7,6 L4,6 C1.791,6 0,7.791 0,10 L0,26 C0,28.209 1.791,30 4,30 L28,30 C30.209,30 32,28.209 32,26 L32,10 C32,7.791 30.209,6 28,6 L28,6 Z"
+            android:strokeColor="#00000000"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

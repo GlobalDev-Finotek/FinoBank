@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="38dp"
+        android:height="38dp"
+        android:viewportHeight="38"
+        android:viewportWidth="38">
+    <group android:name="icon_fail">
+        <path
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M20.3333333,17.6666667 L20.3333333,11 L17.6666667,11 L17.6666667,17.6666667 L11,17.6666667 L11,20.3333333 L17.6666667,20.3333333 L17.6666667,27 L20.3333333,27 L20.3333333,20.3333333 L27,20.3333333 L27,17.6666667 L20.3333333,17.6666667 Z"
+            android:strokeColor="#00000000"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

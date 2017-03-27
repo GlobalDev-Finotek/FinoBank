@@ -46,7 +46,7 @@ public class ChatView extends RecyclerView {
         this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
 
         this.addChatViewBuilder(ViewType.Agreement.ordinal(),new AgreementResultBuilder() );
-        this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder());
+        this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder(context));
     }
 
     public void showIdCardInfo(IDCardInfo info){

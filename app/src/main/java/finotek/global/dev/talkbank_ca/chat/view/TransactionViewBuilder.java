@@ -13,10 +13,16 @@ import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemTransactionBinding;
 
 public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransaction> {
+    private Context context;
+
     class ViewHolder extends RecyclerView.ViewHolder {
         public ViewHolder(View itemView) {
             super(itemView);
         }
+    }
+
+    public TransactionViewBuilder(Context context) {
+        this.context = context;
     }
 
     @Override
@@ -32,9 +38,12 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
         LinearLayout group = (LinearLayout) holder.itemView;
 
         for (Transaction tx : data.getTransactions()) {
-            ChatItemTransactionBinding binding = ChatItemTransactionBinding.inflate(LayoutInflater.from(group.getContext()));
+            Context context = group.getContext();
+            View view = LayoutInflater.from(context).inflate(R.layout.chat_item_transaction, group, false);
+            ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
             binding.setItem(tx);
-            group.addView(binding.main);
+
+            group.addView(view);
         }
     }
 }

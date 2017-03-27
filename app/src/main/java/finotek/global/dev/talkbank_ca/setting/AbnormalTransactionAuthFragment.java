@@ -12,8 +12,13 @@ import android.view.ViewGroup;
 import android.widget.GridLayout;
 import android.widget.TextView;
 
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentAbnormalTransactionBinding;
+import rx.functions.Action1;
 
 /**
  * Created by magyeong-ug on 21/03/2017.
@@ -74,6 +79,12 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 
 			binding.gvOptWrapper.addView(tvOpt);
 		}
+
+		RxView.clicks(binding.btnSave)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					// TODO  저장 처리
+				});
 
 		return binding.getRoot();
 	}

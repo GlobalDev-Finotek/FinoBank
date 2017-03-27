@@ -57,12 +57,12 @@
 
             <Button
                 android:id="@+id/btn_capture_creidt"
+                style="@style/Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
                 android:elevation="0dp"
-                android:text="@string/capture_credit"
-                />
+                android:text="@string/capture_credit"/>
 
         </LinearLayout>
 
@@ -81,11 +81,11 @@
 
             <Button
                 android:id="@+id/btn_capture_profile"
+                style="@style/Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="7dp"
-                android:text="@string/capture_profile"
-                />
+                android:text="@string/capture_profile"/>
 
         </LinearLayout>
 

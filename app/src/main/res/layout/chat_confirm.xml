@@ -2,10 +2,10 @@
 <HorizontalScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:scrollbars="none"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="10dp"
+    android:scrollbars="none">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,15 +15,17 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
-            app:buttonType="danger"
-            android:text="아니오" />
+            android:text="아니오"
+            app:buttonType="danger"/>
+
         <finotek.global.dev.talkbank_ca.widget.RoundButton
             android:id="@+id/confirm_btn"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
-            android:layout_marginStart="10dp"
             android:layout_marginEnd="16dp"
-            app:buttonType="primary"
-            android:text="네" />
+            android:layout_marginStart="10dp"
+            android:elevation="0dp"
+            android:text="네"
+            app:buttonType="primary"/>
     </LinearLayout>
 </HorizontalScrollView>

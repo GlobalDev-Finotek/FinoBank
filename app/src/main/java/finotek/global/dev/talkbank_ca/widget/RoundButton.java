@@ -5,21 +5,11 @@ import android.content.res.TypedArray;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class RoundButton extends AppCompatButton {
-    public enum ButtonType {
-        Primary, Danger, Info;
-
-        static ButtonType valueOf(int btnType) {
-            if(btnType == Primary.ordinal()) return Primary;
-            if(btnType == Danger.ordinal()) return Danger;
-            if(btnType == Info.ordinal()) return Info;
-            return null;
-        }
-    }
-
     public RoundButton(Context context) {
         super(context);
 
@@ -46,7 +36,7 @@ public class RoundButton extends AppCompatButton {
         switch(buttonType) {
             case Primary:
                 setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_primary));
-                setTextColor(ContextCompat.getColor(getContext(), R.color.primary));
+                setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                 break;
             case Danger:
                 setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_danger));
@@ -60,5 +50,16 @@ public class RoundButton extends AppCompatButton {
 
         invalidate();
         requestLayout();
+    }
+
+    public enum ButtonType {
+        Primary, Danger, Info;
+
+        static ButtonType valueOf(int btnType) {
+            if (btnType == Primary.ordinal()) return Primary;
+            if (btnType == Danger.ordinal()) return Danger;
+            if (btnType == Info.ordinal()) return Info;
+            return null;
+        }
     }
 }

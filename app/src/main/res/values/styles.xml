@@ -8,9 +8,9 @@
         <item name="android:editTextStyle">@style/CustomEditTextStyle</item>
         <item name="android:colorBackground">@color/white</item>
         <item name="editTextStyle">@style/CustomEditTextStyle</item>
-        <item name="buttonStyle">@style/Button</item>
-        <item name="android:buttonStyle">@style/Button</item>
+
     </style>
+    ㅇ
 
     <style name="noAnimTheme" parent="android:Theme">
         <item name="android:windowAnimationStyle">@null</item>

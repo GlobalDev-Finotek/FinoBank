@@ -44,8 +44,9 @@
                 android:id="@+id/btn_registration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="0.1"
-                android:background="@color/colorPrimary"
+                android:background="@drawable/btn_default_primary"
                 android:text="@string/string_user_regi"
                 android:textColor="@android:color/white"/>
         </LinearLayout>

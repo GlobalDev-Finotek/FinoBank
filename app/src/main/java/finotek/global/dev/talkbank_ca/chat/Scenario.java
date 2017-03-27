@@ -3,14 +3,20 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
@@ -81,6 +87,10 @@ class Scenario {
             chatView.agreementResult();
             messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
         }
+
+        if(msg instanceof RecentTransaction) {
+            chatView.transactionList((RecentTransaction) msg);
+        }
     }
 
     private void respondTo(String msg) {
@@ -116,6 +126,16 @@ class Scenario {
                 messageBox.add(new AgreementResult());
                 break;
             case "최근거래내역" :
+                ArrayList<Transaction> tx = new ArrayList<>();
+                tx.add(new Transaction("어머니", 0, 200000, 3033800, new DateTime()));
+                tx.add(new Transaction("박예린", 0, 100000, 3233800, new DateTime()));
+                tx.add(new Transaction("김가람", 0, 36200, 3333800, new DateTime()));
+                tx.add(new Transaction("김이솔", 1, 100000, 3370000, new DateTime()));
+                tx.add(new Transaction("김가람", 0, 15500, 3270000, new DateTime()));
+
+                RecentTransaction rt = new RecentTransaction();
+                rt.setTransactions(tx);
+                messageBox.add(rt);
                 break;
             case "계좌이체" :
                 break;

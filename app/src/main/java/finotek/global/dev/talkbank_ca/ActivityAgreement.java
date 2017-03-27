@@ -10,32 +10,6 @@ import android.widget.CompoundButton;
 
 import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.databinding.DataBindingUtil;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
-import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
-
-/**
- * Created by JungwonSeo on 2017-03-23.
- */
-
 public class ActivityAgreement extends AppCompatActivity {
 
 

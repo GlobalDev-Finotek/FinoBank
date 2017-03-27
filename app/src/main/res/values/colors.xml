@@ -42,6 +42,7 @@
     <color name="cool_green">#40cd65</color>
 
 
+
     <color name="color_chat_divider">#D2D5D9</color>
     <color name="color_text_default">@color/dark_100</color>
     <color name="color_chat_background">@android:color/white</color>
@@ -52,5 +53,5 @@
     <color name="color_chat_status_message">#00B0E2</color>
     <color name="color_extended_control_bg">#e0e0e0</color>
     <color name="color_chat_agreement_border">#E5E5E5</color>
-    <color name="white_three">#e0e0e0</color>
+
 </resources>

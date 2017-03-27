@@ -3,10 +3,11 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 
+import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
@@ -69,6 +70,15 @@ class Scenario {
             });
             chatView.confirm(ev);
         }
+
+        if(msg instanceof IDCardInfo) {
+            chatView.showIdCardInfo((IDCardInfo) msg);
+        }
+
+        if(msg instanceof AgreementResult) {
+            chatView.agreementResult();
+            messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
+        }
     }
 
     private void respondTo(String msg) {
@@ -94,6 +104,19 @@ class Scenario {
                     messageBox.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
                     step = 0;
                 }
+                break;
+            case "신분증":
+                messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
+                break;
+            case "약관" :
+                break;
+            case "약관확인" :
+                messageBox.add(new AgreementResult());
+                break;
+            case "최근거래내역" :
+                break;
+            case "계좌이체" :
+                break;
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
                 break;

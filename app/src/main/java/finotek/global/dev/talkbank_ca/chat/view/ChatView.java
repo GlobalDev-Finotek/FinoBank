@@ -8,8 +8,12 @@ import android.view.ViewGroup;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatMessage;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
+import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 
 /**
  * @author david lee at finotek.
@@ -17,7 +21,9 @@ import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
     enum ViewType {
-        Send, Receive, Divider, Status, Confirm
+        Send, Receive, Divider, Status, Confirm,
+        IDCard, RecentTransaction, AccountList,
+        Agreement, AgreementResult
     }
 
     public interface ViewBuilder<T> {
@@ -36,22 +42,33 @@ public class ChatView extends RecyclerView {
         this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
         this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
         this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
+        this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
+
+        this.addChatViewBuilder(ViewType.Agreement.ordinal(),new AgreementResultBuilder() );
+    }
+
+    public void showIdCardInfo(IDCardInfo info){
+        addMessage(ViewType.IDCard.ordinal(), info);
     }
 
     public void sendMessage(String msg) {
-        addMessage(ViewType.Send.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Send.ordinal(), new SendMessage(msg));
     }
 
     public void receiveMessage(String msg) {
-        addMessage(ViewType.Receive.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Receive.ordinal(), new ReceiveMessage(msg));
     }
 
     public void statusMessage(String msg) {
-        addMessage(ViewType.Status.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Status.ordinal(), new StatusMessage(msg));
     }
 
     public void dividerMessage(String msg) {
-        addMessage(ViewType.Divider.ordinal(), new ChatMessage(msg));
+        addMessage(ViewType.Divider.ordinal(), new DividerMessage(msg));
+    }
+
+    public void agreementResult() {
+        addMessage(ViewType.Agreement.ordinal(), null);
     }
 
     public void confirm(ChatSelectButtonEvent ev){

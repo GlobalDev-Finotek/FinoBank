@@ -11,8 +11,12 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -93,15 +97,41 @@ public class PinRegistrationActivity extends AppCompatActivity {
 	}
 
 	private void setTextColorCircle(Pin.Color c) {
+
 		ImageView iv2 = new ImageView(this);
 		iv2.setTag(ContextCompat.getColor(this, c.getColor()));
 		iv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle));
+
 		DrawableCompat.setTint(iv2.getDrawable(), ContextCompat.getColor(this, c.getColor()));
 		binding.glPinTextColor.addView(iv2);
 
-		iv2.setOnClickListener(v -> {
-			for (TextView tv : tvPwd) {
-				tv.setTextColor((int) iv2.getTag());
+		iv2.setOnClickListener(new View.OnClickListener() {
+
+			private boolean state = false;
+
+			@Override
+			public void onClick(View v) {
+
+				/* 비밀번호 문자열 변경 */
+				for (TextView tv : tvPwd) {
+					tv.setTextColor((int) iv2.getTag());
+				}
+
+				if (state) {
+					iv2.setImageDrawable(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.vector_drawable_icon_check));
+
+					/* 흰색은 검은 체크 표시로 처리 */
+					if(Pin.Color.WHITE == iv2.getTag()) {
+						iv2.getDrawable().setTint(ContextCompat.getColor(PinRegistrationActivity.this, R.color.black));
+					}
+
+					iv2.setBackgroundColor((Integer) iv2.getTag());
+				} else {
+					iv2.setImageDrawable(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.circle));
+					DrawableCompat.setTint(iv2.getDrawable(), ContextCompat.getColor(PinRegistrationActivity.this, c.getColor()));
+				}
+
+				state = !state;
 			}
 		});
 	}
@@ -115,6 +145,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		iv.setOnClickListener(v -> binding.llPincodeWrapper.setBackgroundColor((int) iv.getTag()));
 	}
 
+	/* 키보드 문자열 생성 */
 	private List<String> getCompleteRandomizedSeq() {
 		ArrayList<String> completeSets = new ArrayList<>();
 
@@ -128,17 +159,6 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		completeSets.add(" ");
 
 		return completeSets;
-	}
-
-	private View crateColoredView(Pin.Color color) {
-		TextView coloredWidget = new TextView(this);
-		coloredWidget.setBackgroundColor(ContextCompat.getColor(this, color.getColor()));
-		coloredWidget.setText("111");
-		coloredWidget.setTextSize(15f);
-		coloredWidget.setTag(color.getColor());
-		coloredWidget.setTextColor(ContextCompat.getColor(this, color.getColor()));
-
-		return coloredWidget;
 	}
 
 }

@@ -5,13 +5,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/white_two"
             android:padding="10dp"
             android:text="@string/basic_inform"
             android:textColor="@android:color/black"
@@ -52,16 +53,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/ex_control_btn_pressed"
             android:text="@string/string_comm_sign_input"
-            android:textColor="@color/colorPrimary"/>
+            />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="20dp"
             android:layout_marginTop="10dp"
+            android:background="@color/white_three"
             android:orientation="vertical"
-            >
+            android:padding="15dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -125,14 +127,14 @@
                     android:text="@string/simple_sign_text"/>
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/sign_instruction"/>
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/sign_instruction"/>
 
     </LinearLayout>
 </layout>

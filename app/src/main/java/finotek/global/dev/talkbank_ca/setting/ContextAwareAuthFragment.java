@@ -36,7 +36,7 @@ public class ContextAwareAuthFragment extends android.app.Fragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 		FragmentContextAwareBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_context_aware, container, false);
 
-		SimpleDateFormat sdfDate = new SimpleDateFormat("HH:mm");
+		SimpleDateFormat sdfDate = new SimpleDateFormat("a hh:mm");
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
 
@@ -54,6 +54,7 @@ public class ContextAwareAuthFragment extends android.app.Fragment {
 							},
 							now.getHours(), now.getMinutes(), false);
 					dialog.show();
+
 				});
 
 		RxView.clicks(binding.tvEnd)

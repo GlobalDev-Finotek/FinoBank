@@ -89,6 +89,7 @@ class Scenario {
         }
 
         if(msg instanceof RecentTransaction) {
+            messageBox.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
             chatView.transactionList((RecentTransaction) msg);
         }
     }
@@ -138,6 +139,7 @@ class Scenario {
                 messageBox.add(rt);
                 break;
             case "계좌이체" :
+                messageBox.add("이체하실 분을 선택해 주세요.");
                 break;
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));

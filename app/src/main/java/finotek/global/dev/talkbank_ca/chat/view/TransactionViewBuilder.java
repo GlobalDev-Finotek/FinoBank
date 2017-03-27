@@ -36,13 +36,13 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
     public void bind(RecyclerView.ViewHolder viewHolder, RecentTransaction data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         LinearLayout group = (LinearLayout) holder.itemView;
+        group.removeAllViews();
 
         for (Transaction tx : data.getTransactions()) {
             Context context = group.getContext();
             View view = LayoutInflater.from(context).inflate(R.layout.chat_item_transaction, group, false);
             ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
             binding.setItem(tx);
-
             group.addView(view);
         }
     }

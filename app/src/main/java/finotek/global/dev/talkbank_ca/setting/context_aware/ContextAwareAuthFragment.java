@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.setting;
+package finotek.global.dev.talkbank_ca.setting.context_aware;
 
 import android.app.TimePickerDialog;
 import android.databinding.DataBindingUtil;

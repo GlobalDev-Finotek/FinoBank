@@ -37,42 +37,6 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 		transaction.add(R.id.fl_cam, capturePicFragment);
 		transaction.commit();
 
-		RxView.clicks(binding.btnTakePic)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					if (!isCaptureDone) {
-						capturePicFragment.takePicture(path -> {
-							if (!TextUtils.isEmpty(path)) {
-								isCaptureDone = true;
-								runOnUiThread(() -> {
-									binding.btnRecapture.setVisibility(View.VISIBLE);
-									binding.btnTakePic.setText(R.string.string_complete);
-
-								});
-
-							} else {
-								isCaptureDone = false;
-								runOnUiThread(() -> binding.btnTakePic.setText(R.string.take_pic));
-							}
-						});
-					} else {
-						finish();
-					}
-				});
-
-
-		RxView.clicks(binding.btnRecapture)
-				.throttleFirst(300, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					capturePicFragment.unlockCamera();
-					isCaptureDone = false;
-					runOnUiThread(() -> {
-						binding.btnRecapture.setVisibility(View.GONE);
-						binding.btnTakePic.setText(getString(R.string.take_pic));
-					});
-				});
-
 	}
-
 
 }

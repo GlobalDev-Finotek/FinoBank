@@ -9,39 +9,6 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:orientation="horizontal"
-            android:padding="20dp">
-
-            <Button
-                android:id="@+id/btn_recapture"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/ex_control_btn_pressed"
-                android:text="@string/re_capture"
-                android:textColor="@color/colorPrimary"
-                android:visibility="gone"/>
-
-            <Button
-                android:id="@+id/btn_take_pic"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="1"
-                android:background="@drawable/btn_round_primary"
-                android:elevation="0dp"
-                android:text="@string/take_pic"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 

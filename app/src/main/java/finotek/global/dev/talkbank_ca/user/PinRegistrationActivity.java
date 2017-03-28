@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca.user;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -60,14 +61,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 		});
 		for (int i = 0; i < PINCODE_LENGTH; ++i) {
-
-			TextView tv = new TextView(this);
-			tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_black_blank));
-			tv.setMinEms(3);
-			tv.setPadding(0, 40, 0, 40);
-			tv.setGravity(Gravity.CENTER);
-			tv.setTextSize(15.8f);
-
+			TextView tv = generatePwdTextView();
 			tvPwd[i] = tv;
 			binding.llPincodeWrapper.addView(tv);
 		}
@@ -96,13 +90,20 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 	}
 
+	@NonNull
+	private TextView generatePwdTextView() {
+		TextView tv = new TextView(this);
+		tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_black_blank));
+		tv.setMinEms(3);
+		tv.setPadding(0, 40, 0, 40);
+		tv.setGravity(Gravity.CENTER);
+		tv.setTextSize(15.8f);
+		return tv;
+	}
+
 	private void setTextColorCircle(Pin.Color c) {
 
-		ImageView iv2 = new ImageView(this);
-		iv2.setTag(ContextCompat.getColor(this, c.getColor()));
-		iv2.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle));
-
-		DrawableCompat.setTint(iv2.getDrawable(), ContextCompat.getColor(this, c.getColor()));
+		ImageView iv2 = generateBackgroundColorCircle(c);
 		binding.glPinTextColor.addView(iv2);
 
 		iv2.setOnClickListener(new View.OnClickListener() {
@@ -137,12 +138,18 @@ public class PinRegistrationActivity extends AppCompatActivity {
 	}
 
 	private void setPinBackgroundCircle(Pin.Color c) {
+		ImageView iv = generateBackgroundColorCircle(c);
+		binding.glPinBackground.addView(iv);
+		iv.setOnClickListener(v -> binding.llPincodeWrapper.setBackgroundColor((int) iv.getTag()));
+	}
+
+	@NonNull
+	private ImageView generateBackgroundColorCircle(Pin.Color c) {
 		ImageView iv = new ImageView(this);
 		iv.setTag(ContextCompat.getColor(this, c.getColor()));
 		iv.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.circle));
 		DrawableCompat.setTint(iv.getDrawable(), ContextCompat.getColor(this, c.getColor()));
-		binding.glPinBackground.addView(iv);
-		iv.setOnClickListener(v -> binding.llPincodeWrapper.setBackgroundColor((int) iv.getTag()));
+		return iv;
 	}
 
 	/* 키보드 문자열 생성 */

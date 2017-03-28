@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca;
+package finotek.global.dev.talkbank_ca.agreement;
 
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
@@ -8,39 +8,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
 
-import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
-
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.databinding.DataBindingUtil;
-import android.net.Uri;
-import android.os.Environment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.CompoundButton;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.TextView;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-
+import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
 /**
  * Created by JungwonSeo on 2017-03-23.
  */
 
-public class ActivityAgreement extends AppCompatActivity {
-
-
-
-	public class AgreementActivity extends AppCompatActivity {
+public class AgreementActivity extends AppCompatActivity {
 
 		ActivityAgreementBinding binding;
 
@@ -50,24 +25,19 @@ public class ActivityAgreement extends AppCompatActivity {
 			setContentView(R.layout.activity_agreement);
 			binding = DataBindingUtil.setContentView(this, R.layout.activity_agreement);
 
-
 			// check one -> click all
-			binding.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-				@Override
-				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					if (binding.radioButton.isChecked()) {
-						binding.radioButton2.setChecked(true);
-						binding.radioButton3.setChecked(true);
-						binding.radioButton4.setChecked(true);
-						binding.radioButton5.setChecked(true);
-					}
-
-					// show_up signature button
-					if (binding.radioButton.isChecked() && binding.radioButton6.isChecked()) {
-						binding.button.setVisibility(View.VISIBLE);
-					}
+			binding.radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+				if (binding.radioButton.isChecked()) {
+					binding.radioButton2.setChecked(true);
+					binding.radioButton3.setChecked(true);
+					binding.radioButton4.setChecked(true);
+					binding.radioButton5.setChecked(true);
 				}
 
+				// show_up signature button
+				if (binding.radioButton.isChecked() && binding.radioButton6.isChecked()) {
+					binding.button.setVisibility(View.VISIBLE);
+				}
 			});
 
 			//individual check makes check_all button to be true
@@ -213,5 +183,5 @@ public class ActivityAgreement extends AppCompatActivity {
 
 
 
-}
+
 

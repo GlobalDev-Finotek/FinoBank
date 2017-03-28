@@ -1,10 +1,10 @@
 package finotek.global.dev.talkbank_ca.setting;
 
 import android.support.v13.app.FragmentStatePagerAdapter;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 
+import finotek.global.dev.talkbank_ca.setting.abnormal.AbnormalTransactionAuthFragment;
+import finotek.global.dev.talkbank_ca.setting.context_aware.ContextAwareAuthFragment;
+import finotek.global.dev.talkbank_ca.setting.cost_auth.CostAuthFragment;
 import finotek.global.dev.talkbank_ca.user.UserInfoFragment;
 
 /**

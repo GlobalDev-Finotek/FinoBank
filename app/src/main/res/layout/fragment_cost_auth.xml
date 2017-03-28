@@ -22,7 +22,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
                 android:text="금액별 인증 설정"
                 android:textSize="18sp"/>
@@ -33,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginleft="16dp"
                 android:layout_weight="0.00"
                 android:paddingLeft="143dp"/>
 
@@ -51,14 +49,12 @@
                 android:layout_width="458dp"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="14dp"
-                android:layout_marginLeft="28dp"
                 android:layout_marginTop="14dp"
                 android:text="이체 금액"/>
 
             <TableLayout
                 android:layout_width="328dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="0dp"
                 android:background="@drawable/cell_shape"
                 android:stretchColumns="*">
@@ -133,7 +129,6 @@
                 android:layout_width="328dp"
                 android:layout_height="match_parent"
                 android:layout_marginBottom="20dp"
-                android:layout_marginLeft="16dp"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/cell_shape">
 

@@ -15,8 +15,7 @@
             android:background="@color/white_two"
             android:padding="16dp"
             android:text="@string/additional_inform"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"/>
+            android:theme="@style/Title"/>
 
         <View
             android:layout_width="match_parent"
@@ -53,7 +52,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/credit_card_registration"/>
+                android:text="@string/credit_card_registration"
+                android:theme="@style/Stit"/>
 
             <Button
                 android:id="@+id/btn_capture_creidt"
@@ -77,7 +77,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/profile_registration"/>
+                android:text="@string/profile_registration"
+                android:theme="@style/Stit"/>
 
             <Button
                 android:id="@+id/btn_capture_profile"

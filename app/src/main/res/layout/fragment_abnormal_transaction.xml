@@ -20,7 +20,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="이상 거래 시 인증 설정"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:theme="@style/Title"/>
 
             <Switch
                 android:id="@+id/switch4"
@@ -39,7 +40,8 @@
                 android:id="@+id/textView18"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"/>
+                android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"
+                android:theme="@style/Stit"/>
 
             <GridLayout
                 android:id="@+id/gv_opt_wrapper"

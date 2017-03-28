@@ -15,8 +15,7 @@
             android:background="@color/white_two"
             android:padding="10dp"
             android:text="@string/basic_inform"
-            android:textColor="@android:color/black"
-            android:textSize="24sp"/>
+            android:theme="@style/Title"/>
 
         <View
             android:layout_width="match_parent"
@@ -116,7 +115,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/complex_sign_text"/>
+                    android:text="@string/complex_sign_text"
+                    android:theme="@style/TxtMircro"/>
 
                 <TextView
                     android:id="@+id/textView7"
@@ -124,7 +124,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="@string/simple_sign_text"/>
+                    android:text="@string/simple_sign_text"
+                    android:theme="@style/TxtMircro"/>
             </LinearLayout>
 
         </LinearLayout>
@@ -134,7 +135,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="10dp"
-            android:text="@string/sign_instruction"/>
+            android:text="@string/sign_instruction"
+            android:theme="@style/Stit"/>
 
     </LinearLayout>
 </layout>

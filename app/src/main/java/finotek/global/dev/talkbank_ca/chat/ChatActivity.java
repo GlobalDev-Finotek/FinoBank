@@ -25,15 +25,18 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
+import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
+    private ChatFooterInputBinding fiBinding;
     private MessageBox messageBox;
     private Scenario scenario;
 
     private boolean isExControlAvailable = false;
     private View exControlView = null;
+    private View footerInputs = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,19 +48,7 @@ public class ChatActivity extends AppCompatActivity {
         scenario = new Scenario(this, binding.chatView, messageBox);
         messageBox.getObservable().subscribe(this::onNewMessageUpdated);
 
-        RxView.focusChanges(binding.footerInputs.chatEditText)
-                .delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(this::chatEditFieldFocusChanged);
-
-        RxTextView.textChanges(binding.footerInputs.chatEditText)
-                .subscribe(this::chatEditFieldTextChanged);
-
-        RxView.clicks(binding.footerInputs.showExControl)
-            .throttleFirst(200, TimeUnit.MILLISECONDS)
-            .delay(100, TimeUnit.MILLISECONDS)
-            .subscribe(this::expandControlClickEvent);
-
-        preInitExControlView();
+        preInitControlViews();
     }
 
     private void onNewMessageUpdated(Object msg){
@@ -81,8 +72,8 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    public void onSendButtonClickEvent(View v){
-        String msg = binding.footerInputs.chatEditText.getText().toString();
+    public void onSendButtonClickEvent(Void aVoid){
+        String msg = fiBinding.chatEditText.getText().toString();
         messageBox.add(new SendMessage(msg));
         clearInput();
     }
@@ -100,28 +91,48 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void chatEditFieldTextChanged(CharSequence value) {
-        binding.footerInputs.sendButton.setEnabled(!value.toString().isEmpty());
+        fiBinding.sendButton.setEnabled(!value.toString().isEmpty());
     }
 
     private void clearInput() {
-        binding.footerInputs.sendButton.setEnabled(false);
-        binding.footerInputs.chatEditText.setText("");
+        fiBinding.sendButton.setEnabled(false);
+        fiBinding.chatEditText.setText("");
     }
 
     private void hideExControl() {
         isExControlAvailable = false;
         binding.footer.removeView(exControlView);
-        binding.footerInputs.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
+        fiBinding.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
     }
 
     private void showExControl() {
         isExControlAvailable = true;
         binding.footer.addView(exControlView);
-        binding.footerInputs.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
+        fiBinding.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
     }
 
-    private void preInitExControlView(){
+    private void preInitControlViews(){
         exControlView = inflate(R.layout.chat_extended_control);
+        footerInputs = inflate(R.layout.chat_footer_input);
+
+        fiBinding = ChatFooterInputBinding.bind(footerInputs);
+        RxView.focusChanges(fiBinding.chatEditText)
+                .delay(100, TimeUnit.MILLISECONDS)
+                .subscribe(this::chatEditFieldFocusChanged);
+
+        RxTextView.textChanges(fiBinding.chatEditText)
+                .subscribe(this::chatEditFieldTextChanged);
+
+        RxView.clicks(fiBinding.showExControl)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .delay(100, TimeUnit.MILLISECONDS)
+                .subscribe(this::expandControlClickEvent);
+
+        RxView.clicks(fiBinding.sendButton)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .subscribe(this::onSendButtonClickEvent);
+
+        binding.footer.addView(footerInputs);
     }
 
     /**
@@ -139,7 +150,7 @@ public class ChatActivity extends AppCompatActivity {
                 v.getGlobalVisibleRect(editTextRect);
 
                 Rect sendButtonRect = new Rect();
-                binding.footerInputs.sendButton.getGlobalVisibleRect(sendButtonRect);
+                fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
 
                 if(!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
                         && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
@@ -158,7 +169,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void releaseControls(){
-        dismissKeyboard(binding.footerInputs.chatEditText);
+        dismissKeyboard(fiBinding.chatEditText);
         hideExControl();
     }
 

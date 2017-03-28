@@ -9,7 +9,7 @@ import finotek.global.dev.talkbank_ca.base.mvp.IMvpView;
  * Created by kwm on 2017. 3. 6..
  */
 
-public interface CaptureProfileView extends IMvpView {
+interface CaptureProfileView extends IMvpView {
   void setFlashButtonIcon(boolean flashState);
 
   void stopRecording(String videoFilePath);

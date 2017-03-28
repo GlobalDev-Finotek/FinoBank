@@ -41,6 +41,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.jakewharton.rxbinding.view.RxView;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,6 +57,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentCapturePicBinding;
+import rx.functions.Action1;
 
 /**
  * Created by kwm on 2017. 3. 6..
@@ -274,13 +277,7 @@ public class CapturePicFragment extends Fragment
 
     @Override
     public void onError(@NonNull CameraDevice cameraDevice, int error) {
-      mCameraOpenCloseLock.release();
-      cameraDevice.close();
-      mCameraDevice = null;
-      Activity activity = getActivity();
-      if (null != activity) {
-        activity.finish();
-      }
+
     }
 
   };
@@ -394,6 +391,15 @@ public class CapturePicFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState) {
       super.onActivityCreated(savedInstanceState);
       mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+
+      RxView.clicks(binding.ibSize)
+          .throttleFirst(200, TimeUnit.MILLISECONDS)
+          .subscribe(new Action1<Void>() {
+            @Override
+            public void call(Void aVoid) {
+
+            }
+          });
     }
 
     @TargetApi(Build.VERSION_CODES.M)

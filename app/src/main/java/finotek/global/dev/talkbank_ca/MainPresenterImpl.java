@@ -25,6 +25,10 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 		this.activity = activity;
 	}
 
+	/**
+	 * @param isFirst - 앱을 처음 실행해는 지 여부
+	 *                처음 앱 실행여부에 따라 화면 전환
+	 */
 	@Override
 	public void moveToNextActivity(boolean isFirst) {
 

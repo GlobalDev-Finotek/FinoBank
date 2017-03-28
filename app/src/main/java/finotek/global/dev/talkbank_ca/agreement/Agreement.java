@@ -1,17 +1,16 @@
-package finotek.global.dev.talkbank_ca;
+package finotek.global.dev.talkbank_ca.agreement;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 
+import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
 /**

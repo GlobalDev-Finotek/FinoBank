@@ -46,7 +46,7 @@ import finotek.global.dev.talkbank_ca.base.mvp.BasePresenter;
  */
 
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-public class CaptureProfile extends BasePresenter<CaptureProfileView> implements TextureView.SurfaceTextureListener {
+class CaptureProfile extends BasePresenter<CaptureProfileView> implements TextureView.SurfaceTextureListener {
 
   static final String[] CAM_PERMISSIONS = {
       Manifest.permission.CAMERA

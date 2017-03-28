@@ -9,6 +9,9 @@ import android.support.v7.app.AppCompatActivity;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySettingDetailBinding;
+import finotek.global.dev.talkbank_ca.setting.abnormal.AbnormalTransactionAuthFragment;
+import finotek.global.dev.talkbank_ca.setting.context_aware.ContextAwareAuthFragment;
+import finotek.global.dev.talkbank_ca.setting.cost_auth.CostAuthFragment;
 import finotek.global.dev.talkbank_ca.user.UserInfoFragment;
 
 public class SettingDetailActivity extends AppCompatActivity {

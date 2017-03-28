@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.setting;
+package finotek.global.dev.talkbank_ca.setting.abnormal;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -18,7 +18,6 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentAbnormalTransactionBinding;
-import rx.functions.Action1;
 
 /**
  * Created by magyeong-ug on 21/03/2017.
@@ -43,6 +42,8 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 		FragmentAbnormalTransactionBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_abnormal_transaction, container, false);
+
+
 		for (int i = 0; i < options.length; ++i) {
 			TextView tvOpt = new TextView(getActivity());
 			tvOpt.setText(options[i]);

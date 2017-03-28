@@ -3,14 +3,21 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 
+import org.joda.time.DateTime;
+
+import java.util.ArrayList;
+
+import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
@@ -73,11 +80,23 @@ class Scenario {
 
         if(msg instanceof IDCardInfo) {
             chatView.showIdCardInfo((IDCardInfo) msg);
+            messageBox.add(new ReceiveMessage("위 내용이 맞으세요?"));
+            messageBox.add(new ConfirmRequest());
+        }
+
+        if(msg instanceof Agreement) {
+            messageBox.add(new ReceiveMessage("약관 확인 및 동의를 진행해 주세요."));
+            chatView.agreement();
         }
 
         if(msg instanceof AgreementResult) {
             chatView.agreementResult();
             messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
+        }
+
+        if(msg instanceof RecentTransaction) {
+            messageBox.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
+            chatView.transactionList((RecentTransaction) msg);
         }
     }
 
@@ -109,13 +128,25 @@ class Scenario {
                 messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
                 break;
             case "약관" :
+                messageBox.add(new Agreement());
                 break;
             case "약관확인" :
                 messageBox.add(new AgreementResult());
                 break;
             case "최근거래내역" :
+                ArrayList<Transaction> tx = new ArrayList<>();
+                tx.add(new Transaction("어머니", 0, 200000, 3033800, new DateTime()));
+                tx.add(new Transaction("박예린", 0, 100000, 3233800, new DateTime()));
+                tx.add(new Transaction("김가람", 0, 36200, 3333800, new DateTime()));
+                tx.add(new Transaction("김이솔", 1, 100000, 3370000, new DateTime()));
+                tx.add(new Transaction("김가람", 0, 15500, 3270000, new DateTime()));
+
+                RecentTransaction rt = new RecentTransaction();
+                rt.setTransactions(tx);
+                messageBox.add(rt);
                 break;
             case "계좌이체" :
+                messageBox.add("이체하실 분을 선택해 주세요.");
                 break;
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));

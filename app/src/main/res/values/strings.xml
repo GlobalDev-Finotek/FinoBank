@@ -25,7 +25,12 @@
 
     <string name="string_register_account">계좌 개설</string>
     <string name="string_transfer_money">계좌 이체</string>
+    <string name="string_transfer">이체</string>
     <string name="string_check_account">계좌 조회</string>
+    <string name="string_withdrawal">출금</string>
+    <string name="string_deposit">입금</string>
+    <string name="string_balance">잔액</string>
+    <string name="string_price_unit">원</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="button_save">저장</string>

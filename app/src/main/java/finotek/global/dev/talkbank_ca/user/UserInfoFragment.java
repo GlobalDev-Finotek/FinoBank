@@ -16,6 +16,7 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.LayoutUserRegistrationBinding;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
+import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 
 /**
  * Created by magyeong-ug on 21/03/2017.

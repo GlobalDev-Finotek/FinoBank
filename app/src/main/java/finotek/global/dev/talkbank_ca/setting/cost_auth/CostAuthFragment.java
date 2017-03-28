@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -19,6 +18,24 @@ import finotek.global.dev.talkbank_ca.databinding.FragmentCostAuthBinding;
 
 public class CostAuthFragment extends android.app.Fragment {
 
+
+	View.OnClickListener costOnClickListener = new View.OnClickListener() {
+
+		private boolean isClicked;
+
+		@Override
+		public void onClick(View v) {
+			if (isClicked) {
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+			} else {
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
+			}
+
+			isClicked = !isClicked;
+		}
+	};
 
 	public static CostAuthFragment newInstance(String title) {
 		CostAuthFragment fragment = new CostAuthFragment();
@@ -38,24 +55,8 @@ public class CostAuthFragment extends android.app.Fragment {
 		binding.tv100.setOnClickListener(costOnClickListener);
 		binding.tv500.setOnClickListener(costOnClickListener);
 
+		binding.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
+
 		return binding.getRoot();
 	}
-
-	View.OnClickListener costOnClickListener = new View.OnClickListener() {
-
-		private boolean isClicked;
-
-		@Override
-		public void onClick(View v) {
-			if (isClicked) {
-				v.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
-				((TextView)v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-			} else {
-				v.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
-				((TextView)v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
-			}
-
-			isClicked = !isClicked;
-		}
-	};
 }

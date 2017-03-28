@@ -84,7 +84,7 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 		RxView.clicks(binding.btnSave)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					// TODO  저장 처리
+					getActivity().onBackPressed();
 				});
 
 		return binding.getRoot();

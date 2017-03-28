@@ -22,7 +22,7 @@
         </activity>
         <activity android:name=".user.UserRegistrationActivity">
         </activity>
-        <activity android:name=".user.SignRegistrationActivity">
+        <activity android:name=".user.sign.SignRegistrationActivity">
         </activity>
         <activity android:name=".user.profile.CaptureProfilePicActivity">
         </activity>

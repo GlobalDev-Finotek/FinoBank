@@ -25,29 +25,18 @@
                     android:id="@+id/ll_regi_additional"
                     layout="@layout/activity_user_regi_additional"/>
 
-                <LinearLayout
+                <Button
+                    android:id="@+id/btn_registration"
+                    style="@style/Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <TextView
-                        android:id="@+id/textView16"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:paddingBottom="4dp"
-                        android:paddingTop="4dp"
-                        android:text="PIN 코드 변경"/>
-
-                    <Button
-                        android:id="@+id/btn_pin_registration"
-                        style="@style/Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="PIN 코드 변경"/>
-
-                </LinearLayout>
+                    android:layout_margin="16dp"
+                    android:layout_weight="0.1"
+                    android:text="@string/string_user_regi"
+                    />
             </LinearLayout>
+
+
         </android.support.v4.widget.NestedScrollView>
 
 

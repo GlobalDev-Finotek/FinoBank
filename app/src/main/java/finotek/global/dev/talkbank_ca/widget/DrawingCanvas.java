@@ -23,6 +23,7 @@ public class DrawingCanvas extends View {
 	private Canvas drawCanvas;
 	private Bitmap canvasBitmap;
 	private Context context;
+	private OnCanvasTouchListener onCanvasTouchListener;
 
 	public DrawingCanvas(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -44,6 +45,16 @@ public class DrawingCanvas extends View {
 		canvasPaint = new Paint(Paint.DITHER_FLAG);
 	}
 
+	public interface OnCanvasTouchListener {
+		void onTouchStart();
+
+		void onTouchEnd();
+	}
+
+	public void setOnCanvasTouchListener(OnCanvasTouchListener onCanvasTouchListener) {
+		this.onCanvasTouchListener = onCanvasTouchListener;
+	}
+
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -57,14 +68,20 @@ public class DrawingCanvas extends View {
 		float touchX = event.getX();
 		float touchY = event.getY();
 
+		if (onCanvasTouchListener == null) {
+			throw new NullPointerException("canvas touch listener null");
+		}
+
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
+				onCanvasTouchListener.onTouchStart();
 				drawPath.moveTo(touchX, touchY);
 				break;
 			case MotionEvent.ACTION_MOVE:
 				drawPath.lineTo(touchX, touchY);
 				break;
 			case MotionEvent.ACTION_UP:
+				onCanvasTouchListener.onTouchEnd();
 				drawCanvas.drawPath(drawPath, drawPaint);
 				drawPath.reset();
 				break;

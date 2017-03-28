@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.user;
+package finotek.global.dev.talkbank_ca.user.sign;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,20 +11,47 @@ import com.jakewharton.rxbinding.view.RxView;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
+import finotek.global.dev.talkbank_ca.widget.DrawingCanvas;
+import rx.Observable;
+import rx.functions.Action0;
+import rx.functions.Action1;
 
 
 public class SignRegistrationActivity extends AppCompatActivity {
 
   private ActivitySignRegistartionBinding binding;
-  private int touchCount;
+  private int stepCount;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_registartion);
 
-    RxView.clicks(binding.btnRegistration)
-        .subscribe(integer -> binding.btnRegistration.setText(R.string.string_next));
+    Observable.just(stepCount)
+        .subscribe(new Action1<Integer>() {
+          @Override
+          public void call(Integer stepCount) {
+
+            switch (stepCount) {
+
+            }
+
+          }
+        });
+
+    binding.drawingCanvas.setOnCanvasTouchListener(new DrawingCanvas.OnCanvasTouchListener() {
+      @Override
+      public void onTouchStart() {
+
+      }
+
+      @Override
+      public void onTouchEnd() {
+
+      }
+    });
+
+
 
 
   }
@@ -34,24 +61,5 @@ public class SignRegistrationActivity extends AppCompatActivity {
     getMenuInflater().inflate(R.menu.user_regi_menu, menu);
     return true;
   }
-
-  @Override
-  public boolean onOptionsItemSelected(MenuItem item) {
-    int id = item.getItemId();
-    if (id == R.id.action_settings) {
-      Toast.makeText(getApplicationContext(), "Settings", Toast.LENGTH_SHORT).show();
-      return true;
-    } else if (id == R.id.action_search) {
-      Toast.makeText(getApplicationContext(), "Search", Toast.LENGTH_SHORT).show();
-      return true;
-    } else if (id == R.id.action_edit) {
-      Toast.makeText(getApplicationContext(), "Edit", Toast.LENGTH_SHORT).show();
-      return true;
-    }
-    return super.onOptionsItemSelected(item);
-  }
-
-
-
 
 }

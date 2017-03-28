@@ -8,14 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding.view.RxView;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentContextAwareBinding;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by magyeong-ug on 21/03/2017.
@@ -43,31 +40,29 @@ public class ContextAwareAuthFragment extends android.app.Fragment {
 		binding.tvStart.setText(strDate);
 		binding.tvEnd.setText(strDate);
 
-		RxView.clicks(binding.tvStart)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(aVoid -> {
-					TimePickerDialog dialog = new TimePickerDialog(getActivity(),
-							(view, hourOfDay, minute) -> {
-								String hr = hourOfDay > 10 ? String.valueOf(hourOfDay) : "0" + String.valueOf(hourOfDay);
-								String min = minute > 10 ? String.valueOf(minute) : "0" + String.valueOf(minute);
-								binding.tvStart.setText(hr + ":" + min);
-							},
-							now.getHours(), now.getMinutes(), false);
-					dialog.show();
+		binding.tvStart.setOnClickListener(v -> {
+			TimePickerDialog dialog = new TimePickerDialog(getActivity(),
+					(view, hourOfDay, minute) -> {
+						String hr = hourOfDay > 10 ? String.valueOf(hourOfDay) : "0" + String.valueOf(hourOfDay);
+						String min = minute > 10 ? String.valueOf(minute) : "0" + String.valueOf(minute);
+						binding.tvStart.setText(hr + ":" + min);
+					},
+					now.getHours(), now.getMinutes(), false);
+			dialog.show();
+		});
 
-				});
+		binding.tvEnd.setOnClickListener(v -> {
+			TimePickerDialog dialog = new TimePickerDialog(getActivity(),
+					(view, hourOfDay, minute) -> {
+						String hr = hourOfDay > 10 ? String.valueOf(hourOfDay) : "0" + String.valueOf(hourOfDay);
+						String min = minute > 10 ? String.valueOf(minute) : "0" + String.valueOf(minute);
+						binding.tvEnd.setText(hr + ":" + min);
+					},
+					now.getHours(), now.getMinutes(), false);
+			dialog.show();
+		});
 
-		RxView.clicks(binding.tvEnd)
-				.subscribe(aVoid -> {
-					TimePickerDialog dialog = new TimePickerDialog(getActivity(),
-							(view, hourOfDay, minute) -> {
-								String hr = hourOfDay > 10 ? String.valueOf(hourOfDay) : "0" + String.valueOf(hourOfDay);
-								String min = minute > 10 ? String.valueOf(minute) : "0" + String.valueOf(minute);
-								binding.tvEnd.setText(hr + ":" + min);
-							},
-							now.getHours(), now.getMinutes(), false);
-					dialog.show();
-				});
+		binding.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
 
 		return binding.getRoot();
 	}

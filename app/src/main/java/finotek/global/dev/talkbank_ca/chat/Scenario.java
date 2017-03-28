@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
+import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
@@ -15,6 +16,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
@@ -45,27 +47,32 @@ class Scenario {
     }
 
     private void onNewMessage(Object msg){
+        // 보낸 메시지
         if(msg instanceof SendMessage) {
             SendMessage recv = (SendMessage) msg;
             chatView.sendMessage(recv.getMessage());
             this.respondTo(recv.getMessage());
         }
 
+        // 받은 메시지
         if(msg instanceof ReceiveMessage) {
             ReceiveMessage recv = (ReceiveMessage) msg;
             chatView.receiveMessage(recv.getMessage());
         }
 
+        // 상태 메시지
         if(msg instanceof StatusMessage) {
             StatusMessage recv = (StatusMessage) msg;
             chatView.statusMessage(recv.getMessage());
         }
 
+        // 구분선
         if(msg instanceof DividerMessage) {
             DividerMessage recv = (DividerMessage) msg;
             chatView.dividerMessage(recv.getMessage());
         }
 
+        // 예, 아니오 선택 요청
         if(msg instanceof ConfirmRequest) {
             lastRequestIndex = messageBox.size() -1;
             ChatSelectButtonEvent ev = new ChatSelectButtonEvent();
@@ -78,25 +85,34 @@ class Scenario {
             chatView.confirm(ev);
         }
 
+        // 신분증 스캔 결과
         if(msg instanceof IDCardInfo) {
             chatView.showIdCardInfo((IDCardInfo) msg);
             messageBox.add(new ReceiveMessage("위 내용이 맞으세요?"));
             messageBox.add(new ConfirmRequest());
         }
 
+        // 약관 동의 화면
         if(msg instanceof Agreement) {
             messageBox.add(new ReceiveMessage("약관 확인 및 동의를 진행해 주세요."));
             chatView.agreement();
         }
 
+        // 약관 결과
         if(msg instanceof AgreementResult) {
             chatView.agreementResult();
             messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
         }
 
+        // 최근 거래 내역
         if(msg instanceof RecentTransaction) {
             messageBox.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
             chatView.transactionList((RecentTransaction) msg);
+        }
+
+        // 계좌 리스트
+        if(msg instanceof AccountList) {
+            chatView.accountList();
         }
     }
 
@@ -146,7 +162,9 @@ class Scenario {
                 messageBox.add(rt);
                 break;
             case "계좌이체" :
-                messageBox.add("이체하실 분을 선택해 주세요.");
+                messageBox.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
+                messageBox.add(new AccountList());
+                messageBox.add(new RequestTransfer());
                 break;
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));

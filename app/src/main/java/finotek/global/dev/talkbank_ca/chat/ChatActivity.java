@@ -26,6 +26,7 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
@@ -80,6 +81,10 @@ public class ChatActivity extends AppCompatActivity {
         if(msg instanceof RequestSignature) {
             releaseControls();
             binding.footer.addView(inflate(R.layout.chat_sign));
+        }
+
+        if(msg instanceof RequestTransfer) {
+            releaseControls();
         }
     }
 

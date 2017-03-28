@@ -46,7 +46,7 @@ public class UserInfoFragment extends android.app.Fragment {
 		RxView.clicks(binding.llRegiBasic.btnRegiSign)
 				.subscribe(aVoid -> startActivity(new Intent(getActivity(), SignRegistrationActivity.class)));
 
-		RxView.clicks(binding.btnPinRegistration)
+		RxView.clicks(binding.llRegiAdditional.btnPinRegistration)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> startActivity(new Intent(getActivity(), PinRegistrationActivity.class)));
 

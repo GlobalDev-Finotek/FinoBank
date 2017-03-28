@@ -54,6 +54,8 @@ public class CostAuthFragment extends android.app.Fragment {
 		binding.tv50.setOnClickListener(costOnClickListener);
 		binding.tv100.setOnClickListener(costOnClickListener);
 		binding.tv500.setOnClickListener(costOnClickListener);
+		binding.tvOver.setOnClickListener(costOnClickListener);
+		binding.tvUnder.setOnClickListener(costOnClickListener);
 
 		binding.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
 

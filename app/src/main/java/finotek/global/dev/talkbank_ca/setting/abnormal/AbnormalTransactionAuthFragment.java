@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,12 +52,14 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 			GridLayout.LayoutParams layoutParams = getLayoutParams(i);
 			tvOpt.setLayoutParams(layoutParams);
 			tvOpt.setGravity(Gravity.CENTER);
+			tvOpt.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.cell_shape));
 
 			if (i == 0) {
-				tvOpt.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
+				DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.info));
 				tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 			} else {
-				tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+				DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.white));
+				tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
 			}
 
 			tvOpt.setOnClickListener(new View.OnClickListener() {
@@ -66,11 +69,11 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 				@Override
 				public void onClick(View v) {
 					if (state) {
-						tvOpt.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
+						DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.info));
 						tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 					} else {
-						tvOpt.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
-						tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.black));
+						DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.white));
+						tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
 					}
 
 					state = !state;
@@ -83,9 +86,7 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 
 		RxView.clicks(binding.btnSave)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					getActivity().onBackPressed();
-				});
+				.subscribe(aVoid -> getActivity().onBackPressed());
 
 		return binding.getRoot();
 	}

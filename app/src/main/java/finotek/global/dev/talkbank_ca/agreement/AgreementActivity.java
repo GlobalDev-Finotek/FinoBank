@@ -12,6 +12,10 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
 
+/**
+ * Created by JungwonSeo on 2017-03-23.
+ */
+
 public class AgreementActivity extends AppCompatActivity {
 
 		ActivityAgreementBinding binding;

@@ -35,7 +35,6 @@
             android:layout_height="match_parent"
             android:text="@string/string_send"
             android:textColor="@color/color_foreground"
-            android:background="@drawable/btn_primary"
-            android:onClick="onSendButtonClickEvent" />
+            android:background="@drawable/btn_primary" />
     </LinearLayout>
 </layout>

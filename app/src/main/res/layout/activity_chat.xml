@@ -37,10 +37,6 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical">
-                <include
-                    android:id="@+id/footer_inputs"
-                    layout="@layout/chat_footer_input">
-                </include>
             </LinearLayout>
         </RelativeLayout>
 

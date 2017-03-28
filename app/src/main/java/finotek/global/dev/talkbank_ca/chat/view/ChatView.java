@@ -45,7 +45,8 @@ public class ChatView extends RecyclerView {
         this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
         this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
 
-        this.addChatViewBuilder(ViewType.Agreement.ordinal(),new AgreementResultBuilder() );
+        this.addChatViewBuilder(ViewType.Agreement.ordinal(),new AgreementBuilder() );
+        this.addChatViewBuilder(ViewType.AgreementResult.ordinal(),new AgreementResultBuilder() );
         this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder(context));
     }
 
@@ -69,8 +70,12 @@ public class ChatView extends RecyclerView {
         addMessage(ViewType.Divider.ordinal(), new DividerMessage(msg));
     }
 
-    public void agreementResult() {
+    public void agreement() {
         addMessage(ViewType.Agreement.ordinal(), null);
+    }
+
+    public void agreementResult() {
+        addMessage(ViewType.AgreementResult.ordinal(), null);
     }
 
     public void

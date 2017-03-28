@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
+import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
@@ -83,6 +84,11 @@ class Scenario {
             messageBox.add(new ConfirmRequest());
         }
 
+        if(msg instanceof Agreement) {
+            messageBox.add(new ReceiveMessage("약관 확인 및 동의를 진행해 주세요."));
+            chatView.agreement();
+        }
+
         if(msg instanceof AgreementResult) {
             chatView.agreementResult();
             messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
@@ -122,6 +128,7 @@ class Scenario {
                 messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
                 break;
             case "약관" :
+                messageBox.add(new Agreement());
                 break;
             case "약관확인" :
                 messageBox.add(new AgreementResult());

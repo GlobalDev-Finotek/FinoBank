@@ -12,12 +12,8 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,6 +41,8 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("PIN 코드");
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayShowHomeEnabled(true);
+		binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
 
 		for (Pin.Color c : Pin.Color.values()) {
 			setPinBackgroundCircle(c);

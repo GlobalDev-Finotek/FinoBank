@@ -26,17 +26,15 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 	}
 
 	/**
-	 * @param isFirst - 앱을 처음 실행해는 지 여부
-	 *                처음 앱 실행여부에 따라 화면 전환
+	 * 사용자 인증 여부에 따른 화면 전환
 	 */
 	@Override
-	public void moveToNextActivity(boolean isFirst) {
+	public void moveToNextActivity(boolean isAuthedUser) {
 
 		Intent intent;
 
-		if (isFirst) {
+		if (!isAuthedUser) {
 			intent = new Intent(activity, UserRegistrationActivity.class);
-			sharedPrefsHelper.put("isFirst", false);
 		} else {
 			intent = new Intent(activity, ChatActivity.class);
 		}

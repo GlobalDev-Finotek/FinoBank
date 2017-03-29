@@ -4,6 +4,7 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,10 @@ import finotek.global.dev.talkbank_ca.databinding.RowKeypadBinding;
  */
 
 public class SecureKeyboardAdapter extends BaseAdapter {
-
-
 	private Context context;
 	private List<String> keySeq;
 	private OnBackPressListener onBackPressListener;
-
+	private Runnable onComplete;
 
 	public SecureKeyboardAdapter(Context context, List<String> keySeq) {
 		this.context = context;
@@ -50,22 +49,26 @@ public class SecureKeyboardAdapter extends BaseAdapter {
 		this.onBackPressListener = onBackPressListener;
 	}
 
+	public void onCompletePressed(Runnable r) {
+		onComplete = r;
+	}
+
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
-		RowKeypadBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context),
-				R.layout.row_keypad, parent, false);
+		String key = (String) getItem(position);
+
+		RowKeypadBinding binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.row_keypad, parent, false);
 		if (position == keySeq.size() - 1) {
 			binding.llWrapper.setBackgroundColor(ContextCompat.getColor(context, R.color.colorPrimary));
 			binding.tvKey.setTextColor(ContextCompat.getColor(context, R.color.white));
-			binding.tvKey.setTypeface(Typeface.DEFAULT);
-
-			binding.setKey("등록");
+			binding.tvKey.setTextSize(15);
+			binding.tvKey.setOnClickListener(v -> onComplete.run());
+			binding.setKey(key);
 		} else if (position == 7) {
 			binding.tvKey.setVisibility(View.INVISIBLE);
 			binding.ibBack.setVisibility(View.VISIBLE);
 			binding.ibBack.setOnClickListener(v -> onBackPressListener.onBackPress());
 		} else {
-			String key = (String) getItem(position);
 			binding.setKey(key);
 		}
 

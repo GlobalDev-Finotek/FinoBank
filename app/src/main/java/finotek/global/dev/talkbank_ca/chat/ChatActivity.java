@@ -21,6 +21,8 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -30,14 +32,17 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
+import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.widget.SecureKeyboardAdapter;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private ChatFooterInputBinding fiBinding;
     private ChatExtendedControlBinding ecBinding;
+    private ChatTransferBinding ctBinding;
     private MessageBox messageBox;
     private Scenario scenario;
 
@@ -46,6 +51,7 @@ public class ChatActivity extends AppCompatActivity {
     private View footerInputs = null;
     private View captureView = null;
     private View signView = null;
+    private View transferView = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +84,8 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         if(msg instanceof RequestTransfer) {
-            releaseControls();
+            releaseAllControls();
+            binding.footer.addView(transferView);
         }
     }
 
@@ -124,6 +131,7 @@ public class ChatActivity extends AppCompatActivity {
     private void preInitControlViews(){
         exControlView = inflate(R.layout.chat_extended_control);
         footerInputs = inflate(R.layout.chat_footer_input);
+        transferView = inflate(R.layout.chat_transfer);
 
         fiBinding = ChatFooterInputBinding.bind(footerInputs);
         RxView.focusChanges(fiBinding.chatEditText)
@@ -159,6 +167,25 @@ public class ChatActivity extends AppCompatActivity {
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .doOnNext(aVoid -> hideExControl())
                 .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
+
+        ctBinding = ChatTransferBinding.bind(transferView);
+        SecureKeyboardAdapter secureKeyboardAdapter = new SecureKeyboardAdapter(this, transferKeyboardSet());
+        ctBinding.gvKeypad.setAdapter(secureKeyboardAdapter);
+        ctBinding.gvKeypad.setOnItemClickListener((parent, view, position, id) -> {
+            String key = (String) secureKeyboardAdapter.getItem(position);
+
+            if (position == secureKeyboardAdapter.getCount() - 1) {
+
+            }
+        });
+
+        secureKeyboardAdapter.setOnBackPressListener(() -> {
+
+        });
+
+        secureKeyboardAdapter.onCompletePressed(() -> {
+
+        });
 
         binding.footer.addView(footerInputs);
     }
@@ -198,9 +225,31 @@ public class ChatActivity extends AppCompatActivity {
         hideExControl();
     }
 
+    private void releaseAllControls(){
+        dismissKeyboard(fiBinding.chatEditText);
+        binding.footer.removeAllViews();
+    }
+
     private View inflate(int layoutId){
         ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
         return LayoutInflater.from(this).inflate(layoutId, parent, false);
+    }
+
+    private List<String> transferKeyboardSet() {
+        List<String> set = new ArrayList<>();
+        set.add("0");
+        set.add("1");
+        set.add("2");
+        set.add("3");
+        set.add("4");
+        set.add("5");
+        set.add("6");
+        set.add("-");
+        set.add("7");
+        set.add("8");
+        set.add("9");
+        set.add("이체");
+        return set;
     }
 
     @Override

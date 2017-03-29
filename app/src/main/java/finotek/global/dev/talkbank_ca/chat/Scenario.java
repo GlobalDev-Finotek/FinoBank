@@ -163,6 +163,7 @@ class Scenario {
                 messageBox.add(rt);
                 break;
             case "계좌이체" :
+            case "계좌 이체" :
                 messageBox.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
                 messageBox.add(new AccountList());
                 messageBox.add(new RequestTransfer());

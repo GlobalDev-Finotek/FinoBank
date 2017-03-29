@@ -9,10 +9,13 @@
     <color name="info">#00b9e6</color>
     <color name="white_two">#e5e5e5</color>
     <color name="white_three">#e0e0e0</color>
+    <color name="line">#e0e0e0</color>
 
     <color name="color_foreground">#FFFFFF</color>
     <color name="color_foreground_blue_button">#FFFFFF</color>
     <color name="color_foreground_blue_button_disabled">#BBBBBB</color>
+
+    <color name="chevron_color">#8F97A0</color>
 
     <color name="color_background_blue_button">#3DC5F6</color>
     <color name="color_background_blue_button_clicked">#10A5D6</color>

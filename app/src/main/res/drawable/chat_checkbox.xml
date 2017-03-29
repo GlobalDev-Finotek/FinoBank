@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_checkable="false"
+          android:drawable="@drawable/vector_drawable_icon_check">
+    </item>
+    <item android:state_checkable="true"
+          android:drawable="@drawable/vector_drawable_icon_check">
+    </item>
+    <item android:drawable="@drawable/vector_drawable_icon_check">
+    </item>
+</selector>

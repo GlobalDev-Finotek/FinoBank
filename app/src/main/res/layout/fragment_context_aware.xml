@@ -16,7 +16,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="맥락데이터 수집 앱"
-                />
+                android:theme="@style/Stit"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -86,7 +86,8 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="맥락데이터 수집 시간 설정"/>
+                android:text="맥락데이터 수집 시간 설정"
+                android:theme="@style/Stit"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -187,7 +188,8 @@
                                         android:layout_weight="1"
                                         android:autoText="true"
                                         android:format12Hour="hh:mm:ss a"
-                                        android:textSize="24sp"/>
+                                        android:textSize="24sp"
+                                        android:theme="@style/TextLabelLarge"/>
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -216,7 +218,8 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:format12Hour="hh:mm:ss a"
-                                        android:textSize="24sp"/>
+                                        android:textSize="24sp"
+                                        android:theme="@style/TextLabelLarge"/>
                                 </LinearLayout>
 
                             </LinearLayout>

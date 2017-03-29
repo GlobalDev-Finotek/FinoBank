@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
 		Observable.timer(3, TimeUnit.SECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(aVoid -> {
-					Intent intent = new Intent(SplashActivity.this, ChatActivity.class);
+					Intent intent = new Intent(SplashActivity.this, MainActivity.class);
 					intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 					startActivity(intent,
 							ActivityOptions.makeSceneTransitionAnimation(this).toBundle());

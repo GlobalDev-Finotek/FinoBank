@@ -1,12 +1,9 @@
 package finotek.global.dev.talkbank_ca.user.credit;
 
 import android.content.Context;
-import android.support.v4.content.ContextCompat;
-import android.text.TextUtils;
-import android.view.View;
 
-import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.base.mvp.BasePresenter;
+import finotek.global.dev.talkbank_ca.model.CreditCard;
 
 /**
  * Created by magyeong-ug on 2017. 3. 27..
@@ -15,7 +12,6 @@ import finotek.global.dev.talkbank_ca.base.mvp.BasePresenter;
 class CreditRegistrationImpl extends BasePresenter<CreditRegistrationView> implements CreditRegistration {
 
 	private Context context;
-	private boolean isCaptureDone;
 
 	CreditRegistrationImpl(Context context) {
 			this.context = context;
@@ -23,21 +19,9 @@ class CreditRegistrationImpl extends BasePresenter<CreditRegistrationView> imple
 
 	@Override
 	public void takePic(String path) {
-		if (isCaptureDone) {
-			if (!TextUtils.isEmpty(path)) {
-				getMvpView().displayOnCaptureDone();
-			} else {
-				getMvpView().setBtnCaptureText(R.string.take_pic);
-			}
-		} else {
-			// TODO finish
-		}
-
+		// TODO finish
+		getMvpView().displayCreditCardInfo(CreditCard.getMockData());
 	}
 
-	@Override
-	public void recapture() {
-		getMvpView().unlockCamera();
-		getMvpView().displayOnRecapture();
-	}
+
 }

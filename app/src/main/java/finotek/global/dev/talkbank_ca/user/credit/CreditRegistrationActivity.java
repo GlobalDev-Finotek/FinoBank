@@ -3,14 +3,8 @@ package finotek.global.dev.talkbank_ca.user.credit;
 import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
 import android.view.View;
-
-import com.jakewharton.rxbinding.view.RxView;
-
-import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityCreditRegistrationBinding;
@@ -35,18 +29,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		transaction.add(R.id.fl_cam, capturePicFragment);
 		transaction.commit();
 
-		RxView.clicks(binding.btnTakePic)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-						capturePicFragment.takePicture(path -> presenter.takePic(path));
-				});
-
-
-		RxView.clicks(binding.btnRecapture)
-				.throttleFirst(300, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					presenter.recapture();
-				});
+		capturePicFragment.takePicture(path -> presenter.takePic(path));
 
 	}
 
@@ -56,25 +39,4 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		binding.incWidget.setCreditCard(card);
 	}
 
-	@Override
-	public void displayOnCaptureDone() {
-		binding.btnRecapture.setVisibility(View.VISIBLE);
-		setBtnCaptureText(R.string.string_complete);
-	}
-
-	@Override
-	public void displayOnRecapture() {
-		binding.btnRecapture.setVisibility(View.GONE);
-		setBtnCaptureText(R.string.take_pic);
-	}
-
-	@Override
-	public void unlockCamera() {
-		capturePicFragment.unlockCamera();
-	}
-
-	@Override
-	public void setBtnCaptureText(int stringId) {
-		binding.btnTakePic.setText(getString(stringId));
-	}
 }

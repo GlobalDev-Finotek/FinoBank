@@ -13,8 +13,4 @@ interface CreditRegistration extends IPresenter<CreditRegistrationView> {
 	 */
 	void takePic(String path);
 
-	/**
-	 * 카메라 화면을 초기화하고 컨트롤들을 초기 상태로 변경
-	 */
-	void recapture();
 }

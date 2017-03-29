@@ -1,66 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     >
     <RelativeLayout android:layout_width="fill_parent"
                     android:layout_height="fill_parent">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:weightSum="1">
+        <FrameLayout
+            android:id="@+id/fl_content"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:layout_weight="0.3">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_weight="0.675"
-                android:background="@drawable/back_grid">
-
-                <finotek.global.dev.talkbank_ca.widget.DrawingCanvas
-                    android:id="@+id/drawingCanvas"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"/>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="horizontal">
-
-                    <ImageButton
-                        android:id="@+id/ib_next"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentTop="true"
-                        android:layout_centerHorizontal="true"
-                        android:background="@drawable/white_large_circle_border"
-                        android:padding="10dp"
-                        android:tint="@color/white_two"
-                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
-
-                    <ImageButton
-                        android:id="@+id/ib_size_control"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_centerVertical="true"
-                        android:layout_marginEnd="19dp"
-                        android:background="@drawable/white_small_circle_border"
-                        android:tint="@color/colorPrimary"
-                        app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
-                </RelativeLayout>
-
-            </FrameLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="0.3"
-                />
-
-        </LinearLayout>
+        </FrameLayout>
 
     </RelativeLayout>
 </layout>

@@ -9,8 +9,5 @@ import finotek.global.dev.talkbank_ca.model.CreditCard;
 
 interface CreditRegistrationView extends IMvpView {
 	void displayCreditCardInfo(CreditCard card);
-	void displayOnCaptureDone();
-	void displayOnRecapture();
-	void unlockCamera();
-	void setBtnCaptureText(int stringId);
+
 }

@@ -3,8 +3,10 @@ package finotek.global.dev.talkbank_ca.widget;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
@@ -45,12 +47,6 @@ public class DrawingCanvas extends View {
 		canvasPaint = new Paint(Paint.DITHER_FLAG);
 	}
 
-	public interface OnCanvasTouchListener {
-		void onTouchStart();
-
-		void onTouchEnd();
-	}
-
 	public void setOnCanvasTouchListener(OnCanvasTouchListener onCanvasTouchListener) {
 		this.onCanvasTouchListener = onCanvasTouchListener;
 	}
@@ -81,7 +77,6 @@ public class DrawingCanvas extends View {
 				drawPath.lineTo(touchX, touchY);
 				break;
 			case MotionEvent.ACTION_UP:
-				onCanvasTouchListener.onTouchEnd();
 				drawCanvas.drawPath(drawPath, drawPaint);
 				drawPath.reset();
 				break;
@@ -93,9 +88,18 @@ public class DrawingCanvas extends View {
 		return true;
 	}
 
+	public void clear() {
+		drawCanvas.drawColor(Color.TRANSPARENT, PorterDuff.Mode.CLEAR);
+		invalidate();
+	}
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		canvas.drawBitmap(canvasBitmap, 0, 0, canvasPaint);
 		canvas.drawPath(drawPath, drawPaint);
+	}
+
+	public interface OnCanvasTouchListener {
+		void onTouchStart();
 	}
 }

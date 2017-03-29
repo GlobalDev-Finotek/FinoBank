@@ -15,6 +15,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
@@ -165,6 +166,12 @@ class Scenario {
                 messageBox.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
                 messageBox.add(new AccountList());
                 messageBox.add(new RequestTransfer());
+                break;
+            case "카메라":
+                messageBox.add(new RequestTakeIDCard());
+                break;
+            case "서명":
+                messageBox.add(new RequestSignature());
                 break;
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));

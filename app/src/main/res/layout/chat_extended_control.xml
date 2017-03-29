@@ -6,7 +6,9 @@
         android:clickable="true"
         android:focusableInTouchMode="true"
         android:background="@color/color_extended_control_bg">
-        <include layout="@layout/chat_ex_control_1" />
+        <include
+            android:id="@+id/control1"
+            layout="@layout/chat_ex_control_1" />
         <!--<android.support.v4.view.ViewPager-->
             <!--android:id="@+id/extended_control"-->
             <!--android:layout_alignParentBottom="true"-->

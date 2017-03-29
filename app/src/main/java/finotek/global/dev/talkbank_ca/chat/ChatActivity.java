@@ -29,6 +29,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
+import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
@@ -36,12 +37,15 @@ import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private ChatFooterInputBinding fiBinding;
+    private ChatExtendedControlBinding ecBinding;
     private MessageBox messageBox;
     private Scenario scenario;
 
     private boolean isExControlAvailable = false;
     private View exControlView = null;
     private View footerInputs = null;
+    private View captureView = null;
+    private View signView = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -49,7 +53,6 @@ public class ChatActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("톡뱅");
-
 
         messageBox = new MessageBox();
         scenario = new Scenario(this, binding.chatView, messageBox);
@@ -139,6 +142,24 @@ public class ChatActivity extends AppCompatActivity {
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(this::onSendButtonClickEvent);
 
+        ecBinding = ChatExtendedControlBinding.bind(exControlView);
+        RxView.clicks(ecBinding.control1.registerAccount)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> hideExControl())
+                .subscribe(aVoid -> {
+                    messageBox.add(new SendMessage("계좌 개설"));
+                });
+
+        RxView.clicks(ecBinding.control1.transferMoney)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> hideExControl())
+                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
+
+        RxView.clicks(ecBinding.control1.checkAccount)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> hideExControl())
+                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
+
         binding.footer.addView(footerInputs);
     }
 
@@ -148,9 +169,6 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            // dimiss keyboard or hide ex control
-            releaseControls();
-
             View v = getCurrentFocus();
             if(v instanceof EditText) {
                 Rect editTextRect = new Rect();

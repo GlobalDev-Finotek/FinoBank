@@ -40,8 +40,8 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 				v.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.info));
 				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 			} else {
-				v.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.transparent));
-				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50);
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
 			}
 			isClicked = !isClicked;
 		}

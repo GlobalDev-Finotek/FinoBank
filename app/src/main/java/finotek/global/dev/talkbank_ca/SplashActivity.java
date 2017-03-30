@@ -48,14 +48,16 @@ public class SplashActivity extends AppCompatActivity {
 	private void checkPermission() {
 
 		//현재 접근권한이 있는가
-		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_DENIED) {
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_DENIED ||
+				ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_DENIED) {
 			//사용자에게 공지가 필요한경우
 			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CALL_LOG)) {
 
 			}
 			//사용자가 필요없는 경우 강제로 권한 획득
 			else {
-				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG}, MY_PERMISSION_READ_CALL_LOG);
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CALL_LOG, Manifest.permission.READ_PHONE_STATE},
+						MY_PERMISSION_READ_CALL_LOG);
 			}
 
 		}

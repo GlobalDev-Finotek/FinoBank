@@ -71,16 +71,17 @@ public class SignRegistFragment extends Fragment {
 				/* 아이콘 색은 항상 primary */
 				DrawableCompat.setTint(binding.ibSizeControl.getDrawable(),
 						ContextCompat.getColor(getActivity(), R.color.colorPrimary));
-
 			}
 		});
 
 		RxView.clicks(binding.ibNext)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					stepSubject.onNext(++stepCount);
 
-					if (stepCount > 4) {
+					if (stepCount == 2) {
+						stepSubject.onNext(++stepCount);
+					}
+					else if (stepCount == 4) {
 						stepSubject.onCompleted();
 					}
 				});

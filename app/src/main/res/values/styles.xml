@@ -146,7 +146,26 @@
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
 
+
+    <style name="RoundButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/btn_default_round</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@drawable/color_btn_text</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
     <style name="InverseButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/btn_default_inverse_round</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@drawable/color_btn_text_inverse</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+    </style>
+
+    <style name="InverseRoundButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/btn_inverse</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>

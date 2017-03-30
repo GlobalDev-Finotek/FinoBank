@@ -5,7 +5,8 @@
             <stroke
                 android:width="0.5dp"
                 android:color="#FFBBBBBB"/>
-            <corners android:radius="2dp"/>
+            <corners android:radius="4dp"/>
+            <solid android:color="@color/white_three"></solid>
         </shape>
     </item>
 </selector>

@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding.widget.TextViewTextChangeEvent;
 
 import java.util.concurrent.TimeUnit;
 
@@ -17,6 +20,9 @@ import finotek.global.dev.talkbank_ca.databinding.LayoutUserRegistrationBinding;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
+import finotek.global.dev.talkbank_ca.util.TelUtil;
+import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
+import rx.functions.Action1;
 
 /**
  * Created by magyeong-ug on 21/03/2017.
@@ -40,6 +46,19 @@ public class UserInfoFragment extends android.app.Fragment {
 		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
 				.subscribe(aVoid ->
 						startActivity(new Intent(getActivity(), CaptureProfilePicActivity.class)));
+
+		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(getActivity()));
+		binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
+
+
+		RxTextView.textChangeEvents(binding.llRegiBasic.edtPhoneNumber)
+				.subscribe(textViewTextChangeEvent -> {
+          String str = textViewTextChangeEvent.text().toString();
+
+					binding.llRegiBasic.edtPhoneNumber
+                .setErrFilter(str.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$"));
+
+					});
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
 				.subscribe(aVoid -> startActivity(new Intent(getActivity(), CreditRegistrationActivity.class)));

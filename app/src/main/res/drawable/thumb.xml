@@ -3,13 +3,12 @@
        android:shape="oval">
 
     <size
-        android:width="25dp"
-        android:height="25dp"/>
+        android:width="15dp"
+        android:height="15dp"/>
     <stroke
         android:width="2dp"
-        android:color="@color/colorPrimary"/>
-    <solid android:color="@color/colorPrimary"/>
+        android:color="@color/info"/>
+    <solid android:color="@color/info"/>
 
-    <corners android:radius="1dp" />
 
 </shape>

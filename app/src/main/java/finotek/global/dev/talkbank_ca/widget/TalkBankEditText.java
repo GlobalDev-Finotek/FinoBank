@@ -26,6 +26,10 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 
 				case DISABLED:
 					setBackground(ContextCompat.getDrawable(context, R.drawable.edt_disabled));
+					setHint("");
+					setFocusable(false);
+					setEnabled(false);
+
 					break;
 
 				case FOCUS:
@@ -79,7 +83,11 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 
 	}
 
-	private enum MODE {
+	public void setMode(MODE mode) {
+		onModeChangeListener.onModeChange(mode);
+	}
+
+	public enum MODE {
 		NORMAL, DISABLED, FOCUS, ERROR
 	}
 

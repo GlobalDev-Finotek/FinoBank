@@ -115,7 +115,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.89"
-                        android:text="모든 앱 수집"
+                        android:text="24시간"
                         tb:custom_font="noto_regular"/>
 
                     <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
@@ -143,7 +143,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="개별 앱 선택"
+                            android:text="시간 설정"
                             tb:custom_font="noto_regular"/>
 
                         <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
@@ -254,7 +254,7 @@
 
         <Button
             android:id="@+id/btn_save"
-            style="@style/Button"
+            style="@style/RoundButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="15dp"

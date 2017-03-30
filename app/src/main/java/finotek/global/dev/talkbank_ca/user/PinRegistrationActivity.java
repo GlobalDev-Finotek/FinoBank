@@ -49,9 +49,16 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			setTextColorCircle(c);
 		}
 
+		Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
+				R.anim.slide_up);
+
+		binding.llSecureKeyboard.setVisibility(View.VISIBLE);
+		// Start animation
+		binding.llSecureKeyboard.startAnimation(slide_up);
+
+
 		binding.llPincodeWrapper.setOnClickListener(v -> {
-			Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
-					R.anim.slide_up);
+	
 
 			binding.llSecureKeyboard.setVisibility(View.VISIBLE);
 			// Start animation

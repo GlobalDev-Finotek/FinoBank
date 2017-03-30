@@ -135,7 +135,7 @@
         <item name="android:layout_marginBottom">15dp</item>
     </style>
 
-    <style name="Button" parent="android:style/Widget.Button">
+    <style name="Button" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/btn_default</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
@@ -145,7 +145,7 @@
         <item name="android:gravity">center_vertical|center_horizontal</item>
     </style>
 
-    <style name="InverseButton" parent="android:style/Widget.Button">
+    <style name="InverseButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:background">@drawable/btn_inverse</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>

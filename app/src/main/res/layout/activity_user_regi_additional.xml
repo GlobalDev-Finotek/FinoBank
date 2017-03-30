@@ -17,120 +17,132 @@
             android:text="@string/additional_inform"
             android:theme="@style/Title"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:elevation="0dp"></View>
-
-
-        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
-            android:id="@+id/edt_emergency_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/emergency_phone_number"
-            android:inputType="phone"/>
-
-
-        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
-            android:id="@+id/edt_email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/email_address"
-            android:inputType="textEmailAddress"/>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/textView25"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:text="\u2022 비상 연락처"
+                android:theme="@style/Stit"/>
+
+            <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+                android:id="@+id/edt_emergency_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="@string/emergency_phone_number"
+                android:inputType="phone"/>
+
+            <TextView
+                android:id="@+id/textView26"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:text="\u2022 이메일 주소"
+                android:theme="@style/Stit"/>
+
+            <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+                android:id="@+id/edt_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/email_address"
+                android:inputType="textEmailAddress"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:text="\u2022 신용카드 등록"
+                    android:theme="@style/Stit"/>
+
+                <Button
+                    android:id="@+id/btn_capture_creidt"
+                    style="@style/InverseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="0dp"
+                    android:text="@string/capture_credit"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:text="\u2022 인증 사진"
+                    android:theme="@style/Stit"/>
+
+                <Button
+                    android:id="@+id/btn_capture_profile"
+                    style="@style/InverseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/capture_profile"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                >
+
+                <TextView
+                    android:id="@+id/textView16"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:text="\u2022 PIN 코드"
+                    android:theme="@style/Stit"/>
+
+                <Button
+                    android:id="@+id/btn_pin_registration"
+                    style="@style/InverseButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="PIN 코드 변경"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/white_two"
+                android:text="정보 수집 동의(필수 입력)"
+                android:theme="@style/Title"/>
+
+            <CheckBox
+                android:id="@+id/checkBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/credit_card_registration"
-                android:theme="@style/Stit"/>
-
-            <Button
-                android:id="@+id/btn_capture_creidt"
-                style="@style/InverseButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:elevation="0dp"
-                android:text="@string/capture_credit"/>
+                android:padding="16dp"
+                android:text="맥락 데이터 수집 동의(사용자 인증 모드)"/>
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/textView4"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/profile_registration"
-                android:theme="@style/Stit"/>
-
-            <Button
-                android:id="@+id/btn_capture_profile"
-                style="@style/InverseButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="@string/capture_profile"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/textView16"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingBottom="4dp"
-                android:paddingTop="4dp"
-                android:text="PIN 코드 변경"/>
-
-            <Button
-                android:id="@+id/btn_pin_registration"
-                style="@style/InverseButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="PIN 코드 변경"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@color/white_two"
-            android:padding="16dp"
-            android:text="정보 수집 동의(필수 입력)"
-            android:theme="@style/Title"/>
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="16dp"
-            android:text="맥락 데이터 수집 동의(사용자 인증 모드)"/>
 
     </LinearLayout>
 </layout>

@@ -14,6 +14,7 @@
             android:layout_height="match_parent"
             android:background="@color/white_two"
             android:orientation="vertical">
+
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
@@ -52,7 +53,7 @@
                 android:layout_marginLeft="15dp"
                 android:layout_marginRight="15dp"
                 android:layout_marginTop="10dp"
-                android:background="@color/white"
+                android:background="@drawable/border_white_two_radius"
                 android:orientation="vertical">
 
                 <LinearLayout

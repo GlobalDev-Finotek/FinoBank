@@ -12,7 +12,7 @@
     <string name="string_next">다음</string>
     <string name="string_comm_sign_regi1">거래용 전자서명 등록(1/2)</string>
     <string name="string_comm_sign_regi2">거래용 전자서명 등록(2/2)</string>
-    <string name="string_comm_sign_input">거래용 전자서명 입력</string>
+    <string name="string_comm_sign_input">\u2022 거래용 전자서명 입력</string>
     <string name="string_complete">완료</string>
     <string name="button_description">Emoticons Button</string>
     <string name="string_hi">Hi</string>
@@ -77,10 +77,10 @@
     <string name="capture_profile">사진 촬영</string>
     <string name="request_permission"/>
     <string name="take_pic">촬영</string>
-    <string name="pin_code">PIN코드</string>
+    <string name="pin_code">\u2022 PIN코드</string>
     <string name="select_pin_code_background">PIN 코드 배경색 선택</string>
     <string name="select_pin_code_text_color">PIN 코드 글자색 선택</string>
-    <string name="sign_instruction">서명 신뢰도 설정\n - 신뢰도가 높으면 인증 시 난이도가 올라갑니다.</string>
+    <string name="sign_instruction">\u2022 서명 신뢰도 설정\n - 신뢰도가 높으면 인증 시 난이도가 올라갑니다.</string>
     <string name="yes">네</string>
     <string name="no">아니요</string>
     <string name="string_accuracy">현재 맥락 인증 점수는 %d입니다</string>

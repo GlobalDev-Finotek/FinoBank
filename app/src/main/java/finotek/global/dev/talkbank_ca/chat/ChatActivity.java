@@ -9,9 +9,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,8 +26,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
-import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
+import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 
 public class ChatActivity extends AppCompatActivity {
@@ -48,12 +45,15 @@ public class ChatActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
         setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setTitle("톡뱅");
-
-
+        getSupportActionBar().setTitle("");
+        binding.toolbarTitle.setText("톡뱅");
         messageBox = new MessageBox();
         scenario = new Scenario(this, binding.chatView, messageBox);
         messageBox.getObservable().subscribe(this::onNewMessageUpdated);
+
+        binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
+
+
 
         preInitControlViews();
     }
@@ -185,20 +185,7 @@ public class ChatActivity extends AppCompatActivity {
         return LayoutInflater.from(this).inflate(layoutId, parent, false);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.main, menu);
 
-        MenuItem item = menu.findItem(R.id.action_settings);
-
-        item.setOnMenuItemClickListener(item1 -> {
-            startActivity(new Intent(ChatActivity.this, SettingsActivity.class));
-            return false;
-        });
-
-        return true;
-    }
 
 
 }

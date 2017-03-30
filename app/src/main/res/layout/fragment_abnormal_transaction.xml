@@ -43,14 +43,14 @@
                 android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"
                 android:theme="@style/Stit"/>
 
-            <GridLayout
-                android:id="@+id/gv_opt_wrapper"
+            <TableLayout
+                android:id="@+id/tl_opt_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/cell_shape"
-                android:columnCount="4">
-            </GridLayout>
+                >
+            </TableLayout>
 
             <Button
                 android:id="@+id/btn_save"

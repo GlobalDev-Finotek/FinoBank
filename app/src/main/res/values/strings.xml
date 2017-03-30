@@ -83,4 +83,5 @@
     <string name="sign_instruction">서명 신뢰도 설정\n - 신뢰도가 높으면 인증 시 난이도가 올라갑니다.</string>
     <string name="yes">네</string>
     <string name="no">아니요</string>
+    <string name="string_accuracy">현재 맥락 인증 점수는 %d입니다</string>
 </resources>

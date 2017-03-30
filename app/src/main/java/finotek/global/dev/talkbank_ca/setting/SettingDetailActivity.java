@@ -35,7 +35,8 @@ public class SettingDetailActivity extends AppCompatActivity {
 		try {
 			Fragment contentFragment = getContentFragment(b.getInt("type"));
 			String title = contentFragment.getArguments().getString("title");
-			getSupportActionBar().setTitle(title);
+			getSupportActionBar().setTitle("");
+			binding.toolbarTitle.setText(title);
 
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
 			transaction.add(R.id.fl_content, contentFragment);

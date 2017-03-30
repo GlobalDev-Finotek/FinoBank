@@ -10,7 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -27,7 +27,7 @@ import finotek.global.dev.talkbank_ca.databinding.FragmentAbnormalTransactionBin
 public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 
 	private final String[] options = new String[]{
-			"맥락 인증(기본)", "자필 서명", "PIN 코드", "비상 연락처",
+			"맥락 인증기본", "자필 서명", "PIN 코드", "비상 연락처",
 			"인증 메일", "인증 메세지", "신용카드 OCR", "인증 사진", "음성 인식"
 	};
 
@@ -46,42 +46,8 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 
 
 		for (int i = 0; i < options.length; ++i) {
-			TextView tvOpt = new TextView(getActivity());
-			tvOpt.setText(options[i]);
-			tvOpt.setPadding(30, 30, 30, 30);
-			GridLayout.LayoutParams layoutParams = getLayoutParams(i);
-			tvOpt.setLayoutParams(layoutParams);
-			tvOpt.setGravity(Gravity.CENTER);
-			tvOpt.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.cell_shape));
-
-			if (i == 0) {
-				DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.info));
-				tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-			} else {
-				DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.white));
-				tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
-			}
-
-			tvOpt.setOnClickListener(new View.OnClickListener() {
-
-				private boolean state = false;
-
-				@Override
-				public void onClick(View v) {
-					if (state) {
-						DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.info));
-						tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-					} else {
-						DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.white));
-						tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
-					}
-
-					state = !state;
-				}
-			});
-
-
-			binding.gvOptWrapper.addView(tvOpt);
+			TableRow tableRow = getTableRow(i);
+			binding.tlOptWrapper.addView(tableRow);
 		}
 
 		RxView.clicks(binding.btnSave)
@@ -92,18 +58,57 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 	}
 
 	@NonNull
-	private GridLayout.LayoutParams getLayoutParams(int idx) {
-		GridLayout.LayoutParams layoutParams = new GridLayout.LayoutParams();
-		layoutParams.setGravity(Gravity.FILL_HORIZONTAL);
-		GridLayout.Spec colSpec = null;
-		if (idx == 0) {
-			colSpec = GridLayout.spec(0, 4, 1);
-		} else if (idx % 2 == 0) {
-			colSpec = GridLayout.spec(0, 2, 1);
-		} else if (idx % 2 != 0) {
-			colSpec = GridLayout.spec(2, 2, 1);
+	private TextView generateTvOpt(String option) {
+		TextView tvOpt = new TextView(getActivity());
+		tvOpt.setText(option);
+		tvOpt.setPadding(40, 40, 40, 40);
+		tvOpt.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.cell_shape));
+
+		tvOpt.setOnClickListener(new View.OnClickListener() {
+
+			private boolean state = false;
+
+			@Override
+			public void onClick(View v) {
+				if (state) {
+					DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.info));
+					tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+				} else {
+					DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.white));
+					tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
+				}
+
+				state = !state;
+			}
+		});
+
+		if (option.equals(options[0])) {
+			DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.info));
+			tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+		} else {
+			DrawableCompat.setTint(tvOpt.getBackground(), ContextCompat.getColor(getActivity(), R.color.white));
+			tvOpt.setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
 		}
-		layoutParams.columnSpec = colSpec;
-		return layoutParams;
+
+		return tvOpt;
 	}
+
+	private TableRow getTableRow(int idx) {
+		TableRow tableRow = new TableRow(getActivity());
+		tableRow.setGravity(Gravity.CENTER);
+
+		if (idx == 0) {
+			tableRow.addView(generateTvOpt(options[0]));
+		} else if (idx > 0 && idx < options.length - 2) {
+
+			int i = idx;
+			while (i != idx + 2) {
+				tableRow.addView(generateTvOpt(options[i++]));
+			}
+
+		}
+
+		return tableRow;
+	}
+
 }

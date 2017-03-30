@@ -21,7 +21,8 @@ public class SettingsActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 		setSupportActionBar(binding.toolbar);
-		getSupportActionBar().setTitle("설정");
+		getSupportActionBar().setTitle("");
+		binding.toolbarTitle.setText("설정");
 		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 		getSupportActionBar().setDisplayShowHomeEnabled(true);
 		binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());

@@ -20,30 +20,39 @@
             android:id="@+id/logo"
             android:layout_width="174dp"
             android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/intro"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="26dp"
-            android:src="@drawable/ic_finotek_logo2"
-            android:contentDescription="Finotek Logo" />
+            android:contentDescription="Finotek Logo"
+            android:src="@drawable/ic_finotek_logo2"/>
         <Button
             android:id="@+id/main_button"
             android:layout_width="260dp"
             android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
             android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="66dp"
             android:background="@drawable/btn_round_primary"
+            android:text="@string/string_user_regi"
             android:textColor="@color/btn_primary"
-            android:textSize="15sp"
-            android:text="@string/string_user_regi" />
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_context_auth_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/main_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="21dp"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="32dp"
-            android:textSize="12sp"
             android:text="@string/string_copyright"
-            android:textColor="@color/color_text_default" />
+            android:textColor="@color/color_text_default"
+            android:textSize="12sp"/>
     </RelativeLayout>
 </layout>

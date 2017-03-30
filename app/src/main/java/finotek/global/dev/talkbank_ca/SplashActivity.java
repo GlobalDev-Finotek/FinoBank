@@ -62,8 +62,9 @@ public class SplashActivity extends AppCompatActivity {
 		//권한이 있는경우 바로 호출
 		else {
 			Cursor c = getCallLog();
-			boolean isValidUser = isValidUser(CallLogVerifier.getCallLogPassRate(c));
-			moveToNextActivity(isValidUser);
+			double accuracy = CallLogVerifier.getCallLogPassRate(c);
+			boolean isValidUser = isValidUser(accuracy);
+			moveToNextActivity(isValidUser, accuracy);
 
 		}
 	}
@@ -76,14 +77,15 @@ public class SplashActivity extends AppCompatActivity {
 			case MY_PERMISSION_READ_CALL_LOG: {
 				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					Cursor c = getCallLog();
-					boolean isValidUser = isValidUser(CallLogVerifier.getCallLogPassRate(c));
-					moveToNextActivity(isValidUser);
+					double accuracy = CallLogVerifier.getCallLogPassRate(c);
+					boolean isValidUser = isValidUser(accuracy);
+					moveToNextActivity(isValidUser, accuracy);
 				}
 			}
 		}
 	}
 
-	private void moveToNextActivity(boolean isValidUser) {
+	private void moveToNextActivity(boolean isValidUser, double accuracy) {
 
 		Intent intent;
 		if (!isValidUser) {
@@ -91,6 +93,7 @@ public class SplashActivity extends AppCompatActivity {
 		} else {
 			intent = new Intent(SplashActivity.this, ChatActivity.class);
 		}
+		intent.putExtra("accuracy", accuracy);
 
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);

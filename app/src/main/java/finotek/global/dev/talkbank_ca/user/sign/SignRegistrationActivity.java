@@ -1,15 +1,16 @@
 package finotek.global.dev.talkbank_ca.user.sign;
 
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
-import android.view.Menu;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
 
 
@@ -22,6 +23,8 @@ public class SignRegistrationActivity extends AppCompatActivity {
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_registartion);
+	  setSupportActionBar(binding.toolbar);
+	  binding.toolbarTitle.setText("자필 서명");
 
 	  SignRegistFragment signRegistFragment = new SignRegistFragment();
 	  FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -40,12 +43,16 @@ public class SignRegistrationActivity extends AppCompatActivity {
 			  binding.flContent.setLayoutParams(fl);
 		  }
     });
+
+	  signRegistFragment.setOnSaveListener(new SignRegistFragment.OnSignSaveListener() {
+		  @Override
+		  public void onSave() {
+			  Intent intent = new Intent(SignRegistrationActivity.this, ChatActivity.class);
+			  startActivity(intent);
+			  finish();
+		  }
+	  });
   }
 
-  @Override
-  public boolean onCreateOptionsMenu(Menu menu) {
-    getMenuInflater().inflate(R.menu.user_regi_menu, menu);
-    return true;
-  }
 
 }

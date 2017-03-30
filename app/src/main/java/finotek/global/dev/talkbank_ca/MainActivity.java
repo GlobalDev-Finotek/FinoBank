@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -32,7 +33,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 		presenter.attachView(this);
 
-		setNextButtonText(true);
+		boolean isFirst = sharedPrefsHelper.get("isFirst", true);
+		setNextButtonText(isFirst);
+
+		Intent intent = getIntent();
+		if (intent != null) {
+			double accuracy = intent.getDoubleExtra("accuracy", 0);
+
+			String inst = getString(R.string.string_accuracy).replace("%d", String.valueOf(accuracy));
+			binding.tvContextAuthAccuracy.setText(inst);
+		}
 
 	}
 
@@ -50,16 +60,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
 	}
 
 	@Override
-	public void setNextButtonText(boolean isAuthedUser) {
+	public void setNextButtonText(boolean isFirst) {
 
 		RxView.clicks(binding.mainButton)
 				.subscribe(aVoid ->
-						presenter.moveToNextActivity(isAuthedUser));
+						presenter.moveToNextActivity(isFirst));
 
-		if (!isAuthedUser) {
+		if (isFirst) {
 			binding.mainButton.setText("사용자 등록");
+			sharedPrefsHelper.put("isFirst", false);
 		} else {
-			binding.mainButton.setText("시작");
+			binding.mainButton.setText("로그인");
 		}
 	}
 }

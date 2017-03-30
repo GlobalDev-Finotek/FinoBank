@@ -125,6 +125,7 @@ class Scenario {
 
         switch (msg) {
             case "계좌 개설":
+            case "계좌개설":
                 createAccount();
                 step = 1;
                 break;

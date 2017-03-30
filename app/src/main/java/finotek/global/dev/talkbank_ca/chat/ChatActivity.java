@@ -61,6 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         setSupportActionBar(binding.toolbar);
         getSupportActionBar().setTitle("톡뱅");
 
+
         messageBox = new MessageBox();
         scenario = new Scenario(this, binding.chatView, messageBox);
         messageBox.getObservable().subscribe(this::onNewMessageUpdated);
@@ -174,6 +175,7 @@ public class ChatActivity extends AppCompatActivity {
         ctBinding.gvKeypad.onComplete(() -> {
             ctBinding.editMoney.setText("");
             binding.footer.removeView(transferView);
+            binding.footer.addView(footerInputs);
         });
 
         binding.footer.addView(footerInputs);

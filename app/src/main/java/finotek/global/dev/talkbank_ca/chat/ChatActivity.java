@@ -48,12 +48,15 @@ public class ChatActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("");
         binding.toolbarTitle.setText("톡뱅");
         messageBox = new MessageBox();
-        scenario = new Scenario(this, binding.chatView, messageBox);
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            double accuracy = intent.getDoubleExtra("accuracy", 0);
+            scenario = new Scenario(this, binding.chatView, messageBox, accuracy);
+        }
+
         messageBox.getObservable().subscribe(this::onNewMessageUpdated);
-
         binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
-
-
 
         preInitControlViews();
     }

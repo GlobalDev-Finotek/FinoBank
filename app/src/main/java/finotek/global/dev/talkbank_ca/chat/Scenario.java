@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 
+import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
@@ -21,17 +22,16 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 
 class Scenario {
+    private final MessageBox messageBox;
     private Context context;
     private ChatView chatView;
-    private final MessageBox messageBox;
     private int step = 0;
     private int lastRequestIndex = -1;
 
-    Scenario(Context context, ChatView chatView, MessageBox messageBox) {
+    Scenario(Context context, ChatView chatView, MessageBox messageBox, double currentAccuracy) {
         this.context = context;
         this.chatView = chatView;
         this.messageBox = messageBox;
@@ -42,7 +42,7 @@ class Scenario {
         chatView.setLayoutManager(manager);
 
         messageBox.add(new DividerMessage(DateUtil.currentDate()));
-        messageBox.add(new StatusMessage("맥락 데이터 분석 결과 87% 확률로 인증되었습니다."));
+        messageBox.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf(currentAccuracy) + "87% 확률로 인증되었습니다."));
         messageBox.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
     }
 

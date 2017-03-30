@@ -11,129 +11,146 @@
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:background="@color/white_two"
             android:padding="16dp"
             android:text="@string/basic_inform"
             android:theme="@style/Title"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@android:color/darker_gray"
-            android:padding="10dp"></View>
-
-        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
-            android:id="@+id/edt_user_name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/user_name"
-            android:inputType="textPersonName"/>
-
-        <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
-            android:id="@+id/edt_phone_number"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:hint="@string/phone_number"
-            android:inputType="phone"/>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:padding="10dp"
-            android:text="@string/string_comm_sign_input"/>
-
-        <Button
-            android:id="@+id/btn_regi_sign"
-            style="@style/InverseButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="@string/string_comm_sign_input"/>
-
-        <TextView
-            android:id="@+id/textView9"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:text="@string/sign_instruction"
-            android:theme="@style/Stit"/>
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="20dp"
-            android:layout_marginTop="10dp"
-            android:background="@color/white_two"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="15dp">
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            >
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:text="\u2022 휴대전화 번호"
+                android:theme="@style/Stit"/>
+
+            <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+                android:id="@+id/edt_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="@string/user_name"
+                android:inputType="textPersonName"/>
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:text="\u2022 사용자 이름"
+                android:theme="@style/Stit"/>
+
+            <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+                android:id="@+id/edt_phone_number"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:hint="@string/phone_number"
+                android:inputType="phone"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:text="\u2022 자필 서명"
+                android:theme="@style/Stit"/>
+
+            <Button
+                android:id="@+id/btn_regi_sign"
+                style="@style/InverseButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/string_comm_sign_input"/>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:text="@string/sign_instruction"
+                android:theme="@style/Stit"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="horizontal"
-                android:paddingLeft="8dp">
+                android:layout_margin="20dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/border_white_three_radius"
+                android:orientation="vertical"
+                android:padding="15dp">
 
-                <TextView
-                    android:id="@+id/textView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:text="0 %"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:text="50 %"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="100 %"/>
-            </LinearLayout>
-
-            <com.etiennelawlor.discreteslider.library.ui.DiscreteSlider
-                android:id="@+id/discreteSlider"
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:layout_gravity="bottom"
-                app:backdropStrokeWidth="1dp"
-                app:horizontalBarThickness="3dp"
-                app:position="1"
-                app:progressDrawable="@drawable/transparent_progress_drawable"
-                app:thumb="@drawable/thumb"
-                app:tickMarkCount="3"
-                app:tickMarkRadius="12dp"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/textView8"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/complex_sign_text"
-                    android:theme="@style/TxtMircro"/>
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:paddingLeft="8dp">
 
-                <TextView
-                    android:id="@+id/textView7"
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:text="0 %"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:text="50 %"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="100 %"/>
+                </LinearLayout>
+
+                <com.etiennelawlor.discreteslider.library.ui.DiscreteSlider
+                    android:id="@+id/discreteSlider"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="@string/simple_sign_text"
-                    android:theme="@style/TxtMircro"/>
+                    android:layout_height="64dp"
+                    android:layout_gravity="bottom"
+                    app:backdropStrokeWidth="1dp"
+                    app:horizontalBarThickness="3dp"
+                    app:position="1"
+                    app:progressDrawable="@drawable/transparent_progress_drawable"
+                    app:thumb="@drawable/thumb"
+                    app:tickMarkCount="3"
+                    app:tickMarkRadius="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/textView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/complex_sign_text"
+                        android:theme="@style/TxtMircro"/>
+
+                    <TextView
+                        android:id="@+id/textView7"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:text="@string/simple_sign_text"
+                        android:theme="@style/TxtMircro"/>
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

@@ -32,7 +32,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="10dp">
 
@@ -49,17 +49,158 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/cell_shape"
+                android:stretchColumns="*"
                 >
+                    <TextView
+                    android:id="@+id/tv_context_au"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:background="@drawable/cell_shape"
+                    android:gravity="center"
+                    android:text="맥락 인증(기본)"
+                    android:textAlignment="center"
+                    android:textColor="#80182333"
+                    android:textSize="14sp"/>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/cell_shape">
+
+                    <TextView
+                        android:id="@+id/tv_Psignature"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="자필서명"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_PinCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="PIN 코드"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/cell_shape">
+
+                    <TextView
+                        android:id="@+id/tv_emergency_contact"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="비상 연락처"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_au_mail"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="인증메일"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/cell_shape">
+                    <TextView
+                        android:id="@+id/tv_au_message"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="인증 메시지"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_credit_card_ocr"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="신용카드 OCR"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/cell_shape">
+                    <TextView
+                        android:id="@+id/tv_au_picture"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="인증 사진"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+
+                    <TextView
+                        android:id="@+id/tv_voice"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/cell_shape"
+                        android:gravity="center"
+                        android:text="PIN 코드"
+                        android:textAlignment="center"
+                        android:textColor="#80182333"
+                        android:textSize="14sp"/>
+
+                </TableRow>
+
+
+
+
             </TableLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <Button
                 android:id="@+id/btn_save"
                 style="@style/Button"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_height="50dp"
+                android:layout_marginBottom="9dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:text="저장"/>
-
         </LinearLayout>
 
 

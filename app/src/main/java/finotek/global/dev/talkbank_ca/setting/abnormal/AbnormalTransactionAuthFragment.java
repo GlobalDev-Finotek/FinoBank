@@ -31,6 +31,23 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 			"인증 메일", "인증 메세지", "신용카드 OCR", "인증 사진", "음성 인식"
 	};
 
+	View.OnClickListener abnormalOnClickListener = new View.OnClickListener(){
+		private boolean isClicked;
+
+		@Override
+		public void onClick(View v) {
+			if(isClicked) {
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.info));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+			} else {
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.transparent));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50);
+			}
+			isClicked = !isClicked;
+		}
+	};
+
+
 	public static AbnormalTransactionAuthFragment newInstance(String title) {
 		AbnormalTransactionAuthFragment fragment = new AbnormalTransactionAuthFragment();
 		Bundle args = new Bundle();
@@ -53,6 +70,17 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 		RxView.clicks(binding.btnSave)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> getActivity().onBackPressed());
+
+
+		binding.tvContextAu.setOnClickListener(abnormalOnClickListener);
+		binding.tvPsignature.setOnClickListener(abnormalOnClickListener);
+		binding.tvPinCode.setOnClickListener(abnormalOnClickListener);
+		binding.tvEmergencyContact.setOnClickListener(abnormalOnClickListener);
+		binding.tvAuMail.setOnClickListener(abnormalOnClickListener);
+		binding.tvAuMessage.setOnClickListener(abnormalOnClickListener);
+		binding.tvCreditCardOcr.setOnClickListener(abnormalOnClickListener);
+		binding.tvAuPicture.setOnClickListener(abnormalOnClickListener);
+		binding.tvVoice.setOnClickListener(abnormalOnClickListener);
 
 		return binding.getRoot();
 	}
@@ -110,5 +138,6 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 
 		return tableRow;
 	}
+
 
 }

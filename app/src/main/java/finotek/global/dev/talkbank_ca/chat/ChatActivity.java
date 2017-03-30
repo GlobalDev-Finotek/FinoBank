@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -36,7 +38,6 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
-import finotek.global.dev.talkbank_ca.widget.SecureKeyboardAdapter;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
@@ -169,22 +170,10 @@ public class ChatActivity extends AppCompatActivity {
                 .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
 
         ctBinding = ChatTransferBinding.bind(transferView);
-        SecureKeyboardAdapter secureKeyboardAdapter = new SecureKeyboardAdapter(this, transferKeyboardSet());
-        ctBinding.gvKeypad.setAdapter(secureKeyboardAdapter);
-        ctBinding.gvKeypad.setOnItemClickListener((parent, view, position, id) -> {
-            String key = (String) secureKeyboardAdapter.getItem(position);
-
-            if (position == secureKeyboardAdapter.getCount() - 1) {
-
-            }
-        });
-
-        secureKeyboardAdapter.setOnBackPressListener(() -> {
-
-        });
-
-        secureKeyboardAdapter.onCompletePressed(() -> {
-
+        ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
+        ctBinding.gvKeypad.onComplete(() -> {
+            ctBinding.editMoney.setText("");
+            binding.footer.removeView(transferView);
         });
 
         binding.footer.addView(footerInputs);
@@ -235,23 +224,6 @@ public class ChatActivity extends AppCompatActivity {
         return LayoutInflater.from(this).inflate(layoutId, parent, false);
     }
 
-    private List<String> transferKeyboardSet() {
-        List<String> set = new ArrayList<>();
-        set.add("0");
-        set.add("1");
-        set.add("2");
-        set.add("3");
-        set.add("4");
-        set.add("5");
-        set.add("6");
-        set.add("-");
-        set.add("7");
-        set.add("8");
-        set.add("9");
-        set.add("이체");
-        return set;
-    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -266,6 +238,4 @@ public class ChatActivity extends AppCompatActivity {
 
         return true;
     }
-
-
 }

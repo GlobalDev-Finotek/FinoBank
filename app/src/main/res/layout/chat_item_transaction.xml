@@ -50,6 +50,7 @@
                 android:text="@{item.type == 0 ? @string/string_withdrawal : @string/string_deposit }"
                 android:textColor="@{item.type == 0 ? @color/coral_pink : @color/dodger_blue }" />
             <TextView
+                android:layout_marginEnd="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"

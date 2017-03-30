@@ -33,191 +33,192 @@ import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 
 public class ChatActivity extends AppCompatActivity {
-    private ActivityChatBinding binding;
-    private ChatFooterInputBinding fiBinding;
-    private ChatExtendedControlBinding ecBinding;
-    private ChatTransferBinding ctBinding;
-    private MessageBox messageBox;
-    private Scenario scenario;
+	private ActivityChatBinding binding;
+	private ChatFooterInputBinding fiBinding;
+	private ChatExtendedControlBinding ecBinding;
+	private ChatTransferBinding ctBinding;
+	private MessageBox messageBox;
+	private Scenario scenario;
 
-    private boolean isExControlAvailable = false;
-    private View exControlView = null;
-    private View footerInputs = null;
-    private View captureView = null;
-    private View signView = null;
-    private View transferView = null;
+	private boolean isExControlAvailable = false;
+	private View exControlView = null;
+	private View footerInputs = null;
+	private View captureView = null;
+	private View signView = null;
+	private View transferView = null;
 
-    @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-        setSupportActionBar(binding.toolbar);
-        getSupportActionBar().setTitle("");
-        binding.toolbarTitle.setText("톡뱅");
-        messageBox = new MessageBox();
+	@Override
+	protected void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+		setSupportActionBar(binding.toolbar);
+		getSupportActionBar().setTitle("");
+		binding.toolbarTitle.setText("톡뱅");
 
-	    scenario = new Scenario(this, binding.chatView, messageBox);
-	    messageBox.getObservable().subscribe(this::onNewMessageUpdated);
-	    binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
+		messageBox = new MessageBox();
 
-        preInitControlViews();
-    }
+		scenario = new Scenario(this, binding.chatView, messageBox);
+		messageBox.getObservable().subscribe(this::onNewMessageUpdated);
+		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
-    private void onNewMessageUpdated(Object msg){
-        if(msg instanceof RequestTakeIDCard) {
-            releaseControls();
+		preInitControlViews();
+	}
 
-            binding.footer.addView(inflate(R.layout.chat_capture));
-            CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
-            FragmentTransaction tx = getFragmentManager().beginTransaction();
-            tx.add(R.id.chat_capture, capturePicFragment);
-            tx.commit();
-        }
+	private void onNewMessageUpdated(Object msg) {
+		if (msg instanceof RequestTakeIDCard) {
+			releaseControls();
 
-        if(msg instanceof RequestSignature) {
-            releaseControls();
-            binding.footer.addView(inflate(R.layout.chat_sign));
-        }
+			binding.footer.addView(inflate(R.layout.chat_capture));
+			CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			tx.add(R.id.chat_capture, capturePicFragment);
+			tx.commit();
+		}
 
-        if(msg instanceof RequestTransfer) {
-            releaseAllControls();
-            binding.footer.addView(transferView);
-        }
-    }
+		if (msg instanceof RequestSignature) {
+			releaseControls();
+			binding.footer.addView(inflate(R.layout.chat_sign));
+		}
 
-    public void onSendButtonClickEvent(Void aVoid){
-        String msg = fiBinding.chatEditText.getText().toString();
-        messageBox.add(new SendMessage(msg));
-        clearInput();
-    }
+		if (msg instanceof RequestTransfer) {
+			releaseAllControls();
+			binding.footer.addView(transferView);
+		}
+	}
 
-    private void expandControlClickEvent(Void aVoid){
-        if(isExControlAvailable)
-            runOnUiThread(this::hideExControl);
-        else
-            runOnUiThread(this::showExControl);
-    }
+	public void onSendButtonClickEvent(Void aVoid) {
+		String msg = fiBinding.chatEditText.getText().toString();
+		messageBox.add(new SendMessage(msg));
+		clearInput();
+	}
 
-    private void chatEditFieldFocusChanged(boolean hasFocus){
-        if(hasFocus)
-            runOnUiThread(this::hideExControl);
-    }
+	private void expandControlClickEvent(Void aVoid) {
+		if (isExControlAvailable)
+			runOnUiThread(this::hideExControl);
+		else
+			runOnUiThread(this::showExControl);
+	}
 
-    private void chatEditFieldTextChanged(CharSequence value) {
-        fiBinding.sendButton.setEnabled(!value.toString().isEmpty());
-    }
+	private void chatEditFieldFocusChanged(boolean hasFocus) {
+		if (hasFocus)
+			runOnUiThread(this::hideExControl);
+	}
 
-    private void clearInput() {
-        fiBinding.sendButton.setEnabled(false);
-        fiBinding.chatEditText.setText("");
-    }
+	private void chatEditFieldTextChanged(CharSequence value) {
+		fiBinding.sendButton.setEnabled(!value.toString().isEmpty());
+	}
 
-    private void hideExControl() {
-        isExControlAvailable = false;
-        binding.footer.removeView(exControlView);
-        fiBinding.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
-    }
+	private void clearInput() {
+		fiBinding.sendButton.setEnabled(false);
+		fiBinding.chatEditText.setText("");
+	}
 
-    private void showExControl() {
-        isExControlAvailable = true;
-        binding.footer.addView(exControlView);
-        fiBinding.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
-    }
+	private void hideExControl() {
+		isExControlAvailable = false;
+		binding.footer.removeView(exControlView);
+		fiBinding.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
+	}
 
-    private void preInitControlViews(){
-        exControlView = inflate(R.layout.chat_extended_control);
-        footerInputs = inflate(R.layout.chat_footer_input);
-        transferView = inflate(R.layout.chat_transfer);
+	private void showExControl() {
+		isExControlAvailable = true;
+		binding.footer.addView(exControlView);
+		fiBinding.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
+	}
 
-        fiBinding = ChatFooterInputBinding.bind(footerInputs);
-        RxView.focusChanges(fiBinding.chatEditText)
-                .delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(this::chatEditFieldFocusChanged);
+	private void preInitControlViews() {
+		exControlView = inflate(R.layout.chat_extended_control);
+		footerInputs = inflate(R.layout.chat_footer_input);
+		transferView = inflate(R.layout.chat_transfer);
 
-        RxTextView.textChanges(fiBinding.chatEditText)
-                .subscribe(this::chatEditFieldTextChanged);
+		fiBinding = ChatFooterInputBinding.bind(footerInputs);
+		RxView.focusChanges(fiBinding.chatEditText)
+				.delay(100, TimeUnit.MILLISECONDS)
+				.subscribe(this::chatEditFieldFocusChanged);
 
-        RxView.clicks(fiBinding.showExControl)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(this::expandControlClickEvent);
+		RxTextView.textChanges(fiBinding.chatEditText)
+				.subscribe(this::chatEditFieldTextChanged);
 
-        RxView.clicks(fiBinding.sendButton)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .subscribe(this::onSendButtonClickEvent);
+		RxView.clicks(fiBinding.showExControl)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.delay(100, TimeUnit.MILLISECONDS)
+				.subscribe(this::expandControlClickEvent);
 
-        ecBinding = ChatExtendedControlBinding.bind(exControlView);
-        RxView.clicks(ecBinding.control1.registerAccount)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> hideExControl())
-                .subscribe(aVoid -> {
-                    messageBox.add(new SendMessage("계좌 개설"));
-                });
+		RxView.clicks(fiBinding.sendButton)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(this::onSendButtonClickEvent);
 
-        RxView.clicks(ecBinding.control1.transferMoney)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> hideExControl())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
+		ecBinding = ChatExtendedControlBinding.bind(exControlView);
+		RxView.clicks(ecBinding.control1.registerAccount)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.doOnNext(aVoid -> hideExControl())
+				.subscribe(aVoid -> {
+					messageBox.add(new SendMessage("계좌 개설"));
+				});
 
-        RxView.clicks(ecBinding.control1.checkAccount)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> hideExControl())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
+		RxView.clicks(ecBinding.control1.transferMoney)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.doOnNext(aVoid -> hideExControl())
+				.subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
 
-        ctBinding = ChatTransferBinding.bind(transferView);
-        ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
-        ctBinding.gvKeypad.onComplete(() -> {
-            ctBinding.editMoney.setText("");
-            binding.footer.removeView(transferView);
-            binding.footer.addView(footerInputs);
-        });
+		RxView.clicks(ecBinding.control1.checkAccount)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.doOnNext(aVoid -> hideExControl())
+				.subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
 
-        binding.footer.addView(footerInputs);
-    }
+		ctBinding = ChatTransferBinding.bind(transferView);
+		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
+		ctBinding.gvKeypad.onComplete(() -> {
+			ctBinding.editMoney.setText("");
+			binding.footer.removeView(transferView);
+			binding.footer.addView(footerInputs);
+		});
 
-    /**
-     * 키보드 이외에 화면을 터치한 경우 자동으로 키보드를 dismiss 하기 위한 소스
-     * */
-    @Override
-    public boolean dispatchTouchEvent(MotionEvent ev) {
-        if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            View v = getCurrentFocus();
-            if(v instanceof EditText) {
-                Rect editTextRect = new Rect();
-                v.getGlobalVisibleRect(editTextRect);
+		binding.footer.addView(footerInputs);
+	}
 
-                Rect sendButtonRect = new Rect();
-                fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
+	/**
+	 * 키보드 이외에 화면을 터치한 경우 자동으로 키보드를 dismiss 하기 위한 소스
+	 */
+	@Override
+	public boolean dispatchTouchEvent(MotionEvent ev) {
+		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
+			View v = getCurrentFocus();
+			if (v instanceof EditText) {
+				Rect editTextRect = new Rect();
+				v.getGlobalVisibleRect(editTextRect);
 
-                if(!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
-                        && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-                    dismissKeyboard(v);
-                }
-            }
-        }
+				Rect sendButtonRect = new Rect();
+				fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
 
-        return super.dispatchTouchEvent(ev);
-    }
+				if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
+						&& !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+					dismissKeyboard(v);
+				}
+			}
+		}
 
-    private void dismissKeyboard(View v) {
-        v.clearFocus();
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
+		return super.dispatchTouchEvent(ev);
+	}
 
-    private void releaseControls(){
-        dismissKeyboard(fiBinding.chatEditText);
-        hideExControl();
-    }
+	private void dismissKeyboard(View v) {
+		v.clearFocus();
+		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+	}
 
-    private void releaseAllControls(){
-        dismissKeyboard(fiBinding.chatEditText);
-        binding.footer.removeAllViews();
-    }
+	private void releaseControls() {
+		dismissKeyboard(fiBinding.chatEditText);
+		hideExControl();
+	}
 
-    private View inflate(int layoutId){
-        ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
-        return LayoutInflater.from(this).inflate(layoutId, parent, false);
-    }
+	private void releaseAllControls() {
+		dismissKeyboard(fiBinding.chatEditText);
+		binding.footer.removeAllViews();
+	}
+
+	private View inflate(int layoutId) {
+		ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
+		return LayoutInflater.from(this).inflate(layoutId, parent, false);
+	}
 
 }

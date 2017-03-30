@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".SplashActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize">
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -27,14 +28,18 @@
         <activity android:name=".user.sign.SignRegistrationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-        <activity android:name=".user.profile.CaptureProfilePicActivity">
-        </activity>
+
+        <ativity android:name=".user.profile.CaptureProfilePicActivity">
+        </ativity>
         <activity android:name=".user.PinRegistrationActivity">
         </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity" />
         <activity android:name=".setting.SettingsActivity" />
         <activity android:name=".setting.SettingDetailActivity"/>
-        <activity android:name=".MainActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
 
         <activity android:name=".chat.ChatActivity"
                   android:label="톡뱅" />

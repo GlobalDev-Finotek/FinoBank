@@ -44,10 +44,10 @@
                         android:text="모든 앱 수집"
                         tb:custom_font="noto_regular"/>
 
-                    <Switch
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
                         android:id="@+id/switch1"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         android:elevation="0dp"/>
 
                 </LinearLayout>
@@ -56,6 +56,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/border_black_blank"
+
                     android:orientation="horizontal"
                     android:paddingBottom="8dp"
                     android:paddingLeft="15dp"
@@ -69,10 +70,10 @@
                         android:text="개별 앱 선택"
                         tb:custom_font="noto_regular"/>
 
-                    <Switch
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
                         android:id="@+id/switch2"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="30dp"
                         />
 
                 </LinearLayout>
@@ -84,6 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+
             android:padding="15dp">
 
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -112,11 +114,11 @@
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
+                        android:layout_weight="0.89"
                         android:text="모든 앱 수집"
                         tb:custom_font="noto_regular"/>
 
-                    <Switch
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:elevation="0dp"/>
@@ -144,7 +146,7 @@
                             android:text="개별 앱 선택"
                             tb:custom_font="noto_regular"/>
 
-                        <Switch
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
                             android:id="@+id/switch3"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"

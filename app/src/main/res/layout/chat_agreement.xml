@@ -20,7 +20,10 @@
             android:layout_marginEnd="1dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:button="@drawable/checkbox_chat"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
@@ -30,7 +33,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="57dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_100"
@@ -43,7 +46,10 @@
             android:layout_marginEnd="1dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:button="@drawable/checkbox_chat"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
@@ -53,17 +59,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="57dp"
                 android:textSize="14sp"
                 android:textColor="@color/dark_100"
                 android:text="대출 서비스 이용 약관" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/vector_drawable_icon_chevron_right"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/icon_chevron_right_light"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:tint="@color/chevron_color" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
         <RelativeLayout
             android:background="@android:color/white"
@@ -72,7 +78,10 @@
             android:layout_marginEnd="1dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:button="@drawable/checkbox_chat"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
@@ -82,17 +91,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="57dp"
                 android:textSize="14sp"
                 android:textColor="@color/dark_100"
                 android:text="개인(신용)정보 조회 및 이용 제공 동의" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/vector_drawable_icon_chevron_right"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/icon_chevron_right_light"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:tint="@color/chevron_color" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
         <RelativeLayout
             android:background="@android:color/white"
@@ -101,7 +110,10 @@
             android:layout_marginEnd="1dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:button="@drawable/checkbox_chat"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
@@ -111,17 +123,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="57dp"
                 android:textSize="14sp"
                 android:textColor="@color/dark_100"
                 android:text="대출거래 약정서" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/vector_drawable_icon_chevron_right"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/icon_chevron_right_light"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:tint="@color/chevron_color" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
         <RelativeLayout
             android:background="@android:color/white"
@@ -130,7 +142,10 @@
             android:layout_marginEnd="1dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:button="@drawable/checkbox_chat"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
@@ -140,17 +155,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="57dp"
                 android:textSize="14sp"
                 android:textColor="@color/dark_100"
                 android:text="계약 안내사항 및 유의사항" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/vector_drawable_icon_chevron_right"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/icon_chevron_right_light"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:tint="@color/chevron_color" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
         <RelativeLayout
             android:background="@android:color/white"
@@ -159,7 +174,10 @@
             android:layout_marginEnd="1dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:button="@drawable/checkbox_chat"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
@@ -169,7 +187,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="57dp"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:textColor="@color/dark_100"
@@ -182,7 +200,10 @@
             android:layout_marginEnd="1dp"
             android:layout_width="match_parent"
             android:layout_height="50dp">
-            <android.support.v7.widget.AppCompatCheckBox
+            <CheckBox
+                android:scaleX="0.7"
+                android:scaleY="0.7"
+                android:button="@drawable/checkbox_chat"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
@@ -192,17 +213,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginStart="51dp"
+                android:layout_marginStart="57dp"
                 android:textSize="14sp"
                 android:textColor="@color/dark_100"
                 android:text="고객 정보 활용 동의" />
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/vector_drawable_icon_chevron_right"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/icon_chevron_right_light"
                 android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:tint="@color/chevron_color" />
+                android:layout_centerVertical="true" />
         </RelativeLayout>
     </LinearLayout>
     <Button

@@ -7,4 +7,11 @@
             <enum name="info" value="2" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="TBTextView">
+        <attr name="tbFontType" format="enum">
+            <enum name="normal" value="0" />
+            <enum name="medium" value="1" />
+            <enum name="light" value="2" />
+        </attr>
+    </declare-styleable>
 </resources>

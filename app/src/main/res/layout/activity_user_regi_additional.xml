@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tb="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:id="@+id/activity_user_regi_additional"
@@ -8,8 +9,7 @@
         android:orientation="vertical"
         >
 
-        <TextView
-            android:id="@+id/textView"
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white_two"
@@ -19,7 +19,8 @@
             android:paddingRight="16dp"
             android:paddingTop="16dp"
             android:text="@string/additional_inform"
-            android:theme="@style/Title"/>
+            android:theme="@style/Title"
+            tb:custom_font="noto_medium"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,13 +29,13 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
-            <TextView
-                android:id="@+id/textView25"
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:gravity="center_vertical"
                 android:text="\u2022 비상 연락처"
-                android:theme="@style/Stit"/>
+                android:theme="@style/Stit"
+                tb:custom_font="noto_medium"/>
 
             <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                 android:id="@+id/edt_emergency_phone_number"
@@ -43,13 +44,13 @@
                 android:hint="@string/emergency_phone_number"
                 android:inputType="phone"/>
 
-            <TextView
-                android:id="@+id/textView26"
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:gravity="center_vertical"
                 android:text="\u2022 이메일 주소"
-                android:theme="@style/Stit"/>
+                android:theme="@style/Stit"
+                tb:custom_font="noto_medium"/>
 
             <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                 android:id="@+id/edt_email"
@@ -64,13 +65,14 @@
                 android:orientation="vertical"
                 >
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/textView3"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:text="\u2022 신용카드 등록"
-                    android:theme="@style/Stit"/>
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
 
                 <Button
                     android:id="@+id/btn_capture_creidt"
@@ -88,13 +90,14 @@
                 android:orientation="vertical"
                 >
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/textView4"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:text="\u2022 인증 사진"
-                    android:theme="@style/Stit"/>
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
 
                 <Button
                     android:id="@+id/btn_capture_profile"
@@ -111,13 +114,14 @@
                 android:orientation="vertical"
                 >
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/textView16"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
                     android:gravity="center_vertical"
                     android:text="\u2022 PIN 코드"
-                    android:theme="@style/Stit"/>
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
 
                 <Button
                     android:id="@+id/btn_pin_registration"

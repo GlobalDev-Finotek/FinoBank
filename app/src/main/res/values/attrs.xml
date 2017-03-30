@@ -7,4 +7,13 @@
             <enum name="info" value="2" />
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="TalkBankTextView">
+        <attr name="showText" format="boolean"/>
+        <attr name="custom_font" format="enum">
+            <enum name="noto_light" value="0"/>
+            <enum name="noto_medium" value="1"/>
+            <enum name="noto_regular" value="2"/>
+        </attr>
+    </declare-styleable>
 </resources>

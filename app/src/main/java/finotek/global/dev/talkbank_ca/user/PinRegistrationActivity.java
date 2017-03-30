@@ -72,17 +72,16 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			if (ptrTvPwd < PINCODE_LENGTH && !TextUtils.isEmpty(key.trim())) {
 				tvPwd[ptrTvPwd++].setText("*");
 			}
-
-			if (position == secureKeyboardAdapter.getCount() - 1) {
-				startActivity(new Intent(PinRegistrationActivity.this, SettingsActivity.class));
-			}
-
 		});
 
 		secureKeyboardAdapter.setOnBackPressListener(() -> {
 			if (ptrTvPwd > 0) {
 				tvPwd[--ptrTvPwd].setText("");
 			}
+		});
+
+		secureKeyboardAdapter.onCompletePressed(() -> {
+			startActivity(new Intent(PinRegistrationActivity.this, SettingsActivity.class));
 		});
 
 
@@ -161,7 +160,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		Collections.shuffle(completeSets);
 
 		completeSets.add(7, " ");
-		completeSets.add(" ");
+		completeSets.add("등록");
 
 		return completeSets;
 	}

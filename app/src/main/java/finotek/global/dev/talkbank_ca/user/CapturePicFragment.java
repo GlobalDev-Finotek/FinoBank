@@ -384,9 +384,13 @@ public class CapturePicFragment extends Fragment
 	                         Bundle savedInstanceState) {
 		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_capture_pic, container, false);
 
+		binding.tvInst.setText("표시된 영역 안에 맞추어 촬영해 주세요.");
+
 		binding.ibCapture.setOnClickListener(v -> {
+			binding.tvInst.setText("");
 			if (isCaptureDone) {
 				unlockFocus();
+				binding.tvInst.setText("표시된 영역 안에 맞추어 촬영해 주세요.");
 				binding.ibCapture.setImageDrawable(ContextCompat.getDrawable(getActivity(),
 						R.drawable.vector_drawable_icon_camera));
 				binding.ibOk.setVisibility(View.GONE);

@@ -24,6 +24,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_credit_registration);
 
 		presenter = new CreditRegistrationImpl(this);
+		presenter.attachView(this);
 
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.add(R.id.fl_cam, capturePicFragment);
@@ -31,6 +32,12 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 
 		capturePicFragment.takePicture(path -> presenter.takePic(path));
 
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		presenter.detachView();
 	}
 
 	@Override

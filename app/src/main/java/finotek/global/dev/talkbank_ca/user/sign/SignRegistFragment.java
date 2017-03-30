@@ -44,6 +44,8 @@ public class SignRegistFragment extends Fragment {
 	                         Bundle savedInstanceState) {
 		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_draw, container, false);
 
+		binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(1/2)");
+
 		stepSubject = PublishSubject.create();
 
 		binding.drawingCanvas.setOnCanvasTouchListener(() -> {
@@ -101,15 +103,18 @@ public class SignRegistFragment extends Fragment {
 
 			case 2:
 				DrawableCompat.setTint(binding.ibNext.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+				binding.tvInst.setText("");
 				break;
 
 			case 3:
 				binding.drawingCanvas.clear();
 				binding.ibNext.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.vector_drawable_icon_check));
+				binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(2/2)");
 				break;
 
 			case 4:
 				DrawableCompat.setTint(binding.ibNext.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+				binding.tvInst.setText("");
 				break;
 		}
 	}

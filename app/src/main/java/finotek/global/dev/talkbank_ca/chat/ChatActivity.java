@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -18,6 +19,9 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -26,19 +30,26 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
-import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
+import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
+import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
+import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 
 public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private ChatFooterInputBinding fiBinding;
+    private ChatExtendedControlBinding ecBinding;
+    private ChatTransferBinding ctBinding;
     private MessageBox messageBox;
     private Scenario scenario;
 
     private boolean isExControlAvailable = false;
     private View exControlView = null;
     private View footerInputs = null;
+    private View captureView = null;
+    private View signView = null;
+    private View transferView = null;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -78,7 +89,8 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         if(msg instanceof RequestTransfer) {
-            releaseControls();
+            releaseAllControls();
+            binding.footer.addView(transferView);
         }
     }
 
@@ -124,6 +136,7 @@ public class ChatActivity extends AppCompatActivity {
     private void preInitControlViews(){
         exControlView = inflate(R.layout.chat_extended_control);
         footerInputs = inflate(R.layout.chat_footer_input);
+        transferView = inflate(R.layout.chat_transfer);
 
         fiBinding = ChatFooterInputBinding.bind(footerInputs);
         RxView.focusChanges(fiBinding.chatEditText)
@@ -142,6 +155,32 @@ public class ChatActivity extends AppCompatActivity {
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(this::onSendButtonClickEvent);
 
+        ecBinding = ChatExtendedControlBinding.bind(exControlView);
+        RxView.clicks(ecBinding.control1.registerAccount)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> hideExControl())
+                .subscribe(aVoid -> {
+                    messageBox.add(new SendMessage("계좌 개설"));
+                });
+
+        RxView.clicks(ecBinding.control1.transferMoney)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> hideExControl())
+                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
+
+        RxView.clicks(ecBinding.control1.checkAccount)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> hideExControl())
+                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
+
+        ctBinding = ChatTransferBinding.bind(transferView);
+        ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
+        ctBinding.gvKeypad.onComplete(() -> {
+            ctBinding.editMoney.setText("");
+            binding.footer.removeView(transferView);
+            binding.footer.addView(footerInputs);
+        });
+
         binding.footer.addView(footerInputs);
     }
 
@@ -151,9 +190,6 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-            // dimiss keyboard or hide ex control
-            releaseControls();
-
             View v = getCurrentFocus();
             if(v instanceof EditText) {
                 Rect editTextRect = new Rect();
@@ -183,12 +219,14 @@ public class ChatActivity extends AppCompatActivity {
         hideExControl();
     }
 
+    private void releaseAllControls(){
+        dismissKeyboard(fiBinding.chatEditText);
+        binding.footer.removeAllViews();
+    }
+
     private View inflate(int layoutId){
         ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
         return LayoutInflater.from(this).inflate(layoutId, parent, false);
     }
-
-
-
 
 }

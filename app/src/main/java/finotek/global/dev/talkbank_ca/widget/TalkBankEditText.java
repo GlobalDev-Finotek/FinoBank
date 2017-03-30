@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca.widget;
 import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 
 import finotek.global.dev.talkbank_ca.R;
 
@@ -58,6 +59,7 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 	}
 
 	private void init() {
+		setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 		setOnFocusChangeListener((v, hasFocus) -> {
 			if (hasFocus) {
 				onModeChangeListener.onModeChange(MODE.FOCUS);

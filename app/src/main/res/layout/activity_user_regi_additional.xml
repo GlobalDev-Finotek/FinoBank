@@ -13,7 +13,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white_two"
-            android:padding="16dp"
+            android:gravity="center_vertical"
+            android:paddingBottom="16dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="16dp"
             android:text="@string/additional_inform"
             android:theme="@style/Title"/>
 
@@ -72,7 +76,7 @@
                     android:id="@+id/btn_capture_creidt"
                     style="@style/InverseButton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:elevation="0dp"
                     android:text="@string/capture_credit"/>
 
@@ -96,7 +100,7 @@
                     android:id="@+id/btn_capture_profile"
                     style="@style/InverseButton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:text="@string/capture_profile"/>
 
             </LinearLayout>
@@ -119,30 +123,31 @@
                     android:id="@+id/btn_pin_registration"
                     style="@style/InverseButton"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="44dp"
                     android:text="PIN 코드 변경"/>
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView19"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:background="@color/white_two"
-                android:padding="16dp"
-                android:text="정보 수집 동의(필수 입력)"
-                android:theme="@style/Title"/>
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:padding="16dp"
-                android:text="맥락 데이터 수집 동의(사용자 인증 모드)"/>
-
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/textView19"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/white_two"
+            android:gravity="center_vertical"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:text="정보 수집 동의(필수 입력)"
+            android:theme="@style/Title"/>
+
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="맥락 데이터 수집 동의(사용자 인증 모드)"/>
 
 
     </LinearLayout>

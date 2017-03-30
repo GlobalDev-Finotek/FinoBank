@@ -2,10 +2,12 @@ package finotek.global.dev.talkbank_ca.user.sign;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 
@@ -36,23 +38,40 @@ public class SignRegistrationActivity extends AppCompatActivity {
 			  RelativeLayout.LayoutParams fl = new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 					  RelativeLayout.LayoutParams.MATCH_PARENT);
 			  binding.flContent.setLayoutParams(fl);
+			  binding.llInstWrapper.setVisibility(View.GONE);
+			  binding.appbar.setVisibility(View.GONE);
 		  } else if (size == SignRegistFragment.CanvasSize.SMALL) {
 			  RelativeLayout.LayoutParams fl = new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
 					  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics()));
-
+				binding.llInstWrapper.setVisibility(View.VISIBLE);
 			  binding.flContent.setLayoutParams(fl);
+			  binding.appbar.setVisibility(View.VISIBLE);
 		  }
     });
 
-	  signRegistFragment.setOnSaveListener(new SignRegistFragment.OnSignSaveListener() {
-		  @Override
-		  public void onSave() {
-			  Intent intent = new Intent(SignRegistrationActivity.this, ChatActivity.class);
-			  startActivity(intent);
-			  finish();
-		  }
+	  signRegistFragment.setOnSaveListener(() -> {
+		  Intent intent = new Intent(SignRegistrationActivity.this, ChatActivity.class);
+		  startActivity(intent);
+		  finish();
 	  });
   }
 
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
 
+		int orientation = newConfig.orientation;
+
+		switch(orientation) {
+
+			case Configuration.ORIENTATION_LANDSCAPE:
+				binding.appbar.setVisibility(View.GONE);
+				break;
+
+			case Configuration.ORIENTATION_PORTRAIT:
+				binding.appbar.setVisibility(View.VISIBLE);
+				break;
+
+		}
+	}
 }

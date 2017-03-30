@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tb="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -12,11 +13,12 @@
             android:orientation="vertical"
             android:padding="15dp">
 
-            <TextView
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="맥락데이터 수집 앱"
-                android:theme="@style/Stit"/>
+                android:theme="@style/Stit"
+                tb:custom_font="noto_medium"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -34,12 +36,13 @@
                     android:paddingRight="15dp"
                     android:paddingTop="8dp">
 
-                    <TextView
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/textView11"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="모든 앱 수집"/>
+                        android:text="모든 앱 수집"
+                        tb:custom_font="noto_regular"/>
 
                     <Switch
                         android:id="@+id/switch1"
@@ -59,12 +62,12 @@
                     android:paddingRight="15dp"
                     android:paddingTop="8dp">
 
-                    <TextView
-                        android:id="@+id/textView12"
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="개별 앱 선택"/>
+                        android:text="개별 앱 선택"
+                        tb:custom_font="noto_regular"/>
 
                     <Switch
                         android:id="@+id/switch2"
@@ -83,11 +86,12 @@
             android:orientation="vertical"
             android:padding="15dp">
 
-            <TextView
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="맥락데이터 수집 시간 설정"
-                android:theme="@style/Stit"/>
+                android:theme="@style/Stit"
+                tb:custom_font="noto_medium"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -105,11 +109,12 @@
                     android:paddingRight="15dp"
                     android:paddingTop="8dp">
 
-                    <TextView
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="모든 앱 수집"/>
+                        android:text="모든 앱 수집"
+                        tb:custom_font="noto_regular"/>
 
                     <Switch
                         android:layout_width="wrap_content"
@@ -132,12 +137,12 @@
                         android:layout_weight="1"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:id="@+id/textView17"
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="개별 앱 선택"/>
+                            android:text="개별 앱 선택"
+                            tb:custom_font="noto_regular"/>
 
                         <Switch
                             android:id="@+id/switch3"
@@ -168,11 +173,12 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <TextView
+                                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:text="시작"
+                                    tb:custom_font="noto_medium"
                                     />
 
                                 <LinearLayout
@@ -181,7 +187,7 @@
                                     android:layout_weight="1"
                                     android:orientation="horizontal">
 
-                                    <TextView
+                                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                         android:id="@+id/tv_start"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
@@ -189,7 +195,8 @@
                                         android:autoText="true"
                                         android:format12Hour="hh:mm:ss a"
                                         android:textSize="24sp"
-                                        android:theme="@style/TextLabelLarge"/>
+                                        android:theme="@style/TextLabelLarge"
+                                        tb:custom_font="noto_medium"/>
                                 </LinearLayout>
 
                             </LinearLayout>
@@ -200,11 +207,12 @@
                                 android:layout_weight="1"
                                 android:orientation="vertical">
 
-                                <TextView
+                                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
-                                    android:text="종료"/>
+                                    android:text="종료"
+                                    tb:custom_font="noto_medium"/>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -212,27 +220,29 @@
                                     android:layout_weight="1"
                                     android:orientation="horizontal">
 
-                                    <TextView
+                                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                         android:id="@+id/tv_end"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:format12Hour="hh:mm:ss a"
                                         android:textSize="24sp"
-                                        android:theme="@style/TextLabelLarge"/>
+                                        android:theme="@style/TextLabelLarge"
+                                        tb:custom_font="noto_medium"/>
                                 </LinearLayout>
 
                             </LinearLayout>
 
                         </LinearLayout>
 
-                        <TextView
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:id="@+id/textView10"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="5dp"
                             android:layout_weight="1"
-                            android:text="해당 시간대에만 데이터 수집을 허용합니다"/>
+                            android:text="해당 시간대에만 데이터 수집을 허용합니다"
+                            tb:custom_font="noto_regular"/>
 
                     </LinearLayout>
 

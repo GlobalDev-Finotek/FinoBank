@@ -186,35 +186,8 @@ public class CapturePicFragment extends Fragment
 	 */
 	private int mSensorOrientation;
 	private FragmentCapturePicBinding binding;
-	/**
-	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
-	 * {@link TextureView}.
-	 */
-	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
-			= new TextureView.SurfaceTextureListener() {
-
-		@RequiresApi(api = Build.VERSION_CODES.M)
-		@Override
-		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
-			openCamera(width, height);
-		}
-
-		@Override
-		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
-			configureTransform(width, height);
-		}
-
-		@Override
-		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
-			return true;
-		}
-
-		@Override
-		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
-		}
-
-	};
 	private boolean isCaptureDone;
+	private OnSizeChangeListener onSizeChangeListener;
 	/**
 	 * A {@link CameraCaptureSession.CaptureCallback} that handles events related to JPEG capture.
 	 */
@@ -308,6 +281,34 @@ public class CapturePicFragment extends Fragment
 		}
 
 	};
+	/**
+	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
+	 * {@link TextureView}.
+	 */
+	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
+			= new TextureView.SurfaceTextureListener() {
+
+		@RequiresApi(api = Build.VERSION_CODES.M)
+		@Override
+		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+			openCamera(width, height);
+		}
+
+		@Override
+		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
+			configureTransform(width, height);
+		}
+
+		@Override
+		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
+			return true;
+		}
+
+		@Override
+		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
+		}
+
+	};
 
 	/**
 	 * Given {@code choices} of {@code Size}s supported by a camera, choose the smallest one that
@@ -362,6 +363,10 @@ public class CapturePicFragment extends Fragment
 		return new CapturePicFragment();
 	}
 
+	public void setOnSizeChangeListener(OnSizeChangeListener onSizeChangeListener) {
+		this.onSizeChangeListener = onSizeChangeListener;
+	}
+
 	/**
 	 * Shows a {@link Toast} on the UI thread.
 	 *
@@ -401,6 +406,7 @@ public class CapturePicFragment extends Fragment
 						R.drawable.vector_drawable_icon_reload));
 				binding.ibOk.setVisibility(View.VISIBLE);
 			}
+
 
 			binding.ibOk.setOnClickListener(v1 -> {
 				if (isCaptureDone) {
@@ -586,7 +592,7 @@ public class CapturePicFragment extends Fragment
 
 	 */
 	@RequiresApi(api = Build.VERSION_CODES.M)
-	private void openCamera(int width, int height) {
+	public void openCamera(int width, int height) {
 		if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA)
 				!= PackageManager.PERMISSION_GRANTED) {
 			requestCameraPermission();
@@ -876,6 +882,10 @@ public class CapturePicFragment extends Fragment
 			requestBuilder.set(CaptureRequest.CONTROL_AE_MODE,
 					CaptureRequest.CONTROL_AE_MODE_ON_AUTO_FLASH);
 		}
+	}
+
+	public interface OnSizeChangeListener {
+		void onSizeChange();
 	}
 
 

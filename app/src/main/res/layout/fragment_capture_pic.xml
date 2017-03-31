@@ -12,6 +12,52 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
+        <ImageButton
+            android:id="@+id/ib_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="26dp"
+            android:layout_marginRight="41dp"
+            android:background="@drawable/white_large_circle_border"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentStart="true"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/ib_capture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/white_large_circle"
+                android:padding="15dp"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/vector_drawable_icon_camera"/>
+
+            <ImageButton
+                android:id="@+id/ib_ok"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="15dp"
+                android:background="@drawable/primary_large_circle"
+                android:padding="15dp"
+                android:tint="@color/white"
+                android:visibility="gone"
+                app:srcCompat="@drawable/vector_drawable_icon_check"/>
+        </RelativeLayout>
+
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/tv_inst"
             android:layout_width="wrap_content"
@@ -20,48 +66,6 @@
             android:layout_centerVertical="true"
             android:textColor="@color/white"
             tb:custom_font="noto_medium"/>
-
-        <FrameLayout
-            android:id="@+id/frameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginBottom="19dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_horizontal"
-                android:orientation="horizontal">
-
-                <ImageButton
-                    android:id="@+id/ib_capture"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="false"
-                    android:layout_centerHorizontal="false"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/white_large_circle"
-                    android:padding="15dp"
-                    android:tint="@color/colorPrimary"
-                    app:srcCompat="@drawable/vector_drawable_icon_camera"/>
-
-                <ImageButton
-                    android:id="@+id/ib_ok"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="15dp"
-                    android:background="@drawable/primary_large_circle"
-                    android:padding="15dp"
-                    android:tint="@color/white"
-                    android:visibility="gone"
-                    app:srcCompat="@drawable/vector_drawable_icon_check"/>
-            </LinearLayout>
-
-        </FrameLayout>
 
     </RelativeLayout>
 </layout>

@@ -2,7 +2,9 @@ package finotek.global.dev.talkbank_ca.user.credit;
 
 import android.app.FragmentTransaction;
 import android.databinding.DataBindingUtil;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -18,6 +20,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 	private CapturePicFragment capturePicFragment = new CapturePicFragment();
 	private CreditRegistration presenter;
 
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -36,6 +39,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 
 		capturePicFragment.takePicture(path -> presenter.takePic(path));
 
+		capturePicFragment.setOnSizeChangeListener(() -> capturePicFragment.openCamera(binding.flCam.getWidth(), 1024));
 	}
 
 	@Override

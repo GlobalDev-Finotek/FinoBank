@@ -2,9 +2,6 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <data>
         <variable
-            name="order"
-            type="int" />
-        <variable
             name="item"
             type="finotek.global.dev.talkbank_ca.chat.messages.Transaction" />
     </data>
@@ -12,24 +9,38 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="70dp"
-        android:padding="15dp"
+        android:paddingTop="15dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="15dp"
+        android:paddingStart="10dp"
         android:layout_marginTop="1dp"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         android:background="@android:color/white">
+        <CheckBox
+            android:id="@+id/star_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:scaleX="0.7"
+            android:scaleY="0.7"
+            android:button="@drawable/checkbox_bookmark" />
         <TextView
+            android:layout_marginStart="35dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{item.name}" />
         <Button
-            android:layout_marginStart="45dp"
+            android:layout_marginStart="80dp"
             android:layout_width="50dp"
             android:layout_height="20dp"
             android:textSize="12sp"
             android:text="@string/string_transfer"
             android:textColor="@color/dark_100"
-            android:background="@drawable/btn_small_round_default" />
+            android:background="@drawable/btn_small_round_default"
+            style="?android:attr/borderlessButtonStyle" />
         <TextView
+            android:layout_marginStart="35dp"
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -60,7 +71,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
                 android:textSize="12sp"
                 android:text="@string/string_price_unit"
                 android:textColor="@color/dark_100"/>

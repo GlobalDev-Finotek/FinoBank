@@ -37,6 +37,14 @@
                 android:textSize="12sp"
                 android:textColor="@color/dark_50"
                 android:text="200,000원 이체" />
+            <CheckBox
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_bookmark"
+                android:checked="true"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginStart="10dp"
@@ -66,6 +74,13 @@
                 android:textSize="12sp"
                 android:textColor="@color/dark_50"
                 android:text="100,000원 이체" />
+            <CheckBox
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_bookmark"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginStart="10dp"
@@ -95,6 +110,13 @@
                 android:textSize="12sp"
                 android:textColor="@color/dark_50"
                 android:text="36,200원 이체" />
+            <CheckBox
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_bookmark"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginStart="10dp"
@@ -124,6 +146,13 @@
                 android:textSize="12sp"
                 android:textColor="@color/dark_50"
                 android:text="100,000원 입금" />
+            <CheckBox
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_bookmark"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
         </RelativeLayout>
         <RelativeLayout
             android:layout_marginStart="10dp"
@@ -154,6 +183,13 @@
                 android:textSize="12sp"
                 android:textColor="@color/dark_50"
                 android:text="15,500원 이체" />
+            <CheckBox
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@drawable/checkbox_bookmark"
+                android:scaleX="0.7"
+                android:scaleY="0.7" />
         </RelativeLayout>
     </LinearLayout>
 </HorizontalScrollView>

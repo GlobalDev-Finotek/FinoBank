@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
@@ -131,20 +132,28 @@ public class ChatActivity extends AppCompatActivity {
 
         fiBinding = ChatFooterInputBinding.bind(footerInputs);
         RxView.focusChanges(fiBinding.chatEditText)
-                .delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(this::chatEditFieldFocusChanged);
+            .delay(100, TimeUnit.MILLISECONDS)
+            .subscribe(this::chatEditFieldFocusChanged);
 
         RxTextView.textChanges(fiBinding.chatEditText)
-                .subscribe(this::chatEditFieldTextChanged);
+            .subscribe(this::chatEditFieldTextChanged);
 
         RxView.clicks(fiBinding.showExControl)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .delay(100, TimeUnit.MILLISECONDS)
-                .subscribe(this::expandControlClickEvent);
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .delay(100, TimeUnit.MILLISECONDS)
+            .subscribe(this::expandControlClickEvent);
 
         RxView.clicks(fiBinding.sendButton)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .subscribe(this::onSendButtonClickEvent);
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .subscribe(this::onSendButtonClickEvent);
+
+        RxTextView.editorActions(fiBinding.chatEditText)
+            .subscribe(actionId -> {
+                if(actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND) {
+                    this.onSendButtonClickEvent(null);
+                }
+            });
+
 
         ecBinding = ChatExtendedControlBinding.bind(exControlView);
         RxView.clicks(ecBinding.control1.registerAccount)

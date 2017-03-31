@@ -38,6 +38,9 @@ public class TBTextView extends AppCompatTextView  {
                 setTypeface(TBFonts.lightTypeFace(context));
                 break;
         }
+
+        invalidate();
+        requestLayout();
     }
 
 

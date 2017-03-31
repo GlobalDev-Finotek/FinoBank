@@ -6,12 +6,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
+import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
@@ -105,9 +107,9 @@ class Scenario {
         }
 
         // 약관 동의 화면
-        if(msg instanceof Agreement) {
+        if(msg instanceof AgreementRequest) {
             messageBox.add(new ReceiveMessage("약관 확인 및 동의를 진행해 주세요."));
-            chatView.agreement();
+            chatView.agreement((AgreementRequest) msg);
         }
 
         // 약관 결과
@@ -157,7 +159,20 @@ class Scenario {
                 messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
                 break;
             case "약관" :
-                messageBox.add(new Agreement());
+                List<Agreement> agreements = new ArrayList<>();
+                Agreement required = new Agreement(100, "필수 항목 전체 동의");
+                required.addChild(new Agreement(101, "대출 서비스 이용 약관"));
+                required.addChild(new Agreement(102, "개인(신용)정보 조회 및 이용 제공 동의"));
+                required.addChild(new Agreement(103, "대출거래 약정서"));
+                required.addChild(new Agreement(104, "계약 안내사항 및 유의사항"));
+
+                Agreement optional = new Agreement(200, "선택항목 전체 동의");
+                optional.addChild(new Agreement(201, "고객 정보 활용 동의"));
+
+                agreements.add(required);
+                agreements.add(optional);
+
+                messageBox.add(new AgreementRequest(agreements));
                 break;
             case "약관확인" :
                 messageBox.add(new AgreementResult());

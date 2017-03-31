@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:id="@+id/wrapper_splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+        <TextView
+            android:id="@+id/intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="153dp"
+            android:text="@string/finotek_intro"
+            android:textAlignment="center"
+            android:textColor="@color/color_text_default"
+            android:textSize="30sp"/>
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="174dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/intro"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
+            android:contentDescription="Finotek Logo"
+            android:src="@drawable/ic_finotek_logo2"/>
+        <Button
+            android:id="@+id/main_button"
+            android:layout_width="260dp"
+            android:layout_height="50dp"
+            android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="66dp"
+            android:background="@drawable/btn_round_primary"
+            android:text="@string/string_user_regi"
+            android:textColor="@color/btn_primary"
+            android:textSize="15sp"/>
+
+        <TextView
+            android:id="@+id/tv_context_auth_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/main_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="21dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="32dp"
+            android:text="@string/string_copyright"
+            android:textColor="@color/color_text_default"
+            android:textSize="12sp"/>
+    </RelativeLayout>
+</layout>

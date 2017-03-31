@@ -4,7 +4,7 @@
     <string name="app_name">Talk Bank</string>
     <string name="action_settings">Settings</string>
     <string name="action_search">Search</string>
-    <string name="action_edit">Edit</string>
+    <string name="action_edit">Edit</string>"
     <string name="string_user_regi">사용자 등록</string>
     <string name="string_login">로그인</string>
     <string name="string_cancel">취소</string>
@@ -12,17 +12,25 @@
     <string name="string_next">다음</string>
     <string name="string_comm_sign_regi1">거래용 전자서명 등록(1/2)</string>
     <string name="string_comm_sign_regi2">거래용 전자서명 등록(2/2)</string>
-    <string name="string_comm_sign_input">거래용 전자서명 입력</string>
+    <string name="string_comm_sign_input">\u2022 거래용 전자서명 입력</string>
     <string name="string_complete">완료</string>
     <string name="button_description">Emoticons Button</string>
     <string name="string_hi">Hi</string>
     <string name="string_remittance">Remittance</string>
     <string name="string_verify_account">Verify account</string>
     <string name="string_talk_bank">톡뱅크</string>
+    <string name="string_send">전송</string>
 
+    <string name="string_copyright">Copyright Finotek., All rights reserved</string>
 
-
-
+    <string name="string_register_account">계좌 개설</string>
+    <string name="string_transfer_money">계좌 이체</string>
+    <string name="string_transfer">이체</string>
+    <string name="string_check_account">계좌 조회</string>
+    <string name="string_withdrawal">출금</string>
+    <string name="string_deposit">입금</string>
+    <string name="string_balance">잔액</string>
+    <string name="string_price_unit">원</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="button_save">저장</string>
@@ -32,7 +40,7 @@
     <string name="button_cancel">취소</string>
     <string name="title_notice">알림</string>
     <string name="title_check">전자서명 진위 확인 중</string>
-    <string name="title_check2"> </string>
+    <string name="title_check2"></string>
     <string name="title_wait">잠시만 기다려주시기 바랍니다.</string>
     <string name="title_complete_fail1">전자서명 진위 여부 확인결과</string>
     <string name="title_complete_fail2">전자서명에 실패하였습니다.</string>
@@ -47,37 +55,33 @@
     <string name="init_signcount">서명횟수 초기화</string>
     <string name="sign_re_registration">전자서명 재등록</string>
     <string name="docu_sign">문서 서명</string>
-    <string name="digit4_notice"> </string>
-    <string name="seek_desc_text">신뢰도가 높을 수록 서명인증시 난이도가 올라갑니다.\n서명이 복잡할 수록 난이도 는 낮게,\n서명이 단순할 수록 신뢰도는 높게 설정하시기를 권장합니다.</string>
+    <string name="digit4_notice"></string>
+    <string name="seek_desc_text">신뢰도가 높을 수록 서명인증시 난이도가 올라갑니다.\n서명이 복잡할 수록 난이도 는 낮게,\n서명이 단순할 수록
+        신뢰도는 높게 설정하시기를 권장합니다.
+    </string>
+
     <string name="complex_sign_text">복잡한 서명</string>
     <string name="simple_sign_text">단순한 서명</string>
-
-<!--
-    <string name="app_name">Talk Bank</string>
-    <string name="action_settings">Settings</string>
-    <string name="action_search">Search</string>
-    <string name="hello_world">Hello world!</string>
-    <string name="button_save">Save</string>
-    <string name="button_not_save">not save</string>
-    
-    <string name="button_sign">Sign</string>
-    <string name="button_cancel">Cancel</string>
-    <string name="title_notice">Notice</string>
-    <string name="title_check">Checking the E-signature authenticity</string>
-    <string name="title_check2">we are verifying the authenticity through\n the comparison of registered E-signature.</string>
-    <string name="title_wait">Please wait a second.</string>
-    <string name="title_complete_fail1">The E-signature authenticity checking</string>
-    <string name="title_complete_fail2">has been failed.</string>
-    <string name="title_complete_success1">The E-signature authenticity checking</string>
-    <string name="title_complete_success2">has been completed.</string>
-    <string name="title_emergence_success1">시스템상의 문제로 서명진위확인이 불가능합니다.</string>
-    <string name="title_emergence_success2">10분 후 재서명이 가능합니다.</string>
-    <string name="button_confirm">Confirm</string>
-    <string name="title_pin_number">Password</string>
-    <string name="button_password">Password</string>
-    <string name="init_signcount">Retry the signature</string>
-    <string name="sign_re_registration">Re-register the signature</string>
-    <string name="docu_sign">Electronic Signature</string>
-    <string name="digit4_notice"> </string>
--->
+    <string name="finotek_intro">금융의 새로운 경험을\n디자인하는 핀테크 체인저</string>
+    <string name="basic_inform">기본 정보(필수입력)</string>
+    <string name="user_name">사용자 이름</string>
+    <string name="phone_number">휴대전화 번호</string>
+    <string name="additional_inform">추가 정보(선택 입력)</string>
+    <string name="emergency_phone_number">비상 연락처</string>
+    <string name="email_address">이메일 주소</string>
+    <string name="credit_card_registration">신용카드 등록</string>
+    <string name="re_capture">재촬영</string>
+    <string name="capture_credit">신용카드 촬영</string>
+    <string name="capture_registration">등록하시겠습니까?</string>
+    <string name="profile_registration">인증 사진 등록</string>
+    <string name="capture_profile">사진 촬영</string>
+    <string name="request_permission"/>
+    <string name="take_pic">촬영</string>
+    <string name="pin_code">\u2022 PIN코드</string>
+    <string name="select_pin_code_background">PIN 코드 배경색 선택</string>
+    <string name="select_pin_code_text_color">PIN 코드 글자색 선택</string>
+    <string name="sign_instruction">서명 신뢰도 설정</string>
+    <string name="yes">네</string>
+    <string name="no">아니요</string>
+    <string name="string_accuracy">현재 맥락 인증 점수는 %d입니다</string>
 </resources>

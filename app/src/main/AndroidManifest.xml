@@ -1,89 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.cocolap.talkbank">
+          package="finotek.global.dev.talkbank_ca">
 
-    <uses-sdk
-        android:minSdkVersion="16" />
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera2" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
 
+    <uses-permission android:name="android.permission.READ_CALL_LOG"/>
     <application
-        android:name="com.cocolap.talkbank.MainApplication"
-        android:debuggable="true"
-        android:hardwareAccelerated="true"
-        android:largeHeap="true"
-        android:icon="@drawable/tb_icon"
+        android:name=".app.MyApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:supportsRtl="true">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
         <activity
-            android:name="com.cocolap.talkbank.ActivityStart"
-            android:configChanges="orientation|keyboardHidden"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:name=".SplashActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name="tbUserRegiActivity"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.cocolap.talkbank.ActivityStart" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cocolap.talkbank.ActivityStart" />
+        <activity android:name=".user.UserRegistrationActivity">
         </activity>
-        <activity
-            android:name="tbSignRegiActivity"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="landscape"
-            android:parentActivityName="com.cocolap.talkbank.tbUserRegiActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cocolap.talkbank.tbUserRegiActivity" />
+        <activity android:name=".user.sign.SignRegistrationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-        <activity
-            android:name="tbSignInputActivity"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="landscape"
-            android:parentActivityName="com.cocolap.talkbank.ActivityStart" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cocolap.talkbank.ActivityStart" />
+
+        <ativity android:name=".user.profile.CaptureProfilePicActivity">
+        </ativity>
+        <activity android:name=".user.PinRegistrationActivity">
         </activity>
+        <activity android:name=".user.credit.CreditRegistrationActivity" />
+        <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".setting.SettingDetailActivity"/>
         <activity
-            android:name="com.cocolap.talkbank.tbChatActivity"
-            android:theme="@style/AppTheme"
-            android:screenOrientation="portrait"
-            android:parentActivityName="com.cocolap.talkbank.ActivityStart" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.cocolap.talkbank.ActivityStart" />
-        </activity>
+            android:name=".MainActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
+            />
+
+        <activity android:name=".chat.ChatActivity"
+                  android:label="톡뱅" />
     </application>
-
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.READ_CONTACTS" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS" />
-    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
-    <uses-permission android:name="android.permission.BLUETOOTH" />
-    <uses-permission android:name="android.permission.KILL_BACKGROUND_PROCESSES" />
-    
-
-
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 </manifest>

@@ -1,51 +1,64 @@
-//apply plugin: 'com.android.library'
 apply plugin: 'com.android.application'
+apply plugin: 'me.tatarka.retrolambda'
+
 
 android {
-    compileSdkVersion 23
-    buildToolsVersion '23.0.1'
+    compileSdkVersion 25
+    buildToolsVersion '25.0.0'
     defaultConfig {
-        applicationId 'com.cocolap.talkbank'
-        minSdkVersion 16
-        targetSdkVersion 23
+        applicationId "finotek.global.dev.talkbank_ca"
+        minSdkVersion 21
+        targetSdkVersion 24
         versionCode 1
-        versionName "1.0.3"
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    dataBinding {
+        enabled = true
+    }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            applicationVariants.all { variant ->
-                variant.outputs.each {
-                    output->
-                        def apk = output.outputFile
-                        output.outputFile = new File(apk.parent, "talkBank_" + defaultConfig.versionName + ".apk")
-                }
-            }
-
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//            applicationVariants.all { variant ->
-//                variant.outputs.each {
-//                    output->
-//                        def apk = output.outputFile
-//                        def formattedDate = new Date().format('yyMMdd_hhmm')
-//                        def fileName = "talkBank_" + formattedDate + ".apk"
-//                        //def fileName = "talkBank_" + defaultConfig.versionCode + "_" + formattedDate + "_" + buildType + ".apk"
-//                        output.outputFile = new File(apk.parent, fileName)
-//                }
-//            }
         }
-    }
-    repositories {
-        maven {
-            url 'https://download.01.org/crosswalk/releases/crosswalk/android/maven2'
-        }
-    }
-    productFlavors {
     }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:23.0.1'
-    compile 'com.android.support:design:23.0.1'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    compile project(':finopassvalidator')
+
+    compile group: 'joda-time', name: 'joda-time', version: '2.9.7'
+    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:support-v13:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.1.0'
+    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:design:25.1.0'
+    compile 'com.google.dagger:dagger:2.8'
+    compile 'org.projectlombok:lombok:1.16.12'
+    compile 'io.reactivex:rxjava:1.2.7'
+    compile 'com.jakewharton.rxbinding:rxbinding:1.0.1'
+    compile 'com.jakewharton.rxbinding:rxbinding-support-v4:1.0.1'
+    compile 'com.jakewharton.rxbinding:rxbinding-appcompat-v7:1.0.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.0-alpha9'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
+    compile 'com.github.lawloretienne:discreteslider:0.0.9'
+    compile 'com.tsengvn:typekit:1.0.1'
+    testCompile 'org.mockito:mockito-core:2.+'
+    testCompile 'junit:junit:4.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
+    provided 'javax.annotation:jsr250-api:1.0'
 }

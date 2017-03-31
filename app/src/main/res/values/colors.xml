@@ -1,17 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3DC5F6</color>
-    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorPrimary">#4083ff</color>
+    <color name="colorPrimaryDark">#1B356A</color>
     <color name="colorAccent">#FF4081</color>
 
-    <color name="color_foreground">#FFFFFF</color>
+    <color name="primary">@color/colorPrimary</color>
+    <color name="danger">#ff585b</color>
+    <color name="info">#00b9e6</color>
+    <color name="white_two">#e5e5e5</color>
+    <color name="white_three">#e0e0e0</color>
+    <color name="line">#e0e0e0</color>
+    <color name="bullet">#cfcfcf</color>
 
+    <color name="color_foreground">#FFFFFF</color>
     <color name="color_foreground_blue_button">#FFFFFF</color>
     <color name="color_foreground_blue_button_disabled">#BBBBBB</color>
+
+    <color name="chevron_color">#8F97A0</color>
 
     <color name="color_background_blue_button">#3DC5F6</color>
     <color name="color_background_blue_button_clicked">#10A5D6</color>
     <color name="color_background_blue_button_disabled">#EEEEEE</color>
     <!--<color name="color_background_blue_button_disabled">#D0F5FF</color>-->
     <color name="color_background_terms_textview">#EEEEEE</color>
+    <color name="pin_red">#ff0000</color>
+    <color name="pin_orange">#fdbf2d</color>
+    <color name="pin_yellow">#ffe938</color>
+    <color name="pin_light_green">#1aae00</color>
+    <color name="pin_green">#1aa00f</color>
+    <color name="pin_light_blue">#1eb1ed</color>
+    <color name="pin_blue">#1090bd</color>
+    <color name="pin_purple">#6f359e</color>
+    <color name="pin_white">#ffffff</color>
+    <color name="pin_black">#000000</color>
+
+    <color name="dodger_blue">#4083ff</color>
+    <color name="coral_pink">#ff585b</color>
+    <color name="dark_70">#b21f2f42</color>
+    <color name="grey">#e0e0e0</color>
+    <color name="dark_50">#7f1f2f42</color>
+    <color name="white">#ffffff</color>
+    <color name="dark_100">#1f2f42</color>
+    <color name="aqua_blue">#00b9e6</color>
+    <color name="dark_30">#4c1f2f42</color>
+    <color name="black">#313131</color>
+    <color name="cool_green">#40cd65</color>
+    <color name="pale_grey">#eceff0</color>
+
+
+
+    <color name="color_chat_divider">#D2D5D9</color>
+    <color name="color_text_default">@color/dark_100</color>
+    <color name="color_chat_background">@android:color/white</color>
+    <color name="color_chat_footer">#F5F4F5</color>
+    <color name="color_send_disabled">#CFCFCF</color>
+    <color name="color_send_enabled">@color/colorPrimary</color>
+    <color name="color_chat_message_received">#F5F4F5</color>
+    <color name="color_chat_status_message">#00B0E2</color>
+    <color name="color_extended_control_bg">#e0e0e0</color>
+    <color name="color_chat_agreement_border">#E5E5E5</color>
+
 </resources>

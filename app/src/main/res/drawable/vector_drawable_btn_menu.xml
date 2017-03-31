@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="49dp"
+        android:height="49dp"
+        android:viewportHeight="49"
+        android:viewportWidth="49">
+    <group android:name="btn_menu">
+        <path
+            android:name="Rectangle-97"
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M16,17 L24.4450785,17 L24.4450785,24.3894437 L16,24.3894437 L16,17 Z M25.5007133,17 L33.9457917,17 L33.9457917,24.3894437 L25.5007133,24.3894437 L25.5007133,17 Z M16,25.4450785 L24.4450785,25.4450785 L24.4450785,32.8345221 L16,32.8345221 L16,25.4450785 Z M25.5007133,25.4450785 L33.9457917,25.4450785 L33.9457917,32.8345221 L25.5007133,32.8345221 L25.5007133,25.4450785 Z"
+            android:strokeColor="#00000000"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

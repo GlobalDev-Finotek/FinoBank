@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+        android:width="32dp"
+        android:height="32dp"
+        android:viewportHeight="32"
+        android:viewportWidth="32">
+    <group android:name="icon_chevron_right">
+        <path
+            android:name="Combined-Shape"
+            android:fillColor="#FFFFFF"
+            android:fillType="evenOdd"
+            android:pathData="M20.8372627,11.7528725 L11.1227883,2.03839812 L6.8756608,6.28552564 L16.5901352,16 L6.8756608,25.7144744 L11.1227883,29.9616019 L20.8372627,20.2471275 L20.8772117,20.2870765 L25.1243392,16.039949 L25.0843902,16 L25.1243392,15.960051 L20.8772117,11.7129235 L20.8372627,11.7528725 Z"
+            android:strokeColor="#00000000"
+            android:strokeWidth="1"/>
+    </group>
+</vector>

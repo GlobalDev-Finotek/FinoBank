@@ -25,6 +25,7 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 					break;
 
 				case DISABLED:
+					setBackgroundColor(ContextCompat.getColor(context, R.color.grey));
 					setBackground(ContextCompat.getDrawable(context, R.drawable.edt_disabled));
 					setHint("");
 					setFocusable(false);

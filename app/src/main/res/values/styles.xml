@@ -164,7 +164,7 @@
     </style>
 
     <style name="InverseButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:background">@drawable/btn_default_inverse_round</item>
+        <item name="android:background">@drawable/btn_default_inverse</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
         <item name="android:textSize">14sp</item>
@@ -173,7 +173,7 @@
     </style>
 
     <style name="InverseRoundButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:background">@drawable/btn_inverse</item>
+        <item name="android:background">@drawable/btn_default_inverse_round</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
         <item name="android:textSize">14sp</item>

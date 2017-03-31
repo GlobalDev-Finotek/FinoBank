@@ -111,12 +111,12 @@ public class SignRegistFragment extends Fragment {
 
 			case 3:
 				binding.drawingCanvas.clear();
-				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.checkbox_circle));
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
 				binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(2/2)");
 				break;
 
 			case 4:
-				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.checkbox_circle_selected));
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm));
 				binding.tvInst.setText("");
 				break;
 		}

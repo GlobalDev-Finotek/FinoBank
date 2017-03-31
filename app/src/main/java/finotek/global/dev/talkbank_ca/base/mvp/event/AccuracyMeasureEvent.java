@@ -11,7 +11,7 @@ public class AccuracyMeasureEvent implements IEvent {
 		this.accuracy = accuracy;
 	}
 
-	public int getAccuracy() {
-		return (int) accuracy;
+	public double getAccuracy() {
+		return accuracy;
 	}
 }

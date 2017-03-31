@@ -49,8 +49,9 @@ class Scenario {
         RxEventBus.getInstance().getObservable()
             .subscribe(iEvent -> {
                 if (iEvent instanceof AccuracyMeasureEvent) {
-                    int accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-                    messageBox.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf(accuracy * 100) + "% 확률로 인증되었습니다."));
+                    double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
+                    messageBox.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf((int) (accuracy * 100))
+                        + "% 확률로 인증되었습니다."));
                 }
             });
 

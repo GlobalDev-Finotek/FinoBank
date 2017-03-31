@@ -22,6 +22,10 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_credit_registration);
+		setSupportActionBar(binding.toolbar);
+		getSupportActionBar().setTitle("");
+		binding.toolbarTitle.setText("신용카드 등록");
+		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		presenter = new CreditRegistrationImpl(this);
 		presenter.attachView(this);

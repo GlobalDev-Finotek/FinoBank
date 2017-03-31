@@ -29,13 +29,31 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center_vertical"
-                android:text="\u2022 비상 연락처"
-                android:theme="@style/Stit"
-                tb:custom_font="noto_medium"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="\u2022"
+                    android:textColor="@color/bullet"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="비상 연락처"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+            </LinearLayout>
 
             <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                 android:id="@+id/edt_emergency_phone_number"
@@ -44,13 +62,32 @@
                 android:hint="@string/emergency_phone_number"
                 android:inputType="phone"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:gravity="center_vertical"
-                android:text="\u2022 이메일 주소"
-                android:theme="@style/Stit"
-                tb:custom_font="noto_medium"/>
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="\u2022"
+                    android:textColor="@color/bullet"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/talkBankTextView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="이메일 주소"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+            </LinearLayout>
 
             <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                 android:id="@+id/edt_email"
@@ -65,14 +102,31 @@
                 android:orientation="vertical"
                 >
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    android:id="@+id/textView3"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:gravity="center_vertical"
-                    android:text="\u2022 신용카드 등록"
-                    android:theme="@style/Stit"
-                    tb:custom_font="noto_medium"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="신용카드 등록"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_capture_creidt"
@@ -90,14 +144,31 @@
                 android:orientation="vertical"
                 >
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    android:id="@+id/textView4"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:gravity="center_vertical"
-                    android:text="\u2022 인증 사진"
-                    android:theme="@style/Stit"
-                    tb:custom_font="noto_medium"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="인증 사진"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_capture_profile"
@@ -110,18 +181,36 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
                 >
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    android:id="@+id/textView16"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="44dp"
-                    android:gravity="center_vertical"
-                    android:text="\u2022 PIN 코드"
-                    android:theme="@style/Stit"
-                    tb:custom_font="noto_medium"/>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="44dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:id="@+id/textView16"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="PIN 코드"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_pin_registration"
@@ -134,24 +223,6 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/textView19"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_marginTop="20dp"
-            android:background="@color/white_two"
-            android:gravity="center_vertical"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="정보 수집 동의(필수 입력)"
-            android:theme="@style/Title"/>
-
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:text="맥락 데이터 수집 동의(사용자 인증 모드)"/>
 
 
     </LinearLayout>

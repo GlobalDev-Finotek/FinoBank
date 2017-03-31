@@ -6,12 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.text.TextUtils;
-import android.view.View;
-
-import com.jakewharton.rxbinding.view.RxView;
-
-import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityCaptureProfilePicBinding;
@@ -30,6 +24,10 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		ActivityCaptureProfilePicBinding binding = DataBindingUtil.setContentView(this,
 				R.layout.activity_capture_profile_pic);
+		setSupportActionBar(binding.toolbar);
+		getSupportActionBar().setTitle("");
+		binding.toolbar.setTitle("인증 사진");
+		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		CapturePicFragment capturePicFragment = new CapturePicFragment();
 

@@ -25,10 +25,7 @@ public class SettingDetailActivity extends AppCompatActivity {
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_setting_detail);
 
 		setSupportActionBar(binding.toolbar);
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		binding.toolbar.setNavigationOnClickListener(v -> onBackPressed());
-
+		binding.ibBack.setOnClickListener(v -> onBackPressed());
 		Intent intent = getIntent();
 		Bundle b = intent.getExtras();
 

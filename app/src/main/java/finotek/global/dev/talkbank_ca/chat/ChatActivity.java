@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -19,9 +18,6 @@ import android.widget.EditText;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import java.lang.reflect.Method;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -31,9 +27,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
+import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
-import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 
 public class ChatActivity extends AppCompatActivity {
@@ -60,14 +56,9 @@ public class ChatActivity extends AppCompatActivity {
         binding.toolbarTitle.setText("톡뱅");
         messageBox = new MessageBox();
 
-        Intent intent = getIntent();
-        if (intent != null) {
-            double accuracy = intent.getDoubleExtra("accuracy", 0);
-            scenario = new Scenario(this, binding.chatView, messageBox, accuracy);
-        }
-
-        messageBox.getObservable().subscribe(this::onNewMessageUpdated);
-        binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
+	    scenario = new Scenario(this, binding.chatView, messageBox);
+	    messageBox.getObservable().subscribe(this::onNewMessageUpdated);
+	    binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
         preInitControlViews();
     }

@@ -29,9 +29,8 @@ public class UserRegistrationActivity extends AppCompatActivity {
 	  binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
 	  binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 	  setSupportActionBar(binding.toolbar);
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setDisplayShowHomeEnabled(true);
-    binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
+	  getSupportActionBar().setTitle("");
+	  binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 	  UserInfoFragment userInfoFragment = new UserInfoFragment();
 

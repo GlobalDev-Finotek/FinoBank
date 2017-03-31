@@ -23,10 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("설정");
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
-
+		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		Intent intent = new Intent(SettingsActivity.this, SettingDetailActivity.class);
 

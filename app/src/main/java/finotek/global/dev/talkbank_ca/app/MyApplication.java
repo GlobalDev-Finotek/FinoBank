@@ -3,11 +3,13 @@ package finotek.global.dev.talkbank_ca.app;
 import android.app.Application;
 import android.content.Context;
 
+import finotek.global.dev.talkbank_ca.base.mvp.event.IEvent;
 import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
 import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
+import rx.subjects.PublishSubject;
 
 
 /**
@@ -17,11 +19,15 @@ import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 public class MyApplication extends Application {
 
   AppComponent appComponent;
+	private PublishSubject<IEvent> eventBus;
 
-  @Override
-  public void onCreate() {
-    super.onCreate();
-    createDaggerInjections();
+	@Override
+	public void onCreate() {
+		super.onCreate();
+		createDaggerInjections();
+
+		eventBus = PublishSubject.create();
+
   }
 
   public Context getContext() {
@@ -40,8 +46,8 @@ public class MyApplication extends Application {
   private void createDaggerInjections() {
     appComponent = DaggerAppComponent
         .builder()
-        .appModule(new AppModule(this))
-        .build();
+		    .appModule(new AppModule(this, eventBus))
+		    .build();
 
     appComponent.inject(this);
   }

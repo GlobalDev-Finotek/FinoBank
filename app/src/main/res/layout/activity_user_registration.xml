@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         tools:context="finotek.global.dev.talkbank_ca.user.UserRegistrationActivity">
 
@@ -15,16 +16,49 @@
         tools:layout_editor_absoluteX="8dp"
         tools:layout_editor_absoluteY="33dp">
 
-        <android.support.v7.widget.Toolbar
-            android:id="@+id/toolbar"
+        <android.support.design.widget.AppBarLayout
+            android:id="@+id/appbar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:fitsSystemWindows="true"
+            android:layout_height="wrap_content"
+            android:elevation="0dp"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-            tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="75dp">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        </android.support.v7.widget.Toolbar>
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:layout_weight="1"
+                    android:background="?attr/colorPrimary"
+                    app:layout_scrollFlags="scroll|enterAlways|snap"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+                <ImageButton
+                    android:id="@+id/ib_back"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_centerVertical="true"
+                    android:background="@android:color/transparent"
+                    android:scaleX="-1"
+                    app:srcCompat="@drawable/vector_drawable_btn_back"/>
+
+                <TextView
+                    android:id="@+id/toolbar_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerVertical="true"
+                    android:theme="@style/Header"/>
+
+            </RelativeLayout>
+
+
+        </android.support.design.widget.AppBarLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,15 +74,28 @@
 
             </FrameLayout>
 
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="20dp"
+                android:background="@color/white_two"
+                android:gravity="center_vertical"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:text="정보 수집 동의(필수 입력)"
+                android:theme="@style/Title"/>
+
             <Button
                 android:id="@+id/btn_registration"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="10dp"
-                android:layout_weight="0.1"
-                android:background="@drawable/btn_default_primary"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:text="@string/string_user_regi"
-                android:textColor="@android:color/white"/>
+                android:theme="@style/RoundButton"/>
+
         </LinearLayout>
 
     </LinearLayout>

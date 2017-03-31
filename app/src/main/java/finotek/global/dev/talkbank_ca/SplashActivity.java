@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
+import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 import rx.Observable;
@@ -31,6 +33,8 @@ public class SplashActivity extends AppCompatActivity {
 
 	private static final int MY_PERMISSION_READ_CALL_LOG = 1;
 	private final double AUTH_THRESHOLD = 0.6;
+
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -41,6 +45,8 @@ public class SplashActivity extends AppCompatActivity {
 				.subscribe(aVoid -> {
 					checkPermission();
 				});
+
+
 	}
 
 	//request permissions를 이용하여 call log 의 접근권한을 획득하는 함수
@@ -66,7 +72,9 @@ public class SplashActivity extends AppCompatActivity {
 			Cursor c = getCallLog();
 			double accuracy = CallLogVerifier.getCallLogPassRate(c);
 			boolean isValidUser = isValidUser(accuracy);
-			moveToNextActivity(isValidUser, accuracy);
+
+			RxEventBus.getInstance().sendEvent(new AccuracyMeasureEvent(accuracy));
+			moveToNextActivity(isValidUser);
 
 		}
 	}
@@ -81,13 +89,14 @@ public class SplashActivity extends AppCompatActivity {
 					Cursor c = getCallLog();
 					double accuracy = CallLogVerifier.getCallLogPassRate(c);
 					boolean isValidUser = isValidUser(accuracy);
-					moveToNextActivity(isValidUser, accuracy);
+					RxEventBus.getInstance().sendEvent(new AccuracyMeasureEvent(accuracy));
+					moveToNextActivity(isValidUser);
 				}
 			}
 		}
 	}
 
-	private void moveToNextActivity(boolean isValidUser, double accuracy) {
+	private void moveToNextActivity(boolean isValidUser) {
 
 		Intent intent;
 		if (!isValidUser) {
@@ -95,7 +104,7 @@ public class SplashActivity extends AppCompatActivity {
 		} else {
 			intent = new Intent(SplashActivity.this, ChatActivity.class);
 		}
-		intent.putExtra("accuracy", accuracy);
+
 
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);

@@ -39,10 +39,9 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_pin_registration);
 		setSupportActionBar(binding.toolbar);
-		getSupportActionBar().setTitle("PIN 코드");
-		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-		getSupportActionBar().setDisplayShowHomeEnabled(true);
-		binding.toolbar.setNavigationOnClickListener(view -> onBackPressed());
+		getSupportActionBar().setTitle("");
+		binding.toolbarTitle.setText("PIN 코드");
+		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		for (Pin.Color c : Pin.Color.values()) {
 			setPinBackgroundCircle(c);

@@ -48,6 +48,7 @@ public class SignRegistFragment extends Fragment {
 
 		stepSubject = PublishSubject.create();
 
+
 		binding.drawingCanvas.setOnCanvasTouchListener(() -> {
 			if (stepCount == 1 || stepCount == 3) {
 				stepSubject.onNext(++stepCount);
@@ -73,6 +74,7 @@ public class SignRegistFragment extends Fragment {
 						ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 			}
 		});
+
 
 		RxView.clicks(binding.ibNext)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
@@ -103,18 +105,18 @@ public class SignRegistFragment extends Fragment {
 		switch (step) {
 
 			case 2:
-				DrawableCompat.setTint(binding.ibNext.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_next));
 				binding.tvInst.setText("");
 				break;
 
 			case 3:
 				binding.drawingCanvas.clear();
-				binding.ibNext.setImageDrawable(ContextCompat.getDrawable(getActivity(), R.drawable.vector_drawable_icon_check));
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.checkbox_circle));
 				binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(2/2)");
 				break;
 
 			case 4:
-				DrawableCompat.setTint(binding.ibNext.getDrawable(), ContextCompat.getColor(getActivity(), R.color.colorPrimary));
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.checkbox_circle_selected));
 				binding.tvInst.setText("");
 				break;
 		}

@@ -9,6 +9,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
+import finotek.global.dev.talkbank_ca.base.mvp.event.IEvent;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by kwm on 2017. 3. 6..
@@ -17,10 +19,12 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 public class AppModule {
 
 	private MyApplication application;
+	private PublishSubject<IEvent> eventBus;
 
-  public AppModule(@NonNull MyApplication application) {
-    this.application = application;
-  }
+	public AppModule(@NonNull MyApplication application, PublishSubject<IEvent> eventBus) {
+		this.application = application;
+		this.eventBus = eventBus;
+	}
 
   @Provides
   @Singleton
@@ -34,9 +38,10 @@ public class AppModule {
     return this.application;
   }
 
-  @Provides
-  SharedPreferences provideSharedPreferences() {
-    return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+	@Provides
+	SharedPreferences provideSharedPreferences() {
+		return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
   }
 
 

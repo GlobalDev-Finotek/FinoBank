@@ -29,14 +29,12 @@
 
             <ImageButton
                 android:id="@+id/ib_next"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:background="@drawable/white_large_circle_border"
-                android:padding="10dp"
-                android:tint="@color/white_two"
-                app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+                android:background="@drawable/btn_next_disable"
+                android:padding="10dp"/>
 
             <ImageButton
                 android:id="@+id/ib_size_control"

@@ -1,7 +1,6 @@
 package finotek.global.dev.talkbank_ca.inject.component;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
 import javax.inject.Singleton;
 

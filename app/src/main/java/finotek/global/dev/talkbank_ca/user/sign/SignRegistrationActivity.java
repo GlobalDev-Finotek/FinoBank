@@ -26,7 +26,9 @@ public class SignRegistrationActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_registartion);
 	  setSupportActionBar(binding.toolbar);
+	  getSupportActionBar().setTitle("");
 	  binding.toolbarTitle.setText("자필 서명");
+	  binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 	  SignRegistFragment signRegistFragment = new SignRegistFragment();
 	  FragmentTransaction transaction = getFragmentManager().beginTransaction();

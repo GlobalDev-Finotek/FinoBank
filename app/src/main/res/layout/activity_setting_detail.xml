@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tb="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.CoordinatorLayout
@@ -35,6 +36,16 @@
                         android:background="?attr/colorPrimary"
                         app:layout_scrollFlags="scroll|enterAlways|snap"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+                    <ImageButton
+                        android:id="@+id/ib_back"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_centerVertical="true"
+                        android:background="@android:color/transparent"
+                        android:scaleX="-1"
+                        tb:srcCompat="@drawable/vector_drawable_btn_back"/>
 
                     <TextView
                         android:id="@+id/toolbar_title"

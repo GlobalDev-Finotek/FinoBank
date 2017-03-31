@@ -61,16 +61,9 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 		FragmentAbnormalTransactionBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_abnormal_transaction, container, false);
 
-
-		for (int i = 0; i < options.length; ++i) {
-			TableRow tableRow = getTableRow(i);
-			binding.tlOptWrapper.addView(tableRow);
-		}
-
 		RxView.clicks(binding.btnSave)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> getActivity().onBackPressed());
-
 
 		binding.tvContextAu.setOnClickListener(abnormalOnClickListener);
 		binding.tvPsignature.setOnClickListener(abnormalOnClickListener);

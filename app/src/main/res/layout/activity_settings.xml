@@ -74,18 +74,9 @@
                     android:id="@+id/ll_userinfo"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
+                    android:background="@drawable/border_white_two_top_radius"
                     android:orientation="horizontal"
                     android:padding="10dp">
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_weight="1"
-                        android:text="사용자 정보"
-                        tb:custom_font="noto_regular"
-                        />
 
                     <ImageView
                         android:id="@+id/imageView"
@@ -93,13 +84,22 @@
                         android:layout_height="wrap_content"
                         android:tint="#94989e"
                         app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:id="@+id/talkBankTextView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="사용자 정보"
+                        tb:custom_font="noto_regular"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/ll_ca"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
+                    android:background="@drawable/border_white_two"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -123,7 +123,7 @@
                     android:id="@+id/ll_cost"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
+                    android:background="@drawable/border_white_two"
                     android:orientation="horizontal"
                     android:padding="10dp">
 
@@ -148,7 +148,7 @@
                     android:id="@+id/ll_abnormal"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
+                    android:background="@drawable/border_white_two_bottom_radius"
                     android:orientation="horizontal"
                     android:padding="10dp">
 

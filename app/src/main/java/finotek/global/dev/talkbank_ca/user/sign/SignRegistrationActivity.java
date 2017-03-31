@@ -8,8 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.ChatActivity;
@@ -37,13 +36,13 @@ public class SignRegistrationActivity extends AppCompatActivity {
 
 	  signRegistFragment.setOnSizeControlClick(size -> {
 		  if (size == SignRegistFragment.CanvasSize.LARGE) {
-			  RelativeLayout.LayoutParams fl = new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
-					  RelativeLayout.LayoutParams.MATCH_PARENT);
+			  LinearLayout.LayoutParams fl = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+					  LinearLayout.LayoutParams.MATCH_PARENT);
 			  binding.flContent.setLayoutParams(fl);
 			  binding.llInstWrapper.setVisibility(View.GONE);
 			  binding.appbar.setVisibility(View.GONE);
 		  } else if (size == SignRegistFragment.CanvasSize.SMALL) {
-			  RelativeLayout.LayoutParams fl = new RelativeLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT,
+			  LinearLayout.LayoutParams fl = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 					  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics()));
 				binding.llInstWrapper.setVisibility(View.VISIBLE);
 			  binding.flContent.setLayoutParams(fl);

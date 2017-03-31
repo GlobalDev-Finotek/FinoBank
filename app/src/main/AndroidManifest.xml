@@ -29,8 +29,8 @@
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
-        <ativity android:name=".user.profile.CaptureProfilePicActivity">
-        </ativity>
+        <activity android:name=".user.profile.CaptureProfilePicActivity">
+        </activity>
         <activity android:name=".user.PinRegistrationActivity">
         </activity>
         <activity android:name=".user.credit.CreditRegistrationActivity" />

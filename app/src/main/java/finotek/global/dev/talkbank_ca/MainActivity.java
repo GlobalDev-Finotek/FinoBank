@@ -40,8 +40,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		RxEventBus.getInstance().getObservable()
 				.subscribe(iEvent -> {
 					if (iEvent instanceof AccuracyMeasureEvent) {
-						int accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy() * 100;
-						String inst = getString(R.string.string_accuracy).replace("%d", String.valueOf(accuracy));
+						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
+						String inst = getString(R.string.string_accuracy).replace("%d", String.valueOf((int) (accuracy * 100)));
 						binding.tvContextAuthAccuracy.setText(inst);
 					}
 				});

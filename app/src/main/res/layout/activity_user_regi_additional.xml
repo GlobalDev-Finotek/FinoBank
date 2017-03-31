@@ -10,6 +10,7 @@
         >
 
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            android:id="@+id/talkBankTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white_two"
@@ -37,7 +38,7 @@
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
-                    android:layout_weight="1"
+                    android:elevation="0dp"
                     android:gravity="center_vertical"
                     android:text="\u2022"
                     android:textColor="@color/bullet"
@@ -70,7 +71,6 @@
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:text="\u2022"
                     android:textColor="@color/bullet"
@@ -110,7 +110,6 @@
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="44dp"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
@@ -121,7 +120,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
                         android:layout_marginLeft="7dp"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="신용카드 등록"
                         android:theme="@style/Stit"
@@ -152,7 +150,6 @@
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="44dp"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
@@ -193,7 +190,6 @@
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="44dp"
-                        android:layout_weight="1"
                         android:gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
@@ -222,7 +218,6 @@
             </LinearLayout>
 
         </LinearLayout>
-
 
 
     </LinearLayout>

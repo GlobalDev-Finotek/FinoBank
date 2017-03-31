@@ -12,10 +12,10 @@
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:background="@color/white_two"
             android:gravity="center_vertical"
-            android:paddingLeft="16dp"
+            android:padding="16dp"
             android:text="@string/basic_inform"
             android:theme="@style/Title"
             tb:custom_font="noto_medium"/>

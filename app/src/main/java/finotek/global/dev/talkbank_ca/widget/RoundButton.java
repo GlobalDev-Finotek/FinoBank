@@ -35,7 +35,7 @@ public class RoundButton extends AppCompatButton {
     public void setButtonType(ButtonType buttonType) {
         switch(buttonType) {
             case Primary:
-                setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_round));
+                setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_primary));
                 setTextColor(ContextCompat.getColor(getContext(), R.color.white));
                 break;
             case Danger:

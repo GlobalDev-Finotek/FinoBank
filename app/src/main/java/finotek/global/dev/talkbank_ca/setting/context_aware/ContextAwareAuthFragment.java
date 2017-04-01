@@ -33,7 +33,7 @@ public class ContextAwareAuthFragment extends android.app.Fragment {
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
 		FragmentContextAwareBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_context_aware, container, false);
 
-		SimpleDateFormat sdfDate = new SimpleDateFormat("a hh:mm");
+		SimpleDateFormat sdfDate = new SimpleDateFormat("hh:mm");
 		Date now = new Date();
 		String strDate = sdfDate.format(now);
 

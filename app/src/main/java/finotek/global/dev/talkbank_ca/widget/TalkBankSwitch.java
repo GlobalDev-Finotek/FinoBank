@@ -34,7 +34,8 @@ public class TalkBankSwitch extends Switch {
 	}
 
 	private void init(Context context) {
-		setSwitchMinWidth(Converter.dpToPx(88));
+		setMinimumHeight(Converter.dpToPx(30));
+		setSwitchMinWidth(Converter.dpToPx(58));
 		setTrackDrawable(ContextCompat.getDrawable(context, R.drawable.switch_track_off));
 		setThumbDrawable(ContextCompat.getDrawable(context, R.drawable.switch_thumb_selector));
 

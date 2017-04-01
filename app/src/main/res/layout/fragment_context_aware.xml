@@ -2,264 +2,344 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tb="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:fitsSystemWindows="false">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="15dp">
-
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="맥락데이터 수집 앱"
-                android:theme="@style/Stit"
-                tb:custom_font="noto_medium"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
-                    android:orientation="horizontal"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="8dp">
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/textView11"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="모든 앱 수집"
-                        tb:custom_font="noto_regular"/>
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
-                        android:id="@+id/switch1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:elevation="0dp"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
-
-                    android:orientation="horizontal"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="8dp">
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="개별 앱 선택"
-                        tb:custom_font="noto_regular"/>
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
-                        android:id="@+id/switch2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        />
-
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-
-            android:padding="15dp">
-
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="맥락데이터 수집 시간 설정"
-                android:theme="@style/Stit"
-                tb:custom_font="noto_medium"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
-                    android:orientation="horizontal"
-                    android:paddingBottom="8dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="8dp">
+                    android:orientation="horizontal">
 
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="0.89"
-                        android:text="24시간"
-                        tb:custom_font="noto_regular"/>
+                        android:layout_gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:elevation="0dp"/>
-
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="맥락데이터 수집 앱"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/border_black_blank"
-                    android:orientation="vertical"
-                    android:padding="15dp"
-                    >
+                    android:orientation="vertical">
 
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="horizontal">
+                        android:layout_height="50dp"
+                        android:background="@drawable/border_white_two_top_radius"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="8dp">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/textView11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="모든 앱 수집"
+                            tb:custom_font="noto_regular"/>
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
+                            android:id="@+id/switch1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            android:elevation="0dp"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/border_white_two_bottom_radius"
+
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="8dp">
 
                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="시간 설정"
+                            android:text="개별 앱 선택"
                             tb:custom_font="noto_regular"/>
 
                         <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
-                            android:id="@+id/switch3"
+                            android:id="@+id/switch2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="30dp"
+                            />
+
+                    </LinearLayout>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+
+                android:orientation="vertical"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:id="@+id/talkBankTextView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="44dp"
+                        android:layout_marginLeft="7dp"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:text="맥락데이터 수집 시간 설정"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:background="@drawable/border_white_two_top_radius"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="8dp"
+                        android:paddingLeft="15dp"
+                        android:paddingRight="15dp"
+                        android:paddingTop="8dp">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/talkBankTextView5"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="0.89"
+                            android:text="24시간"
+                            tb:custom_font="noto_regular"/>
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:elevation="0dp"/>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="15dp"
-                        android:layout_weight="1"
-                        android:background="@color/grey"
+                        android:background="@drawable/border_white_two_bottom_radius"
                         android:orientation="vertical"
-                        android:padding="15dp">
+                        android:padding="15dp"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="50dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal">
+
+                            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"
+                                android:text="시간 설정"
+                                tb:custom_font="noto_regular"/>
+
+                            <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
+                                android:id="@+id/switch3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_weight="1"/>
+
+                        </LinearLayout>
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:orientation="horizontal"
-                            >
+                            android:layout_marginTop="15dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/border_white_three_radius"
+                            android:orientation="vertical"
+                            android:padding="15dp">
 
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="시작"
-                                    tb:custom_font="noto_medium"
-                                    />
+                                android:orientation="horizontal"
+                                >
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
+                                    android:layout_height="match_parent"
                                     android:layout_weight="1"
-                                    android:orientation="horizontal">
+                                    android:orientation="vertical">
 
                                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                                        android:id="@+id/tv_start"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:autoText="true"
-                                        android:format12Hour="hh:mm:ss a"
-                                        android:textSize="24sp"
-                                        android:theme="@style/TextLabelLarge"
+                                        android:text="시작"
+                                        tb:custom_font="noto_medium"
+                                        />
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                                            android:id="@+id/tv_start"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:autoText="true"
+                                            android:format12Hour="hh:mm:ss a"
+                                            android:textSize="24sp"
+                                            android:theme="@style/TextLabelLarge"
+                                            tb:custom_font="noto_medium"/>
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@android:color/transparent"
+                                            android:rotation="90"
+                                            android:tint="#801f2f41"
+                                            tb:srcCompat="@drawable/vector_drawable_btn_back"/>
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:layout_weight="1"
+                                    android:orientation="vertical">
+
+                                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:text="종료"
                                         tb:custom_font="noto_medium"/>
+
+                                    <LinearLayout
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:orientation="horizontal">
+
+                                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                                            android:id="@+id/tv_end"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_gravity="center_vertical"
+                                            android:format12Hour="hh:mm:ss a"
+                                            android:textSize="24sp"
+                                            android:theme="@style/TextLabelLarge"
+                                            tb:custom_font="noto_medium"/>
+
+                                        <ImageView
+                                            android:layout_width="40dp"
+                                            android:layout_height="wrap_content"
+                                            android:background="@android:color/transparent"
+                                            android:rotation="90"
+                                            android:tint="#801f2f41"
+                                            tb:srcCompat="@drawable/vector_drawable_btn_back"/>
+                                    </LinearLayout>
+
                                 </LinearLayout>
 
                             </LinearLayout>
 
-                            <LinearLayout
+                            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
                                 android:layout_weight="1"
-                                android:orientation="vertical">
-
-                                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:text="종료"
-                                    tb:custom_font="noto_medium"/>
-
-                                <LinearLayout
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:orientation="horizontal">
-
-                                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                                        android:id="@+id/tv_end"
-                                        android:layout_width="match_parent"
-                                        android:layout_height="wrap_content"
-                                        android:layout_weight="1"
-                                        android:format12Hour="hh:mm:ss a"
-                                        android:textSize="24sp"
-                                        android:theme="@style/TextLabelLarge"
-                                        tb:custom_font="noto_medium"/>
-                                </LinearLayout>
-
-                            </LinearLayout>
+                                android:text="해당 시간대에만 데이터 수집을 허용합니다"
+                                tb:custom_font="noto_regular"/>
 
                         </LinearLayout>
 
-                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_weight="1"
-                            android:text="해당 시간대에만 데이터 수집을 허용합니다"
-                            tb:custom_font="noto_regular"/>
-
                     </LinearLayout>
-
                 </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp">
 
-        <Button
-            android:id="@+id/btn_save"
-            style="@style/RoundButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="15dp"
-            android:layout_marginTop="35dp"
-            android:text="@string/button_save"
-            android:theme="@style/RoundButton"/>
-    </LinearLayout>
+                <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+                    android:id="@+id/btn_save"
+                    style="@style/RoundButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="15dp"
+                    android:text="@string/button_save"
+                    android:theme="@style/RoundButton"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
 </layout>

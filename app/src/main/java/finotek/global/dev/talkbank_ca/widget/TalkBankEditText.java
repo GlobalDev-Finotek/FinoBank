@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.widget;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -47,23 +48,26 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 	public TalkBankEditText(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		this.context = context;
-		init();
+		init(context);
 	}
 
 	public TalkBankEditText(Context context) {
 		super(context);
 		this.context = context;
-		init();
+		init(context);
 	}
 
 	public TalkBankEditText(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		this.context = context;
-		init();
+		init(context);
 
 	}
 
-	private void init() {
+	private void init(Context context) {
+		Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Regular-Hestia.otf");
+		setTypeface(typeface);
+
 		setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 		setOnFocusChangeListener((v, hasFocus) -> {
 			if (hasFocus) {

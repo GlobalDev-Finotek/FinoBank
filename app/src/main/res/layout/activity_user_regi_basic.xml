@@ -30,7 +30,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="44dp"
                 android:orientation="horizontal">
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -62,7 +62,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="44dp"
                 android:orientation="horizontal">
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -94,8 +94,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
                 android:orientation="horizontal">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -115,7 +116,7 @@
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
 
-            <Button
+            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                 android:id="@+id/btn_regi_sign"
                 style="@style/InverseButton"
                 android:layout_width="match_parent"
@@ -124,12 +125,14 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
                 android:layout_marginTop="14dp"
                 android:orientation="horizontal">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:text="\u2022"
                     android:textColor="@color/bullet"
                     android:theme="@style/Stit"
@@ -138,6 +141,7 @@
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
                     android:text="@string/sign_instruction"
@@ -148,8 +152,7 @@
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:text="- 신뢰도가 높으면 인증 시 난이도가 올라갑니다."
+                android:text="  - 신뢰도가 높으면 인증 시 난이도가 올라갑니다."
                 android:theme="@style/Stit"
                 tb:custom_font="noto_regular"/>
 
@@ -169,7 +172,6 @@
                     android:paddingLeft="8dp">
 
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/textView6"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

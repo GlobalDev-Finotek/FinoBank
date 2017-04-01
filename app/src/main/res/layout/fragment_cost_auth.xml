@@ -59,15 +59,31 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="14dp"
-                        android:layout_marginTop="14dp"
-                        android:text="이체 금액"
-                        android:theme="@style/Stit"
-                        tb:custom_font="noto_medium"
-                        />
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="\u2022"
+                            android:textColor="@color/bullet"
+                            android:theme="@style/Stit"
+                            tb:custom_font="noto_medium"/>
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/talkBankTextView4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="14dp"
+                            android:layout_marginLeft="7dp"
+                            android:layout_marginTop="14dp"
+                            android:text="이체 금액"
+                            android:theme="@style/Stit"
+                            tb:custom_font="noto_medium"/>
+                    </LinearLayout>
 
                     <TableLayout
                         android:id="@+id/tl_cost"
@@ -207,12 +223,28 @@
                     android:orientation="vertical"
                     android:padding="10dp">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"
-                        android:theme="@style/Stit"
-                        tb:custom_font="noto_medium"/>
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:text="\u2022"
+                            android:textColor="@color/bullet"
+                            android:theme="@style/Stit"
+                            tb:custom_font="noto_medium"/>
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="7dp"
+                            android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"
+                            android:theme="@style/Stit"
+                            tb:custom_font="noto_medium"/>
+                    </LinearLayout>
 
                     <TableLayout
                         android:id="@+id/tl_opt_wrapper"
@@ -373,15 +405,15 @@
                     android:gravity="center_vertical|center_horizontal"
                     android:orientation="vertical">
 
-                    <Button
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                         android:id="@+id/btn_add_auth_method"
                         style="@style/InverseButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="30dp"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
 
+                        android:layout_marginLeft="15dp"
+                        android:layout_marginRight="15dp"
                         android:layout_marginTop="20dp"
                         android:text="인증 설정 추가"
                         android:textSize="14sp"
@@ -394,7 +426,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="15dp">
 
-                    <Button
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                         android:id="@+id/btn_save"
                         style="@style/RoundButton"
                         android:layout_width="match_parent"

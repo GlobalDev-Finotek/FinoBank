@@ -30,6 +30,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 	  binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 	  setSupportActionBar(binding.toolbar);
 	  getSupportActionBar().setTitle("");
+	  binding.appbar.setOutlineProvider(null);
 	  binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 	  UserInfoFragment userInfoFragment = new UserInfoFragment();

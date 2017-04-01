@@ -26,6 +26,7 @@ public class SettingDetailActivity extends AppCompatActivity {
 
 		setSupportActionBar(binding.toolbar);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
+		binding.appbar.setOutlineProvider(null);
 		Intent intent = getIntent();
 		Bundle b = intent.getExtras();
 

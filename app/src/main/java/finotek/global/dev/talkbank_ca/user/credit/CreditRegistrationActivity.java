@@ -28,6 +28,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("신용카드 등록");
+		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		presenter = new CreditRegistrationImpl(this);

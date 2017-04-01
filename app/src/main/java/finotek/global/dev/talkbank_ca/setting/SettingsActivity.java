@@ -23,6 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("설정");
+		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		Intent intent = new Intent(SettingsActivity.this, SettingDetailActivity.class);

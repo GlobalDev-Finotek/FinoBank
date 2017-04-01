@@ -15,17 +15,16 @@
             android:orientation="horizontal"
             android:padding="10dp">
 
-            <TextView
-                android:id="@+id/textView13"
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="이상 거래 시 인증 설정"
                 android:textColor="@color/black"
-                android:theme="@style/Title"/>
+                android:theme="@style/Title"
+                tb:custom_font="noto_medium"/>
 
             <Switch
-                android:id="@+id/switch4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
@@ -35,14 +34,33 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="10dp">
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp">
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"
-                android:theme="@style/Stit"
-                tb:custom_font="noto_medium"/>
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="\u2022"
+                    android:textColor="@color/bullet"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/talkBankTextView7"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+            </LinearLayout>
 
             <TableLayout
                 android:id="@+id/tl_opt_wrapper"

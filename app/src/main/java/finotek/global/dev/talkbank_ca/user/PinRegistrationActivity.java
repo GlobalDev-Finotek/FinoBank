@@ -41,6 +41,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("PIN 코드");
+		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		for (Pin.Color c : Pin.Color.values()) {

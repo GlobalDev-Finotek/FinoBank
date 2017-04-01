@@ -27,6 +27,7 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbar.setTitle("인증 사진");
+		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		CapturePicFragment capturePicFragment = new CapturePicFragment();

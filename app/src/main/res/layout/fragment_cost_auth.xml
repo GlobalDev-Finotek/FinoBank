@@ -241,7 +241,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="7dp"
-                            android:text="인증 방법(다중 선택 가능 2개 이상 선택 필수)"
+                            android:text="인증 방법(다중 선택 가능 1개 이상 선택 필수)"
                             android:theme="@style/Stit"
                             tb:custom_font="noto_medium"/>
                     </LinearLayout>

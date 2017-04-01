@@ -27,6 +27,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 	  setSupportActionBar(binding.toolbar);
 	  getSupportActionBar().setTitle("");
 	  binding.toolbarTitle.setText("자필 서명");
+	  binding.appbar.setOutlineProvider(null);
 	  binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 	  SignRegistFragment signRegistFragment = new SignRegistFragment();

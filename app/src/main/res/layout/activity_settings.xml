@@ -78,13 +78,6 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:tint="#94989e"
-                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/talkBankTextView3"
                         android:layout_width="wrap_content"
@@ -93,6 +86,13 @@
                         android:layout_weight="1"
                         android:text="사용자 정보"
                         tb:custom_font="noto_regular"/>
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:tint="#94989e"
+                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
                 </LinearLayout>
 
                 <LinearLayout

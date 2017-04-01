@@ -88,29 +88,43 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/cell_shape">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_Psignature"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="자필서명"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:orientation="horizontal">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_PinCode"
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_Psignature"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="자필서명"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
+
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="PIN 코드"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:orientation="horizontal">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_PinCode"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="PIN 코드"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
 
                 </TableRow>
 
@@ -119,30 +133,44 @@
                     android:layout_height="wrap_content"
                     android:background="@drawable/cell_shape">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_emergency_contact"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="비상 연락처"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:orientation="horizontal">
 
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_emergency_contact"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="비상 연락처"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_au_mail"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="인증메일"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:orientation="horizontal">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_au_mail"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="인증메일"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
+
 
                 </TableRow>
 
@@ -151,30 +179,44 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/cell_shape">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_au_message"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="인증 메시지"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:orientation="horizontal">
 
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_au_message"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="인증 메시지"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_credit_card_ocr"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="신용카드 OCR"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:orientation="horizontal">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_credit_card_ocr"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="신용카드 OCR"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
+
 
                 </TableRow>
 
@@ -183,30 +225,45 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/cell_shape">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_au_picture"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="인증 사진"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:elevation="0dp"
+                        android:orientation="horizontal">
 
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_au_picture"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="인증 사진"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_voice"
+                    <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="40dp"
+                        android:layout_height="match_parent"
                         android:background="@drawable/cell_shape"
-                        android:gravity="center"
-                        android:text="PIN 코드"
-                        android:textAlignment="center"
-                        android:textColor="#80182333"
-                        android:textSize="14sp"
-                        tb:custom_font="noto_regular"/>
+                        android:orientation="horizontal">
+
+                        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            android:id="@+id/tv_voice"
+                            android:layout_width="match_parent"
+                            android:layout_height="40dp"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:text="PIN 코드"
+                            android:textAlignment="center"
+                            android:textColor="#80182333"
+                            android:textSize="14sp"
+                            tb:custom_font="noto_regular"/>
+                    </LinearLayout>
+
 
                 </TableRow>
 

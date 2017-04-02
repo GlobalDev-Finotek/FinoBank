@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tb="http://schemas.android.com/tools">
     <RelativeLayout
         android:id="@+id/wrapper_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
-        <TextView
-            android:id="@+id/intro"
+
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            android:id="@+id/tv_intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -15,23 +18,27 @@
             android:text="@string/finotek_intro"
             android:textAlignment="center"
             android:textColor="@android:color/white"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            tb:custom_font="noto_medium"/>
+
+
         <ImageView
             android:layout_width="174dp"
             android:layout_height="50dp"
+            android:layout_below="@+id/tv_intro"
             android:layout_centerHorizontal="true"
-            android:layout_below="@id/intro"
             android:layout_marginTop="26dp"
-            android:src="@drawable/ic_finotek"
-            android:contentDescription="Finotek Logo" />
+            android:contentDescription="Finotek Logo"
+            app:srcCompat="@drawable/vector_drawable_ci_finotek"/>
         <TextView
+            android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="32dp"
-            android:textSize="12sp"
             android:text="@string/string_copyright"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            android:textSize="12sp"/>
     </RelativeLayout>
 </layout>

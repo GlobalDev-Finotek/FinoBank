@@ -223,7 +223,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
+            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                 android:id="@+id/btn_save"
                 style="@style/RoundButton"
                 android:layout_width="match_parent"

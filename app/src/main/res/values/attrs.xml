@@ -14,4 +14,7 @@
             <enum name="light" value="2" />
         </attr>
     </declare-styleable>
+    <declare-styleable name="IconButton">
+        <attr name="iconPadding" format="dimension"/>
+    </declare-styleable>
 </resources>

@@ -16,7 +16,8 @@
             android:layout_height="40dp"
             android:layout_marginStart="16dp"
             android:text="아니오"
-            app:buttonType="danger"/>
+            app:buttonType="danger"
+            style="?android:attr/borderlessButtonStyle" />
 
         <finotek.global.dev.talkbank_ca.widget.RoundButton
             android:id="@+id/confirm_btn"
@@ -26,6 +27,7 @@
             android:layout_marginStart="10dp"
             android:elevation="0dp"
             android:text="네"
-            app:buttonType="primary"/>
+            app:buttonType="primary"
+            style="?android:attr/borderlessButtonStyle" />
     </LinearLayout>
 </HorizontalScrollView>

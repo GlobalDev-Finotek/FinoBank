@@ -7,6 +7,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -16,12 +17,14 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
@@ -156,22 +159,36 @@ public class ChatActivity extends AppCompatActivity {
 
 
         ecBinding = ChatExtendedControlBinding.bind(exControlView);
-        RxView.clicks(ecBinding.control1.registerAccount)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> hideExControl())
-                .subscribe(aVoid -> {
-                    messageBox.add(new SendMessage("계좌 개설"));
-                });
+        ecBinding.extendedControl.setAdapter(new ControlPagerAdapter(getSupportFragmentManager()));
+        RxViewPager.pageSelections(ecBinding.extendedControl)
+            .subscribe(pos -> {
+                if (pos == 0) {
+                    ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+                    ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+                } else {
+                    ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+                    ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+                }
+            });
 
-        RxView.clicks(ecBinding.control1.transferMoney)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> hideExControl())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
+//        RxView.clicks(ecBinding.control1.registerAccount)
+//                .throttleFirst(200, TimeUnit.MILLISECONDS)
+//                .doOnNext(aVoid -> hideExControl())
+//                .subscribe(aVoid -> {
+//                    messageBox.add(new SendMessage("계좌 개설"));
+//                });
+//
+//        RxView.clicks(ecBinding.control1.transferMoney)
+//                .throttleFirst(200, TimeUnit.MILLISECONDS)
+//                .doOnNext(aVoid -> hideExControl())
+//                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
+//
+//        RxView.clicks(ecBinding.control1.checkAccount)
+//                .throttleFirst(200, TimeUnit.MILLISECONDS)
+//                .doOnNext(aVoid -> hideExControl())
+//                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
 
-        RxView.clicks(ecBinding.control1.checkAccount)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> hideExControl())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
+
 
         ctBinding = ChatTransferBinding.bind(transferView);
         ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);

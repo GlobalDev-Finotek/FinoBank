@@ -40,8 +40,17 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		transaction.add(R.id.fl_cam, capturePicFragment);
 		transaction.commit();
 
-		capturePicFragment.takePicture(path -> presenter.takePic(path));
+		capturePicFragment.takePicture(path -> {
 
+			if (!isCaptureDone) {
+				binding.llInstWrapper.setVisibility(View.GONE);
+				presenter.takePic(path);
+			} else {
+				finish();
+			}
+
+			isCaptureDone = !isCaptureDone;
+		});
 
 		capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
 			@Override

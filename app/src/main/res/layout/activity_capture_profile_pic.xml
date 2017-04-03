@@ -82,6 +82,7 @@
                     tb:custom_font="noto_medium"/>
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/tv_inst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"

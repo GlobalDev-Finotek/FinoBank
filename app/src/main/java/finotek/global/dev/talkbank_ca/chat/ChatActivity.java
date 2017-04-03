@@ -23,8 +23,6 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
@@ -32,6 +30,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SignaturePassed;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
@@ -96,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
             signRegistFragment.setOnSaveListener(new SignRegistFragment.OnSignSaveListener() {
                 @Override
                 public void onSave() {
-                    messageBox.add(new SendMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?\n"));
+                    messageBox.add(new SignaturePassed());
                 }
             });
 

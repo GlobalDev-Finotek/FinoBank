@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
@@ -85,8 +86,8 @@ public class ChatView extends RecyclerView {
         addMessage(ViewType.AgreementResult.ordinal(), null);
     }
 
-    public void accountList() {
-        addMessage(ViewType.AccountList.ordinal(), null);
+    public void accountList(AccountList accountList) {
+        addMessage(ViewType.AccountList.ordinal(), accountList);
     }
 
     public void

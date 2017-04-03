@@ -1,16 +1,20 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
+import finotek.global.dev.talkbank_ca.base.mvp.event.IEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
+import finotek.global.dev.talkbank_ca.chat.messages.Account;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -24,29 +28,46 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SignaturePassed;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 
 class Scenario {
+    private enum Step {
+        // 아무것도 아님
+        None,
+
+        // 계좌 개설
+        Account, AccountCheckIDCard, AccountTakeSign, AccountSucceeded,
+
+        // 소액담보대출
+        Loan, LoanInputMoney, LoanInputAddress, LoanSucceeded
+    }
+
     private final MessageBox messageBox;
     private Context context;
     private ChatView chatView;
-    private int step = 0;
+
+    private Step step = Step.None;
+    private boolean isConfirmAppear = false;
 
     Scenario(Context context, ChatView chatView, MessageBox messageBox) {
         this.context = context;
         this.chatView = chatView;
         this.messageBox = messageBox;
+
+        // 메시지 박스 설정
         messageBox.getObservable().subscribe(this::onNewMessage);
 
+        // 채팅 설정
         LinearLayoutManager manager = new LinearLayoutManager(context);
         manager.setStackFromEnd(true);
         chatView.setLayoutManager(manager);
 
+        // 초기 메시지 출력
         messageBox.add(new DividerMessage(DateUtil.currentDate()));
-
         RxEventBus.getInstance().getObservable()
             .subscribe(iEvent -> {
                 if (iEvent instanceof AccuracyMeasureEvent) {
@@ -91,13 +112,17 @@ class Scenario {
 
         // 예, 아니오 선택 요청
         if(msg instanceof ConfirmRequest) {
+            isConfirmAppear = true;
+
             ChatSelectButtonEvent ev = new ChatSelectButtonEvent();
             ev.setConfirmAction(aVoid -> {
                 chatView.removeOf(ChatView.ViewType.Confirm);
+                isConfirmAppear = false;
                 messageBox.add(new SendMessage("예"));
             });
             ev.setCancelAction(aVoid -> {
                 chatView.removeOf(ChatView.ViewType.Confirm);
+                isConfirmAppear = false;
                 messageBox.add(new SendMessage("아니오"));
             });
             chatView.confirm(ev);
@@ -130,54 +155,59 @@ class Scenario {
 
         // 계좌 리스트
         if(msg instanceof AccountList) {
-            chatView.accountList();
+            chatView.accountList((AccountList) msg);
+        }
+
+        if(msg instanceof SignaturePassed) {
+            switch (step){
+                case AccountSucceeded:
+                    new ReceiveMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?\n");
+                    break;
+            }
         }
     }
 
     private void respondTo(String msg) {
-        switch (msg) {
+        switch (msg.trim()) {
             case "계좌 개설":
             case "계좌개설":
                 createAccount();
-                step = 1;
+                step = Step.Account;
                 break;
             case "네":
             case "예":
-                if(step == 1) {
-                    messageBox.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
-                    messageBox.add(new RequestTakeIDCard());
-                    step = 2;
-                } else if(step == 2){
-                    messageBox.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요.\n"));
-                    messageBox.add(new RequestSignature());
-                } else {
-                    messageBox.add(new ReceiveMessage("무슨 의미인가요? 현재 진행중인 내용이 없습니다."));
+                if(isConfirmAppear)
+                    chatView.removeOf(ChatView.ViewType.Confirm);
+
+                switch (step) {
+                    case Account:
+                        messageBox.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
+                        messageBox.add(new RequestTakeIDCard());
+                        step = Step.AccountCheckIDCard;
+                        break;
+                    case Loan:
+                        messageBox.add(new ReceiveMessage("집 주소를 입력해 주세요.\n"));
+                        step = Step.LoanInputAddress;
+                        break;
+                    default:
+                        messageBox.add(new ReceiveMessage("무슨 의미인가요? 현재 진행중인 내용이 없습니다."));
+                        break;
                 }
                 break;
             case "아니오":
-                if(step == 1) {
-                    messageBox.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
-                    step = 0;
+                if(isConfirmAppear)
+                    chatView.removeOf(ChatView.ViewType.Confirm);
+
+                switch (step) {
+                    case Account:
+                        messageBox.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
+                        break;
+                    case Loan:
+                        messageBox.add(new ReceiveMessage("소액담보대출 진행을 취소했습니다."));
+                        break;
                 }
-                break;
-            case "약관" :
-                List<Agreement> agreements = new ArrayList<>();
-                Agreement required = new Agreement(100, "필수 항목 전체 동의");
-                required.addChild(new Agreement(101, "대출 서비스 이용 약관"));
-                required.addChild(new Agreement(102, "개인(신용)정보 조회 및 이용 제공 동의"));
-                required.addChild(new Agreement(103, "대출거래 약정서"));
-                required.addChild(new Agreement(104, "계약 안내사항 및 유의사항"));
 
-                Agreement optional = new Agreement(200, "선택항목 전체 동의");
-                optional.addChild(new Agreement(201, "고객 정보 활용 동의"));
-
-                agreements.add(required);
-                agreements.add(optional);
-
-                messageBox.add(new AgreementRequest(agreements));
-                break;
-            case "약관확인" :
-                messageBox.add(new AgreementResult());
+                step = Step.None;
                 break;
             case "최근거래내역" :
                 ArrayList<Transaction> tx = new ArrayList<>();
@@ -193,12 +223,60 @@ class Scenario {
                 break;
             case "계좌이체" :
             case "계좌 이체" :
+                List<Account> accounts = new ArrayList<>();
+                accounts.add(new Account("어머니", "2017년 01월 25일", "200,000원 이체", true));
+                accounts.add(new Account("박예린", "2017년 01월 11일", "100,000원 이체", false));
+                accounts.add(new Account("김가람", "2017년 01월 11일", "36,200원 이체", false));
+                accounts.add(new Account("김이솔", "2017년 01월 10일", "100,000원 입금", false));
+
                 messageBox.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
-                messageBox.add(new AccountList());
+                messageBox.add(new AccountList(accounts));
                 messageBox.add(new RequestTransfer());
                 break;
+            case "집을 담보로 대출 받고 싶어":
+            case "소액담보대출":
+            case "소액 담보 대출":
+                messageBox.add(new ReceiveMessage("거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리 2.0%입니다.\n\n대출을 신청하시겠습니까?"));
+                messageBox.add(new ConfirmRequest());
+                step = Step.Loan;
+                break;
             default:
-                messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
+                switch (step) {
+                    case LoanInputAddress:
+                        messageBox.add(new ReceiveMessage("입력하신 주소로 담보 설정 시 최대 5천만 원까지\n2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요."));
+                        step = Step.LoanInputMoney;
+                        break;
+                    case LoanInputMoney:
+                        messageBox.add(new ReceiveMessage("약관 확인 및 동의를 진행해주세요."));
+
+                        List<Agreement> agreements = new ArrayList<>();
+                        Agreement required = new Agreement(100, "필수 항목 전체 동의");
+                        required.addChild(new Agreement(101, "대출 서비스 이용 약관"));
+                        required.addChild(new Agreement(102, "개인(신용)정보 조회 및 이용 제공 동의"));
+                        required.addChild(new Agreement(103, "대출거래 약정서"));
+                        required.addChild(new Agreement(104, "계약 안내사항 및 유의사항"));
+
+                        Agreement optional = new Agreement(200, "선택항목 전체 동의");
+                        optional.addChild(new Agreement(201, "고객 정보 활용 동의"));
+
+                        agreements.add(required);
+                        agreements.add(optional);
+
+                        messageBox.add(new AgreementRequest(agreements));
+                        step = Step.LoanSucceeded;
+                        break;
+                    case LoanSucceeded:
+                        messageBox.add(new AgreementResult());
+                        messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?"));
+                        break;
+                    case AccountCheckIDCard:
+                        messageBox.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요.\n"));
+                        messageBox.add(new RequestSignature());
+                        break;
+                    default:
+                        messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
+                        break;
+                }
                 break;
         }
     }

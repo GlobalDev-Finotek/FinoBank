@@ -70,6 +70,8 @@ public class UserInfoFragment extends android.app.Fragment {
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> startActivity(new Intent(getActivity(), PinRegistrationActivity.class)));
 
+		binding.llRegiAdditional.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
+
 		return binding.getRoot();
 	}
 }

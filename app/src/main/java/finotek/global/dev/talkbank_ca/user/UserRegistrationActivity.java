@@ -43,5 +43,6 @@ public class UserRegistrationActivity extends AppCompatActivity {
 			  .throttleFirst(200, TimeUnit.MILLISECONDS)
 			  .subscribe(aVoid -> startActivity(new Intent(UserRegistrationActivity.this, ChatActivity.class)));
 
+
   }
 }

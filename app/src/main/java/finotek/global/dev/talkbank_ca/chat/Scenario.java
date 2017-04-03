@@ -63,7 +63,11 @@ class Scenario {
         // 보낸 메시지
         if(msg instanceof SendMessage) {
             SendMessage recv = (SendMessage) msg;
-            chatView.sendMessage(recv.getMessage());
+            if(recv.getIcon() == -1) {
+                chatView.sendMessage(recv.getMessage());
+            } else {
+                chatView.sendMessage(recv.getMessage(), recv.getIcon());
+            }
             this.respondTo(recv.getMessage());
         }
 
@@ -144,7 +148,8 @@ class Scenario {
                     messageBox.add(new RequestTakeIDCard());
                     step = 2;
                 } else if(step == 2){
-
+                    messageBox.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요.\n"));
+                    messageBox.add(new RequestSignature());
                 } else {
                     messageBox.add(new ReceiveMessage("무슨 의미인가요? 현재 진행중인 내용이 없습니다."));
                 }
@@ -191,12 +196,6 @@ class Scenario {
                 messageBox.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
                 messageBox.add(new AccountList());
                 messageBox.add(new RequestTransfer());
-                break;
-            case "카메라":
-                messageBox.add(new RequestTakeIDCard());
-                break;
-            case "서명":
-                messageBox.add(new RequestSignature());
                 break;
             default:
                 messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));

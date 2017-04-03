@@ -34,18 +34,18 @@ public class ExtendedControl1 extends Fragment {
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .doOnNext(aVoid -> doOnControl.run())
                 .subscribe(aVoid -> {
-                    messageBox.add(new SendMessage("계좌 개설"));
+                    messageBox.add(new SendMessage("계좌 개설", R.drawable.icon_talkbank01));
                 });
 
         RxView.clicks(binding.transferMoney)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
+                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체", R.drawable.icon_talkbank02)));
 
         RxView.clicks(binding.checkAccount)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
+                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회", R.drawable.icon_talkbank03)));
 
         return rootView;
     }

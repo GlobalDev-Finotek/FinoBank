@@ -38,6 +38,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
 
 public class ChatActivity extends AppCompatActivity {
     private MessageBox messageBox;
@@ -88,7 +89,19 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof RequestSignature) {
 			releaseControls();
-			binding.footer.addView(inflate(R.layout.chat_sign));
+
+            binding.footer.addView(inflate(R.layout.chat_capture));
+            SignRegistFragment signRegistFragment = new SignRegistFragment();
+            FragmentTransaction tx = getFragmentManager().beginTransaction();
+            signRegistFragment.setOnSaveListener(new SignRegistFragment.OnSignSaveListener() {
+                @Override
+                public void onSave() {
+                    messageBox.add(new SendMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?\n"));
+                }
+            });
+
+            tx.add(R.id.chat_capture, signRegistFragment );
+            tx.commit();
 		}
 
 		if (msg instanceof RequestTransfer) {

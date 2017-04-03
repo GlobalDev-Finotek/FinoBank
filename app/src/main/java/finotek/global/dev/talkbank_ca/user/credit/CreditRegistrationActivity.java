@@ -49,6 +49,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.MATCH_PARENT);
 				binding.flCam.setLayoutParams(lp);
+				binding.appbar.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -56,6 +57,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						Converter.dpToPx(350));
 				binding.flCam.setLayoutParams(lp);
+				binding.appbar.setVisibility(View.VISIBLE);
 			}
 
 		});

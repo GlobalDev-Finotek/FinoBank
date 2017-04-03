@@ -22,7 +22,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
  * */
 public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
-    enum ViewType {
+    public enum ViewType {
         Send, Receive, Divider, Status, Confirm,
         IDCard, RecentTransaction, AccountList,
         Agreement, AgreementResult
@@ -100,6 +100,10 @@ public class ChatView extends RecyclerView {
     private void addMessage(int viewType, Object item) {
         adapter.addChatItem(new DataWithType(viewType, item));
         scrollToBottom();
+    }
+
+    public void removeOf(ViewType viewType){
+        adapter.removeChatItem(viewType.ordinal());
     }
 
     public void removeAt(int pos) {

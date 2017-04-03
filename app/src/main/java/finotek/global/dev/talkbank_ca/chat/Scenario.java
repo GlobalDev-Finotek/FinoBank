@@ -34,7 +34,6 @@ class Scenario {
     private Context context;
     private ChatView chatView;
     private int step = 0;
-    private int lastRequestIndex = -1;
 
     Scenario(Context context, ChatView chatView, MessageBox messageBox) {
         this.context = context;
@@ -88,12 +87,13 @@ class Scenario {
 
         // 예, 아니오 선택 요청
         if(msg instanceof ConfirmRequest) {
-            lastRequestIndex = messageBox.size() -1;
             ChatSelectButtonEvent ev = new ChatSelectButtonEvent();
             ev.setConfirmAction(aVoid -> {
+                chatView.removeOf(ChatView.ViewType.Confirm);
                 messageBox.add(new SendMessage("예"));
             });
             ev.setCancelAction(aVoid -> {
+                chatView.removeOf(ChatView.ViewType.Confirm);
                 messageBox.add(new SendMessage("아니오"));
             });
             chatView.confirm(ev);
@@ -131,11 +131,6 @@ class Scenario {
     }
 
     private void respondTo(String msg) {
-        if(lastRequestIndex != -1) {
-            chatView.removeAt(lastRequestIndex);
-            lastRequestIndex = -1;
-        }
-
         switch (msg) {
             case "계좌 개설":
             case "계좌개설":
@@ -147,6 +142,11 @@ class Scenario {
                 if(step == 1) {
                     messageBox.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
                     messageBox.add(new RequestTakeIDCard());
+                    step = 2;
+                } else if(step == 2){
+
+                } else {
+                    messageBox.add(new ReceiveMessage("무슨 의미인가요? 현재 진행중인 내용이 없습니다."));
                 }
                 break;
             case "아니오":
@@ -154,9 +154,6 @@ class Scenario {
                     messageBox.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
                     step = 0;
                 }
-                break;
-            case "신분증":
-                messageBox.add(new IDCardInfo("주민등록증", "홍길동", "931203-1155123", "2012.11.11"));
                 break;
             case "약관" :
                 List<Agreement> agreements = new ArrayList<>();

@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.IEvent;
+import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import rx.subjects.PublishSubject;
 
 /**
@@ -42,7 +43,11 @@ public class AppModule {
 	@Provides
 	SharedPreferences provideSharedPreferences() {
 		return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
-  }
+    }
 
-
+    @Provides
+    @Singleton
+    MessageBox provideMessageBox(){
+        return new MessageBox();
+    }
 }

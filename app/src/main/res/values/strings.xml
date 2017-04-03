@@ -27,6 +27,9 @@
     <string name="string_transfer_money">계좌 이체</string>
     <string name="string_transfer">이체</string>
     <string name="string_check_account">계좌 조회</string>
+    <string name="string_loan">소액담보대출</string>
+    <string name="string_setting">환경설정</string>
+    <string name="string_send_email">상담 내용 이메일로 보내기</string>
     <string name="string_withdrawal">출금</string>
     <string name="string_deposit">입금</string>
     <string name="string_balance">잔액</string>

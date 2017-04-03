@@ -20,6 +20,10 @@ public class MessageBox {
         ps.onNext(msg);
     }
 
+    public void removeAt(int index){
+        messages.remove(index);
+    }
+
     public int size() {
         return messages.size();
     }

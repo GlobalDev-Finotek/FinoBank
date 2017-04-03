@@ -18,10 +18,6 @@
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".user.UserRegistrationActivity">
         </activity>
@@ -42,6 +38,11 @@
             />
 
         <activity android:name=".chat.ChatActivity"
-                  android:label="톡뱅" />
+                  android:label="톡뱅">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
     </application>
 </manifest>

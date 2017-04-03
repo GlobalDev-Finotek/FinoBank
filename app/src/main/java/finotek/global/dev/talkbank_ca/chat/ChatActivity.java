@@ -23,8 +23,11 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
+import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
@@ -37,11 +40,12 @@ import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 
 public class ChatActivity extends AppCompatActivity {
+    private MessageBox messageBox;
+
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
 	private ChatTransferBinding ctBinding;
-	private MessageBox messageBox;
 	private Scenario scenario;
 
 	private boolean isExControlAvailable = false;
@@ -74,6 +78,10 @@ public class ChatActivity extends AppCompatActivity {
 			binding.footer.addView(inflate(R.layout.chat_capture));
 			CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			capturePicFragment.takePicture(path -> {
+				messageBox.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
+                this.returnToInitialControl();
+			});
 			tx.add(R.id.chat_capture, capturePicFragment);
 			tx.commit();
 		}
@@ -157,37 +165,21 @@ public class ChatActivity extends AppCompatActivity {
 					}
 				});
 
-
 		ecBinding = ChatExtendedControlBinding.bind(exControlView);
-		ecBinding.extendedControl.setAdapter(new ControlPagerAdapter(getSupportFragmentManager()));
+
+        ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager(), messageBox);
+        adapter.setDoOnControl(this::hideExControl);
+		ecBinding.extendedControl.setAdapter(adapter);
 		RxViewPager.pageSelections(ecBinding.extendedControl)
-				.subscribe(pos -> {
-					if (pos == 0) {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-					} else {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-					}
-				});
-
-//        RxView.clicks(ecBinding.control1.registerAccount)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> hideExControl())
-//                .subscribe(aVoid -> {
-//                    messageBox.add(new SendMessage("계좌 개설"));
-//                });
-//
-//        RxView.clicks(ecBinding.control1.transferMoney)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> hideExControl())
-//                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
-//
-//        RxView.clicks(ecBinding.control1.checkAccount)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> hideExControl())
-//                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
-
+            .subscribe(pos -> {
+                if (pos == 0) {
+                    ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+                    ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+                } else {
+                    ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+                    ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+                }
+            });
 
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
@@ -239,6 +231,11 @@ public class ChatActivity extends AppCompatActivity {
 		dismissKeyboard(fiBinding.chatEditText);
 		binding.footer.removeAllViews();
 	}
+
+	private void returnToInitialControl(){
+        releaseAllControls();
+        binding.footer.addView(footerInputs);
+    }
 
 	private View inflate(int layoutId) {
 		ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);

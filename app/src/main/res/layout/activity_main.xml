@@ -11,14 +11,14 @@
             android:id="@+id/intro"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="153dp"
             android:text="@string/finotek_intro"
             android:textAlignment="center"
             android:textColor="@color/color_text_default"
             android:textSize="30sp"
-            tb:custom_font="noto_medium"/>
+            tb:custom_font="noto_medium"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"/>
 
         <ImageView
             android:id="@+id/logo"

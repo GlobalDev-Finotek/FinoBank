@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityCreditRegistrationBinding;
 import finotek.global.dev.talkbank_ca.model.CreditCard;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class CreditRegistrationActivity extends AppCompatActivity implements CreditRegistrationView {
 
@@ -40,7 +42,23 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 
 		capturePicFragment.takePicture(path -> presenter.takePic(path));
 
-		capturePicFragment.setOnSizeChangeListener(() -> capturePicFragment.openCamera(binding.flCam.getWidth(), 1024));
+
+		capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
+			@Override
+			public void onSizeFull() {
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+						LinearLayout.LayoutParams.MATCH_PARENT);
+				binding.flCam.setLayoutParams(lp);
+			}
+
+			@Override
+			public void onSizeMinimize() {
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+						Converter.dpToPx(350));
+				binding.flCam.setLayoutParams(lp);
+			}
+
+		});
 	}
 
 	@Override

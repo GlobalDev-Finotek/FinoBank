@@ -12,19 +12,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <ImageButton
-            android:id="@+id/ib_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginBottom="26dp"
-            android:layout_marginRight="41dp"
-            android:background="@drawable/white_large_circle_border"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
-
         <ImageView
+            android:id="@+id/imageView5"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginBottom="43dp"
@@ -34,39 +23,47 @@
             android:background="@drawable/border_cap_white"
             android:scaleType="fitXY"/>
 
+        <ImageButton
+            android:id="@+id/ib_size"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            android:layout_alignEnd="@+id/imageView5"
+            android:layout_alignTop="@+id/relativeLayout"
+            android:layout_marginEnd="26dp"
+            android:layout_marginRight="41dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/white_small_circle"
+            android:tint="@color/colorPrimary"
+            app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentStart="true"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <ImageButton
-                android:id="@+id/ib_capture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_gravity="center_vertical"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/white_large_circle"
-                android:padding="15dp"
-                android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/vector_drawable_icon_camera"/>
+            android:layout_toEndOf="@+id/ib_ok"
+            android:id="@+id/relativeLayout">
 
             <ImageButton
                 android:id="@+id/ib_ok"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="15dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignBottom="@+id/ib_capture"
+                android:layout_marginEnd="15dp"
+                android:layout_toStartOf="@+id/ib_capture"
                 android:background="@drawable/primary_large_circle"
-                android:padding="15dp"
-                android:tint="@color/white"
                 android:visibility="gone"
-                app:srcCompat="@drawable/vector_drawable_icon_check"/>
+                app:srcCompat="@drawable/vector_drawable_icon_confirm"/>
 
+            <ImageButton
+                android:id="@+id/ib_capture"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/white_large_circle"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/vector_drawable_icon_camera"/>
         </RelativeLayout>
 
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView

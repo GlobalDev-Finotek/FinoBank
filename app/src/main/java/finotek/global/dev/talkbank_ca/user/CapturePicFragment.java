@@ -416,6 +416,27 @@ public class CapturePicFragment extends Fragment
 				}
 			});
 
+			binding.ibSize.setOnClickListener(new View.OnClickListener() {
+				boolean isFullSize = false;
+
+				@Override
+				public void onClick(View v) {
+							if (onSizeChangeListener != null) {
+								if (isFullSize) {
+									onSizeChangeListener.onSizeFull();
+									binding.ibSize.setImageDrawable(ContextCompat.getDrawable(getActivity(),
+											R.drawable.vector_drawable_icon_minimize));
+								} else {
+									onSizeChangeListener.onSizeMinimize();
+									binding.ibSize.setImageDrawable(ContextCompat.getDrawable(getActivity(),
+											R.drawable.vector_drawable_icon_fullsize));
+								}
+
+								isFullSize = !isFullSize;
+							}
+				}
+			});
+
 			DrawableCompat.setTint(binding.ibCapture.getDrawable(),
 					ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 
@@ -885,8 +906,10 @@ public class CapturePicFragment extends Fragment
 	}
 
 	public interface OnSizeChangeListener {
-		void onSizeChange();
+		void onSizeFull();
+		void onSizeMinimize();
 	}
+
 
 
 	public interface OnCaptureListener {

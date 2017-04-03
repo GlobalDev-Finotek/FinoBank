@@ -6,8 +6,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
+import android.view.View;
 import android.widget.LinearLayout;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -23,7 +22,7 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		ActivityCaptureProfilePicBinding binding = DataBindingUtil.setContentView(this,
+		binding = DataBindingUtil.setContentView(this,
 				R.layout.activity_capture_profile_pic);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
@@ -43,6 +42,7 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						LinearLayout.LayoutParams.MATCH_PARENT);
 				binding.flCam.setLayoutParams(lp);
+				binding.appbar.setVisibility(View.GONE);
 			}
 
 			@Override
@@ -50,6 +50,7 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 						Converter.dpToPx(350));
 				binding.flCam.setLayoutParams(lp);
+				binding.appbar.setVisibility(View.VISIBLE);
 			}
 
 		});

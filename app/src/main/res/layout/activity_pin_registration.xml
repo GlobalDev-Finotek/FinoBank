@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tb="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <android.support.design.widget.CoordinatorLayout
@@ -80,12 +81,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/border_white_three_radius"
                 android:orientation="vertical"
-                android:paddingBottom="15dp"
-                android:paddingTop="15dp">
+                android:padding="15dp">
 
                 <TextView
                     android:id="@+id/textView2"
@@ -133,6 +134,65 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/ll_inst_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:id="@+id/talkBankTextView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="6자리 숫자로 PIN 코드를 입력해 주세요."
+                        tb:custom_font="noto_regular"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_weight="1"
+                        android:text="PIN 코드 인증 시 등록한 배경색과 글자색도 일치해야 합니다."
+                        tb:custom_font="noto_regular"/>
+                </LinearLayout>
+
+            </LinearLayout>
             <RelativeLayout
                 android:id="@+id/ll_secure_keyboard"
                 android:layout_width="match_parent"

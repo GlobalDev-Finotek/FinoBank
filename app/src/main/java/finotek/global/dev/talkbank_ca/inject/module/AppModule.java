@@ -44,10 +44,4 @@ public class AppModule {
 	SharedPreferences provideSharedPreferences() {
 		return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
     }
-
-    @Provides
-    @Singleton
-    MessageBox provideMessageBox(){
-        return new MessageBox();
-    }
 }

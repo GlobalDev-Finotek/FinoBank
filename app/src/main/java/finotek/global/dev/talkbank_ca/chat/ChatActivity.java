@@ -40,8 +40,6 @@ import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
 
 public class ChatActivity extends AppCompatActivity {
-    private MessageBox messageBox;
-
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -62,10 +60,9 @@ public class ChatActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("톡뱅");
-		messageBox = new MessageBox();
 
-		scenario = new Scenario(this, binding.chatView, messageBox);
-		messageBox.getObservable().subscribe(this::onNewMessageUpdated);
+		scenario = new Scenario(this, binding.chatView);
+		MessageBox.INSTANCE.observable.subscribe(this::onNewMessageUpdated);
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
@@ -79,7 +76,7 @@ public class ChatActivity extends AppCompatActivity {
 			CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				messageBox.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
+				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
                 this.returnToInitialControl();
 			});
 			tx.add(R.id.chat_capture, capturePicFragment);
@@ -95,7 +92,7 @@ public class ChatActivity extends AppCompatActivity {
             signRegistFragment.setOnSaveListener(new SignRegistFragment.OnSignSaveListener() {
                 @Override
                 public void onSave() {
-                    messageBox.add(new Succeeded());
+                    MessageBox.INSTANCE.add(new Succeeded());
                 }
             });
 
@@ -111,7 +108,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	public void onSendButtonClickEvent(Void aVoid) {
 		String msg = fiBinding.chatEditText.getText().toString();
-		messageBox.add(new SendMessage(msg));
+		MessageBox.INSTANCE.add(new SendMessage(msg));
 		clearInput();
 	}
 
@@ -179,7 +176,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		ecBinding = ChatExtendedControlBinding.bind(exControlView);
 
-        ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager(), messageBox);
+        ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
         adapter.setDoOnControl(this::hideExControl);
 		ecBinding.extendedControl.setAdapter(adapter);
 		RxViewPager.pageSelections(ecBinding.extendedControl)
@@ -200,7 +197,7 @@ public class ChatActivity extends AppCompatActivity {
 			binding.footer.removeView(transferView);
 			binding.footer.addView(footerInputs);
 
-            messageBox.add(new Succeeded());
+            MessageBox.INSTANCE.add(new Succeeded());
 		});
 
 		binding.footer.addView(footerInputs);

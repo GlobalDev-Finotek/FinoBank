@@ -26,7 +26,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.SignaturePassed;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
@@ -47,20 +46,18 @@ class Scenario {
         Transfer
     }
 
-    private final MessageBox messageBox;
     private Context context;
     private ChatView chatView;
 
     private Step step = Step.None;
     private boolean isConfirmAppear = false;
 
-    Scenario(Context context, ChatView chatView, MessageBox messageBox) {
+    Scenario(Context context, ChatView chatView) {
         this.context = context;
         this.chatView = chatView;
-        this.messageBox = messageBox;
 
         // 메시지 박스 설정
-        messageBox.getObservable().subscribe(this::onNewMessage);
+        MessageBox.INSTANCE.observable.subscribe(this::onNewMessage);
 
         // 채팅 설정
         LinearLayoutManager manager = new LinearLayoutManager(context);
@@ -68,17 +65,17 @@ class Scenario {
         chatView.setLayoutManager(manager);
 
         // 초기 메시지 출력
-        messageBox.add(new DividerMessage(DateUtil.currentDate()));
+        MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
         RxEventBus.getInstance().getObservable()
             .subscribe(iEvent -> {
                 if (iEvent instanceof AccuracyMeasureEvent) {
                     double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-                    messageBox.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf((int) (accuracy * 100))
+                    MessageBox.INSTANCE.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf((int) (accuracy * 100))
                         + "% 확률로 인증되었습니다."));
                 }
             });
 
-        messageBox.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
+        MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
     }
 
     private void onNewMessage(Object msg){
@@ -119,12 +116,12 @@ class Scenario {
             ev.setConfirmAction(aVoid -> {
                 chatView.removeOf(ChatView.ViewType.Confirm);
                 isConfirmAppear = false;
-                messageBox.add(new SendMessage("예"));
+                MessageBox.INSTANCE.add(new SendMessage("예"));
             });
             ev.setCancelAction(aVoid -> {
                 chatView.removeOf(ChatView.ViewType.Confirm);
                 isConfirmAppear = false;
-                messageBox.add(new SendMessage("아니오"));
+                MessageBox.INSTANCE.add(new SendMessage("아니오"));
             });
             chatView.confirm(ev);
         }
@@ -132,25 +129,25 @@ class Scenario {
         // 신분증 스캔 결과
         if(msg instanceof IDCardInfo) {
             chatView.showIdCardInfo((IDCardInfo) msg);
-            messageBox.add(new ReceiveMessage("위 내용이 맞으세요?"));
-            messageBox.add(new ConfirmRequest());
+            MessageBox.INSTANCE.add(new ReceiveMessage("위 내용이 맞으세요?"));
+            MessageBox.INSTANCE.add(new ConfirmRequest());
         }
 
         // 약관 동의 화면
         if(msg instanceof AgreementRequest) {
-            messageBox.add(new ReceiveMessage("약관 확인 및 동의를 진행해 주세요."));
+            MessageBox.INSTANCE.add(new ReceiveMessage("약관 확인 및 동의를 진행해 주세요."));
             chatView.agreement((AgreementRequest) msg);
         }
 
         // 약관 결과
         if(msg instanceof AgreementResult) {
             chatView.agreementResult();
-            messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
+            MessageBox.INSTANCE.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
         }
 
         // 최근 거래 내역
         if(msg instanceof RecentTransaction) {
-            messageBox.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
+            MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
             chatView.transactionList((RecentTransaction) msg);
         }
 
@@ -170,8 +167,8 @@ class Scenario {
                     new ReceiveMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?\n");
                 break;
                 case LoanSucceeded:
-                    messageBox.add(new AgreementResult());
-                    messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?"));
+                    MessageBox.INSTANCE.add(new AgreementResult());
+                    MessageBox.INSTANCE.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?"));
                 break;
             }
         }
@@ -191,16 +188,16 @@ class Scenario {
 
                 switch (step) {
                     case Account:
-                        messageBox.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
-                        messageBox.add(new RequestTakeIDCard());
+                        MessageBox.INSTANCE.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
+                        MessageBox.INSTANCE.add(new RequestTakeIDCard());
                         step = Step.AccountCheckIDCard;
                         break;
                     case Loan:
-                        messageBox.add(new ReceiveMessage("집 주소를 입력해 주세요."));
+                        MessageBox.INSTANCE.add(new ReceiveMessage("집 주소를 입력해 주세요."));
                         step = Step.LoanInputAddress;
                         break;
                     default:
-                        messageBox.add(new ReceiveMessage("무슨 의미인가요? 현재 진행중인 내용이 없습니다."));
+                        MessageBox.INSTANCE.add(new ReceiveMessage("무슨 의미인가요? 현재 진행중인 내용이 없습니다."));
                         break;
                 }
                 break;
@@ -210,10 +207,10 @@ class Scenario {
 
                 switch (step) {
                     case Account:
-                        messageBox.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
+                        MessageBox.INSTANCE.add(new ReceiveMessage("계좌 개설 진행을 취소했습니다."));
                         break;
                     case Loan:
-                        messageBox.add(new ReceiveMessage("소액담보대출 진행을 취소했습니다."));
+                        MessageBox.INSTANCE.add(new ReceiveMessage("소액담보대출 진행을 취소했습니다."));
                         break;
                 }
 
@@ -229,7 +226,7 @@ class Scenario {
 
                 RecentTransaction rt = new RecentTransaction();
                 rt.setTransactions(tx);
-                messageBox.add(rt);
+                MessageBox.INSTANCE.add(rt);
                 break;
             case "계좌이체" :
             case "계좌 이체" :
@@ -239,27 +236,27 @@ class Scenario {
                 accounts.add(new Account("김가람", "2017년 01월 11일", "36,200원 이체", false));
                 accounts.add(new Account("김이솔", "2017년 01월 10일", "100,000원 입금", false));
 
-                messageBox.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
-                messageBox.add(new AccountList(accounts));
-                messageBox.add(new RequestTransfer());
+                MessageBox.INSTANCE.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
+                MessageBox.INSTANCE.add(new AccountList(accounts));
+                MessageBox.INSTANCE.add(new RequestTransfer());
 
                 step = Step.Transfer;
                 break;
             case "집을 담보로 대출 받고 싶어":
             case "소액담보대출":
             case "소액 담보 대출":
-                messageBox.add(new ReceiveMessage("거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리 2.0%입니다.\n\n대출을 신청하시겠습니까?"));
-                messageBox.add(new ConfirmRequest());
+                MessageBox.INSTANCE.add(new ReceiveMessage("거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리 2.0%입니다.\n\n대출을 신청하시겠습니까?"));
+                MessageBox.INSTANCE.add(new ConfirmRequest());
                 step = Step.Loan;
                 break;
             default:
                 switch (step) {
                     case LoanInputAddress:
-                        messageBox.add(new ReceiveMessage("입력하신 주소로 담보 설정 시 최대 5천만 원까지\n2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요."));
+                        MessageBox.INSTANCE.add(new ReceiveMessage("입력하신 주소로 담보 설정 시 최대 5천만 원까지\n2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요."));
                         step = Step.LoanInputMoney;
                         break;
                     case LoanInputMoney:
-                        messageBox.add(new ReceiveMessage("약관 확인 및 동의를 진행해주세요."));
+                        MessageBox.INSTANCE.add(new ReceiveMessage("약관 확인 및 동의를 진행해주세요."));
 
                         List<Agreement> agreements = new ArrayList<>();
                         Agreement required = new Agreement(100, "필수 항목 전체 동의");
@@ -274,15 +271,15 @@ class Scenario {
                         agreements.add(required);
                         agreements.add(optional);
 
-                        messageBox.add(new AgreementRequest(agreements));
+                        MessageBox.INSTANCE.add(new AgreementRequest(agreements));
                         step = Step.LoanSucceeded;
                         break;
                     case AccountCheckIDCard:
-                        messageBox.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요."));
-                        messageBox.add(new RequestSignature());
+                        MessageBox.INSTANCE.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요."));
+                        MessageBox.INSTANCE.add(new RequestSignature());
                         break;
                     default:
-                        messageBox.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
+                        MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
                         break;
                 }
                 break;
@@ -290,7 +287,7 @@ class Scenario {
     }
 
     private void createAccount() {
-        messageBox.add(new ReceiveMessage("홍길동님께는 `스마트 계좌`를 추천드립니다\n계좌 개설을 진행하시겠습니까?"));
-        messageBox.add(new ConfirmRequest());
+        MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님께는 `스마트 계좌`를 추천드립니다\n계좌 개설을 진행하시겠습니까?"));
+        MessageBox.INSTANCE.add(new ConfirmRequest());
     }
 }

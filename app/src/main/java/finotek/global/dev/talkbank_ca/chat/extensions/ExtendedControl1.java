@@ -17,7 +17,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ChatExControl1Binding;
 
 public class ExtendedControl1 extends Fragment {
-    private MessageBox messageBox;
     private Runnable doOnControl;
 
     @Override
@@ -34,24 +33,23 @@ public class ExtendedControl1 extends Fragment {
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .doOnNext(aVoid -> doOnControl.run())
                 .subscribe(aVoid -> {
-                    messageBox.add(new SendMessage("계좌 개설", R.drawable.icon_talkbank01));
+                    MessageBox.INSTANCE.add(new SendMessage("계좌 개설", R.drawable.icon_talkbank01));
                 });
 
         RxView.clicks(binding.transferMoney)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체", R.drawable.icon_talkbank02)));
+                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage("계좌 이체", R.drawable.icon_talkbank02)));
 
         RxView.clicks(binding.checkAccount)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회", R.drawable.icon_talkbank03)));
+                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage("계좌 조회", R.drawable.icon_talkbank03)));
 
         return rootView;
     }
 
-    public void setMessageBox(MessageBox messageBox, Runnable doOnControl) {
-        this.messageBox = messageBox;
+    public void setDoOnControl(Runnable doOnControl) {
         this.doOnControl = doOnControl;
     }
 }

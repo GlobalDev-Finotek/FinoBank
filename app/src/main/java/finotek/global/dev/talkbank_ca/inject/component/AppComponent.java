@@ -20,6 +20,5 @@ public interface AppComponent {
   Context context();
   MyApplication myApplication();
   SharedPrefsHelper getPreferenceHelper();
-  MessageBox messageBox();
   void inject(MyApplication app);
 }

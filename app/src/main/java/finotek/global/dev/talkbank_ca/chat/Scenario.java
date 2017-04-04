@@ -269,7 +269,9 @@ class Scenario {
 
                 step = Step.None;
                 break;
+            case "계좌조회":
             case "최근거래내역" :
+            case "최근 거래 내역" :
                 ArrayList<Transaction> tx = new ArrayList<>();
                 tx.add(new Transaction("어머니", 0, 200000, 3033800, new DateTime()));
                 tx.add(new Transaction("박예린", 0, 100000, 3233800, new DateTime()));

@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		presenter.attachView(this);
 
 		boolean isFirst = sharedPrefsHelper.get("isFirst", true);
-		setNextButtonText(true);
+		setNextButtonText(isFirst);
 
 		RxEventBus.getInstance().getObservable()
 				.subscribe(iEvent -> {

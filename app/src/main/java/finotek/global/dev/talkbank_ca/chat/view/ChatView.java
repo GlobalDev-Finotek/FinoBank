@@ -24,7 +24,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
     public enum ViewType {
-        Send, IconicSend, Receive, Divider, Status, Confirm,
+        Send, IconicSend, Receive, Divider, Status,
+        Confirm, TransferConfirm,
         IDCard, RecentTransaction, AccountList,
         Agreement, AgreementResult
     }
@@ -47,6 +48,7 @@ public class ChatView extends RecyclerView {
         this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
         this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
         this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
+        this.addChatViewBuilder(ViewType.TransferConfirm.ordinal(), new TransferConfirmViewBuilder());
         this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
 
         this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder());
@@ -98,6 +100,10 @@ public class ChatView extends RecyclerView {
 
     public void confirm(ChatSelectButtonEvent ev){
         addMessage(ViewType.Confirm.ordinal(), ev);
+    }
+
+    public void transferConfirm(ChatSelectButtonEvent ev){
+        addMessage(ViewType.TransferConfirm.ordinal(), ev);
     }
 
     private void addChatViewBuilder(int viewType, ViewBuilder builder) {

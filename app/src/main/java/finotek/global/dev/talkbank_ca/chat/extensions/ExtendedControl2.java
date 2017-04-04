@@ -28,22 +28,23 @@ public class ExtendedControl2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.chat_ex_control_2, container, false);
         ChatExControl2Binding binding = ChatExControl2Binding.bind(rootView);
-//        RxView.clicks(binding.btnLoan)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> doOnControl.run())
-//                .subscribe(aVoid -> {
-//                    MessageBox.INSTANCE.add(new SendMessage("소액 담보 대출", R.drawable.icon_talkbank04));
-//                });
-//
-//        RxView.clicks(binding.btnSetting)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> doOnControl.run())
-//                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage("환경설정", R.drawable.icon_talkbank05)));
-//
-//        RxView.clicks(binding.btnSendEmail)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> doOnControl.run())
-//                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage("상담 내용 이메일로 보내기", R.drawable.icon_talkbank06)));
+
+        RxView.clicks(binding.btnLoan)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> doOnControl.run())
+                .subscribe(aVoid -> {
+                    MessageBox.INSTANCE.add(new SendMessage("소액 담보 대출", R.drawable.icon_talkbank04));
+                });
+
+        RxView.clicks(binding.btnSetting)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> doOnControl.run())
+                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage("환경설정", R.drawable.icon_talkbank05)));
+
+        RxView.clicks(binding.btnSendEmail)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .doOnNext(aVoid -> doOnControl.run())
+                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage("상담 내용 이메일로 보내기", R.drawable.icon_talkbank06)));
 
         return rootView;
     }

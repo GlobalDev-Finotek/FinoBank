@@ -10,35 +10,35 @@
         android:paddingEnd="16dp"
         android:paddingStart="16dp">
         <finotek.global.dev.talkbank_ca.widget.IconButton
-            android:id="@+id/register_account"
+            android:id="@+id/btn_loan"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@drawable/ex_control_button"
-            android:drawableLeft="@drawable/icon_stankbank01"
-            android:text="@string/string_register_account"
+            android:drawableLeft="@drawable/icon_stankbank04"
+            android:text="@string/string_loan"
             android:textColor="@color/ex_control"
             app:iconPadding="5dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
-            android:id="@+id/transfer_money"
+            android:id="@+id/btn_setting"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/ex_control_button"
-            android:drawableLeft="@drawable/icon_stankbank02"
-            android:text="@string/string_transfer_money"
+            android:drawableLeft="@drawable/icon_stankbank05"
+            android:text="@string/string_setting"
             android:textColor="@color/ex_control"
             app:iconPadding="5dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
-            android:id="@+id/check_account"
+            android:id="@+id/btn_send_email"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_marginTop="15dp"
             android:background="@drawable/ex_control_button"
-            android:drawableLeft="@drawable/icon_stankbank03"
-            android:text="@string/string_check_account"
+            android:drawableLeft="@drawable/icon_stankbank06"
+            android:text="@string/string_send_email"
             android:textColor="@color/ex_control"
             app:iconPadding="5dp"/>
     </LinearLayout>

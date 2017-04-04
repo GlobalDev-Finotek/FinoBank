@@ -63,7 +63,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
         RxView.touches(itemBinding.main)
             .throttleFirst(200, TimeUnit.MILLISECONDS)
             .subscribe(e -> {
-                if(e.getAction() == MotionEvent.ACTION_UP) {
+                if(e.getAction() == MotionEvent.ACTION_DOWN) {
                     list.removeAllViews();
                     list.addView(view);
                     selectedAccount = account;

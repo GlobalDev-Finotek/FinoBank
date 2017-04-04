@@ -168,6 +168,32 @@
                         android:tint="#94989e"
                         app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
                 </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/ll_language_setting"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/border_white_two_bottom_radius"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1"
+                        android:text="언어 설정"
+                        tb:custom_font="noto_regular"/>
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="0dp"
+                        android:tint="#94989e"
+                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+                </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>

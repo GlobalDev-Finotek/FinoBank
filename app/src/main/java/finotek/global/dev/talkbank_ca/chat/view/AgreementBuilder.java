@@ -63,10 +63,13 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             addAgreement(holder.binding.agreements, agr);
 
             // child
-            if(!agr.isEmptyChild())
-                for(Agreement child : agr.getChild()) {
+            if(!agr.isEmptyChild()) {
+                for (Agreement child : agr.getChild()) {
                     addAgreement(holder.binding.agreements, child);
                 }
+            }
+
+
         }
     }
 
@@ -84,6 +87,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             binding.textView.setFontType(context, 1);
             binding.arrow.setVisibility(View.INVISIBLE);
         }
+
 
         holder.addView(view);
     }

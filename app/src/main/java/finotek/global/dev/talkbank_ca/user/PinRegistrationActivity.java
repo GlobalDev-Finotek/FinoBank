@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca.user;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +23,8 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityPinRegistrationBinding;
 import finotek.global.dev.talkbank_ca.model.Pin;
 import finotek.global.dev.talkbank_ca.widget.SecureKeyboardAdapter;
+
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 public class PinRegistrationActivity extends AppCompatActivity {
 
@@ -86,8 +89,21 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			}
 		});
 
-		secureKeyboardAdapter.onCompletePressed(this::onBackPressed);
 
+		try {
+			Intent intent = getIntent();
+			Class nextClass = (Class) intent.getExtras().get("nextClass");
+
+			secureKeyboardAdapter.onCompletePressed(() -> {
+				Intent intent2 = new Intent(PinRegistrationActivity.this, nextClass);
+				intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+				startActivity(intent2);
+				finish();
+			});
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
 	}
 

@@ -36,15 +36,18 @@
 
     <color name="dodger_blue">#4083ff</color>
     <color name="coral_pink">#ff585b</color>
+    <color name="coral_pink_dark">#ca3639</color>
     <color name="dark_70">#b21f2f42</color>
     <color name="grey">#e0e0e0</color>
     <color name="dark_50">#7f1f2f42</color>
     <color name="white">#ffffff</color>
     <color name="dark_100">#1f2f42</color>
     <color name="aqua_blue">#00b9e6</color>
+    <color name="aqua_blue_dark">#0192b6</color>
     <color name="dark_30">#4c1f2f42</color>
     <color name="black">#313131</color>
     <color name="cool_green">#40cd65</color>
+    <color name="cool_green_dark">#298f44</color>
     <color name="pale_grey">#eceff0</color>
 
 

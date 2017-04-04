@@ -38,6 +38,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
 	private ActivityChatBinding binding;
@@ -62,7 +63,10 @@ public class ChatActivity extends AppCompatActivity {
 		binding.toolbarTitle.setText("톡뱅");
 
 		scenario = new Scenario(this, binding.chatView);
-		MessageBox.INSTANCE.observable.subscribe(this::onNewMessageUpdated);
+		MessageBox.INSTANCE.observable
+            .delay(2000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::onNewMessageUpdated);
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
@@ -78,9 +82,12 @@ public class ChatActivity extends AppCompatActivity {
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
                 this.returnToInitialControl();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.remove(capturePicFragment).commit();
 			});
 			tx.add(R.id.chat_capture, capturePicFragment);
-			tx.commit();
+            tx.commit();
 		}
 
 		if (msg instanceof RequestSignature) {
@@ -93,10 +100,14 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void onSave() {
                     MessageBox.INSTANCE.add(new Succeeded());
+                    returnToInitialControl();
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.remove(signRegistFragment).commit();
                 }
             });
 
-            tx.add(R.id.chat_capture, signRegistFragment );
+            tx.add(R.id.chat_capture, signRegistFragment);
             tx.commit();
 		}
 

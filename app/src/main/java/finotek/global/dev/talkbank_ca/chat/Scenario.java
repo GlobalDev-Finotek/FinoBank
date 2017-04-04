@@ -7,6 +7,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
@@ -30,6 +31,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 class Scenario {
     private enum Step {
@@ -57,7 +60,17 @@ class Scenario {
         this.chatView = chatView;
 
         // 메시지 박스 설정
-        MessageBox.INSTANCE.observable.subscribe(this::onNewMessage);
+        MessageBox.INSTANCE.observable
+            .flatMap(msg -> {
+                if(msg instanceof SendMessage) {
+                    return Observable.just(msg);
+                } else {
+                    return Observable.just(msg)
+                        .delay(2000, TimeUnit.MILLISECONDS)
+                        .observeOn(AndroidSchedulers.mainThread());
+                }
+            })
+            .subscribe(this::onNewMessage);
 
         // 채팅 설정
         LinearLayoutManager manager = new LinearLayoutManager(context);
@@ -127,22 +140,21 @@ class Scenario {
         }
 
         // 신분증 스캔 결과
-        if(msg instanceof IDCardInfo) {
+        if(msg instanceof IDCardInfo && step == Step.AccountCheckIDCard) {
             chatView.showIdCardInfo((IDCardInfo) msg);
             MessageBox.INSTANCE.add(new ReceiveMessage("위 내용이 맞으세요?"));
             MessageBox.INSTANCE.add(new ConfirmRequest());
+            step = Step.AccountTakeSign;
         }
 
         // 약관 동의 화면
         if(msg instanceof AgreementRequest) {
-            MessageBox.INSTANCE.add(new ReceiveMessage("약관 확인 및 동의를 진행해 주세요."));
             chatView.agreement((AgreementRequest) msg);
         }
 
         // 약관 결과
         if(msg instanceof AgreementResult) {
             chatView.agreementResult();
-            MessageBox.INSTANCE.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
         }
 
         // 최근 거래 내역
@@ -160,15 +172,16 @@ class Scenario {
             switch (step) {
                 case Transfer:
                     chatView.removeOf(ChatView.ViewType.AccountList);
-                    chatView.receiveMessage("어머니(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?");
+                    MessageBox.INSTANCE.add(new ReceiveMessage("어머니(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?"));
                     step = Step.None;
                 break;
                 case AccountSucceeded:
-                    new ReceiveMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?\n");
+                    MessageBox.INSTANCE.add(new ReceiveMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
                 break;
                 case LoanSucceeded:
                     MessageBox.INSTANCE.add(new AgreementResult());
                     MessageBox.INSTANCE.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?"));
+                    step = Step.None;
                 break;
             }
         }
@@ -191,6 +204,11 @@ class Scenario {
                         MessageBox.INSTANCE.add(new ReceiveMessage("계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n 준비가 되셨으면 신분증 촬영을 진행해 주세요."));
                         MessageBox.INSTANCE.add(new RequestTakeIDCard());
                         step = Step.AccountCheckIDCard;
+                        break;
+                    case AccountTakeSign:
+                        MessageBox.INSTANCE.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요."));
+                        MessageBox.INSTANCE.add(new RequestSignature());
+                        step = Step.AccountSucceeded;
                         break;
                     case Loan:
                         MessageBox.INSTANCE.add(new ReceiveMessage("집 주소를 입력해 주세요."));
@@ -273,10 +291,6 @@ class Scenario {
 
                         MessageBox.INSTANCE.add(new AgreementRequest(agreements));
                         step = Step.LoanSucceeded;
-                        break;
-                    case AccountCheckIDCard:
-                        MessageBox.INSTANCE.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요."));
-                        MessageBox.INSTANCE.add(new RequestSignature());
                         break;
                     default:
                         MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));

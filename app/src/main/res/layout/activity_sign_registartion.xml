@@ -108,7 +108,7 @@
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
+                        android:singleLine="false"
                         android:text="표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요"
                         tb:custom_font="noto_regular"/>
                 </LinearLayout>

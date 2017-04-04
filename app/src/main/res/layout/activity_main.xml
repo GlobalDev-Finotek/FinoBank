@@ -40,7 +40,7 @@
             android:layout_below="@id/logo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="66dp"
-            android:text="@string/string_user_regi"/>
+            android:text="@string/registration_string_register"/>
 
         <TextView
             android:id="@+id/tv_context_auth_accuracy"
@@ -56,7 +56,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="32dp"
-            android:text="@string/string_copyright"
+            android:text=""
             android:textColor="@color/color_text_default"
             android:textSize="12sp"/>
     </RelativeLayout>

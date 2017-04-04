@@ -30,13 +30,13 @@ public class UserRegistrationActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_user_registration);
 
-    binding.toolbar.setTitle(R.string.string_user_regi);
+    binding.toolbar.setTitle(getString(R.string));
 	  binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
 	  binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 	  setSupportActionBar(binding.toolbar);
 	  getSupportActionBar().setTitle("");
 	  binding.appbar.setOutlineProvider(null);
-	  binding.toolbarTitle.setText("사용자 등록");
+	  binding.toolbarTitle.setText(getString(R.string.registration_string_register));
 	  binding.ibBack.setOnClickListener(v -> onBackPressed());
 
 	  RxView.clicks(binding.btnCaptureProfile)

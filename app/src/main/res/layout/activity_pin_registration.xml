@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="10dp"
-                android:text="@string/pin_code"
+                android:text="@string/setting_string_pin_code"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="25dp"/>
 
@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@string/select_pin_code_background"/>
+                    android:text="@string/setting_string_pin_code_backgorund_color_select"/>
 
                 <GridLayout
                     android:id="@+id/gl_pin_background"
@@ -115,7 +115,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@string/select_pin_code_text_color"/>
+                    android:text="@string/setting_string_pin_code_text_color_select"/>
 
                 <GridLayout
                     android:id="@+id/gl_pin_text_color"

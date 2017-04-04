@@ -180,9 +180,6 @@ please write the ammount of loan you would like to request</string>
     <string name="dialog_chat_agreenment_accepted">agreement have been aceepted </string>
     <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account
 is there anything else I can help you with?</string>
-    <string name="no"></string>
-    <string name="registration_string_signature">E-signature</string>
-    <string name="setting_string_save">Save</string>
     <string name="setting_string_allowed_time">It\'s only actviated in allowed time.</string>
     <string name="setting_string_end">End</string>
     <string name="setting_string_start">Start</string>
@@ -192,4 +189,5 @@ is there anything else I can help you with?</string>
     <string name="setting_string_one_app_select">Select each app</string>
     <string name="setting_string_all_app_collect">Select all app</string>
     <string name="setting_string_context_app">Context data collect app</string>
+    <string name="no"></string>
 </resources>

@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
@@ -668,8 +669,10 @@ public class CapturePicFragment extends Fragment
 			requestCameraPermission();
 			return;
 		}
+
 		setUpCameraOutputs(width, height);
-		configureTransform(width, height);
+		// configureTransform(width, height);
+
 		Activity activity = getActivity();
 		CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
 		try {

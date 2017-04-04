@@ -99,7 +99,7 @@
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:paddingTop="16dp"
-                            android:text="@string/additional_inform"
+                            android:text="@string/registration_string_additional_info"
                             android:theme="@style/Title"
                             tb:custom_font="noto_medium"/>
 
@@ -140,7 +140,7 @@
                                 android:id="@+id/edt_emergency_phone_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="44dp"
-                                android:hint="@string/emergency_phone_number"
+                                android:hint="@string/registration_string_emergency_number"
                                 android:inputType="phone"/>
 
                             <LinearLayout
@@ -173,7 +173,7 @@
                                 android:id="@+id/edt_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/email_address"
+                                android:hint="@string/registration_string_email"
                                 android:inputType="textEmailAddress"/>
 
                             <LinearLayout
@@ -212,7 +212,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="44dp"
                                     android:elevation="0dp"
-                                    android:text="@string/capture_credit"/>
+                                    android:text="@string/registration_button_credit_card_capture"/>
 
                             </LinearLayout>
 
@@ -252,7 +252,7 @@
                                     style="@style/InverseButton"
                                     android:layout_width="match_parent"
                                     android:layout_height="44dp"
-                                    android:text="@string/capture_profile"/>
+                                    android:text="@string/registration_button_profile_capture"/>
 
                             </LinearLayout>
 

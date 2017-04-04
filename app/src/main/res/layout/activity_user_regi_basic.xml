@@ -16,7 +16,7 @@
             android:background="@color/white_two"
             android:gravity="center_vertical"
             android:padding="16dp"
-            android:text="@string/basic_inform"
+            android:text="@string/registration_string_basic_information"
             android:theme="@style/Title"
             tb:custom_font="noto_medium"/>
 
@@ -48,7 +48,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="휴대전화 번호"
+                    android:text="@string/registration_string_phone_number"
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
@@ -57,7 +57,7 @@
                 android:id="@+id/edt_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:hint="@string/phone_number"
+                android:hint="@string/registration_string_phone_number"
                 android:inputType="phone"/>
 
             <LinearLayout
@@ -80,7 +80,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="사용자 이름"
+                    android:text="@string/registration_string_user_name"
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
@@ -89,7 +89,7 @@
                 android:id="@+id/edt_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:hint="@string/user_name"
+                android:text="@string/registration_string_user_name"
                 android:inputType="textPersonName"/>
 
             <LinearLayout
@@ -111,7 +111,7 @@
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
                     android:gravity="center_vertical"
-                    android:text="자필 서명"
+                    android:text="@string/registration_string_signature"
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
@@ -121,7 +121,7 @@
                 style="@style/InverseButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="자필 서명 등록"/>
+                android:text="@string/registration_button_signature_register"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -144,7 +144,7 @@
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
-                    android:text="@string/sign_instruction"
+                    android:text="@string/registration_string_signature_reliability_setting"
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
@@ -152,7 +152,7 @@
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="  - 신뢰도가 높으면 인증 시 난이도가 올라갑니다."
+                android:text="@string/registration_string_signature_reliability_instruction"
                 android:theme="@style/Stit"
                 tb:custom_font="noto_regular"/>
 
@@ -216,7 +216,7 @@
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="175dp"
                         android:layout_height="wrap_content"
-                        android:text="@string/complex_sign_text"
+                        android:text="@string/registration_string_complicated_signature"
                         android:theme="@style/TxtMircro"
                         tb:custom_font="noto_medium"/>
 
@@ -225,7 +225,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:text="@string/simple_sign_text"
+                        android:text="@string/registration_string_simple_signature"
                         android:theme="@style/TxtMircro"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>

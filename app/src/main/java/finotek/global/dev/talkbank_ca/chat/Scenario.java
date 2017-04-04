@@ -270,6 +270,7 @@ class Scenario {
                 step = Step.None;
                 break;
             case "계좌조회":
+            case "계좌 조회":
             case "최근거래내역" :
             case "최근 거래 내역" :
                 ArrayList<Transaction> tx = new ArrayList<>();

@@ -11,8 +11,9 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
+
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 
 public class SignRegistrationActivity extends AppCompatActivity {
@@ -51,11 +52,20 @@ public class SignRegistrationActivity extends AppCompatActivity {
 		  }
     });
 
-	  signRegistFragment.setOnSaveListener(() -> {
-		  Intent intent = new Intent(SignRegistrationActivity.this, ChatActivity.class);
-		  startActivity(intent);
-		  finish();
-	  });
+	  Intent intent = getIntent();
+
+	  try {
+		  Class nextClass = (Class) intent.getExtras().get("nextClass");
+		  signRegistFragment.setOnSaveListener(() -> {
+			  Intent intent2 = new Intent(SignRegistrationActivity.this, nextClass);
+			  intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+			  intent2.putExtras(intent.getExtras());
+			  startActivity(intent2);
+			  finish();
+		  });
+	  } catch (NullPointerException e) {
+		  e.printStackTrace();
+	  }
   }
 
 	@Override

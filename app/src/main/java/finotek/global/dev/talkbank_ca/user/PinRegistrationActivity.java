@@ -25,6 +25,8 @@ import finotek.global.dev.talkbank_ca.model.Pin;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.widget.SecureKeyboardAdapter;
 
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
+
 public class PinRegistrationActivity extends AppCompatActivity {
 
 	private final int PINCODE_LENGTH = 6;
@@ -88,8 +90,21 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			}
 		});
 
-		secureKeyboardAdapter.onCompletePressed(this::onBackPressed);
 
+		try {
+			Intent intent = getIntent();
+			Class nextClass = (Class) intent.getExtras().get("nextClass");
+
+			secureKeyboardAdapter.onCompletePressed(() -> {
+				Intent intent2 = new Intent(PinRegistrationActivity.this, nextClass);
+				intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+				startActivity(intent2);
+				finish();
+			});
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
 
 	}
 

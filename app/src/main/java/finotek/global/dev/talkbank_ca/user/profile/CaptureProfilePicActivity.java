@@ -60,7 +60,6 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 
 			if (isCaptureDone) {
 				finish();
-				isCaptureDone = true;
 			} else {
 				binding.tvInst.setText("촬영된 화면이 정확한지 확인해 주십시오.");
 			}

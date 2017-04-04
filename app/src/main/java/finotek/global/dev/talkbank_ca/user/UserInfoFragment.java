@@ -15,11 +15,16 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.LayoutUserRegistrationBinding;
+import finotek.global.dev.talkbank_ca.setting.PageType;
+import finotek.global.dev.talkbank_ca.setting.SettingDetailActivity;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
 import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
+import rx.functions.Action1;
+
+import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
 /**
  * Created by magyeong-ug on 21/03/2017.
@@ -41,8 +46,17 @@ public class UserInfoFragment extends android.app.Fragment {
 		LayoutUserRegistrationBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_user_registration, container, false);
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
-				.subscribe(aVoid ->
-						startActivity(new Intent(getActivity(), CaptureProfilePicActivity.class)));
+				.subscribe(new Action1<Void>() {
+					@Override
+					public void call(Void aVoid) {
+						Intent intent = new Intent(getActivity(), CaptureProfilePicActivity.class);
+						intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+						intent.putExtra("nextClass", SettingDetailActivity.class);
+						intent.putExtra("type", PageType.USER_INFO);
+						startActivity(intent);
+					}
+				});
+
 
 		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(getActivity()));
 		binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
@@ -58,14 +72,33 @@ public class UserInfoFragment extends android.app.Fragment {
 					});
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
-				.subscribe(aVoid -> startActivity(new Intent(getActivity(), CreditRegistrationActivity.class)));
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(getActivity(), CreditRegistrationActivity.class);
+					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+					intent.putExtra("nextClass", SettingDetailActivity.class);
+					intent.putExtra("type", PageType.USER_INFO);
+					startActivity(intent);
+				});
 
 		RxView.clicks(binding.llRegiBasic.btnRegiSign)
-				.subscribe(aVoid -> startActivity(new Intent(getActivity(), SignRegistrationActivity.class)));
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(getActivity(), SignRegistrationActivity.class);
+					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+					intent.putExtra("nextClass", SettingDetailActivity.class);
+					intent.putExtra("type", PageType.USER_INFO);
+					startActivity(intent);
+				});
+
 
 		RxView.clicks(binding.llRegiAdditional.btnPinRegistration)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> startActivity(new Intent(getActivity(), PinRegistrationActivity.class)));
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(getActivity(), PinRegistrationActivity.class);
+					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+					intent.putExtra("nextClass", SettingDetailActivity.class);
+					intent.putExtra("type", PageType.USER_INFO);
+					startActivity(intent);
+				});
 
 		binding.llRegiAdditional.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
 

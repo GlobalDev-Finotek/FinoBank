@@ -29,6 +29,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
+import finotek.global.dev.talkbank_ca.chat.messages.TransferConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import rx.Observable;
@@ -46,7 +47,7 @@ class Scenario {
         Loan, LoanInputMoney, LoanInputAddress, LoanSucceeded,
 
         // 계좌 이체
-        Transfer
+        TransferAnalyzing, TransferSelect, TransferSucceeded,
     }
 
     private Context context;
@@ -139,6 +140,28 @@ class Scenario {
             chatView.confirm(ev);
         }
 
+        if(msg instanceof TransferConfirmRequest) {
+            isConfirmAppear = true;
+
+            ChatSelectButtonEvent ev = new ChatSelectButtonEvent();
+            ev.setConfirmAction(aVoid -> {
+                chatView.removeOf(ChatView.ViewType.TransferConfirm);
+                isConfirmAppear = false;
+                MessageBox.INSTANCE.add(new SendMessage("예"));
+            });
+            ev.setCancelAction(aVoid -> {
+                chatView.removeOf(ChatView.ViewType.TransferConfirm);
+                isConfirmAppear = false;
+                MessageBox.INSTANCE.add(new SendMessage("아니오"));
+            });
+            ev.setTransferOtherAction(aVoid -> {
+                chatView.removeOf(ChatView.ViewType.TransferConfirm);
+                isConfirmAppear = false;
+                MessageBox.INSTANCE.add(new SendMessage("다른 사람에게 이체"));
+            });
+            chatView.transferConfirm(ev);
+        }
+
         // 신분증 스캔 결과
         if(msg instanceof IDCardInfo && step == Step.AccountCheckIDCard) {
             chatView.showIdCardInfo((IDCardInfo) msg);
@@ -170,7 +193,7 @@ class Scenario {
 
         if(msg instanceof Succeeded) {
             switch (step) {
-                case Transfer:
+                case TransferSucceeded:
                     chatView.removeOf(ChatView.ViewType.AccountList);
                     MessageBox.INSTANCE.add(new ReceiveMessage("어머니(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?"));
                     step = Step.None;
@@ -196,8 +219,10 @@ class Scenario {
                 break;
             case "네":
             case "예":
-                if(isConfirmAppear)
+                if(isConfirmAppear) {
                     chatView.removeOf(ChatView.ViewType.Confirm);
+                    chatView.removeOf(ChatView.ViewType.TransferConfirm);
+                }
 
                 switch (step) {
                     case Account:
@@ -214,14 +239,21 @@ class Scenario {
                         MessageBox.INSTANCE.add(new ReceiveMessage("집 주소를 입력해 주세요."));
                         step = Step.LoanInputAddress;
                         break;
+                    case TransferAnalyzing:
+                        MessageBox.INSTANCE.add(new ReceiveMessage("김가람(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?"));
+                        step = Step.None;
+                        break;
                     default:
                         MessageBox.INSTANCE.add(new ReceiveMessage("무슨 의미인가요? 현재 진행중인 내용이 없습니다."));
                         break;
                 }
                 break;
             case "아니오":
-                if(isConfirmAppear)
+            case "아니요":
+                if(isConfirmAppear) {
                     chatView.removeOf(ChatView.ViewType.Confirm);
+                    chatView.removeOf(ChatView.ViewType.TransferConfirm);
+                }
 
                 switch (step) {
                     case Account:
@@ -229,6 +261,9 @@ class Scenario {
                         break;
                     case Loan:
                         MessageBox.INSTANCE.add(new ReceiveMessage("소액담보대출 진행을 취소했습니다."));
+                        break;
+                    case TransferAnalyzing:
+                        MessageBox.INSTANCE.add(new ReceiveMessage("계좌이체를 취소했습니다."));
                         break;
                 }
 
@@ -248,6 +283,14 @@ class Scenario {
                 break;
             case "계좌이체" :
             case "계좌 이체" :
+                step = Step.TransferAnalyzing;
+                MessageBox.INSTANCE.add(new ReceiveMessage("월별 입출금 거래 내역 확인 결과,\n김가람(010-5678-1234)님에게 100,000원을\n이체하시겠어요?"));
+                MessageBox.INSTANCE.add(new TransferConfirmRequest());
+                break;
+            case "다른 사람에게 이체":
+                if(isConfirmAppear)
+                    chatView.removeOf(ChatView.ViewType.TransferConfirm);
+
                 List<Account> accounts = new ArrayList<>();
                 accounts.add(new Account("어머니", "2017년 01월 25일", "200,000원 이체", true));
                 accounts.add(new Account("박예린", "2017년 01월 11일", "100,000원 이체", false));
@@ -257,8 +300,7 @@ class Scenario {
                 MessageBox.INSTANCE.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
                 MessageBox.INSTANCE.add(new AccountList(accounts));
                 MessageBox.INSTANCE.add(new RequestTransfer());
-
-                step = Step.Transfer;
+                step = Step.TransferSucceeded;
                 break;
             case "집을 담보로 대출 받고 싶어":
             case "소액담보대출":

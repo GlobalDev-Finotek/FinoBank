@@ -22,7 +22,10 @@ public class ExtendedControl2 extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.chat_ex_control_2, container, false);
         ChatExControl2Binding binding = ChatExControl2Binding.bind(rootView);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 시작 화면 변경
 //        RxView.clicks(binding.btnLoan)
 //                .throttleFirst(200, TimeUnit.MILLISECONDS)
 //                .doOnNext(aVoid -> doOnControl.run())

@@ -1,17 +1,14 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
-import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 
 import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
-import finotek.global.dev.talkbank_ca.base.mvp.event.IEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.chat.messages.Account;
@@ -24,6 +21,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
+import finotek.global.dev.talkbank_ca.chat.messages.Succeeded;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
@@ -43,7 +41,10 @@ class Scenario {
         Account, AccountCheckIDCard, AccountTakeSign, AccountSucceeded,
 
         // 소액담보대출
-        Loan, LoanInputMoney, LoanInputAddress, LoanSucceeded
+        Loan, LoanInputMoney, LoanInputAddress, LoanSucceeded,
+
+        // 계좌 이체
+        Transfer
     }
 
     private final MessageBox messageBox;
@@ -89,7 +90,7 @@ class Scenario {
             } else {
                 chatView.sendMessage(recv.getMessage(), recv.getIcon());
             }
-            this.respondTo(recv.getMessage());
+            this.respondToSendMessage(recv.getMessage());
         }
 
         // 받은 메시지
@@ -158,16 +159,25 @@ class Scenario {
             chatView.accountList((AccountList) msg);
         }
 
-        if(msg instanceof SignaturePassed) {
-            switch (step){
+        if(msg instanceof Succeeded) {
+            switch (step) {
+                case Transfer:
+                    chatView.removeOf(ChatView.ViewType.AccountList);
+                    chatView.receiveMessage("어머니(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?");
+                    step = Step.None;
+                break;
                 case AccountSucceeded:
                     new ReceiveMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?\n");
-                    break;
+                break;
+                case LoanSucceeded:
+                    messageBox.add(new AgreementResult());
+                    messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?"));
+                break;
             }
         }
     }
 
-    private void respondTo(String msg) {
+    private void respondToSendMessage(String msg) {
         switch (msg.trim()) {
             case "계좌 개설":
             case "계좌개설":
@@ -186,7 +196,7 @@ class Scenario {
                         step = Step.AccountCheckIDCard;
                         break;
                     case Loan:
-                        messageBox.add(new ReceiveMessage("집 주소를 입력해 주세요.\n"));
+                        messageBox.add(new ReceiveMessage("집 주소를 입력해 주세요."));
                         step = Step.LoanInputAddress;
                         break;
                     default:
@@ -232,6 +242,8 @@ class Scenario {
                 messageBox.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
                 messageBox.add(new AccountList(accounts));
                 messageBox.add(new RequestTransfer());
+
+                step = Step.Transfer;
                 break;
             case "집을 담보로 대출 받고 싶어":
             case "소액담보대출":
@@ -265,12 +277,8 @@ class Scenario {
                         messageBox.add(new AgreementRequest(agreements));
                         step = Step.LoanSucceeded;
                         break;
-                    case LoanSucceeded:
-                        messageBox.add(new AgreementResult());
-                        messageBox.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?"));
-                        break;
                     case AccountCheckIDCard:
-                        messageBox.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요.\n"));
+                        messageBox.add(new ReceiveMessage("마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여\n서명해 주세요."));
                         messageBox.add(new RequestSignature());
                         break;
                     default:

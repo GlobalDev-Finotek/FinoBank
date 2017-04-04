@@ -31,4 +31,9 @@ public class SendViewBuilder implements ChatView.ViewBuilder<SendMessage> {
         SendViewHolder holder = (SendViewHolder) viewHolder;
         holder.message.setText(data.getMessage());
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

@@ -32,6 +32,7 @@ public class ChatView extends RecyclerView {
     public interface ViewBuilder<T> {
         RecyclerView.ViewHolder build(ViewGroup parent);
         void bind(RecyclerView.ViewHolder viewHolder, T data);
+        void onDelete();
     }
 
     public ChatView(Context context, @Nullable AttributeSet attrs) {
@@ -110,6 +111,7 @@ public class ChatView extends RecyclerView {
 
     public void removeOf(ViewType viewType){
         adapter.removeChatItem(viewType.ordinal());
+        scrollToBottom();
     }
 
     public void removeAt(int pos) {

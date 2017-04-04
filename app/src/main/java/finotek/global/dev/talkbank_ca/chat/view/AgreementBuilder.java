@@ -57,6 +57,11 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
         }
     }
 
+    @Override
+    public void onDelete() {
+
+    }
+
     private void addAgreement(LinearLayout holder, Agreement agreement){
         View view = LayoutInflater.from(context).inflate(R.layout.chat_item_agreement, holder, false);
         ChatItemAgreementBinding binding = ChatItemAgreementBinding.bind(view);

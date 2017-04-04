@@ -42,4 +42,9 @@ public class IconicSendViewBuilder implements ChatView.ViewBuilder<SendMessage> 
         holder.message.setText(data.getMessage());
         holder.icon.setImageDrawable(ContextCompat.getDrawable(context, data.getIcon()));
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

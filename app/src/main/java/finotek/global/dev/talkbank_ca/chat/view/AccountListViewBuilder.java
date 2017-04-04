@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -29,14 +30,16 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
 
     @Override
     public RecyclerView.ViewHolder build(ViewGroup parent) {
-        return new ViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_list, parent, false));
+        ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_list, parent, false);
+        ChatAccountListBinding binding = ChatAccountListBinding.bind(view);
+        return new ViewHolder(view);
     }
 
     @Override
     public void bind(RecyclerView.ViewHolder viewHolder, AccountList data) {
         ViewHolder holder = (ViewHolder) viewHolder;
         ViewGroup frame = (ViewGroup) holder.itemView;
-        ChatAccountListBinding listBinding = ChatAccountListBinding.bind(holder.itemView);
+        ChatAccountListBinding listBinding = DataBindingUtil.getBinding(frame);
         listBinding.accountList.removeAllViews();
 
         if(selectedAccount != null) {
@@ -48,6 +51,11 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
         }
     }
 
+    @Override
+    public void onDelete() {
+        selectedAccount = null;
+    }
+
     private void addAccount(Context context, ViewGroup list, Account account){
         final View view = LayoutInflater.from(context).inflate(R.layout.chat_item_account, list, false);
         ChatItemAccountBinding itemBinding = ChatItemAccountBinding.bind(view);
@@ -55,7 +63,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
         RxView.touches(itemBinding.main)
             .throttleFirst(200, TimeUnit.MILLISECONDS)
             .subscribe(e -> {
-                if(e.getAction() == MotionEvent.ACTION_DOWN) {
+                if(e.getAction() == MotionEvent.ACTION_UP) {
                     list.removeAllViews();
                     list.addView(view);
                     selectedAccount = account;

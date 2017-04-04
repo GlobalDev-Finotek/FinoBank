@@ -70,8 +70,10 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public void removeChatItem(int viewType){
         for(DataWithType item : this.items) {
-            if(item.getViewType() == viewType)
+            if(item.getViewType() == viewType) {
+                builders.get(viewType).onDelete();
                 items.remove(item);
+            }
         }
     }
 

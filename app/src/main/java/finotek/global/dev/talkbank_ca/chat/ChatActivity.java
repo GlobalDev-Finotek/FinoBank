@@ -26,11 +26,11 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.Succeeded;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.SignaturePassed;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
@@ -95,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
             signRegistFragment.setOnSaveListener(new SignRegistFragment.OnSignSaveListener() {
                 @Override
                 public void onSave() {
-                    messageBox.add(new SignaturePassed());
+                    messageBox.add(new Succeeded());
                 }
             });
 
@@ -199,6 +199,8 @@ public class ChatActivity extends AppCompatActivity {
 			ctBinding.editMoney.setText("");
 			binding.footer.removeView(transferView);
 			binding.footer.addView(footerInputs);
+
+            messageBox.add(new Succeeded());
 		});
 
 		binding.footer.addView(footerInputs);

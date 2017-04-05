@@ -10,7 +10,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
+import finotek.global.dev.talkbank_ca.chat.extensions.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.widget.RoundButton;
 
 public class TransferConfirmViewBuilder implements  ChatView.ViewBuilder<ChatSelectButtonEvent> {

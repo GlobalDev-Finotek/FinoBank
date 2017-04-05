@@ -25,11 +25,13 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
+import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
-import finotek.global.dev.talkbank_ca.chat.messages.Succeeded;
+import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -46,7 +48,7 @@ public class ChatActivity extends AppCompatActivity {
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
 	private ChatTransferBinding ctBinding;
-	private Scenario scenario;
+	private ScenarioChannel scenario;
 
 	private boolean isExControlAvailable = false;
 	private View exControlView = null;
@@ -61,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("톡뱅");
 
-		scenario = new Scenario(this, binding.chatView);
+		scenario = new ScenarioChannel(this, binding.chatView);
 		MessageBox.INSTANCE.observable
             .delay(2000, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -80,6 +82,8 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
+				MessageBox.INSTANCE.add(new ReceiveMessage("위 내용이 맞으세요?"));
+				MessageBox.INSTANCE.add(new ConfirmRequest());
                 this.returnToInitialControl();
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -101,7 +105,7 @@ public class ChatActivity extends AppCompatActivity {
                 dialog.setDescription("확인 버튼을 선택하면\n완료 단계로 이동합니다.");
                 dialog.setButtonText("확인");
                 dialog.setDoneListener(() -> {
-                    MessageBox.INSTANCE.add(new Succeeded());
+                    MessageBox.INSTANCE.add(new Done());
                     returnToInitialControl();
 
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -213,7 +217,7 @@ public class ChatActivity extends AppCompatActivity {
 			binding.footer.removeView(transferView);
 			binding.footer.addView(footerInputs);
 
-            MessageBox.INSTANCE.add(new Succeeded());
+            MessageBox.INSTANCE.add(new Done());
 		});
 
 		binding.footer.addView(footerInputs);

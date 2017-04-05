@@ -7,7 +7,7 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
-import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 
@@ -49,7 +49,7 @@ public class LoanScenario implements Scenario {
         switch(step){
             case Initial:
                 MessageBox.INSTANCE.add(new ReceiveMessage("거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리 2.0%입니다.\n\n대출을 신청하시겠습니까?"));
-                MessageBox.INSTANCE.add(new ConfirmRequest());
+                MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
                 step = Step.InputAddress;
                 break;
             case InputAddress:

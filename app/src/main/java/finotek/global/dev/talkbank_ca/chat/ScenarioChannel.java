@@ -9,11 +9,10 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
-import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
@@ -21,7 +20,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
@@ -148,33 +146,11 @@ class ScenarioChannel {
 
         // 예, 아니오 선택 요청
         if(msg instanceof ConfirmRequest) {
-            ChatSelectButtonEvent ev = new ChatSelectButtonEvent();
-            ev.setConfirmAction(aVoid -> {
+            ConfirmRequest request = (ConfirmRequest) msg;
+            request.setDoAfterEvent(() -> {
                 chatView.removeOf(ChatView.ViewType.Confirm);
-                MessageBox.INSTANCE.add(new SendMessage("네"));
             });
-            ev.setCancelAction(aVoid -> {
-                chatView.removeOf(ChatView.ViewType.Confirm);
-                MessageBox.INSTANCE.add(new SendMessage("아니오"));
-            });
-            chatView.confirm(ev);
-        }
-
-        if(msg instanceof TransferConfirmRequest) {
-            ChatSelectButtonEvent ev = new ChatSelectButtonEvent();
-            ev.setConfirmAction(aVoid -> {
-                chatView.removeOf(ChatView.ViewType.TransferConfirm);
-                MessageBox.INSTANCE.add(new SendMessage("네"));
-            });
-            ev.setCancelAction(aVoid -> {
-                chatView.removeOf(ChatView.ViewType.TransferConfirm);
-                MessageBox.INSTANCE.add(new SendMessage("아니오"));
-            });
-            ev.setTransferOtherAction(aVoid -> {
-                chatView.removeOf(ChatView.ViewType.TransferConfirm);
-                MessageBox.INSTANCE.add(new SendMessage("다른 사람에게 이체"));
-            });
-            chatView.transferConfirm(ev);
+            chatView.confirm(request);
         }
 
         // 신분증 스캔 결과

@@ -133,11 +133,11 @@ public class SignRegistFragment extends Fragment {
 		}
 	}
 
-	interface OnSizeControlClick {
+	public interface OnSizeControlClick {
 		void onClick(CanvasSize size);
 	}
 
-	interface OnSignSaveListener {
+	public interface OnSignSaveListener {
 		void onSave();
 	}
 }

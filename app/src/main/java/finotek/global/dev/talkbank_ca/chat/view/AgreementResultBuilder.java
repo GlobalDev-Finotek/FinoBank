@@ -23,4 +23,9 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
     public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
 
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

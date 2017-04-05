@@ -7,4 +7,5 @@ import rx.functions.Action1;
 public class ChatSelectButtonEvent {
     Action1<Void> confirmAction;
     Action1<Void> cancelAction;
+    Action1<Void> transferOtherAction;
 }

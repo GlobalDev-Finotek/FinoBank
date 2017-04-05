@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="registration_string_register">register</string>
+    <string name="registration_string_basic_information">Your account</string>
+    <string name="registration_string_phone_number">phone number</string>
+    <string name="registration_string_user_name">user\'s name</string>
+    <string name="registration_string_signnature">E-signature</string>
+    <string name="registration_button_signature_register">Register e-signature</string>
+    <string name="registration_string_signature_reliability_setting">setting accuracy rate(demo version)</string>
+    <string name="registration_string_signature_reliability_instruction">If you increase the accuracy rate, the sensitivity of verification goes up</string>
+    <string name="registration_string_complicated_signature">Complicated signature</string>
+    <string name="registration_string_simple_signature">simplified signature</string>
+    <string name="registration_string_additional_info">Additional information(Optional)</string>
+    <string name="registration_string_emergency_number">Emergency contact number</string>
+    <string name="registration_string_number_only">Number only</string>
+    <string name="registration_string_email">E-mail</string>
+    <string name="registration_string_credit_card_register">Register credit card</string>
+    <string name="registration_button_credit_card_capture">Take picture of credit card</string>
+    <string name="registration_string_profile_register">Register authenticate picture</string>
+    <string name="registration_button_profile_capture">Take picture of ID card</string>
+    <string name="registration_string_pin_code">PIN code</string>
+
+    <string name="registration_string_inform_collect_agree">Agreement for collecting information(Required)</string>
+    <string name="registration_string_context_collect_agree">Agreement for collection context data(User authentication mode)</string>
+    <string name="registration_button_register">register</string>
+    <string name="registration_string_register_success">register has been successed</string>
+    <string name="registration_string_type_all_field">please type all required field</string>
+    <string name="registration_string_write_signature_step_1">please write signature on displayed area(1/2)</string>
+    <string name="registration_string_write_signature_step_2">please write signature on displayed area(1/2)</string>
+    <string name="registration_string_registering_signature">registering signature is repeated twice</string>
+    <string name="registration_string_fingertip_use">use fingertip, not finger nail, to sign in the marked area</string>
+    <string name="registration_string_registered_signature">registered signature will be used for lon-in and personal verification purpose</string>
+    <string name="registration_button_next">Next</string>
+    <string name="registration_string_signature_verifying">verifying e-signature...</string>
+    <string name="registration_string_wait">please wait</string>
+    <string name="registration_string_signature_verified">E-signature has been verified</string>
+    <string name="registration_string_authentication_complete">When you click confirm button, authentication is completed</string>
+    <string name="registration_button_yes">Yes</string>
+    <string name="registration_string_signature_fail">E-signature is failed(1/5)</string>
+    <string name="registration_string_click_re_try_button">please select "re-try" to verify your e-signature (maximum 5 times)</string>
+    <string name="registration_button_re_try">re-try</string>
+    <string name="registration_string_fits_area_take_picture">please fits displayed areas and take a picture</string>
+    <string name="registration_string_warning_backlight">the system cannot recognize the ID card under the excessive light</string>
+    <string name="registration_string_purpose_registered_credit">registered credit card will be used for identification</string>
+    <string name="registration_string_collecting_data_check">please check collected data is correct</string>
+    <string name="registration_string_credit_card_number">credit card number</string>
+    <string name="registration_string_credit_card_company">credit card company</string>
+    <string name="registration_string_credit_card_expire_date">credit card expire date (month/year)</string>
+    <string name="registration_string_name">name</string>
+    <string name="registration_button_retake_picture">retake picture</string>
+    <string name="registration_button_registration">registration</string>
+    <string name="registration_string_registered_signature_purpose">registered signature will be used for personal verification purpose</string>
+    <string name="registration_string_picture_check">Please check your pictures are correct</string>
+    <string name="registration_string_pin_code_backgorund_color_select">Select PIN code background color</string>
+    <string name="registration_string_pin_code_text_color_select">select Pin code text color </string>
+    <string name="registration_string_pin_code_type">please type 6 digit PIN code</string>
+    <string name="registration_string_pin_code_color_verify">When you try to verify PIN code, text and background color should be matched with registered color</string>
+    <string name="registration_string_secure_keyboard_operating">Operating secured keyboard</string>
+    <string name="registration_button_pin_code_chanage">Change PIN code</string>
+    <string name="registration_string_signature_twice">you will be signing twice to confirm your e-signaute.</string>
+
+
+
+    <string name="main_string_talkbank">TalkBank</string>
+    <string name="main_actoin_settings">Settings</string>
+    <string name="main_action_seach">Seach</string>
+    <string name="main_action_edit">Edit</string>
+    <string name="main_button_register">Register</string>
+    <string name="main_button_login">Log-in</string>
+    <string name="main_button_cancel">Cancel</string>
+    <string name="main_string_copyright_finotek">Copyright Finotek., All rights reserved</string>
+    <string name="main_string_message_input">Input a message</string>
+    <string name="main_button_send">Send </string>
+    <string name="main_string_open_account">Open account</string>
+    <string name="main_string_transfer">Transfer</string>
+    <string name="main_string_view_account_details">view account details</string>
+    <string name="main_string_secured_mirocredit">secured mirocredit</string>
+    <string name="main_action_settings">settings</string>
+    <string name="main_button_send_the_conversation_to_e_mail">send the conversation to e-mail</string>
+    <string name="setting_string_setting">settings</string>
+    <string name="setting_string_user_information">user info.</string>
+    <string name="setting_string_context_verification">verification for context</string>
+    <string name="setting_string_amount_verification">verification for amount of money</string>
+    <string name="setting_string_suspicious_transaction_verification">verification for suspicious transaction is detected</string>
+    <string name="setting_string_langauge">language</string>
+    <string name="setting_string_basic_information">your account</string>
+    <string name="setting_string_phone_number">phone number</string>
+    <string name="setting_string_user_name">user\'s name</string>
+    <string name="setting_string_signature">e-signature</string>
+    <string name="setting_button_signature_change">change e-signature</string>
+    <string name="setting_string_signature_reliability_setting">setting accuracy rate(demo version)</string>
+    <string name="setting_string_signature_reliability_instruction">if you increase the accuracy rate, the sensitivity of verification goes up</string>
+    <string name="setting_string_complicated_signature">complicated signature</string>
+    <string name="setting_string_simple_signature">simplified signature</string>
+    <string name="setting_string_additional_info">additional information</string>
+    <string name="setting_string_emergency_number">emergency contact number</string>
+    <string name="setting_string_email">E-mail address</string>
+    <string name="setting_button_credit_card_register">register credit card</string>
+    <string name="setting_button_credit_card_capture">take picture of credit card</string>
+    <string name="setting_button_profile_register">register picture for verification</string>
+    <string name="setting_button_profile_capture">take picture of credit card</string>
+    <string name="setting_string_pin_code">PIN code</string>
+    <string name="setting_button_pin_code_chanage">Change PIN code</string>
+    <string name="setting_button_save">Save</string>
+    <string name="setting_string_save_success">have been saved</string>
+    <string name="setting_string_type_all_field">please type all required filed</string>
+    <string name="setting_string_write_signature">sign within the marked area</string>
+    <string name="setting_string_fingertip_use">use fingertip, not finger nail, to sign in the marked area</string>
+    <string name="setting_string_write_signature_step_1">sign within the marked area (1/2)</string>
+    <string name="setting_string_write_signature_step_2">sign within the marked area(2/2)</string>
+    <string name="setting_string_signature_twice">you will be signing twice to confirm your e-signaute.</string>
+    <string name="setting_string_registered_signature">registered signature will be used for log-in and personal verification purpose</string>
+    <string name="setting_string_next">Next</string>
+    <string name="setting_string_signature_verifying">Register e-signature</string>
+    <string name="setting_string_wait">please wait</string>
+    <string name="setting_string_signature_verified">E-signature has been verified</string>
+    <string name="setting_string_authentication_complete">please select "Yes" to continue to the next step</string>
+    <string name="setting_string_yes">Yes</string>
+    <string name="setting_string_signature_fail">Fail to verify(1/5)</string>
+    <string name="setting_string_click_re_try_button">Please select "re-try: to verify your e-signature (Maximu 5 times)</string>
+    <string name="setting_string_re_try">Re-try</string>
+    <string name="setting_string_fits_area_take_picture">please take a picture within marked area</string>
+    <string name="setting_string_warning_backlight">The system cannot recognize the ID card under the excessive light</string>
+    <string name="setting_string_purpose_registered_credit">registered creditcard will be used for personal verification purpose</string>
+    <string name="setting_string_collecting_data_check">please check collecting data is correct</string>
+    <string name="setting_string_credit_card_number">credit card number</string>
+    <string name="setting_string_credit_card_company">credit card company</string>
+    <string name="setting_string_credit_card_expire_date">Expire date (month/year)</string>
+    <string name="setting_string_name">name</string>
+    <string name="setting_string_retake_picture">re-take photo</string>
+    <string name="setting_string_register">register</string>
+    <string name="setting_string_registered_picture_purpose">registered picture will be used for personal verification purpose</string>
+
+    <!--- add -->
+    <string name='setting_string_picture_check'>please check your picture is correct</string>
+    <string name='setting_string_pin_code_type'>type new PIN code</string>
+    <string name='setting_string_pin_code_re_type'>again, type new PIN code</string>
+    <string name='setting_string_pin_code_background_color_select'>select PIN code background color</string>
+    <string name='setting_string_pin_code_text_color_select'>select PIN code text color</string>
+    <string name='setting_string_six_digit'>please type six digit PIN code</string>
+    <string name='setting_string_pin_code_color_verify'>background and text color should be matched with registered color</string>
+    <string name='setting_string_secure_keyboard_operating'>Operating secured keyboard</string>
+    <string name='setting_string_amount_auth'>authentication for amount of money</string>
+    <string name='setting_string_amount'>amount of transfer</string>
+    <string name='setting_string_edit_manually'>direct type</string>
+    <string name='setting_string_under'>less</string>
+    <string name='setting_string_over'>more</string>
+    <string name='setting_string_auth_method_select_1'>select authentication methods (you are required to select more than one)</string>
+    <string name='setting_string_context_auth'>context authentication (basic)</string>
+    <string name='setting_string_auth_mail'>authentication email</string>
+    <string name='setting_string_auth_message'>authentication message</string>
+    <string name='setting_string_ocr_credit_card'>credit card OCR</string>
+    <string name='setting_string_profile_picture'>authentication picture</string>
+    <string name='setting_string_voice_recognition'>authentication  voice</string>
+    <string name='setting_string_auth_method_add'>add more authentication method</string>
+    <string name='setting_string_suspicious_auth'>setting for fraud or unexpected situation</string>
+    <string name='setting_string_auth_method_select_2'>select authentication methods (you are required to select more than two)</string>
+
+
+    <string name="dialog_chat_verified_context_data">Result of analyzing context data is %d. Authentication is succeeded.</string>
+    <string name="dialog_chat_ask_help">Hello %s How may I help you</string>
+    <string name="dialog_button_open_account">Open account</string>
+    <string name="dialog_chat_recommandation">I would like to recommend "Finocation smart account". Do you want to continue opening account?</string>
+    <string name="dialog_button_yes">Yes</string>
+    <string name="dialog_button_no">No</string>
+    <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.What can I do for you?</string>
+    <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license.
+Please take a picture of your ID card</string>
+    <string name="dialog_string_id_card_type">verification ID type</string>
+    <string name="dialog_string_name">Name</string>
+    <string name="dialog_string_id_number">ID number</string>
+    <string name="dialog_string_date_issued">Date issued</string>
+    <string name="dialog_string_license_number">Driver\'s license number</string>
+    <string name="dialog_chat_correct_information">Is the above information correct?</string>
+    <string name="dialog_chat_id_card_retake">re-taking a picture of your ID card</string>
+    <string name="dialog_chat_finger_tip_sign">sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
+    <string name="dialog_chat_open_account_success">you\'ve successfully opened your account. is there anything else I can help you with?</string>
+    <string name="dialog_chat_transaction">I\'ve checked your monthly transaction history. would you like to transfer 100,000 won to 김가람(010-5678-1234).</string>
+    <string name="dialog_button_transfer_other">transfer to other</string>
+    <string name="dialog_chat_transfer_cancel">tranfer is canceled. How may I help you</string>
+    <string name="dialog_string_finger_tip_sign_user_register">use fingertip, not finger nail, to sign in the marked area</string>
+    <string name="dialog_chat_after_transfer_1">you\'ve transferred 100,000 won to 김가람(010-5678-1234). your available balance is 3,270,000 won.
+Is there anything else I can help you with?</string>
+    <string name="dialog_button_recent_transaction">view recent tractions</string>
+    <string name="dialog_button_transfer_add">add transfer account</string>
+    <string name="dialog_chat_someone_recent_transaction">% view recent transaction</string>
+    <string name="dialog_string_deposit">Deposit</string>
+    <string name="dialog_string_withdrawal">withdrawal</string>
+    <string name="dialog_string_balance">balance</string>
+    <string name="dialog_button_transfer">transfer</string>
+    <string name="dialog_button_view_more">view more</string>
+    <string name="dialog_string_receiver_select">please select receiver</string>
+    <string name="dialog_chat_contact_select">if receiver is not contain on the list, please select new receiver from address book or KakaoTalk</string>
+    <string name="dialog_string_amount_transfer">amount of transfer</string>
+    <string name="dialog_chat_after_transfer_2">you\'ve transferred 100,000 won to 어머니 (010-5678-1234). your available balance is 3,270,000 won.
+Is there anything else I can help you with?</string>
+    <string name="dialog_chat_loan_appl">I\'ve checked your account details and I would like to recommend ""Finocation one-day loan""
+you may request up to 50 million won and 2.0% interest rate
+do you want to apply loan?</string>
+    <string name="dialog_string_won">won</string>
+    <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. what can i help you?</string>
+    <string name="dialog_string_home_address_type">type in your home address</string>
+    <string name="dialog_chat_loan_amount_type">you may loan up to 50 million won with 2% interest rate.
+please write the ammount of loan you would like to request</string>
+    <string name="dialog_string_term_agreement_accept">accept the terms in the agreement</string>
+    <string name="dialog_string_mandatory_term_accept">agree to mandatory terms and conditions</string>
+    <string name="dialog_string_loan_service_user_agreement">loan service user agreement</string>
+    <string name="dialog_string_personal_credit_information_access_agreement">personal credit information access agreement</string>
+    <string name="dialog_string_loan_transaction_agreement">loan transaction agreement</string>
+    <string name="dialog_string_contact_information">contract information and instruction</string>
+    <string name="dialog_string_optional_term_agreement">agree to optional terms and conditions</string>
+    <string name="dialog_string_customer_information_agreement">customer\'s information agreement</string>
+    <string name="dialog_button_signature">E-signature</string>
+    <string name="dialog_chat_agreenment_accepted">agreement have been aceepted </string>
+    <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account
+is there anything else I can help you with?</string>
+
+
+    <string name="setting_string_allowed_time">It\'s only actviated in allowed time.</string>
+    <string name="setting_string_end">End</string>
+    <string name="setting_string_start">Start</string>
+    <string name="setting_string_time_setting">Time setting</string>
+    <string name="setting_string__24hr">24Hour</string>
+    <string name="setting_string_context_collect_time_setting">Collect time setting</string>
+    <string name="setting_string_one_app_select">Select each app</string>
+    <string name="setting_string_all_app_collect">Select all app</string>
+    <string name="setting_string_context_app">Context data collect app</string>
+
+
+
+    <string name="no"></string>
+</resources>

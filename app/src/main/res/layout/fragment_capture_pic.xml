@@ -7,7 +7,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextureView
+        <finotek.global.dev.talkbank_ca.widget.AutoFitTextureView
             android:id="@+id/texture_cam"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

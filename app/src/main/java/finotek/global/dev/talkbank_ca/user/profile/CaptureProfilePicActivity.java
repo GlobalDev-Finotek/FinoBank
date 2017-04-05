@@ -17,6 +17,7 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 public class CaptureProfilePicActivity extends AppCompatActivity {
 
 	private ActivityCaptureProfilePicBinding binding;
+	private boolean isCaptureDone;
 
 	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 	@Override
@@ -53,6 +54,17 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 				binding.appbar.setVisibility(View.VISIBLE);
 			}
 
+		});
+
+		capturePicFragment.takePicture(path -> {
+
+			if (isCaptureDone) {
+				finish();
+			} else {
+				binding.tvInst.setText("촬영된 화면이 정확한지 확인해 주십시오.");
+			}
+
+			isCaptureDone = !isCaptureDone;
 		});
 
 	}

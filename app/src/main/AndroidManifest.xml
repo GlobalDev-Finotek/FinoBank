@@ -42,6 +42,8 @@
             />
 
         <activity android:name=".chat.ChatActivity"
-                  android:label="톡뱅" />
+                  android:label="톡뱅">
+
+        </activity>
     </application>
 </manifest>

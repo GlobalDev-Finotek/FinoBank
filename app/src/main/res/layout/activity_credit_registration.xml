@@ -2,6 +2,7 @@
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tb="http://schemas.android.com/tools"
     >
 
     <FrameLayout
@@ -62,6 +63,65 @@
                 android:layout_height="350dp">
 
             </FrameLayout>
+
+            <LinearLayout
+                android:id="@+id/ll_inst_wrapper"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="14dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:id="@+id/talkBankTextView8"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:text="@string/setting_string_warning_backlight"
+                        tb:custom_font="noto_regular"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp">
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:text="\u2022"
+                        android:textColor="@color/bullet"
+                        android:theme="@style/Stit"
+                        tb:custom_font="noto_medium"/>
+
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="4dp"
+                        android:layout_weight="1"
+                        android:text="@string/setting_string_purpose_registered_credit"
+                        tb:custom_font="noto_regular"/>
+                </LinearLayout>
+
+            </LinearLayout>
 
             <include
                 android:id="@+id/inc_widget"

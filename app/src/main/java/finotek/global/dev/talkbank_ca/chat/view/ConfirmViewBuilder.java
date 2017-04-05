@@ -43,4 +43,9 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ChatSelectButto
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(data.getCancelAction());
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

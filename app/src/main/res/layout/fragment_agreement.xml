@@ -10,7 +10,7 @@
         android:layout_height="51dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="90dp"
-        android:text="필수 항목 전체 동의"
+        android:text="@string/dialog_string_mandatory_term_accept"
         android:textStyle="bold"/>
 
 
@@ -20,7 +20,7 @@
         android:layout_height="51dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="320dp"
-        android:text="선택항목 전체 동의"
+        android:text="@string/dialog_string_optional_term_agreement"
         android:textStyle="bold"/>
 
 
@@ -31,7 +31,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginTop="40dp"
         android:background="#4587cefa"
-        android:text="약관 확인 및 동의를 진행해 주세요"
+        android:text="@string/dialog_string_term_agreement_accept"
         android:textStyle="bold"
         android:visibility="visible"/>
 
@@ -41,7 +41,7 @@
         android:layout_height="27dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="150dp"
-        android:text="대출 서비스 이용 약관"
+        android:text="@string/dialog_string_loan_service_user_agreement"
         android:textStyle="bold"/>
 
     <RadioButton
@@ -50,7 +50,7 @@
         android:layout_height="27dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="185dp"
-        android:text="개인(신용)정보 조회 및 이용 제공 동의"
+        android:text="@string/dialog_string_personal_credit_information_access_agreement"
         android:textStyle="bold"/>
 
     <RadioButton
@@ -59,7 +59,7 @@
         android:layout_height="27dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="218dp"
-        android:text="대출거래 약정서"
+        android:text="@string/dialog_string_loan_transaction_agreement"
         android:textStyle="bold"/>
 
     <RadioButton
@@ -68,7 +68,7 @@
         android:layout_height="27dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="250dp"
-        android:text="계약 안내사항 및 유의사항"
+        android:text="@string/dialog_string_contact_information"
         android:textStyle="bold"/>
 
 
@@ -78,7 +78,7 @@
         android:layout_height="27dp"
         android:layout_marginLeft="20dp"
         android:layout_marginTop="380dp"
-        android:text="고객 정보 활용 동의"
+        android:text="@string/dialog_string_customer_information_agreement"
         android:textStyle="bold"/>
 
 
@@ -125,7 +125,7 @@
         android:layout_height="48dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="510dp"
-        android:text="자필서명"
+        android:text="@string/setting_string_signature"
         android:visibility="invisible"/>
 
     <FrameLayout

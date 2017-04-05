@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tb="http://schemas.android.com/tools"
     >
 
     <LinearLayout
@@ -62,6 +63,33 @@
                 android:layout_height="350dp">
 
             </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:orientation="horizontal"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:text="\u2022"
+                    android:textColor="@color/bullet"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/tv_inst"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="4dp"
+                    android:layout_weight="1"
+                    android:text="@string/registration_string_registered_signature_purpose"
+                    tb:custom_font="noto_regular"/>
+            </LinearLayout>
 
             <include
                 android:id="@+id/inc_widget"

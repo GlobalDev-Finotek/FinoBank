@@ -31,4 +31,9 @@ public class StatusViewBuilder implements ChatView.ViewBuilder<StatusMessage> {
         StatusViewBuilder.StatusViewHolder holder = (StatusViewBuilder.StatusViewHolder) viewHolder;
         holder.message.setText(data.getMessage());
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

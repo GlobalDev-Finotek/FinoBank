@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
@@ -22,8 +23,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
  * */
 public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
-    enum ViewType {
-        Send, Receive, Divider, Status, Confirm,
+    public enum ViewType {
+        Send, IconicSend, Receive, Divider, Status,
+        Confirm, TransferConfirm,
         IDCard, RecentTransaction, AccountList,
         Agreement, AgreementResult
     }
@@ -31,6 +33,7 @@ public class ChatView extends RecyclerView {
     public interface ViewBuilder<T> {
         RecyclerView.ViewHolder build(ViewGroup parent);
         void bind(RecyclerView.ViewHolder viewHolder, T data);
+        void onDelete();
     }
 
     public ChatView(Context context, @Nullable AttributeSet attrs) {
@@ -40,10 +43,12 @@ public class ChatView extends RecyclerView {
         setAdapter(adapter);
 
         this.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
+        this.addChatViewBuilder(ViewType.IconicSend.ordinal(), new IconicSendViewBuilder(context));
         this.addChatViewBuilder(ViewType.Receive.ordinal(), new ReceiveViewBuilder());
         this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
         this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
         this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
+        this.addChatViewBuilder(ViewType.TransferConfirm.ordinal(), new TransferConfirmViewBuilder());
         this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
 
         this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder());
@@ -58,6 +63,10 @@ public class ChatView extends RecyclerView {
 
     public void sendMessage(String msg) {
         addMessage(ViewType.Send.ordinal(), new SendMessage(msg));
+    }
+
+    public void sendMessage(String msg, int icon) {
+        addMessage(ViewType.IconicSend.ordinal(), new SendMessage(msg, icon));
     }
 
     public void receiveMessage(String msg) {
@@ -80,8 +89,8 @@ public class ChatView extends RecyclerView {
         addMessage(ViewType.AgreementResult.ordinal(), null);
     }
 
-    public void accountList() {
-        addMessage(ViewType.AccountList.ordinal(), null);
+    public void accountList(AccountList accountList) {
+        addMessage(ViewType.AccountList.ordinal(), accountList);
     }
 
     public void
@@ -93,12 +102,21 @@ public class ChatView extends RecyclerView {
         addMessage(ViewType.Confirm.ordinal(), ev);
     }
 
+    public void transferConfirm(ChatSelectButtonEvent ev){
+        addMessage(ViewType.TransferConfirm.ordinal(), ev);
+    }
+
     private void addChatViewBuilder(int viewType, ViewBuilder builder) {
         adapter.addChatViewBuilder(viewType, builder);
     }
 
     private void addMessage(int viewType, Object item) {
         adapter.addChatItem(new DataWithType(viewType, item));
+        scrollToBottom();
+    }
+
+    public void removeOf(ViewType viewType){
+        adapter.removeChatItem(viewType.ordinal());
         scrollToBottom();
     }
 

@@ -25,11 +25,13 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
-import finotek.global.dev.talkbank_ca.chat.messages.Succeeded;
+import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -38,6 +40,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
@@ -45,13 +48,11 @@ public class ChatActivity extends AppCompatActivity {
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
 	private ChatTransferBinding ctBinding;
-	private Scenario scenario;
+	private ScenarioChannel scenario;
 
 	private boolean isExControlAvailable = false;
 	private View exControlView = null;
 	private View footerInputs = null;
-	private View captureView = null;
-	private View signView = null;
 	private View transferView = null;
 
 	@Override
@@ -62,7 +63,7 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("톡뱅");
 
-		scenario = new Scenario(this, binding.chatView);
+		scenario = new ScenarioChannel(this, binding.chatView);
 		MessageBox.INSTANCE.observable
             .delay(2000, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -81,6 +82,8 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
+				MessageBox.INSTANCE.add(new ReceiveMessage("위 내용이 맞으세요?"));
+				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
                 this.returnToInitialControl();
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -96,15 +99,21 @@ public class ChatActivity extends AppCompatActivity {
             binding.footer.addView(inflate(R.layout.chat_capture));
             SignRegistFragment signRegistFragment = new SignRegistFragment();
             FragmentTransaction tx = getFragmentManager().beginTransaction();
-            signRegistFragment.setOnSaveListener(new SignRegistFragment.OnSignSaveListener() {
-                @Override
-                public void onSave() {
-                    MessageBox.INSTANCE.add(new Succeeded());
+            signRegistFragment.setOnSaveListener(() -> {
+                SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+                dialog.setTitle("자필 서명이 인증 되었습니다.");
+                dialog.setDescription("확인 버튼을 선택하면\n완료 단계로 이동합니다.");
+                dialog.setButtonText("확인");
+                dialog.setDoneListener(() -> {
+                    MessageBox.INSTANCE.add(new Done());
                     returnToInitialControl();
 
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.remove(signRegistFragment).commit();
-                }
+
+                    dialog.dismiss();
+                });
+                dialog.show();
             });
 
             tx.add(R.id.chat_capture, signRegistFragment);
@@ -208,7 +217,7 @@ public class ChatActivity extends AppCompatActivity {
 			binding.footer.removeView(transferView);
 			binding.footer.addView(footerInputs);
 
-            MessageBox.INSTANCE.add(new Succeeded());
+            MessageBox.INSTANCE.add(new Done());
 		});
 
 		binding.footer.addView(footerInputs);

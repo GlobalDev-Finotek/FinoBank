@@ -99,7 +99,7 @@
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:paddingTop="16dp"
-                            android:text="@string/additional_inform"
+                            android:text="@string/registration_string_additional_info"
                             android:theme="@style/Title"
                             tb:custom_font="noto_medium"/>
 
@@ -131,7 +131,7 @@
                                     android:layout_marginLeft="7dp"
                                     android:layout_weight="1"
                                     android:gravity="center_vertical"
-                                    android:text="비상 연락처"
+                                    android:text="@string/registration_string_emergency_number"
                                     android:theme="@style/Stit"
                                     tb:custom_font="noto_medium"/>
                             </LinearLayout>
@@ -140,7 +140,7 @@
                                 android:id="@+id/edt_emergency_phone_number"
                                 android:layout_width="match_parent"
                                 android:layout_height="44dp"
-                                android:hint="@string/emergency_phone_number"
+                                android:hint="@string/registration_string_emergency_number"
                                 android:inputType="phone"/>
 
                             <LinearLayout
@@ -164,7 +164,7 @@
                                     android:layout_marginLeft="7dp"
                                     android:layout_weight="1"
                                     android:gravity="center_vertical"
-                                    android:text="이메일 주소"
+                                    android:text="@string/registration_string_email"
                                     android:theme="@style/Stit"
                                     tb:custom_font="noto_medium"/>
                             </LinearLayout>
@@ -173,7 +173,7 @@
                                 android:id="@+id/edt_email"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="@string/email_address"
+                                android:hint="@string/registration_string_email"
                                 android:inputType="textEmailAddress"/>
 
                             <LinearLayout
@@ -201,7 +201,7 @@
                                         android:layout_height="44dp"
                                         android:layout_marginLeft="7dp"
                                         android:gravity="center_vertical"
-                                        android:text="신용카드 등록"
+                                        android:text="@string/registration_string_credit_card_register"
                                         android:theme="@style/Stit"
                                         tb:custom_font="noto_medium"/>
                                 </LinearLayout>
@@ -212,7 +212,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="44dp"
                                     android:elevation="0dp"
-                                    android:text="@string/capture_credit"/>
+                                    android:text="@string/registration_button_credit_card_capture"/>
 
                             </LinearLayout>
 
@@ -242,7 +242,7 @@
                                         android:layout_marginLeft="7dp"
                                         android:layout_weight="1"
                                         android:gravity="center_vertical"
-                                        android:text="인증 사진"
+                                        android:text="@string/registration_string_profile_register"
                                         android:theme="@style/Stit"
                                         tb:custom_font="noto_medium"/>
                                 </LinearLayout>
@@ -252,7 +252,7 @@
                                     style="@style/InverseButton"
                                     android:layout_width="match_parent"
                                     android:layout_height="44dp"
-                                    android:text="@string/capture_profile"/>
+                                    android:text="@string/registration_button_profile_capture"/>
 
                             </LinearLayout>
 
@@ -282,7 +282,7 @@
                                         android:layout_marginLeft="7dp"
                                         android:layout_weight="1"
                                         android:gravity="center_vertical"
-                                        android:text="PIN 코드"
+                                        android:text="@string/registration_string_pin_code"
                                         android:theme="@style/Stit"
                                         tb:custom_font="noto_medium"/>
                                 </LinearLayout>
@@ -295,7 +295,7 @@
                                     android:layout_alignParentBottom="true"
                                     android:layout_centerHorizontal="true"
                                     android:layout_marginBottom="16dp"
-                                    android:text="PIN 코드 등록"/>
+                                    android:text="@string/registration_button_register"/>
                             </LinearLayout>
 
                         </LinearLayout>
@@ -312,14 +312,14 @@
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="16dp"
-                        android:text="정보 수집 동의(필수 입력)"
+                        android:text="@string/registration_string_inform_collect_agree"
                         android:theme="@style/Title"
                         tb:custom_font="noto_medium"/>
 
                     <CheckedTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="맥락 데이터 수집 동의(사용자 인증 모드)"/>
+                        android:text="@string/registration_string_context_collect_agree"/>
 
                     <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                         android:id="@+id/btn_register"
@@ -328,7 +328,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:text="등록"/>
+                        android:text="@string/registration_button_register"/>
 
 
                 </LinearLayout>

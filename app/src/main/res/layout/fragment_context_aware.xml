@@ -39,7 +39,7 @@
                         android:layout_marginLeft="7dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="맥락데이터 수집 앱"
+                        android:text="@string/setting_string_context_app"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>
@@ -65,11 +65,10 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="모든 앱 수집"
+                            android:text="@string/setting_string_all_app_collect"
                             tb:custom_font="noto_regular"/>
 
                         <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
-                            android:id="@+id/switch1"
                             android:layout_width="wrap_content"
                             android:layout_height="30dp"
                             android:elevation="0dp"/>
@@ -92,7 +91,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:text="개별 앱 선택"
+                            android:text="@string/setting_string_one_app_select"
                             tb:custom_font="noto_regular"/>
 
                         <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
@@ -136,7 +135,7 @@
                         android:layout_marginLeft="7dp"
                         android:layout_weight="1"
                         android:gravity="center_vertical"
-                        android:text="맥락데이터 수집 시간 설정"
+                        android:text="@string/setting_string_context_collect_time_setting"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>
@@ -164,7 +163,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="0.89"
-                            android:text="24시간"
+                            android:text="@string/setting_string__24hr"
                             tb:custom_font="noto_regular"/>
 
                         <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
@@ -194,7 +193,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 android:layout_weight="1"
-                                android:text="시간 설정"
+                                android:text="@string/setting_string_time_setting"
                                 tb:custom_font="noto_regular"/>
 
                             <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
@@ -231,7 +230,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="시작"
+                                        android:text="@string/setting_string_start"
                                         tb:custom_font="noto_medium"
                                         />
 
@@ -273,7 +272,7 @@
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:text="종료"
+                                        android:text="@string/setting_string_end"
                                         tb:custom_font="noto_medium"/>
 
                                     <LinearLayout
@@ -310,7 +309,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="5dp"
                                 android:layout_weight="1"
-                                android:text="해당 시간대에만 데이터 수집을 허용합니다"
+                                android:text="@string/setting_string_allowed_time"
                                 tb:custom_font="noto_regular"/>
 
                         </LinearLayout>
@@ -335,7 +334,7 @@
                     android:layout_marginBottom="16dp"
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="@string/button_save"
+                    android:text="@string/setting_string_save"
                     android:theme="@style/RoundButton"/>
             </RelativeLayout>
 

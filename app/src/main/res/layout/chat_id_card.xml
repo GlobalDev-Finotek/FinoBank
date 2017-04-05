@@ -29,7 +29,7 @@
                     style="@style/table_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="신분증 종류" />
+                    android:text="@string/dialog_string_id_card_type" />
                 <TextView
                     style="@style/table_body"
                     android:id="@+id/card_type"
@@ -47,7 +47,7 @@
                     style="@style/table_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="이름" />
+                    android:text="@string/dialog_string_name" />
                 <TextView
                     style="@style/table_body"
                     android:id="@+id/name"
@@ -65,7 +65,7 @@
                     style="@style/table_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="주민등록번호" />
+                    android:text="@string/dialog_string_id_number" />
                 <TextView
                     style="@style/table_body"
                     android:id="@+id/jumin"
@@ -83,7 +83,7 @@
                     style="@style/table_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="발급일자" />
+                    android:text="@string/dialog_string_date_issued" />
                 <TextView
                     style="@style/table_body"
                     android:id="@+id/issue_date"

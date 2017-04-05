@@ -148,14 +148,14 @@ Please take a picture of your ID card</string>
     <string name="dialog_string_finger_tip_sign_user_register">use fingertip, not finger nail, to sign in the marked area</string>
     <string name="dialog_chat_after_transfer_1">you\'ve transferred 100,000 won to 김가람(010-5678-1234). your available balance is 3,270,000 won.
 Is there anything else I can help you with?</string>
-    <string name="dialog_button_recent_transaction">view recent tractions</string>
+    <string name="dialog_button_recent_transaction">View recent tractions</string>
     <string name="dialog_button_transfer_add">add transfer account</string>
     <string name="dialog_chat_someone_recent_transaction">% view recent transaction</string>
     <string name="dialog_string_deposit">Deposit</string>
     <string name="dialog_string_withdrawal">withdrawal</string>
     <string name="dialog_string_balance">balance</string>
     <string name="dialog_button_transfer">transfer</string>
-    <string name="dialog_button_view_more">view more</string>
+    <string name="dialog_button_view_more">View more</string>
     <string name="dialog_string_receiver_select">please select receiver</string>
     <string name="dialog_chat_contact_select">if receiver is not contain on the list, please select new receiver from address book or KakaoTalk</string>
     <string name="dialog_string_amount_transfer">amount of transfer</string>
@@ -192,4 +192,17 @@ is there anything else I can help you with?</string>
     <string name="setting_string_one_app_select">Select each app</string>
     <string name="setting_string_all_app_collect">Select all app</string>
     <string name="setting_string_context_app">Context data collect app</string>
+    <string name="string_preview">Preview</string>
+    <string name="string_save">Save</string>
+    <string name="string_transfer">Transfer</string>
+    <string name="string_price_unit">Price unit</string>
+    <string name="dialog_string_context_auth">Context authentication</string>
+    <string name="string_send">Send</string>
+    <string name="string_setting">Setting</string>
+    <string name="string_loan">Loan</string>
+    <string name="string_send_email">Send to email</string>
+    <string name="string_register_account">Register account</string>
+    <string name="string_transfer_money">Transfer</string>
+    <string name="string_check_account">Check account</string>
+    <string name="string_balance">Balance</string>
 </resources>

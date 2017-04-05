@@ -28,7 +28,7 @@
                     android:layout_weight="0.5"
                     android:background="@drawable/cell_shape"
                     android:padding="4dp"
-                    android:text="@string/registration_string_credit_card_number "
+                    android:text="@string/registration_string_credit_card_number"
                     android:textAlignment="center"/>
 
                 <TextView

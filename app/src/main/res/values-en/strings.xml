@@ -19,6 +19,7 @@
     <string name="registration_string_profile_register">Register authenticate picture</string>
     <string name="registration_button_profile_capture">Take picture of ID card</string>
     <string name="registration_string_pin_code">PIN code</string>
+
     <string name="registration_string_inform_collect_agree">Agreement for collecting information(Required)</string>
     <string name="registration_string_context_collect_agree">Agreement for collection context data(User authentication mode)</string>
     <string name="registration_button_register">register</string>
@@ -55,6 +56,11 @@
     <string name="registration_string_pin_code_type">please type 6 digit PIN code</string>
     <string name="registration_string_pin_code_color_verify">When you try to verify PIN code, text and background color should be matched with registered color</string>
     <string name="registration_string_secure_keyboard_operating">Operating secured keyboard</string>
+    <string name="registration_button_pin_code_chanage">Change PIN code</string>
+    <string name="registration_string_signature_twice">you will be signing twice to confirm your e-signaute.</string>
+
+
+
     <string name="main_string_talkbank">TalkBank</string>
     <string name="main_actoin_settings">Settings</string>
     <string name="main_action_seach">Seach</string>
@@ -124,6 +130,33 @@
     <string name="setting_string_retake_picture">re-take photo</string>
     <string name="setting_string_register">register</string>
     <string name="setting_string_registered_picture_purpose">registered picture will be used for personal verification purpose</string>
+
+    <!--- add -->
+    <string name='setting_string_picture_check'>please check your picture is correct</string>
+    <string name='setting_string_pin_code_type'>type new PIN code</string>
+    <string name='setting_string_pin_code_re_type'>again, type new PIN code</string>
+    <string name='setting_string_pin_code_background_color_select'>select PIN code background color</string>
+    <string name='setting_string_pin_code_text_color_select'>select PIN code text color</string>
+    <string name='setting_string_six_digit'>please type six digit PIN code</string>
+    <string name='setting_string_pin_code_color_verify'>background and text color should be matched with registered color</string>
+    <string name='setting_string_secure_keyboard_operating'>Operating secured keyboard</string>
+    <string name='setting_string_amount_auth'>authentication for amount of money</string>
+    <string name='setting_string_amount'>amount of transfer</string>
+    <string name='setting_string_edit_manually'>direct type</string>
+    <string name='setting_string_under'>less</string>
+    <string name='setting_string_over'>more</string>
+    <string name='setting_string_auth_method_select_1'>select authentication methods (you are required to select more than one)</string>
+    <string name='setting_string_context_auth'>context authentication (basic)</string>
+    <string name='setting_string_auth_mail'>authentication email</string>
+    <string name='setting_string_auth_message'>authentication message</string>
+    <string name='setting_string_ocr_credit_card'>credit card OCR</string>
+    <string name='setting_string_profile_picture'>authentication picture</string>
+    <string name='setting_string_voice_recognition'>authentication  voice</string>
+    <string name='setting_string_auth_method_add'>add more authentication method</string>
+    <string name='setting_string_suspicious_auth'>setting for fraud or unexpected situation</string>
+    <string name='setting_string_auth_method_select_2'>select authentication methods (you are required to select more than two)</string>
+
+
     <string name="dialog_chat_verified_context_data">Result of analyzing context data is %d. Authentication is succeeded.</string>
     <string name="dialog_chat_ask_help">Hello %s How may I help you</string>
     <string name="dialog_button_open_account">Open account</string>
@@ -164,6 +197,7 @@ Is there anything else I can help you with?</string>
     <string name="dialog_chat_loan_appl">I\'ve checked your account details and I would like to recommend ""Finocation one-day loan""
 you may request up to 50 million won and 2.0% interest rate
 do you want to apply loan?</string>
+    <string name="dialog_string_won">won</string>
     <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. what can i help you?</string>
     <string name="dialog_string_home_address_type">type in your home address</string>
     <string name="dialog_chat_loan_amount_type">you may loan up to 50 million won with 2% interest rate.
@@ -180,6 +214,8 @@ please write the ammount of loan you would like to request</string>
     <string name="dialog_chat_agreenment_accepted">agreement have been aceepted </string>
     <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account
 is there anything else I can help you with?</string>
+
+
     <string name="setting_string_allowed_time">It\'s only actviated in allowed time.</string>
     <string name="setting_string_end">End</string>
     <string name="setting_string_start">Start</string>
@@ -189,5 +225,8 @@ is there anything else I can help you with?</string>
     <string name="setting_string_one_app_select">Select each app</string>
     <string name="setting_string_all_app_collect">Select all app</string>
     <string name="setting_string_context_app">Context data collect app</string>
+
+
+
     <string name="no"></string>
 </resources>

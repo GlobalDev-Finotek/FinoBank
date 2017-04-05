@@ -93,7 +93,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@string/setting_string_pin_code_backgorund_color_select"/>
+                    android:text="@string/registration_string_pin_code_backgorund_color_select">
+                    </TextView>
 
                 <GridLayout
                     android:id="@+id/gl_pin_background"
@@ -115,7 +116,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:padding="10dp"
-                    android:text="@string/setting_string_pin_code_text_color_select"/>
+                    android:text="@string/registration_string_pin_code_text_color_select">
+                    </TextView>
 
                 <GridLayout
                     android:id="@+id/gl_pin_text_color"
@@ -163,7 +165,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
-                        android:text="6자리 숫자로 PIN 코드를 입력해 주세요."
+                        android:text="@string/registration_string_pin_code_type"
                         tb:custom_font="noto_regular"/>
                 </LinearLayout>
 
@@ -188,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_weight="1"
-                        android:text="PIN 코드 인증 시 등록한 배경색과 글자색도 일치해야 합니다."
+                        android:text="@string/registration_string_pin_code_color_verify"
                         tb:custom_font="noto_regular"/>
                 </LinearLayout>
 

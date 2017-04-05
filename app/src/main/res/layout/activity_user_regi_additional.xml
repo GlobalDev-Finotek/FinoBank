@@ -211,7 +211,7 @@
                     style="@style/InverseButton"
                     android:layout_width="match_parent"
                     android:layout_height="44dp"
-                    android:text="PIN 코드 변경"/>
+                    android:text="@string/registration_button_pin_code_chanage"/>
 
             </LinearLayout>
 

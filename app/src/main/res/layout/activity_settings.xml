@@ -84,7 +84,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="사용자 정보"
+                        android:text="@string/setting_string_user_information"
                         tb:custom_font="noto_regular"/>
 
                     <ImageView
@@ -108,7 +108,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="맥락 인증"
+                        android:text="@string/setting_string_context_verification"
                         tb:custom_font="noto_regular"/>
 
                     <ImageView
@@ -132,7 +132,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="금액별 인증"
+                        android:text="@string/setting_string_amount_verification"
                         tb:custom_font="noto_regular"/>
 
                     <ImageView
@@ -157,7 +157,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="이상 거래 시 인증"
+                        android:text="@string/setting_string_suspicious_transaction_verification"
                         tb:custom_font="noto_regular"/>
 
                     <ImageView
@@ -183,7 +183,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:layout_weight="1"
-                        android:text="언어 설정"
+                        android:text="@string/setting_string_langauge"
                         tb:custom_font="noto_regular"/>
 
                     <ImageView

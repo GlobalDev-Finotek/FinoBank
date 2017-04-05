@@ -1,14 +1,11 @@
 package finotek.global.dev.talkbank_ca.chat.scenario;
 
-import android.support.v4.app.NotificationCompat;
-
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
-import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 
 public class AccountScenario implements Scenario {
     private enum Step {
@@ -25,7 +22,7 @@ public class AccountScenario implements Scenario {
     public void onReceive(Object msg) {
         if(msg instanceof Done) {
             if(step == Step.Last) {
-                MessageBox.INSTANCE.add(new ReceiveMessage("신규 `스마트 계좌`가 개설되었습니다."));
+                MessageBox.INSTANCE.add(new ReceiveMessage("계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?"));
             }
 
             step = Step.Initial;
@@ -37,7 +34,7 @@ public class AccountScenario implements Scenario {
         switch (step) {
             case Initial:
                 MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님께는 `스마트 계좌`를 추천드립니다\n계좌 개설을 진행하시겠습니까?"));
-                MessageBox.INSTANCE.add(new ConfirmRequest()); // 네, 아니오
+                MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo()); // 네, 아니오
                 step = Step.CheckIDCard;
                 break;
             case CheckIDCard:

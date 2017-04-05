@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
-import finotek.global.dev.talkbank_ca.chat.adapter.ChatSelectButtonEvent;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
@@ -17,6 +16,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 
 /**
  * @author david lee at finotek.
@@ -25,7 +25,7 @@ public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
     public enum ViewType {
         Send, IconicSend, Receive, Divider, Status,
-        Confirm, TransferConfirm,
+        Confirm,
         IDCard, RecentTransaction, AccountList,
         Agreement, AgreementResult
     }
@@ -48,7 +48,6 @@ public class ChatView extends RecyclerView {
         this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
         this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
         this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
-        this.addChatViewBuilder(ViewType.TransferConfirm.ordinal(), new TransferConfirmViewBuilder());
         this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
 
         this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder());
@@ -98,12 +97,8 @@ public class ChatView extends RecyclerView {
         addMessage(ViewType.RecentTransaction.ordinal(), data);
     }
 
-    public void confirm(ChatSelectButtonEvent ev){
+    public void confirm(ConfirmRequest ev){
         addMessage(ViewType.Confirm.ordinal(), ev);
-    }
-
-    public void transferConfirm(ChatSelectButtonEvent ev){
-        addMessage(ViewType.TransferConfirm.ordinal(), ev);
     }
 
     private void addChatViewBuilder(int viewType, ViewBuilder builder) {

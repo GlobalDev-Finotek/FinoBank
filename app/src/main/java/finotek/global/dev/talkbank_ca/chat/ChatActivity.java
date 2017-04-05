@@ -25,7 +25,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
-import finotek.global.dev.talkbank_ca.chat.messages.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Done;
@@ -83,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
 				MessageBox.INSTANCE.add(new ReceiveMessage("위 내용이 맞으세요?"));
-				MessageBox.INSTANCE.add(new ConfirmRequest());
+				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
                 this.returnToInitialControl();
 
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();

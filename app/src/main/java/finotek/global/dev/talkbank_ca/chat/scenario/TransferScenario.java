@@ -8,8 +8,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.Account;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferConfirmRequest;
 
 public class TransferScenario implements Scenario {
     private enum Step {
@@ -39,7 +40,19 @@ public class TransferScenario implements Scenario {
         switch (step) {
             case Initial:
                 MessageBox.INSTANCE.add(new ReceiveMessage("월별 입출금 거래 내역 확인 결과,\n김가람(010-5678-1234)님에게 100,000원을\n이체하시겠어요?"));
-                MessageBox.INSTANCE.add(new TransferConfirmRequest());
+
+                ConfirmRequest request = new ConfirmRequest();
+                request.addDangerEvent("아니오", () -> {
+                    MessageBox.INSTANCE.add(new SendMessage("아니오"));
+                });
+                request.addPrimaryEvent("네", () -> {
+                    MessageBox.INSTANCE.add(new SendMessage("네"));
+                });
+                request.addInfoEvent("다른 사람에게 이체", () -> {
+                    MessageBox.INSTANCE.add(new SendMessage("다른 사람에게 이체"));
+                });
+                MessageBox.INSTANCE.add(request);
+
                 step = Step.Analyzing;
                 break;
             case Analyzing:

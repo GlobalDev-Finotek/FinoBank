@@ -11,10 +11,11 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class RoundButton extends AppCompatButton {
     public RoundButton(Context context) {
-        super(context);
+        super(context, null, android.R.attr.borderlessButtonStyle);
 
         int padding = Converter.dpToPx(15);
         setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
+
     }
 
     public RoundButton(Context context, AttributeSet attrs) {
@@ -35,11 +36,11 @@ public class RoundButton extends AppCompatButton {
     public void setButtonType(ButtonType buttonType) {
         switch(buttonType) {
             case Primary:
-                setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_primary));
-                setTextColor(ContextCompat.getColor(getContext(), R.color.white));
+                setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_round_primary));
+                setTextColor(ContextCompat.getColor(getContext(), R.color.primary));
                 break;
             case Danger:
-                setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_danger));
+                setBackgroundDrawable(ContextCompat.getDrawable(getContext(), R.drawable.btn_default_round_danger));
                 setTextColor(ContextCompat.getColor(getContext(), R.color.danger));
                 break;
             case Info:

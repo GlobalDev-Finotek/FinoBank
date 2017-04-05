@@ -31,4 +31,9 @@ public class DividerViewBuilder implements ChatView.ViewBuilder<DividerMessage> 
         DividerViewHolder holder = (DividerViewHolder) viewHolder;
         holder.message.setText(data.getMessage());
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

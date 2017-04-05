@@ -31,5 +31,9 @@ public class ReceiveViewBuilder implements ChatView.ViewBuilder<ReceiveMessage> 
         ReceiveViewHolder holder = (ReceiveViewHolder) viewHolder;
         holder.message.setText(data.getMessage());
     }
-}
 
+    @Override
+    public void onDelete() {
+
+    }
+}

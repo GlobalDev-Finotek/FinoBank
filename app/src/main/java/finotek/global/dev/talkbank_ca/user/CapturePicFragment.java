@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
@@ -35,6 +36,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Size;
 import android.util.SparseIntArray;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Surface;
 import android.view.TextureView;
@@ -186,6 +188,34 @@ public class CapturePicFragment extends Fragment
 	 */
 	private int mSensorOrientation;
 	private FragmentCapturePicBinding binding;
+	/**
+	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
+	 * {@link TextureView}.
+	 */
+	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
+			= new TextureView.SurfaceTextureListener() {
+
+		@RequiresApi(api = Build.VERSION_CODES.M)
+		@Override
+		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+			openCamera(width, height);
+		}
+
+		@Override
+		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
+			configureTransform(width, height);
+		}
+
+		@Override
+		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
+			return true;
+		}
+
+		@Override
+		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
+		}
+
+	};
 	private boolean isCaptureDone;
 	private OnSizeChangeListener onSizeChangeListener;
 	/**
@@ -281,34 +311,8 @@ public class CapturePicFragment extends Fragment
 		}
 
 	};
-	/**
-	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
-	 * {@link TextureView}.
-	 */
-	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
-			= new TextureView.SurfaceTextureListener() {
-
-		@RequiresApi(api = Build.VERSION_CODES.M)
-		@Override
-		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
-			openCamera(width, height);
-		}
-
-		@Override
-		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
-			configureTransform(width, height);
-		}
-
-		@Override
-		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
-			return true;
-		}
-
-		@Override
-		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
-		}
-
-	};
+	private int orgPreviewWidth;
+	private int orgPreviewHeight;
 
 	/**
 	 * Given {@code choices} of {@code Size}s supported by a camera, choose the smallest one that
@@ -382,6 +386,51 @@ public class CapturePicFragment extends Fragment
 				}
 			});
 		}
+	}
+
+	private void updateTextureMatrix(int width, int height) {
+		boolean isPortrait = false;
+
+		Display display = getActivity().getWindowManager().getDefaultDisplay();
+		if (display.getRotation() == Surface.ROTATION_0 || display.getRotation() == Surface.ROTATION_180)
+			isPortrait = true;
+		else if (display.getRotation() == Surface.ROTATION_90 || display.getRotation() == Surface.ROTATION_270)
+			isPortrait = false;
+
+		int previewWidth = orgPreviewWidth;
+		int previewHeight = orgPreviewHeight;
+
+		if (isPortrait) {
+			previewWidth = orgPreviewHeight;
+			previewHeight = orgPreviewWidth;
+		}
+
+		float ratioSurface = (float) width / height;
+		float ratioPreview = (float) previewWidth / previewHeight;
+
+		float scaleX;
+		float scaleY;
+
+		if (ratioSurface > ratioPreview) {
+			scaleX = (float) height / previewHeight;
+			scaleY = 1;
+		} else {
+			scaleX = 1;
+			scaleY = (float) width / previewWidth;
+		}
+
+		Matrix matrix = new Matrix();
+
+		matrix.setScale(scaleX, scaleY);
+		binding.textureCam.setTransform(matrix);
+
+		float scaledWidth = width * scaleX;
+		float scaledHeight = height * scaleY;
+
+		float dx = (width - scaledWidth) / 2;
+		float dy = (height - scaledHeight) / 2;
+		binding.textureCam.setTranslationX(dx);
+		binding.textureCam.setTranslationY(dy);
 	}
 
 	@Override
@@ -620,8 +669,10 @@ public class CapturePicFragment extends Fragment
 			requestCameraPermission();
 			return;
 		}
+
 		setUpCameraOutputs(width, height);
-		configureTransform(width, height);
+		// configureTransform(width, height);
+
 		Activity activity = getActivity();
 		CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
 		try {

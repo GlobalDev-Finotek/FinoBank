@@ -59,7 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:textSize="12sp"
-                android:text="@{item.type == 0 ? @string/string_withdrawal : @string/string_deposit }"
+                android:text="@{item.type == 0 ? @string/dialog_string_withdrawal : @string/dialog_string_deposit }"
                 android:textColor="@{item.type == 0 ? @color/coral_pink : @color/dodger_blue }" />
             <TextView
                 android:layout_marginEnd="4dp"

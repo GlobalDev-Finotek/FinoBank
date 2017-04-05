@@ -82,11 +82,12 @@
                     tb:custom_font="noto_medium"/>
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/tv_inst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="4dp"
                     android:layout_weight="1"
-                    android:text="등록한 사진은 필요 시 본인 확인용으로 사용됩니다."
+                    android:text="@string/registration_string_registered_signature_purpose"
                     tb:custom_font="noto_regular"/>
             </LinearLayout>
 

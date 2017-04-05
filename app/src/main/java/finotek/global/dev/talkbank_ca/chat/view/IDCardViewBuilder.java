@@ -33,4 +33,9 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
         holder.binding.jumin.setText(data.getJumin());
         holder.binding.issueDate.setText(data.getIssueDate());
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

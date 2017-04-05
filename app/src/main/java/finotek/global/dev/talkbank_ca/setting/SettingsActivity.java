@@ -56,5 +56,15 @@ public class SettingsActivity extends AppCompatActivity {
 					startActivity(intent);
 				});
 
+
+		RxView.clicks(binding.llLanguageSetting)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					Intent i = new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS);
+					startActivity(i);
+				});
+
+
+
 	}
 }

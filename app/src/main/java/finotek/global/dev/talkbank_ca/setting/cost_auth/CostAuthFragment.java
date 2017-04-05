@@ -59,6 +59,16 @@ public class CostAuthFragment extends android.app.Fragment {
 
 		binding.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
 
+		binding.tvContextAu.setOnClickListener(costOnClickListener);
+		binding.tvPsignature.setOnClickListener(costOnClickListener);
+		binding.tvPinCode.setOnClickListener(costOnClickListener);
+		binding.tvEmergencyContact.setOnClickListener(costOnClickListener);
+		binding.tvAuMail.setOnClickListener(costOnClickListener);
+		binding.tvAuMessage.setOnClickListener(costOnClickListener);
+		binding.tvCreditCardOcr.setOnClickListener(costOnClickListener);
+		binding.tvAuPicture.setOnClickListener(costOnClickListener);
+		binding.tvVoice.setOnClickListener(costOnClickListener);
+
 		return binding.getRoot();
 	}
 }

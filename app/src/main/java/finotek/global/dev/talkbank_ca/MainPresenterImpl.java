@@ -6,6 +6,7 @@ import android.content.Intent;
 import javax.inject.Inject;
 
 import finotek.global.dev.talkbank_ca.base.mvp.BasePresenter;
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.user.UserRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
@@ -37,9 +38,11 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 			intent = new Intent(activity, UserRegistrationActivity.class);
 		} else {
 			intent = new Intent(activity, SignRegistrationActivity.class);
+			intent.putExtra("nextClass", ChatActivity.class);
 		}
 
 		activity.startActivity(intent);
+		activity.finish();
 	}
 
 }

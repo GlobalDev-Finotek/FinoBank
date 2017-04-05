@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/dialog_bg">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:gravity="center"
+            android:background="@drawable/dialog_primary_title"
+            android:src="@drawable/icon_reload"
+            android:scaleType="fitCenter" />
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            android:id="@+id/title"
+            android:layout_below="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:textSize="18sp"
+            android:textColor="@color/dark_100"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            app:custom_font="noto_medium" />
+        <TextView
+            android:id="@+id/description"
+            android:layout_below="@id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="17dp"
+            android:textSize="16sp"
+            android:textColor="@color/dark_70"
+            android:lineSpacingMultiplier="1.2" />
+        <Button
+            android:id="@+id/done_btn"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_below="@id/description"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:layout_centerHorizontal="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/btn_dialog_primary"
+            android:textSize="14sp"
+            android:textColor="@android:color/white" />
+    </RelativeLayout>
+</layout>

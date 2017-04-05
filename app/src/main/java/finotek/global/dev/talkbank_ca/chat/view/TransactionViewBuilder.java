@@ -46,4 +46,9 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
             group.addView(view);
         }
     }
+
+    @Override
+    public void onDelete() {
+
+    }
 }

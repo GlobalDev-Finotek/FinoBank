@@ -20,6 +20,7 @@ public class MyApplication extends Application {
 
   AppComponent appComponent;
 	private PublishSubject<IEvent> eventBus;
+	private static MyApplication instance;
 
 	@Override
 	public void onCreate() {
@@ -27,11 +28,11 @@ public class MyApplication extends Application {
 		createDaggerInjections();
 
 		eventBus = PublishSubject.create();
-
+		instance = this;
   }
 
-  public Context getContext() {
-    return this.getApplicationContext();
+  public static Context getContext() {
+    return instance.getApplicationContext();
   }
 
   public AppComponent getAppComponent() {

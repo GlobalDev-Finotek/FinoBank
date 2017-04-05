@@ -25,9 +25,13 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestTransfer;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -35,20 +39,20 @@ import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
 	private ChatTransferBinding ctBinding;
-	private MessageBox messageBox;
-	private Scenario scenario;
+	private ScenarioChannel scenario;
 
 	private boolean isExControlAvailable = false;
 	private View exControlView = null;
 	private View footerInputs = null;
-	private View captureView = null;
-	private View signView = null;
 	private View transferView = null;
 
 	@Override
@@ -58,10 +62,12 @@ public class ChatActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("톡뱅");
-		messageBox = new MessageBox();
 
-		scenario = new Scenario(this, binding.chatView, messageBox);
-		messageBox.getObservable().subscribe(this::onNewMessageUpdated);
+		scenario = new ScenarioChannel(this, binding.chatView);
+		MessageBox.INSTANCE.observable
+            .delay(2000, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(this::onNewMessageUpdated);
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
@@ -74,13 +80,44 @@ public class ChatActivity extends AppCompatActivity {
 			binding.footer.addView(inflate(R.layout.chat_capture));
 			CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			capturePicFragment.takePicture(path -> {
+				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
+				MessageBox.INSTANCE.add(new ReceiveMessage("위 내용이 맞으세요?"));
+				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
+                this.returnToInitialControl();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.remove(capturePicFragment).commit();
+			});
 			tx.add(R.id.chat_capture, capturePicFragment);
-			tx.commit();
+            tx.commit();
 		}
 
 		if (msg instanceof RequestSignature) {
 			releaseControls();
-			binding.footer.addView(inflate(R.layout.chat_sign));
+
+            binding.footer.addView(inflate(R.layout.chat_capture));
+            SignRegistFragment signRegistFragment = new SignRegistFragment();
+            FragmentTransaction tx = getFragmentManager().beginTransaction();
+            signRegistFragment.setOnSaveListener(() -> {
+                SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+                dialog.setTitle("자필 서명이 인증 되었습니다.");
+                dialog.setDescription("확인 버튼을 선택하면\n완료 단계로 이동합니다.");
+                dialog.setButtonText("확인");
+                dialog.setDoneListener(() -> {
+                    MessageBox.INSTANCE.add(new Done());
+                    returnToInitialControl();
+
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.remove(signRegistFragment).commit();
+
+                    dialog.dismiss();
+                });
+                dialog.show();
+            });
+
+            tx.add(R.id.chat_capture, signRegistFragment);
+            tx.commit();
 		}
 
 		if (msg instanceof RequestTransfer) {
@@ -91,7 +128,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	public void onSendButtonClickEvent(Void aVoid) {
 		String msg = fiBinding.chatEditText.getText().toString();
-		messageBox.add(new SendMessage(msg));
+		MessageBox.INSTANCE.add(new SendMessage(msg));
 		clearInput();
 	}
 
@@ -157,37 +194,21 @@ public class ChatActivity extends AppCompatActivity {
 					}
 				});
 
-
 		ecBinding = ChatExtendedControlBinding.bind(exControlView);
-		ecBinding.extendedControl.setAdapter(new ControlPagerAdapter(getSupportFragmentManager()));
+
+        ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
+        adapter.setDoOnControl(this::hideExControl);
+		ecBinding.extendedControl.setAdapter(adapter);
 		RxViewPager.pageSelections(ecBinding.extendedControl)
-				.subscribe(pos -> {
-					if (pos == 0) {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-					} else {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-					}
-				});
-
-//        RxView.clicks(ecBinding.control1.registerAccount)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> hideExControl())
-//                .subscribe(aVoid -> {
-//                    messageBox.add(new SendMessage("계좌 개설"));
-//                });
-//
-//        RxView.clicks(ecBinding.control1.transferMoney)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> hideExControl())
-//                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 이체")));
-//
-//        RxView.clicks(ecBinding.control1.checkAccount)
-//                .throttleFirst(200, TimeUnit.MILLISECONDS)
-//                .doOnNext(aVoid -> hideExControl())
-//                .subscribe(aVoid -> messageBox.add(new SendMessage("계좌 조회")));
-
+            .subscribe(pos -> {
+                if (pos == 0) {
+                    ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+                    ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+                } else {
+                    ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+                    ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+                }
+            });
 
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
@@ -195,6 +216,8 @@ public class ChatActivity extends AppCompatActivity {
 			ctBinding.editMoney.setText("");
 			binding.footer.removeView(transferView);
 			binding.footer.addView(footerInputs);
+
+            MessageBox.INSTANCE.add(new Done());
 		});
 
 		binding.footer.addView(footerInputs);
@@ -239,6 +262,11 @@ public class ChatActivity extends AppCompatActivity {
 		dismissKeyboard(fiBinding.chatEditText);
 		binding.footer.removeAllViews();
 	}
+
+	private void returnToInitialControl(){
+        releaseAllControls();
+        binding.footer.addView(footerInputs);
+    }
 
 	private View inflate(int layoutId) {
 		ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);

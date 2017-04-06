@@ -1,22 +1,16 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.databinding.DataBindingUtil;
-import android.net.Uri;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.jakewharton.rxbinding.view.RxView;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
@@ -24,9 +18,10 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementResultBinding;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
 public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
+    @Inject
+    MyApplication application;
+
     private class AgreementViewHolder extends RecyclerView.ViewHolder {
         ChatAgreementResultBinding binding;
 
@@ -78,7 +73,6 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 
     @Override
     public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
-
     }
 
     @Override

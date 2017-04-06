@@ -6,30 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Account;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
+import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
-import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
 public class TransferScenario implements Scenario {
-    private Context context = MyApplication.getContext();
-
-    private enum Step {
-        Initial, Analyzing, SelectAccount, TransferDone
-    }
-
+    private Context context;
     private Step step = Step.Initial;
+
+
+    public TransferScenario(Context context) {
+        this.context = context;
+    }
 
     @Override
     public boolean decideOn(String msg) {
@@ -76,7 +75,7 @@ public class TransferScenario implements Scenario {
             case Initial:
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_transaction)));
 
-                ConfirmRequest request = ConfirmRequest.buildYesOrNo();
+                ConfirmRequest request = ConfirmRequest.buildYesOrNo(context);
                 request.addInfoEvent(context.getResources().getString(R.string.dialog_button_transfer_other), () -> {
                     MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_other)));
                 });
@@ -85,7 +84,7 @@ public class TransferScenario implements Scenario {
                 step = Step.Analyzing;
                 break;
             case Analyzing:
-                if(msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
+                if (msg.equals(context.getString(R.string.dialog_button_yes))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
                     MessageBox.INSTANCE.add(new RequestSignature());
                 } else if(msg.equals(context.getResources().getString(R.string.dialog_button_no))) {
@@ -122,5 +121,9 @@ public class TransferScenario implements Scenario {
         MessageBox.INSTANCE.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
         MessageBox.INSTANCE.add(new AccountList(accounts));
         MessageBox.INSTANCE.add(new RequestTransfer());
+    }
+
+    private enum Step {
+        Initial, Analyzing, SelectAccount, TransferDone
     }
 }

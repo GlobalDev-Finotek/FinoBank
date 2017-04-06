@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca.model;
 
+import io.realm.RealmObject;
 import lombok.Data;
 
 /**
@@ -7,7 +8,7 @@ import lombok.Data;
  */
 
 @Data
-public class UserAdditionalInfo {
+public class UserAdditionalInfo extends RealmObject {
   String emergencyPhoneNumber;
   String email;
   String creditPicPath;

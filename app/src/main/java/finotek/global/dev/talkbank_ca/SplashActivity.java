@@ -18,9 +18,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
+import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.ChatActivity;
+import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
+import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
+import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
@@ -34,11 +40,15 @@ public class SplashActivity extends AppCompatActivity {
 	private static final int MY_PERMISSION_READ_CALL_LOG = 1;
 	private final double AUTH_THRESHOLD = 0.6;
 
+	@Inject
+	RxEventBus eventBus;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		DataBindingUtil.setContentView(this, R.layout.activity_splash);
+
+		getComponent().inject(this);
 
 		Observable.timer(3, TimeUnit.SECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
@@ -73,7 +83,7 @@ public class SplashActivity extends AppCompatActivity {
 			double accuracy = CallLogVerifier.getCallLogPassRate(c);
 			boolean isValidUser = isValidUser(accuracy);
 
-			RxEventBus.getInstance().sendEvent(new AccuracyMeasureEvent(accuracy));
+			eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 			moveToNextActivity(isValidUser);
 
 		}
@@ -89,7 +99,7 @@ public class SplashActivity extends AppCompatActivity {
 					Cursor c = getCallLog();
 					double accuracy = CallLogVerifier.getCallLogPassRate(c);
 					boolean isValidUser = isValidUser(accuracy);
-					RxEventBus.getInstance().sendEvent(new AccuracyMeasureEvent(accuracy));
+					eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 					moveToNextActivity(isValidUser);
 				}
 			}
@@ -155,6 +165,14 @@ public class SplashActivity extends AppCompatActivity {
 		c.setTime(new Date());
 		c.add(Calendar.MINUTE, -10);
 		return String.valueOf(c.getTimeInMillis());
+	}
+
+
+	public MainComponent getComponent() {
+		return DaggerMainComponent.builder()
+				.appComponent(((MyApplication) getApplication()).getAppComponent())
+				.activityModule(new ActivityModule(this))
+				.build();
 	}
 
 }

@@ -20,16 +20,6 @@
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/back_grid"/>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingBottom="42dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="15dp"
-            android:scaleType="fitXY"
-            app:srcCompat="@drawable/icon_spot"/>
-
         <TextView
             android:id="@+id/tv_inst"
             android:layout_width="wrap_content"
@@ -60,6 +50,17 @@
             android:background="@drawable/white_small_circle_border"
             android:tint="@color/colorPrimary"
             app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
+
+        <ImageView
+            android:id="@+id/imageView7"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="42dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="15dp"
+            android:scaleType="fitXY"
+            app:srcCompat="@drawable/icon_spot"/>
 
     </FrameLayout>
 </layout>

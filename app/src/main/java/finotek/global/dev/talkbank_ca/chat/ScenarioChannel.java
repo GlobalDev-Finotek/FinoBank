@@ -200,6 +200,7 @@ class ScenarioChannel {
 			case "계좌 조회":
 			case "최근거래내역":
 			case "최근 거래 내역":
+			case "View recent transactions":
 				MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
 				RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
 				MessageBox.INSTANCE.add(rt);

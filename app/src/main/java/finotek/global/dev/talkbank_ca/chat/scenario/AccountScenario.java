@@ -6,6 +6,7 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
@@ -27,11 +28,14 @@ public class AccountScenario implements Scenario {
 
     @Override
     public void onReceive(Object msg) {
-        if(msg instanceof Done) {
+        if(msg instanceof SignatureVerified) {
             if(step == Step.Last) {
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_success)));
+                MessageBox.INSTANCE.add(new Done());
             }
+        }
 
+        if(msg instanceof Done) {
             step = Step.Initial;
         }
     }

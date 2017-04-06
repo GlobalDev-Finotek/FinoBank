@@ -42,7 +42,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 	            PackageManager pm = application.getContext().getPackageManager();
 	            List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
 	            if (activities.size() > 0) {
-	                application.getContext().startActivity(intent);
+		            application.getContext().startActivity(intent);
 	            } else {
                     // Do something else here. Maybe pop up a Dialog or Toast
                 }
@@ -69,7 +69,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 	            PackageManager pm = application.getContext().getPackageManager();
 	            List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
 	            if (activities.size() > 0) {
-	                application.getContext().startActivity(intent);
+		            application.getContext().startActivity(intent);
 	            } else {
                     // Do something else here. Maybe pop up a Dialog or Toast
                 }
@@ -85,7 +85,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 	            PackageManager pm = application.getContext().getPackageManager();
 	            List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
 	            if (activities.size() > 0) {
-	                application.getContext().startActivity(intent);
+		            application.getContext().startActivity(intent);
 	            } else {
                     // Do something else here. Maybe pop up a Dialog or Toast
                 }

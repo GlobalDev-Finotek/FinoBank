@@ -84,7 +84,7 @@ public class TransferScenario implements Scenario {
                 step = Step.Analyzing;
                 break;
             case Analyzing:
-                if(msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
+                if (msg.equals(context.getString(R.string.dialog_button_yes))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
                     MessageBox.INSTANCE.add(new RequestSignature());
                 } else if(msg.equals(context.getResources().getString(R.string.dialog_button_no))) {

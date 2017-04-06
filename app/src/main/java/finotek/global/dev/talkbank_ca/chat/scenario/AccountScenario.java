@@ -45,11 +45,11 @@ public class AccountScenario implements Scenario {
                 step = Step.CheckIDCard;
                 break;
             case CheckIDCard:
-                if(msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
+                if (msg.equals(context.getString(R.string.string_yes))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_take_picture_id_card)));
                     MessageBox.INSTANCE.add(new RequestTakeIDCard());
                     step = Step.TakeSign;
-                } else if(msg.equals(context.getResources().getString(R.string.dialog_button_no))) {
+                } else if (msg.equals(context.getString(R.string.string_no))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)));
                     MessageBox.INSTANCE.add(new Done());
                 } else {
@@ -58,11 +58,11 @@ public class AccountScenario implements Scenario {
                 break;
             // 본인이 맞으세요?
             case TakeSign:
-                if(msg.equals("네")) {
+                if (msg.equals(context.getString(R.string.string_yes))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
                     MessageBox.INSTANCE.add(new RequestSignature());
                     step = Step.Last;
-                } else if(msg.equals("아니오")){
+                } else if (msg.equals(context.getString(R.string.string_no))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)));
                     MessageBox.INSTANCE.add(new Done());
                 } else {

@@ -38,9 +38,9 @@ public class Agreement implements Comparable<Agreement> {
         isNewCheck = newCheck;
     }
 
-	public boolean isParent() {
-		return !isEmptyChild();
-	}
+    public boolean isParent() {
+        return !isEmptyChild();
+    }
 
     public List<Agreement> getChild() {
         return child;
@@ -57,8 +57,8 @@ public class Agreement implements Comparable<Agreement> {
         this.child.add(childAgr);
     }
 
-	@Override
-	public int compareTo(@android.support.annotation.NonNull Agreement o) {
-		return id - o.getId();
-	}
+    @Override
+    public int compareTo(@android.support.annotation.NonNull Agreement o) {
+        return id - o.getId();
+    }
 }

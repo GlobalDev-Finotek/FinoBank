@@ -35,10 +35,10 @@ public class SendMailScenario implements Scenario {
             MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context));
             step = 1;
         } else if(step == 1) {
-            if(msg.equals("네")) {
+            if (msg.equals(context.getString(R.string.string_yes))) {
                 MessageBox.INSTANCE.add(new ReceiveMessage("발송되었습니다"));
                 MessageBox.INSTANCE.add(new Done());
-            } else if(msg.equals("아니오")) {
+            } else if (msg.equals(context.getString(R.string.string_no))) {
                 MessageBox.INSTANCE.add(new ReceiveMessage("취소되었습니다."));
                 MessageBox.INSTANCE.add(new Done());
             }

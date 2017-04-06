@@ -16,7 +16,7 @@
             android:layout_height="40dp"
             android:background="@drawable/ex_control_button"
             android:drawableLeft="@drawable/icon_stankbank01"
-            android:text="@string/string_register_account"
+            android:text="@string/main_string_open_account"
             android:textColor="@color/ex_control"
             app:iconPadding="5dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
@@ -27,7 +27,7 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/ex_control_button"
             android:drawableLeft="@drawable/icon_stankbank02"
-            android:text="@string/string_transfer_money"
+            android:text="@string/main_string_transfer"
             android:textColor="@color/ex_control"
             app:iconPadding="5dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
@@ -38,7 +38,7 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/ex_control_button"
             android:drawableLeft="@drawable/icon_stankbank03"
-            android:text="@string/string_check_account"
+            android:text="@string/main_string_view_account_details"
             android:textColor="@color/ex_control"
             app:iconPadding="5dp"/>
     </LinearLayout>

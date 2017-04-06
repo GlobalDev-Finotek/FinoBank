@@ -178,8 +178,7 @@
     <string name="dialog_chat_verified_context_data">맥락 데이터 분석 결과 %d점 확률로 인증되었습니다.</string>
     <string name="dialog_chat_ask_help">%s님 안녕하세요. 무엇을 도와드릴까요?</string>
     <string name="dialog_button_open_account">계좌 개설</string>
-    <string name="dialog_chat_recommandation">%s님께는 ""스마트 계좌""를 추천해드립니다.
-계좌 개설을 진행하시겠습니까?</string>
+    <string name="dialog_chat_recommandation">%s님께는 ""스마트 계좌""를 추천해드립니다.\n계좌 개설을 진행하시겠습니까?</string>
     <string name="dialog_button_yes">네</string>
     <string name="dialog_button_no">아니오</string>
     <string name="dialog_chat_cancel_opening_bank">계좌 개설을 취소합니다. 어떤것을 도와드릴까요?</string>

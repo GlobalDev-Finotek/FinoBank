@@ -31,19 +31,19 @@ public class SignRegistrationActivity extends AppCompatActivity {
 	  binding.appbar.setOutlineProvider(null);
 	  binding.ibBack.setOnClickListener(v -> onBackPressed());
 
-	  SignRegistFragment signRegistFragment = new SignRegistFragment();
+	  OneStepSignRegisterFragment signRegistFragment = new OneStepSignRegisterFragment();
 	  FragmentTransaction transaction = getFragmentManager().beginTransaction();
 	  transaction.add(R.id.fl_content, signRegistFragment);
 	  transaction.commit();
 
 	  signRegistFragment.setOnSizeControlClick(size -> {
-		  if (size == SignRegistFragment.CanvasSize.LARGE) {
+		  if (size == BaseSignRegisterFragment.CanvasSize.LARGE) {
 			  LinearLayout.LayoutParams fl = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 					  LinearLayout.LayoutParams.MATCH_PARENT);
 			  binding.flContent.setLayoutParams(fl);
 			  binding.llInstWrapper.setVisibility(View.GONE);
 			  binding.appbar.setVisibility(View.GONE);
-		  } else if (size == SignRegistFragment.CanvasSize.SMALL) {
+		  } else if (size == BaseSignRegisterFragment.CanvasSize.SMALL) {
 			  LinearLayout.LayoutParams fl = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
 					  (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 350, getResources().getDisplayMetrics()));
 				binding.llInstWrapper.setVisibility(View.VISIBLE);

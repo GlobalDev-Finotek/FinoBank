@@ -47,7 +47,7 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
-import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
+import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
@@ -109,7 +109,7 @@ public class ChatActivity extends AppCompatActivity {
 			releaseControls();
 
             binding.footer.addView(inflate(R.layout.chat_capture));
-            SignRegistFragment signRegistFragment = new SignRegistFragment();
+            OneStepSignRegisterFragment signRegistFragment = new OneStepSignRegisterFragment();
             FragmentTransaction tx = getFragmentManager().beginTransaction();
             signRegistFragment.setOnSaveListener(() -> {
                 SucceededDialog dialog = new SucceededDialog(ChatActivity.this);

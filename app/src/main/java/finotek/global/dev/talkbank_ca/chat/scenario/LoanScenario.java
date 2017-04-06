@@ -76,13 +76,13 @@ public class LoanScenario implements Scenario {
 
                 List<Agreement> agreements = new ArrayList<>();
                 Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
-                required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement)));
-                required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement)));
-                required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement)));
-                required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information)));
+                required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "view.pdf"));
+                required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "view2.pdf"));
+                required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement), "view3.pdf"));
+                required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information), "view4.pdf"));
 
                 Agreement optional = new Agreement(200, context.getResources().getString(R.string.dialog_string_optional_term_agreement));
-                optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement)));
+                optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement), "view5.pdf"));
 
                 agreements.add(required);
                 agreements.add(optional);

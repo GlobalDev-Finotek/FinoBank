@@ -11,7 +11,7 @@ import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
@@ -112,11 +112,6 @@ public class ChatView extends RecyclerView {
 
     public void removeOf(ViewType viewType){
         adapter.removeChatItem(viewType.ordinal());
-        scrollToBottom();
-    }
-
-    public void removeAt(int pos) {
-        adapter.removeItem(pos);
         scrollToBottom();
     }
 

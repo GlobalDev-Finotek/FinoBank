@@ -198,9 +198,7 @@
     <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.
 더 필요한 사항이 있으세요?</string>
     <string name="dialog_button_transfer">계좌 이체</string>
-    <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과,
-김가람(010-5678-1234)님에게
-100,000원을 이체하시겠어요?</string>
+    <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과,\n김가람(010&#8211;5678&#8211;1234)님에게 100,000원을 이체하시겠어요?</string>
     <string name="dialog_button_transfer_other">다른 사람에게 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다. 어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에
@@ -226,8 +224,7 @@
 현재 계좌 잔액은 3,120,000원입니다.
      <string name="dialog_string_won">원</string>
 더 필요한 사항이 있으세요?</string>
-    <string name="dialog_chat_loan_appl">거래 내역 확인 결과, “원데이 대출”을 추천합니다.
-최대 5천만 원 이내, 최저 금리는 2.0%입니다.
+    <string name="dialog_chat_loan_appl">거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리는 2.0%입니다.
 
 대출을 신청하시겠습니까?</string>
     <string name="dialog_chat_microedit_cancel">소액 담보대출을 취소합니다. 어떤것을 도와드릴까요?</string>

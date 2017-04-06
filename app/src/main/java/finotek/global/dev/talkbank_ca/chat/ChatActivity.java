@@ -25,12 +25,13 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.Done;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
@@ -61,7 +62,7 @@ public class ChatActivity extends AppCompatActivity {
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbarTitle.setText("톡뱅");
+		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
 		scenario = new ScenarioChannel(this, binding.chatView);
 		MessageBox.INSTANCE.observable
@@ -82,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
-				MessageBox.INSTANCE.add(new ReceiveMessage("위 내용이 맞으세요?"));
+				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
 				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
                 this.returnToInitialControl();
 
@@ -101,11 +102,11 @@ public class ChatActivity extends AppCompatActivity {
             FragmentTransaction tx = getFragmentManager().beginTransaction();
             signRegistFragment.setOnSaveListener(() -> {
                 SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-                dialog.setTitle("자필 서명이 인증 되었습니다.");
-                dialog.setDescription("확인 버튼을 선택하면\n완료 단계로 이동합니다.");
-                dialog.setButtonText("확인");
+                dialog.setTitle(getString(R.string.setting_string_signature_verified));
+                dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+                dialog.setButtonText(getString(R.string.setting_string_yes));
                 dialog.setDoneListener(() -> {
-                    MessageBox.INSTANCE.add(new Done());
+                    MessageBox.INSTANCE.add(new SignatureVerified());
                     returnToInitialControl();
 
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -214,10 +215,9 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
 		ctBinding.gvKeypad.onComplete(() -> {
 			ctBinding.editMoney.setText("");
-			binding.footer.removeView(transferView);
-			binding.footer.addView(footerInputs);
+			this.returnToInitialControl();
 
-            MessageBox.INSTANCE.add(new Done());
+            MessageBox.INSTANCE.add(new TransferButtonPressed());
 		});
 
 		binding.footer.addView(footerInputs);

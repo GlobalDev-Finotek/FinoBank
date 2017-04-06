@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,14 +13,17 @@ import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
-import finotek.global.dev.talkbank_ca.chat.messages.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
@@ -45,7 +49,7 @@ class ScenarioChannel {
         // 메시지 박스 설정
         MessageBox.INSTANCE.observable
             .flatMap(msg -> {
-                if(msg instanceof SendMessage) {
+                if(msg instanceof SendMessage || msg instanceof RequestRemoveControls || msg instanceof TransferButtonPressed) {
                     return Observable.just(msg);
                 } else {
                     return Observable.just(msg)
@@ -178,7 +182,11 @@ class ScenarioChannel {
             chatView.accountList((AccountList) msg);
         }
 
-        if(msg instanceof Done) {
+        if(msg instanceof SignatureVerified) {
+
+        }
+
+        if(msg instanceof RequestRemoveControls) {
             chatView.removeOf(ChatView.ViewType.AccountList);
         }
     }

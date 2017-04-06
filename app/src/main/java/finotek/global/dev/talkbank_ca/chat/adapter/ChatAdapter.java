@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.chat.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.ViewGroup;
@@ -69,10 +70,11 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     }
 
     public void removeChatItem(int viewType){
-        for(DataWithType item : this.items) {
+        for(int i = 0; i < this.items.size(); i++) {
+            DataWithType item = this.items.get(i);
             if(item.getViewType() == viewType) {
                 builders.get(viewType).onDelete();
-                items.remove(item);
+                items.remove(i);
             }
         }
     }

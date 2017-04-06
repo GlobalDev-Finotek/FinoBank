@@ -1,11 +1,13 @@
 package finotek.global.dev.talkbank_ca.chat.messages.control;
 
+import android.content.Context;
 import android.content.res.Resources;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.widget.RoundButton.ButtonType;
@@ -33,12 +35,13 @@ public class ConfirmRequest {
     }
 
     public static ConfirmRequest buildYesOrNo(){
+        Context context = MyApplication.getContext();
         ConfirmRequest req = new ConfirmRequest();
-        req.addDangerEvent(Resources.getSystem().getString(R.string.dialog_button_no), () -> {
-            MessageBox.INSTANCE.add(new SendMessage(Resources.getSystem().getString(R.string.dialog_button_no)));
+        req.addDangerEvent(context.getResources().getString(R.string.dialog_button_no), () -> {
+            MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_no)));
         });
-        req.addPrimaryEvent(Resources.getSystem().getString(R.string.dialog_button_yes), () -> {
-            MessageBox.INSTANCE.add(new SendMessage(Resources.getSystem().getString(R.string.dialog_button_yes)));
+        req.addPrimaryEvent(context.getResources().getString(R.string.dialog_button_yes), () -> {
+            MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_yes)));
         });
         return req;
     }

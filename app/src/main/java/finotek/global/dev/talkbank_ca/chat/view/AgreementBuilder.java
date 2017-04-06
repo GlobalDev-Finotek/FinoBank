@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -17,10 +16,9 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemAgreementBinding;
-import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> {
     private Context context;

@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.chat.messages;
+package finotek.global.dev.talkbank_ca.chat.messages.ui;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

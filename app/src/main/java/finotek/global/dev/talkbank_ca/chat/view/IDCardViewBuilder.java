@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.databinding.ChatIdCardBinding;
 
 public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {

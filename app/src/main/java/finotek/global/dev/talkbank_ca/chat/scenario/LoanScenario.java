@@ -12,6 +12,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
@@ -39,12 +40,15 @@ public class LoanScenario implements Scenario {
     // SendMessage를 제외한 모든 메시지를 받음
     @Override
     public void onReceive(Object msg) {
-        if(msg instanceof Done) {
+        if(msg instanceof SignatureVerified) {
             if(step == Step.Last) {
                 MessageBox.INSTANCE.add(new AgreementResult());
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)));
+                MessageBox.INSTANCE.add(new Done());
             }
+        }
 
+        if(msg instanceof Done) {
             step = Step.Initial;
         }
     }

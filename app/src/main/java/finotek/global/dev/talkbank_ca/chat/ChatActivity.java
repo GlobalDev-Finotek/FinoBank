@@ -17,6 +17,7 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
+import com.github.barteksc.pdfviewer.PDFView;
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
@@ -30,6 +31,7 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -46,6 +48,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import rx.android.schedulers.AndroidSchedulers;
@@ -137,6 +140,14 @@ public class ChatActivity extends AppCompatActivity {
 
 		if(msg instanceof DismissKeyboard) {
             returnToInitialControl();
+        }
+
+        if(msg instanceof ShowPdfView) {
+            ShowPdfView info = (ShowPdfView) msg;
+            PdfViewDialog dialog = new PdfViewDialog(this);
+            dialog.setTitle(info.getTitle());
+            dialog.setPdfAssets(info.getPdfAsset());
+            dialog.show();
         }
 	}
 

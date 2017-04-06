@@ -40,6 +40,7 @@ dependencies {
     })
     compile project(':finopassvalidator')
     compile 'joda-time:joda-time:2.9.7'
+    compile 'com.github.barteksc:android-pdf-viewer:2.5.0'
     compile 'com.android.support:support-v4:25.1.0'
     compile 'com.android.support:support-v13:25.1.0'
     compile 'com.android.support:appcompat-v7:25.1.0'

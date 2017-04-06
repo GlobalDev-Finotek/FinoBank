@@ -33,7 +33,7 @@
             android:layout_width="50dp"
             android:layout_marginEnd="10dp"
             android:layout_height="match_parent"
-            android:text="@string/string_send"
+            android:text="@string/main_button_send"
             android:textColor="@color/color_foreground"
             android:background="@drawable/btn_send_primary" />
     </LinearLayout>

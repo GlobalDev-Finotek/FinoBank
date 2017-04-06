@@ -10,12 +10,18 @@ import lombok.RequiredArgsConstructor;
 public class Agreement {
     private int id;
     private String name;
+    private String pdfAsset;
     private List<Agreement> child = null;
     private boolean isNewCheck = false;
 
     public Agreement(int id, String name) {
+        this(id, name, null);
+    }
+
+    public Agreement(int id, String name, String pdfAsset) {
         this.id = id;
         this.name = name;
+        this.pdfAsset = pdfAsset;
     }
 
     public int getId() {
@@ -32,6 +38,10 @@ public class Agreement {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getPdfAsset() {
+        return pdfAsset;
     }
 
     public boolean isNewCheck() {

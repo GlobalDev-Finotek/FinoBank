@@ -9,6 +9,7 @@ import android.widget.LinearLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
+import java.util.concurrent.RunnableFuture;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -16,6 +17,7 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemAgreementBinding;
@@ -84,8 +86,23 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
         if(agreement.isParent()) {
             binding.textView.setFontType(context, 1);
             binding.arrow.setVisibility(View.INVISIBLE);
-        }
+        } else {
+            binding.textView.setClickable(true);
+            Runnable r = new Runnable(){
+                @Override
+                public void run() {
+                    MessageBox.INSTANCE.add(new ShowPdfView(agreement.getName(), agreement.getPdfAsset()));
+                }
+            };
 
+            RxView.clicks(binding.textView)
+                .throttleFirst(2000, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> r.run());
+
+            RxView.clicks(binding.arrow)
+                .throttleFirst(2000, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> r.run());
+        }
 
         holder.addView(view);
     }

@@ -23,33 +23,41 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.app.MyApplication;
+import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
+import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
+import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
+import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
-import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
+import finotek.global.dev.talkbank_ca.user.sign.SignRegistFragment;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
+	@Inject
+	RxEventBus eventBus;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
 	private ChatTransferBinding ctBinding;
 	private ScenarioChannel scenario;
-
 	private boolean isExControlAvailable = false;
 	private View exControlView = null;
 	private View footerInputs = null;
@@ -59,11 +67,15 @@ public class ChatActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
+
+		getComponent().inject(this);
+
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText("톡뱅");
 
-		scenario = new ScenarioChannel(this, binding.chatView);
+		scenario = new ScenarioChannel(this, binding.chatView, eventBus);
+
 		MessageBox.INSTANCE.observable
             .delay(2000, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())
@@ -271,6 +283,14 @@ public class ChatActivity extends AppCompatActivity {
 	private View inflate(int layoutId) {
 		ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
 		return LayoutInflater.from(this).inflate(layoutId, parent, false);
+	}
+
+	private ChatComponent getComponent() {
+		return DaggerChatComponent
+				.builder()
+				.appComponent(((MyApplication) getApplication()).getAppComponent())
+				.activityModule(new ActivityModule(this))
+				.build();
 	}
 
 }

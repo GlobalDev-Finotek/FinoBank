@@ -19,7 +19,7 @@ import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
 public class Agreement extends Fragment {
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState){
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState) {
 		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_agreement, container, false);
 		View view = binding.getRoot();
 // check one -> click all
@@ -138,8 +138,8 @@ public class Agreement extends Fragment {
 			public void onClick(View v) {
 
 
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",2);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 2);
 
 				startActivity(move);
 			}
@@ -150,8 +150,8 @@ public class Agreement extends Fragment {
 			public void onClick(View v) {
 
 
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",3);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 3);
 
 				startActivity(move);
 			}
@@ -174,8 +174,8 @@ public class Agreement extends Fragment {
 			public void onClick(View v) {
 
 
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",5);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 5);
 
 				startActivity(move);
 			}

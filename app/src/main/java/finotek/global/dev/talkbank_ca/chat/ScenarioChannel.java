@@ -12,14 +12,14 @@ import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
-import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
@@ -31,16 +31,15 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 class ScenarioChannel {
-    private enum Step {
-        Account, AccountCheckIDCard, AccountTakeSign, AccountSucceeded
-    }
 
-    private ChatView chatView;
+	private RxEventBus eventBus;
+	private ChatView chatView;
     private Scenario currentScenario = null;
     private List<Scenario> scenarioPool;
 
-    ScenarioChannel(Context context, ChatView chatView) {
-        this.chatView = chatView;
+	ScenarioChannel(Context context, ChatView chatView, RxEventBus eventBus) {
+		this.chatView = chatView;
+		this.eventBus = eventBus;
 
         // 메시지 박스 설정
         MessageBox.INSTANCE.observable
@@ -73,10 +72,14 @@ class ScenarioChannel {
         scenarioPool.add(new AccountScenario());
     }
 
+	public void setEventBus(RxEventBus eventBus) {
+		this.eventBus = eventBus;
+	}
+
     private void firstScenario(){
         MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
-        RxEventBus.getInstance().getObservable()
-            .subscribe(iEvent -> {
+	    eventBus.getObservable()
+			    .subscribe(iEvent -> {
                 if (iEvent instanceof AccuracyMeasureEvent) {
                     double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
                     MessageBox.INSTANCE.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf((int) (accuracy * 100))
@@ -198,4 +201,8 @@ class ScenarioChannel {
                 break;
         }
     }
+
+	private enum Step {
+		Account, AccountCheckIDCard, AccountTakeSign, AccountSucceeded
+	}
 }

@@ -9,9 +9,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
-import finotek.global.dev.talkbank_ca.base.mvp.event.IEvent;
-import finotek.global.dev.talkbank_ca.chat.MessageBox;
-import rx.subjects.PublishSubject;
+import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import io.realm.Realm;
 
 /**
  * Created by kwm on 2017. 3. 6..
@@ -20,11 +19,13 @@ import rx.subjects.PublishSubject;
 public class AppModule {
 
 	private MyApplication application;
-	private PublishSubject<IEvent> eventBus;
+	private RxEventBus eventBus;
+	private Realm realm;
 
-	public AppModule(@NonNull MyApplication application, PublishSubject<IEvent> eventBus) {
+	public AppModule(@NonNull MyApplication application, RxEventBus eventBus, Realm realm) {
 		this.application = application;
 		this.eventBus = eventBus;
+		this.realm = realm;
 	}
 
   @Provides
@@ -39,6 +40,17 @@ public class AppModule {
     return this.application;
   }
 
+	@Provides
+	@Singleton
+	Realm provideRealm() {
+		return realm;
+	}
+
+	@Provides
+	@Singleton
+	RxEventBus provideEventBus() {
+		return eventBus;
+	}
 
 	@Provides
 	SharedPreferences provideSharedPreferences() {

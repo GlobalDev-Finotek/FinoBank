@@ -1,26 +1,20 @@
 package finotek.global.dev.talkbank_ca.base.mvp.event;
 
+import javax.inject.Singleton;
+
 import rx.Observable;
 import rx.subjects.BehaviorSubject;
 
 /**
  * Created by magyeong-ug on 2017. 3. 31..
  */
-
+@Singleton
 public class RxEventBus {
 
-	private static RxEventBus mInstance;
 	private BehaviorSubject<IEvent> mSubject;
 
-	private RxEventBus() {
+	public RxEventBus() {
 		mSubject = BehaviorSubject.create();
-	}
-
-	public static RxEventBus getInstance() {
-		if (mInstance == null) {
-			mInstance = new RxEventBus();
-		}
-		return mInstance;
 	}
 
 	public void sendEvent(IEvent event) {

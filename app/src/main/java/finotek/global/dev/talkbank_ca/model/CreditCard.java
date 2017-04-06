@@ -2,13 +2,14 @@ package finotek.global.dev.talkbank_ca.model;
 
 import java.util.Date;
 
+import io.realm.RealmObject;
 import lombok.Data;
 
 /**
  * Created by magyeong-ug on 15/03/2017.
  */
 @Data
-public class CreditCard {
+public class CreditCard extends RealmObject {
 	public String number;
 	public String company;
 	public Date expirationDate;

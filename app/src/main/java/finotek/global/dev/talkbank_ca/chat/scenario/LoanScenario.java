@@ -6,24 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
-import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 
 public class LoanScenario implements Scenario {
-    private Context context = MyApplication.getContext();
-
-    private enum Step {
-        Initial, InputAddress, InputMoney, Agreement, Last
-    }
-
+    private Context context;
     private Step step = Step.Initial;
+
+    public LoanScenario(Context context) {
+        this.context = context;
+    }
 
     @Override
     public boolean decideOn(String msg) {
@@ -55,7 +53,7 @@ public class LoanScenario implements Scenario {
         switch(step){
             case Initial:
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_apply)));
-                MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
+                MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context));
                 step = Step.InputAddress;
                 break;
             case InputAddress:
@@ -97,5 +95,9 @@ public class LoanScenario implements Scenario {
                 MessageBox.INSTANCE.add(new ReceiveMessage("무슨 의미 인가요?"));
                 break;
         }
+    }
+
+    private enum Step {
+        Initial, InputAddress, InputMoney, Agreement, Last
     }
 }

@@ -3,15 +3,18 @@ package finotek.global.dev.talkbank_ca.chat.scenario;
 import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 
 public class SendMailScenario implements Scenario {
-    private Context context = MyApplication.getContext();
     int step = 0;
+    private Context context;
+
+    public SendMailScenario(Context context) {
+        this.context = context;
+    }
 
     @Override
     public boolean decideOn(String msg) {
@@ -29,7 +32,7 @@ public class SendMailScenario implements Scenario {
     public void onUserSend(String msg) {
         if(step == 0) {
             MessageBox.INSTANCE.add(new ReceiveMessage("상담 내용을 이메일로 보내시겠습니까?"));
-            MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
+            MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context));
             step = 1;
         } else if(step == 1) {
             if(msg.equals("네")) {

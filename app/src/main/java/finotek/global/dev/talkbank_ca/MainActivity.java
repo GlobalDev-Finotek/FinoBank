@@ -22,6 +22,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 	ActivityMainBinding binding;
 
 	@Inject
+	RxEventBus eventBus;
+
+	@Inject
 	SharedPrefsHelper sharedPrefsHelper;
 
 	@Inject
@@ -37,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		boolean isFirst = sharedPrefsHelper.get("isFirst", true);
 		setNextButtonText(isFirst);
 
-		RxEventBus.getInstance().getObservable()
+		eventBus.getObservable()
 				.subscribe(iEvent -> {
 					if (iEvent instanceof AccuracyMeasureEvent) {
 						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();

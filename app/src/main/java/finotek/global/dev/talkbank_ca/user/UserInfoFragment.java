@@ -13,8 +13,16 @@ import com.jakewharton.rxbinding.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.databinding.LayoutUserRegistrationBinding;
+import finotek.global.dev.talkbank_ca.inject.component.DaggerUserInfoComponent;
+import finotek.global.dev.talkbank_ca.inject.component.UserInfoComponent;
+import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.model.UserAdditionalInfo;
 import finotek.global.dev.talkbank_ca.setting.PageType;
 import finotek.global.dev.talkbank_ca.setting.SettingDetailActivity;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
@@ -30,7 +38,13 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
  * Created by magyeong-ug on 21/03/2017.
  */
 
-public class UserInfoFragment extends android.app.Fragment {
+public class UserInfoFragment extends android.app.Fragment implements UserRegisterView {
+
+
+	@Inject
+	UserRegisterImpl presenter;
+
+	LayoutUserRegistrationBinding binding;
 
 	public static UserInfoFragment newInstance(String title) {
 		UserInfoFragment userInfoFragment = new UserInfoFragment();
@@ -40,10 +54,20 @@ public class UserInfoFragment extends android.app.Fragment {
 		return userInfoFragment;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		presenter.detachView();
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		LayoutUserRegistrationBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_user_registration, container, false);
+		binding = DataBindingUtil.inflate(inflater, R.layout.layout_user_registration, container, false);
+
+		getComponent().inject(this);
+
+		presenter.attachView(this);
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
 				.subscribe(new Action1<Void>() {
@@ -68,7 +92,6 @@ public class UserInfoFragment extends android.app.Fragment {
 
 					binding.llRegiBasic.edtPhoneNumber
                 .setErrFilter(str.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$"));
-
 					});
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
@@ -100,8 +123,40 @@ public class UserInfoFragment extends android.app.Fragment {
 					startActivity(intent);
 				});
 
-		binding.llRegiAdditional.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
+		binding.llRegiAdditional.btnSave.setOnClickListener(v -> {
+			User user = generateUser();
+			presenter.saveUser(user);
+			getActivity().onBackPressed();
+		});
 
 		return binding.getRoot();
 	}
+
+	private User generateUser() {
+		User user = new User();
+
+		user.setName(binding.llRegiBasic.edtUserName.getText().toString());
+		user.setPhoneNumber(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+
+		UserAdditionalInfo additionalInfo = getAdditionalInfo();
+		user.setAdditionalInfo(additionalInfo);
+
+		return user;
+	}
+
+	private UserAdditionalInfo getAdditionalInfo() {
+		UserAdditionalInfo userAdditionalInfo = new UserAdditionalInfo();
+		userAdditionalInfo.setEmail(binding.llRegiAdditional.edtEmail.getText().toString());
+		userAdditionalInfo.setEmergencyPhoneNumber(binding.llRegiAdditional.edtEmergencyPhoneNumber.getText().toString());
+		return userAdditionalInfo;
+	}
+
+	private UserInfoComponent getComponent() {
+		return DaggerUserInfoComponent
+				.builder()
+				.appComponent(((MyApplication) getActivity().getApplication()).getAppComponent())
+				.activityModule(new ActivityModule(getActivity())).build();
+	}
+
+
 }

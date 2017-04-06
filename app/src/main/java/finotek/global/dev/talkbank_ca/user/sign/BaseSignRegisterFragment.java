@@ -9,10 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding.view.RxView;
-
-import java.util.concurrent.TimeUnit;
-
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentDrawBinding;
 import rx.android.schedulers.AndroidSchedulers;
@@ -22,14 +18,14 @@ import rx.subjects.PublishSubject;
  * Created by magyeong-ug on 2017. 3. 29..
  */
 
-public class SignRegistFragment extends Fragment {
+public abstract class BaseSignRegisterFragment extends Fragment {
 
+	protected int stepCount = 1;
+	protected PublishSubject<Integer> stepSubject;
+	protected OnSizeControlClick onSizeControlClick;
+	protected OnSignSaveListener onSaveListener;
+	protected CanvasSize currentSize = CanvasSize.SMALL;
 	FragmentDrawBinding binding;
-	private int stepCount = 1;
-	private PublishSubject<Integer> stepSubject;
-	private OnSizeControlClick onSizeControlClick;
-	private OnSignSaveListener onSaveListener;
-	private CanvasSize currentSize = CanvasSize.SMALL;
 
 	public void setOnSaveListener(OnSignSaveListener onSaveListener) {
 		this.onSaveListener = onSaveListener;
@@ -39,31 +35,27 @@ public class SignRegistFragment extends Fragment {
 		this.onSizeControlClick = onSizeControlClick;
 	}
 
+	abstract void initView();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
 		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_draw, container, false);
 
-		binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(1/2)");
-
 		stepSubject = PublishSubject.create();
 
-
-		binding.drawingCanvas.setOnCanvasTouchListener(() -> {
-			if (stepCount == 1 || stepCount == 3) {
-				stepSubject.onNext(++stepCount);
-			}
-		});
+		initView();
 
 		binding.ibSizeControl.setOnClickListener(v -> {
 			currentSize = currentSize == CanvasSize.SMALL ? CanvasSize.LARGE : CanvasSize.SMALL;
 			if (onSizeControlClick != null) {
 				onSizeControlClick.onClick(currentSize);
-
+				stepCount = 1;
 				/* 사이즈에 따른 아이콘 변경 */
 				if (currentSize == CanvasSize.SMALL) {
 					binding.ibSizeControl.setImageDrawable(ContextCompat.getDrawable(getActivity(),
 							R.drawable.vector_drawable_icon_fullsize));
+
 				} else {
 					binding.ibSizeControl.setImageDrawable(ContextCompat.getDrawable(getActivity(),
 							R.drawable.vector_drawable_icon_minimize));
@@ -75,23 +67,12 @@ public class SignRegistFragment extends Fragment {
 			}
 		});
 
-
-		RxView.clicks(binding.ibNext)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-
-					if (stepCount == 2) {
-						stepSubject.onNext(++stepCount);
-					}
-					else if (stepCount == 4) {
-						stepSubject.onCompleted();
-					}
-				});
+		setOnTouchCount();
 
 		stepSubject
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(
-						this::setNextBtnAppearance,
+						this::setNextStepAction,
 						throwable -> {
 						},
 						() -> {
@@ -101,26 +82,9 @@ public class SignRegistFragment extends Fragment {
 		return binding.getRoot();
 	}
 
-	private void setNextBtnAppearance(int step) {
-		switch (step) {
+	abstract void setNextStepAction(int step);
 
-			case 2:
-				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_next));
-				binding.tvInst.setText("");
-				break;
-
-			case 3:
-				binding.drawingCanvas.clear();
-				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
-				binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(2/2)");
-				break;
-
-			case 4:
-				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm));
-				binding.tvInst.setText("");
-				break;
-		}
-	}
+	abstract void setOnTouchCount();
 
 	public enum CanvasSize {
 		SMALL(1),
@@ -136,7 +100,6 @@ public class SignRegistFragment extends Fragment {
 	public interface OnSizeControlClick {
 		void onClick(CanvasSize size);
 	}
-
 	public interface OnSignSaveListener {
 		void onSave();
 	}

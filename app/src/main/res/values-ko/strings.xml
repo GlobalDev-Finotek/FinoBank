@@ -27,10 +27,8 @@
     <string name="registration_string_write_signature_step_1">표시된 영역 안에 서명해 주세요.(1/2)</string>
     <string name="registration_string_write_signature_step_2">표시된 영역 안에 서명해 주세요.(2/2)</string>
     <string name="registration_string_registering_signature">서명은 2회 등록을 진행하게 됩니다.</string>
-    <string name="registration_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여
-서명해 주세요.</string>
-    <string name="registration_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로
-사용됩니다.</string>
+    <string name="registration_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+    <string name="registration_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로 사용됩니다.</string>
     <string name="registration_button_next">다음</string>
     <string name="registration_string_signature_verifying">자필 서명 인증 중</string>
     <string name="registration_string_wait">잠시만 기다려 주세요.</string>
@@ -38,14 +36,11 @@
     <string name="registration_string_authentication_complete">확인 버튼을 선택하면 인증이 완료됩니다.</string>
     <string name="registration_button_yes">확인</string>
     <string name="registration_string_signature_fail">자필서명 인증 실패(1/5)</string>
-    <string name="registration_string_click_re_try_button">재시도 버튼을 선택하여
-다시 서명해주세요(5회 가능)</string>
+    <string name="registration_string_click_re_try_button">재시도 버튼을 선택하여 다시 서명해주세요(5회 가능)</string>
     <string name="registration_button_re_try">재시도</string>
     <string name="registration_string_fits_area_take_picture">표시된 영역 안에 맞추어 촬영해 주세요.</string>
-    <string name="registration_string_warning_backlight">촬영 시 빛이 들어가면 인식이 잘 안 될 수  있으니
-빛이 반사되지 않게 촬영해 주세요.</string>
-    <string name="registration_string_purpose_registered_credit">등록한 신용카드는 필요 시 본인 확인용으로
-사용됩니다.</string>
+    <string name="registration_string_warning_backlight">촬영 시 빛이 들어가면 인식이 잘 안 될 수 있으니 빛이 반사되지 않게 촬영해 주세요.</string>
+    <string name="registration_string_purpose_registered_credit">등록한 신용카드는 필요 시 본인 확인용으로 사용됩니다.</string>
     <string name="registration_string_collecting_data_check">추출된 데이터가 정확한지 확인해 주십시오.</string>
     <string name="registration_string_credit_card_number">카드 번호</string>
     <string name="registration_string_credit_card_company">카드사</string>
@@ -58,8 +53,7 @@
     <string name="registration_string_pin_code_backgorund_color_select">- PIN 코드 배경색 선택</string>
     <string name="registration_string_pin_code_text_color_select">- PIN 코드 글자색 선택</string>
     <string name="registration_string_pin_code_type">6자리 숫자로 PIN 코드를 입력해 주세요.</string>
-    <string name="registration_string_pin_code_color_verify">PIN 코드 인증 시 등록한 배경색과 글자색도
-일치해야 합니다.</string>
+    <string name="registration_string_pin_code_color_verify">PIN 코드 인증 시 등록한 배경색과 글자색도 일치해야 합니다.</string>
     <string name="registration_string_secure_keyboard_operating">보안 키보드 작동 중</string>
     <string name="registration_button_pin_code_chanage">PIN 코드 변경</string>
     <string name="registration_string_signature_twice">서명은 2회 등록을 진행하게 됩니다.</string>
@@ -112,10 +106,8 @@
     <string name="setting_string_write_signature_step_1">표시된 영역 안에 서명해 주세요.(1/2)</string>
     <string name="setting_string_write_signature_step_2">표시된 영역 안에 서명해 주세요.(2/2)</string>
     <string name="setting_string_signature_twice">서명은 2회 등록을 진행하게 됩니다.</string>
-    <string name="setting_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여
-서명해 주세요.</string>
-    <string name="setting_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로
-사용됩니다.</string>
+    <string name="setting_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+    <string name="setting_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로 사용됩니다.</string>
     <string name="setting_string_next">다음</string>
     <string name="setting_string_signature_verifying">자필 서명 인증 중</string>
     <string name="setting_string_wait">잠시만 기다려 주세요.</string>
@@ -123,14 +115,11 @@
     <string name="setting_string_authentication_complete">확인 버튼을 선택하면 인증이 완료됩니다.</string>
     <string name="setting_string_yes">확인</string>
     <string name="setting_string_signature_fail">자필서명 인증 실패(1/5)</string>
-    <string name="setting_string_click_re_try_button">재시도 버튼을 선택하여
-다시 서명해주세요(5회 가능)</string>
+    <string name="setting_string_click_re_try_button">재시도 버튼을 선택하여 다시 서명해주세요(5회 가능)</string>
     <string name="setting_string_re_try">재시도</string>
     <string name="setting_string_fits_area_take_picture">표시된 영역 안에 맞추어 촬영해 주세요.</string>
-    <string name="setting_string_warning_backlight">촬영 시 빛이 들어가면 인식이 잘 안 될 수  있으니
-빛이 반사되지 않게 촬영해 주세요.</string>
-    <string name="setting_string_purpose_registered_credit">등록한 신용카드는 필요 시 본인 확인용으로
-사용됩니다.</string>
+    <string name="setting_string_warning_backlight">촬영 시 빛이 들어가면 인식이 잘 안 될 수 있으니 빛이 반사되지 않게 촬영해 주세요.</string>
+    <string name="setting_string_purpose_registered_credit">등록한 신용카드는 필요 시 본인 확인용으로 사용됩니다.</string>
     <string name="setting_string_collecting_data_check">추출된 데이터가 정확한지 확인해 주십시오.</string>
     <string name="setting_string_credit_card_number">카드 번호</string>
     <string name="setting_string_credit_card_company">카드사</string>
@@ -145,8 +134,7 @@
     <string name="setting_string_pin_code_background_color_select">- PIN 코드 배경색 선택</string>
     <string name="setting_string_pin_code_text_color_select">- PIN 코드 글자색 선택</string>
     <string name="setting_string_six_digit">6자리 숫자로 PIN 코드를 입력해 주세요.</string>
-    <string name="setting_string_pin_code_color_verify">PIN 코드 인증 시 등록한 배경색과 글자색도
-일치해야 합니다.</string>
+    <string name="setting_string_pin_code_color_verify">PIN 코드 인증 시 등록한 배경색과 글자색도 일치해야 합니다.</string>
     <string name="setting_string_secure_keyboard_operating">보안 키보드 작동 중</string>
     <string name="setting_string_context_app">맥락데이터 수집 앱</string>
     <string name="setting_string_all_app_collect">모든 앱 수집</string>
@@ -182,9 +170,7 @@
     <string name="dialog_button_yes">네</string>
     <string name="dialog_button_no">아니오</string>
     <string name="dialog_chat_cancel_opening_bank">계좌 개설을 취소합니다. 어떤것을 도와드릴까요?</string>
-    <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인 용도로 주민등록증이나
-운전면허증이 필요합니다.
-준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
+    <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
     <string name="dialog_string_id_card_type">신분증 유형</string>
     <string name="dialog_string_name">이름</string>
     <string name="dialog_string_id_number">주민등록번호</string>
@@ -192,22 +178,14 @@
     <string name="dialog_string_license_number">운전면허번호</string>
     <string name="dialog_chat_correct_information">위 내용이 맞으세요?</string>
     <string name="dialog_chat_id_card_retake">신분증 촬영을 다시 진행합니다.</string>
-    <string name="dialog_chat_finger_tip_sign">마지막으로 사용자 등록 시 입력한 자필 서명을
-표시된 영역 안에 손톱이 아닌 손가락 끝을
-사용하여 서명해 주세요.</string>
-    <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.
-더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_finger_tip_sign">마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을\n사용하여 서명해 주세요.</string>
+    <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_button_transfer">계좌 이체</string>
     <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과,\n김가람(010&#8211;5678&#8211;1234)님에게 100,000원을 이체하시겠어요?</string>
     <string name="dialog_button_transfer_other">다른 사람에게 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다. 어떤것을 도와드릴까요?</string>
-    <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에
-손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
-    <string name="dialog_chat_after_transfer_1">김가람(010-5678-1234)님에게
-100,000원을 이체하였습니다.
-현재 계좌 잔액은 3,270,000원입니다.
-
-더 필요한 사항이 있으세요?</string>
+    <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에\n손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+    <string name="dialog_chat_after_transfer_1">김가람(010-5678-1234)님에게 100,000원을 이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_button_recent_transaction">최근 거래내역 보기</string>
     <string name="dialog_button_transfer_add">추가 이체</string>
     <string name="dialog_chat_someone_recent_transaction">%s님의 최근 거래내역입니다.</string>
@@ -216,20 +194,14 @@
     <string name="dialog_string_balance">잔액</string>
     <string name="dialog_button_view_more">더보기</string>
     <string name="dialog_string_receiver_select">받으실 분을 선택해 주세요.</string>
-    <string name="dialog_chat_contact_select">위 목록에 없다면 주소록 또는 카카오톡에서
-선택해 주세요.</string>
+    <string name="dialog_chat_contact_select">위 목록에 없다면 주소록 또는 카카오톡에서 선택해 주세요.</string>
     <string name="dialog_string_amount_transfer">이체 금액</string>
     <string name="dialog_chat_after_transfer_2">어머니(010-9876-5432)님에게 150,000원을 이체하였습니다.\n현재 계좌 잔액은 3,120,000원입니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_string_won">원</string>
-    <string name="dialog_chat_loan_appl">거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리는 2.0%입니다.
-
-대출을 신청하시겠습니까?</string>
-    <string name="dialog_chat_microedit_cancel">소액 담보대출을 취소합니다. 어떤것을 도와드릴까요?</string>
+    <string name="dialog_chat_loan_apply">거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리는 2.0%입니다.\n\n대출을 신청하시겠습니까?</string>
+    <string name="dialog_chat_microedit_cancel">소액 담보대출을 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_home_address_type">집 주소를 입력해 주세요.</string>
-    <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만 원까지
-2.0%의 금리로 대출 가능합니다.
-
-대출 신청 금액을 입력해 주세요</string>
+    <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만 원까지2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요</string>
     <string name="dialog_string_term_agreement_accept">약관 확인 및 동의를 진행해 주세요.</string>
     <string name="dialog_string_mandatory_term_accept">필수 항목 전체 동의</string>
     <string name="dialog_string_loan_service_user_agreement">대출 서비스 이용 약관</string>
@@ -240,8 +212,5 @@
     <string name="dialog_string_customer_information_agreement">고객 정보 활용 동의</string>
     <string name="dialog_button_signature">자필 서명</string>
     <string name="dialog_chat_agreenment_accepted">약관 확인 및 동의가 완료되었습니다.</string>
-    <string name="dialog_chat_loan_success">대출 신청이 정상적으로 처리되어
-입금 완료 되었습니다.
-
-더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_loan_success">대출 신청이 정상적으로 처리되어 입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?</string>
 </resources>

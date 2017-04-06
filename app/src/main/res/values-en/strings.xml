@@ -59,8 +59,6 @@
     <string name="registration_button_pin_code_chanage">Change PIN code</string>
     <string name="registration_string_signature_twice">you will be signing twice to confirm your e-signaute.</string>
 
-
-
     <string name="main_string_talkbank">TalkBank</string>
     <string name="main_actoin_settings">Settings</string>
     <string name="main_action_seach">Seach</string>
@@ -192,11 +190,8 @@ Is there anything else I can help you with?</string>
     <string name="dialog_string_receiver_select">please select receiver</string>
     <string name="dialog_chat_contact_select">if receiver is not contain on the list, please select new receiver from address book or KakaoTalk</string>
     <string name="dialog_string_amount_transfer">amount of transfer</string>
-    <string name="dialog_chat_after_transfer_2">you\'ve transferred 100,000 won to 어머니 (010-5678-1234). your available balance is 3,270,000 won.
-Is there anything else I can help you with?</string>
-    <string name="dialog_chat_loan_appl">I\'ve checked your account details and I would like to recommend ""Finocation one-day loan""
-you may request up to 50 million won and 2.0% interest rate
-do you want to apply loan?</string>
+    <string name="dialog_chat_after_transfer_2">you\'ve transferred 100,000 won to 어머니 (010-5678-1234). your available balance is 3,270,000 won.\n\nIs there anything else I can help you with?</string>
+    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend ""Finocation one-day loan"" \n you may request up to 50 million won and 2.0% interest rate \n do you want to apply loan?</string>
     <string name="dialog_string_won">won</string>
     <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. what can i help you?</string>
     <string name="dialog_string_home_address_type">type in your home address</string>
@@ -212,10 +207,8 @@ please write the ammount of loan you would like to request</string>
     <string name="dialog_string_customer_information_agreement">customer\'s information agreement</string>
     <string name="dialog_button_signature">E-signature</string>
     <string name="dialog_chat_agreenment_accepted">agreement have been aceepted </string>
-    <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account
+    <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n\n
 is there anything else I can help you with?</string>
-
-
     <string name="setting_string_allowed_time">It\'s only actviated in allowed time.</string>
     <string name="setting_string_end">End</string>
     <string name="setting_string_start">Start</string>
@@ -225,8 +218,5 @@ is there anything else I can help you with?</string>
     <string name="setting_string_one_app_select">Select each app</string>
     <string name="setting_string_all_app_collect">Select all app</string>
     <string name="setting_string_context_app">Context data collect app</string>
-
-
-
     <string name="no"></string>
 </resources>

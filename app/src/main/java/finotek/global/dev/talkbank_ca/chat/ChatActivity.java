@@ -29,6 +29,7 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
+import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -133,6 +134,10 @@ public class ChatActivity extends AppCompatActivity {
             ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
 			binding.footer.addView(ctBinding.getRoot());
 		}
+
+		if(msg instanceof DismissKeyboard) {
+            returnToInitialControl();
+        }
 	}
 
 	public void onSendButtonClickEvent(Void aVoid) {

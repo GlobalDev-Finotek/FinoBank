@@ -67,7 +67,7 @@
 
 
 
-
+    <string name="string_transfer">이체</string>
     <string name="main_string_talkbank">톡뱅</string>
     <string name="main_actoin_settings">설정</string>
     <string name="main_action_seach">Search</string>
@@ -219,11 +219,8 @@
     <string name="dialog_chat_contact_select">위 목록에 없다면 주소록 또는 카카오톡에서
 선택해 주세요.</string>
     <string name="dialog_string_amount_transfer">이체 금액</string>
-    <string name="dialog_chat_after_transfer_2">어머니(010-9876-5432)님에게
-150,000원을 이체하였습니다.
-현재 계좌 잔액은 3,120,000원입니다.
-     <string name="dialog_string_won">원</string>
-더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_after_transfer_2">어머니(010-9876-5432)님에게 150,000원을 이체하였습니다.\n현재 계좌 잔액은 3,120,000원입니다.\n더 필요한 사항이 있으세요?</string>
+    <string name="dialog_string_won">원</string>
     <string name="dialog_chat_loan_appl">거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리는 2.0%입니다.
 
 대출을 신청하시겠습니까?</string>

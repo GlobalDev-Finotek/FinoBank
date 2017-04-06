@@ -11,6 +11,7 @@ public enum TransactionDB {
     INSTANCE;
 
     private List<Transaction> tx;
+    private int balance;
 
     TransactionDB(){
         tx = new ArrayList<>();
@@ -19,9 +20,23 @@ public enum TransactionDB {
         tx.add(new Transaction("김가람", 0, 36200, 3333800, new DateTime()));
         tx.add(new Transaction("김이솔", 1, 100000, 3370000, new DateTime()));
         tx.add(new Transaction("김가람", 0, 15500, 3270000, new DateTime()));
+
+        balance = 3270000;
     }
 
     public List<Transaction> getTx() {
         return tx;
+    }
+
+    public void addTx(Transaction transaction){
+        tx.add(0, transaction);
+    }
+
+    public int getBalance() {
+        return balance;
+    }
+
+    public void transferMoney(int money){
+        this.balance -= money;
     }
 }

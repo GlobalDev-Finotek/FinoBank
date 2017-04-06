@@ -21,10 +21,14 @@ import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
+import org.joda.time.DateTime;
+
+import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
+import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -34,6 +38,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
@@ -123,7 +128,10 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof RequestTransfer) {
 			releaseAllControls();
-			binding.footer.addView(transferView);
+
+            int balance = TransactionDB.INSTANCE.getBalance();
+            ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+			binding.footer.addView(ctBinding.getRoot());
 		}
 	}
 
@@ -214,7 +222,13 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
 		ctBinding.gvKeypad.onComplete(() -> {
-			ctBinding.editMoney.setText("");
+            int money = Integer.valueOf(ctBinding.editMoney.getText().toString().replaceAll(",", ""));
+            TransactionDB.INSTANCE.transferMoney(money);
+
+            int balance = TransactionDB.INSTANCE.getBalance();
+            TransactionDB.INSTANCE.addTx(new Transaction("어머니", 0, 200000, balance, new DateTime()));
+
+            ctBinding.editMoney.setText("");
 			this.returnToInitialControl();
 
             MessageBox.INSTANCE.add(new TransferButtonPressed());

@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="@string/string_price_unit"
+                android:text="@string/dialog_string_won"
                 android:textColor="@color/dark_100"/>
         </LinearLayout>
         <LinearLayout
@@ -100,7 +100,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:text="@string/string_price_unit"
+                android:text="@string/dialog_string_won"
                 android:textColor="@color/dark_100"/>
         </LinearLayout>
     </RelativeLayout>

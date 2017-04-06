@@ -27,6 +27,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
@@ -49,7 +50,8 @@ class ScenarioChannel {
         // 메시지 박스 설정
         MessageBox.INSTANCE.observable
             .flatMap(msg -> {
-                if(msg instanceof SendMessage || msg instanceof RequestRemoveControls || msg instanceof TransferButtonPressed) {
+                if(msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
+                   msg instanceof TransferButtonPressed || msg instanceof DividerMessage) {
                     return Observable.just(msg);
                 } else {
                     return Observable.just(msg)
@@ -75,6 +77,7 @@ class ScenarioChannel {
         scenarioPool.add(new TransferScenario());
         scenarioPool.add(new LoanScenario());
         scenarioPool.add(new AccountScenario());
+        scenarioPool.add(new SendMailScenario());
     }
 
     private void firstScenario(){

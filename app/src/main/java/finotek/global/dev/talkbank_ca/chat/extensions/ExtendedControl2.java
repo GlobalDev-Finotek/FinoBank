@@ -31,11 +31,18 @@ public class ExtendedControl2 extends Fragment {
 
 
         RxView.clicks(binding.btnLoan)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> {
-                    MessageBox.INSTANCE.add(new SendMessage("소액 담보 대출", R.drawable.icon_talkbank04));
-                });
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .doOnNext(aVoid -> doOnControl.run())
+            .subscribe(aVoid -> {
+                MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_string_secured_mirocredit), R.drawable.icon_talkbank04));
+            });
+
+        RxView.clicks(binding.btnSendEmail)
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .doOnNext(aVoid -> doOnControl.run())
+            .subscribe(aVoid -> {
+                MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_talkbank06));
+            });
         
         return rootView;
     }

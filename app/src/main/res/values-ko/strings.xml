@@ -213,4 +213,6 @@
     <string name="dialog_button_signature">자필 서명</string>
     <string name="dialog_chat_agreenment_accepted">약관 확인 및 동의가 완료되었습니다.</string>
     <string name="dialog_chat_loan_success">대출 신청이 정상적으로 처리되어 입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_preview">미리보기</string>
+    <string name="dialog_chat_save">저장</string>
 </resources>

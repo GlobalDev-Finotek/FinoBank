@@ -219,4 +219,6 @@ is there anything else I can help you with?</string>
     <string name="setting_string_all_app_collect">Select all app</string>
     <string name="setting_string_context_app">Context data collect app</string>
     <string name="no"></string>
+    <string name="dialog_chat_preview">Preview</string>
+    <string name="dialog_chat_save">Save</string>
 </resources>

@@ -36,6 +36,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
@@ -53,6 +54,7 @@ import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import rx.android.schedulers.AndroidSchedulers;
@@ -146,6 +148,14 @@ public class ChatActivity extends AppCompatActivity {
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
 			binding.footer.addView(ctBinding.getRoot());
 		}
+
+		if(msg instanceof ShowPdfView) {
+            ShowPdfView action = (ShowPdfView) msg;
+            PdfViewDialog dialog = new PdfViewDialog(this);
+            dialog.setTitle(action.getTitle());
+            dialog.setPdfAssets(action.getPdfAsset());
+            dialog.show();
+        }
 
 		if (msg instanceof DismissKeyboard) {
 			returnToInitialControl();

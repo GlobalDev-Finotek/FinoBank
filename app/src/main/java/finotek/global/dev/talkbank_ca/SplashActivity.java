@@ -3,19 +3,13 @@ package finotek.global.dev.talkbank_ca;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.provider.CallLog;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
-import java.util.Calendar;
-import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -79,8 +73,7 @@ public class SplashActivity extends AppCompatActivity {
 		}
 		//권한이 있는경우 바로 호출
 		else {
-			Cursor c = getCallLog();
-			double accuracy = CallLogVerifier.getCallLogPassRate(c);
+			double accuracy = CallLogVerifier.getCallLogPassRate(this);
 			boolean isValidUser = isValidUser(accuracy);
 
 			eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
@@ -96,8 +89,7 @@ public class SplashActivity extends AppCompatActivity {
 			//통화기록의 권한이 변경된 경우
 			case MY_PERMISSION_READ_CALL_LOG: {
 				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-					Cursor c = getCallLog();
-					double accuracy = CallLogVerifier.getCallLogPassRate(c);
+					double accuracy = CallLogVerifier.getCallLogPassRate(this);
 					boolean isValidUser = isValidUser(accuracy);
 					eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 					moveToNextActivity(isValidUser);
@@ -118,6 +110,7 @@ public class SplashActivity extends AppCompatActivity {
 
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
+		finish();
 
 	}
 
@@ -125,47 +118,6 @@ public class SplashActivity extends AppCompatActivity {
 		return authRate > AUTH_THRESHOLD;
 	}
 
-	private Cursor getCallLog() {
-		Log.d("aa", "Permission opened");
-		String[] projection;
-		projection = new String[]{
-				CallLog.Calls.NUMBER,
-				CallLog.Calls.TYPE,
-				CallLog.Calls.DURATION,
-				CallLog.Calls.CACHED_NAME,
-				CallLog.Calls.DATE,
-				CallLog.Calls._ID
-		};
-
-		String beforeStr = getMinus10MinTimeStr();
-		String nowStr = getNowTimeStr();
-
-		try {
-				/* 지금으로부터 10분 전의 통화목록만 얻어옴 */
-			return getContentResolver().query(CallLog.Calls.CONTENT_URI, projection,
-					//null, null,
-					CallLog.Calls.DATE + " BETWEEN ? AND ? ", new String[]{beforeStr, nowStr},
-					CallLog.Calls._ID + " DESC");
-		} catch (SecurityException e) {
-		}
-		return null;
-	}
-
-	@NonNull
-	private String getNowTimeStr() {
-		Calendar now = Calendar.getInstance();
-		now.setTime(new Date());
-		return String.valueOf(now.getTimeInMillis());
-	}
-
-
-	@NonNull
-	private String getMinus10MinTimeStr() {
-		Calendar c = Calendar.getInstance();
-		c.setTime(new Date());
-		c.add(Calendar.MINUTE, -10);
-		return String.valueOf(c.getTimeInMillis());
-	}
 
 
 	public MainComponent getComponent() {

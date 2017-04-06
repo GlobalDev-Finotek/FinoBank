@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tb="http://schemas.android.com/apk/res-auto"
-        xmlns:app="http://schemas.android.com/tools">
+        xmlns:app="http://schemas.android.com/tools"
+        xmlns:tb="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
         android:id="@+id/wrapper_splash"
         android:layout_width="match_parent"
@@ -48,7 +48,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/main_button"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="21dp"/>
+            android:layout_marginTop="21dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            />
 
         <TextView
             android:layout_width="wrap_content"

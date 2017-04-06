@@ -42,7 +42,6 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 		}
 
 		activity.startActivity(intent);
-		activity.finish();
 	}
 
 }

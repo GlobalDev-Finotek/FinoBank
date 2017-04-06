@@ -1,7 +1,10 @@
 package kr.co.finotek.finopass.finopassvalidator;
 
-import android.util.Log;
+import android.content.Context;
 import android.database.Cursor;
+import android.provider.CallLog;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -15,7 +18,51 @@ public class CallLogVerifier {
 
     private static int MaxAvailableCalledMinute = 10;
 
-    public static double getCallLogPassRate(Cursor cursor){
+    private static Cursor getCallLog(Context context) {
+        Log.d("aa", "Permission opened");
+        String[] projection;
+        projection = new String[]{
+            CallLog.Calls.NUMBER,
+            CallLog.Calls.TYPE,
+            CallLog.Calls.DURATION,
+            CallLog.Calls.CACHED_NAME,
+            CallLog.Calls.DATE,
+            CallLog.Calls._ID
+        };
+
+        String beforeStr = getMinus10MinTimeStr();
+        String nowStr = getNowTimeStr();
+
+        try {
+        /* 지금으로부터 10분 전의 통화목록만 얻어옴 */
+            return context.getContentResolver().query(CallLog.Calls.CONTENT_URI, projection,
+                CallLog.Calls.DATE + " BETWEEN ? AND ? ", new String[]{beforeStr, nowStr},
+                CallLog.Calls._ID + " DESC");
+        } catch (SecurityException e) {
+        }
+        return null;
+    }
+
+    @NonNull
+    private static String getNowTimeStr() {
+        Calendar now = Calendar.getInstance();
+        now.setTime(new Date());
+        return String.valueOf(now.getTimeInMillis());
+    }
+
+
+    @NonNull
+    private static String getMinus10MinTimeStr() {
+        Calendar c = Calendar.getInstance();
+        c.setTime(new Date());
+        c.add(Calendar.MINUTE, -10);
+        return String.valueOf(c.getTimeInMillis());
+    }
+
+
+    public static double getCallLogPassRate(Context context) {
+
+        Cursor cursor = getCallLog(context);
         ArrayList<CallDetailRecord> records = parseCallLog(cursor);
         Long now = new Date().getTime();
         double totalWeight = 0.0;

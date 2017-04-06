@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 
 import com.jakewharton.rxbinding.view.RxView;
@@ -44,6 +45,7 @@ public class PrimaryDialog extends Dialog {
     }
 
     public void setButtonText(String text){
+        binding.doneBtn.setVisibility(View.VISIBLE);
         binding.doneBtn.setText(text);
     }
 

@@ -16,6 +16,7 @@ import java.util.Date;
 
 public class CallLogVerifier {
 
+    private static final double AUTH_THRESHOLD = 0.5;
     private static int MaxAvailableCalledMinute = 10;
 
     private static Cursor getCallLog(Context context) {
@@ -59,6 +60,15 @@ public class CallLogVerifier {
         return String.valueOf(c.getTimeInMillis());
     }
 
+
+    public static boolean isValidUser(Context context) {
+        if (getCallLogPassRate(context) <= AUTH_THRESHOLD) {
+            return false;
+        } else {
+            return true;
+        }
+
+    }
 
     public static double getCallLogPassRate(Context context) {
 

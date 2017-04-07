@@ -6,6 +6,7 @@
                 android:width="1dp"
                 android:color="@color/coral_pink"/>
             <corners android:radius="2dp"/>
+            <solid android:color="#4Dff585a"/>
         </shape>
     </item>
 

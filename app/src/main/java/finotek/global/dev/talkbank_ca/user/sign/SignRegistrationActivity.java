@@ -61,9 +61,12 @@ public class SignRegistrationActivity extends AppCompatActivity {
 
 			  SucceededDialog dialog = new SucceededDialog(SignRegistrationActivity.this);
 
+
 			  dialog.setTitle(getString(R.string.setting_string_signature_verified));
 			  dialog.setDescription(getString(R.string.setting_string_authentication_complete));
 			  dialog.setButtonText(getString(R.string.setting_string_yes));
+			  dialog.show();
+
 			  dialog.setDoneListener(() -> {
 				  Intent intent2 = new Intent(SignRegistrationActivity.this, nextClass);
 				  intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
@@ -72,7 +75,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 				  finish();
 			  });
 
-			  dialog.show();
+
 		  });
 	  } catch (NullPointerException e) {
 		  e.printStackTrace();

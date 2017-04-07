@@ -89,7 +89,7 @@
                 android:id="@+id/edt_user_name"
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
-                android:text="@string/registration_string_user_name"
+                android:hint="@string/registration_string_user_name"
                 android:inputType="textPersonName"/>
 
             <LinearLayout

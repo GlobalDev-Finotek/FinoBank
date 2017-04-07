@@ -16,6 +16,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.DialogSuccessBinding;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class SucceededDialog extends Dialog {
     private DialogSuccessBinding binding;
@@ -29,10 +30,13 @@ public class SucceededDialog extends Dialog {
         setContentView(binding.getRoot());
 
         RxView.clicks(binding.doneBtn)
+            .observeOn(AndroidSchedulers.mainThread())
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
-                    if(listener != null)
+                    if (listener != null) {
+                        dismiss();
                         listener.run();
+                    }
                 });
     }
 

@@ -10,8 +10,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import java.util.concurrent.TimeUnit;
-
 import javax.inject.Inject;
 
 import finotek.global.dev.talkbank_ca.app.MyApplication;
@@ -22,8 +20,6 @@ import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
 import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -44,12 +40,8 @@ public class SplashActivity extends AppCompatActivity {
 
 		getComponent().inject(this);
 
-		Observable.timer(3, TimeUnit.SECONDS)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(aVoid -> {
-					checkPermission();
-				});
 
+		checkPermission();
 
 	}
 
@@ -78,7 +70,7 @@ public class SplashActivity extends AppCompatActivity {
 
 			eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 			moveToNextActivity(isValidUser);
-
+			finish();
 		}
 	}
 
@@ -110,7 +102,6 @@ public class SplashActivity extends AppCompatActivity {
 
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 		startActivity(intent);
-		finish();
 
 	}
 

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="registration_string_register">register</string>
+    <string name="registration_string_register">Register</string>
     <string name="registration_string_basic_information">Your account</string>
     <string name="registration_string_phone_number">phone number</string>
-    <string name="registration_string_user_name">user\'s name</string>
+    <string name="registration_string_user_name">User\'s name</string>
     <string name="registration_string_signnature">E-signature</string>
     <string name="registration_button_signature_register">Register e-signature</string>
     <string name="registration_string_signature_reliability_setting">setting accuracy rate(demo version)</string>
@@ -149,12 +149,12 @@ Please take a picture of your ID card</string>
     <string name="dialog_chat_after_transfer_1">you\'ve transferred 100,000 won to 김가람(010-5678-1234). your available balance is 3,270,000 won.
 Is there anything else I can help you with?</string>
     <string name="dialog_button_recent_transaction">View recent tractions</string>
-    <string name="dialog_button_transfer_add">add transfer account</string>
+    <string name="dialog_button_transfer_add">Add transfer account</string>
     <string name="dialog_chat_someone_recent_transaction">% view recent transaction</string>
     <string name="dialog_string_deposit">Deposit</string>
     <string name="dialog_string_withdrawal">withdrawal</string>
     <string name="dialog_string_balance">balance</string>
-    <string name="dialog_button_transfer">transfer</string>
+    <string name="dialog_button_transfer">Transfer</string>
     <string name="dialog_button_view_more">View more</string>
     <string name="dialog_string_receiver_select">please select receiver</string>
     <string name="dialog_chat_contact_select">if receiver is not contain on the list, please select new receiver from address book or KakaoTalk</string>
@@ -207,4 +207,5 @@ is there anything else I can help you with?</string>
     <string name="string_balance">Balance</string>
     <string name="string_yes">Yes</string>
     <string name="string_no">No</string>
+    <string name="dialog_string_won">Won</string>
 </resources>

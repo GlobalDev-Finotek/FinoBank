@@ -75,6 +75,8 @@ public class ChatActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
 		getComponent().inject(this);
@@ -312,6 +314,12 @@ public class ChatActivity extends AppCompatActivity {
 	private View inflate(int layoutId) {
 		ViewGroup parent = (ViewGroup) findViewById(android.R.id.content);
 		return LayoutInflater.from(this).inflate(layoutId, parent, false);
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+
 	}
 
 	private ChatComponent getComponent() {

@@ -180,19 +180,19 @@ Please take a picture of your ID card</string>
     <string name="dialog_chat_after_transfer_1">you\'ve transferred 100,000 won to 김가람(010-5678-1234). your available balance is 3,270,000 won.
 Is there anything else I can help you with?</string>
     <string name="dialog_button_recent_transaction">View recent transactions</string>
-    <string name="dialog_button_transfer_add">add transfer account</string>
+    <string name="dialog_button_transfer_add">Add transfer account</string>
     <string name="dialog_chat_someone_recent_transaction">% view recent transaction</string>
     <string name="dialog_string_deposit">Deposit</string>
     <string name="dialog_string_withdrawal">withdrawal</string>
     <string name="dialog_string_balance">balance</string>
-    <string name="dialog_button_transfer">transfer</string>
+    <string name="dialog_button_transfer">Transfer</string>
     <string name="dialog_button_view_more">View more</string>
     <string name="dialog_string_receiver_select">please select receiver</string>
     <string name="dialog_chat_contact_select">if receiver is not contain on the list, please select new receiver from address book or KakaoTalk</string>
     <string name="dialog_string_amount_transfer">amount of transfer</string>
     <string name="dialog_chat_after_transfer_2">you\'ve transferred 100,000 won to 어머니 (010-5678-1234). your available balance is 3,270,000 won.\n\nIs there anything else I can help you with?</string>
     <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend ""Finocation one-day loan"" \n you may request up to 50 million won and 2.0% interest rate \n do you want to apply loan?</string>
-    <string name="dialog_string_won">won</string>
+    <string name="dialog_string_won">Won</string>
     <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. what can i help you?</string>
     <string name="dialog_string_home_address_type">type in your home address</string>
     <string name="dialog_chat_loan_amount_type">you may loan up to 50 million won with 2% interest rate.
@@ -221,4 +221,15 @@ is there anything else I can help you with?</string>
     <string name="no"></string>
     <string name="dialog_chat_preview">Preview</string>
     <string name="dialog_chat_save">Save</string>
+    <string name="string_balance">Balance</string>
+    <string name="string_check_account">Check account</string>
+    <string name="string_loan">Loan</string>
+    <string name="string_no">No</string>
+    <string name="string_preview">Preview</string>
+    <string name="string_price_unit">Price Unit</string>
+    <string name="string_register_account">Register account</string>
+    <string name="string_save">Save</string>
+    <string name="string_send">Send</string>
+    <string name="string_send_email">Send to email</string>
+    <string name="string_setting">Setting</string>
 </resources>

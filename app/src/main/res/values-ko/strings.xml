@@ -30,7 +30,7 @@
     <string name="registration_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="registration_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로 사용됩니다.</string>
     <string name="registration_button_next">다음</string>
-    <string name="registration_string_signature_verifying">자필 서명 인증 중</string>
+    <string name="registration_string_signature_verifying">자필 전자서명 인증 중</string>
     <string name="registration_string_wait">잠시만 기다려 주세요.</string>
     <string name="registration_string_signature_verified">자필 서명이 인증되었습니다.</string>
     <string name="registration_string_authentication_complete">확인 버튼을 선택하면 인증이 완료됩니다.</string>

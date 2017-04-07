@@ -34,7 +34,6 @@ import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
@@ -56,8 +55,10 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
+import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
@@ -88,9 +89,17 @@ public class ChatActivity extends AppCompatActivity {
 		ScenarioChannel.INSTANCE.init(this, binding.chatView, eventBus);
 
 		MessageBox.INSTANCE.observable
-				.delay(2000, TimeUnit.MILLISECONDS)
-				.observeOn(AndroidSchedulers.mainThread())
-				.subscribe(this::onNewMessageUpdated);
+            .flatMap(msg -> {
+                if(msg instanceof EnableToEditMoney) {
+                    return Observable.just(msg)
+                        .observeOn(AndroidSchedulers.mainThread());
+                } else {
+                    return Observable.just(msg)
+                        .delay(2000, TimeUnit.MILLISECONDS)
+                        .observeOn(AndroidSchedulers.mainThread());
+                }
+            })
+            .subscribe(this::onNewMessageUpdated);
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
@@ -123,22 +132,31 @@ public class ChatActivity extends AppCompatActivity {
 			OneStepSignRegisterFragment signRegistFragment = new OneStepSignRegisterFragment();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSaveListener(() -> {
+                PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
+                loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+                loadingDialog.setDescription(getString(R.string.registration_string_wait));
+                loadingDialog.show();
 
+                Observable.interval(1500, TimeUnit.MILLISECONDS).first()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(i -> {
+                        loadingDialog.dismiss();
 
-				SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-				dialog.setTitle(getString(R.string.setting_string_signature_verified));
-				dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-				dialog.setButtonText(getString(R.string.setting_string_yes));
-				dialog.setDoneListener(() -> {
-					MessageBox.INSTANCE.add(new SignatureVerified());
-					returnToInitialControl();
+                        SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+                        dialog.setTitle(getString(R.string.setting_string_signature_verified));
+                        dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+                        dialog.setButtonText(getString(R.string.setting_string_yes));
+                        dialog.setDoneListener(() -> {
+                            MessageBox.INSTANCE.add(new SignatureVerified());
+                            returnToInitialControl();
 
-					FragmentTransaction transaction = getFragmentManager().beginTransaction();
-					transaction.remove(signRegistFragment).commit();
+                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                            transaction.remove(signRegistFragment).commit();
 
-					dialog.dismiss();
-				});
-				dialog.show();
+                            dialog.dismiss();
+                        });
+                        dialog.show();
+                    });
 			});
 
 			tx.add(R.id.chat_capture, signRegistFragment);

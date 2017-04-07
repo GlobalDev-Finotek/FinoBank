@@ -21,6 +21,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferToSomeone;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
@@ -28,7 +29,6 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 public class TransferScenario implements Scenario {
     private Context context;
     private Step step = Step.Initial;
-
 
     public TransferScenario(Context context) {
         this.context = context;
@@ -41,20 +41,35 @@ public class TransferScenario implements Scenario {
 
     @Override
     public void onReceive(Object msg) {
+        if(msg instanceof TransferToSomeone) {
+            TransferToSomeone action = (TransferToSomeone) msg;
+            String name = action.getName();
+            String money = NumberFormat.getNumberInstance().format(action.getMoney());
+            String message = context.getResources().getString(R.string.dialog_chat_transaction, money, name);
+            MessageBox.INSTANCE.add(new ReceiveMessage(message));
+
+            TransactionDB.INSTANCE.setTxName(name);
+            TransactionDB.INSTANCE.setTxMoney(money);
+
+            ConfirmRequest request = ConfirmRequest.buildYesOrNo(context);
+            request.addInfoEvent(context.getResources().getString(R.string.dialog_button_transfer_other), () -> {
+                MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_other)));
+            });
+            MessageBox.INSTANCE.add(request);
+
+            step = Step.Analyzing;
+        }
+
         if(msg instanceof SignatureVerified) {
             if(step == Step.SelectAccount) {
                 String name = TransactionDB.INSTANCE.getTxName();
-                String money = TransactionDB.INSTANCE.getTxMoney();
-                String balance = NumberFormat.getNumberInstance().format(TransactionDB.INSTANCE.getBalance());
-
-                MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234)님에게 " + money + "원을\n이체하였습니다.\n현재 계좌 잔액은 " + balance + "원입니다.\n\n더 필요한 사항이 있으세요?"));
-            } else if(step == Step.Analyzing){
-                TransactionDB.INSTANCE.transferMoney(100000);
+                String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+                int money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
                 int balance = TransactionDB.INSTANCE.getBalance();
-                String formatted = NumberFormat.getNumberInstance().format(TransactionDB.INSTANCE.getBalance());
-                TransactionDB.INSTANCE.addTx(new Transaction("김가람", 0, 100000, balance, new DateTime()));
+                String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 
-                MessageBox.INSTANCE.add(new ReceiveMessage("김가람(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 " + formatted + "원입니다.\n\n더 필요한 사항이 있으세요?"));
+                MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234)님에게 " + moneyAsString + "원을\n이체하였습니다.\n현재 계좌 잔액은 " + balanceAsString + "원입니다.\n\n더 필요한 사항이 있으세요?"));
+                TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
             }
 
             ConfirmRequest request = new ConfirmRequest();
@@ -92,20 +107,13 @@ public class TransferScenario implements Scenario {
     public void onUserSend(String msg) {
         switch (step) {
             case Initial:
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_transaction)));
-
-                ConfirmRequest request = ConfirmRequest.buildYesOrNo(context);
-                request.addInfoEvent(context.getResources().getString(R.string.dialog_button_transfer_other), () -> {
-                    MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_other)));
-                });
-                MessageBox.INSTANCE.add(request);
-
-                step = Step.Analyzing;
+                MessageBox.INSTANCE.add(new TransferToSomeone("김가람", 100000));
                 break;
             case Analyzing:
                 if (msg.equals(context.getString(R.string.dialog_button_yes))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
                     MessageBox.INSTANCE.add(new RequestSignature());
+                    step = Step.SelectAccount;
                 } else if(msg.equals(context.getResources().getString(R.string.dialog_button_no))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_transfer_cancel)));
                     MessageBox.INSTANCE.add(new Done());
@@ -128,6 +136,13 @@ public class TransferScenario implements Scenario {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void clear() {
+        step = Step.Initial;
+        TransactionDB.INSTANCE.setTxMoney("");
+        TransactionDB.INSTANCE.setTxName("");
     }
 
     private void selectAccounts(){

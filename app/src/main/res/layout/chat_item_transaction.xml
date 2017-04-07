@@ -31,11 +31,14 @@
             android:layout_height="wrap_content"
             android:text="@{item.name}" />
         <Button
+            android:id="@+id/transfer_btn"
             android:layout_marginStart="80dp"
-            android:layout_width="50dp"
-            android:layout_height="20dp"
-            android:textSize="12sp"
             android:text="@string/string_transfer"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:textSize="12sp"
             android:textColor="@color/dark_100"
             android:background="@drawable/btn_small_round_default"
             style="?android:attr/borderlessButtonStyle" />

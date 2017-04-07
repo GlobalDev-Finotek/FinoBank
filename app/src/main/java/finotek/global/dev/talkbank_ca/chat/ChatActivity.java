@@ -262,12 +262,8 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding.gvKeypad.onComplete(() -> {
             String moneyAsString = ctBinding.editMoney.getText().toString();
 			int money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
-            String name = TransactionDB.INSTANCE.getTxName();
 			TransactionDB.INSTANCE.transferMoney(money);
             TransactionDB.INSTANCE.setTxMoney(moneyAsString);
-
-			int balance = TransactionDB.INSTANCE.getBalance();
-			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
 			ctBinding.editMoney.setText("");
 			this.returnToInitialControl();

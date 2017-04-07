@@ -101,6 +101,11 @@ public class LoanScenario implements Scenario {
         }
     }
 
+    @Override
+    public void clear() {
+        step = Step.Initial;
+    }
+
     private enum Step {
         Initial, InputAddress, InputMoney, Agreement, Last
     }

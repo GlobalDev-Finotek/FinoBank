@@ -22,8 +22,6 @@ public class AccountScenario implements Scenario {
     @Override
     public boolean decideOn(String msg) {
         return msg.equals("계좌개설") || msg.equals(context.getResources().getString(R.string.main_string_open_account));
-
-
     }
 
     @Override
@@ -74,6 +72,11 @@ public class AccountScenario implements Scenario {
                 }
                 break;
         }
+    }
+
+    @Override
+    public void clear() {
+        step = Step.Initial;
     }
 
     private enum Step {

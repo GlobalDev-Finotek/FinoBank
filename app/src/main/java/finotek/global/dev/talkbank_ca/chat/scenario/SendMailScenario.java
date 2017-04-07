@@ -44,4 +44,9 @@ public class SendMailScenario implements Scenario {
             }
         }
     }
+
+    @Override
+    public void clear() {
+        step = 0;
+    }
 }

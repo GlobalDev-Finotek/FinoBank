@@ -181,7 +181,7 @@
     <string name="dialog_chat_finger_tip_sign">마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을\n사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_button_transfer">계좌 이체</string>
-    <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과,\n김가람(010&#8211;5678&#8211;1234)님에게 100,000원을 이체하시겠어요?</string>
+    <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과,\n%1$s원을 %2$s(010&#8211;5678&#8211;1234)님에게 이체하시겠어요?</string>
     <string name="dialog_button_transfer_other">다른 사람에게 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다. 어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에\n손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>

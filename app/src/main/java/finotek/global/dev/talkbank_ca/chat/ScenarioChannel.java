@@ -4,7 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
@@ -40,7 +44,7 @@ public enum ScenarioChannel {
 	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
-	private List<Scenario> scenarioPool;
+	private Map<String, Scenario> scenarioPool;
 
     ScenarioChannel() {
     }
@@ -75,15 +79,23 @@ public enum ScenarioChannel {
 		this.firstScenario();
 
 		// 시나리오 저장
-		scenarioPool = new ArrayList<>();
-		scenarioPool.add(new TransferScenario(context));
-		scenarioPool.add(new LoanScenario(context));
-		scenarioPool.add(new AccountScenario(context));
-		scenarioPool.add(new SendMailScenario(context));
+		scenarioPool = new HashMap<>();
+		scenarioPool.put("transfer", new TransferScenario(context));
+		scenarioPool.put("loan", new LoanScenario(context));
+		scenarioPool.put("account", new AccountScenario(context));
+		scenarioPool.put("sendMail", new SendMailScenario(context));
 
         currentScenario = null;
 	}
 
+	public void applyScenario(String key){
+        if(scenarioPool.containsKey(key)) {
+            currentScenario = scenarioPool.get(key);
+            currentScenario.clear();
+        } else {
+            throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
+        }
+    }
 
 	private void firstScenario() {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
@@ -104,12 +116,18 @@ public enum ScenarioChannel {
 			SendMessage recv = (SendMessage) msg;
 
 			if (currentScenario == null) {
-				for (Scenario scenario : scenarioPool) {
-					if (scenario.decideOn(recv.getMessage())) {
-						currentScenario = scenario;
-						break;
-					}
-				}
+                Iterator<String> keySet = scenarioPool.keySet().iterator();
+
+                while(keySet.hasNext()){
+                    String key = keySet.next();
+                    Scenario scenario = scenarioPool.get(key);
+
+                    if (scenario.decideOn(recv.getMessage())) {
+                        currentScenario = scenario;
+                        currentScenario.clear();
+                        break;
+                    }
+                }
 			}
 
 			if (currentScenario == null) {
@@ -215,9 +233,5 @@ public enum ScenarioChannel {
 				MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
 				break;
 		}
-	}
-
-	private enum Step {
-		Account, AccountCheckIDCard, AccountTakeSign, AccountSucceeded
 	}
 }

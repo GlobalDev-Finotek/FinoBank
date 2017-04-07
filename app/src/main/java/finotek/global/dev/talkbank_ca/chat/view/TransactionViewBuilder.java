@@ -7,9 +7,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
+import com.jakewharton.rxbinding.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.ScenarioChannel;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferToSomeone;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemTransactionBinding;
 
 public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransaction> {
@@ -44,6 +51,13 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
             ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
             binding.setItem(tx);
             group.addView(view);
+
+            RxView.clicks(binding.transferBtn)
+                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .subscribe(aVoid -> {
+                    ScenarioChannel.INSTANCE.applyScenario("transfer");
+                    MessageBox.INSTANCE.add(new TransferToSomeone(tx.getName(), tx.getPrice()));
+                });
         }
     }
 

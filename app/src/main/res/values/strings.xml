@@ -142,7 +142,7 @@ Please take a picture of your ID card</string>
     <string name="dialog_chat_id_card_retake">re-taking a picture of your ID card</string>
     <string name="dialog_chat_finger_tip_sign">sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">you\'ve successfully opened your account. is there anything else I can help you with?</string>
-    <string name="dialog_chat_transaction">I\'ve checked your monthly transaction history. would you like to transfer 100,000 won to 김가람(010-5678-1234).</string>
+    <string name="dialog_chat_transaction">I\'ve checked your monthly transaction history. would you like to transfer %1$s won to %2$s(010-5678-1234).</string>
     <string name="dialog_button_transfer_other">transfer to other</string>
     <string name="dialog_chat_transfer_cancel">tranfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register">use fingertip, not finger nail, to sign in the marked area</string>

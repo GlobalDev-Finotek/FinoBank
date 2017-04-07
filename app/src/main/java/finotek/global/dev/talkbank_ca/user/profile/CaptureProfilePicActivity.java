@@ -37,6 +37,16 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 		transaction.add(R.id.fl_cam, capturePicFragment);
 		transaction.commit();
 
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		binding.flCam.setLayoutParams(lp);
+		binding.appbar.setVisibility(View.GONE);
+
+		LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				Converter.dpToPx(350));
+		binding.flCam.setLayoutParams(lp2);
+		binding.appbar.setVisibility(View.VISIBLE);
+
 		capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
 			@Override
 			public void onSizeFull() {

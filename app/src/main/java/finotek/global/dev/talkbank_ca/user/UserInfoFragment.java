@@ -29,7 +29,6 @@ import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
-import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
 import rx.functions.Action1;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
@@ -81,18 +80,16 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 					}
 				});
 
-
 		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(getActivity()));
-		binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
 
 
-		RxTextView.textChangeEvents(binding.llRegiBasic.edtPhoneNumber)
-				.subscribe(textViewTextChangeEvent -> {
-          String str = textViewTextChangeEvent.text().toString();
-
+		RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtPhoneNumber)
+				.subscribe(textViewAfterTextChangeEvent -> {
+					String str = textViewAfterTextChangeEvent.editable().toString();
+					boolean isValid = str.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$");
 					binding.llRegiBasic.edtPhoneNumber
-                .setErrFilter(str.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$"));
-					});
+							.setErrFilter(!isValid);
+				});
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
 				.subscribe(aVoid -> {

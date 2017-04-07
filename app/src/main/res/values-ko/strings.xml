@@ -215,4 +215,19 @@
     <string name="dialog_chat_loan_success">대출 신청이 정상적으로 처리되어 입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_chat_preview">미리보기</string>
     <string name="dialog_chat_save">저장</string>
+
+    <string name="string_preview">미리보기</string>
+    <string name="string_save">저장</string>
+    <string name="string_price_unit">단위</string>
+    <string name="dialog_string_context_auth">맥락인증</string>
+    <string name="string_send">전송</string>
+    <string name="string_setting">설정</string>
+    <string name="string_loan">대출</string>
+    <string name="string_send_email">이메일로 보내기</string>
+    <string name="string_register_account">계좌 개설</string>
+    <string name="string_transfer_money">계좌 이체</string>
+    <string name="string_check_account">계좌 조회</string>
+    <string name="string_balance">잔액</string>
+    <string name="string_yes">네</string>
+    <string name="string_no">아니오</string>
 </resources>

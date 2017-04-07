@@ -36,6 +36,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
@@ -66,7 +67,6 @@ public class ChatActivity extends AppCompatActivity {
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
 	private ChatTransferBinding ctBinding;
-	private ScenarioChannel scenario;
 	private boolean isExControlAvailable = false;
 	private View exControlView = null;
 	private View footerInputs = null;
@@ -83,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		scenario = new ScenarioChannel(this, binding.chatView, eventBus);
+		ScenarioChannel.INSTANCE.init(this, binding.chatView, eventBus);
 
 		MessageBox.INSTANCE.observable
 				.delay(2000, TimeUnit.MILLISECONDS)
@@ -121,6 +121,8 @@ public class ChatActivity extends AppCompatActivity {
 			OneStepSignRegisterFragment signRegistFragment = new OneStepSignRegisterFragment();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSaveListener(() -> {
+
+
 				SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
 				dialog.setTitle(getString(R.string.setting_string_signature_verified));
 				dialog.setDescription(getString(R.string.setting_string_authentication_complete));
@@ -146,8 +148,14 @@ public class ChatActivity extends AppCompatActivity {
 
 			int balance = TransactionDB.INSTANCE.getBalance();
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+            ctBinding.editMoney.setEnabled(false);
 			binding.footer.addView(ctBinding.getRoot());
 		}
+
+		if(msg instanceof EnableToEditMoney) {
+            ctBinding.editMoney.setEnabled(true);
+            ctBinding.editMoney.requestFocus();
+        }
 
 		if(msg instanceof ShowPdfView) {
             ShowPdfView action = (ShowPdfView) msg;
@@ -249,11 +257,14 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
 		ctBinding.gvKeypad.onComplete(() -> {
-			int money = Integer.valueOf(ctBinding.editMoney.getText().toString().replaceAll(",", ""));
+            String moneyAsString = ctBinding.editMoney.getText().toString();
+			int money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+            String name = TransactionDB.INSTANCE.getTxName();
 			TransactionDB.INSTANCE.transferMoney(money);
+            TransactionDB.INSTANCE.setTxMoney(moneyAsString);
 
 			int balance = TransactionDB.INSTANCE.getBalance();
-			TransactionDB.INSTANCE.addTx(new Transaction("어머니", 0, 200000, balance, new DateTime()));
+			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
 			ctBinding.editMoney.setText("");
 			this.returnToInitialControl();

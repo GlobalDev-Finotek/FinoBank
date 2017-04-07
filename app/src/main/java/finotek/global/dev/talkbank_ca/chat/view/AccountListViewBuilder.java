@@ -14,8 +14,11 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Account;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
+import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
+import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ChatAccountListBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemAccountBinding;
 
@@ -68,6 +71,9 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                 list.addView(view);
                 selectedAccount = account;
                 itemBinding.main.setBackground(ContextCompat.getDrawable(context, R.drawable.border_round_primary));
+
+                TransactionDB.INSTANCE.setTxName(account.getName());
+                MessageBox.INSTANCE.add(new EnableToEditMoney());
             });
 
         list.addView(view);

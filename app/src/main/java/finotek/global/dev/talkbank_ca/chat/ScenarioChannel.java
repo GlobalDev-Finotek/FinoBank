@@ -34,15 +34,18 @@ import finotek.global.dev.talkbank_ca.util.DateUtil;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
-class ScenarioChannel {
-
+public enum ScenarioChannel {
+	INSTANCE;
 
 	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
 	private List<Scenario> scenarioPool;
 
-	ScenarioChannel(Context context, ChatView chatView, RxEventBus eventBus) {
+    ScenarioChannel() {
+    }
+
+    public void init(Context context, ChatView chatView, RxEventBus eventBus) {
 		this.chatView = chatView;
 		this.eventBus = eventBus;
 
@@ -77,6 +80,8 @@ class ScenarioChannel {
 		scenarioPool.add(new LoanScenario(context));
 		scenarioPool.add(new AccountScenario(context));
 		scenarioPool.add(new SendMailScenario(context));
+
+        currentScenario = null;
 	}
 
 

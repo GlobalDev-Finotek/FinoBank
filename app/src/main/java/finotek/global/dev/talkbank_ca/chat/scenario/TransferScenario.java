@@ -2,6 +2,9 @@ package finotek.global.dev.talkbank_ca.chat.scenario;
 
 import android.content.Context;
 
+import org.joda.time.DateTime;
+
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +15,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
@@ -39,9 +43,18 @@ public class TransferScenario implements Scenario {
     public void onReceive(Object msg) {
         if(msg instanceof SignatureVerified) {
             if(step == Step.SelectAccount) {
-                MessageBox.INSTANCE.add(new ReceiveMessage("어머니(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?"));
+                String name = TransactionDB.INSTANCE.getTxName();
+                String money = TransactionDB.INSTANCE.getTxMoney();
+                String balance = NumberFormat.getNumberInstance().format(TransactionDB.INSTANCE.getBalance());
+
+                MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234)님에게 " + money + "원을\n이체하였습니다.\n현재 계좌 잔액은 " + balance + "원입니다.\n\n더 필요한 사항이 있으세요?"));
             } else if(step == Step.Analyzing){
-                MessageBox.INSTANCE.add(new ReceiveMessage("김가람(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?"));
+                TransactionDB.INSTANCE.transferMoney(100000);
+                int balance = TransactionDB.INSTANCE.getBalance();
+                String formatted = NumberFormat.getNumberInstance().format(TransactionDB.INSTANCE.getBalance());
+                TransactionDB.INSTANCE.addTx(new Transaction("김가람", 0, 100000, balance, new DateTime()));
+
+                MessageBox.INSTANCE.add(new ReceiveMessage("김가람(010-5678-1234)님에게 100,000원을\n이체하였습니다.\n현재 계좌 잔액은 " + formatted + "원입니다.\n\n더 필요한 사항이 있으세요?"));
             }
 
             ConfirmRequest request = new ConfirmRequest();
@@ -59,12 +72,18 @@ public class TransferScenario implements Scenario {
         if(msg instanceof TransferButtonPressed) {
             MessageBox.INSTANCE.add(new RequestRemoveControls());
 
-            MessageBox.INSTANCE.add(new SendMessage("어머니(010-9876-5432)님에게\n200,000원을 이체"));
+            String name = TransactionDB.INSTANCE.getTxName();
+            String money = TransactionDB.INSTANCE.getTxMoney();
+
+            MessageBox.INSTANCE.add(new SendMessage(name + "(010-9876-5432)님에게\n" + money + "원을 이체"));
             MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
             MessageBox.INSTANCE.add(new RequestSignature());
         }
 
         if(msg instanceof Done) {
+            TransactionDB.INSTANCE.setTxName("");
+            TransactionDB.INSTANCE.setTxMoney("");
+
             step = Step.Initial;
         }
     }

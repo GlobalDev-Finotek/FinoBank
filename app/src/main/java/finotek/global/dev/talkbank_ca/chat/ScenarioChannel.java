@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
 
 import java.util.ArrayList;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
+import finotek.global.dev.talkbank_ca.base.mvp.event.EventTimeout;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -100,15 +102,18 @@ public enum ScenarioChannel {
 	private void firstScenario() {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
 		eventBus.getObservable()
-				.subscribe(iEvent -> {
-					if (iEvent instanceof AccuracyMeasureEvent) {
-						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-						MessageBox.INSTANCE.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf((int) (accuracy * 100))
-								+ "% 확률로 인증되었습니다."));
-					}
-				});
-
-		MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
+            .timeout(3, TimeUnit.SECONDS, Observable.just(new EventTimeout()))
+            .subscribe(iEvent -> {
+                if (iEvent instanceof AccuracyMeasureEvent) {
+                    double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
+                    MessageBox.INSTANCE.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf((int) (accuracy * 100))
+                            + "% 확률로 인증되었습니다."));
+                    MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
+                } else {
+                    MessageBox.INSTANCE.add(new StatusMessage("맥락 데이터 분석에 실패했습니다."));
+                    MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
+                }
+            });
 	}
 
 	private void onRequest(Object msg) {

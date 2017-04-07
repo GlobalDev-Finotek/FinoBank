@@ -242,6 +242,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
 		adapter.setDoOnControl(this::hideExControl);
+        adapter.setSettingControl(() -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 		ecBinding.extendedControl.setAdapter(adapter);
 		RxViewPager.pageSelections(ecBinding.extendedControl)
 				.subscribe(pos -> {

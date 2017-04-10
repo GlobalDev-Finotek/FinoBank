@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
@@ -34,10 +33,8 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
-import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
@@ -69,15 +66,12 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 public class ChatActivity extends AppCompatActivity {
+	static final int RESULT_PICK_CONTACT = 1;
 	@Inject
 	RxEventBus eventBus;
-
 	@Inject
 	DBHelper userDBHelper;
-
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -87,8 +81,6 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 	private Subscription messageBoxSubscription;
-
-    static final int RESULT_PICK_CONTACT = 1;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,10 +101,6 @@ public class ChatActivity extends AppCompatActivity {
 					if(msg instanceof EnableToEditMoney) {
                     return Observable.just(msg)
                         .observeOn(AndroidSchedulers.mainThread());
-                } else if(msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
-                    return Observable.just(msg)
-                        .debounce(2, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread());
                 } else {
                     return Observable.just(msg)
                         .delay(2000, TimeUnit.MILLISECONDS)
@@ -126,14 +114,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-        if(msg instanceof WaitForMessage) {
-            binding.waitMessage.setVisibility(View.VISIBLE);
-        }
-
-        if(msg instanceof MessageEmitted) {
-            binding.waitMessage.setVisibility(View.INVISIBLE);
-        }
-
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
 

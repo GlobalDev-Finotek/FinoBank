@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.EventTimeout;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
@@ -36,13 +37,16 @@ import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
+import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
+import io.realm.Realm;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 
 public enum ScenarioChannel {
 	INSTANCE;
 
+    private Context context;
 	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
@@ -52,6 +56,7 @@ public enum ScenarioChannel {
     }
 
     public void init(Context context, ChatView chatView, RxEventBus eventBus) {
+        this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
 
@@ -101,17 +106,15 @@ public enum ScenarioChannel {
 
 	private void firstScenario() {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
-		eventBus.getObservable()
-            .timeout(3, TimeUnit.SECONDS, Observable.just(new EventTimeout()))
+        eventBus.getObservable()
             .subscribe(iEvent -> {
+                Realm realm = Realm.getDefaultInstance();
+                User user = realm.where(User.class).findFirst();
+
                 if (iEvent instanceof AccuracyMeasureEvent) {
                     double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-                    MessageBox.INSTANCE.add(new StatusMessage("맥락 데이터 분석 결과 " + String.valueOf((int) (accuracy * 100))
-                            + "% 확률로 인증되었습니다."));
-                    MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
-                } else {
-                    MessageBox.INSTANCE.add(new StatusMessage("맥락 데이터 분석에 실패했습니다."));
-                    MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님 안녕하세요. 무엇을 도와드릴까요?"));
+                    MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
                 }
             });
 	}

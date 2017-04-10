@@ -31,6 +31,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -58,5 +59,11 @@ dependencies {
     compile 'com.tsengvn:typekit:1.0.1'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
     provided 'javax.annotation:jsr250-api:1.0'
-
 }
+
+task copy(type: Copy) {
+    from('/Users/magyeong-ug/workspace/TalkBank/app/build/outputs/apk')
+    into('/Users/magyeong-ug/Dropbox/2017_FinoPass/demo/deploy')
+    include('*.apk')
+}
+

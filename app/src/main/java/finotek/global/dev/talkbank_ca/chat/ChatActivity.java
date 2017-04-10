@@ -3,9 +3,12 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
@@ -36,6 +40,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
+import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
+import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -61,6 +67,8 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
+import static android.widget.Toast.LENGTH_LONG;
+
 public class ChatActivity extends AppCompatActivity {
 	@Inject
 	RxEventBus eventBus;
@@ -77,6 +85,8 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 	private Subscription messageBoxSubscription;
+
+    static final int RESULT_PICK_CONTACT = 1;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -188,6 +198,11 @@ public class ChatActivity extends AppCompatActivity {
             dialog.setPdfAssets(action.getPdfAsset());
             dialog.show();
         }
+
+        if(msg instanceof RequestSelectContact) {
+            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+            startActivityForResult(intent, RESULT_PICK_CONTACT);
+		}
 
 		if (msg instanceof DismissKeyboard) {
 			returnToInitialControl();
@@ -373,7 +388,36 @@ public class ChatActivity extends AppCompatActivity {
 
 	}
 
-	private ChatComponent getComponent() {
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch(requestCode) {
+            case RESULT_PICK_CONTACT:
+                Uri contactData = data.getData();
+                Cursor c = getContentResolver().query(contactData, null, null, null, null);
+                if(c.moveToFirst()) {
+                    String id =c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+                    String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+                    String hasPhone =c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+                    String cNumber = "";
+
+                    if (hasPhone.equalsIgnoreCase("1")) {
+                        Cursor phones = getContentResolver().query(
+                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
+                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,
+                                null, null);
+                        phones.moveToFirst();
+                        cNumber = phones.getString(phones.getColumnIndex("data1"));
+                    }
+
+                    MessageBox.INSTANCE.add(new SelectedContact(name, cNumber));
+                }
+                break;
+        }
+    }
+
+    private ChatComponent getComponent() {
 		return DaggerChatComponent
 				.builder()
 				.appComponent(((MyApplication) getApplication()).getAppComponent())

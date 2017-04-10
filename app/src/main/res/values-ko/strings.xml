@@ -142,7 +142,7 @@
     <string name="dialog_chat_id_card_retake">신분증 촬영을 다시 진행합니다.</string>
     <string name="dialog_chat_finger_tip_sign">마지막으로 사용자 등록 시 입력한 자필 서명을\n표시된 영역 안에 손톱이 아닌 손가락 끝을\n사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?</string>
-    <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과,\n김가람(010–5678–1234)님에게 100,000원을 이체하시겠어요?</string>
+    <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과,\n%1$s원을 %2$s(010–5678–1234)님에게 이체하시겠어요?</string>
     <string name="dialog_button_transfer_other">다른 사람에게 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다. 어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에\n손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
@@ -174,7 +174,7 @@
     <string name="dialog_button_signature">자필 서명</string>
     <string name="dialog_chat_agreenment_accepted">약관 확인 및 동의가 완료되었습니다.</string>
     <string name="dialog_chat_loan_success">대출 신청이 정상적으로 처리되어 입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?</string>
-    <string name="no"></string>
+    <string name="dialog_contact">주소록</string>
     <string name="registration_string_signature">전자 서명</string>
     <string name="setting_string_save">저장</string>
     <string name="setting_string_allowed_time">해당 시간대에만 n맥락데이터를 수집을 허용합니다.</string>

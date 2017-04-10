@@ -4,16 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 
 public class Account {
-    String name;
-    String date;
-    String history;
-    boolean isStar;
+    private String name;
+    private String date;
+    private String history;
+    private boolean isStar;
+    private boolean isFromContact;
 
     public Account(String name, String date, String history, boolean isStar) {
         this.name = name;
         this.date = date;
         this.history = history;
         this.isStar = isStar;
+        this.isFromContact = false;
     }
 
     public String getName() {
@@ -46,5 +48,13 @@ public class Account {
 
     public void setStar(boolean star) {
         isStar = star;
+    }
+
+    public boolean isFromContact() {
+        return isFromContact;
+    }
+
+    public void setFromContact(boolean fromContact) {
+        isFromContact = fromContact;
     }
 }

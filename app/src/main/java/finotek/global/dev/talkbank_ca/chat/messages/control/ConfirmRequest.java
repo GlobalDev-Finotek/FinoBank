@@ -31,15 +31,27 @@ public class ConfirmRequest {
         return req;
     }
 
+    public void addPrimaryEvent(String buttonName, Runnable listener, boolean disappear){
+        events.add(new ConfirmControlEvent(ButtonType.Primary, buttonName, listener, disappear));
+    }
+
     public void addPrimaryEvent(String buttonName, Runnable listener){
-        events.add(new ConfirmControlEvent(ButtonType.Primary, buttonName, listener));
+        addPrimaryEvent(buttonName, listener, true);
+    }
+
+    public void addInfoEvent(String buttonName, Runnable listener, boolean disappear){
+        events.add(new ConfirmControlEvent(ButtonType.Info, buttonName, listener, disappear));
     }
 
     public void addInfoEvent(String buttonName, Runnable listener){
-        events.add(new ConfirmControlEvent(ButtonType.Info, buttonName, listener));
+        addInfoEvent(buttonName, listener, true);
+    }
+
+    public void addDangerEvent(String buttonName, Runnable listener, boolean disappear){
+        events.add(new ConfirmControlEvent(ButtonType.Danger, buttonName, listener, disappear));
     }
 
     public void addDangerEvent(String buttonName, Runnable listener){
-        events.add(new ConfirmControlEvent(ButtonType.Danger, buttonName, listener));
+        addDangerEvent(buttonName, listener, true);
     }
 }

@@ -36,7 +36,6 @@
         <activity android:name=".setting.SettingDetailActivity"/>
         <activity
             android:name=".MainActivity"
-            android:launchMode="singleInstance"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>

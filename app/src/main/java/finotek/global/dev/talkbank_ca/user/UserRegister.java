@@ -8,4 +8,6 @@ import finotek.global.dev.talkbank_ca.model.User;
 
 public interface UserRegister {
 	void saveUser(User user);
+
+	void showLastUser();
 }

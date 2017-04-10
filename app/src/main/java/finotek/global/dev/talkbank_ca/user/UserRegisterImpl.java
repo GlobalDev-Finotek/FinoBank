@@ -3,8 +3,9 @@ package finotek.global.dev.talkbank_ca.user;
 import javax.inject.Inject;
 
 import finotek.global.dev.talkbank_ca.base.mvp.BasePresenter;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
-import io.realm.Realm;
+import rx.android.schedulers.AndroidSchedulers;
 
 /**
  * Created by magyeong-ug on 2017. 4. 6..
@@ -12,18 +13,24 @@ import io.realm.Realm;
 
 public class UserRegisterImpl extends BasePresenter<UserRegisterView> implements UserRegister {
 
-	private Realm realm;
+	private DBHelper dbHelper;
 
 	@Inject
-	UserRegisterImpl(Realm realm) {
-		this.realm = realm;
+	UserRegisterImpl(DBHelper dbHelper) {
+		this.dbHelper = dbHelper;
 	}
 
 	@Override
 	public void saveUser(User user) {
-		realm.beginTransaction();
-		realm.insertOrUpdate(user);
-		realm.commitTransaction();
+		dbHelper.insert(user);
+	}
+
+	@Override
+	public void showLastUser() {
+		dbHelper.get(User.class)
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe(users -> getMvpView().showLastUserData(users.last()));
+
 	}
 
 

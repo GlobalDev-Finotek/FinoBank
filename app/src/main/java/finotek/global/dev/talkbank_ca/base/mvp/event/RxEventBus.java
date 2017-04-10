@@ -3,7 +3,7 @@ package finotek.global.dev.talkbank_ca.base.mvp.event;
 import javax.inject.Singleton;
 
 import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import rx.subjects.PublishSubject;
 
 /**
  * Created by magyeong-ug on 2017. 3. 31..
@@ -11,10 +11,10 @@ import rx.subjects.BehaviorSubject;
 @Singleton
 public class RxEventBus {
 
-	private BehaviorSubject<IEvent> mSubject;
+	private PublishSubject<IEvent> mSubject;
 
 	public RxEventBus() {
-		mSubject = BehaviorSubject.create();
+		mSubject = PublishSubject.create();
 	}
 
 	public void sendEvent(IEvent event) {
@@ -22,7 +22,7 @@ public class RxEventBus {
 	}
 
 	public Observable<IEvent> getObservable() {
-		return mSubject;
+		return Observable.defer(() -> mSubject);
 	}
 }
 

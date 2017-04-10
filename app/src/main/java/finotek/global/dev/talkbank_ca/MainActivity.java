@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		boolean isFirst = sharedPrefsHelper.get("isFirst", true);
 		setNextButtonText(isFirst);
 
-
 	}
 
 	private void moveToNextActivity(boolean isValidUser) {
@@ -93,8 +92,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		else {
 			double accuracy = CallLogVerifier.getCallLogPassRate(this);
 			boolean isValidUser = isValidUser(accuracy);
+
 			String inst = getString(R.string.dialog_chat_verified_context_data).replace("%d", String.valueOf((int) (accuracy * 100)));
-			binding.tvContextAuthAccuracy.setText(inst);
+			setInstructionText(inst, isValidUser);
+
 			eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 			moveToNextActivity(isValidUser);
 		}
@@ -122,14 +123,29 @@ public class MainActivity extends AppCompatActivity implements MainView {
 				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					double accuracy = CallLogVerifier.getCallLogPassRate(this);
 					boolean isValidUser = isValidUser(accuracy);
+
 					String inst = getString(R.string.dialog_chat_verified_context_data).replace("%d", String.valueOf((int) (accuracy * 100)));
-					binding.tvContextAuthAccuracy.setText(inst);
+					setInstructionText(inst, isValidUser);
+
 					eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 					moveToNextActivity(isValidUser);
 				}
 			}
 		}
 	}
+
+	private void setInstructionText(String baseInstruction, boolean isValidUser) {
+
+
+		if (isValidUser) {
+			baseInstruction += " " + getString(R.string.main_string_authentication_succeed);
+		} else {
+			baseInstruction += " " + getString(R.string.main_string_authentication_required);
+		}
+
+		binding.tvContextAuthAccuracy.setText(baseInstruction);
+	}
+
 	@Override
 	public void setNextButtonText(boolean isFirst) {
 

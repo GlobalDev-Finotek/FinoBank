@@ -219,6 +219,7 @@ public enum ScenarioChannel {
 
 		if (msg instanceof RequestRemoveControls) {
 			chatView.removeOf(ChatView.ViewType.AccountList);
+			chatView.removeOf(ChatView.ViewType.Confirm);
 		}
 	}
 

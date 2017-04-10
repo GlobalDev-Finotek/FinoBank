@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -20,10 +19,12 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Account;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
+import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ChatAccountListBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemAccountBinding;
 import finotek.global.dev.talkbank_ca.util.Converter;
+import rx.android.schedulers.AndroidSchedulers;
 
 public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList> {
     private class ViewHolder extends RecyclerView.ViewHolder {
@@ -36,6 +37,17 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
             setIsRecyclable(false);
 
             listBinding = DataBindingUtil.bind(itemView);
+
+            MessageBox.INSTANCE.observable
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(msg -> {
+                    if(msg instanceof SelectedContact) {
+                        SelectedContact contact = (SelectedContact) msg;
+                        Account acc = new Account(contact.getName(), contact.getPhoneNumber(), "주소록에서 가져옴", false);
+                        acc.setFromContact(true);
+                        addContact(acc);
+                    }
+                });
         }
 
         public void addAccounts() {
@@ -43,6 +55,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                 Account act = accountList.get(i);
                 ChatItemAccountBinding binding = itemBindings.get(i);
 
+                // 마지막 엘리먼트에 오른쪽 Margin 추가
                 if(i == accountList.size() - 1) {
                     LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.main.getLayoutParams();
                     params.setMarginEnd(Converter.dpToPx(16));
@@ -54,16 +67,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                 RxView.clicks(binding.main)
                     .throttleFirst(200, TimeUnit.MILLISECONDS)
                     .subscribe(aVoid -> {
-                        for(int k = 0; k < itemBindings.size(); k++) {
-                            ChatItemAccountBinding b = itemBindings.get(k);
-                            Account acc = accountList.get(k);
-                            if(acc.isFromContact()) {
-                                listBinding.accountList.removeView(b.getRoot());
-                            } else {
-                                b.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_gray));
-                            }
-                        }
-
+                        unselectAccount();
                         binding.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_primary));
 
                         TransactionDB.INSTANCE.setTxName(act.getName());
@@ -71,6 +75,34 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                     });
 
                 listBinding.accountList.addView(binding.getRoot());
+            }
+        }
+
+        public void addContact(Account account){
+            unselectAccount();
+
+            final View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.chat_item_account, listBinding.accountList, false);
+            ChatItemAccountBinding itemBinding = ChatItemAccountBinding.bind(view);
+            itemBinding.setAccount(account);
+            itemBinding.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_primary));
+            listBinding.accountList.addView(view, 0);
+
+            TransactionDB.INSTANCE.setTxName(account.getName());
+            MessageBox.INSTANCE.add(new EnableToEditMoney());
+
+            itemBindings.add(itemBinding);
+            accountList.add(account);
+        }
+
+        private void unselectAccount(){
+            for(int k = 0; k < itemBindings.size(); k++) {
+                ChatItemAccountBinding b = itemBindings.get(k);
+                Account acc = accountList.get(k);
+                if(acc.isFromContact()) {
+                    listBinding.accountList.removeView(b.getRoot());
+                } else {
+                    b.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_gray));
+                }
             }
         }
     }

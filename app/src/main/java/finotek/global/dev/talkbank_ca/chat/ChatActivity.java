@@ -88,6 +88,8 @@ public class ChatActivity extends AppCompatActivity {
 
     static final int RESULT_PICK_CONTACT = 1;
 
+    static final int RESULT_PICK_CONTACT = 1;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

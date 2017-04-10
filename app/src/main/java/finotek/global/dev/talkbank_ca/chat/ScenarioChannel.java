@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +21,12 @@ import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
@@ -63,8 +66,7 @@ public enum ScenarioChannel {
 		// 메시지 박스 설정
 		MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
-					if (msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
-							msg instanceof TransferButtonPressed || msg instanceof DividerMessage) {
+					if (isImmediateMessage(msg)) {
 						return Observable.just(msg);
 					} else {
 						return Observable.just(msg)
@@ -72,6 +74,11 @@ public enum ScenarioChannel {
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
+                .doOnNext(msg -> {
+                    if(!isImmediateMessage(msg)) {
+                        MessageBox.INSTANCE.add(new MessageEmitted());
+                    }
+                })
 				.subscribe(msg -> {
 					updateUIOn(msg);
 					onRequest(msg);
@@ -243,4 +250,10 @@ public enum ScenarioChannel {
 				break;
 		}
 	}
+
+	private boolean isImmediateMessage(Object msg){
+        return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
+                msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
+                msg instanceof WaitForMessage || msg instanceof MessageEmitted;
+    }
 }

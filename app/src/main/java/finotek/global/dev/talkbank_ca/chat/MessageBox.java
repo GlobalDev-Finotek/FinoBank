@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.PublishSubject;
@@ -23,6 +25,7 @@ public enum MessageBox {
 
     public void add(Object msg) {
         messages.add(msg);
+        observable.onNext(new WaitForMessage());
         observable.onNext(msg);
     }
 

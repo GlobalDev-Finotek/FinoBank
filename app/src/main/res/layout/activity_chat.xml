@@ -69,6 +69,23 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical">
             </LinearLayout>
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                android:id="@+id/wait_message"
+                android:layout_centerHorizontal="true"
+                android:layout_alignParentTop="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
+                android:textAlignment="center"
+                android:textSize="12sp"
+                android:text="지금 메시지를 처리하는 중입니다 잠시만 기다려주세요..."
+                android:textColor="@android:color/white"
+                android:background="@drawable/wait_message"
+                android:visibility="invisible" />
         </RelativeLayout>
 
     </LinearLayout>

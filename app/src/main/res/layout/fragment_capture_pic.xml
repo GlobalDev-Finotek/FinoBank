@@ -37,11 +37,10 @@
             app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
 
         <RelativeLayout
+            android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_toEndOf="@+id/ib_ok"
-            android:id="@+id/relativeLayout">
+            android:layout_alignParentBottom="true">
 
             <ImageButton
                 android:id="@+id/ib_ok"

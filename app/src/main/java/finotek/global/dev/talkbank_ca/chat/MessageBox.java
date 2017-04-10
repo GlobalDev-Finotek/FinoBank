@@ -7,6 +7,8 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
+import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.PublishSubject;
@@ -25,7 +27,11 @@ public enum MessageBox {
 
     public void add(Object msg) {
         messages.add(msg);
-        observable.onNext(new WaitForMessage());
+
+        if(!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
+            observable.onNext(new WaitForMessage());
+        }
+
         observable.onNext(msg);
     }
 

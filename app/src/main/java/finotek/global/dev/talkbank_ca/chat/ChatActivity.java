@@ -21,8 +21,6 @@ import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
 
-import org.joda.time.DateTime;
-
 import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
 
@@ -52,6 +50,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
@@ -64,6 +63,10 @@ import rx.android.schedulers.AndroidSchedulers;
 public class ChatActivity extends AppCompatActivity {
 	@Inject
 	RxEventBus eventBus;
+
+	@Inject
+	DBHelper userDBHelper;
+
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -77,7 +80,6 @@ public class ChatActivity extends AppCompatActivity {
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
 		getComponent().inject(this);
@@ -86,7 +88,7 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		ScenarioChannel.INSTANCE.init(this, binding.chatView, eventBus);
+		ScenarioChannel.INSTANCE.init(this, binding.chatView, eventBus, userDBHelper);
 
 		MessageBox.INSTANCE.observable
             .flatMap(msg -> {

@@ -10,6 +10,7 @@ import dagger.Module;
 import dagger.Provides;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import io.realm.Realm;
 
 /**
@@ -18,14 +19,17 @@ import io.realm.Realm;
 @Module
 public class AppModule {
 
+	private final DBHelper dbHelper;
 	private MyApplication application;
 	private RxEventBus eventBus;
 	private Realm realm;
 
-	public AppModule(@NonNull MyApplication application, RxEventBus eventBus, Realm realm) {
+	public AppModule(@NonNull MyApplication application, RxEventBus eventBus,
+	                 Realm realm, DBHelper dbHelper) {
 		this.application = application;
 		this.eventBus = eventBus;
 		this.realm = realm;
+		this.dbHelper = dbHelper;
 	}
 
   @Provides
@@ -44,6 +48,12 @@ public class AppModule {
 	@Singleton
 	Realm provideRealm() {
 		return realm;
+	}
+
+	@Provides
+	@Singleton
+	DBHelper provideDBHelper() {
+		return dbHelper;
 	}
 
 	@Provides

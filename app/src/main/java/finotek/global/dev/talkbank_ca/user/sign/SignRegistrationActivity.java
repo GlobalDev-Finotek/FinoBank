@@ -10,9 +10,14 @@ import android.util.TypedValue;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import java.util.concurrent.TimeUnit;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
+import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
+import rx.Observable;
+import rx.android.schedulers.AndroidSchedulers;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
@@ -59,23 +64,30 @@ public class SignRegistrationActivity extends AppCompatActivity {
 		  Class nextClass = (Class) intent.getExtras().get("nextClass");
 		  signRegistFragment.setOnSaveListener(() -> {
 
-			  SucceededDialog dialog = new SucceededDialog(SignRegistrationActivity.this);
+			  PrimaryDialog loadingDialog = new PrimaryDialog(this);
+			  loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+			  loadingDialog.setDescription(getString(R.string.registration_string_wait));
+			  loadingDialog.show();
 
+			  Observable.interval(1500, TimeUnit.MILLISECONDS)
+					  .first()
+					  .observeOn(AndroidSchedulers.mainThread())
+					  .subscribe(i -> {
+						  loadingDialog.dismiss();
 
-			  dialog.setTitle(getString(R.string.setting_string_signature_verified));
-			  dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-			  dialog.setButtonText(getString(R.string.setting_string_yes));
-			  dialog.show();
-
-			  dialog.setDoneListener(() -> {
-				  Intent intent2 = new Intent(SignRegistrationActivity.this, nextClass);
-				  intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-				  intent2.putExtras(intent.getExtras());
-				  startActivity(intent2);
-				  finish();
-			  });
-
-
+						  SucceededDialog dialog = new SucceededDialog(this);
+						  dialog.setTitle(getString(R.string.setting_string_signature_verified));
+						  dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+						  dialog.setButtonText(getString(R.string.setting_string_yes));
+						  dialog.setDoneListener(() -> {
+							  Intent intent2 = new Intent(SignRegistrationActivity.this, nextClass);
+							  intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+							  intent2.putExtras(intent.getExtras());
+							  startActivity(intent2);
+							  finish();
+						  });
+						  dialog.show();
+					  });
 		  });
 	  } catch (NullPointerException e) {
 		  e.printStackTrace();

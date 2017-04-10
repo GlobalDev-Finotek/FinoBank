@@ -7,6 +7,7 @@ import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -20,6 +21,7 @@ public class MyApplication extends Application {
   AppComponent appComponent;
 	private RxEventBus eventBus;
 	private Realm realm;
+	private DBHelper dbHelper;
 
 	@Override
 	public void onCreate() {
@@ -35,7 +37,7 @@ public class MyApplication extends Application {
 		Realm.setDefaultConfiguration(realmConfiguration);
 		realm = Realm.getDefaultInstance();
 		eventBus = new RxEventBus();
-
+		dbHelper = new DBHelper(realm);
 
 		createDaggerInjections();
 	}
@@ -51,7 +53,7 @@ public class MyApplication extends Application {
   private void createDaggerInjections() {
     appComponent = DaggerAppComponent
         .builder()
-		    .appModule(new AppModule(this, eventBus, realm))
+		    .appModule(new AppModule(this, eventBus, realm, dbHelper))
 		    .build();
 
     appComponent.inject(this);

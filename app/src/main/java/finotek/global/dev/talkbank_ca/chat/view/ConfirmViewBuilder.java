@@ -64,7 +64,9 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
             RxView.clicks(btn)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
-                    data.getDoAfterEvent().run();
+                    if(event.isDisappearAfter()) {
+                        data.getDoAfterEvent().run();
+                    }
                     event.getListener().run();
                 });
         }

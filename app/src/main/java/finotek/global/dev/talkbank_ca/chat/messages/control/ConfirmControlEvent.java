@@ -10,4 +10,5 @@ public class ConfirmControlEvent {
     RoundButton.ButtonType buttonType;
     String name;
     Runnable listener;
+    boolean isDisappearAfter;
 }

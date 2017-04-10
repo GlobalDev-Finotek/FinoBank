@@ -18,6 +18,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
+import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -154,6 +155,13 @@ public class TransferScenario implements Scenario {
 
         MessageBox.INSTANCE.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
         MessageBox.INSTANCE.add(new AccountList(accounts));
+
+        ConfirmRequest req = new ConfirmRequest();
+        req.addInfoEvent(context.getResources().getString(R.string.dialog_contact), () -> {
+            MessageBox.INSTANCE.add(new RequestSelectContact());
+        }, false);
+
+        MessageBox.INSTANCE.add(req);
         MessageBox.INSTANCE.add(new RequestTransfer());
     }
 

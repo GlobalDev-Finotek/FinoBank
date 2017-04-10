@@ -19,7 +19,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
@@ -67,15 +66,12 @@ import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 public class ChatActivity extends AppCompatActivity {
+	static final int RESULT_PICK_CONTACT = 1;
 	@Inject
 	RxEventBus eventBus;
-
 	@Inject
 	DBHelper userDBHelper;
-
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -85,10 +81,6 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 	private Subscription messageBoxSubscription;
-
-    static final int RESULT_PICK_CONTACT = 1;
-
-    static final int RESULT_PICK_CONTACT = 1;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {

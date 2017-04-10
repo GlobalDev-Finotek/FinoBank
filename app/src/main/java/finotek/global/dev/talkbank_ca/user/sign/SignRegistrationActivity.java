@@ -13,6 +13,9 @@ import android.widget.LinearLayout;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
+import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
@@ -63,19 +66,17 @@ public class SignRegistrationActivity extends AppCompatActivity {
 	  try {
 		  Class nextClass = (Class) intent.getExtras().get("nextClass");
 		  signRegistFragment.setOnSaveListener(() -> {
-
-			  PrimaryDialog loadingDialog = new PrimaryDialog(this);
+			  PrimaryDialog loadingDialog = new PrimaryDialog(SignRegistrationActivity.this);
 			  loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 			  loadingDialog.setDescription(getString(R.string.registration_string_wait));
 			  loadingDialog.show();
 
-			  Observable.interval(1500, TimeUnit.MILLISECONDS)
-					  .first()
+			  Observable.interval(1500, TimeUnit.MILLISECONDS).first()
 					  .observeOn(AndroidSchedulers.mainThread())
 					  .subscribe(i -> {
 						  loadingDialog.dismiss();
 
-						  SucceededDialog dialog = new SucceededDialog(this);
+						  SucceededDialog dialog = new SucceededDialog(SignRegistrationActivity.this);
 						  dialog.setTitle(getString(R.string.setting_string_signature_verified));
 						  dialog.setDescription(getString(R.string.setting_string_authentication_complete));
 						  dialog.setButtonText(getString(R.string.setting_string_yes));

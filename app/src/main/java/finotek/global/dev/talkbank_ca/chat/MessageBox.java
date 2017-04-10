@@ -15,31 +15,31 @@ import rx.subjects.PublishSubject;
 
 // Singleton Instance
 public enum MessageBox {
-    INSTANCE;
+	INSTANCE;
 
-    private final List<Object> messages;
-    public final PublishSubject<Object> observable;
+	private final List<Object> messages;
+	public final PublishSubject<Object> observable;
 
-    MessageBox(){
-        messages = new ArrayList<>();
-        observable = PublishSubject.create();
-    }
+	MessageBox(){
+		messages = new ArrayList<>();
+		observable = PublishSubject.create();
+	}
 
-    public void add(Object msg) {
-        messages.add(msg);
+	public void add(Object msg) {
+		messages.add(msg);
 
-        if(!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-            observable.onNext(new WaitForMessage());
-        }
+		if(!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
+			observable.onNext(new WaitForMessage());
+		}
 
-        observable.onNext(msg);
-    }
+		observable.onNext(msg);
+	}
 
-    public void removeAt(int index){
-        messages.remove(index);
-    }
+	public void removeAt(int index){
+		messages.remove(index);
+	}
 
-    public int size() {
-        return messages.size();
-    }
+	public int size() {
+		return messages.size();
+	}
 }

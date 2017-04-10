@@ -48,7 +48,9 @@
                 android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:padding="14dp"
+                android:paddingTop="10dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
                 android:background="@android:color/white">
                 <TextView
                     android:layout_width="65dp"
@@ -66,6 +68,7 @@
                     android:background="@android:color/transparent"
                     android:textSize="18sp"
                     android:textColor="@color/coral_pink"
+                    android:textStyle="bold"
                     android:gravity="end" />
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_marginStart="5dp"

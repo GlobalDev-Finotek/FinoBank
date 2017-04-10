@@ -67,7 +67,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                 RxView.clicks(binding.main)
                     .throttleFirst(200, TimeUnit.MILLISECONDS)
                     .subscribe(aVoid -> {
-                        unselectAccount();
+                        deselectAccount();
                         binding.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_primary));
 
                         TransactionDB.INSTANCE.setTxName(act.getName());
@@ -79,7 +79,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
         }
 
         public void addContact(Account account){
-            unselectAccount();
+            deselectAccount();
 
             final View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.chat_item_account, listBinding.accountList, false);
             ChatItemAccountBinding itemBinding = ChatItemAccountBinding.bind(view);
@@ -88,18 +88,19 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
             listBinding.accountList.addView(view, 0);
 
             TransactionDB.INSTANCE.setTxName(account.getName());
-            MessageBox.INSTANCE.add(new EnableToEditMoney());
+            MessageBox.INSTANCE.add(new EnableToEditMoney   ());
 
             itemBindings.add(itemBinding);
             accountList.add(account);
         }
 
-        private void unselectAccount(){
+        private void deselectAccount(){
             for(int k = 0; k < itemBindings.size(); k++) {
                 ChatItemAccountBinding b = itemBindings.get(k);
                 Account acc = accountList.get(k);
                 if(acc.isFromContact()) {
                     listBinding.accountList.removeView(b.getRoot());
+                    accountList.remove(k);
                 } else {
                     b.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_gray));
                 }

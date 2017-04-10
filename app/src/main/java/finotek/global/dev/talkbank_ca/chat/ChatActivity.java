@@ -66,6 +66,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 
 import static android.widget.Toast.LENGTH_LONG;
@@ -85,6 +86,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
+	private Subscription messageBoxSubscription;
 
     static final int RESULT_PICK_CONTACT = 1;
 
@@ -102,9 +104,9 @@ public class ChatActivity extends AppCompatActivity {
 
 		ScenarioChannel.INSTANCE.init(this, binding.chatView, eventBus, userDBHelper);
 
-		MessageBox.INSTANCE.observable
-            .flatMap(msg -> {
-                if(msg instanceof EnableToEditMoney) {
+		messageBoxSubscription = MessageBox.INSTANCE.observable
+				.flatMap(msg -> {
+					if(msg instanceof EnableToEditMoney) {
                     return Observable.just(msg)
                         .observeOn(AndroidSchedulers.mainThread());
                 } else if(msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
@@ -374,8 +376,29 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		if (!messageBoxSubscription.isUnsubscribed()) {
+			messageBoxSubscription.unsubscribe();
+		}
+	}
+
+	@Override
+	public void onBackPressed() {
+		moveTaskToBack(true);
+	}
+
+	@Override
 	protected void onResume() {
 		super.onResume();
+
+		/*
+		// TODO 맥락 인증 점수 명시 후 구현
+		if (!CallLogVerifier.isValidUser(this)) {
+			Intent intent = new Intent(this, MainActivity.class);
+			startActivity(intent);
+		}
+		*/
 
 	}
 

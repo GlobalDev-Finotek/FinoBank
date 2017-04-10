@@ -29,7 +29,6 @@ import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
-import rx.functions.Action1;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
@@ -68,16 +67,15 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 
 		presenter.attachView(this);
 
+		presenter.showLastUser();
+
 		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
-				.subscribe(new Action1<Void>() {
-					@Override
-					public void call(Void aVoid) {
-						Intent intent = new Intent(getActivity(), CaptureProfilePicActivity.class);
-						intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-						intent.putExtra("nextClass", SettingDetailActivity.class);
-						intent.putExtra("type", PageType.USER_INFO);
-						startActivity(intent);
-					}
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(getActivity(), CaptureProfilePicActivity.class);
+					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+					intent.putExtra("nextClass", SettingDetailActivity.class);
+					intent.putExtra("type", PageType.USER_INFO);
+					startActivity(intent);
 				});
 
 		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(getActivity()));
@@ -156,4 +154,9 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 	}
 
 
+	@Override
+	public void showLastUserData(User user) {
+		binding.llRegiBasic.edtUserName.setText(user.getName());
+		binding.llRegiBasic.edtPhoneNumber.setText(user.getPhoneNumber());
+	}
 }

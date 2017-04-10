@@ -130,4 +130,9 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 				.activityModule(new ActivityModule(this)).build();
 	}
 
+	@Override
+	public void showLastUserData(User user) {
+		binding.llRegiBasic.edtUserName.setText(user.getName());
+		binding.llRegiBasic.edtPhoneNumber.setText(user.getPhoneNumber());
+	}
 }

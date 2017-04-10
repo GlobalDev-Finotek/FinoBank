@@ -88,7 +88,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
             listBinding.accountList.addView(view, 0);
 
             TransactionDB.INSTANCE.setTxName(account.getName());
-            MessageBox.INSTANCE.add(new EnableToEditMoney());
+            MessageBox.INSTANCE.add(new EnableToEditMoney   ());
 
             itemBindings.add(itemBinding);
             accountList.add(account);

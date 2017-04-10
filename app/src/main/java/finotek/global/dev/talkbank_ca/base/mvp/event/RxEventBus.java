@@ -22,7 +22,7 @@ public class RxEventBus {
 	}
 
 	public Observable<IEvent> getObservable() {
-		return Observable.defer(() -> mSubject);
+		return mSubject;
 	}
 }
 

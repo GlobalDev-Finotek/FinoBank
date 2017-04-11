@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		else {
 			double accuracy = CallLogVerifier.getCallLogPassRate(this);
 			boolean isValidUser = isValidUser(accuracy);
-			String inst = getString(R.string.dialog_chat_verified_context_data).replace("%d", String.valueOf((int) (accuracy * 100)));
+			String inst = getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100));
 			binding.tvContextAuthAccuracy.setText(inst);
 			eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 			moveToNextActivity(isValidUser);
@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					double accuracy = CallLogVerifier.getCallLogPassRate(this);
 					boolean isValidUser = isValidUser(accuracy);
-					String inst = getString(R.string.dialog_chat_verified_context_data).replace("%d", String.valueOf((int) (accuracy * 100)));
+					String inst = getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100));
 					binding.tvContextAuthAccuracy.setText(inst);
 					eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 					moveToNextActivity(isValidUser);

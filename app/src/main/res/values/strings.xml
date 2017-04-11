@@ -124,7 +124,7 @@
     <string name="setting_string_retake_picture">Re-take photo</string>
     <string name="setting_string_register">Register</string>
     <string name="setting_string_registered_picture_purpose">Registered picture will be used for personal verification purpose</string>
-    <string name="dialog_chat_verified_context_data">Result of analyzing context data is %d. Authentication is succeeded.</string>
+    <string name="dialog_chat_verified_context_data">Result of analyzing context data is %1$d. Authentication is succeeded.</string>
     <string name="dialog_chat_ask_help">Hello %s How may I help you</string>
     <string name="dialog_button_open_account">Open account</string>
     <string name="dialog_chat_recommandation">%1$s.\nI would like to recommend Finocation smart account\n". Do you want to continue opening account?"</string>

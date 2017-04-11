@@ -9,6 +9,9 @@ import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -34,6 +37,23 @@ public class PrimaryDialog extends Dialog {
                     if(listener != null)
                         listener.run();
                 });
+
+        RotateAnimation anim = new RotateAnimation(0, 360,
+            Animation.RELATIVE_TO_SELF, 0.5f,
+            Animation.RELATIVE_TO_SELF, 0.5f);
+        anim.setInterpolator(new LinearInterpolator());
+        anim.setRepeatCount(Animation.INFINITE);
+        anim.setDuration(700);
+
+        binding.icon.startAnimation(anim);
+
+
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        binding.icon.setAnimation(null);
     }
 
     public void setTitle(String title){

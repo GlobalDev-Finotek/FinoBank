@@ -42,27 +42,38 @@
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true">
 
-            <ImageButton
-                android:id="@+id/ib_ok"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignBottom="@+id/ib_capture"
-                android:layout_marginEnd="15dp"
-                android:layout_toStartOf="@+id/ib_capture"
-                android:background="@drawable/primary_large_circle"
-                android:visibility="gone"
-                app:srcCompat="@drawable/vector_drawable_icon_confirm"/>
-
-            <ImageButton
-                android:id="@+id/ib_capture"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/white_large_circle"
-                android:tint="@color/colorPrimary"
-                app:srcCompat="@drawable/vector_drawable_icon_camera"/>
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/ib_capture"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="16dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/white_large_circle"
+                    android:tint="@color/colorPrimary"
+                    app:srcCompat="@drawable/vector_drawable_icon_camera"/>
+
+                <ImageButton
+                    android:id="@+id/ib_ok"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignBottom="@+id/ib_capture"
+                    android:layout_marginLeft="15dp"
+                    android:layout_toStartOf="@+id/ib_capture"
+                    android:layout_weight="1"
+                    android:background="@drawable/primary_large_circle"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/vector_drawable_icon_confirm"/>
+            </LinearLayout>
+
         </RelativeLayout>
 
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView

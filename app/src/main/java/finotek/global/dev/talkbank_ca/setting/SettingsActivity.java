@@ -14,6 +14,7 @@ import finotek.global.dev.talkbank_ca.databinding.ActivitySettingsBinding;
 
 public class SettingsActivity extends AppCompatActivity {
 
+	private final int LANGUATE_SETTING = 1;
 	private ActivitySettingsBinding binding;
 
 	@Override
@@ -61,10 +62,24 @@ public class SettingsActivity extends AppCompatActivity {
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
 					Intent i = new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS);
-					startActivity(i);
+					startActivityForResult(i, LANGUATE_SETTING);
+					finish();
 				});
+	}
 
-
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		switch (requestCode) {
+			case LANGUATE_SETTING:
+				Intent i = getBaseContext().getPackageManager()
+						.getLaunchIntentForPackage(getBaseContext().getPackageName());
+				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+				startActivity(i);
+				finish();
+				break;
+		}
 
 	}
+
+
 }

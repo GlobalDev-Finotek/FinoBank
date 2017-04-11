@@ -159,4 +159,6 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 		binding.llRegiBasic.edtUserName.setText(user.getName());
 		binding.llRegiBasic.edtPhoneNumber.setText(user.getPhoneNumber());
 	}
+
+
 }

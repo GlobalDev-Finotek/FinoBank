@@ -10,12 +10,17 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.model.User;
+import io.realm.Realm;
 
 public class AccountScenario implements Scenario {
     private Context context;
     private Step step = Step.Initial;
+    private User user;
 
     public AccountScenario(Context context) {
+        Realm realm = Realm.getDefaultInstance();
+        this.user = realm.where(User.class).findFirst();
         this.context = context;
     }
 
@@ -42,7 +47,7 @@ public class AccountScenario implements Scenario {
     public void onUserSend(String msg) {
         switch (step) {
             case Initial:
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recommandation)));
+                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recommandation, user.getName())));
                 MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context)); // 네, 아니오
                 step = Step.CheckIDCard;
                 break;

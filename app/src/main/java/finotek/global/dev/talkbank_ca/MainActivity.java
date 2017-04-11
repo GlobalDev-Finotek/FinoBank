@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -26,9 +27,6 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
-import io.realm.RealmResults;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 
 
@@ -61,22 +59,25 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		checkPermission();
 
 		dbHelper.get(User.class)
-				.subscribe(new Consumer<RealmResults<User>>() {
-					@Override
-					public void accept(@NonNull RealmResults<User> users) throws Exception {
-						boolean isFirst = false;
+				.subscribe(users -> {
+					boolean isFirst = false;
 
-						if (users.size() == 0) {
-							isFirst = true;
-						}
-
-						setNextButtonText(isFirst);
+					if (users.size() == 0) {
+						isFirst = true;
 					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(@NonNull Throwable throwable) throws Exception {
 
+					if (isFirst) {
+						binding.tvContextAuthAccuracy.setVisibility(View.INVISIBLE);
+					} else {
+						binding.tvContextAuthAccuracy.setVisibility(View.VISIBLE);
 					}
+
+
+					setNextButtonText(isFirst);
+
+
+				}, throwable -> {
+
 				});
 
 	}

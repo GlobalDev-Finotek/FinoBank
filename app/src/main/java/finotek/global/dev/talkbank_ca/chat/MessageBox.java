@@ -2,23 +2,18 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 
-import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
 import rx.subjects.PublishSubject;
 
 // Singleton Instance
 public enum MessageBox {
 	INSTANCE;
 
-	private final List<Object> messages;
 	public final PublishSubject<Object> observable;
+	private final List<Object> messages;
 
 	MessageBox(){
 		messages = new ArrayList<>();

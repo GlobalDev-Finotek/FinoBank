@@ -38,6 +38,6 @@ public class TalkBankSwitch extends Switch {
 		setSwitchMinWidth(Converter.dpToPx(58));
 		setTrackDrawable(ContextCompat.getDrawable(context, R.drawable.switch_track_off));
 		setThumbDrawable(ContextCompat.getDrawable(context, R.drawable.switch_thumb_selector));
-
+		setThumbTextPadding((int) context.getResources().getDimension(R.dimen.switch_thumb_radius));
 	}
 }

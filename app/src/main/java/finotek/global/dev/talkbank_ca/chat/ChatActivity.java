@@ -68,6 +68,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 import static android.widget.Toast.LENGTH_LONG;
 
@@ -111,7 +112,7 @@ public class ChatActivity extends AppCompatActivity {
                         .observeOn(AndroidSchedulers.mainThread());
                 } else {
                     return Observable.just(msg)
-                        .delay(2000, TimeUnit.MILLISECONDS)
+                        .delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
                 }
             })

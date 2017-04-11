@@ -1,21 +1,14 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
-import finotek.global.dev.talkbank_ca.base.mvp.event.EventTimeout;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -45,6 +38,7 @@ import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.realm.Realm;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public enum ScenarioChannel {
 	INSTANCE;
@@ -70,7 +64,7 @@ public enum ScenarioChannel {
 						return Observable.just(msg);
 					} else {
 						return Observable.just(msg)
-								.delay(2000, TimeUnit.MILLISECONDS)
+								.delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})

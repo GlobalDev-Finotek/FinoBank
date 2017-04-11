@@ -181,9 +181,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 						presenter.moveToNextActivity(isFirst));
 
 		if (isFirst) {
-			binding.mainButton.setText("사용자 등록");
+			binding.mainButton.setText(getString(R.string.main_button_register));
 		} else {
-			binding.mainButton.setText("로그인");
+			binding.mainButton.setText(getString(R.string.main_button_login));
 		}
 	}
 }

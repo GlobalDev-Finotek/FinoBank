@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
@@ -27,6 +28,12 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList> {
+
+	private final Context context;
+
+	public AccountListViewBuilder(Context context) {
+		this.context = context;
+	}
 	@Override
 	public RecyclerView.ViewHolder build(ViewGroup parent) {
 		ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_list, parent, false);
@@ -73,8 +80,8 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                 .subscribe(msg -> {
                     if(msg instanceof SelectedContact) {
                         SelectedContact contact = (SelectedContact) msg;
-                        Account acc = new Account(contact.getName(), contact.getPhoneNumber(), "주소록에서 가져옴", false);
-                        acc.setFromContact(true);
+	                    Account acc = new Account(contact.getName(), contact.getPhoneNumber(), context.getString(R.string.dialog_string_import_from_contact), false);
+	                    acc.setFromContact(true);
                         addContact(acc);
                     }
                 });

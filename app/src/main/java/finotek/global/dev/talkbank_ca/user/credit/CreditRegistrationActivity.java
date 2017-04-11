@@ -29,7 +29,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_credit_registration);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbarTitle.setText("신용카드 등록");
+		binding.toolbarTitle.setText(getString(R.string.registration_string_credit_card_register));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 

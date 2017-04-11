@@ -12,9 +12,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 
 public class LoanScenario implements Scenario {
     private Context context;
@@ -68,7 +68,7 @@ public class LoanScenario implements Scenario {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)));
                     MessageBox.INSTANCE.add(new Done());
                 } else {
-                    MessageBox.INSTANCE.add(new ReceiveMessage("무슨 의미 인가요?"));
+	                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
                 }
                 break;
             case InputMoney:
@@ -96,8 +96,8 @@ public class LoanScenario implements Scenario {
                 step = Step.Last;
                 break;
             default:
-                MessageBox.INSTANCE.add(new ReceiveMessage("무슨 의미 인가요?"));
-                break;
+	            MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+	            break;
         }
     }
 

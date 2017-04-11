@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -28,6 +29,8 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
     private Context context;
     private TreeMap<Agreement, List<ChatItemAgreementBinding>> agreementViewTree = new TreeMap<>();
 
+    private boolean isRequiredFieldClicked;
+
     public AgreementBuilder(Context context) {
         this.context = context;
     }
@@ -47,7 +50,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             // parent
             Agreement agr = data.getAgreements().get(i);
             agr.setNewCheck(isNewCheck);
-            addAgreement(holder.binding.agreements, agr);
+            addAgreement(holder.binding.agreements, agr, i);
 
             // child
             if (!agr.isEmptyChild()) {
@@ -75,12 +78,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             childAgreementViewBindings.add(binding);
 
             binding.textView.setClickable(true);
-            Runnable r = new Runnable(){
-                @Override
-                public void run() {
-                    MessageBox.INSTANCE.add(new ShowPdfView(childAgreement.getName(), childAgreement.getPdfAsset()));
-                }
-            };
+            Runnable r = () -> MessageBox.INSTANCE.add(new ShowPdfView(childAgreement.getName(), childAgreement.getPdfAsset()));
 
             RxView.clicks(binding.textView)
                     .throttleFirst(2000, TimeUnit.MILLISECONDS)
@@ -95,7 +93,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
 
     }
 
-    private void addAgreement(LinearLayout holder, Agreement agreement) {
+    private void addAgreement(LinearLayout holder, Agreement agreement, int i) {
         View view = LayoutInflater.from(context).inflate(R.layout.chat_item_agreement, holder, false);
         ChatItemAgreementBinding binding = ChatItemAgreementBinding.bind(view);
         binding.setItem(agreement);
@@ -106,11 +104,21 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
         binding.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             List<ChatItemAgreementBinding> bindings = agreementViewTree.get(agreement);
             if (isChecked) {
+
+                if (i == 0) {
+                    isRequiredFieldClicked = true;
+                }
+
                 for (ChatItemAgreementBinding b : bindings) {
                     b.checkbox.setChecked(true);
                     b.checkbox.setSelected(true);
                 }
             } else {
+
+                if (i == 0) {
+                    isRequiredFieldClicked = false;
+                }
+
                 for (ChatItemAgreementBinding b : bindings) {
                     b.checkbox.setChecked(false);
                     b.checkbox.setSelected(false);
@@ -131,8 +139,15 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             RxView.clicks(binding.signButton)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
-                    MessageBox.INSTANCE.add(new ReceiveMessage("사용자 등록 시 입력한 자필 서명을 표시된 영역 안에\n손톱이 아닌 손가락 끝을 사용하여 서명해 주세요."));
-                    MessageBox.INSTANCE.add(new RequestSignature());
+
+                    if (isRequiredFieldClicked) {
+                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_string_finger_tip_sign_user_register)));
+                        MessageBox.INSTANCE.add(new RequestSignature());
+                    } else {
+                        // TODO 서명해달라는 메세지 표시
+                        Toast.makeText(context, "동의가 필요합니다", Toast.LENGTH_SHORT).show();
+                    }
+
                 });
         }
     }

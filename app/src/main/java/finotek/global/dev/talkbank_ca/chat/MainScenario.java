@@ -240,7 +240,8 @@ public enum MainScenario {
 				s.equals(context.getString(R.string.main_string_view_account_details))) {
 
 			dbHelper.get(User.class).subscribe(users -> {
-				MessageBox.INSTANCE.add(new ReceiveMessage(users.last().getName() + " 님의 최근 거래내역입니다."));
+				MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
+						users.last().getName())));
 				RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
 				MessageBox.INSTANCE.add(rt);
 			}, throwable -> {
@@ -249,7 +250,7 @@ public enum MainScenario {
 
 
 		} else {
-			MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
+			MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_recognize_error)));
 
 		}
 	}

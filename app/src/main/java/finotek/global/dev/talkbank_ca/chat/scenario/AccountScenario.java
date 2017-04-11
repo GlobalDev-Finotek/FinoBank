@@ -65,8 +65,8 @@ public class AccountScenario implements Scenario {
                     MessageBox.INSTANCE.add(new RequestSignature());
                     step = Step.Last;
                 } else if (msg.equals(context.getString(R.string.string_no))) {
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)));
-                    MessageBox.INSTANCE.add(new Done());
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_id_card_retake)));
+                    MessageBox.INSTANCE.add(new RequestTakeIDCard());
                 } else {
                     MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠습니다."));
                 }

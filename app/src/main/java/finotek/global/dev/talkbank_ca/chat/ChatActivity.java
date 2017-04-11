@@ -65,6 +65,7 @@ import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import rx.Observable;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
@@ -103,7 +104,7 @@ public class ChatActivity extends AppCompatActivity {
                         .observeOn(AndroidSchedulers.mainThread());
                 } else {
                     return Observable.just(msg)
-                        .delay(2000, TimeUnit.MILLISECONDS)
+                        .delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
                 }
             })

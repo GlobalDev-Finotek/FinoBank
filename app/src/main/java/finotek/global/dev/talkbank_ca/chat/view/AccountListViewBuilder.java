@@ -100,6 +100,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                 Account acc = accountList.get(k);
                 if(acc.isFromContact()) {
                     listBinding.accountList.removeView(b.getRoot());
+                    itemBindings.remove(k);
                     accountList.remove(k);
                 } else {
                     b.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_gray));

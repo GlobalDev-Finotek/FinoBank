@@ -6,19 +6,16 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.DialogPdfViewBinding;
-import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class PdfViewDialog extends Dialog {
     private DialogPdfViewBinding binding;

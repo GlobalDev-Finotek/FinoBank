@@ -8,8 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -29,7 +29,9 @@ import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
-import rx.functions.Action1;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
@@ -69,15 +71,12 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 		presenter.attachView(this);
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
-				.subscribe(new Action1<Void>() {
-					@Override
-					public void call(Void aVoid) {
-						Intent intent = new Intent(getActivity(), CaptureProfilePicActivity.class);
-						intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-						intent.putExtra("nextClass", SettingDetailActivity.class);
-						intent.putExtra("type", PageType.USER_INFO);
-						startActivity(intent);
-					}
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(getActivity(), CaptureProfilePicActivity.class);
+					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+					intent.putExtra("nextClass", SettingDetailActivity.class);
+					intent.putExtra("type", PageType.USER_INFO);
+					startActivity(intent);
 				});
 
 		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(getActivity()));

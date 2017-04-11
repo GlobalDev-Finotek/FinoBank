@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.chat.extensions;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,16 +7,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ChatExControl2Binding;
-import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 
 public class ExtendedControl2 extends Fragment {
     private Runnable doOnControl;

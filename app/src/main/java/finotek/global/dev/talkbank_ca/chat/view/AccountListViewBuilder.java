@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +24,7 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ChatAccountListBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemAccountBinding;
 import finotek.global.dev.talkbank_ca.util.Converter;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList> {
     private class ViewHolder extends RecyclerView.ViewHolder {

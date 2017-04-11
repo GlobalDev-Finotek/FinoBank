@@ -11,8 +11,9 @@ import android.view.ViewGroup;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentDrawBinding;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.subjects.PublishSubject;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.subjects.PublishSubject;
+
 
 /**
  * Created by magyeong-ug on 2017. 3. 29..

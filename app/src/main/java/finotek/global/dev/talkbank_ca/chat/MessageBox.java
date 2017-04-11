@@ -2,16 +2,14 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.subjects.PublishSubject;
+import io.reactivex.Flowable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.subjects.PublishSubject;
 
 // Singleton Instance
 public enum MessageBox {
@@ -28,11 +26,16 @@ public enum MessageBox {
     public void add(Object msg) {
         messages.add(msg);
 
-        if(!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-            observable.onNext(new WaitForMessage());
-        }
+        Flowable.interval(200, TimeUnit.MILLISECONDS)
+            .observeOn(AndroidSchedulers.mainThread())
+            .first((long) 1)
+            .subscribe(value -> {
+                if(!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
+                    observable.onNext(new WaitForMessage());
+                }
 
-        observable.onNext(msg);
+                observable.onNext(msg);
+            });
     }
 
     public void removeAt(int index){

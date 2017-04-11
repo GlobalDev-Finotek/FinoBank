@@ -2,7 +2,7 @@ package finotek.global.dev.talkbank_ca.user.sign;
 
 import android.support.v4.content.ContextCompat;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -42,7 +42,7 @@ public class OneStepSignRegisterFragment extends BaseSignRegisterFragment {
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
 					stepSubject.onNext(3);
-					stepSubject.onCompleted();
+					stepSubject.onComplete();
 				});
 
 	}

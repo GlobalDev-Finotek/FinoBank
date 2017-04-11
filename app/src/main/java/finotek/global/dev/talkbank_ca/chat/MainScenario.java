@@ -35,10 +35,9 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.realm.Realm;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 public enum MainScenario {
 	INSTANCE;

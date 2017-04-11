@@ -153,7 +153,7 @@
     Is there anything else I can help you with?</string>
     <string name="dialog_button_recent_transaction">View recent transactions</string>
     <string name="dialog_button_transfer_add">Add transfer account</string>
-    <string name="dialog_chat_someone_recent_transaction">% view recent transaction</string>
+    <string name="dialog_chat_someone_recent_transaction">view recent transaction</string>
     <string name="dialog_string_deposit">Deposit</string>
     <string name="dialog_string_withdrawal">Withdrawal</string>
     <string name="dialog_string_balance">Balance</string>

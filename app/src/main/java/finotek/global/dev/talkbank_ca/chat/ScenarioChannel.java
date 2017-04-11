@@ -231,20 +231,23 @@ public enum ScenarioChannel {
 	}
 
 	private void respondToSendMessage(String msg) {
-		switch (msg.trim()) {
-			case "계좌조회":
-			case "계좌 조회":
-			case "최근거래내역":
-			case "최근 거래 내역":
-			case "View recent transactions":
-			case "view account details":
-				MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
+		String s = msg.trim();
+		if (s.equals("계좌조회") || s.equals("계좌 조회") || s.equals("최근거래내역") ||
+				s.equals("최근 거래 내역") || s.equals(context.getString(R.string.dialog_button_recent_transaction)) ||
+				s.equals(context.getString(R.string.main_string_view_account_details))) {
+
+			dbHelper.get(User.class).subscribe(users -> {
+				MessageBox.INSTANCE.add(new ReceiveMessage(users.last().getName() + " 님의 최근 거래내역입니다."));
 				RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
 				MessageBox.INSTANCE.add(rt);
-				break;
-			default:
-				MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
-				break;
+			}, throwable -> {
+
+			});
+
+
+		} else {
+			MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
+
 		}
 	}
 

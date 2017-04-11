@@ -15,10 +15,10 @@ import io.reactivex.subjects.PublishSubject;
 public enum MessageBox {
     INSTANCE;
 
-    private final List<Object> messages;
     public final PublishSubject<Object> observable;
+    private final List<Object> messages;
 
-    MessageBox(){
+    MessageBox() {
         messages = new ArrayList<>();
         observable = PublishSubject.create();
     }
@@ -30,7 +30,7 @@ public enum MessageBox {
             .observeOn(AndroidSchedulers.mainThread())
             .first((long) 1)
             .subscribe(value -> {
-                if(!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
+                if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
                     observable.onNext(new WaitForMessage());
                 }
 
@@ -38,7 +38,7 @@ public enum MessageBox {
             });
     }
 
-    public void removeAt(int index){
+    public void removeAt(int index) {
         messages.remove(index);
     }
 

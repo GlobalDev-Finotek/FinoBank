@@ -22,6 +22,20 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
     @Inject
     MyApplication application;
 
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		return new AgreementViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_agreement_result, parent, false));
+	}
+
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
+	}
+
+	@Override
+	public void onDelete() {
+
+	}
+
     private class AgreementViewHolder extends RecyclerView.ViewHolder {
         ChatAgreementResultBinding binding;
 
@@ -64,19 +78,5 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
                     MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, "credit_inform.pdf"));
                 });
         }
-    }
-
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        return new AgreementViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_agreement_result, parent, false));
-    }
-
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
-    }
-
-    @Override
-    public void onDelete() {
-
     }
 }

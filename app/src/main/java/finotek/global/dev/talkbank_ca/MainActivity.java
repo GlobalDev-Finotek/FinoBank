@@ -26,9 +26,10 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 import io.realm.RealmResults;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
-import rx.functions.Action1;
 
 
 public class MainActivity extends AppCompatActivity implements MainView {
@@ -60,9 +61,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		checkPermission();
 
 		dbHelper.get(User.class)
-				.subscribe(new Action1<RealmResults<User>>() {
+				.subscribe(new Consumer<RealmResults<User>>() {
 					@Override
-					public void call(RealmResults<User> users) {
+					public void accept(@NonNull RealmResults<User> users) throws Exception {
 						boolean isFirst = false;
 
 						if (users.size() == 0) {
@@ -71,13 +72,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 						setNextButtonText(isFirst);
 					}
-				}, new Action1<Throwable>() {
+				}, new Consumer<Throwable>() {
 					@Override
-					public void call(Throwable throwable) {
+					public void accept(@NonNull Throwable throwable) throws Exception {
 
 					}
 				});
-
 
 	}
 

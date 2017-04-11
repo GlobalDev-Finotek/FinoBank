@@ -27,6 +27,36 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList> {
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_list, parent, false);
+		return new ViewHolder(view);
+	}
+
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, AccountList data) {
+		ViewHolder holder = (ViewHolder) viewHolder;
+		ViewGroup frame = (ViewGroup) holder.itemView;
+		holder.listBinding.accountList.removeAllViews();
+		holder.accountList = data.getList();
+
+		if (holder.itemBindings.isEmpty()) {
+			for (Account account : data.getList()) {
+				final View view = LayoutInflater.from(frame.getContext()).inflate(R.layout.chat_item_account, holder.listBinding.accountList, false);
+				ChatItemAccountBinding itemBinding = ChatItemAccountBinding.bind(view);
+
+				holder.itemBindings.add(itemBinding);
+			}
+
+			holder.addAccounts();
+		}
+	}
+
+	@Override
+	public void onDelete() {
+
+	}
+
     private class ViewHolder extends RecyclerView.ViewHolder {
         private ChatAccountListBinding listBinding;
         private List<ChatItemAccountBinding> itemBindings = new ArrayList<>();
@@ -107,35 +137,5 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
                 }
             }
         }
-    }
-
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_list, parent, false);
-        return new ViewHolder(view);
-    }
-
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, AccountList data) {
-        ViewHolder holder = (ViewHolder) viewHolder;
-        ViewGroup frame = (ViewGroup) holder.itemView;
-        holder.listBinding.accountList.removeAllViews();
-        holder.accountList = data.getList();
-
-        if(holder.itemBindings.isEmpty()) {
-            for (Account account : data.getList()) {
-                final View view = LayoutInflater.from(frame.getContext()).inflate(R.layout.chat_item_account, holder.listBinding.accountList, false);
-                ChatItemAccountBinding itemBinding = ChatItemAccountBinding.bind(view);
-
-                holder.itemBindings.add(itemBinding);
-            }
-
-            holder.addAccounts();
-        }
-    }
-
-    @Override
-    public void onDelete() {
-
     }
 }

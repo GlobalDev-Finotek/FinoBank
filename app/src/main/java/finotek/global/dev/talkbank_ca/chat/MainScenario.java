@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -33,6 +34,7 @@ import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
@@ -42,19 +44,21 @@ import io.realm.Realm;
 public enum MainScenario {
 	INSTANCE;
 
-    private Context context;
+	private Context context;
 	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
+	private DBHelper dbHelper;
 
-    MainScenario() {
-    }
+	MainScenario() {
+	}
 
-    public void init(Context context, ChatView chatView, RxEventBus eventBus) {
-        this.context = context;
+	public void init(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper) {
+		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
+		this.dbHelper = dbHelper;
 
 		// 메시지 박스 설정
 		MessageBox.INSTANCE.observable
@@ -67,14 +71,14 @@ public enum MainScenario {
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
-                .doOnNext(msg -> {
-                    if(!isImmediateMessage(msg)) {
-                        MessageBox.INSTANCE.add(new MessageEmitted());
-                    }
-                })
-                .doOnError(e -> {
-                    chatView.statusMessage(context.getResources().getString(R.string.dialog_message_error));
-                })
+				.doOnNext(msg -> {
+					if (!isImmediateMessage(msg)) {
+						MessageBox.INSTANCE.add(new MessageEmitted());
+					}
+				})
+				.doOnError(e -> {
+					chatView.statusMessage(context.getResources().getString(R.string.dialog_message_error));
+				})
 				.subscribe(msg -> {
 					updateUIOn(msg);
 					onRequest(msg);
@@ -90,36 +94,36 @@ public enum MainScenario {
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
-		scenarioPool.put("transfer", new TransferScenario(context));
+		scenarioPool.put("transfer", new TransferScenario(context, dbHelper));
 		scenarioPool.put("loan", new LoanScenario(context));
 		scenarioPool.put("account", new AccountScenario(context));
 		scenarioPool.put("sendMail", new SendMailScenario(context));
 
-        currentScenario = null;
+		currentScenario = null;
 	}
 
-	public void applyScenario(String key){
-        if(scenarioPool.containsKey(key)) {
-            currentScenario = scenarioPool.get(key);
-            currentScenario.clear();
-        } else {
-            throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
-        }
-    }
+	public void applyScenario(String key) {
+		if (scenarioPool.containsKey(key)) {
+			currentScenario = scenarioPool.get(key);
+			currentScenario.clear();
+		} else {
+			throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
+		}
+	}
 
 	private void firstScenario() {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
-        eventBus.getObservable()
-            .subscribe(iEvent -> {
-                Realm realm = Realm.getDefaultInstance();
-                User user = realm.where(User.class).findAll().last();
+		eventBus.getObservable()
+				.subscribe(iEvent -> {
+					Realm realm = Realm.getDefaultInstance();
+					User user = realm.where(User.class).findAll().last();
 
-                if (iEvent instanceof AccuracyMeasureEvent) {
-                    double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-                    MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
-                }
-            });
+					if (iEvent instanceof AccuracyMeasureEvent) {
+						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
+						MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
+						MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
+					}
+				});
 	}
 
 	private void onRequest(Object msg) {
@@ -127,18 +131,18 @@ public enum MainScenario {
 			SendMessage recv = (SendMessage) msg;
 
 			if (currentScenario == null) {
-                Iterator<String> keySet = scenarioPool.keySet().iterator();
+				Iterator<String> keySet = scenarioPool.keySet().iterator();
 
-                while(keySet.hasNext()){
-                    String key = keySet.next();
-                    Scenario scenario = scenarioPool.get(key);
+				while (keySet.hasNext()) {
+					String key = keySet.next();
+					Scenario scenario = scenarioPool.get(key);
 
-                    if (scenario.decideOn(recv.getMessage())) {
-                        currentScenario = scenario;
-                        currentScenario.clear();
-                        break;
-                    }
-                }
+					if (scenario.decideOn(recv.getMessage())) {
+						currentScenario = scenario;
+						currentScenario.clear();
+						break;
+					}
+				}
 			}
 
 			if (currentScenario == null) {
@@ -230,26 +234,29 @@ public enum MainScenario {
 	}
 
 	private void respondToSendMessage(String msg) {
-		switch (msg.trim()) {
-			case "계좌조회":
-			case "계좌 조회":
-			case "최근거래내역":
-			case "최근 거래 내역":
-			case "View recent transactions":
-			case "view account details":
-				MessageBox.INSTANCE.add(new ReceiveMessage("홍길동님의 최근 거래내역입니다."));
+		String s = msg.trim();
+		if (s.equals("계좌조회") || s.equals("계좌 조회") || s.equals("최근거래내역") ||
+				s.equals("최근 거래 내역") || s.equals(context.getString(R.string.dialog_button_recent_transaction)) ||
+				s.equals(context.getString(R.string.main_string_view_account_details))) {
+
+			dbHelper.get(User.class).subscribe(users -> {
+				MessageBox.INSTANCE.add(new ReceiveMessage(users.last().getName() + " 님의 최근 거래내역입니다."));
 				RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
 				MessageBox.INSTANCE.add(rt);
-				break;
-			default:
-				MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
-				break;
+			}, throwable -> {
+
+			});
+
+
+		} else {
+			MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠어요."));
+
 		}
 	}
 
-	private boolean isImmediateMessage(Object msg){
-        return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
-                msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
-                msg instanceof WaitForMessage || msg instanceof MessageEmitted;
-    }
+	private boolean isImmediateMessage(Object msg) {
+		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
+				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
+				msg instanceof WaitForMessage || msg instanceof MessageEmitted;
+	}
 }

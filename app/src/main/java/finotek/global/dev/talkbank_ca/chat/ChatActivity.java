@@ -57,6 +57,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
@@ -67,6 +68,9 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
+	static final int RESULT_PICK_CONTACT = 1;
+	@Inject
+	DBHelper dbHelper;
 	@Inject
 	RxEventBus eventBus;
 	private ActivityChatBinding binding;
@@ -77,8 +81,6 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-
-    static final int RESULT_PICK_CONTACT = 1;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -93,37 +95,37 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		MainScenario.INSTANCE.init(this, binding.chatView, eventBus);
+		MainScenario.INSTANCE.init(this, binding.chatView, eventBus, dbHelper);
 
 		MessageBox.INSTANCE.observable
-            .flatMap(msg -> {
-                if(msg instanceof EnableToEditMoney) {
-                    return Observable.just(msg)
-                        .observeOn(AndroidSchedulers.mainThread());
-                } else if(msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
-                    return Observable.just(msg)
-                        .debounce(2, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread());
-                } else {
-                    return Observable.just(msg)
-                        .delay(2000, TimeUnit.MILLISECONDS)
-                        .observeOn(AndroidSchedulers.mainThread());
-                }
-            })
-            .subscribe(this::onNewMessageUpdated);
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
+						return Observable.just(msg)
+								.debounce(2, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(2000, TimeUnit.MILLISECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.subscribe(this::onNewMessageUpdated);
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-        if(msg instanceof WaitForMessage) {
-            binding.waitMessage.setVisibility(View.VISIBLE);
-        }
+		if (msg instanceof WaitForMessage) {
+			binding.waitMessage.setVisibility(View.VISIBLE);
+		}
 
-        if(msg instanceof MessageEmitted) {
-            binding.waitMessage.setVisibility(View.INVISIBLE);
-        }
+		if (msg instanceof MessageEmitted) {
+			binding.waitMessage.setVisibility(View.INVISIBLE);
+		}
 
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
@@ -156,11 +158,11 @@ public class ChatActivity extends AppCompatActivity {
                 loadingDialog.setDescription(getString(R.string.registration_string_wait));
                 loadingDialog.show();
 
-                Observable.interval(1500, TimeUnit.MILLISECONDS)
-                    .observeOn(AndroidSchedulers.mainThread())
-					.first((long) 1)
-                    .subscribe(i -> {
-                        loadingDialog.dismiss();
+				Observable.interval(1500, TimeUnit.MILLISECONDS)
+						.observeOn(AndroidSchedulers.mainThread())
+						.first((long) 1)
+						.subscribe(i -> {
+							loadingDialog.dismiss();
 
                         SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
                         dialog.setTitle(getString(R.string.setting_string_signature_verified));
@@ -383,24 +385,24 @@ public class ChatActivity extends AppCompatActivity {
 
         switch(requestCode) {
             case RESULT_PICK_CONTACT:
-            	if(data != null) {
-					Uri contactData = data.getData();
-					Cursor c = getContentResolver().query(contactData, null, null, null, null);
-					if (c.moveToFirst()) {
-						String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-						String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-						String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-						String cNumber = "";
+	            if (data != null) {
+		            Uri contactData = data.getData();
+		            Cursor c = getContentResolver().query(contactData, null, null, null, null);
+		            if (c.moveToFirst()) {
+			            String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+			            String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+			            String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+			            String cNumber = "";
 
-						if (hasPhone.equalsIgnoreCase("1")) {
-							Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
-							phones.moveToFirst();
-							cNumber = phones.getString(phones.getColumnIndex("data1"));
-						}
+			            if (hasPhone.equalsIgnoreCase("1")) {
+				            Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
+				            phones.moveToFirst();
+				            cNumber = phones.getString(phones.getColumnIndex("data1"));
+			            }
 
-						MessageBox.INSTANCE.add(new SelectedContact(name, cNumber));
-					}
-				}
+			            MessageBox.INSTANCE.add(new SelectedContact(name, cNumber));
+		            }
+	            }
                 break;
         }
     }

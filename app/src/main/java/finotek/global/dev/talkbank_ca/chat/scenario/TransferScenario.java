@@ -129,6 +129,8 @@ public class TransferScenario implements Scenario {
 			case TransferDone:
 				if (msg.equals(context.getResources().getString(R.string.dialog_button_recent_transaction))) {
 
+					dbHelper.get(User.class);
+
 					dbHelper.get(User.class)
 							.subscribe(users -> {
 										MessageBox.INSTANCE.add(new ReceiveMessage(users.last().getName() + " 님의 최근 거래내역입니다."));

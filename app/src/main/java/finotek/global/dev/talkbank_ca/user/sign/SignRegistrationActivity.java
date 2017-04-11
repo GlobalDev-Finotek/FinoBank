@@ -13,9 +13,6 @@ import android.widget.LinearLayout;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.ChatActivity;
-import finotek.global.dev.talkbank_ca.chat.MessageBox;
-import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;

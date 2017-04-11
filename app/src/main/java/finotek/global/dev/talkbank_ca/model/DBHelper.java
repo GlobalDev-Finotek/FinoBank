@@ -1,9 +1,9 @@
 package finotek.global.dev.talkbank_ca.model;
 
+import io.reactivex.Observable;
 import io.realm.Realm;
 import io.realm.RealmObject;
 import io.realm.RealmResults;
-import rx.Observable;
 
 /**
  * Created by magyeong-ug on 2017. 4. 10..
@@ -19,7 +19,7 @@ public class DBHelper {
 
 	public <T extends RealmObject> Observable<RealmResults<T>> get(Class<T> clazz) {
 		try {
-			return realm.where(clazz).findAll().asObservable();
+			return Observable.just(realm.where(clazz).findAll());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

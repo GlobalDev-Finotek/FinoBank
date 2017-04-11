@@ -55,7 +55,6 @@ public class TransferScenario implements Scenario {
 
 			TransactionDB.INSTANCE.setTxName(name);
 			TransactionDB.INSTANCE.setTxMoney(money);
-
 			ConfirmRequest request = ConfirmRequest.buildYesOrNo(context);
 			request.addInfoEvent(context.getResources().getString(R.string.dialog_button_transfer_other), () -> {
 				MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_other)));

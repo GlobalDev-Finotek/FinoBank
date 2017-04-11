@@ -57,7 +57,6 @@ public enum ScenarioChannel {
 		this.chatView = chatView;
 		this.eventBus = eventBus;
 
-		// 메시지 박스 설정
 		MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
 					if (isImmediateMessage(msg)) {

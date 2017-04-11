@@ -19,13 +19,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
-
-import org.joda.time.DateTime;
 
 import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
@@ -70,8 +67,6 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 public class ChatActivity extends AppCompatActivity {
 	@Inject
 	RxEventBus eventBus;
@@ -99,7 +94,7 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		ScenarioChannel.INSTANCE.init(this, binding.chatView, eventBus);
+		MainScenario.INSTANCE.init(this, binding.chatView, eventBus);
 
 		MessageBox.INSTANCE.observable
             .flatMap(msg -> {

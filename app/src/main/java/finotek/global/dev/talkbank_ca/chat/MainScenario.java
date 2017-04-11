@@ -40,7 +40,7 @@ import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public enum ScenarioChannel {
+public enum MainScenario {
 	INSTANCE;
 
     private Context context;
@@ -49,7 +49,7 @@ public enum ScenarioChannel {
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
 
-    ScenarioChannel() {
+    MainScenario() {
     }
 
     public void init(Context context, ChatView chatView, RxEventBus eventBus) {

@@ -19,13 +19,10 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding.view.RxView;
 import com.jakewharton.rxbinding.widget.RxTextView;
-
-import org.joda.time.DateTime;
 
 import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
@@ -60,6 +57,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
@@ -67,14 +65,16 @@ import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import rx.Observable;
+import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-import static android.widget.Toast.LENGTH_LONG;
-
 public class ChatActivity extends AppCompatActivity {
+	static final int RESULT_PICK_CONTACT = 1;
 	@Inject
 	RxEventBus eventBus;
+	@Inject
+	DBHelper dbHelper;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -83,8 +83,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-
-    static final int RESULT_PICK_CONTACT = 1;
+	private Subscription messageBoxSubscription;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -99,20 +98,20 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		MainScenario.INSTANCE.init(this, binding.chatView, eventBus);
+		MainScenario.INSTANCE.init(this, binding.chatView, eventBus, dbHelper);
 
-		MessageBox.INSTANCE.observable
-            .flatMap(msg -> {
-                if(msg instanceof EnableToEditMoney) {
-                    return Observable.just(msg)
-                        .observeOn(AndroidSchedulers.mainThread());
-                } else if(msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
-                    return Observable.just(msg)
-                        .debounce(2, TimeUnit.SECONDS)
-                        .observeOn(AndroidSchedulers.mainThread());
-                } else {
-                    return Observable.just(msg)
-                        .delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
+		messageBoxSubscription = MessageBox.INSTANCE.observable
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
+						return Observable.just(msg)
+								.debounce(2, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread());
                 }
             })
@@ -123,13 +122,13 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-        if(msg instanceof WaitForMessage) {
-            binding.waitMessage.setVisibility(View.VISIBLE);
-        }
+		if (msg instanceof WaitForMessage) {
+			binding.waitMessage.setVisibility(View.VISIBLE);
+		}
 
-        if(msg instanceof MessageEmitted) {
-            binding.waitMessage.setVisibility(View.INVISIBLE);
-        }
+		if (msg instanceof MessageEmitted) {
+			binding.waitMessage.setVisibility(View.INVISIBLE);
+		}
 
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();

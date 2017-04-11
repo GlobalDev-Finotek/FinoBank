@@ -20,7 +20,7 @@ public class AccountScenario implements Scenario {
 
     public AccountScenario(Context context) {
         Realm realm = Realm.getDefaultInstance();
-        this.user = realm.where(User.class).findFirst();
+        this.user = realm.where(User.class).findAll().last();
         this.context = context;
     }
 

@@ -12,8 +12,8 @@ import com.jakewharton.rxbinding.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.MainScenario;
+import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferToSomeone;
@@ -21,12 +21,6 @@ import finotek.global.dev.talkbank_ca.databinding.ChatItemTransactionBinding;
 
 public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransaction> {
     private Context context;
-
-    class ViewHolder extends RecyclerView.ViewHolder {
-        public ViewHolder(View itemView) {
-            super(itemView);
-        }
-    }
 
     public TransactionViewBuilder(Context context) {
         this.context = context;
@@ -55,8 +49,8 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
             RxView.clicks(binding.transferBtn)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
-                    MainScenario.INSTANCE.applyScenario("transfer");
-                    MessageBox.INSTANCE.add(new TransferToSomeone(tx.getName(), tx.getPrice()));
+	                MainScenario.INSTANCE.applyScenario("transfer");
+	                MessageBox.INSTANCE.add(new TransferToSomeone(tx.getName(), tx.getPrice()));
                 });
         }
     }
@@ -65,4 +59,10 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
     public void onDelete() {
 
     }
+
+	class ViewHolder extends RecyclerView.ViewHolder {
+		public ViewHolder(View itemView) {
+			super(itemView);
+		}
+	}
 }

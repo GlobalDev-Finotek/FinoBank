@@ -22,6 +22,7 @@ import finotek.global.dev.talkbank_ca.databinding.ActivityMainBinding;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
 import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 
@@ -113,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 	public MainComponent getComponent() {
 		return DaggerMainComponent.builder()
-				.appComponent(((MyApplication)getApplication()).getAppComponent())
+				.appComponent(((MyApplication) getApplication()).getAppComponent())
 				.activityModule(new ActivityModule(this))
 				.build();
 	}

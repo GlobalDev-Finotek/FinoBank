@@ -22,8 +22,12 @@ import finotek.global.dev.talkbank_ca.databinding.ActivityMainBinding;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
 import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
+import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
+import io.realm.RealmResults;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
+import rx.functions.Action1;
 
 
 public class MainActivity extends AppCompatActivity implements MainView {
@@ -43,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 	@Inject
 	MainPresenterImpl presenter;
 
+	@Inject
+	DBHelper dbHelper;
+
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getComponent().inject(this);
@@ -50,8 +57,26 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 		presenter.attachView(this);
 		checkPermission();
-		boolean isFirst = sharedPrefsHelper.get("isFirst", true);
-		setNextButtonText(isFirst);
+
+		dbHelper.get(User.class)
+				.subscribe(new Action1<RealmResults<User>>() {
+					@Override
+					public void call(RealmResults<User> users) {
+						boolean isFirst = false;
+
+						if (users.size() == 0) {
+							isFirst = true;
+						}
+
+						setNextButtonText(isFirst);
+					}
+				}, new Action1<Throwable>() {
+					@Override
+					public void call(Throwable throwable) {
+
+					}
+				});
+
 
 	}
 
@@ -109,7 +134,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 	public MainComponent getComponent() {
 		return DaggerMainComponent.builder()
-				.appComponent(((MyApplication)getApplication()).getAppComponent())
+				.appComponent(((MyApplication) getApplication()).getAppComponent())
 				.activityModule(new ActivityModule(this))
 				.build();
 	}
@@ -155,7 +180,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 		if (isFirst) {
 			binding.mainButton.setText("사용자 등록");
-			sharedPrefsHelper.put("isFirst", false);
 		} else {
 			binding.mainButton.setText("로그인");
 		}

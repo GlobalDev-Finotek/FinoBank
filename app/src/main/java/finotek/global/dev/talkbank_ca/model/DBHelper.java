@@ -20,7 +20,7 @@ public class DBHelper {
 	public <T extends RealmObject> Observable<RealmResults<T>> get(Class<T> clazz) {
 		try {
 			return realm.where(clazz).findAll().asObservable();
-		} catch (IndexOutOfBoundsException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return Observable.empty();

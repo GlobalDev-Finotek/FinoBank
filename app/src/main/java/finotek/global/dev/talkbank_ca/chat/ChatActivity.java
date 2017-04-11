@@ -107,7 +107,7 @@ public class ChatActivity extends AppCompatActivity {
                         .observeOn(AndroidSchedulers.mainThread());
                 } else {
                     return Observable.just(msg)
-                        .delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
+                        .delay(2000, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread());
                 }
             })

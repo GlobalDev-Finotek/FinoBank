@@ -177,6 +177,7 @@
     <string name="dialog_chat_agreenment_accepted">Agreement have been aceepted</string>
     <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n\n
     is there anything else I can help you with?</string>
+    <string name="dialog_message_error">An unknown error has occurred! Please try again later.</string>
     <string name="dialog_contact">Contact</string>
     <string name="dialog_message_processing">Your message is being processed right now. Please wait.</string>
     <string name="registration_string_signature">E-signature</string>

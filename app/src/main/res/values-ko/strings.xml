@@ -175,6 +175,7 @@
     <string name="dialog_chat_loan_success">대출 신청이 정상적으로 처리되어 입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_contact">주소록</string>
     <string name="dialog_message_processing">지금 메시지를 처리하는 중입니다. 잠시만 기다려주세요.</string>
+    <string name="dialog_message_error">알 수 없는 에러가 발생했습니다! 잠시후에 다시 시도해 주세요.</string>
     <string name="registration_string_signature">전자 서명</string>
     <string name="setting_string_save">저장</string>
     <string name="setting_string_allowed_time">해당 시간대에만 n맥락데이터를 수집을 허용합니다.</string>

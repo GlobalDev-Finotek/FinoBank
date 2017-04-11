@@ -64,7 +64,7 @@ public enum MainScenario {
 						return Observable.just(msg);
 					} else {
 						return Observable.just(msg)
-								.delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
+								.delay(1, TimeUnit.SECONDS)
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
@@ -72,6 +72,9 @@ public enum MainScenario {
                     if(!isImmediateMessage(msg)) {
                         MessageBox.INSTANCE.add(new MessageEmitted());
                     }
+                })
+                .doOnError(e -> {
+                    chatView.statusMessage(context.getResources().getString(R.string.dialog_message_error));
                 })
 				.subscribe(msg -> {
 					updateUIOn(msg);
@@ -110,7 +113,7 @@ public enum MainScenario {
         eventBus.getObservable()
             .subscribe(iEvent -> {
                 Realm realm = Realm.getDefaultInstance();
-                User user = realm.where(User.class).findFirst();
+                User user = realm.where(User.class).findAll().last();
 
                 if (iEvent instanceof AccuracyMeasureEvent) {
                     double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();

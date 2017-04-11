@@ -13,7 +13,7 @@ public class DateUtil {
         if (nWeek == 1) {
             strWeek = "일요일";
         } else if (nWeek == 2) {
-            strWeek = "월요";
+            strWeek = "월요일";
         } else if (nWeek == 3) {
             strWeek = "화요일";
         } else if (nWeek == 4) {

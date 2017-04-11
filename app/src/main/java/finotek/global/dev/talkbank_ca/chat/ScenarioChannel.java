@@ -2,13 +2,13 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -33,9 +33,10 @@ import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
+import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
-import io.realm.Realm;
+import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -43,19 +44,21 @@ import rx.schedulers.Schedulers;
 public enum ScenarioChannel {
 	INSTANCE;
 
-    private Context context;
+	private Context context;
 	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
+	private DBHelper dbHelper;
 
-    ScenarioChannel() {
-    }
+	ScenarioChannel() {
+	}
 
-    public void init(Context context, ChatView chatView, RxEventBus eventBus) {
-        this.context = context;
+	public void init(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper) {
+		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
+		this.dbHelper = dbHelper;
 
 		MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
@@ -67,11 +70,11 @@ public enum ScenarioChannel {
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
-                .doOnNext(msg -> {
-                    if(!isImmediateMessage(msg)) {
-                        MessageBox.INSTANCE.add(new MessageEmitted());
-                    }
-                })
+				.doOnNext(msg -> {
+					if (!isImmediateMessage(msg)) {
+						MessageBox.INSTANCE.add(new MessageEmitted());
+					}
+				})
 				.subscribe(msg -> {
 					updateUIOn(msg);
 					onRequest(msg);
@@ -87,36 +90,37 @@ public enum ScenarioChannel {
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
-		scenarioPool.put("transfer", new TransferScenario(context));
+		scenarioPool.put("transfer", new TransferScenario(context, dbHelper));
 		scenarioPool.put("loan", new LoanScenario(context));
 		scenarioPool.put("account", new AccountScenario(context));
 		scenarioPool.put("sendMail", new SendMailScenario(context));
 
-        currentScenario = null;
+		currentScenario = null;
 	}
 
-	public void applyScenario(String key){
-        if(scenarioPool.containsKey(key)) {
-            currentScenario = scenarioPool.get(key);
-            currentScenario.clear();
-        } else {
-            throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
-        }
-    }
+	public void applyScenario(String key) {
+		if (scenarioPool.containsKey(key)) {
+			currentScenario = scenarioPool.get(key);
+			currentScenario.clear();
+		} else {
+			throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
+		}
+	}
 
 	private void firstScenario() {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
-        eventBus.getObservable()
-            .subscribe(iEvent -> {
-                Realm realm = Realm.getDefaultInstance();
-                User user = realm.where(User.class).findFirst();
 
-                if (iEvent instanceof AccuracyMeasureEvent) {
-                    double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-                    MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
-                }
-            });
+		double accuracy = CallLogVerifier.getCallLogPassRate(context);
+
+		dbHelper.get(User.class)
+				.subscribe(users -> {
+					User user = users.last();
+					MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
+					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
+				}, throwable -> {
+
+				});
+
 	}
 
 	private void onRequest(Object msg) {
@@ -124,18 +128,18 @@ public enum ScenarioChannel {
 			SendMessage recv = (SendMessage) msg;
 
 			if (currentScenario == null) {
-                Iterator<String> keySet = scenarioPool.keySet().iterator();
+				Iterator<String> keySet = scenarioPool.keySet().iterator();
 
-                while(keySet.hasNext()){
-                    String key = keySet.next();
-                    Scenario scenario = scenarioPool.get(key);
+				while (keySet.hasNext()) {
+					String key = keySet.next();
+					Scenario scenario = scenarioPool.get(key);
 
-                    if (scenario.decideOn(recv.getMessage())) {
-                        currentScenario = scenario;
-                        currentScenario.clear();
-                        break;
-                    }
-                }
+					if (scenario.decideOn(recv.getMessage())) {
+						currentScenario = scenario;
+						currentScenario.clear();
+						break;
+					}
+				}
 			}
 
 			if (currentScenario == null) {
@@ -244,9 +248,9 @@ public enum ScenarioChannel {
 		}
 	}
 
-	private boolean isImmediateMessage(Object msg){
-        return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
-                msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
-                msg instanceof WaitForMessage || msg instanceof MessageEmitted;
-    }
+	private boolean isImmediateMessage(Object msg) {
+		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
+				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
+				msg instanceof WaitForMessage || msg instanceof MessageEmitted;
+	}
 }

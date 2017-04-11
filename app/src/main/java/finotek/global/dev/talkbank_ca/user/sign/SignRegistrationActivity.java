@@ -19,8 +19,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
@@ -71,8 +71,9 @@ public class SignRegistrationActivity extends AppCompatActivity {
 			  loadingDialog.setDescription(getString(R.string.registration_string_wait));
 			  loadingDialog.show();
 
-			  Observable.interval(1500, TimeUnit.MILLISECONDS).first()
+			  Observable.interval(1500, TimeUnit.MILLISECONDS)
 					  .observeOn(AndroidSchedulers.mainThread())
+					  .first((long) 1)
 					  .subscribe(i -> {
 						  loadingDialog.dismiss();
 

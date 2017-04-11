@@ -2,8 +2,9 @@ package finotek.global.dev.talkbank_ca.base.mvp.event;
 
 import javax.inject.Singleton;
 
-import rx.Observable;
-import rx.subjects.PublishSubject;
+import io.reactivex.Observable;
+import io.reactivex.subjects.PublishSubject;
+
 
 /**
  * Created by magyeong-ug on 2017. 3. 31..

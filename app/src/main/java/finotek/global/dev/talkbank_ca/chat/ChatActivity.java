@@ -20,9 +20,9 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
-import com.jakewharton.rxbinding.support.v4.view.RxViewPager;
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
@@ -57,24 +57,18 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
-import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
-import rx.Observable;
-import rx.Subscription;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ChatActivity extends AppCompatActivity {
-	static final int RESULT_PICK_CONTACT = 1;
 	@Inject
 	RxEventBus eventBus;
-	@Inject
-	DBHelper dbHelper;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -83,7 +77,8 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-	private Subscription messageBoxSubscription;
+
+    static final int RESULT_PICK_CONTACT = 1;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,20 +93,20 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setTitle("");
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		MainScenario.INSTANCE.init(this, binding.chatView, eventBus, dbHelper);
+		MainScenario.INSTANCE.init(this, binding.chatView, eventBus);
 
-		messageBoxSubscription = MessageBox.INSTANCE.observable
-				.flatMap(msg -> {
-					if (msg instanceof EnableToEditMoney) {
-						return Observable.just(msg)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
-						return Observable.just(msg)
-								.debounce(2, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else {
-						return Observable.just(msg)
-								.delay(2000, TimeUnit.MILLISECONDS, Schedulers.io())
+		MessageBox.INSTANCE.observable
+            .flatMap(msg -> {
+                if(msg instanceof EnableToEditMoney) {
+                    return Observable.just(msg)
+                        .observeOn(AndroidSchedulers.mainThread());
+                } else if(msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
+                    return Observable.just(msg)
+                        .debounce(2, TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread());
+                } else {
+                    return Observable.just(msg)
+                        .delay(2000, TimeUnit.MILLISECONDS)
                         .observeOn(AndroidSchedulers.mainThread());
                 }
             })
@@ -122,13 +117,13 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		if (msg instanceof WaitForMessage) {
-			binding.waitMessage.setVisibility(View.VISIBLE);
-		}
+        if(msg instanceof WaitForMessage) {
+            binding.waitMessage.setVisibility(View.VISIBLE);
+        }
 
-		if (msg instanceof MessageEmitted) {
-			binding.waitMessage.setVisibility(View.INVISIBLE);
-		}
+        if(msg instanceof MessageEmitted) {
+            binding.waitMessage.setVisibility(View.INVISIBLE);
+        }
 
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
@@ -161,8 +156,9 @@ public class ChatActivity extends AppCompatActivity {
                 loadingDialog.setDescription(getString(R.string.registration_string_wait));
                 loadingDialog.show();
 
-                Observable.interval(1500, TimeUnit.MILLISECONDS).first()
+                Observable.interval(1500, TimeUnit.MILLISECONDS)
                     .observeOn(AndroidSchedulers.mainThread())
+					.first((long) 1)
                     .subscribe(i -> {
                         loadingDialog.dismiss();
 
@@ -219,13 +215,13 @@ public class ChatActivity extends AppCompatActivity {
 		}
 	}
 
-	public void onSendButtonClickEvent(Void aVoid) {
+	public void onSendButtonClickEvent() {
 		String msg = fiBinding.chatEditText.getText().toString();
 		MessageBox.INSTANCE.add(new SendMessage(msg));
 		clearInput();
 	}
 
-	private void expandControlClickEvent(Void aVoid) {
+	private void expandControlClickEvent() {
 		if (isExControlAvailable)
 			runOnUiThread(this::hideExControl);
 		else
@@ -274,16 +270,20 @@ public class ChatActivity extends AppCompatActivity {
 		RxView.clicks(fiBinding.showExControl)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.delay(100, TimeUnit.MILLISECONDS)
-				.subscribe(this::expandControlClickEvent);
+				.subscribe(aVoid -> {
+					expandControlClickEvent();
+				});
 
 		RxView.clicks(fiBinding.sendButton)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(this::onSendButtonClickEvent);
+				.subscribe(aVoid -> {
+					onSendButtonClickEvent();
+				});
 
 		RxTextView.editorActions(fiBinding.chatEditText)
 				.subscribe(actionId -> {
 					if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND) {
-						this.onSendButtonClickEvent(null);
+						this.onSendButtonClickEvent();
 					}
 				});
 
@@ -372,19 +372,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		if (!messageBoxSubscription.isUnsubscribed()) {
-			messageBoxSubscription.unsubscribe();
-		}
-	}
-
-	@Override
-	public void onBackPressed() {
-		moveTaskToBack(true);
-	}
-
-	@Override
 	protected void onResume() {
 		super.onResume();
 
@@ -396,25 +383,24 @@ public class ChatActivity extends AppCompatActivity {
 
         switch(requestCode) {
             case RESULT_PICK_CONTACT:
-                Uri contactData = data.getData();
-                Cursor c = getContentResolver().query(contactData, null, null, null, null);
-                if(c.moveToFirst()) {
-                    String id =c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-                    String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-                    String hasPhone =c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-                    String cNumber = "";
+            	if(data != null) {
+					Uri contactData = data.getData();
+					Cursor c = getContentResolver().query(contactData, null, null, null, null);
+					if (c.moveToFirst()) {
+						String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+						String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+						String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+						String cNumber = "";
 
-                    if (hasPhone.equalsIgnoreCase("1")) {
-                        Cursor phones = getContentResolver().query(
-                                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,
-                                ContactsContract.CommonDataKinds.Phone.CONTACT_ID +" = "+ id,
-                                null, null);
-                        phones.moveToFirst();
-                        cNumber = phones.getString(phones.getColumnIndex("data1"));
-                    }
+						if (hasPhone.equalsIgnoreCase("1")) {
+							Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
+							phones.moveToFirst();
+							cNumber = phones.getString(phones.getColumnIndex("data1"));
+						}
 
-                    MessageBox.INSTANCE.add(new SelectedContact(name, cNumber));
-                }
+						MessageBox.INSTANCE.add(new SelectedContact(name, cNumber));
+					}
+				}
                 break;
         }
     }

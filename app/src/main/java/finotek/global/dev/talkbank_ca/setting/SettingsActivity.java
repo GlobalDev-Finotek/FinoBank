@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca.setting;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -11,10 +12,11 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySettingsBinding;
+import finotek.global.dev.talkbank_ca.user.dialogs.LanguageSelectDialog;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 
 public class SettingsActivity extends AppCompatActivity {
 
-	private final int LANGUATE_SETTING = 1;
 	private ActivitySettingsBinding binding;
 
 	@Override
@@ -61,25 +63,26 @@ public class SettingsActivity extends AppCompatActivity {
 		RxView.clicks(binding.llLanguageSetting)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					Intent i = new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS);
-					startActivityForResult(i, LANGUATE_SETTING);
-					finish();
+
+					LanguageSelectDialog languageSelectDialog = new LanguageSelectDialog(this);
+					languageSelectDialog.setDoneListener(locale -> {
+						LocaleHelper.setLocale(SettingsActivity.this, locale);
+
+						Intent i = getBaseContext().getPackageManager()
+								.getLaunchIntentForPackage(getBaseContext().getPackageName());
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+						startActivity(i);
+						finish();
+					});
+
+					languageSelectDialog.show();
+
 				});
 	}
 
+
 	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		switch (requestCode) {
-			case LANGUATE_SETTING:
-				Intent i = getBaseContext().getPackageManager()
-						.getLaunchIntentForPackage(getBaseContext().getPackageName());
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-				startActivity(i);
-				finish();
-				break;
-		}
-
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(LocaleHelper.onAttach(base));
 	}
-
-
 }

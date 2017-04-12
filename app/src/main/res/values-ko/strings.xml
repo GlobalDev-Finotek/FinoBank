@@ -248,5 +248,9 @@
     <string name="dialog_chat_transferred">이체되었습니다</string>
     <string name="dialog_string_import_from_contact">주소록에서 가져옴</string>
     <string name="common_string_warning">경고</string>
+    <string name="setting_string_langauge_select">언어 선택</string>
+    <string name="setting_string_korean">한국어</string>
+    <string name="setting_string_english">영어(English)</string>
+    <string name="string_confirm">확인</string>
 </resources>
 

@@ -58,7 +58,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 
 	  binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(this));
 	  binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
-	  
+
 	  RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
 			  .subscribe(textViewAfterTextChangeEvent -> {
 				  if (textViewAfterTextChangeEvent.editable().length() > 0) {

@@ -251,4 +251,8 @@
     <string name="dialog_string_import_from_contact">Import from contact</string>
     <string name="common_string_warning">Warning</string>
     <string name="registration_string_please_sign_in">Please sign in the marked area</string>
+    <string name="setting_string_langauge_select">Select langauge</string>
+    <string name="setting_string_korean">Korean</string>
+    <string name="setting_string_english">English</string>
+    <string name="string_confirm">Confirm</string>
 </resources>

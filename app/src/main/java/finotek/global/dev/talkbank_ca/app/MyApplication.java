@@ -8,6 +8,7 @@ import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
@@ -46,8 +47,13 @@ public class MyApplication extends Application {
 		return getApplicationContext();
 	}
 
-  public AppComponent getAppComponent() {
-    return appComponent;
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
+	}
+
+	public AppComponent getAppComponent() {
+		return appComponent;
   }
 
   private void createDaggerInjections() {

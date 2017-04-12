@@ -116,9 +116,9 @@ public enum MainScenario {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
 		eventBus.getObservable()
 				.subscribe(iEvent -> {
-                    Log.d("FINO-TB", iEvent.getClass().getName());
+					Log.d("FINO-TB", iEvent.getClass().getName());
 
-                    Realm realm = Realm.getDefaultInstance();
+					Realm realm = Realm.getDefaultInstance();
 					User user = realm.where(User.class).findAll().last();
 
 					if (iEvent instanceof AccuracyMeasureEvent) {

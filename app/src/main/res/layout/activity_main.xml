@@ -52,14 +52,15 @@
             android:paddingRight="16dp"
             />
 
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="32dp"
-            android:text=""
+            android:text="Copyrightⓒ Finotek., All rights reserved"
             android:textColor="@color/color_text_default"
-            android:textSize="12sp"/>
+            android:textSize="12sp"
+            tb:custom_font="noto_light"/>
     </RelativeLayout>
 </layout>

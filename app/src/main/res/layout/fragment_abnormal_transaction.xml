@@ -13,7 +13,10 @@
             android:layout_height="wrap_content"
             android:background="@color/white_two"
             android:orientation="horizontal"
-            android:padding="10dp">
+            android:paddingBottom="10dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:paddingTop="10dp">
 
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="wrap_content"
@@ -24,10 +27,10 @@
                 android:theme="@style/Title"
                 tb:custom_font="noto_medium"/>
 
-            <Switch
+            <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                />
+                android:layout_gravity="center_vertical"/>
         </LinearLayout>
 
         <LinearLayout
@@ -76,10 +79,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
                     android:background="@drawable/cell_shape"
+                    android:backgroundTint="@color/info"
                     android:gravity="center"
                     android:text="@string/dialog_string_context_auth"
                     android:textAlignment="center"
-                    android:textColor="#80182333"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
                     tb:custom_font="noto_regular"/>
 

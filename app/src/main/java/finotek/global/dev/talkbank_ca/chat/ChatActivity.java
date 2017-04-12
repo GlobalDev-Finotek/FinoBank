@@ -425,7 +425,13 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    private ChatComponent getComponent() {
+	@Override
+	public void onBackPressed() {
+		// TODO 앱 종료할건지 묻는 뷰 구현
+
+	}
+
+	private ChatComponent getComponent() {
 		return DaggerChatComponent
 				.builder()
 				.appComponent(((MyApplication) getApplication()).getAppComponent())

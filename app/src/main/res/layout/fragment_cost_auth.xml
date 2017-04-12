@@ -30,11 +30,11 @@
                 tb:custom_font="noto_medium"
                 />
 
-            <Switch
-                android:id="@+id/switch6"
+            <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
+                android:layout_marginRight="16dp"
                 android:layout_weight="1"
                 android:elevation="0dp"
                 android:gravity="center_vertical"/>
@@ -307,10 +307,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@drawable/cell_shape"
+                            android:backgroundTint="@color/info"
                             android:gravity="center"
                             android:text="@string/setting_string_context_auth"
                             android:textAlignment="center"
-                            android:textColor="#80182333"
+                            android:textColor="@color/white"
                             android:textSize="14sp"
                             tb:custom_font="noto_regular"/>
 

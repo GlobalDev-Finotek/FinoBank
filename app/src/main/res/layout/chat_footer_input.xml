@@ -30,10 +30,15 @@
                 android:layout_weight="9"
                 android:background="@android:color/transparent"
                 android:hint="@string/dialog_string_input_message"
+                android:textColorHint="@color/dark_30"
                 android:inputType="text"
                 android:padding="0dp"
                 android:textColor="@color/color_text_default"
                 android:textSize="14sp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/icon_mike"/>
             <Button
                 android:id="@+id/send_button"
                 android:layout_width="50dp"

@@ -76,7 +76,7 @@
     <string name="setting_string_user_information">User info.</string>
     <string name="setting_string_context_verification">Verification for context</string>
     <string name="setting_string_amount_verification">Verification for amount of money</string>
-    <string name="setting_string_suspicious_transaction_verification">Verification for suspicious transaction is detected</string>
+    <string name="setting_string_suspicious_transaction_verification">Verification for suspicious transaction</string>
     <string name="setting_string_langauge">Language</string>
     <string name="setting_string_basic_information">Your account</string>
     <string name="setting_string_phone_number">Phone number</string>
@@ -109,7 +109,7 @@
     <string name="setting_string_signature_verifying">Register e-signature</string>
     <string name="setting_string_wait">Please wait</string>
     <string name="setting_string_signature_verified">E-signature has been verified</string>
-    <string name="setting_string_authentication_complete">Please select Yes" to continue to the next step"</string>
+    <string name="setting_string_authentication_complete">Please select Yes\n"to continue to the next step"</string>
     <string name="setting_string_yes">Yes</string>
     <string name="setting_string_signature_fail">Fail to verify(1/5)</string>
     <string name="setting_string_click_re_try_button">Please select re-try: to verify your e-signature (Maximu 5 times)"</string>
@@ -125,14 +125,15 @@
     <string name="setting_string_retake_picture">Re-take photo</string>
     <string name="setting_string_register">Register</string>
     <string name="setting_string_registered_picture_purpose">Registered picture will be used for personal verification purpose</string>
-    <string name="dialog_chat_verified_context_data_succeeded">Result of analyzing context data is %1$d. Authentication is succeeded.</string>
-    <string name="dialog_chat_verified_context_data_failed">Result of analyzing context data is %1$d. Authentication is needed.</string>
+    <string name="dialog_chat_verified_context_data_succeeded">Result of analyzing context data is %1$d.\n Authentication is succeeded.</string>
+    <string name="dialog_chat_verified_context_data_failed">Result of analyzing context data is %1$d.\n Authentication is needed.</string>
+    <string name="dialog_chat_verified_context_data">Result of analyzing context data is %1$d.\n Authentication is succeeded.</string>
     <string name="dialog_chat_ask_help">Hello %s How may I help you</string>
     <string name="dialog_button_open_account">Open account</string>
     <string name="dialog_chat_recommandation">%s.\nI would like to recommend Finocation smart account\n". Do you want to continue opening account?"</string>
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
-    <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.What can I do for you?</string>
+    <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.\n What can I do for you?</string>
     <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license.
     Please take a picture of your ID card</string>
     <string name="dialog_string_id_card_type">Verification ID type</string>
@@ -240,7 +241,7 @@
     <string name="setting_string_pin_code_type">Type new PIN code</string>
     <string name="setting_string_profile_picture">Authentication picture</string>
     <string name="dialog_string_input_message">Please input a message.</string>
-    <string name="dialog_chat_recognize_error">Can\'t understand what you said. Please input other message</string>
+    <string name="dialog_chat_recognize_error">Can\'t understand what you said.\n Press \'+\' button to select the menu</string>
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
     <string name="dialog_string_email_sent">Sent</string>
     <string name="dialog_string_email_cancel">Cancel</string>

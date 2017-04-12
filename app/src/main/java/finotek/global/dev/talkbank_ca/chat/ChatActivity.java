@@ -8,11 +8,11 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -20,7 +20,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -84,12 +83,12 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-	private boolean doubleBackToExitPressedOnce;
+
+    private MainScenario mainScenario;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
@@ -97,9 +96,11 @@ public class ChatActivity extends AppCompatActivity {
 
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
+        getSupportActionBar().setElevation(0);
+        binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		MainScenario.INSTANCE.init(this, binding.chatView, eventBus, dbHelper);
+		mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper);
 
 		MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
@@ -261,7 +262,8 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void preInitControlViews() {
-		exControlView = inflate(R.layout.chat_extended_control);
+        Log.d("FINOTEK", "preInitControlViews");
+
 		footerInputs = inflate(R.layout.chat_footer_input);
 		transferView = inflate(R.layout.chat_transfer);
 
@@ -293,12 +295,14 @@ public class ChatActivity extends AppCompatActivity {
 					}
 				});
 
-		ecBinding = ChatExtendedControlBinding.bind(exControlView);
+        exControlView = inflate(R.layout.chat_extended_control);
+		ecBinding = DataBindingUtil.bind(exControlView);
 
 		ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
 		adapter.setDoOnControl(this::hideExControl);
         adapter.setSettingControl(() -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 		ecBinding.extendedControl.setAdapter(adapter);
+
 		RxViewPager.pageSelections(ecBinding.extendedControl)
 				.subscribe(pos -> {
 					if (pos == 0) {
@@ -427,20 +431,14 @@ public class ChatActivity extends AppCompatActivity {
                 break;
         }
     }
-	@Override
-	public void onBackPressed() {
-		if (doubleBackToExitPressedOnce) {
-			super.onBackPressed();
-			return;
-		}
 
-		this.doubleBackToExitPressedOnce = true;
-		Toast.makeText(this, getString(R.string.main_back_exit), Toast.LENGTH_SHORT).show();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainScenario.release();
+    }
 
-		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
-	}
-
-	private ChatComponent getComponent() {
+    private ChatComponent getComponent() {
 		return DaggerChatComponent
 				.builder()
 				.appComponent(((MyApplication) getApplication()).getAppComponent())

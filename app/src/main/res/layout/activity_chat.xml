@@ -25,12 +25,12 @@
                     android:background="?attr/colorPrimary"
                     android:elevation="0dp"
                     app:layout_scrollFlags="scroll|enterAlways|snap"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" >
 
 
                 </android.support.v7.widget.Toolbar>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -45,9 +45,8 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentTop="true"
-                    android:layout_marginEnd="16dp"
                     android:background="@android:color/transparent"
-                    app:srcCompat="@drawable/vector_drawable_btn_menu"/>
+                    app:srcCompat="@drawable/btn_menu"/>
             </RelativeLayout>
 
 

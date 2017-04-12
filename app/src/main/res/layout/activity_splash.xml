@@ -27,7 +27,7 @@
             android:layout_marginTop="26dp"
             android:contentDescription="Finotek Logo"
             app:srcCompat="@drawable/vector_drawable_ci_finotek"/>
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/textView4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

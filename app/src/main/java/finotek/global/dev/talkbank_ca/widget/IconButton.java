@@ -4,9 +4,12 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+
+import java.util.Locale;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.util.Converter;
@@ -35,6 +38,9 @@ public class IconButton extends AppCompatButton {
         super(context, attrs);
         bounds = new Rect();
         applyAttributes(attrs);
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Light-Hestia.otf");
+        setTypeface(typeface);
     }
 
     public IconButton(Context context, AttributeSet attrs, int defStyle) {
@@ -71,7 +77,13 @@ public class IconButton extends AppCompatButton {
         int textWidth = bounds.width();
         int factor = (drawablePosition == DrawablePositions.LEFT_AND_RIGHT) ? 2 : 1;
         int contentWidth = drawableWidth + iconPadding * factor + textWidth;
-        int horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0));
+        int horizontalPadding = 0;
+
+        if(Locale.getDefault().getDisplayCountry().equals("ko")) {
+            horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0));
+        } else {
+            horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 1.7));
+        }
 
         setCompoundDrawablePadding(-horizontalPadding + iconPadding);
 
@@ -122,9 +134,6 @@ public class IconButton extends AppCompatButton {
             }
 
             Rect realBounds = drawable.getBounds();
-            realBounds.right = realBounds.left + Converter.dpToPx(20);
-            realBounds.bottom = realBounds.top + Converter.dpToPx(20);
-
             drawable.setBounds(realBounds);
         }
 

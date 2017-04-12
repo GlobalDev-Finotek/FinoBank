@@ -23,7 +23,7 @@
             android:layout_marginStart="10dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
-        <finotek.global.dev.talkbank_ca.widget.TBTextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

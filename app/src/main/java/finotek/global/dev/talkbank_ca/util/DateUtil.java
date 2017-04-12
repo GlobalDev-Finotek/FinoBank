@@ -1,9 +1,9 @@
 package finotek.global.dev.talkbank_ca.util;
 
 import java.util.Calendar;
-
 public class DateUtil {
     public static String currentDate() {
+
         Calendar cal = Calendar.getInstance();
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH);

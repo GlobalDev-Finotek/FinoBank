@@ -37,6 +37,7 @@
             android:layout_marginBottom="20dp"
             android:textSize="16sp"
             android:textColor="@color/dark_70"
+            android:textAlignment="center"
             android:lineSpacingMultiplier="1.2" />
         <Button
             android:id="@+id/done_btn"
@@ -49,6 +50,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:background="@drawable/btn_dialog_done"
             android:textSize="14sp"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"
+            style="?android:attr/borderlessButtonStyle" />
     </RelativeLayout>
 </layout>

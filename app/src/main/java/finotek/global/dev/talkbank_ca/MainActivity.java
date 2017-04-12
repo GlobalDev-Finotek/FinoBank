@@ -121,8 +121,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 			double accuracy = CallLogVerifier.getCallLogPassRate(this);
 			boolean isValidUser = isValidUser(accuracy);
 
-			String inst = getString(R.string.dialog_chat_verified_context_data).replace("%d", String.valueOf((int) (accuracy * 100)));
-			setInstructionText(inst, isValidUser);
+			int score = (int) (accuracy * 100);
+			setInstructionText(score, isValidUser);
 
 			Log.d("FINO-TB", "Accuracy measure event was sent.");
 			eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
@@ -152,9 +152,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					double accuracy = CallLogVerifier.getCallLogPassRate(this);
 					boolean isValidUser = isValidUser(accuracy);
-
-					String inst = getString(R.string.dialog_chat_verified_context_data).replace("%d", String.valueOf((int) (accuracy * 100)));
-					setInstructionText(inst, isValidUser);
+                    int score = ((int) (accuracy * 100));
+					setInstructionText(score, isValidUser);
 
 					eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 					moveToNextActivity(isValidUser);
@@ -163,16 +162,15 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		}
 	}
 
-	private void setInstructionText(String baseInstruction, boolean isValidUser) {
-
-
+	private void setInstructionText(int score, boolean isValidUser) {
+        String text = "";
 		if (isValidUser) {
-			baseInstruction += " " + getString(R.string.main_string_authentication_succeed);
+			text = getString(R.string.dialog_chat_verified_context_data_succeeded, score);
 		} else {
-			baseInstruction += " " + getString(R.string.main_string_authentication_required);
+			text += getString(R.string.dialog_chat_verified_context_data_failed, score);
 		}
 
-		binding.tvContextAuthAccuracy.setText(baseInstruction);
+		binding.tvContextAuthAccuracy.setText(text);
 	}
 
 	@Override

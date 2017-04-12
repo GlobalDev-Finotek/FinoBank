@@ -11,18 +11,19 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.subjects.BehaviorSubject;
 import io.reactivex.subjects.PublishSubject;
 
 // Singleton Instance
 public enum MessageBox {
     INSTANCE;
 
-    public final PublishSubject<Object> observable;
+    public final BehaviorSubject<Object> observable;
     private final List<Object> messages;
 
     MessageBox() {
         messages = new ArrayList<>();
-        observable = PublishSubject.create();
+        observable = BehaviorSubject.create();
     }
 
     public void add(Object msg) {

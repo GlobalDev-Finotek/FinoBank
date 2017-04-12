@@ -165,7 +165,7 @@
     <string name="dialog_button_view_more">View more</string>
     <string name="dialog_string_receiver_select">Please select receiver</string>
     <string name="dialog_chat_contact_select">If receiver is not contain on the list, please select new receiver from address book or KakaoTalk</string>
-    <string name="dialog_string_amount_transfer">Amount of transfer</string>
+    <string name="dialog_string_amount_transfer">Amount</string>
     <string name="dialog_chat_after_transfer_2">You\'ve transferred 100,000 won to 어머니 (010-5678-1234). your available balance is 3,270,000 won.\n\nIs there anything else I can help you with?</string>
     <string name="dialog_chat_loan_appl">I\'ve checked your account details and I would like to recommend \\"Finocation one-day loan\"\" you may request up to 50 million won and 2.0% interest rate do you want to apply loan?"</string>
     <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. What can i help you?</string>

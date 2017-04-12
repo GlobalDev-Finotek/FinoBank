@@ -68,10 +68,12 @@
                             android:text="@string/setting_string_all_app_collect"
                             tb:custom_font="noto_regular"/>
 
-                        <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
+                        <com.suke.widget.SwitchButton
                             android:layout_width="wrap_content"
-                            android:layout_height="30dp"
-                            android:elevation="0dp"/>
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            tb:sb_checked_color="@color/colorPrimary"
+                            tb:sb_show_indicator="false"/>
 
                     </LinearLayout>
 
@@ -94,11 +96,12 @@
                             android:text="@string/setting_string_one_app_select"
                             tb:custom_font="noto_regular"/>
 
-                        <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
-                            android:id="@+id/switch2"
+                        <com.suke.widget.SwitchButton
                             android:layout_width="wrap_content"
-                            android:layout_height="30dp"
-                            />
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            tb:sb_checked_color="@color/colorPrimary"
+                            tb:sb_show_indicator="false"/>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -166,12 +169,12 @@
                             android:text="@string/setting_string__24hr"
                             tb:custom_font="noto_regular"/>
 
-                        <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
+                        <com.suke.widget.SwitchButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
-                            android:elevation="0dp"/>
-
+                            tb:sb_checked_color="@color/colorPrimary"
+                            tb:sb_show_indicator="false"/>
                     </LinearLayout>
 
                     <LinearLayout
@@ -196,12 +199,12 @@
                                 android:text="@string/setting_string_time_setting"
                                 tb:custom_font="noto_regular"/>
 
-                            <finotek.global.dev.talkbank_ca.widget.TalkBankSwitch
-                                android:id="@+id/switch3"
+                            <com.suke.widget.SwitchButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
-                                />
+                                tb:sb_checked_color="@color/colorPrimary"
+                                tb:sb_show_indicator="false"/>
 
                         </LinearLayout>
 

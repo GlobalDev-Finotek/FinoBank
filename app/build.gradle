@@ -42,11 +42,11 @@ dependencies {
     compile project(':finopassvalidator')
     compile 'joda-time:joda-time:2.9.7'
     compile 'com.github.barteksc:android-pdf-viewer:2.5.0'
-    compile 'com.android.support:support-v4:25.1.0'
-    compile 'com.android.support:support-v13:25.1.0'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
-    compile 'com.android.support:design:25.1.0'
+    compile 'com.android.support:support-v4:25.3.1'
+    compile 'com.android.support:support-v13:25.3.1'
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
+    compile 'com.android.support:design:25.3.1'
     compile 'com.google.dagger:dagger:2.8'
     compile 'org.projectlombok:lombok:1.16.12'
     compile 'io.reactivex.rxjava2:rxjava:2.0.7'
@@ -57,6 +57,8 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.lawloretienne:discreteslider:0.0.9'
     compile 'com.tsengvn:typekit:1.0.1'
+    compile 'com.github.zcweng:switch-button:0.0.3@aar'
+
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
     provided 'javax.annotation:jsr250-api:1.0'
 }

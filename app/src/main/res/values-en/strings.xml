@@ -250,6 +250,8 @@
     <string name="dialog_chat_verified_context_data">Result of analyzing context data is %d.</string>
     <string name="dialog_string_select_receiver">Please select someone who want to transfer.</string>
     <string name="dialog_chat_send_to">send</string>
+    <string name="dialog_button_signature">E-signature</string>
+    <string name="dialog_chat_current_balance">Current balance is</string>
     <string name="dialog_chat_transferred">transferred</string>
     <string name="dialog_string_import_from_contact">Import from contact</string>
     <string name="common_string_warning">Warning</string>

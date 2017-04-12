@@ -4,11 +4,14 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -69,6 +72,13 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 
 		presenter.showLastUser();
 
+		RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
+				.subscribe(textViewAfterTextChangeEvent -> {
+					if (textViewAfterTextChangeEvent.editable().length() > 0) {
+						binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
+					}
+				});
+
 		binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
@@ -114,14 +124,35 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 				});
 
 		binding.llRegiAdditional.btnSave.setOnClickListener(v -> {
-			User user = generateUser();
-			presenter.saveUser(user);
-			getActivity().onBackPressed();
+
+
+			if (checkRequiredInformationFilled()) {
+				User user = generateUser();
+				presenter.saveUser(user);
+				getActivity().onBackPressed();
+			} else {
+				Toast.makeText(getActivity(), getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
+			}
 		});
 
 		return binding.getRoot();
 	}
 
+	private boolean checkRequiredInformationFilled() {
+
+		boolean isNameEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtUserName.getText().toString());
+		boolean isPhoneNumberEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+
+		if (isNameEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		if (isPhoneNumberEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		return !isNameEmpty && !isPhoneNumberEmpty;
+	}
 	private User generateUser() {
 		User user = new User();
 

@@ -5,8 +5,11 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -55,7 +58,13 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 
 	  binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(this));
 	  binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
-
+	  
+	  RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
+			  .subscribe(textViewAfterTextChangeEvent -> {
+				  if (textViewAfterTextChangeEvent.editable().length() > 0) {
+					  binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
+				  }
+			  });
 
 	  RxView.clicks(binding.btnCaptureCreidt)
 			  .subscribe(aVoid -> {
@@ -81,11 +90,16 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 			  });
 
 	  binding.btnRegister.setOnClickListener(v -> {
-		  User user = generateUser();
-		  presenter.saveUser(user);
-		  startActivity(new Intent(this,
-				  ChatActivity.class));
-		  finish();
+
+		  if (checkRequiredInformationFilled()) {
+			  User user = generateUser();
+			  presenter.saveUser(user);
+			  startActivity(new Intent(this,
+					  ChatActivity.class));
+			  finish();
+		  } else {
+			  Toast.makeText(this, getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
+		  }
 	  });
 
   }
@@ -100,6 +114,22 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 		user.setAdditionalInfo(additionalInfo);
 
 		return user;
+	}
+
+	private boolean checkRequiredInformationFilled() {
+
+		boolean isNameEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtUserName.getText().toString());
+		boolean isPhoneNumberEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+
+		if (isNameEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		if (isPhoneNumberEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		return !isNameEmpty && !isPhoneNumberEmpty;
 	}
 
 	private UserAdditionalInfo getAdditionalInfo() {

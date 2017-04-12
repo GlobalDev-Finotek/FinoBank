@@ -129,13 +129,13 @@
     <string name="setting_string_registered_picture_purpose">등록한 사진은 필요 시 본인 확인용으로 사용됩니다.</string>
     <string name="dialog_chat_verified_context_data_succeeded">현재 맥락 인증 점수는 %1$d점으로\n본인 인증되었습니다.</string>
     <string name="dialog_chat_verified_context_data_failed">현재 맥락 인증 점수는 %1$d점으로\n인증이 필요합니다.</string>
-    <string name="dialog_chat_verified_context_data">현재 맥락 인증 점수는 %d점으로</string>
+    <string name="dialog_chat_verified_context_data">현재 맥락 인증 점수는 %1$d점으로 본인 인증되었습니다.</string>
     <string name="dialog_chat_ask_help">%1$s님 안녕하세요. 무엇을 도와드릴까요?</string>
     <string name="dialog_button_open_account">계좌 개설</string>
     <string name="dialog_chat_recommandation">%1$s님께는 "스마트 계좌"를 추천해드립니다.\n계좌 개설을 진행하시겠습니까?</string>
     <string name="dialog_button_yes">네</string>
     <string name="dialog_button_no">아니오</string>
-    <string name="dialog_chat_cancel_opening_bank">계좌 개설을 취소합니다. 어떤것을 도와드릴까요?</string>
+    <string name="dialog_chat_cancel_opening_bank">계좌 개설을 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인 용도로 주민등록증이나\n운전면허증이 필요합니다.\n준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
     <string name="dialog_string_id_card_type">신분증 유형</string>
     <string name="dialog_string_name">이름</string>

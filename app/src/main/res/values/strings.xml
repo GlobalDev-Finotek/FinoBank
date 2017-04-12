@@ -132,7 +132,7 @@
     <string name="dialog_chat_recommandation">%s.\nI would like to recommend Finocation smart account\n". Do you want to continue opening account?"</string>
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
-    <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.What can I do for you?</string>
+    <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.\n What can I do for you?</string>
     <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license.
     Please take a picture of your ID card</string>
     <string name="dialog_string_id_card_type">Verification ID type</string>

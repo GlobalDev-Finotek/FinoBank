@@ -47,7 +47,7 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginEnd="16dp"
                     android:background="@android:color/transparent"
-                    app:srcCompat="@drawable/vector_drawable_btn_menu"/>
+                    app:srcCompat="@drawable/btn_menu"/>
             </RelativeLayout>
 
 

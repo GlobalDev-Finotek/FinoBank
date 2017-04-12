@@ -94,6 +94,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
+        getSupportActionBar().setElevation(0);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
 		MainScenario.INSTANCE.init(this, binding.chatView, eventBus, dbHelper);

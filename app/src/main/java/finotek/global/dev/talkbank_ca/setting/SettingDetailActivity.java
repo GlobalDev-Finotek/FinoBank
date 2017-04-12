@@ -50,16 +50,16 @@ public class SettingDetailActivity extends AppCompatActivity {
 		switch (type) {
 
 			case PageType.ABNORMAL_TRANSACTION:
-				return AbnormalTransactionAuthFragment.newInstance("이상 거래 시 인증");
+				return AbnormalTransactionAuthFragment.newInstance(getString(R.string.setting_string_suspicious_transaction_verification));
 
 			case PageType.CONTEXT_AWARE:
-				return ContextAwareAuthFragment.newInstance("맥락 인증");
+				return ContextAwareAuthFragment.newInstance(getString(R.string.setting_string_context_auth));
 
 			case PageType.COST_AUTH:
-				return CostAuthFragment.newInstance("금액 인증");
+				return CostAuthFragment.newInstance(getString(R.string.setting_string_amount_auth));
 
 			case PageType.USER_INFO:
-				return UserInfoFragment.newInstance("사용자 정보");
+				return UserInfoFragment.newInstance(getString(R.string.setting_string_user_information));
 			default:
 				return null;
 		}

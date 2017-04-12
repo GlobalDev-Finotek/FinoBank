@@ -23,7 +23,7 @@ public class SettingsActivity extends AppCompatActivity {
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbarTitle.setText("설정");
+		binding.toolbarTitle.setText(getString(R.string.setting_string_setting));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 

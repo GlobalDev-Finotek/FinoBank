@@ -15,7 +15,7 @@ import finotek.global.dev.talkbank_ca.R;
 public class OneStepSignRegisterFragment extends BaseSignRegisterFragment {
 	@Override
 	void initView() {
-		binding.tvInst.setText("표시된 영역 안에 서명해 주세요.");
+		binding.tvInst.setText(getString(R.string.registration_string_fits_area_take_picture));
 		binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
 	}
 

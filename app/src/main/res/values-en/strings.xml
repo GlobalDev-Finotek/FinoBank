@@ -146,6 +146,7 @@
     <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>
     <string name="dialog_chat_finger_tip_sign">Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. Is there anything else that I can help you with?</string>
+    <string name="dialog_chat_anything_help">Is there anything else that I can help you with?</string>
     <string name="dialog_chat_transaction">I\'ve checked your monthly transaction history. Would you like to transfer %1$s won to %2$s(010-5678-1234).</string>
     <string name="dialog_button_transfer_other">Transfer to other</string>
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
@@ -154,7 +155,7 @@
     Is there anything else that I can help you with?</string>
     <string name="dialog_button_recent_transaction">View recent transactions</string>
     <string name="dialog_button_transfer_add">Add transfer account</string>
-    <string name="dialog_chat_someone_recent_transaction">% view recent transaction</string>
+    <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
     <string name="dialog_string_deposit">Deposit</string>
     <string name="dialog_string_withdrawal">Withdrawal</string>
     <string name="dialog_string_balance">Balance</string>
@@ -240,5 +241,15 @@
     <string name="setting_string_pin_code_text_color_select">Select PIN code text color</string>
     <string name="setting_string_pin_code_type">Type new PIN code</string>
     <string name="setting_string_profile_picture">Authentication picture</string>
+    <string name="dialog_string_input_message">Please input a message.</string>
+    <string name="dialog_chat_recognize_error">Can\'t understand what you said. Please input other message</string>
+    <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
+    <string name="dialog_string_email_sent">Sent</string>
+    <string name="dialog_string_email_cancel">Cancel</string>
+
+    <string name="dialog_string_select_receiver">Please select someone who want to transfer.</string>
+    <string name="dialog_chat_send_to">send</string>
+    <string name="dialog_chat_transferred">transferred</string>
+    <string name="dialog_string_import_from_contact">Import from contact</string>
     <string name="common_string_warning">Warning</string>
 </resources>

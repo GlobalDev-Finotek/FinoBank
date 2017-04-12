@@ -28,7 +28,7 @@ public enum MessageBox {
     public void add(Object msg) {
         messages.add(msg);
 
-        Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
+	    Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
 
         Flowable.interval(200, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())

@@ -60,7 +60,6 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
-import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
@@ -313,21 +312,21 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding.gvKeypad.onComplete(() -> {
 			// 잔액
 			int balance = TransactionDB.INSTANCE.getBalance();
-            String moneyAsString = ctBinding.editMoney.getText().toString();
+			String moneyAsString = ctBinding.editMoney.getText().toString();
 			int money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
 
-			if(money > balance) {
+			if (money > balance) {
 				WarningDialog dialog = new WarningDialog(this);
 				dialog.setTitle(getString(R.string.common_string_warning));
-                dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
-                dialog.setButtonText(getString(R.string.setting_string_yes));
-                dialog.setDoneListener(() -> {
-                    ctBinding.editMoney.setText("");
-                    ctBinding.editMoney.requestFocus();
+				dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
+				dialog.setButtonText(getString(R.string.setting_string_yes));
+				dialog.setDoneListener(() -> {
+					ctBinding.editMoney.setText("");
+					ctBinding.editMoney.requestFocus();
 
-                    dialog.dismiss();
-                });
-                dialog.show();
+					dialog.dismiss();
+				});
+				dialog.show();
 			} else {
 				TransactionDB.INSTANCE.transferMoney(money);
 				TransactionDB.INSTANCE.setTxMoney(moneyAsString);

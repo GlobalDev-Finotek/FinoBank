@@ -26,7 +26,7 @@ public class AccountScenario implements Scenario {
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals("계좌개설") || msg.equals(context.getResources().getString(R.string.main_string_open_account));
+	    return msg.equals(context.getResources().getString(R.string.main_string_open_account));
     }
 
     @Override
@@ -60,7 +60,7 @@ public class AccountScenario implements Scenario {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)));
                     MessageBox.INSTANCE.add(new Done());
                 } else {
-                    MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠습니다."));
+	                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
                 }
                 break;
             // 본인이 맞으세요?
@@ -73,7 +73,7 @@ public class AccountScenario implements Scenario {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_id_card_retake)));
                     MessageBox.INSTANCE.add(new RequestTakeIDCard());
                 } else {
-                    MessageBox.INSTANCE.add(new ReceiveMessage("무슨 말씀인지 잘 모르겠습니다."));
+	                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
                 }
                 break;
         }

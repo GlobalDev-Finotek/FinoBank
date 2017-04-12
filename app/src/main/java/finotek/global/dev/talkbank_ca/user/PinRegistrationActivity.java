@@ -22,7 +22,6 @@ import java.util.List;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityPinRegistrationBinding;
 import finotek.global.dev.talkbank_ca.model.Pin;
-import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.widget.SecureKeyboardAdapter;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
@@ -43,7 +42,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_pin_registration);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbarTitle.setText("PIN 코드");
+		binding.toolbarTitle.setText(getString(R.string.setting_string_pin_code));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
@@ -211,7 +210,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		Collections.shuffle(completeSets);
 
 		completeSets.add(7, " ");
-		completeSets.add("등록");
+		completeSets.add(getString(R.string.setting_button_save));
 
 		return completeSets;
 	}

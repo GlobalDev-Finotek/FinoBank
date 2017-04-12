@@ -72,7 +72,9 @@ public class TransferScenario implements Scenario {
 				int balance = TransactionDB.INSTANCE.getBalance();
 				String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 
-				MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234)님에게 " + moneyAsString + "원을\n이체하였습니다.\n현재 계좌 잔액은 " + balanceAsString + "원입니다.\n\n더 필요한 사항이 있으세요?"));
+				MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234) " + context.getString(R.string.dialog_chat_send_to) +
+						" " + moneyAsString + " " + context.getString(R.string.dialog_chat_transferred) +
+						"\n" + context.getString(R.string.dialog_chat_current_balance) + balanceAsString + "\n\n" + context.getString(R.string.dialog_chat_anything_help)));
 				TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 			}
 
@@ -94,7 +96,8 @@ public class TransferScenario implements Scenario {
 			String name = TransactionDB.INSTANCE.getTxName();
 			String money = TransactionDB.INSTANCE.getTxMoney();
 
-			MessageBox.INSTANCE.add(new SendMessage(name + "(010-9876-5432)님에게\n" + money + "원을 이체"));
+			MessageBox.INSTANCE.add(new SendMessage(name + "(010-9876-5432) \n" + context.getString(R.string.dialog_chat_send_to)
+					+ money + context.getString(R.string.string_transfer).toLowerCase()));
 			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
 			MessageBox.INSTANCE.add(new RequestSignature());
 		}
@@ -129,17 +132,17 @@ public class TransferScenario implements Scenario {
 			case TransferDone:
 				if (msg.equals(context.getResources().getString(R.string.dialog_button_recent_transaction))) {
 
-					dbHelper.get(User.class);
 
 					dbHelper.get(User.class)
 							.subscribe(users -> {
-										MessageBox.INSTANCE.add(new ReceiveMessage(users.last().getName() + " 님의 최근 거래내역입니다."));
-										RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
-										MessageBox.INSTANCE.add(rt);
-										MessageBox.INSTANCE.add(new Done());
-									},
-									throwable -> {
-									});
+
+								MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction, users.last().getName())));
+								RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
+								MessageBox.INSTANCE.add(rt);
+								MessageBox.INSTANCE.add(new Done());
+							}, throwable -> {
+
+							});
 
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_button_transfer_add))) {
 					selectAccounts();
@@ -160,12 +163,12 @@ public class TransferScenario implements Scenario {
 
 	private void selectAccounts() {
 		List<Account> accounts = new ArrayList<>();
-		accounts.add(new Account("어머니", "2017년 01월 25일", "200,000원 이체", true));
-		accounts.add(new Account("박예린", "2017년 01월 11일", "100,000원 이체", false));
-		accounts.add(new Account("김가람", "2017년 01월 11일", "36,200원 이체", false));
-		accounts.add(new Account("김이솔", "2017년 01월 10일", "100,000원 입금", false));
+		accounts.add(new Account("어머니", "2017/01/25", "200,000₩ " + context.getString(R.string.string_transfer).toLowerCase(), true));
+		accounts.add(new Account("박예린", "2017/01/11", "100,000₩ " + context.getString(R.string.string_transfer).toLowerCase(), false));
+		accounts.add(new Account("김가람", "2017/01/11", "36,200₩ " + context.getString(R.string.string_transfer).toLowerCase(), false));
+		accounts.add(new Account("김이솔", "2017/01/10", "100,000₩ " + context.getString(R.string.dialog_string_deposit).toLowerCase(), false));
 
-		MessageBox.INSTANCE.add(new ReceiveMessage("이체하실 분을 선택해 주세요."));
+		MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)));
 		MessageBox.INSTANCE.add(new AccountList(accounts));
 		MessageBox.INSTANCE.add(new RequestTransfer());
 	}

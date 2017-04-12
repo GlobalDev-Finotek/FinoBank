@@ -33,7 +33,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
     binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_registartion);
 	  setSupportActionBar(binding.toolbar);
 	  getSupportActionBar().setTitle("");
-	  binding.toolbarTitle.setText("자필 서명");
+	  binding.toolbarTitle.setText(getString(R.string.registration_string_signnature));
 	  binding.appbar.setOutlineProvider(null);
 	  binding.ibBack.setOnClickListener(v -> onBackPressed());
 

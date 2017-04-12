@@ -76,7 +76,7 @@
     <string name="setting_string_user_information">User info.</string>
     <string name="setting_string_context_verification">Verification for context</string>
     <string name="setting_string_amount_verification">Verification for amount of money</string>
-    <string name="setting_string_suspicious_transaction_verification">Verification for suspicious transaction is detected</string>
+    <string name="setting_string_suspicious_transaction_verification">Verification for suspicious transaction</string>
     <string name="setting_string_langauge">Language</string>
     <string name="setting_string_basic_information">Your account</string>
     <string name="setting_string_phone_number">Phone number</string>

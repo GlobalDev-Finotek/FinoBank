@@ -12,6 +12,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -261,7 +262,8 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void preInitControlViews() {
-		exControlView = inflate(R.layout.chat_extended_control);
+        Log.d("FINOTEK", "preInitControlViews");
+
 		footerInputs = inflate(R.layout.chat_footer_input);
 		transferView = inflate(R.layout.chat_transfer);
 
@@ -293,12 +295,14 @@ public class ChatActivity extends AppCompatActivity {
 					}
 				});
 
-		ecBinding = ChatExtendedControlBinding.bind(exControlView);
+        exControlView = inflate(R.layout.chat_extended_control);
+		ecBinding = DataBindingUtil.bind(exControlView);
 
 		ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
 		adapter.setDoOnControl(this::hideExControl);
         adapter.setSettingControl(() -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 		ecBinding.extendedControl.setAdapter(adapter);
+
 		RxViewPager.pageSelections(ecBinding.extendedControl)
 				.subscribe(pos -> {
 					if (pos == 0) {

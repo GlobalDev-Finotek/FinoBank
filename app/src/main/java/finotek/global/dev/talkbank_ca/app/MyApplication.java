@@ -22,6 +22,7 @@ public class MyApplication extends Application {
 	private RxEventBus eventBus;
 	private Realm realm;
 	private DBHelper dbHelper;
+	private static Context context;
 
 	@Override
 	public void onCreate() {
@@ -38,12 +39,17 @@ public class MyApplication extends Application {
 		realm = Realm.getDefaultInstance();
 		eventBus = new RxEventBus();
 		dbHelper = new DBHelper(realm);
+		context = getContext();
 
 		createDaggerInjections();
 	}
 
 	public Context getContext() {
 		return getApplicationContext();
+	}
+
+	public static Context getGlobalContext(){
+		return context;
 	}
 
   public AppComponent getAppComponent() {

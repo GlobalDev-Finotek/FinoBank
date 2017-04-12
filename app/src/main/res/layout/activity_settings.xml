@@ -92,7 +92,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tint="#94989e"
-                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+                        app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -116,7 +116,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:tint="#94989e"
-                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+                        app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -141,7 +141,7 @@
                         android:layout_height="wrap_content"
                         android:elevation="0dp"
                         android:tint="#94989e"
-                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+                        app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -166,7 +166,7 @@
                         android:layout_height="wrap_content"
                         android:elevation="0dp"
                         android:tint="#94989e"
-                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+                        app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
 
 
@@ -191,7 +191,7 @@
                         android:layout_height="wrap_content"
                         android:elevation="0dp"
                         android:tint="#94989e"
-                        app:srcCompat="@drawable/vector_drawable_icon_chevron_right"/>
+                        app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
 
             </LinearLayout>

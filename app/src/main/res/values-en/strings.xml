@@ -251,4 +251,5 @@
     <string name="dialog_chat_send_to">send</string>
     <string name="dialog_chat_transferred">transferred</string>
     <string name="dialog_string_import_from_contact">Import from contact</string>
+    <string name="registration_string_please_sign_in">Please sign in the marked area</string>
 </resources>

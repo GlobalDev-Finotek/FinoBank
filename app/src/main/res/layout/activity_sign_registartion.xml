@@ -75,6 +75,7 @@
                 android:paddingRight="16dp">
 
                 <LinearLayout
+                    android:id="@+id/ll_inst_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -87,6 +88,7 @@
                         tb:custom_font="noto_regular"/>
 
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:id="@+id/tv_inst_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/registration_string_signature_twice"
@@ -94,6 +96,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_inst_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -114,6 +117,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_inst_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">

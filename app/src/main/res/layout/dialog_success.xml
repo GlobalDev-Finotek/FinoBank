@@ -26,6 +26,7 @@
             android:textColor="@color/dark_100"
             android:textSize="18sp"
             app:custom_font="noto_medium" />
+
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/description"
             android:layout_width="wrap_content"

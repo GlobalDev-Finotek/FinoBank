@@ -84,7 +84,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 
-    private MainScenario mainScenario;
+	private MainScenario mainScenario;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -96,8 +96,8 @@ public class ChatActivity extends AppCompatActivity {
 
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-        getSupportActionBar().setElevation(0);
-        binding.appbar.setOutlineProvider(null);
+		getSupportActionBar().setElevation(0);
+		binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
 		mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper);
@@ -262,7 +262,7 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void preInitControlViews() {
-        Log.d("FINOTEK", "preInitControlViews");
+		Log.d("FINOTEK", "preInitControlViews");
 
 		footerInputs = inflate(R.layout.chat_footer_input);
 		transferView = inflate(R.layout.chat_transfer);
@@ -295,7 +295,7 @@ public class ChatActivity extends AppCompatActivity {
 					}
 				});
 
-        exControlView = inflate(R.layout.chat_extended_control);
+		exControlView = inflate(R.layout.chat_extended_control);
 		ecBinding = DataBindingUtil.bind(exControlView);
 
 		ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
@@ -432,13 +432,13 @@ public class ChatActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        mainScenario.release();
-    }
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		mainScenario.release();
+	}
 
-    private ChatComponent getComponent() {
+	private ChatComponent getComponent() {
 		return DaggerChatComponent
 				.builder()
 				.appComponent(((MyApplication) getApplication()).getAppComponent())

@@ -12,7 +12,6 @@ import android.util.AttributeSet;
 import java.util.Locale;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class IconButton extends AppCompatButton {
     protected int drawableWidth;
@@ -21,13 +20,6 @@ public class IconButton extends AppCompatButton {
 
     // Cached to prevent allocation during onLayout
     Rect bounds;
-
-    private enum DrawablePositions {
-        NONE,
-        LEFT_AND_RIGHT,
-        LEFT,
-        RIGHT
-    }
 
     public IconButton(Context context) {
         super(context);
@@ -79,7 +71,7 @@ public class IconButton extends AppCompatButton {
         int contentWidth = drawableWidth + iconPadding * factor + textWidth;
         int horizontalPadding = 0;
 
-        if(Locale.getDefault().getDisplayCountry().equals("ko")) {
+        if (Locale.getDefault().getDisplayCountry().equals("ko")) {
             horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0));
         } else {
             horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 1.7));
@@ -138,5 +130,12 @@ public class IconButton extends AppCompatButton {
         }
 
         setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
+    }
+
+    private enum DrawablePositions {
+        NONE,
+        LEFT_AND_RIGHT,
+        LEFT,
+        RIGHT
     }
 }

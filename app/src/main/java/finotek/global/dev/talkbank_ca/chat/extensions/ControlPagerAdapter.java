@@ -35,10 +35,10 @@ public class ControlPagerAdapter extends FragmentStatePagerAdapter {
         return NUM_PAGES;
     }
 
-    @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-    }
+	@Override
+	public void destroyItem(ViewGroup container, int position, Object object) {
+		super.destroyItem(container, position, object);
+	}
 
     public void setDoOnControl(Runnable doOnControl) {
         this.doOnControl = doOnControl;

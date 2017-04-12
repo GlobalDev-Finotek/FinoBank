@@ -12,7 +12,6 @@ import com.jakewharton.rxbinding2.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.MainScenario;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
@@ -50,7 +49,7 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
             RxView.clicks(binding.transferBtn)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
-                    MessageBox.INSTANCE.add(new ApplyScenario("transfer"));
+	                MessageBox.INSTANCE.add(new ApplyScenario("transfer"));
 	                MessageBox.INSTANCE.add(new TransferToSomeone(tx.getName(), tx.getPrice()));
                 });
         }

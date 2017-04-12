@@ -16,6 +16,7 @@
             android:layout_marginTop="1dp"
             android:background="@android:color/white"
             android:padding="15dp">
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/btn_loan_text"
                 android:layout_width="wrap_content"
@@ -64,6 +65,7 @@
             android:layout_marginTop="1dp"
             android:background="@android:color/white"
             android:padding="15dp">
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/btn_credit_inform_text"
                 android:layout_width="wrap_content"
@@ -112,6 +114,7 @@
             android:layout_marginTop="1dp"
             android:background="@android:color/white"
             android:padding="15dp">
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/btn_loan_transaction_text"
                 android:layout_width="wrap_content"
@@ -159,6 +162,7 @@
             android:layout_margin="1dp"
             android:background="@android:color/white"
             android:padding="15dp">
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/btn_contract_inform_text"
                 android:layout_width="wrap_content"

@@ -13,19 +13,19 @@ public class DateUtil {
         String strWeek = "";
         int nWeek = cal.get(Calendar.DAY_OF_WEEK);
         if (nWeek == 1) {
-            strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "일요일" : "Sun";
+	        strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "일요일" : "Sun";
         } else if (nWeek == 2) {
-            strWeek = (Locale.getDefault().getDisplayLanguage().equals(" ko")) ? "월요일" : "Mon";
+	        strWeek = (Locale.getDefault().getDisplayLanguage().equals(" ko")) ? "월요일" : "Mon";
         } else if (nWeek == 3) {
-            strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "화요일" : "Tue";
+	        strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "화요일" : "Tue";
         } else if (nWeek == 4) {
-            strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "수요일" : "Wed";
+	        strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "수요일" : "Wed";
         } else if (nWeek == 5) {
-            strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "목요일" : "Thus";
+	        strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "목요일" : "Thus";
         } else if (nWeek == 6) {
-            strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "금요일" : "Fri";
+	        strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "금요일" : "Fri";
         } else if (nWeek == 7) {
-            strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "토요일" : "Sat";
+	        strWeek = (Locale.getDefault().getDisplayLanguage().equals("ko")) ? "토요일" : "Sat";
         }
 
         return String.format("%02d.%02d %s", month, day, strWeek);

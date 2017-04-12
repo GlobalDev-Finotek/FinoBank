@@ -3,27 +3,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="5dp"
-        android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:background="@android:color/transparent"
         android:paddingBottom="20dp"
-        android:background="@android:color/transparent">
+        android:paddingEnd="20dp"
+        android:paddingStart="20dp"
+        android:paddingTop="5dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@drawable/dialog_bg">
             <RelativeLayout
                 android:id="@+id/title_bg"
-                android:layout_alignParentTop="true"
                 android:layout_width="match_parent"
                 android:layout_height="51dp"
-                android:paddingBottom="1dp"
-                android:background="@color/white_two">
+                android:layout_alignParentTop="true"
+                android:background="@color/white_two"
+                android:paddingBottom="1dp">
                 <RelativeLayout
                     android:id="@+id/title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/dialog_pdf_title">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/title_text"
                         android:layout_width="wrap_content"
@@ -46,9 +47,9 @@
             </RelativeLayout>
             <com.github.barteksc.pdfviewer.PDFView
                 android:id="@+id/pdf_view"
-                android:layout_below="@id/title_bg"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_below="@id/title_bg">
             </com.github.barteksc.pdfviewer.PDFView>
         </RelativeLayout>
     </RelativeLayout>

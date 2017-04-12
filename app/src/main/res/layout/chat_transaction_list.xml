@@ -2,13 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <LinearLayout
         android:id="@+id/list"
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
         android:layout_marginBottom="10dp"
-        android:paddingBottom="1dp"
-        android:background="#E7E7E7">
+        android:layout_marginEnd="16dp"
+        android:layout_marginStart="16dp"
+        android:background="#E7E7E7"
+        android:orientation="vertical"
+        android:paddingBottom="1dp">
     </LinearLayout>
 </layout>

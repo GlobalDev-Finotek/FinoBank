@@ -44,13 +44,13 @@ import io.reactivex.disposables.Disposable;
 import io.realm.Realm;
 
 public class MainScenario {
+	private final Disposable disposable;
 	private Context context;
 	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
 	private DBHelper dbHelper;
-    private final Disposable disposable;
 
 	public MainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper) {
 		this.context = context;
@@ -215,15 +215,15 @@ public class MainScenario {
 		}
 
 		if (msg instanceof ApplyScenario) {
-            ApplyScenario result = (ApplyScenario) msg;
-            String key = result.getName();
+			ApplyScenario result = (ApplyScenario) msg;
+			String key = result.getName();
 
-            if (scenarioPool.containsKey(key)) {
-                currentScenario = scenarioPool.get(key);
-                currentScenario.clear();
-            } else {
-                throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
-            }
+			if (scenarioPool.containsKey(key)) {
+				currentScenario = scenarioPool.get(key);
+				currentScenario.clear();
+			} else {
+				throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
+			}
 		}
 
 		if (msg instanceof RequestRemoveControls) {
@@ -259,7 +259,7 @@ public class MainScenario {
 				msg instanceof WaitForMessage || msg instanceof MessageEmitted;
 	}
 
-	public void release(){
-        disposable.dispose();
-    }
+	public void release() {
+		disposable.dispose();
+	}
 }

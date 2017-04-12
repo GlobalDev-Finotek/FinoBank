@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 				if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 					double accuracy = CallLogVerifier.getCallLogPassRate(this);
 					boolean isValidUser = isValidUser(accuracy);
-                    int score = ((int) (accuracy * 100));
+					int score = ((int) (accuracy * 100));
 					setInstructionText(score, isValidUser);
 
 					eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 	}
 
 	private void setInstructionText(int score, boolean isValidUser) {
-        String text = "";
+		String text = "";
 		if (isValidUser) {
 			text = getString(R.string.dialog_chat_verified_context_data_succeeded, score);
 		} else {

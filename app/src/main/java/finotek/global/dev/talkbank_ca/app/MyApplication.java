@@ -19,11 +19,15 @@ import io.realm.RealmConfiguration;
 
 public class MyApplication extends Application {
 
-  AppComponent appComponent;
+	private static Context context;
+	AppComponent appComponent;
 	private RxEventBus eventBus;
 	private Realm realm;
 	private DBHelper dbHelper;
-	private static Context context;
+
+	public static Context getGlobalContext() {
+		return context;
+	}
 
 	@Override
 	public void onCreate() {
@@ -56,10 +60,6 @@ public class MyApplication extends Application {
 
 	public AppComponent getAppComponent() {
 		return appComponent;
-	}
-	
-	public static Context getGlobalContext(){
-		return context;
 	}
 
   private void createDaggerInjections() {

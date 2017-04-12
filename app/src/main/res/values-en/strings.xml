@@ -247,7 +247,7 @@
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
     <string name="dialog_string_email_sent">Sent</string>
     <string name="dialog_string_email_cancel">Cancel</string>
-
+    <string name="dialog_chat_verified_context_data">Result of analyzing context data is %d.</string>
     <string name="dialog_string_select_receiver">Please select someone who want to transfer.</string>
     <string name="dialog_chat_send_to">send</string>
     <string name="dialog_chat_transferred">transferred</string>
@@ -258,4 +258,5 @@
     <string name="setting_string_korean">Korean</string>
     <string name="setting_string_english">English</string>
     <string name="string_confirm">Confirm</string>
+    <string name="main_back_exit">When you click the \'back\' button again, the session will be closed</string>
 </resources>

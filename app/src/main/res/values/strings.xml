@@ -256,4 +256,5 @@
     <string name="setting_string_korean">Korean</string>
     <string name="setting_string_english">English</string>
     <string name="string_confirm">Confirm</string>
+    <string name="main_back_exit">When you click the \'back\' button again, the session will be closed</string>
 </resources>

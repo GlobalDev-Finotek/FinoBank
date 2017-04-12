@@ -98,6 +98,7 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
 					intent.putExtra("nextClass", SettingDetailActivity.class);
 					intent.putExtra("type", PageType.USER_INFO);
+					intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
 					startActivity(intent);
 				});
 

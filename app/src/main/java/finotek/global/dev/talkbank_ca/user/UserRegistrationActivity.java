@@ -67,6 +67,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 	  RxView.clicks(binding.llRegiBasic.btnRegiSign)
 			  .subscribe(aVoid -> {
 				  Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
+				  intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
 				  intent.putExtra("nextClass", UserRegistrationActivity.class);
 				  startActivity(intent);
 			  });

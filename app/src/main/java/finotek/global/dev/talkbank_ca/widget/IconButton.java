@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
@@ -37,6 +38,9 @@ public class IconButton extends AppCompatButton {
         super(context, attrs);
         bounds = new Rect();
         applyAttributes(attrs);
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Light-Hestia.otf");
+        setTypeface(typeface);
     }
 
     public IconButton(Context context, AttributeSet attrs, int defStyle) {

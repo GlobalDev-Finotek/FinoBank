@@ -177,13 +177,13 @@
     <string name="dialog_string_contact_information">Contract information and instruction</string>
     <string name="dialog_string_optional_term_agreement">Agree to optional terms and conditions</string>
     <string name="dialog_string_customer_information_agreement">Customer\'s information agreement</string>
-    <string name="dialog_button_signature">E-signature</string>
     <string name="dialog_chat_agreenment_accepted">Agreement have been accepted</string>
     <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n\n
     is there anything else I can help you with?</string>
     <string name="dialog_message_error">An unknown error has occurred! Please try again later.</string>
     <string name="dialog_contact">Contact</string>
     <string name="dialog_message_processing">Your message is being processed right now. Please wait.</string>
+    <string name="dialog_string_lack_of_balance">There is not enough balance.\nPlease re-enter the amount that you want to transfer.</string>
     <string name="registration_string_signature">E-signature</string>
     <string name="setting_string_save">Save</string>
     <string name="setting_string_allowed_time">It\'s only activated in allowed time.</string>
@@ -240,4 +240,5 @@
     <string name="setting_string_pin_code_text_color_select">Select PIN code text color</string>
     <string name="setting_string_pin_code_type">Type new PIN code</string>
     <string name="setting_string_profile_picture">Authentication picture</string>
+    <string name="common_string_warning">Warning</string>
 </resources>

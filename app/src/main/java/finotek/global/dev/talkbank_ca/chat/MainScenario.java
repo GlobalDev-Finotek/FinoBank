@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -115,7 +116,9 @@ public enum MainScenario {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
 		eventBus.getObservable()
 				.subscribe(iEvent -> {
-					Realm realm = Realm.getDefaultInstance();
+                    Log.d("FINO-TB", iEvent.getClass().getName());
+
+                    Realm realm = Realm.getDefaultInstance();
 					User user = realm.where(User.class).findAll().last();
 
 					if (iEvent instanceof AccuracyMeasureEvent) {

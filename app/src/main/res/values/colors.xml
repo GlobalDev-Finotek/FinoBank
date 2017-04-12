@@ -7,6 +7,8 @@
     <color name="primary">@color/colorPrimary</color>
     <color name="danger">#ff585b</color>
     <color name="info">#00b9e6</color>
+    <color name="warning">#ffe938</color>
+    <color name="warning_dark">#cfbd28</color>
     <color name="white_two">#e5e5e5</color>
     <color name="white_three">#e0e0e0</color>
     <color name="line">#e0e0e0</color>

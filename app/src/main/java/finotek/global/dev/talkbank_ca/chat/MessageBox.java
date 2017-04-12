@@ -1,5 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,6 +27,8 @@ public enum MessageBox {
 
     public void add(Object msg) {
         messages.add(msg);
+
+        Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
 
         Flowable.interval(200, TimeUnit.MILLISECONDS)
             .observeOn(AndroidSchedulers.mainThread())

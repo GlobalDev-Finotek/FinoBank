@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -123,6 +124,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 			String inst = getString(R.string.dialog_chat_verified_context_data).replace("%d", String.valueOf((int) (accuracy * 100)));
 			setInstructionText(inst, isValidUser);
 
+			Log.d("FINO-TB", "Accuracy measure event was sent.");
 			eventBus.sendEvent(new AccuracyMeasureEvent(accuracy));
 			moveToNextActivity(isValidUser);
 		}

@@ -112,7 +112,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="false"
-                        android:text="@string/registration_string_fits_area_take_picture"
+                        android:text="@string/registration_string_please_sign_in"
                         tb:custom_font="noto_regular"/>
                 </LinearLayout>
 

@@ -16,7 +16,7 @@ public class TwoStepSignRegistFragment extends BaseSignRegisterFragment {
 
 	@Override
 	void initView() {
-		binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(1/2)");
+		binding.tvInst.setText(getString(R.string.registration_string_write_signature_step_1));
 	}
 
 	@Override
@@ -31,7 +31,7 @@ public class TwoStepSignRegistFragment extends BaseSignRegisterFragment {
 			case 3:
 				binding.drawingCanvas.clear();
 				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
-				binding.tvInst.setText("표시된 영역 안에 서명해 주세요.(2/2)");
+				binding.tvInst.setText(getString(R.string.registration_string_write_signature_step_2));
 				break;
 
 			case 4:

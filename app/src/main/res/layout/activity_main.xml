@@ -41,7 +41,7 @@
             android:layout_marginTop="66dp"
             android:text="@string/registration_string_register"/>
 
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/tv_context_auth_accuracy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
             android:paddingRight="16dp"
             />
 
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

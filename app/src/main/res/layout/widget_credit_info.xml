@@ -22,7 +22,7 @@
 
             <TableRow>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -31,7 +31,7 @@
                     android:text="@string/registration_string_credit_card_number"
                     android:textAlignment="center"/>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/tv_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
 
             <TableRow>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -52,7 +52,7 @@
                     android:text="@string/registration_string_credit_card_company"
                     android:textAlignment="center"/>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/tv_company"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
 
             <TableRow>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -73,7 +73,7 @@
                     android:text="@string/registration_string_credit_card_expire_date"
                     android:textAlignment="center"/>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/tv_expiration"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
 
             <TableRow>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.5"
@@ -94,7 +94,7 @@
                     android:text="@string/registration_string_name"
                     android:textAlignment="center"/>
 
-                <TextView
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/tv_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

@@ -41,7 +41,7 @@
                 android:textSize="18sp"
                 app:custom_font="noto_medium"/>
 
-            <TextView
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

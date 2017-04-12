@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="account"
@@ -12,14 +13,14 @@
         android:layout_height="79dp"
         android:padding="15dp"
         android:background="@drawable/border_round_gray">
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dark_100"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="@{account.name}" />
-        <TextView
+            android:text="@{account.name}"
+            app:custom_font="noto_medium" />
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_alignParentTop="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
             android:textSize="10sp"
             android:textColor="@color/dark_50"
             android:text="@{account.date}" />
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

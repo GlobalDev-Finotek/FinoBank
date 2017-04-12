@@ -43,7 +43,7 @@
             android:textAlignment="center"
             android:textColor="@color/dark_70"
             android:textSize="16sp"/>
-        <Button
+        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/done_btn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="120dp"

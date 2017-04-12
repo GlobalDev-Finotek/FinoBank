@@ -41,7 +41,8 @@ public class TransferScenario implements Scenario {
 
 	@Override
 	public boolean decideOn(String msg) {
-		return msg.equals("계좌이체") || msg.equals(context.getResources().getString(R.string.dialog_button_transfer));
+		return msg.equals("계좌이체") || msg.equals(context.getResources().getString(R.string.dialog_button_transfer))
+				|| msg.equals("이체") || msg.equals("송금");
 	}
 
 	@Override

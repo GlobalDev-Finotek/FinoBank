@@ -49,6 +49,7 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 		super(context, attrs);
 		this.context = context;
 		init(context);
+        setDefaultFontSize();
 	}
 
 	public TalkBankEditText(Context context) {
@@ -61,14 +62,13 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 		super(context, attrs, defStyleAttr);
 		this.context = context;
 		init(context);
-
+        setDefaultFontSize();
 	}
 
 	private void init(Context context) {
 		Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Regular-Hestia.otf");
 		setTypeface(typeface);
 
-		setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
 		setOnFocusChangeListener((v, hasFocus) -> {
 			if (hasFocus) {
 				onModeChangeListener.onModeChange(MODE.FOCUS);
@@ -100,5 +100,7 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 		void onModeChange(MODE mode);
 	}
 
-
+    public void setDefaultFontSize(){
+        setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+    }
 }

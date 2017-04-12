@@ -23,7 +23,7 @@
                 android:contentDescription="Select request as image."
                 android:src="@drawable/ic_add_white_24dp"
                 android:tint="@color/colorPrimary"/>
-            <EditText
+            <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                 android:id="@+id/chat_edit_text"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:src="@drawable/icon_mike"/>
-            <Button
+            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                 android:id="@+id/send_button"
                 android:layout_width="50dp"
                 android:layout_height="match_parent"

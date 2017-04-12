@@ -236,7 +236,8 @@ public class MainScenario {
 		String s = msg.trim();
 		if (s.equals("계좌조회") || s.equals("계좌 조회") || s.equals("최근거래내역") ||
 				s.equals("최근 거래 내역") || s.equals(context.getString(R.string.dialog_button_recent_transaction)) ||
-				s.equals(context.getString(R.string.main_string_view_account_details))) {
+				s.equals(context.getString(R.string.main_string_view_account_details)) || s.equals("잔액조회") || s.equals("잔액 조회")
+                || s.equals("잔액")) {
 
 			dbHelper.get(User.class).subscribe(users -> {
 				MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,

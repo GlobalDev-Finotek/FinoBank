@@ -29,6 +29,10 @@ public class LoanScenario implements Scenario {
         switch(msg) {
             case "집을 담보로 대출 받고 싶어":
             case "소액 담보 대출":
+            case "소액담보대출":
+            case "담보 대출":
+            case "담보대출":
+            case "대출":
                 return true;
             default:
                 return msg.equals(context.getResources().getString(R.string.main_string_secured_mirocredit));

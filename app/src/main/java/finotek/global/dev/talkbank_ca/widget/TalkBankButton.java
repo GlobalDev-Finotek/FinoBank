@@ -4,10 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 
-/**
- * Created by magyeong-ug on 2017. 4. 1..
- */
-
 public class TalkBankButton extends android.support.v7.widget.AppCompatButton {
 
 	public TalkBankButton(Context context) {

@@ -15,6 +15,7 @@ import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
+import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
@@ -23,7 +24,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
-import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
@@ -40,29 +40,26 @@ import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.realm.Realm;
 
-public enum MainScenario {
-	INSTANCE;
-
+public class MainScenario {
 	private Context context;
 	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
 	private DBHelper dbHelper;
+    private final Disposable disposable;
 
-	MainScenario() {
-	}
-
-	public void init(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper) {
+	public MainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper) {
 		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
 		this.dbHelper = dbHelper;
 
 		// 메시지 박스 설정
-		MessageBox.INSTANCE.observable
+		disposable = MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
 					if (isImmediateMessage(msg)) {
 						return Observable.just(msg);
@@ -101,15 +98,6 @@ public enum MainScenario {
 		scenarioPool.put("sendMail", new SendMailScenario(context));
 
 		currentScenario = null;
-	}
-
-	public void applyScenario(String key) {
-		if (scenarioPool.containsKey(key)) {
-			currentScenario = scenarioPool.get(key);
-			currentScenario.clear();
-		} else {
-			throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
-		}
 	}
 
 	private void firstScenario() {
@@ -226,8 +214,16 @@ public enum MainScenario {
 			chatView.accountList((AccountList) msg);
 		}
 
-		if (msg instanceof SignatureVerified) {
+		if (msg instanceof ApplyScenario) {
+            ApplyScenario result = (ApplyScenario) msg;
+            String key = result.getName();
 
+            if (scenarioPool.containsKey(key)) {
+                currentScenario = scenarioPool.get(key);
+                currentScenario.clear();
+            } else {
+                throw new RuntimeException("NoSuchScenarioError Exception: for key: " + key);
+            }
 		}
 
 		if (msg instanceof RequestRemoveControls) {
@@ -254,7 +250,6 @@ public enum MainScenario {
 
 		} else {
 			MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_recognize_error)));
-
 		}
 	}
 
@@ -263,4 +258,8 @@ public enum MainScenario {
 				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
 				msg instanceof WaitForMessage || msg instanceof MessageEmitted;
 	}
+
+	public void release(){
+        disposable.dispose();
+    }
 }

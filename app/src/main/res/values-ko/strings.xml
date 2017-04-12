@@ -111,7 +111,7 @@
     <string name="setting_string_signature_verifying">자필 서명 인증 중</string>
     <string name="setting_string_wait">잠시만 기다려 주세요.</string>
     <string name="setting_string_signature_verified">자필 서명이 인증되었습니다.</string>
-    <string name="setting_string_authentication_complete">확인 버튼을 선택하면 인증이 완료됩니다.</string>
+    <string name="setting_string_authentication_complete">확인 버튼을 선택하면\n인증이 완료됩니다.</string>
     <string name="setting_string_yes">확인</string>
     <string name="setting_string_signature_fail">자필서명 인증 실패(1/5)</string>
     <string name="setting_string_click_re_try_button">재시도 버튼을 선택하여 다시 서명해주세요(5회 가능)</string>
@@ -239,7 +239,7 @@
     <string name="setting_string_pin_code_type">변경할 PIN 코드 입력</string>
     <string name="setting_string_profile_picture">인증 사진</string>
     <string name="dialog_string_input_message">메세지를 입력해주세요.</string>
-    <string name="dialog_chat_recognize_error">무슨 말인지 모르겠어요. 정확한 메시지를 다시 입력해주세요.</string>
+    <string name="dialog_chat_recognize_error">무슨 말씀인지 모르겠어요.\n메뉴를 선택하려면 + 버튼을 눌러주세요.</string>
     <string name="dialog_chat_receive_email">상담 내역을 이메일로 받아보시겠습니까?</string>
     <string name="dialog_string_email_sent">전송되었습니다.</string>
     <string name="dialog_string_email_cancel">취소되었습니다.</string>

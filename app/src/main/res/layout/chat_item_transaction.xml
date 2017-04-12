@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="item"
@@ -22,14 +23,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:scaleX="0.7"
-            android:scaleY="0.7"
+            android:scaleX="1.0"
+            android:scaleY="1.0"
             android:button="@drawable/checkbox_bookmark" />
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_marginStart="35dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{item.name}" />
+            android:text="@{item.name}"
+            app:custom_font="noto_medium" />
         <Button
             android:id="@+id/transfer_btn"
             android:layout_marginStart="80dp"
@@ -40,14 +42,15 @@
             android:textColor="@color/dark_100"
             android:background="@drawable/btn_small_round_default"
             style="?android:attr/borderlessButtonStyle" />
-        <TextView
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_marginStart="35dp"
             android:layout_alignParentBottom="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dark_50"
             android:textSize="12sp"
-            android:text="@{item.dateAsString}" />
+            android:text="@{item.dateAsString}"
+            app:custom_font="noto_light" />
         <LinearLayout
             android:orientation="horizontal"
             android:layout_alignParentEnd="true"
@@ -55,26 +58,29 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:baselineAligned="true">
-            <TextView
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:textSize="12sp"
                 android:text="@{item.type == 0 ? @string/dialog_string_withdrawal : @string/dialog_string_deposit }"
-                android:textColor="@{item.type == 0 ? @color/coral_pink : @color/dodger_blue }" />
-            <TextView
+                android:textColor="@{item.type == 0 ? @color/coral_pink : @color/dodger_blue }"
+                app:custom_font="noto_light" />
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_marginEnd="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:text="@{item.priceAsString}"
-                android:textColor="@{item.type == 0 ? @color/coral_pink : @color/dodger_blue }" />
-            <TextView
+                android:textColor="@{item.type == 0 ? @color/coral_pink : @color/dodger_blue }"
+                app:custom_font="noto_medium" />
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:text="@string/dialog_string_won"
-                android:textColor="@color/dark_100"/>
+                android:textColor="@color/dark_100"
+                app:custom_font="noto_light"/>
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
@@ -83,21 +89,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:baselineAligned="true">
-            <TextView
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="4dp"
                 android:textSize="10sp"
                 android:text="@string/dialog_string_balance"
-                android:textColor="@color/dark_50" />
-            <TextView
+                android:textColor="@color/dark_50"
+                app:custom_font="noto_light" />
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_marginEnd="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:text="@{item.balanceAsString}"
-                android:textColor="@color/dark_100" />
-            <TextView
+                android:textColor="@color/dark_100"
+                app:custom_font="noto_medium" />
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"

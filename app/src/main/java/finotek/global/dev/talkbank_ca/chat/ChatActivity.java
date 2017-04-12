@@ -83,10 +83,11 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 
+    private MainScenario mainScenario;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 
@@ -95,9 +96,10 @@ public class ChatActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
         getSupportActionBar().setElevation(0);
+        binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		MainScenario.INSTANCE.init(this, binding.chatView, eventBus, dbHelper);
+		mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper);
 
 		MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
@@ -424,6 +426,12 @@ public class ChatActivity extends AppCompatActivity {
 	            }
                 break;
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mainScenario.release();
     }
 
     private ChatComponent getComponent() {

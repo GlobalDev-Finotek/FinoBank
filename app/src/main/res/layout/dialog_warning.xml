@@ -47,7 +47,7 @@
             android:layout_marginBottom="25dp"
             android:layout_centerHorizontal="true"
             android:gravity="center_vertical|center_horizontal"
-            android:background="@drawable/btn_dialog_danger"
+            android:background="@drawable/btn_dialog_warning"
             android:textSize="14sp"
             android:textColor="@android:color/white" />
     </RelativeLayout>

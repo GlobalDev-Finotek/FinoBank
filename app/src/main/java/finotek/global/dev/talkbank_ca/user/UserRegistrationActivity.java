@@ -7,7 +7,6 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import com.jakewharton.rxbinding2.view.RxView;
-import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -56,15 +55,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 
 	  binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(this));
 	  binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
-	  
-	  RxTextView.textChangeEvents(binding.llRegiBasic.edtPhoneNumber)
-			  .subscribe(textViewTextChangeEvent -> {
-				  String str = textViewTextChangeEvent.text().toString();
 
-				  binding.llRegiBasic.edtPhoneNumber
-						  .setErrFilter(str.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$"));
-
-			  });
 
 	  RxView.clicks(binding.btnCaptureCreidt)
 			  .subscribe(aVoid -> {

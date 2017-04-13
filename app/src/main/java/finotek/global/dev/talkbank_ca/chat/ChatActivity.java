@@ -149,7 +149,7 @@ public class ChatActivity extends AppCompatActivity {
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
 			});
-			tx.add(R.id.chat_capture, capturePicFragment);
+			tx.replace(R.id.chat_capture, capturePicFragment);
 			tx.commit();
 		}
 
@@ -189,7 +189,7 @@ public class ChatActivity extends AppCompatActivity {
 						});
 			});
 
-			tx.add(R.id.chat_capture, signRegistFragment);
+			tx.replace(R.id.chat_capture, signRegistFragment);
 			tx.commit();
 		}
 
@@ -230,6 +230,7 @@ public class ChatActivity extends AppCompatActivity {
 		MessageBox.INSTANCE.add(new SendMessage(msg));
 		clearInput();
 	}
+
 
 	private void expandControlClickEvent() {
 		if (isExControlAvailable)
@@ -323,8 +324,12 @@ public class ChatActivity extends AppCompatActivity {
 			// 잔액
 			int balance = TransactionDB.INSTANCE.getBalance();
 			String moneyAsString = ctBinding.editMoney.getText().toString();
-			int money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
-
+			int money = 0;
+			try {
+				money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
 			if (money > balance) {
 				WarningDialog dialog = new WarningDialog(this);
 				dialog.setTitle(getString(R.string.common_string_warning));

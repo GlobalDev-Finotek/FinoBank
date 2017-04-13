@@ -21,6 +21,7 @@ public class RoundButton extends IconButton {
         setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
 
         setTypeface();
+        requestLayout();
     }
 
     public RoundButton(Context context, AttributeSet attrs) {

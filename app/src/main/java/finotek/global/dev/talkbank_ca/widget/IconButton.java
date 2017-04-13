@@ -8,10 +8,12 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import java.util.Locale;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.databinding.DialogDangerBinding;
 
 public class IconButton extends AppCompatButton {
     protected int drawableWidth;
@@ -66,16 +68,10 @@ public class IconButton extends AppCompatButton {
         String text = getText().toString();
         textPaint.getTextBounds(text, 0, text.length(), bounds);
 
-        int textWidth = bounds.width();
+        int textWidth = (int) textPaint.measureText(text, 0, text.length());
         int factor = (drawablePosition == DrawablePositions.LEFT_AND_RIGHT) ? 2 : 1;
-        int contentWidth = drawableWidth + iconPadding * factor + textWidth;
-        int horizontalPadding = 0;
-
-        if (Locale.getDefault().getDisplayCountry().equals("ko")) {
-            horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0));
-        } else {
-            horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 1.7));
-        }
+        int contentWidth = iconPadding * factor + textWidth;
+        int horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0)) - drawableWidth;
 
         setCompoundDrawablePadding(-horizontalPadding + iconPadding);
 

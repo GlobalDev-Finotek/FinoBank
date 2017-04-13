@@ -436,6 +436,7 @@ public class ChatActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mainScenario.release();
+		eventBus.clear();
 	}
 
 	private ChatComponent getComponent() {

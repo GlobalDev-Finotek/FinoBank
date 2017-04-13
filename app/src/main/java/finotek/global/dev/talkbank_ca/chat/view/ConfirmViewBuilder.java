@@ -52,7 +52,7 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
 
             if(event.getIcon() != 0) {
                 btn.setCompoundDrawablesWithIntrinsicBounds(event.getIcon(), 0, 0, 0);
-                btn.setIconPadding(Converter.dpToPx(5));
+                btn.setIconPadding(0);
             }
 
             holder.buttons.addView(btn);

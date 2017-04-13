@@ -19,7 +19,7 @@
             android:text="@string/main_string_secured_mirocredit"
             android:textColor="@color/ex_control"
             android:textSize="14sp"
-            app:iconPadding="5dp"/>
+            app:iconPadding="2dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
             android:id="@+id/btn_setting"
             style="?android:attr/borderlessButtonStyle"
@@ -31,7 +31,7 @@
             android:text="@string/main_action_settings"
             android:textColor="@color/ex_control"
             android:textSize="14sp"
-            app:iconPadding="5dp"/>
+            app:iconPadding="2dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
             android:id="@+id/btn_send_email"
             style="?android:attr/borderlessButtonStyle"
@@ -43,6 +43,6 @@
             android:text="@string/main_button_send_the_conversation_to_e_mail"
             android:textColor="@color/ex_control"
             android:textSize="14sp"
-            app:iconPadding="5dp"/>
+            app:iconPadding="2dp"/>
     </LinearLayout>
 </layout>

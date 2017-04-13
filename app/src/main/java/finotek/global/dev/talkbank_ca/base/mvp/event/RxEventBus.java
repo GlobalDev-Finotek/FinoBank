@@ -10,25 +10,22 @@ import io.reactivex.subjects.BehaviorSubject;
 
 @Singleton
 public class RxEventBus {
-	private List<IEvent> events;
+	private BehaviorSubject<IEvent> subject;
 
 	public RxEventBus() {
-		events = new ArrayList<>();
+		subject = BehaviorSubject.create();
 	}
 
 	public void sendEvent(IEvent event) {
-		events.add(event);
+		subject.onNext(event);
 	}
 
 	public Observable<IEvent> getObservable() {
-		return Observable.create(subscriber -> {
-			for(IEvent event : events) {
-				subscriber.onNext(event);
-			}
-		});
+		return subject;
 	}
 
 	public void clear(){
-
+		subject.onComplete();
+		subject = BehaviorSubject.create();
 	}
 }

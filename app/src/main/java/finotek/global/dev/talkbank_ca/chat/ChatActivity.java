@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -75,6 +77,7 @@ public class ChatActivity extends AppCompatActivity {
 	DBHelper dbHelper;
 	@Inject
 	RxEventBus eventBus;
+	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -83,7 +86,6 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-
 	private MainScenario mainScenario;
 
 	@Override
@@ -437,6 +439,19 @@ public class ChatActivity extends AppCompatActivity {
 		super.onDestroy();
 		mainScenario.release();
 		eventBus.clear();
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (doubleBackToExitPressedOnce) {
+			super.onBackPressed();
+			return;
+		}
+
+		this.doubleBackToExitPressedOnce = true;
+		Toast.makeText(this, getString(R.string.main_back_exit), Toast.LENGTH_SHORT).show();
+
+		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
 	private ChatComponent getComponent() {

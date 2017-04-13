@@ -169,21 +169,22 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(i -> {
 							loadingDialog.dismiss();
 
-                        SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-                        dialog.setTitle(getString(R.string.setting_string_signature_verified));
-                        dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-                        dialog.setButtonText(getString(R.string.setting_string_yes));
-                        dialog.setDoneListener(() -> {
-                            MessageBox.INSTANCE.add(new SignatureVerified());
-                            returnToInitialControl();
+							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+							dialog.setTitle(getString(R.string.setting_string_signature_verified));
+							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+							dialog.setButtonText(getString(R.string.setting_string_yes));
+							dialog.setDoneListener(() -> {
+								MessageBox.INSTANCE.add(new SignatureVerified());
+								returnToInitialControl();
 
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.remove(signRegistFragment).commit();
+								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+								transaction.remove(signRegistFragment).commit();
 
-                            dialog.dismiss();
-                        });
-                        dialog.show();
-                    });
+								dialog.dismiss();
+							});
+							dialog.show();
+						}, throwable -> {
+						});
 			});
 
 			tx.add(R.id.chat_capture, signRegistFragment);

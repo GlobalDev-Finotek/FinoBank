@@ -69,7 +69,15 @@ public class TransferScenario implements Scenario {
 			if (step == Step.SelectAccount) {
 				String name = TransactionDB.INSTANCE.getTxName();
 				String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-				int money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+
+				int money = 0;
+				try {
+					money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
+				
+				
 				int balance = TransactionDB.INSTANCE.getBalance();
 				String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 

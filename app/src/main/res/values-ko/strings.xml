@@ -63,7 +63,7 @@
     <string name="main_button_register">사용자 등록</string>
     <string name="main_button_login">로그인</string>
     <string name="main_button_cancel">취소</string>
-    <string name="main_string_copyright_finotek">Copyright Finotek., All rights reserved</string>
+    <string name="main_string_copyright_finotek">Copyright 2017 (c) Finotek Inc. All Rights Reserved</string>
     <string name="main_string_message_input">메시지를 입력해주세요</string>
     <string name="main_button_send">전송</string>
     <string name="main_string_open_account">계좌 개설</string>

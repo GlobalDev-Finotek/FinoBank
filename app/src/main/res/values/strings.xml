@@ -63,7 +63,7 @@
     <string name="main_button_register">Register</string>
     <string name="main_button_login">Log-in</string>
     <string name="main_button_cancel">Cancel</string>
-    <string name="main_string_copyright_finotek">Copyright Finotek., All rights reserved</string>
+    <string name="main_string_copyright_finotek">Copyright 2017 (c) Finotek Inc. All Rights Reserved</string>
     <string name="main_string_message_input">Input a message</string>
     <string name="main_button_send">Send</string>
     <string name="main_string_open_account">Open account</string>
@@ -169,12 +169,12 @@
     <string name="dialog_chat_loan_amount_type">You may loan up to 50 million won with 2% interest rate.
     please write the ammount of loan you would like to request</string>
     <string name="dialog_string_term_agreement_accept">Accept the terms in the agreement</string>
-    <string name="dialog_string_mandatory_term_accept">Agree to mandatory terms and conditions</string>
+    <string name="dialog_string_mandatory_term_accept">Agree to all required fields.</string>
     <string name="dialog_string_loan_service_user_agreement">Loan service user agreement</string>
     <string name="dialog_string_personal_credit_information_access_agreement">Personal credit information access agreement</string>
     <string name="dialog_string_loan_transaction_agreement">Loan transaction agreement</string>
     <string name="dialog_string_contact_information">Contract information and instruction</string>
-    <string name="dialog_string_optional_term_agreement">Agree to optional terms and conditions</string>
+    <string name="dialog_string_optional_term_agreement">Agree to all optional fields</string>
     <string name="dialog_string_customer_information_agreement">Customer\'s information agreement</string>
     <string name="dialog_button_signature">E-signature</string>
     <string name="dialog_chat_agreenment_accepted">Agreement have been aceepted</string>

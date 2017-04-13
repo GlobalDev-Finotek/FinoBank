@@ -63,7 +63,7 @@
     <string name="main_button_register">Register</string>
     <string name="main_button_login">Log-in</string>
     <string name="main_button_cancel">Cancel</string>
-    <string name="main_string_copyright_finotek">Copyright Finotek., All rights reserved</string>
+    <string name="main_string_copyright_finotek">Copyright 2017 (c) Finotek Inc. All Rights Reserved</string>
     <string name="main_string_message_input">type a message</string>
     <string name="main_button_send">Send</string>
     <string name="main_string_open_account">Open account</string>

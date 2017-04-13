@@ -5,30 +5,43 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.widget.Toast;
 
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.databinding.ActivityUserRegistrationBinding;
+import finotek.global.dev.talkbank_ca.inject.component.DaggerUserInfoComponent;
+import finotek.global.dev.talkbank_ca.inject.component.UserInfoComponent;
+import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.model.UserAdditionalInfo;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
 import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
 
-public class UserRegistrationActivity extends AppCompatActivity {
+public class UserRegistrationActivity extends AppCompatActivity implements UserRegisterView {
 
-
-  private ActivityUserRegistrationBinding binding;
+	@Inject
+	UserRegisterImpl presenter;
+	private ActivityUserRegistrationBinding binding;
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     binding = DataBindingUtil.setContentView(this, R.layout.activity_user_registration);
+	  getComponent().inject(this);
+	  presenter.attachView(this);
 
     binding.toolbar.setTitle(getString(R.string.registration_string_register));
 	  binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
@@ -46,14 +59,11 @@ public class UserRegistrationActivity extends AppCompatActivity {
 	  binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(this));
 	  binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
 
-
-	  RxTextView.textChangeEvents(binding.llRegiBasic.edtPhoneNumber)
-			  .subscribe(textViewTextChangeEvent -> {
-				  String str = textViewTextChangeEvent.text().toString();
-
-				  binding.llRegiBasic.edtPhoneNumber
-						  .setErrFilter(str.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$"));
-
+	  RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
+			  .subscribe(textViewAfterTextChangeEvent -> {
+				  if (textViewAfterTextChangeEvent.editable().length() > 0) {
+					  binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
+				  }
 			  });
 
 	  RxView.clicks(binding.btnCaptureCreidt)
@@ -66,6 +76,7 @@ public class UserRegistrationActivity extends AppCompatActivity {
 	  RxView.clicks(binding.llRegiBasic.btnRegiSign)
 			  .subscribe(aVoid -> {
 				  Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
+				  intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
 				  intent.putExtra("nextClass", UserRegistrationActivity.class);
 				  startActivity(intent);
 			  });
@@ -79,10 +90,71 @@ public class UserRegistrationActivity extends AppCompatActivity {
 			  });
 
 	  binding.btnRegister.setOnClickListener(v -> {
-		  startActivity(new Intent(this,
-				  ChatActivity.class));
-		  finish();
+
+		  if (checkRequiredInformationFilled()) {
+			  User user = generateUser();
+			  presenter.saveUser(user);
+			  startActivity(new Intent(this,
+					  ChatActivity.class));
+			  finish();
+		  } else {
+			  Toast.makeText(this, getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
+		  }
 	  });
 
   }
+
+	private User generateUser() {
+		User user = new User();
+
+		user.setName(binding.llRegiBasic.edtUserName.getText().toString());
+		user.setPhoneNumber(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+
+		UserAdditionalInfo additionalInfo = getAdditionalInfo();
+		user.setAdditionalInfo(additionalInfo);
+
+		return user;
+	}
+
+	private boolean checkRequiredInformationFilled() {
+
+		boolean isNameEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtUserName.getText().toString());
+		boolean isPhoneNumberEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+
+		if (isNameEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		if (isPhoneNumberEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		return !isNameEmpty && !isPhoneNumberEmpty;
+	}
+
+	private UserAdditionalInfo getAdditionalInfo() {
+		UserAdditionalInfo userAdditionalInfo = new UserAdditionalInfo();
+		userAdditionalInfo.setEmail(binding.edtEmail.getText().toString());
+		userAdditionalInfo.setEmergencyPhoneNumber(binding.edtEmergencyPhoneNumber.getText().toString());
+		return userAdditionalInfo;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		presenter.detachView();
+	}
+
+	private UserInfoComponent getComponent() {
+		return DaggerUserInfoComponent
+				.builder()
+				.appComponent(((MyApplication) getApplication()).getAppComponent())
+				.activityModule(new ActivityModule(this)).build();
+	}
+
+	@Override
+	public void showLastUserData(User user) {
+		binding.llRegiBasic.edtUserName.setText(user.getName());
+		binding.llRegiBasic.edtPhoneNumber.setText(user.getPhoneNumber());
+	}
 }

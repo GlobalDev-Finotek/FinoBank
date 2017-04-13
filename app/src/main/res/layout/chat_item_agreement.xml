@@ -1,5 +1,5 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto">
+    >
     <data>
         <variable
             name="item"
@@ -7,39 +7,40 @@
     </data>
     <RelativeLayout
         android:id="@+id/main"
-        android:background="@android:color/white"
-        android:layout_marginTop="1dp"
-        android:layout_marginStart="1dp"
-        android:layout_marginEnd="1dp"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="50dp"
+        android:layout_marginEnd="1dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white">
         <CheckBox
             android:id="@+id/checkbox"
-            android:scaleX="0.9"
-            android:scaleY="0.9"
-            android:button="@drawable/checkbox_chat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-        <finotek.global.dev.talkbank_ca.widget.TBTextView
+            android:button="@drawable/checkbox_chat"
+            android:scaleX="0.9"
+            android:scaleY="0.9"/>
+
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="57dp"
-            android:textSize="16sp"
+            android:text="@{item.name}"
             android:textColor="@color/dark_100"
-            android:text="@{item.name}" />
+            android:textSize="16sp"/>
         <ImageView
             android:id="@+id/arrow"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:src="@drawable/icon_chevron_right_light"
             android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true" />
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="8dp"
+            android:src="@drawable/icon_chevron_right_light"/>
     </RelativeLayout>
 
 </layout>

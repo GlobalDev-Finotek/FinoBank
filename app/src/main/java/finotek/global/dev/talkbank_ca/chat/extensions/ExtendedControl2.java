@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,6 +18,7 @@ import finotek.global.dev.talkbank_ca.databinding.ChatExControl2Binding;
 
 public class ExtendedControl2 extends Fragment {
     private Runnable doOnControl;
+    private Runnable settingControl;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -31,16 +32,34 @@ public class ExtendedControl2 extends Fragment {
 
 
         RxView.clicks(binding.btnLoan)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> {
-                    MessageBox.INSTANCE.add(new SendMessage("소액 담보 대출", R.drawable.icon_talkbank04));
-                });
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .doOnNext(aVoid -> doOnControl.run())
+            .subscribe(aVoid -> {
+                MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_string_secured_mirocredit), R.drawable.icon_talkbank04));
+            });
+
+        RxView.clicks(binding.btnSetting)
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .doOnNext(aVoid -> doOnControl.run())
+            .subscribe(aVoid -> {
+                settingControl.run();
+            });
+
+        RxView.clicks(binding.btnSendEmail)
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .doOnNext(aVoid -> doOnControl.run())
+            .subscribe(aVoid -> {
+                MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_stalkbank06));
+            });
         
         return rootView;
     }
 
     public void setDoOnControl(Runnable doOnControl) {
         this.doOnControl = doOnControl;
+    }
+
+    public void setSettingControl(Runnable settingControl) {
+        this.settingControl = settingControl;
     }
 }

@@ -7,14 +7,16 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.Window;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.DialogSuccessBinding;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class SucceededDialog extends Dialog {
     private DialogSuccessBinding binding;
@@ -28,10 +30,13 @@ public class SucceededDialog extends Dialog {
         setContentView(binding.getRoot());
 
         RxView.clicks(binding.doneBtn)
+            .observeOn(AndroidSchedulers.mainThread())
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
-                    if(listener != null)
+                    if (listener != null) {
+                        dismiss();
                         listener.run();
+                    }
                 });
     }
 
@@ -44,6 +49,7 @@ public class SucceededDialog extends Dialog {
     }
 
     public void setButtonText(String text){
+        binding.doneBtn.setVisibility(View.VISIBLE);
         binding.doneBtn.setText(text);
     }
 

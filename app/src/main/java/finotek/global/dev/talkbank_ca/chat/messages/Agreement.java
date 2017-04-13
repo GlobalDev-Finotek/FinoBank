@@ -3,19 +3,21 @@ package finotek.global.dev.talkbank_ca.chat.messages;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Data;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-
-public class Agreement {
+public class Agreement implements Comparable<Agreement> {
     private int id;
     private String name;
+    private String pdfAsset;
     private List<Agreement> child = null;
     private boolean isNewCheck = false;
 
     public Agreement(int id, String name) {
+        this(id, name, null);
+    }
+
+    public Agreement(int id, String name, String pdfAsset) {
         this.id = id;
         this.name = name;
+        this.pdfAsset = pdfAsset;
     }
 
     public int getId() {
@@ -34,16 +36,20 @@ public class Agreement {
         this.name = name;
     }
 
+    public String getPdfAsset() {
+        return pdfAsset;
+    }
+
     public boolean isNewCheck() {
         return isNewCheck;
     }
 
-    public boolean isParent(){
-        return !isEmptyChild();
-    }
-
     public void setNewCheck(boolean newCheck) {
         isNewCheck = newCheck;
+    }
+
+    public boolean isParent() {
+        return !isEmptyChild();
     }
 
     public List<Agreement> getChild() {
@@ -59,5 +65,10 @@ public class Agreement {
             this.child = new ArrayList<>();
 
         this.child.add(childAgr);
+    }
+
+    @Override
+    public int compareTo(@android.support.annotation.NonNull Agreement o) {
+        return id - o.getId();
     }
 }

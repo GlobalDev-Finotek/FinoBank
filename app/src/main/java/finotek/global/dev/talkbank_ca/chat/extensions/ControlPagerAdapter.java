@@ -2,13 +2,13 @@ package finotek.global.dev.talkbank_ca.chat.extensions;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.view.ViewGroup;
 
-import finotek.global.dev.talkbank_ca.chat.MessageBox;
-
-public class ControlPagerAdapter extends FragmentPagerAdapter {
+public class ControlPagerAdapter extends FragmentStatePagerAdapter {
     private final int NUM_PAGES = 2;
     private Runnable doOnControl;
+    private Runnable settingControl;
 
     public ControlPagerAdapter(FragmentManager fm) {
         super(fm);
@@ -23,6 +23,7 @@ public class ControlPagerAdapter extends FragmentPagerAdapter {
         } else if(position == 1) {
             ExtendedControl2 ec2 = new ExtendedControl2();
             ec2.setDoOnControl(doOnControl);
+            ec2.setSettingControl(settingControl);
             return ec2;
         } else {
             return null;
@@ -34,7 +35,16 @@ public class ControlPagerAdapter extends FragmentPagerAdapter {
         return NUM_PAGES;
     }
 
+	@Override
+	public void destroyItem(ViewGroup container, int position, Object object) {
+		super.destroyItem(container, position, object);
+	}
+
     public void setDoOnControl(Runnable doOnControl) {
         this.doOnControl = doOnControl;
+    }
+
+    public void setSettingControl(Runnable settingControl) {
+        this.settingControl = settingControl;
     }
 }

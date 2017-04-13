@@ -6,7 +6,7 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 import android.widget.GridView;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.lang.reflect.Method;
 import java.text.NumberFormat;

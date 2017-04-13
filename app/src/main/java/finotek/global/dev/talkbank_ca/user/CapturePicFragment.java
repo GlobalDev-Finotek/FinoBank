@@ -6,7 +6,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.graphics.ImageFormat;
 import android.graphics.Matrix;
@@ -188,34 +187,6 @@ public class CapturePicFragment extends Fragment
 	 */
 	private int mSensorOrientation;
 	private FragmentCapturePicBinding binding;
-	/**
-	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
-	 * {@link TextureView}.
-	 */
-	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
-			= new TextureView.SurfaceTextureListener() {
-
-		@RequiresApi(api = Build.VERSION_CODES.M)
-		@Override
-		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
-			openCamera(width, height);
-		}
-
-		@Override
-		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
-			configureTransform(width, height);
-		}
-
-		@Override
-		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
-			return true;
-		}
-
-		@Override
-		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
-		}
-
-	};
 	private boolean isCaptureDone;
 	private OnSizeChangeListener onSizeChangeListener;
 	/**
@@ -308,6 +279,34 @@ public class CapturePicFragment extends Fragment
 		@Override
 		public void onError(@NonNull CameraDevice cameraDevice, int error) {
 
+		}
+
+	};
+	/**
+	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
+	 * {@link TextureView}.
+	 */
+	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
+			= new TextureView.SurfaceTextureListener() {
+
+		@RequiresApi(api = Build.VERSION_CODES.M)
+		@Override
+		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+			openCamera(width, height);
+		}
+
+		@Override
+		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
+			configureTransform(width, height);
+		}
+
+		@Override
+		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
+			return true;
+		}
+
+		@Override
+		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
 		}
 
 	};
@@ -438,13 +437,13 @@ public class CapturePicFragment extends Fragment
 	                         Bundle savedInstanceState) {
 		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_capture_pic, container, false);
 
-		binding.tvInst.setText("표시된 영역 안에 맞추어 촬영해 주세요.");
+		binding.tvInst.setText(getString(R.string.registration_string_fits_area_take_picture));
 
 		binding.ibCapture.setOnClickListener(v -> {
 			binding.tvInst.setText("");
 			if (isCaptureDone) {
 				unlockFocus();
-				binding.tvInst.setText("표시된 영역 안에 맞추어 촬영해 주세요.");
+				binding.tvInst.setText(getString(R.string.registration_string_fits_area_take_picture));
 				binding.ibCapture.setImageDrawable(ContextCompat.getDrawable(getActivity(),
 						R.drawable.vector_drawable_icon_camera));
 				binding.ibOk.setVisibility(View.GONE);
@@ -452,7 +451,7 @@ public class CapturePicFragment extends Fragment
 			} else {
 				lockFocus();
 				binding.ibCapture.setImageDrawable(ContextCompat.getDrawable(getActivity(),
-						R.drawable.vector_drawable_icon_reload));
+						R.drawable.icon_reload));
 				binding.ibOk.setVisibility(View.VISIBLE);
 			}
 
@@ -671,7 +670,7 @@ public class CapturePicFragment extends Fragment
 		}
 
 		setUpCameraOutputs(width, height);
-		// configureTransform(width, height);
+		configureTransform(width, height);
 
 		Activity activity = getActivity();
 		CameraManager manager = (CameraManager) activity.getSystemService(Context.CAMERA_SERVICE);
@@ -753,6 +752,10 @@ public class CapturePicFragment extends Fragment
 			mPreviewRequestBuilder
 					= mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 			mPreviewRequestBuilder.addTarget(surface);
+
+			// Rect zoomCropPreview = new Rect(1094, 822, 2186, 1660); //(1092x820, 4:3 aspect ratio)
+			// mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, zoomCropPreview);
+
 
 			// Here, we create a CameraCaptureSession for camera preview.
 			mCameraDevice.createCaptureSession(Arrays.asList(surface, mImageReader.getSurface()),

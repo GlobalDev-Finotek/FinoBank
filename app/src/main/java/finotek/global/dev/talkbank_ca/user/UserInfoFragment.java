@@ -4,17 +4,27 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
-import com.jakewharton.rxbinding.view.RxView;
-import com.jakewharton.rxbinding.widget.RxTextView;
+import com.jakewharton.rxbinding2.view.RxView;
+import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Inject;
+
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.databinding.LayoutUserRegistrationBinding;
+import finotek.global.dev.talkbank_ca.inject.component.DaggerUserInfoComponent;
+import finotek.global.dev.talkbank_ca.inject.component.UserInfoComponent;
+import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.model.UserAdditionalInfo;
 import finotek.global.dev.talkbank_ca.setting.PageType;
 import finotek.global.dev.talkbank_ca.setting.SettingDetailActivity;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
@@ -22,7 +32,6 @@ import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
 import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
 import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
-import rx.functions.Action1;
 
 import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
 
@@ -30,7 +39,13 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
  * Created by magyeong-ug on 21/03/2017.
  */
 
-public class UserInfoFragment extends android.app.Fragment {
+public class UserInfoFragment extends android.app.Fragment implements UserRegisterView {
+
+
+	@Inject
+	UserRegisterImpl presenter;
+
+	LayoutUserRegistrationBinding binding;
 
 	public static UserInfoFragment newInstance(String title) {
 		UserInfoFragment userInfoFragment = new UserInfoFragment();
@@ -40,36 +55,43 @@ public class UserInfoFragment extends android.app.Fragment {
 		return userInfoFragment;
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		presenter.detachView();
+	}
+
 	@Nullable
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-		LayoutUserRegistrationBinding binding = DataBindingUtil.inflate(inflater, R.layout.layout_user_registration, container, false);
+		binding = DataBindingUtil.inflate(inflater, R.layout.layout_user_registration, container, false);
 
-		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
-				.subscribe(new Action1<Void>() {
-					@Override
-					public void call(Void aVoid) {
-						Intent intent = new Intent(getActivity(), CaptureProfilePicActivity.class);
-						intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-						intent.putExtra("nextClass", SettingDetailActivity.class);
-						intent.putExtra("type", PageType.USER_INFO);
-						startActivity(intent);
+		getComponent().inject(this);
+
+		presenter.attachView(this);
+
+		presenter.showLastUser();
+
+		RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
+				.subscribe(textViewAfterTextChangeEvent -> {
+					if (textViewAfterTextChangeEvent.editable().length() > 0) {
+						binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
 					}
 				});
 
-
-		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(getActivity()));
 		binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
 
+		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(getActivity(), CaptureProfilePicActivity.class);
+					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+					intent.putExtra("nextClass", SettingDetailActivity.class);
+					intent.putExtra("type", PageType.USER_INFO);
+					startActivity(intent);
+				});
 
-		RxTextView.textChangeEvents(binding.llRegiBasic.edtPhoneNumber)
-				.subscribe(textViewTextChangeEvent -> {
-          String str = textViewTextChangeEvent.text().toString();
+		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(getActivity()));
 
-					binding.llRegiBasic.edtPhoneNumber
-                .setErrFilter(str.matches("^01(?:0|1|[6-9])-(?:\\d{3}|\\d{4})-\\d{4}$"));
-
-					});
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
 				.subscribe(aVoid -> {
@@ -86,6 +108,7 @@ public class UserInfoFragment extends android.app.Fragment {
 					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
 					intent.putExtra("nextClass", SettingDetailActivity.class);
 					intent.putExtra("type", PageType.USER_INFO);
+					intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
 					startActivity(intent);
 				});
 
@@ -100,8 +123,68 @@ public class UserInfoFragment extends android.app.Fragment {
 					startActivity(intent);
 				});
 
-		binding.llRegiAdditional.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
+		binding.llRegiAdditional.btnSave.setOnClickListener(v -> {
+
+
+			if (checkRequiredInformationFilled()) {
+				User user = generateUser();
+				presenter.saveUser(user);
+				getActivity().onBackPressed();
+			} else {
+				Toast.makeText(getActivity(), getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
+			}
+		});
 
 		return binding.getRoot();
 	}
+
+	private boolean checkRequiredInformationFilled() {
+
+		boolean isNameEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtUserName.getText().toString());
+		boolean isPhoneNumberEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+
+		if (isNameEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		if (isPhoneNumberEmpty) {
+			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		return !isNameEmpty && !isPhoneNumberEmpty;
+	}
+	private User generateUser() {
+		User user = new User();
+
+		user.setName(binding.llRegiBasic.edtUserName.getText().toString());
+		user.setPhoneNumber(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+
+		UserAdditionalInfo additionalInfo = getAdditionalInfo();
+		user.setAdditionalInfo(additionalInfo);
+
+		return user;
+	}
+
+	private UserAdditionalInfo getAdditionalInfo() {
+		UserAdditionalInfo userAdditionalInfo = new UserAdditionalInfo();
+		userAdditionalInfo.setEmail(binding.llRegiAdditional.edtEmail.getText().toString());
+		userAdditionalInfo.setEmergencyPhoneNumber(binding.llRegiAdditional.edtEmergencyPhoneNumber.getText().toString());
+		return userAdditionalInfo;
+	}
+
+	private UserInfoComponent getComponent() {
+		return DaggerUserInfoComponent
+				.builder()
+				.appComponent(((MyApplication) getActivity().getApplication()).getAppComponent())
+				.activityModule(new ActivityModule(getActivity())).build();
+	}
+
+
+	@Override
+	public void showLastUserData(User user) {
+		binding.llRegiBasic.edtUserName.setText(user.getName());
+		binding.llRegiBasic.edtPhoneNumber.setText(user.getPhoneNumber());
+	}
+
+
 }

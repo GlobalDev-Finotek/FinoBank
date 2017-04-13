@@ -1,14 +1,10 @@
 package finotek.global.dev.talkbank_ca.base.mvp;
 
-import rx.subscriptions.CompositeSubscription;
-
-/**
- * Created by mario on 2017-01-11.
- */
+import io.reactivex.disposables.CompositeDisposable;
 
 public abstract class BasePresenter<V extends IMvpView>  implements IPresenter<V> {
-  private V mvpView;
-  protected CompositeSubscription viewSubscription;
+	protected CompositeDisposable viewSubscription;
+	private V mvpView;
 
   /**
    * @param mvpView View 인터페이스
@@ -16,8 +12,8 @@ public abstract class BasePresenter<V extends IMvpView>  implements IPresenter<V
    */
   @Override
   public void attachView(V mvpView) {
-    viewSubscription = new CompositeSubscription();
-    this.mvpView = mvpView;
+	  viewSubscription = new CompositeDisposable();
+	  this.mvpView = mvpView;
   }
 
   /**
@@ -25,9 +21,10 @@ public abstract class BasePresenter<V extends IMvpView>  implements IPresenter<V
    */
   @Override
   public void detachView() {
-    if (viewSubscription != null && !viewSubscription.isUnsubscribed()) {
-      viewSubscription.unsubscribe();;
-    }
+	  if (viewSubscription != null && !viewSubscription.isDisposed()) {
+		  viewSubscription.dispose();
+		  ;
+	  }
     mvpView = null;
   }
 

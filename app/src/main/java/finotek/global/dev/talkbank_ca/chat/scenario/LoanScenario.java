@@ -1,44 +1,56 @@
 package finotek.global.dev.talkbank_ca.chat.scenario;
 
+import android.content.Context;
+
 import java.util.ArrayList;
 import java.util.List;
 
+import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
+import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 
 public class LoanScenario implements Scenario {
-    private enum Step {
-        Initial, InputAddress, InputMoney, Agreement, Last
-    }
-
+    private Context context;
     private Step step = Step.Initial;
+
+    public LoanScenario(Context context) {
+        this.context = context;
+    }
 
     @Override
     public boolean decideOn(String msg) {
         switch(msg) {
             case "집을 담보로 대출 받고 싶어":
-            case "소액담보대출":
             case "소액 담보 대출":
+            case "소액담보대출":
+            case "담보 대출":
+            case "담보대출":
+            case "대출":
                 return true;
             default:
-                return false;
+                return msg.equals(context.getResources().getString(R.string.main_string_secured_mirocredit));
         }
     }
 
     // SendMessage를 제외한 모든 메시지를 받음
     @Override
     public void onReceive(Object msg) {
-        if(msg instanceof Done) {
+        if(msg instanceof SignatureVerified) {
             if(step == Step.Last) {
                 MessageBox.INSTANCE.add(new AgreementResult());
-                MessageBox.INSTANCE.add(new ReceiveMessage("대출 신청이 정상적으로 처리되어\n입금 완료 되었습니다.\n\n더 필요한 사항이 있으세요?"));
+                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)));
+                MessageBox.INSTANCE.add(new Done());
             }
+        }
 
+        if(msg instanceof Done) {
             step = Step.Initial;
         }
     }
@@ -48,47 +60,57 @@ public class LoanScenario implements Scenario {
     public void onUserSend(String msg) {
         switch(step){
             case Initial:
-                MessageBox.INSTANCE.add(new ReceiveMessage("거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만 원 이내, 최저 금리 2.0%입니다.\n\n대출을 신청하시겠습니까?"));
-                MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo());
+                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_apply)));
+                MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context));
                 step = Step.InputAddress;
                 break;
             case InputAddress:
-                if(msg.equals("네")) {
-                    MessageBox.INSTANCE.add(new ReceiveMessage("집 주소를 입력해 주세요."));
+                if(msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_home_address_type)));
                     step = Step.InputMoney;
-                } else if(msg.equals("아니오")){
-                    MessageBox.INSTANCE.add(new ReceiveMessage("소액담보대출 진행을 취소했습니다."));
+                } else if(msg.equals(context.getResources().getString(R.string.dialog_button_no))){
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)));
                     MessageBox.INSTANCE.add(new Done());
                 } else {
-                    MessageBox.INSTANCE.add(new ReceiveMessage("무슨 의미 인가요?"));
+	                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
                 }
                 break;
             case InputMoney:
-                MessageBox.INSTANCE.add(new ReceiveMessage("입력하신 주소로 담보 설정 시 최대 5천만 원까지\n2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요."));
+                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_amount_type)));
                 step = Step.Agreement;
                 break;
             case Agreement:
-                MessageBox.INSTANCE.add(new ReceiveMessage("약관 확인 및 동의를 진행해주세요."));
+                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_term_agreement_accept)));
 
                 List<Agreement> agreements = new ArrayList<>();
-                Agreement required = new Agreement(100, "필수 항목 전체 동의");
-                required.addChild(new Agreement(101, "대출 서비스 이용 약관"));
-                required.addChild(new Agreement(102, "개인(신용)정보 조회 및 이용 제공 동의"));
-                required.addChild(new Agreement(103, "대출거래 약정서"));
-                required.addChild(new Agreement(104, "계약 안내사항 및 유의사항"));
+                Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
+                required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "view.pdf"));
+                required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "view2.pdf"));
+                required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement), "view3.pdf"));
+                required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information), "view4.pdf"));
 
-                Agreement optional = new Agreement(200, "선택항목 전체 동의");
-                optional.addChild(new Agreement(201, "고객 정보 활용 동의"));
+                Agreement optional = new Agreement(200, context.getResources().getString(R.string.dialog_string_optional_term_agreement));
+                optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement), "view5.pdf"));
 
                 agreements.add(required);
                 agreements.add(optional);
 
                 MessageBox.INSTANCE.add(new AgreementRequest(agreements));
+                MessageBox.INSTANCE.add(new DismissKeyboard());
                 step = Step.Last;
                 break;
             default:
-                MessageBox.INSTANCE.add(new ReceiveMessage("무슨 의미 인가요?"));
-                break;
+	            MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+	            break;
         }
+    }
+
+    @Override
+    public void clear() {
+        step = Step.Initial;
+    }
+
+    private enum Step {
+        Initial, InputAddress, InputMoney, Agreement, Last
     }
 }

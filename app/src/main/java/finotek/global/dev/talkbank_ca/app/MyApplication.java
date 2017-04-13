@@ -3,51 +3,59 @@ package finotek.global.dev.talkbank_ca.app;
 import android.app.Application;
 import android.content.Context;
 
-import finotek.global.dev.talkbank_ca.base.mvp.event.IEvent;
+import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
-import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
-import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
-import rx.subjects.PublishSubject;
-
-
-/**
- * Created by kwm on 2017. 3. 6..
- */
+import finotek.global.dev.talkbank_ca.model.DBHelper;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
+import io.realm.Realm;
+import io.realm.RealmConfiguration;
 
 public class MyApplication extends Application {
 
-  AppComponent appComponent;
-	private PublishSubject<IEvent> eventBus;
-	private static MyApplication instance;
+	private static Context context;
+	AppComponent appComponent;
+	private RxEventBus eventBus;
+	private Realm realm;
+	private DBHelper dbHelper;
+
+	public static Context getGlobalContext() {
+		return context;
+	}
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+
+		Realm.init(this);
+
+		RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
+				.name(Realm.DEFAULT_REALM_NAME)
+				.deleteRealmIfMigrationNeeded()
+				.build();
+
+		Realm.setDefaultConfiguration(realmConfiguration);
+		realm = Realm.getDefaultInstance();
+		eventBus = new RxEventBus();
+		dbHelper = new DBHelper(realm);
+		context = getContext();
+
 		createDaggerInjections();
+	}
 
-		eventBus = PublishSubject.create();
-		instance = this;
-  }
+	public Context getContext() {
+		return getApplicationContext();
+	}
 
-  public static Context getContext() {
-    return instance.getApplicationContext();
-  }
-
-  public AppComponent getAppComponent() {
-    return appComponent;
-  }
-
-	public MainComponent getMainComponent() {
-		return DaggerMainComponent.builder()
-				.appComponent(appComponent).build();
+	public AppComponent getAppComponent() {
+		return appComponent;
 	}
 
   private void createDaggerInjections() {
     appComponent = DaggerAppComponent
         .builder()
-		    .appModule(new AppModule(this, eventBus))
+		    .appModule(new AppModule(this, eventBus, realm, dbHelper))
 		    .build();
 
     appComponent.inject(this);

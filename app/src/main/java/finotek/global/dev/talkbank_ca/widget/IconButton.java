@@ -4,11 +4,16 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Paint;
 import android.graphics.Rect;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
+import android.util.Log;
+
+import java.util.Locale;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.databinding.DialogDangerBinding;
 import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class IconButton extends AppCompatButton {
@@ -19,13 +24,6 @@ public class IconButton extends AppCompatButton {
     // Cached to prevent allocation during onLayout
     Rect bounds;
 
-    private enum DrawablePositions {
-        NONE,
-        LEFT_AND_RIGHT,
-        LEFT,
-        RIGHT
-    }
-
     public IconButton(Context context) {
         super(context);
         bounds = new Rect();
@@ -35,6 +33,9 @@ public class IconButton extends AppCompatButton {
         super(context, attrs);
         bounds = new Rect();
         applyAttributes(attrs);
+
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Light-Hestia.otf");
+        setTypeface(typeface);
     }
 
     public IconButton(Context context, AttributeSet attrs, int defStyle) {
@@ -68,10 +69,10 @@ public class IconButton extends AppCompatButton {
         String text = getText().toString();
         textPaint.getTextBounds(text, 0, text.length(), bounds);
 
-        int textWidth = bounds.width();
+        int textWidth = (int) textPaint.measureText(text, 0, text.length());
         int factor = (drawablePosition == DrawablePositions.LEFT_AND_RIGHT) ? 2 : 1;
-        int contentWidth = drawableWidth + iconPadding * factor + textWidth;
-        int horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0));
+        int contentWidth = iconPadding * factor + textWidth;
+        int horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0)) - drawableWidth - Converter.dpToPx(10);
 
         setCompoundDrawablePadding(-horizontalPadding + iconPadding);
 
@@ -122,12 +123,16 @@ public class IconButton extends AppCompatButton {
             }
 
             Rect realBounds = drawable.getBounds();
-            realBounds.right = realBounds.left + Converter.dpToPx(20);
-            realBounds.bottom = realBounds.top + Converter.dpToPx(20);
-
             drawable.setBounds(realBounds);
         }
 
         setCompoundDrawables(drawables[0], drawables[1], drawables[2], drawables[3]);
+    }
+
+    private enum DrawablePositions {
+        NONE,
+        LEFT_AND_RIGHT,
+        LEFT,
+        RIGHT
     }
 }

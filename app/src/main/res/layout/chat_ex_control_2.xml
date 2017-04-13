@@ -16,9 +16,10 @@
             android:layout_height="40dp"
             android:background="@drawable/ex_control_button"
             android:drawableLeft="@drawable/icon_stankbank04"
-            android:text="@string/string_loan"
+            android:text="@string/main_string_secured_mirocredit"
             android:textColor="@color/ex_control"
-            app:iconPadding="5dp"/>
+            android:textSize="14sp"
+            app:iconPadding="2dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
             android:id="@+id/btn_setting"
             style="?android:attr/borderlessButtonStyle"
@@ -27,9 +28,10 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/ex_control_button"
             android:drawableLeft="@drawable/icon_stankbank05"
-            android:text="@string/string_setting"
+            android:text="@string/main_action_settings"
             android:textColor="@color/ex_control"
-            app:iconPadding="5dp"/>
+            android:textSize="14sp"
+            app:iconPadding="2dp"/>
         <finotek.global.dev.talkbank_ca.widget.IconButton
             android:id="@+id/btn_send_email"
             style="?android:attr/borderlessButtonStyle"
@@ -38,8 +40,9 @@
             android:layout_marginTop="15dp"
             android:background="@drawable/ex_control_button"
             android:drawableLeft="@drawable/icon_stankbank06"
-            android:text="@string/string_send_email"
+            android:text="@string/main_button_send_the_conversation_to_e_mail"
             android:textColor="@color/ex_control"
-            app:iconPadding="5dp"/>
+            android:textSize="14sp"
+            app:iconPadding="2dp"/>
     </LinearLayout>
 </layout>

@@ -15,7 +15,7 @@
             android:paddingBottom="1dp"
             android:background="#E4E3E3">
         </LinearLayout>
-        <Button
+        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/sign_button"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tb="http://schemas.android.com/apk/res-auto">
+    xmlns:tb="http://schemas.android.com/apk/res-auto"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,6 +14,8 @@
             android:layout_height="60dp"
             android:background="#80E5E5E5"
             android:orientation="horizontal"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
             android:visibility="visible"
             android:weightSum="1">
 
@@ -24,20 +27,18 @@
                 android:layout_weight="1"
                 android:gravity="center_vertical"
                 android:paddingLeft="16dp"
-                android:text="금액별 인증 설정"
+                android:text="@string/setting_string_amount_auth"
                 android:textSize="18sp"
                 android:theme="@style/Title"
                 tb:custom_font="noto_medium"
                 />
 
-            <Switch
-                android:id="@+id/switch6"
+            <com.suke.widget.SwitchButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:elevation="0dp"
-                android:gravity="center_vertical"/>
+                tb:sb_checked_color="@color/colorPrimary"
+                tb:sb_show_indicator="false"/>
 
 
         </LinearLayout>
@@ -80,7 +81,7 @@
                             android:layout_marginBottom="14dp"
                             android:layout_marginLeft="7dp"
                             android:layout_marginTop="14dp"
-                            android:text="이체 금액"
+                            android:text="@string/setting_string_amount"
                             android:theme="@style/Stit"
                             tb:custom_font="noto_medium"/>
                     </LinearLayout>
@@ -191,7 +192,7 @@
                             android:layout_width="164dp"
                             android:layout_height="40dp"
                             android:gravity="center"
-                            android:text="직접 입력"
+                            android:text="@string/setting_string_edit_manually"
                             android:textAlignment="center"
                             android:textColor="#80182333"
                             android:textSize="14sp"
@@ -226,7 +227,7 @@
                                     android:layout_height="40dp"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="이하"
+                                    android:text="@string/setting_string_under"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
                                     android:textSize="14sp"
@@ -249,7 +250,7 @@
                                     android:layout_height="40dp"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="이상"
+                                    android:text="@string/setting_string_over"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
                                     android:textSize="14sp"
@@ -288,7 +289,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="7dp"
-                            android:text="인증 방법(다중 선택 가능 1개 이상 선택 필수)"
+                            android:text="@string/setting_string_auth_method_select_1"
                             android:theme="@style/Stit"
                             tb:custom_font="noto_medium"/>
                     </LinearLayout>
@@ -307,10 +308,11 @@
                             android:layout_width="match_parent"
                             android:layout_height="40dp"
                             android:background="@drawable/cell_shape"
+                            android:backgroundTint="@color/info"
                             android:gravity="center"
-                            android:text="맥락 인증(기본)"
+                            android:text="@string/setting_string_context_auth"
                             android:textAlignment="center"
-                            android:textColor="#80182333"
+                            android:textColor="@color/white"
                             android:textSize="14sp"
                             tb:custom_font="noto_regular"/>
 
@@ -325,7 +327,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="자필서명"
+                                android:text="@string/setting_string_signature"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -337,7 +339,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="PIN 코드"
+                                android:text="@string/setting_string_pin_code"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -356,7 +358,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="비상 연락처"
+                                android:text="@string/setting_string_emergency_number"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -369,7 +371,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="인증메일"
+                                android:text="@string/setting_string_auth_mail"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -388,7 +390,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="인증 메시지"
+                                android:text="@string/setting_string_auth_message"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -401,7 +403,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="신용카드 OCR"
+                                android:text="@string/setting_string_ocr_credit_card"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -420,7 +422,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="인증 사진"
+                                android:text="@string/setting_string_profile_picture"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -433,7 +435,7 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/cell_shape"
                                 android:gravity="center"
-                                android:text="PIN 코드"
+                                android:text="@string/setting_string_voice_recognition"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
                                 android:textSize="14sp"
@@ -462,7 +464,7 @@
                         android:layout_marginLeft="15dp"
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="20dp"
-                        android:text="인증 설정 추가"
+                        android:text="@string/setting_string_auth_method_add"
                         android:textSize="14sp"
                         android:visibility="visible"/>
 
@@ -484,7 +486,7 @@
                         android:layout_marginBottom="16dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
-                        android:text="저장"
+                        android:text="@string/setting_string_save"
                         android:textSize="15sp"/>
                 </RelativeLayout>
 

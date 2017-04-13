@@ -11,31 +11,18 @@ import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 
 /**
  * @author david lee at finotek.
  * */
 public class ChatView extends RecyclerView {
     private ChatAdapter adapter;
-    public enum ViewType {
-        Send, IconicSend, Receive, Divider, Status,
-        Confirm,
-        IDCard, RecentTransaction, AccountList,
-        Agreement, AgreementResult
-    }
-
-    public interface ViewBuilder<T> {
-        RecyclerView.ViewHolder build(ViewGroup parent);
-        void bind(RecyclerView.ViewHolder viewHolder, T data);
-        void onDelete();
-    }
-
     public ChatView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
 
@@ -50,7 +37,7 @@ public class ChatView extends RecyclerView {
         this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
         this.addChatViewBuilder(ViewType.IDCard.ordinal(),new IDCardViewBuilder() );
 
-        this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder());
+        this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder(context));
         this.addChatViewBuilder(ViewType.Agreement.ordinal(),new AgreementBuilder(context) );
         this.addChatViewBuilder(ViewType.AgreementResult.ordinal(),new AgreementResultBuilder() );
         this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder(context));
@@ -115,16 +102,26 @@ public class ChatView extends RecyclerView {
         scrollToBottom();
     }
 
-    public void removeAt(int pos) {
-        adapter.removeItem(pos);
-        scrollToBottom();
-    }
-
     public void removeLast() {
         adapter.removeItem(adapter.getItemCount() - 1);
     }
 
     public void scrollToBottom() {
         getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
+    }
+
+    public enum ViewType {
+        Send, IconicSend, Receive, Divider, Status,
+        Confirm,
+        IDCard, RecentTransaction, AccountList,
+        Agreement, AgreementResult
+    }
+
+    public interface ViewBuilder<T> {
+        RecyclerView.ViewHolder build(ViewGroup parent);
+
+        void bind(RecyclerView.ViewHolder viewHolder, T data);
+
+        void onDelete();
     }
 }

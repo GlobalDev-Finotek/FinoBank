@@ -1,16 +1,22 @@
 package finotek.global.dev.talkbank_ca.setting;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.BuildConfig;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySettingsBinding;
+import finotek.global.dev.talkbank_ca.user.dialogs.LanguageSelectDialog;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -22,7 +28,7 @@ public class SettingsActivity extends AppCompatActivity {
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_settings);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbarTitle.setText("설정");
+		binding.toolbarTitle.setText(getString(R.string.setting_string_setting));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
@@ -60,11 +66,31 @@ public class SettingsActivity extends AppCompatActivity {
 		RxView.clicks(binding.llLanguageSetting)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					Intent i = new Intent(android.provider.Settings.ACTION_LOCALE_SETTINGS);
-					startActivity(i);
+
+					LanguageSelectDialog languageSelectDialog = new LanguageSelectDialog(this);
+					languageSelectDialog.setDoneListener(locale -> {
+						LocaleHelper.setLocale(SettingsActivity.this, locale);
+
+						Intent i = getBaseContext().getPackageManager()
+								.getLaunchIntentForPackage(getBaseContext().getPackageName());
+						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+						startActivity(i);
+						finish();
+					});
+
+					languageSelectDialog.show();
+
 				});
 
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd(" + BuildConfig.VERSION_CODE + ")");
+		String currentDateandTime = sdf.format(new Date());
+		binding.tvCurrentVersion.setText(currentDateandTime);
+
+	}
 
 
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(LocaleHelper.onAttach(base));
 	}
 }

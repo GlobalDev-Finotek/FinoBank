@@ -1,13 +1,12 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
-import android.app.ActionBar;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.jakewharton.rxbinding.view.RxView;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -19,15 +18,6 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.widget.RoundButton;
 
 public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest> {
-    class ConfirmViewHolder extends RecyclerView.ViewHolder {
-        LinearLayout buttons;
-
-        public ConfirmViewHolder(View itemView) {
-            super(itemView);
-            buttons = (LinearLayout) itemView.findViewById(R.id.buttons);
-        }
-    }
-
     @Override
     public RecyclerView.ViewHolder build(ViewGroup parent) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_confirm, parent, false);
@@ -59,12 +49,20 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
             btn.setLayoutParams(params);
             btn.setButtonType(event.getButtonType());
             btn.setText(event.getName());
+
+            if(event.getIcon() != 0) {
+                btn.setCompoundDrawablesWithIntrinsicBounds(event.getIcon(), 0, 0, 0);
+                btn.setIconPadding(0);
+            }
+
             holder.buttons.addView(btn);
 
             RxView.clicks(btn)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
-                    data.getDoAfterEvent().run();
+                    if(event.isDisappearAfter()) {
+                        data.getDoAfterEvent().run();
+                    }
                     event.getListener().run();
                 });
         }
@@ -73,5 +71,14 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
     @Override
     public void onDelete() {
 
+    }
+
+    class ConfirmViewHolder extends RecyclerView.ViewHolder {
+        LinearLayout buttons;
+
+        public ConfirmViewHolder(View itemView) {
+            super(itemView);
+            buttons = (LinearLayout) itemView.findViewById(R.id.buttons);
+        }
     }
 }

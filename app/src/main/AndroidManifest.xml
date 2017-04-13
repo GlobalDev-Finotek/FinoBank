@@ -2,12 +2,22 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="finotek.global.dev.talkbank_ca">
 
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera2" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true"/>
 
+    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-feature android:name="android.hardware.camera2"/>
+
+    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.READ_CALL_LOG"/>
+
     <application
         android:name=".app.MyApplication"
         android:allowBackup="true"
@@ -26,7 +36,8 @@
         </activity>
         <activity android:name=".user.UserRegistrationActivity">
         </activity>
-        <activity android:name=".user.sign.SignRegistrationActivity"
+        <activity
+            android:name=".user.sign.SignRegistrationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
 
@@ -34,17 +45,18 @@
         </activity>
         <activity android:name=".user.PinRegistrationActivity">
         </activity>
-        <activity android:name=".user.credit.CreditRegistrationActivity" />
-        <activity android:name=".setting.SettingsActivity" />
+        <activity android:name=".user.credit.CreditRegistrationActivity"/>
+        <activity android:name=".setting.SettingsActivity"/>
         <activity android:name=".setting.SettingDetailActivity"/>
         <activity
             android:name=".MainActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen"
-            />
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
 
-        <activity android:name=".chat.ChatActivity"
-                  android:label="톡뱅">
+        </activity>
 
+        <activity
+            android:name=".chat.ChatActivity"
+            android:label="톡뱅">
         </activity>
     </application>
 </manifest>

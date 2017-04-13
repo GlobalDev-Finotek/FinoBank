@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
             name="account"
@@ -7,37 +8,40 @@
     </data>
     <RelativeLayout
         android:id="@+id/main"
-        android:layout_marginStart="16dp"
         android:layout_width="170dp"
         android:layout_height="79dp"
-        android:padding="15dp"
-        android:background="@drawable/border_round_gray">
-        <TextView
+        android:layout_marginStart="16dp"
+        android:background="@drawable/border_round_gray"
+        android:padding="15dp">
+
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{account.name}"
             android:textColor="@color/dark_100"
             android:textSize="14sp"
-            android:textStyle="bold"
-            android:text="@{account.name}" />
-        <TextView
+            app:custom_font="noto_medium"/>
+
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:textSize="10sp"
+            android:text="@{account.date}"
             android:textColor="@color/dark_50"
-            android:text="@{account.date}" />
-        <TextView
+            android:textSize="10sp"/>
+
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:text="@{account.history}"
             android:textColor="@color/dark_50"
-            android:text="@{account.history}" />
+            android:textSize="12sp"/>
         <CheckBox
-            android:layout_alignParentEnd="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:button="@drawable/checkbox_bookmark"
             android:checked="@{account.star}"
             android:scaleX="0.7"

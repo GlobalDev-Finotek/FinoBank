@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.AppCompatButton;
 import android.util.AttributeSet;
@@ -9,17 +10,22 @@ import android.util.AttributeSet;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.util.Converter;
 
-public class RoundButton extends AppCompatButton {
+public class RoundButton extends IconButton {
+    private Context context;
+
     public RoundButton(Context context) {
         super(context, null, android.R.attr.borderlessButtonStyle);
+        this.context = context;
 
         int padding = Converter.dpToPx(15);
         setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
 
+        setTypeface();
     }
 
     public RoundButton(Context context, AttributeSet attrs) {
         super(context, attrs);
+        this.context = context;
 
         TypedArray array = context.getTheme().obtainStyledAttributes(attrs, R.styleable.RoundButton, 0, 0);
         try {
@@ -31,6 +37,8 @@ public class RoundButton extends AppCompatButton {
         } finally {
             array.recycle();
         }
+
+        setTypeface();
     }
 
     public void setButtonType(ButtonType buttonType) {
@@ -51,6 +59,11 @@ public class RoundButton extends AppCompatButton {
 
         invalidate();
         requestLayout();
+    }
+
+    private void setTypeface(){
+        Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Medium-Hestia.otf");
+        setTypeface(typeface);
     }
 
     public enum ButtonType {

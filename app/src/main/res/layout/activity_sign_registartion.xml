@@ -42,13 +42,14 @@
                         android:scaleX="-1"
                         app:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                    <TextView
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:theme="@style/Header"/>
+                        android:theme="@style/Header"
+                        app:custom_font="noto_medium" />
 
                 </RelativeLayout>
 
@@ -75,6 +76,7 @@
                 android:paddingRight="16dp">
 
                 <LinearLayout
+                    android:id="@+id/ll_inst_1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -87,6 +89,7 @@
                         tb:custom_font="noto_regular"/>
 
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:id="@+id/tv_inst_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="@string/registration_string_signature_twice"
@@ -94,6 +97,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_inst_2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
@@ -109,11 +113,12 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="false"
-                        android:text="@string/registration_string_fits_area_take_picture"
+                        android:text="@string/registration_string_please_sign_in"
                         tb:custom_font="noto_regular"/>
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_inst_3"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">

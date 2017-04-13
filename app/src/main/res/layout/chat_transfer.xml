@@ -1,81 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:padding="2dp"
-            android:background="@drawable/transfer_control_bg">
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="16dp"
+            android:background="@drawable/transfer_control_bg"
+            android:orientation="vertical"
+            android:padding="2dp">
             <LinearLayout
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:padding="14dp"
                 android:background="@android:color/white"
-                android:baselineAligned="true">
-                <TextView
+                android:baselineAligned="true"
+                android:orientation="horizontal"
+                android:padding="14dp">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:text="@string/dialog_string_balance"
                     android:textColor="@color/dark_100"
-                    android:text="@string/dialog_string_balance" />
-                <TextView
+                    android:textSize="14sp"
+                    app:custom_font="noto_medium" />
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/balance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:textSize="12sp"
+                    android:gravity="end"
                     android:textColor="@color/dark_100"
-                    android:text="3,370,000"
-                    android:gravity="end" />
-                <TextView
-                    android:layout_marginStart="5dp"
+                    android:textSize="12sp"
+                    app:custom_font="noto_medium"/>
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="12sp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/dialog_string_won"
                     android:textColor="@color/dark_100"
-                    android:text="@string/dialog_string_won" />
+                    android:textSize="12sp"
+                    app:custom_font="noto_medium" />
             </LinearLayout>
             <LinearLayout
-                android:orientation="horizontal"
-                android:layout_marginTop="1dp"
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:padding="14dp"
+                android:layout_marginTop="1dp"
                 android:background="@android:color/white"
-                android:baselineAligned="true">
-                <TextView
+                android:orientation="horizontal"
+                android:paddingEnd="14dp"
+                android:paddingStart="14dp"
+                android:paddingTop="10dp">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:text="@string/dialog_string_amount_transfer"
                     android:textColor="@color/dark_100"
-                    android:text="@string/dialog_string_amount_transfer" />
-                <EditText
+                    android:textSize="14sp"
+                    app:custom_font="noto_medium" />
+                <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                     android:id="@+id/edit_money"
-                    android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_margin="0dp"
-                    android:padding="0dp"
+                    android:layout_weight="1"
                     android:background="@android:color/transparent"
-                    android:hint="@string/dialog_string_amount_transfer"
-                    android:textSize="14sp"
-                    android:textColor="@color/coral_pink"
                     android:gravity="end"
-                    />
-                <TextView
-                    android:layout_marginStart="5dp"
+                    android:padding="0dp"
+                    android:textColor="@color/coral_pink"
+                    android:textSize="18sp" />
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="14sp"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/dialog_string_won"
                     android:textColor="@color/coral_pink"
-                    android:text="@string/dialog_string_won" />
+                    android:textSize="18sp"
+                    app:custom_font="noto_medium"/>
             </LinearLayout>
         </LinearLayout>
         <RelativeLayout

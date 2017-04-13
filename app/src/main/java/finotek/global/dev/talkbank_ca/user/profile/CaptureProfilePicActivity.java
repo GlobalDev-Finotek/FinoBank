@@ -27,7 +27,7 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 				R.layout.activity_capture_profile_pic);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbar.setTitle("인증 사진");
+		binding.toolbar.setTitle(getString(R.string.registration_string_profile_register));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
@@ -36,6 +36,16 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.add(R.id.fl_cam, capturePicFragment);
 		transaction.commit();
+
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT);
+		binding.flCam.setLayoutParams(lp);
+		binding.appbar.setVisibility(View.GONE);
+
+		LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+				Converter.dpToPx(350));
+		binding.flCam.setLayoutParams(lp2);
+		binding.appbar.setVisibility(View.VISIBLE);
 
 		capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
 			@Override

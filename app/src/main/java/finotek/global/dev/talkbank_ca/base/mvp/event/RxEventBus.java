@@ -1,34 +1,31 @@
 package finotek.global.dev.talkbank_ca.base.mvp.event;
 
-import rx.Observable;
-import rx.subjects.BehaviorSubject;
+import java.util.ArrayList;
+import java.util.List;
 
-/**
- * Created by magyeong-ug on 2017. 3. 31..
- */
+import javax.inject.Singleton;
 
+import io.reactivex.Observable;
+import io.reactivex.subjects.BehaviorSubject;
+
+@Singleton
 public class RxEventBus {
+	private BehaviorSubject<IEvent> subject;
 
-	private static RxEventBus mInstance;
-	private BehaviorSubject<IEvent> mSubject;
-
-	private RxEventBus() {
-		mSubject = BehaviorSubject.create();
-	}
-
-	public static RxEventBus getInstance() {
-		if (mInstance == null) {
-			mInstance = new RxEventBus();
-		}
-		return mInstance;
+	public RxEventBus() {
+		subject = BehaviorSubject.create();
 	}
 
 	public void sendEvent(IEvent event) {
-		mSubject.onNext(event);
+		subject.onNext(event);
 	}
 
 	public Observable<IEvent> getObservable() {
-		return Observable.defer(() -> mSubject);
+		return subject;
+	}
+
+	public void clear(){
+		subject.onComplete();
+		subject = BehaviorSubject.create();
 	}
 }
-

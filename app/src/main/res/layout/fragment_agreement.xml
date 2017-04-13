@@ -24,7 +24,7 @@
         android:textStyle="bold"/>
 
 
-    <TextView
+    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
         android:id="@+id/textView3"
         android:layout_width="228dp"
         android:layout_height="24dp"
@@ -119,7 +119,7 @@
         android:layout_marginTop="380dp"/>
 
 
-    <Button
+    <finotek.global.dev.talkbank_ca.widget.TalkBankButton
         android:id="@+id/button"
         android:layout_width="357dp"
         android:layout_height="48dp"

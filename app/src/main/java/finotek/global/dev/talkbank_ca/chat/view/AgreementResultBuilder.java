@@ -1,110 +1,118 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
+import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.databinding.DataBindingUtil;
 import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
-import java.util.List;
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
+import javax.inject.Inject;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
+import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementResultBinding;
 
-import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
 public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
-    private class AgreementViewHolder extends RecyclerView.ViewHolder {
-        AgreementViewHolder(View itemView) {
-            super(itemView);
-             btnLoanServicePreview = (Button) itemView.findViewById(R.id.btn_loan_service_preview);
-             btnCreditInformPreview = (Button) itemView.findViewById(R.id.btn_credit_inform_preview);
-             btnLoanTransactionPreview = (Button) itemView.findViewById(R.id.btn_loan_transaction_preview);
-             btnContractInformPreview = (Button) itemView.findViewById(R.id.btn_contract_inform_preview);
-        }
-        Button btnLoanServicePreview;
-        Button btnCreditInformPreview;
-        Button btnLoanTransactionPreview;
-        Button btnContractInformPreview;
-    }
+	@Inject
+	MyApplication application;
 
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        return new AgreementViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_agreement_result, parent, false));
-    }
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		return new AgreementViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_agreement_result, parent, false));
+	}
 
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
-        AgreementViewHolder vh = (AgreementViewHolder) viewHolder;
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
+	}
 
-        vh.btnContractInformPreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://drive.google.com/open?id=0B0uqV2k-AfoWMndOc1V4MFRSVUE"));
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                PackageManager pm = MyApplication.getContext().getPackageManager();
-                List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
-                if (activities.size() > 0) {
-                    MyApplication.getContext().startActivity(intent);
-                } else {
-                    // Do something else here. Maybe pop up a Dialog or Toast
-                }
-            }
-        });
+	@Override
+	public void onDelete() {
 
-        vh.btnCreditInformPreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://drive.google.com/open?id=0B0uqV2k-AfoWWG1IZVhVTU9ET00"));
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                MyApplication.getContext().startActivity(intent);
-            }
-        });
+	}
+
+	private class AgreementViewHolder extends RecyclerView.ViewHolder {
+		ChatAgreementResultBinding binding;
+
+		AgreementViewHolder(View itemView) {
+			super(itemView);
+			binding = ChatAgreementResultBinding.bind(itemView);
+			Context context = itemView.getContext();
+
+			String loanText = context.getResources().getString(R.string.dialog_string_loan_service_user_agreement);
+			String creditInfoText = context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement);
+			String loanTransactionText = context.getResources().getString(R.string.dialog_string_loan_transaction_agreement);
+			String contractInformText = context.getResources().getString(R.string.dialog_string_contact_information);
+
+			binding.btnLoanText.setText(String.format("%s.%s", loanText, "pdf"));
+			binding.btnCreditInformText.setText(String.format("%s.%s", creditInfoText, "pdf"));
+			binding.btnLoanTransactionText.setText(String.format("%s.%s", loanTransactionText, "pdf"));
+			binding.btnContractInformText.setText(String.format("%s.%s", contractInformText, "pdf"));
+
+			RxView.clicks(binding.btnLoanServicePreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						MessageBox.INSTANCE.add(new ShowPdfView(loanText, "loan_service.pdf"));
+					});
+
+			RxView.clicks(binding.bntLoanServiceSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(o -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
+						context.startActivity(i);
+					});
+
+			RxView.clicks(binding.btnCreditInformPreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, "credit_inform.pdf"));
+					});
+
+			RxView.clicks(binding.btnCreditInforSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(o -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/u9wsz2gn35eqfa1/credit_inform.pdf?dl=0"));
+						context.startActivity(i);
+					});
+
+			RxView.clicks(binding.btnLoanTransactionPreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, "credit_inform.pdf"));
+					});
+
+			RxView.clicks(binding.btnLoanTransactionSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/tbiyvrvqko959ul/loan_transaction.pdf?dl=0"));
+						context.startActivity(i);
+					});
 
 
-        vh.btnLoanServicePreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://drive.google.com/open?id=0B0uqV2k-AfoWRFpEZnFCZGtLUjA"));
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                PackageManager pm = MyApplication.getContext().getPackageManager();
-                List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
-                if (activities.size() > 0) {
-                    MyApplication.getContext().startActivity(intent);
-                } else {
-                    // Do something else here. Maybe pop up a Dialog or Toast
-                }
-            }
-        });
+			RxView.clicks(binding.btnContractInformPreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, "credit_inform.pdf"));
+					});
 
-        vh.btnLoanTransactionPreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://drive.google.com/open?id=0B0uqV2k-AfoWZ2lLcVRMd2IycW8"));
-                intent.setFlags(FLAG_ACTIVITY_NEW_TASK);
-                PackageManager pm = MyApplication.getContext().getPackageManager();
-                List<ResolveInfo> activities = pm.queryIntentActivities(intent, 0);
-                if (activities.size() > 0) {
-                    MyApplication.getContext().startActivity(intent);
-                } else {
-                    // Do something else here. Maybe pop up a Dialog or Toast
-                }
-            }
-        });
-    }
+			RxView.clicks(binding.btnContractInformSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/d6155l9zjc53vm1/contract_inform.pdf?dl=0"));
+						context.startActivity(i);
+					});
 
-    @Override
-    public void onDelete() {
-
-    }
+		}
+	}
 }

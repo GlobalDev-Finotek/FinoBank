@@ -84,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd(" + BuildConfig.VERSION_CODE + ")");
 		String currentDateandTime = sdf.format(new Date());
-		binding.tvCurrentVersion.setText(currentDateandTime);
+		binding.tvCurrentVersion.setText("ver." + currentDateandTime);
 
 	}
 

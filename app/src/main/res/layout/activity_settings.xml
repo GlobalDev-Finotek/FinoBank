@@ -218,28 +218,19 @@
                         app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_version"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_marginTop="-1dp"
-                    android:background="@drawable/border_white_two_bottom_radius"
-                    android:orientation="horizontal"
-                    android:padding="10dp">
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:id="@+id/tv_current_version"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="10dp"
-                        android:layout_weight="1"
-                        android:textColor="@color/dark_100"
-                        tb:custom_font="noto_regular"/>
-
-                </LinearLayout>
-
             </LinearLayout>
+
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                android:id="@+id/tv_current_version"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:gravity="bottom|center_horizontal"
+                android:textColor="@color/dark_100"
+                tb:custom_font="noto_regular"/>
 
         </LinearLayout>
 

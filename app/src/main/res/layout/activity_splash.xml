@@ -29,7 +29,7 @@
             app:srcCompat="@drawable/vector_drawable_ci_finotek"/>
 
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-            android:id="@+id/textView4"
+            android:id="@+id/tv_copyright"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

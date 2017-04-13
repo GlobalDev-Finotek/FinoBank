@@ -151,8 +151,8 @@
     <string name="dialog_string_finger_tip_sign_user_register">Use fingertip, not finger nail, to sign in the marked area</string>
     <string name="dialog_chat_after_transfer_1">You\'ve transferred 100,000 won to 김가람(010-5678-1234). your available balance is 3,270,000 won.
     Is there anything else I can help you with?</string>
-    <string name="dialog_button_recent_transaction">View recent transactions</string>
-    <string name="dialog_button_transfer_add">Add transfer account</string>
+    <string name="dialog_button_recent_transaction">Recent Transactions</string>
+    <string name="dialog_button_transfer_add">Additional Transfer</string>
     <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
     <string name="dialog_string_deposit">Deposit</string>
     <string name="dialog_string_withdrawal">Withdrawal</string>
@@ -250,6 +250,7 @@
     <string name="dialog_chat_current_balance">Current balance is %1$s</string>
     <string name="dialog_chat_anything_help">Is there anything else that I can help you with?</string>
     <string name="dialog_chat_transferred">transferred</string>
+    <string name="dialog_chat_transferred_price_unit">won</string>
     <string name="dialog_string_import_from_contact">Import from contact</string>
     <string name="common_string_warning">Warning</string>
     <string name="registration_string_please_sign_in">Please sign in the marked area</string>

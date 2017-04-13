@@ -248,6 +248,7 @@
     <string name="dialog_chat_send_to">님에게</string>
     <string name="dialog_chat_anything_help">더 필요한 사항이 있으신가요?</string>
     <string name="dialog_chat_transferred">이체되었습니다</string>
+    <string name="dialog_chat_transferred_price_unit">원이</string>
     <string name="dialog_string_import_from_contact">주소록에서 가져옴</string>
     <string name="common_string_warning">경고</string>
     <string name="registration_string_please_sign_in">표시된 영역 안에 서명해 주세요.</string>

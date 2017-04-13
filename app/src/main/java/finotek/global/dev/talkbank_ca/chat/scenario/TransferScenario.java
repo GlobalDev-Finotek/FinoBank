@@ -74,7 +74,7 @@ public class TransferScenario implements Scenario {
 				String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 
 				MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234) " + context.getString(R.string.dialog_chat_send_to) +
-						" " + moneyAsString + " " + context.getString(R.string.dialog_chat_transferred) + " " +
+						" " + moneyAsString + context.getString(R.string.dialog_chat_transferred_price_unit) + " " + context.getString(R.string.dialog_chat_transferred) + " " +
 						context.getString(R.string.dialog_chat_current_balance,  balanceAsString) + "\n\n" + context.getString(R.string.dialog_chat_anything_help)));
 				TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 			}

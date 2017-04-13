@@ -14,6 +14,7 @@ import java.util.Locale;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.DialogDangerBinding;
+import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class IconButton extends AppCompatButton {
     protected int drawableWidth;
@@ -71,7 +72,7 @@ public class IconButton extends AppCompatButton {
         int textWidth = (int) textPaint.measureText(text, 0, text.length());
         int factor = (drawablePosition == DrawablePositions.LEFT_AND_RIGHT) ? 2 : 1;
         int contentWidth = iconPadding * factor + textWidth;
-        int horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0)) - drawableWidth;
+        int horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0)) - drawableWidth - Converter.dpToPx(10);
 
         setCompoundDrawablePadding(-horizontalPadding + iconPadding);
 

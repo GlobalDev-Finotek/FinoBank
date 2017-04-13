@@ -185,7 +185,7 @@
     <string name="dialog_chat_current_balance">현재 잔액은 %1$s원 입니다.</string>
     <string name="registration_string_signature">전자 서명</string>
     <string name="setting_string_save">저장</string>
-    <string name="setting_string_allowed_time">해당 시간대에만 n맥락데이터를 수집을 허용합니다.</string>
+    <string name="setting_string_allowed_time">해당 시간대에만 맥락데이터 수집을 허용합니다.</string>
     <string name="setting_string_end">종료</string>
     <string name="setting_string_start">시작</string>
     <string name="setting_string_time_setting">시간 설정</string>

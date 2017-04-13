@@ -154,7 +154,7 @@
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
     <string name="dialog_chat_after_transfer">You\'ve transferred %2$s won to %1$s(010-5678-1234). Your current balance is %3$s won. \n\n Is there anything else that I can help you with?</string>s
-    <string name="dialog_chat_send_transfer">Transfer %2$s won to %1$s (010-5678-1234)\n</string>
+    <string name="dialog_chat_send_transfer">Transfer %2$s won to\n%1$s (010-5678-1234)</string>
     <string name="dialog_button_recent_transaction">Recent Transactions</string>
     <string name="dialog_button_transfer_add">Additional Transfer</string>
     <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
@@ -171,12 +171,12 @@
     <string name="dialog_chat_loan_amount_type">You may loan up to 50 million won with 2% interest rate.
     please write the ammount of loan you would like to request</string>
     <string name="dialog_string_term_agreement_accept">Accept to terms of agreement</string>
-    <string name="dialog_string_mandatory_term_accept">Agree to mandatory terms of conditions</string>
+    <string name="dialog_string_mandatory_term_accept">Agree to all required fields</string>
     <string name="dialog_string_loan_service_user_agreement">Loan service user agreement</string>
     <string name="dialog_string_personal_credit_information_access_agreement">Personal credit information access agreement</string>
     <string name="dialog_string_loan_transaction_agreement">Loan transaction agreement</string>
     <string name="dialog_string_contact_information">Contract information and instruction</string>
-    <string name="dialog_string_optional_term_agreement">Agree to optional terms and conditions</string>
+    <string name="dialog_string_optional_term_agreement">Agree to all optional fields</string>
     <string name="dialog_string_customer_information_agreement">Customer\'s information agreement</string>
     <string name="dialog_chat_agreenment_accepted">Agreement have been accepted</string>
     <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n\n
@@ -218,7 +218,7 @@
     <string name="setting_string_six_digit">Please type six digit PIN code</string>
     <string name="setting_string_secure_keyboard_operating">Operating secured keyboard</string>
     <string name="setting_string_registered_signature_purpose">Registered signature will be used for log-in and personal verification purpose</string>
-    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan" \n you may request up to 50 million won and 2.0% interest rate \n do you want to apply loan?</string>
+    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan" \n you may request up to 50 million won and 2.0% interest rate \n\n do you want to apply loan?</string>
     <string name="dialog_chat_preview">Preview</string>
     <string name="dialog_chat_save">Save</string>
     <string name="registration_button_pin_code_chanage">Change PIN code</string>

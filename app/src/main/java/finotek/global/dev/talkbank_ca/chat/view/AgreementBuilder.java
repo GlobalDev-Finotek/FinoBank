@@ -24,6 +24,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemAgreementBinding;
+import finotek.global.dev.talkbank_ca.widget.TalkBankTextView;
 
 public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> {
     private Context context;
@@ -98,6 +99,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
         ChatItemAgreementBinding binding = ChatItemAgreementBinding.bind(view);
         binding.setItem(agreement);
 
+        binding.textView.setFontType(TalkBankTextView.FontType.Medium);
         binding.arrow.setVisibility(View.INVISIBLE);
 
         binding.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {

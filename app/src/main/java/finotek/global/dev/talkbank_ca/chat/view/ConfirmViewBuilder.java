@@ -67,6 +67,12 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
                     }
                     event.getListener().run();
                 });
+
+            RxView.layoutChanges(btn)
+                .subscribe(param -> {
+                    btn.setPadding(padding, 0, padding, 0);
+                    btn.requestLayout();
+                });
         }
     }
 

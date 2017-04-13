@@ -74,8 +74,8 @@ public class TransferScenario implements Scenario {
 				String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 
 				MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234) " + context.getString(R.string.dialog_chat_send_to) +
-						" " + moneyAsString + " " + context.getString(R.string.dialog_chat_transferred) +
-						"\n" + context.getString(R.string.dialog_chat_current_balance) + balanceAsString + "\n\n" + context.getString(R.string.dialog_chat_anything_help)));
+						" " + moneyAsString + " " + context.getString(R.string.dialog_chat_transferred) + " " +
+						context.getString(R.string.dialog_chat_current_balance,  balanceAsString) + "\n\n" + context.getString(R.string.dialog_chat_anything_help)));
 				TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 			}
 
@@ -164,10 +164,10 @@ public class TransferScenario implements Scenario {
 
 	private void selectAccounts() {
 		List<Account> accounts = new ArrayList<>();
-		accounts.add(new Account("어머니", "2017/01/25", "200,000₩ " + context.getString(R.string.string_transfer).toLowerCase(), true));
-		accounts.add(new Account("박예린", "2017/01/11", "100,000₩ " + context.getString(R.string.string_transfer).toLowerCase(), false));
-		accounts.add(new Account("김가람", "2017/01/11", "36,200₩ " + context.getString(R.string.string_transfer).toLowerCase(), false));
-		accounts.add(new Account("김이솔", "2017/01/10", "100,000₩ " + context.getString(R.string.dialog_string_deposit).toLowerCase(), false));
+		accounts.add(new Account("어머니", "2017/01/25", "200,000 원 " + context.getString(R.string.string_transfer).toLowerCase(), true));
+		accounts.add(new Account("박예린", "2017/01/11", "100,000 원 " + context.getString(R.string.string_transfer).toLowerCase(), false));
+		accounts.add(new Account("김가람", "2017/01/11", "36,200 원 " + context.getString(R.string.string_transfer).toLowerCase(), false));
+		accounts.add(new Account("김이솔", "2017/01/10", "100,000 원 " + context.getString(R.string.dialog_string_deposit).toLowerCase(), false));
 
 		MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)));
 		MessageBox.INSTANCE.add(new AccountList(accounts));

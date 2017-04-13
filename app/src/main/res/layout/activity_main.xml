@@ -60,7 +60,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="32dp"
             android:text="Copyrightⓒ Finotek., All rights reserved"
-            android:textColor="@color/color_text_default"
+            android:textColor="@color/dark_30"
             android:textSize="12sp"
             tb:custom_font="noto_light"/>
     </RelativeLayout>

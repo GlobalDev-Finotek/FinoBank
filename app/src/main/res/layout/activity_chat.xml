@@ -37,7 +37,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:layout_weight="1"
-                    android:theme="@style/Header"/>
+                    android:theme="@style/Header"
+                    app:custom_font="noto_medium"   />
 
                 <ImageButton
                     android:id="@+id/ib_menu"

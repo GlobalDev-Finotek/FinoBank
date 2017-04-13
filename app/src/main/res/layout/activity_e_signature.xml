@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context="finotek.global.dev.talkbank_ca.agreement.eSignature">
 
-    <TextView
+    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
         android:layout_width="123dp"
         android:layout_height="17dp"
         android:layout_marginBottom="8dp"

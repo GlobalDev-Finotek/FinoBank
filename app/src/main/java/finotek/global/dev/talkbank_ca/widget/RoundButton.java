@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.util.Converter;
 
-public class RoundButton extends AppCompatButton {
+public class RoundButton extends IconButton {
     private Context context;
 
     public RoundButton(Context context) {

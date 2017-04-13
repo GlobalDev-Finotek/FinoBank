@@ -247,7 +247,7 @@
     <string name="dialog_string_email_cancel">Cancel</string>
     <string name="dialog_string_select_receiver">Please select someone who want to transfer.</string>
     <string name="dialog_chat_send_to">send</string>
-    <string name="dialog_chat_current_balance">Current balance is</string>
+    <string name="dialog_chat_current_balance">Current balance is %1$s</string>
     <string name="dialog_chat_anything_help">Is there anything else that I can help you with?</string>
     <string name="dialog_chat_transferred">transferred</string>
     <string name="dialog_string_import_from_contact">Import from contact</string>

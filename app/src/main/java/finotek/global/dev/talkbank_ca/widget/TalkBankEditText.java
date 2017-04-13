@@ -49,13 +49,13 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 		super(context, attrs);
 		this.context = context;
 		init(context);
-        setDefaultFontSize();
 	}
 
 	public TalkBankEditText(Context context) {
 		super(context);
 		this.context = context;
 		init(context);
+		setDefaultFontSize();
 	}
 
 	public TalkBankEditText(Context context, AttributeSet attrs, int defStyleAttr) {

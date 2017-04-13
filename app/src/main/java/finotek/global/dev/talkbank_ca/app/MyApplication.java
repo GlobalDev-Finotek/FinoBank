@@ -12,11 +12,6 @@ import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-
-/**
- * Created by kwm on 2017. 3. 6..
- */
-
 public class MyApplication extends Application {
 
 	private static Context context;
@@ -51,11 +46,6 @@ public class MyApplication extends Application {
 
 	public Context getContext() {
 		return getApplicationContext();
-	}
-
-	@Override
-	protected void attachBaseContext(Context base) {
-		super.attachBaseContext(LocaleHelper.onAttach(base, "en"));
 	}
 
 	public AppComponent getAppComponent() {

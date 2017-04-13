@@ -49,6 +49,12 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
             btn.setLayoutParams(params);
             btn.setButtonType(event.getButtonType());
             btn.setText(event.getName());
+
+            if(event.getIcon() != 0) {
+                btn.setCompoundDrawablesWithIntrinsicBounds(event.getIcon(), 0, 0, 0);
+                btn.setIconPadding(Converter.dpToPx(5));
+            }
+
             holder.buttons.addView(btn);
 
             RxView.clicks(btn)

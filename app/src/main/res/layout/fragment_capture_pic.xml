@@ -23,19 +23,6 @@
             android:background="@drawable/border_cap_white"
             android:scaleType="fitXY"/>
 
-        <ImageButton
-            android:id="@+id/ib_size"
-            android:layout_width="38dp"
-            android:layout_height="38dp"
-            android:layout_alignEnd="@+id/imageView5"
-            android:layout_alignTop="@+id/relativeLayout"
-            android:layout_marginEnd="26dp"
-            android:layout_marginRight="41dp"
-            android:layout_marginTop="16dp"
-            android:background="@drawable/white_small_circle"
-            android:tint="@color/colorPrimary"
-            app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
-
         <RelativeLayout
             android:id="@+id/relativeLayout"
             android:layout_width="match_parent"
@@ -47,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:padding="10dp">
 
                 <ImageButton
                     android:id="@+id/ib_capture"
@@ -71,8 +59,30 @@
                     android:layout_weight="1"
                     android:background="@drawable/primary_large_circle"
                     android:visibility="gone"
-                    app:srcCompat="@drawable/vector_drawable_icon_confirm"/>
+                    app:srcCompat="@drawable/vector_drawable_icon_check"/>
+
+                <ImageButton
+                    android:id="@+id/ib_reload"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:visibility="gone"
+                    app:srcCompat="@drawable/btn_reload"/>
+
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/ib_size"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="18dp"
+                android:layout_marginRight="41dp"
+                android:background="@drawable/white_small_circle"
+                android:tint="@color/colorPrimary"
+                app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
 
         </RelativeLayout>
 

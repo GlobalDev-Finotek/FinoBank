@@ -8,8 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.BuildConfig;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySettingsBinding;
 import finotek.global.dev.talkbank_ca.user.dialogs.LanguageSelectDialog;
@@ -78,6 +81,11 @@ public class SettingsActivity extends AppCompatActivity {
 					languageSelectDialog.show();
 
 				});
+
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd(" + BuildConfig.VERSION_CODE + ")");
+		String currentDateandTime = sdf.format(new Date());
+		binding.tvCurrentVersion.setText(currentDateandTime);
+
 	}
 
 

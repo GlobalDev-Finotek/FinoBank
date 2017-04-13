@@ -119,7 +119,8 @@ public class ChatActivity extends AppCompatActivity {
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
-				.subscribe(this::onNewMessageUpdated);
+				.subscribe(this::onNewMessageUpdated, throwable -> {
+				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();

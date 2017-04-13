@@ -41,8 +41,10 @@ public class OneStepSignRegisterFragment extends BaseSignRegisterFragment {
 		RxView.clicks(binding.ibNext)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					stepSubject.onNext(3);
-					stepSubject.onComplete();
+					if (stepCount > 1) {
+						stepSubject.onNext(3);
+						stepSubject.onComplete();
+					}
 				});
 
 	}

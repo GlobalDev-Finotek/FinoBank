@@ -940,7 +940,7 @@ public class CapturePicFragment extends Fragment
 	 * finished.
 	 */
 	private void unlockFocus() {
-		
+
 		try {
 			// Reset the auto-focus trigger
 			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,

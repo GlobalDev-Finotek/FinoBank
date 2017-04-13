@@ -35,7 +35,7 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
 
             RoundButton btn = new RoundButton(holder.itemView.getContext());
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.WRAP_CONTENT, Converter.dpToPx(40)
+                LinearLayout.LayoutParams.WRAP_CONTENT, Converter.dpToPx(40)
             );
 
             if(i == 0) {
@@ -46,6 +46,8 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
                 params.setMargins(Converter.dpToPx(10), 0, 0, 0);
             }
 
+            int padding = Converter.dpToPx(15);
+            btn.setPadding(padding, 0, padding, 0);
             btn.setLayoutParams(params);
             btn.setButtonType(event.getButtonType());
             btn.setText(event.getName());

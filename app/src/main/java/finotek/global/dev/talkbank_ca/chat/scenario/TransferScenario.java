@@ -73,9 +73,7 @@ public class TransferScenario implements Scenario {
 				int balance = TransactionDB.INSTANCE.getBalance();
 				String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 
-				MessageBox.INSTANCE.add(new ReceiveMessage(name + "(010-5678-1234) " + context.getString(R.string.dialog_chat_send_to) +
-						" " + moneyAsString + context.getString(R.string.dialog_chat_transferred_price_unit) + " " + context.getString(R.string.dialog_chat_transferred) + " " +
-						context.getString(R.string.dialog_chat_current_balance,  balanceAsString) + "\n\n" + context.getString(R.string.dialog_chat_anything_help)));
+                MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString)));
 				TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 			}
 
@@ -97,8 +95,7 @@ public class TransferScenario implements Scenario {
 			String name = TransactionDB.INSTANCE.getTxName();
 			String money = TransactionDB.INSTANCE.getTxMoney();
 
-			MessageBox.INSTANCE.add(new SendMessage(name + "(010-9876-5432) \n" + context.getString(R.string.dialog_chat_send_to)
-					+ money + context.getString(R.string.string_transfer).toLowerCase()));
+			MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, money)));
 			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
 			MessageBox.INSTANCE.add(new RequestSignature());
 		}

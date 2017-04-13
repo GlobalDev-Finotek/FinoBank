@@ -150,7 +150,8 @@
     <string name="dialog_button_transfer_other">다른 사람에게 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
-    <string name="dialog_chat_after_transfer_1">김가람 (010-5678-1234) 님에게 100,000원을 이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_after_transfer">%1$s (010-5678-1234) 님에게 %2$s원을 이체하였습니다.\n현재 계좌 잔액은 %3$s원입니다.\n\n더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_send_transfer">%1$s (010-5678-1234) 님에게 %2$s원을 이체</string>
     <string name="dialog_button_recent_transaction">최근 거래내역 보기</string>
     <string name="dialog_button_transfer_add">추가 이체</string>
     <string name="dialog_chat_someone_recent_transaction">%s님의 최근 거래내역입니다.</string>
@@ -162,8 +163,6 @@
     <string name="dialog_string_receiver_select">받으실 분을 선택해 주세요.</string>
     <string name="dialog_chat_contact_select">위 목록에 없다면 주소록 또는 카카오톡에서 선택해 주세요.</string>
     <string name="dialog_string_amount_transfer">이체 금액</string>
-    <string name="dialog_chat_after_transfer_2">어머니(010-9876-5432)님에게 150,000원을 이체하였습니다.\n현재 계좌 잔액은 3,120,000원입니다.\n더 필요한 사항이 있으세요?</string>
-    <string name="dialog_chat_loan_appl">I\'ve checked your account details and I would like to recommend \\"Finocation one-day loan\"\" you may request up to 50 million won and 2.0% interest rate do you want to apply loan?"</string>
     <string name="dialog_chat_microedit_cancel">소액 담보대출을 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_home_address_type">집 주소를 입력해 주세요.</string>
     <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만 원까지2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요</string>

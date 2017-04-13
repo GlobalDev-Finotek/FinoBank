@@ -146,11 +146,11 @@
     <string name="dialog_chat_finger_tip_sign">Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. is there anything else I can help you with?</string>
     <string name="dialog_chat_transaction">I\'ve checked your monthly transaction history. would you like to transfer %1$s won to %2$s(010-5678-1234).</string>
-    <string name="dialog_button_transfer_other">Transfer to other</string>
+    <string name="dialog_button_transfer_other">Transfer to others</string>
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register">Use fingertip, not finger nail, to sign in the marked area</string>
-    <string name="dialog_chat_after_transfer_1">You\'ve transferred 100,000 won to 김가람(010-5678-1234). your available balance is 3,270,000 won.
-    Is there anything else I can help you with?</string>
+    <string name="dialog_chat_after_transfer">You\'ve transferred %2$s won to %1$s(010-5678-1234). your available balance is %3$s won. \n Is there anything else that I can help you with?</string>
+    <string name="dialog_chat_send_transfer">For %1$s (010-5678-1234)\n Transfer %2$s won</string>
     <string name="dialog_button_recent_transaction">Recent Transactions</string>
     <string name="dialog_button_transfer_add">Additional Transfer</string>
     <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
@@ -162,8 +162,6 @@
     <string name="dialog_string_receiver_select">Please select receiver</string>
     <string name="dialog_chat_contact_select">If receiver is not contain on the list, please select new receiver from address book or KakaoTalk</string>
     <string name="dialog_string_amount_transfer">Amount</string>
-    <string name="dialog_chat_after_transfer_2">You\'ve transferred 100,000 won to 어머니 (010-5678-1234). your available balance is 3,270,000 won.\n\nIs there anything else I can help you with?</string>
-    <string name="dialog_chat_loan_appl">I\'ve checked your account details and I would like to recommend \\"Finocation one-day loan\"\" you may request up to 50 million won and 2.0% interest rate do you want to apply loan?"</string>
     <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. what can i help you?</string>
     <string name="dialog_string_home_address_type">Type in your home address</string>
     <string name="dialog_chat_loan_amount_type">You may loan up to 50 million won with 2% interest rate.
@@ -245,7 +243,7 @@
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
     <string name="dialog_string_email_sent">Sent</string>
     <string name="dialog_string_email_cancel">Cancel</string>
-    <string name="dialog_string_select_receiver">Please select someone who want to transfer.</string>
+    <string name="dialog_string_select_receiver">Please select someone who you want to transfer.</string>
     <string name="dialog_chat_send_to">send</string>
     <string name="dialog_chat_current_balance">Current balance is %1$s</string>
     <string name="dialog_chat_anything_help">Is there anything else that I can help you with?</string>

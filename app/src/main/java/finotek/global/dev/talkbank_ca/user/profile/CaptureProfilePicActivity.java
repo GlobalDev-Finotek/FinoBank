@@ -28,7 +28,7 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 				R.layout.activity_capture_profile_pic);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbar.setTitle(getString(R.string.registration_string_profile_register));
+		// binding.toolbar.setTitle(getString(R.string.registration_string_profile_register));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 

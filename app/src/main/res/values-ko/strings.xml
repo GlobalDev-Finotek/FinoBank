@@ -263,5 +263,6 @@
     <string name="setting_string_korean">한국어</string>
     <string name="setting_string_english">English</string>
     <string name="string_confirm">확인</string>
+    <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 </resources>
 

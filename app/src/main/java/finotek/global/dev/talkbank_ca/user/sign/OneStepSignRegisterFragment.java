@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.user.sign;
 
 import android.support.v4.content.ContextCompat;
+import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -36,6 +37,8 @@ public class OneStepSignRegisterFragment extends BaseSignRegisterFragment {
 			if (stepCount == 1) {
 				stepSubject.onNext(++stepCount);
 			}
+
+			binding.ibSizeControl.setVisibility(View.GONE);
 		});
 
 		RxView.clicks(binding.ibNext)

@@ -49,7 +49,7 @@ public class ExtendedControl2 extends Fragment {
             .throttleFirst(200, TimeUnit.MILLISECONDS)
             .doOnNext(aVoid -> doOnControl.run())
             .subscribe(aVoid -> {
-                MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_stalkbank06));
+                MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_talkbank06));
             });
         
         return rootView;

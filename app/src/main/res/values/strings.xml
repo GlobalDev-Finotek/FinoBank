@@ -246,7 +246,7 @@
     <string name="dialog_string_input_message">Please input a message.</string>
     <string name="dialog_chat_recognize_error">Can\'t understand what you said.\n Press \'+\' button to select the menu</string>
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
-    <string name="dialog_string_email_sent">Sent</string>
+    <string name="dialog_string_email_sent">An email has been sent.</string>
     <string name="dialog_string_email_cancel">Cancel</string>
     <string name="dialog_string_select_receiver">Please select someone who you want to transfer.</string>
     <string name="dialog_chat_send_to">send</string>

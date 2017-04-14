@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.TransactionViewMoreActivity;
 import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
@@ -41,12 +43,13 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
         LinearLayout group = (LinearLayout) holder.itemView;
         group.removeAllViews();
 
-        for (Transaction tx : data.getTransactions()) {
-            Context context = group.getContext();
-            View view = LayoutInflater.from(context).inflate(R.layout.chat_item_transaction, group, false);
-            ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
-            binding.setItem(tx);
-            group.addView(view);
+	    for (int i = 0; i < 4; ++i) {
+		    Transaction tx = data.getTransactions().get(i);
+		    Context context = group.getContext();
+		    View view = LayoutInflater.from(context).inflate(R.layout.chat_item_transaction, group, false);
+		    ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
+		    binding.setItem(tx);
+		    group.addView(view);
 
             RxView.clicks(binding.transferBtn)
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
@@ -59,6 +62,13 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
         View moreButtonLayout = LayoutInflater.from(context).inflate(R.layout.chat_item_more, group, false);
         ChatItemMoreBinding moreButtonBinding = DataBindingUtil.bind(moreButtonLayout);
         group.addView(moreButtonLayout);
+
+        RxView.clicks(moreButtonBinding.moreButton)
+            .throttleFirst(200, TimeUnit.MILLISECONDS)
+            .subscribe(aVoid -> {
+                Intent intent = new Intent(context, TransactionViewMoreActivity.class);
+                context.startActivity(intent);
+            });
     }
 
     @Override

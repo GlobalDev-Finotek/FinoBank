@@ -13,11 +13,8 @@
             android:layout_height="50dp"
             android:background="@android:color/white"
             android:text="@string/more_button"
-            android:drawableLeft="@drawable/ic_add_circle_outline_white_24dp"
-            android:backgroundTint="@color/primary"
-            android:drawableTint="@color/primary"
-            android:tint="@color/primary"
             android:textColor="@color/primary"
+            android:drawableLeft="@drawable/ic_add_circle_outline_white_24dp"
             style="?android:attr/borderlessButtonStyle"
         />
     </RelativeLayout>

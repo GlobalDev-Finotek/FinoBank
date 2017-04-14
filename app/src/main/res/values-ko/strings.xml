@@ -275,5 +275,6 @@
     <string name="scenario_send_mail">상담 메일 보내기</string>
     <string name="scenario_transfer">계좌 이체</string>
     <string name="more_button">더보기</string>
+    <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 </resources>
 

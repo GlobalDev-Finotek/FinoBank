@@ -49,6 +49,7 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 
 		binding.ibSizeControl.setOnClickListener(v -> {
 			currentSize = currentSize == CanvasSize.SMALL ? CanvasSize.LARGE : CanvasSize.SMALL;
+
 			if (onSizeControlClick != null) {
 				onSizeControlClick.onClick(currentSize);
 				stepCount = 1;

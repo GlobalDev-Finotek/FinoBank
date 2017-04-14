@@ -251,5 +251,13 @@
     <string name="dialog_string_import_from_contact">주소록에서 가져옴</string>
     <string name="common_string_warning">경고</string>
     <string name="registration_string_please_sign_in">표시된 영역 안에 서명해 주세요.</string>
+
+    <string name="monday">월요일</string>
+    <string name="tuesday">화요일</string>
+    <string name="wednesday">수요일</string>
+    <string name="thursday">목요일</string>
+    <string name="friday">금요일</string>
+    <string name="saturday">토요일</string>
+    <string name="sunday">일요일</string>
 </resources>
 

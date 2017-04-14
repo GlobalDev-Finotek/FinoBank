@@ -329,7 +329,7 @@
                         android:orientation="horizontal">
 
                         <CheckBox
-                            android:id="@+id/checkBox"
+                            android:id="@+id/cb_context_auth"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"

@@ -154,8 +154,8 @@
     <string name="dialog_button_recent_transaction">Recent Transactions</string>
     <string name="dialog_button_transfer_add">Additional Transfer</string>
     <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
-    <string name="dialog_string_deposit">Deposit</string>
-    <string name="dialog_string_withdrawal">Withdrawal</string>
+    <string name="dialog_string_deposit">+</string>
+    <string name="dialog_string_withdrawal">-</string>
     <string name="dialog_string_balance">Balance</string>
     <string name="dialog_button_transfer">Transfer</string>
     <string name="dialog_button_view_more">View more</string>
@@ -257,4 +257,13 @@
     <string name="setting_string_english">English</string>
     <string name="string_confirm">Confirm</string>
     <string name="main_back_exit">When you click the \'back\' button again, the session will be closed</string>
+
+    <string name="monday">Mon</string>
+    <string name="tuesday">Tue</string>
+    <string name="wednesday">Wed</string>
+    <string name="thursday">Thu</string>
+    <string name="friday">Fri</string>
+    <string name="saturday">Sat</string>
+    <string name="sunday">Sun</string>
+
 </resources>

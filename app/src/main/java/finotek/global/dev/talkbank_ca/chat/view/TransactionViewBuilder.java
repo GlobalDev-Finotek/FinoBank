@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.content.Context;
+import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferTo;
+import finotek.global.dev.talkbank_ca.databinding.ChatItemMoreBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemTransactionBinding;
 
 public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransaction> {
@@ -53,6 +55,10 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
 	                MessageBox.INSTANCE.add(new TransferTo(tx.getName(), tx.getPrice(), TransferTo.TransactionType.ToSomeone));
                 });
         }
+
+        View moreButtonLayout = LayoutInflater.from(context).inflate(R.layout.chat_item_more, group, false);
+        ChatItemMoreBinding moreButtonBinding = DataBindingUtil.bind(moreButtonLayout);
+        group.addView(moreButtonLayout);
     }
 
     @Override

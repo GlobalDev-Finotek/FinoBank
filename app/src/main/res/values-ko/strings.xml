@@ -274,5 +274,6 @@
     <string name="scenario_loan">소액 담보 대출</string>
     <string name="scenario_send_mail">상담 메일 보내기</string>
     <string name="scenario_transfer">계좌 이체</string>
+    <string name="more_button">더보기</string>
 </resources>
 

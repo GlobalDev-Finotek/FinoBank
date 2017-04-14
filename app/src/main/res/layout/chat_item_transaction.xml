@@ -38,7 +38,7 @@
         <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/transfer_btn"
             style="?android:attr/borderlessButtonStyle"
-            android:layout_alignEnd="@id/name"
+            android:layout_toEndOf="@id/name"
             android:layout_width="wrap_content"
             android:layout_height="20dp"
             android:layout_marginStart="5dp"

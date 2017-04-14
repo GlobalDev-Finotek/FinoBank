@@ -77,7 +77,7 @@ public class TransferScenario implements Scenario {
 					e.printStackTrace();
 				}
 				
-				
+				TransactionDB.INSTANCE.transferMoney(money);
 				int balance = TransactionDB.INSTANCE.getBalance();
 				String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 

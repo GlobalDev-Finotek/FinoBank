@@ -78,7 +78,7 @@ public class IconButton extends AppCompatButton {
         Log.d(logTitle, "right padding : " + rightPadding);
 
         int contentWidth = iconPadding * factor + textWidth;
-        iconPadding += (int) ((getWidth() / 2.0) - (contentWidth / 2.0) - (drawableWidth));
+        iconPadding += (int) ((getWidth() / 2.0) - (contentWidth / 2.0) - drawableWidth);
 
         setCompoundDrawablePadding(-iconPadding + leftPadding);
         switch (drawablePosition) {

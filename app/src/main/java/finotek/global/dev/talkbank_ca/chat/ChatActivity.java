@@ -42,6 +42,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
+import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
@@ -63,10 +64,10 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
-import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -152,6 +153,10 @@ public class ChatActivity extends AppCompatActivity {
 			});
 			tx.replace(R.id.chat_capture, capturePicFragment);
 			tx.commit();
+		}
+
+		if(msg instanceof RequestKeyboardInput) {
+			openKeyboard(fiBinding.chatEditText);
 		}
 
 		if (msg instanceof RequestSignature) {
@@ -332,7 +337,7 @@ public class ChatActivity extends AppCompatActivity {
 				e.printStackTrace();
 			}
 			if (money > balance) {
-				WarningDialog dialog = new WarningDialog(this);
+				DangerDialog dialog = new DangerDialog(this);
 				dialog.setTitle(getString(R.string.common_string_warning));
 				dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
 				dialog.setButtonText(getString(R.string.setting_string_yes));
@@ -344,7 +349,6 @@ public class ChatActivity extends AppCompatActivity {
 				});
 				dialog.show();
 			} else {
-				TransactionDB.INSTANCE.transferMoney(money);
 				TransactionDB.INSTANCE.setTxMoney(moneyAsString);
 
 				ctBinding.editMoney.setText("");
@@ -385,6 +389,12 @@ public class ChatActivity extends AppCompatActivity {
 		v.clearFocus();
 		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+	}
+
+	private void openKeyboard(View v){
+		v.requestFocus();
+		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.showSoftInput(v, 0);
 	}
 
 	private void releaseControls() {

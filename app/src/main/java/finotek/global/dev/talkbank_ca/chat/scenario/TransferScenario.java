@@ -103,9 +103,6 @@ public class TransferScenario implements Scenario {
                 request.addPrimaryEvent(context.getResources().getString(R.string.dialog_button_transfer_add), () -> {
                     MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_add)));
                 });
-                request.addDangerEvent(context.getResources().getString(R.string.dialog_button_no), () -> {
-                    MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_no)));
-                });
                 MessageBox.INSTANCE.add(request);
                 step = Step.TransferDone;
 			} else if(step == Step.TransferByAI) {
@@ -168,6 +165,7 @@ public class TransferScenario implements Scenario {
 					MessageBox.INSTANCE.add(new Done());
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_button_transfer_other))) {
 					selectAccounts();
+					step = Step.TransferToSomeone;
 				}
 				break;
 			case TransferDone:
@@ -211,6 +209,6 @@ public class TransferScenario implements Scenario {
 	}
 
 	private enum Step {
-		Initial, TransferToSomeone, TransferByAI, TransferByAISecond, TransferDone
+		Initial, TransferToSomeone, TransferByAI, TransferDone
 	}
 }

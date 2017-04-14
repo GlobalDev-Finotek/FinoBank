@@ -142,7 +142,7 @@
     <string name="dialog_string_license_number">Driver\'s license number</string>
     <string name="dialog_chat_correct_information">Is the above information correct?</string>
     <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>
-    <string name="dialog_chat_finger_tip_sign">Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
+    <string name="dialog_chat_finger_tip_sign">Sign your e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_sign_tip">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. is there anything else I can help you with?</string>
     <string name="dialog_chat_transaction">I analyzed the context data of %1$s, You paid the electricity bill every month on the %3$d th.\n\nI checked your SMS message. This month\'s bill is %2$s won.\n\nWould you like to transfer the electricity bill of %2$s won?</string>

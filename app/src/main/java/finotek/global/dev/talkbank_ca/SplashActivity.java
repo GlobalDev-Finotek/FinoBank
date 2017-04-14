@@ -12,6 +12,7 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
 import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -21,7 +22,7 @@ public class SplashActivity extends AppCompatActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if(Locale.getDefault().getDisplayName().equals("ko")) {
+		if(LocaleHelper.getLanguage(this).equals("ko")) {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash);
 		} else {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash_eng);

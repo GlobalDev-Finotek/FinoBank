@@ -31,6 +31,7 @@ import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		super.onCreate(savedInstanceState);
 		getComponent().inject(this);
 
-		if(Locale.getDefault().getDisplayName().equals("ko")) {
+        if(LocaleHelper.getLanguage(this).equals("ko")) {
 			setContentView(R.layout.activity_main);
 		} else {
 			setContentView(R.layout.activity_main_eng);

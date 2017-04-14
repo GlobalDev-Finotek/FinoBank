@@ -144,7 +144,7 @@
     <string name="dialog_string_license_number">운전면허번호</string>
     <string name="dialog_chat_correct_information">위 내용이 맞으세요?</string>
     <string name="dialog_chat_id_card_retake">신분증 촬영을 다시 진행합니다.</string>
-    <string name="dialog_chat_finger_tip_sign">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+    <string name="dialog_chat_finger_tip_sign">자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_sign_tip">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_chat_transaction">%1$s님의 맥락데이터 분석결과 매달 %3$d일 전기요금를 납부 하셨습니다.\n\n문자메시지를 보니 이번 달 요금은 %2$s원 입니다.\n\n전기요금 %2$s원을 이체 하시겠어요?</string>

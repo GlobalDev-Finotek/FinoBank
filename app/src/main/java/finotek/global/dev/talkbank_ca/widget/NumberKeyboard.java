@@ -30,11 +30,14 @@ public class NumberKeyboard extends GridView {
         this.setAdapter(keyboardAdapter);
         this.setOnItemClickListener((parent, view, position, id) -> {
             String key = (String) keyboardAdapter.getItem(position);
-            if (currentFocus.length() > limit) {
-                return;
-            }
+
 
             if (position != keyboardAdapter.getCount() - 1 && currentFocus != null) {
+
+                if (currentFocus.length() > limit) {
+                    return;
+                }
+
                 String text = currentFocus.getText().toString();
                 if(text.length() < 12) {
                     text = text + key;

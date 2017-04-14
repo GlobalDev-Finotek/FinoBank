@@ -278,8 +278,12 @@ public class ChatActivity extends AppCompatActivity {
 
 		if(msg instanceof RequestRemoveControls) {
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			transaction.remove(capturePicFragment);
-			transaction.remove(signRegistFragment);
+            if(capturePicFragment != null) {
+                transaction.remove(capturePicFragment);
+            }
+            if(signRegistFragment != null) {
+                transaction.remove(signRegistFragment);
+            }
 			transaction.commit();
 
 			this.returnToInitialControl();

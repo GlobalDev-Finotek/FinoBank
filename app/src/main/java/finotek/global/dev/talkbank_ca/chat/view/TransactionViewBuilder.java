@@ -16,7 +16,7 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferToSomeone;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferTo;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemTransactionBinding;
 
 public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransaction> {
@@ -50,7 +50,7 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
 	                MessageBox.INSTANCE.add(new ApplyScenario("transfer"));
-	                MessageBox.INSTANCE.add(new TransferToSomeone(tx.getName(), tx.getPrice()));
+	                MessageBox.INSTANCE.add(new TransferTo(tx.getName(), tx.getPrice(), TransferTo.TransactionType.ToSomeone));
                 });
         }
     }

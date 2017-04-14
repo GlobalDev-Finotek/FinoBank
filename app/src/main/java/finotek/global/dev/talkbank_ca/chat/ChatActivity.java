@@ -48,7 +48,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransfer;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
@@ -199,7 +199,7 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
-		if (msg instanceof RequestTransfer) {
+		if (msg instanceof RequestTransferUI) {
 			releaseAllControls();
 
 			int balance = TransactionDB.INSTANCE.getBalance();

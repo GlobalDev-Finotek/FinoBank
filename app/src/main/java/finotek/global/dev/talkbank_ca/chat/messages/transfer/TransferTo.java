@@ -5,7 +5,12 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class TransferToSomeone {
+public class TransferTo {
     String name;
     int money;
+    TransactionType type;
+
+    public enum TransactionType {
+        ToSomeone, ByAI
+    }
 }

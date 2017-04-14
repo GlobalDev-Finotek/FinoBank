@@ -57,6 +57,16 @@ public enum TransactionDB {
         return txMoney;
     }
 
+    public int getMoneyAsInt(){
+        int money = 0;
+        try {
+            money = Integer.valueOf(txMoney.replaceAll(",", ""));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return money;
+    }
+
     public void setTxMoney(String txMoney) {
         this.txMoney = txMoney;
     }

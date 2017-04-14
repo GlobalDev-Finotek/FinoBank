@@ -7,7 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
-
         <ImageView
             android:id="@+id/iv_intro"
             android:layout_width="wrap_content"
@@ -17,8 +16,6 @@
             android:layout_marginTop="153dp"
             android:src="@drawable/txt_intro"
             tb:custom_font="noto_medium"/>
-
-
         <ImageView
             android:layout_width="174dp"
             android:layout_height="50dp"
@@ -27,7 +24,6 @@
             android:layout_marginTop="26dp"
             android:contentDescription="Finotek Logo"
             app:srcCompat="@drawable/vector_drawable_ci_finotek"/>
-
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/tv_copyright"
             android:layout_width="wrap_content"

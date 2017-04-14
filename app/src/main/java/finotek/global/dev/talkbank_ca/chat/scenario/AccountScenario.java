@@ -66,7 +66,7 @@ public class AccountScenario implements Scenario {
             // 본인이 맞으세요?
             case TakeSign:
                 if (msg.equals(context.getString(R.string.string_yes))) {
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_finger_tip_sign_user_register)));
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_sign_tip)));
                     MessageBox.INSTANCE.add(new RequestSignature());
                     step = Step.Last;
                 } else if (msg.equals(context.getString(R.string.string_no))) {

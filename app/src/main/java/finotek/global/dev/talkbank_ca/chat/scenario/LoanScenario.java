@@ -13,8 +13,10 @@ import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 
 public class LoanScenario implements Scenario {
     private Context context;
@@ -44,6 +46,7 @@ public class LoanScenario implements Scenario {
     public void onReceive(Object msg) {
         if(msg instanceof SignatureVerified) {
             if(step == Step.Last) {
+                MessageBox.INSTANCE.add(new RequestRemoveControls());
                 MessageBox.INSTANCE.add(new AgreementResult());
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)));
                 MessageBox.INSTANCE.add(new Done());
@@ -67,6 +70,7 @@ public class LoanScenario implements Scenario {
             case InputAddress:
                 if(msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_home_address_type)));
+                    MessageBox.INSTANCE.add(new RequestKeyboardInput());
                     step = Step.InputMoney;
                 } else if(msg.equals(context.getResources().getString(R.string.dialog_button_no))){
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)));

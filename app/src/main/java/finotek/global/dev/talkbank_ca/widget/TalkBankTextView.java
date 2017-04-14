@@ -52,6 +52,27 @@ public class TalkBankTextView extends android.support.v7.widget.AppCompatTextVie
 		}
 
 		setTypeface(tf);
+	}
 
+	public void setFontType(FontType fontType){
+		Typeface tf = null;
+
+		switch(fontType){
+			case Light:
+				tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/NotoSansKR-Light-Hestia.otf");
+				break;
+			case Medium:
+				tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/NotoSansKR-Medium-Hestia.otf");
+				break;
+			case Regular:
+				tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/NotoSansKR-Regular-Hestia.otf");
+				break;
+		}
+
+		setTypeface(tf);
+	}
+
+	public enum FontType {
+		Light, Medium, Regular
 	}
 }

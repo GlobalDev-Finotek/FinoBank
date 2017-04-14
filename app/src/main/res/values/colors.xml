@@ -54,7 +54,7 @@
 
 
 
-    <color name="color_chat_divider">#D2D5D9</color>
+    <color name="color_chat_divider">@color/dark_50</color>
     <color name="color_text_default">@color/dark_100</color>
     <color name="color_chat_background">@android:color/white</color>
     <color name="color_chat_footer">#F5F4F5</color>

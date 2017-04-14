@@ -32,7 +32,7 @@ public class RoundButton extends IconButton {
             int buttonType = array.getInteger(R.styleable.RoundButton_buttonType, 0);
             setButtonType(ButtonType.valueOf(buttonType));
 
-            int padding = Converter.pxToDp(14);
+            int padding = Converter.pxToDp(15);
             setPadding(padding, getPaddingTop(), padding, getPaddingBottom());
         } finally {
             array.recycle();

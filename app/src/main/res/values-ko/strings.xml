@@ -63,7 +63,7 @@
     <string name="main_button_register">사용자 등록</string>
     <string name="main_button_login">로그인</string>
     <string name="main_button_cancel">취소</string>
-    <string name="main_string_copyright_finotek">Copyright Finotek., All rights reserved</string>
+    <string name="main_string_copyright_finotek">Copyright 2017 (c) Finotek Inc. All Rights Reserved</string>
     <string name="main_string_message_input">메시지를 입력해주세요</string>
     <string name="main_button_send">전송</string>
     <string name="main_string_open_account">계좌 개설</string>
@@ -144,13 +144,14 @@
     <string name="dialog_string_license_number">운전면허번호</string>
     <string name="dialog_chat_correct_information">위 내용이 맞으세요?</string>
     <string name="dialog_chat_id_card_retake">신분증 촬영을 다시 진행합니다.</string>
-    <string name="dialog_chat_finger_tip_sign">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을\n사용하여 서명해 주세요.</string>
+    <string name="dialog_chat_finger_tip_sign">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_chat_transaction">월별 입출금 거래 내역 확인 결과\n%1$s원을 %2$s (010–5678–1234) 님에게 이체하시겠어요?</string>
     <string name="dialog_button_transfer_other">다른 사람에게 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
-    <string name="dialog_chat_after_transfer_1">김가람 (010-5678-1234) 님에게 100,000원을 이체하였습니다.\n현재 계좌 잔액은 3,270,000원입니다.\n\n더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_after_transfer">%1$s (010-5678-1234) 님에게 %2$s원을 이체하였습니다.\n현재 계좌 잔액은 %3$s원입니다.\n\n더 필요한 사항이 있으세요?</string>
+    <string name="dialog_chat_send_transfer">%1$s (010-5678-1234) 님에게 %2$s원을 이체</string>
     <string name="dialog_button_recent_transaction">최근 거래내역 보기</string>
     <string name="dialog_button_transfer_add">추가 이체</string>
     <string name="dialog_chat_someone_recent_transaction">%s님의 최근 거래내역입니다.</string>
@@ -162,8 +163,6 @@
     <string name="dialog_string_receiver_select">받으실 분을 선택해 주세요.</string>
     <string name="dialog_chat_contact_select">위 목록에 없다면 주소록 또는 카카오톡에서 선택해 주세요.</string>
     <string name="dialog_string_amount_transfer">이체 금액</string>
-    <string name="dialog_chat_after_transfer_2">어머니(010-9876-5432)님에게 150,000원을 이체하였습니다.\n현재 계좌 잔액은 3,120,000원입니다.\n더 필요한 사항이 있으세요?</string>
-    <string name="dialog_chat_loan_appl">I\'ve checked your account details and I would like to recommend \\"Finocation one-day loan\"\" you may request up to 50 million won and 2.0% interest rate do you want to apply loan?"</string>
     <string name="dialog_chat_microedit_cancel">소액 담보대출을 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_home_address_type">집 주소를 입력해 주세요.</string>
     <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만 원까지2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요</string>
@@ -248,8 +247,21 @@
     <string name="dialog_chat_send_to">님에게</string>
     <string name="dialog_chat_anything_help">더 필요한 사항이 있으신가요?</string>
     <string name="dialog_chat_transferred">이체되었습니다</string>
+    <string name="dialog_chat_transferred_price_unit">원이</string>
     <string name="dialog_string_import_from_contact">주소록에서 가져옴</string>
     <string name="common_string_warning">경고</string>
     <string name="registration_string_please_sign_in">표시된 영역 안에 서명해 주세요.</string>
+
+    <string name="monday">월요일</string>
+    <string name="tuesday">화요일</string>
+    <string name="wednesday">수요일</string>
+    <string name="thursday">목요일</string>
+    <string name="friday">금요일</string>
+    <string name="saturday">토요일</string>
+    <string name="sunday">일요일</string>
+    <string name="setting_string_langauge_select">언어 선택</string>
+    <string name="setting_string_korean">한국어</string>
+    <string name="setting_string_english">English</string>
+    <string name="string_confirm">확인</string>
 </resources>
 

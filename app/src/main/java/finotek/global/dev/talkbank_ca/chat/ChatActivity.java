@@ -8,6 +8,7 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
@@ -40,6 +42,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
+import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
@@ -61,10 +64,10 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
-import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -75,6 +78,7 @@ public class ChatActivity extends AppCompatActivity {
 	DBHelper dbHelper;
 	@Inject
 	RxEventBus eventBus;
+	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
 	private ChatExtendedControlBinding ecBinding;
@@ -83,7 +87,6 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-
 	private MainScenario mainScenario;
 
 	@Override
@@ -117,7 +120,8 @@ public class ChatActivity extends AppCompatActivity {
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
-				.subscribe(this::onNewMessageUpdated);
+				.subscribe(this::onNewMessageUpdated, throwable -> {
+				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
@@ -147,8 +151,12 @@ public class ChatActivity extends AppCompatActivity {
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
 			});
-			tx.add(R.id.chat_capture, capturePicFragment);
+			tx.replace(R.id.chat_capture, capturePicFragment);
 			tx.commit();
+		}
+
+		if(msg instanceof RequestKeyboardInput) {
+			openKeyboard(fiBinding.chatEditText);
 		}
 
 		if (msg instanceof RequestSignature) {
@@ -169,24 +177,25 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(i -> {
 							loadingDialog.dismiss();
 
-                        SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-                        dialog.setTitle(getString(R.string.setting_string_signature_verified));
-                        dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-                        dialog.setButtonText(getString(R.string.setting_string_yes));
-                        dialog.setDoneListener(() -> {
-                            MessageBox.INSTANCE.add(new SignatureVerified());
-                            returnToInitialControl();
+							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+							dialog.setTitle(getString(R.string.setting_string_signature_verified));
+							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+							dialog.setButtonText(getString(R.string.setting_string_yes));
+							dialog.setDoneListener(() -> {
+								MessageBox.INSTANCE.add(new SignatureVerified());
+								returnToInitialControl();
 
-                            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                            transaction.remove(signRegistFragment).commit();
+								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+								transaction.remove(signRegistFragment).commit();
 
-                            dialog.dismiss();
-                        });
-                        dialog.show();
-                    });
+								dialog.dismiss();
+							});
+							dialog.show();
+						}, throwable -> {
+						});
 			});
 
-			tx.add(R.id.chat_capture, signRegistFragment);
+			tx.replace(R.id.chat_capture, signRegistFragment);
 			tx.commit();
 		}
 
@@ -227,6 +236,7 @@ public class ChatActivity extends AppCompatActivity {
 		MessageBox.INSTANCE.add(new SendMessage(msg));
 		clearInput();
 	}
+
 
 	private void expandControlClickEvent() {
 		if (isExControlAvailable)
@@ -320,10 +330,14 @@ public class ChatActivity extends AppCompatActivity {
 			// 잔액
 			int balance = TransactionDB.INSTANCE.getBalance();
 			String moneyAsString = ctBinding.editMoney.getText().toString();
-			int money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
-
+			int money = 0;
+			try {
+				money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			}
 			if (money > balance) {
-				WarningDialog dialog = new WarningDialog(this);
+				DangerDialog dialog = new DangerDialog(this);
 				dialog.setTitle(getString(R.string.common_string_warning));
 				dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
 				dialog.setButtonText(getString(R.string.setting_string_yes));
@@ -335,7 +349,6 @@ public class ChatActivity extends AppCompatActivity {
 				});
 				dialog.show();
 			} else {
-				TransactionDB.INSTANCE.transferMoney(money);
 				TransactionDB.INSTANCE.setTxMoney(moneyAsString);
 
 				ctBinding.editMoney.setText("");
@@ -376,6 +389,12 @@ public class ChatActivity extends AppCompatActivity {
 		v.clearFocus();
 		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+	}
+
+	private void openKeyboard(View v){
+		v.requestFocus();
+		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
+		inputMethodManager.showSoftInput(v, 0);
 	}
 
 	private void releaseControls() {
@@ -437,6 +456,19 @@ public class ChatActivity extends AppCompatActivity {
 		super.onDestroy();
 		mainScenario.release();
 		eventBus.clear();
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (doubleBackToExitPressedOnce) {
+			super.onBackPressed();
+			return;
+		}
+
+		this.doubleBackToExitPressedOnce = true;
+		Toast.makeText(this, getString(R.string.main_back_exit), Toast.LENGTH_SHORT).show();
+
+		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
 	private ChatComponent getComponent() {

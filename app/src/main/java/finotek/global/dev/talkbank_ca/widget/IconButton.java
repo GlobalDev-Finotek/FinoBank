@@ -17,6 +17,8 @@ import finotek.global.dev.talkbank_ca.databinding.DialogDangerBinding;
 import finotek.global.dev.talkbank_ca.util.Converter;
 
 public class IconButton extends AppCompatButton {
+    private final String logTitle = "FINOTEK-ICON_BUTTON";
+
     protected int drawableWidth;
     protected DrawablePositions drawablePosition;
     protected int iconPadding;
@@ -67,26 +69,29 @@ public class IconButton extends AppCompatButton {
 
         Paint textPaint = getPaint();
         String text = getText().toString();
-        textPaint.getTextBounds(text, 0, text.length(), bounds);
-
         int textWidth = (int) textPaint.measureText(text, 0, text.length());
         int factor = (drawablePosition == DrawablePositions.LEFT_AND_RIGHT) ? 2 : 1;
+        int leftPadding = getPaddingStart() / 2;
+        int rightPadding = getPaddingEnd() / 2;
+
+        Log.d(logTitle, "left padding : " + leftPadding);
+        Log.d(logTitle, "right padding : " + rightPadding);
+
         int contentWidth = iconPadding * factor + textWidth;
-        int horizontalPadding = (int) ((getWidth() / 2.0) - (contentWidth / 2.0)) - drawableWidth - Converter.dpToPx(10);
+        iconPadding += (int) ((getWidth() / 2.0) - (contentWidth / 2.0) - drawableWidth);
 
-        setCompoundDrawablePadding(-horizontalPadding + iconPadding);
-
+        setCompoundDrawablePadding(-iconPadding + leftPadding);
         switch (drawablePosition) {
             case LEFT:
-                setPadding(horizontalPadding, getPaddingTop(), 0, getPaddingBottom());
+                setPadding(iconPadding + leftPadding, getPaddingTop(), rightPadding, getPaddingBottom());
                 break;
 
             case RIGHT:
-                setPadding(0, getPaddingTop(), horizontalPadding, getPaddingBottom());
+                setPadding(leftPadding, getPaddingTop(), iconPadding + rightPadding, getPaddingBottom());
                 break;
 
             case LEFT_AND_RIGHT:
-                setPadding(horizontalPadding, getPaddingTop(), horizontalPadding, getPaddingBottom());
+                setPadding(iconPadding, getPaddingTop(), iconPadding, getPaddingBottom());
                 break;
 
             default:

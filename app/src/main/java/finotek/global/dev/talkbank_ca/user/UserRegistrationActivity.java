@@ -120,6 +120,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 
 		boolean isNameEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtUserName.getText().toString());
 		boolean isPhoneNumberEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+		boolean isRequiredCheck = binding.cbContextAuth.isChecked();
 
 		if (isNameEmpty) {
 			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
@@ -129,7 +130,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
 		}
 
-		return !isNameEmpty && !isPhoneNumberEmpty;
+		return !isNameEmpty && !isPhoneNumberEmpty && isRequiredCheck;
 	}
 
 	private UserAdditionalInfo getAdditionalInfo() {

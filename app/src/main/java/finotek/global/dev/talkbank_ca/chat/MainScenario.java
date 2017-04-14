@@ -236,6 +236,7 @@ public class MainScenario {
 		if (msg instanceof RequestRemoveControls) {
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
+			chatView.removeOf(ChatView.ViewType.Agreement);
 		}
 	}
 

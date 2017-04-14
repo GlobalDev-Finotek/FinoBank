@@ -144,6 +144,7 @@
     <string name="dialog_chat_correct_information">Is the above information correct?</string>
     <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>
     <string name="dialog_chat_finger_tip_sign">Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
+    <string name="dialog_chat_open_account_sign_tip">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. is there anything else I can help you with?</string>
     <string name="dialog_chat_transaction">I\'ve checked your monthly transaction history. would you like to transfer %1$s won to %2$s(010-5678-1234).</string>
     <string name="dialog_button_transfer_other">Transfer to others</string>

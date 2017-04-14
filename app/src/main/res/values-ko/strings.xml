@@ -259,5 +259,9 @@
     <string name="friday">금요일</string>
     <string name="saturday">토요일</string>
     <string name="sunday">일요일</string>
+    <string name="setting_string_langauge_select">언어 선택</string>
+    <string name="setting_string_korean">한국어</string>
+    <string name="setting_string_english">English</string>
+    <string name="string_confirm">확인</string>
 </resources>
 

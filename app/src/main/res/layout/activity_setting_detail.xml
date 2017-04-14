@@ -47,13 +47,14 @@
                         android:scaleX="-1"
                         tb:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                    <TextView
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:layout_centerVertical="true"
-                        android:theme="@style/Header"/>
+                        android:theme="@style/Header"
+                        tb:custom_font="noto_medium"/>
 
                 </RelativeLayout>
 

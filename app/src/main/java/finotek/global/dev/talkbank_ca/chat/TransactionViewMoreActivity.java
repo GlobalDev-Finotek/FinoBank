@@ -21,8 +21,11 @@ public class TransactionViewMoreActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		rootBinding = DataBindingUtil.setContentView(this, R.layout.activity_transaction_view_more);
+		rootBinding.toolbarTitle.setText(R.string.dialog_button_recent_transaction);
 		ViewGroup viewGroup = (ViewGroup) ((ViewGroup) this
 				.findViewById(android.R.id.content)).getChildAt(0);
+		rootBinding.appbar.setOutlineProvider(null);
+		rootBinding.ibBack.setOnClickListener(v -> onBackPressed());
 
 		for (Transaction tx : TransactionDB.INSTANCE.getTx()) {
 			View view = LayoutInflater.from(this).inflate(R.layout.chat_item_transaction, viewGroup, false);

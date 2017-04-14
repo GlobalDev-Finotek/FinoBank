@@ -57,6 +57,10 @@ public enum TransactionDB {
         return txMoney;
     }
 
+    public void setTxMoney(String txMoney) {
+        this.txMoney = txMoney;
+    }
+
     public int getMoneyAsInt(){
         int money = 0;
         try {
@@ -65,9 +69,5 @@ public enum TransactionDB {
             e.printStackTrace();
         }
         return money;
-    }
-
-    public void setTxMoney(String txMoney) {
-        this.txMoney = txMoney;
     }
 }

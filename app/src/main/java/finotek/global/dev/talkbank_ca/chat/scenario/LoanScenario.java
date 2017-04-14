@@ -16,6 +16,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 
 public class LoanScenario implements Scenario {
     private Context context;
@@ -45,6 +46,7 @@ public class LoanScenario implements Scenario {
     public void onReceive(Object msg) {
         if(msg instanceof SignatureVerified) {
             if(step == Step.Last) {
+                MessageBox.INSTANCE.add(new RequestRemoveControls());
                 MessageBox.INSTANCE.add(new AgreementResult());
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)));
                 MessageBox.INSTANCE.add(new Done());

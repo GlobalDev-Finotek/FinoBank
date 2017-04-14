@@ -219,7 +219,7 @@
     <string name="dialog_chat_preview">Preview</string>
     <string name="dialog_chat_save">Save</string>
     <string name="registration_button_pin_code_chanage">Change PIN code</string>
-    <string name="registration_string_signature_twice">You will be signing twice to confirm your e-signaute.</string>
+    <string name="registration_string_signature_twice">You will be signing twice to confirm your e-signature.</string>
     <string name="setting_string_amount">Amount of transfer</string>
     <string name="setting_string_amount_auth">Authentication for amount of money</string>
     <string name="setting_string_auth_message">Authentication message</string>

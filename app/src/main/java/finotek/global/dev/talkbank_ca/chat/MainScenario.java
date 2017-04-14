@@ -135,15 +135,13 @@ public class MainScenario {
 
 				if (scenario.decideOn(recv.getMessage())) {
                     if(currentScenario != null) {
-                        if (!currentScenario.getName().equals(scenario.getName())) {
-                            MessageBox.INSTANCE.add(new RequestRemoveControls());
-                            MessageBox.INSTANCE.add(new StatusMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
+                        MessageBox.INSTANCE.add(new RequestRemoveControls());
+                        MessageBox.INSTANCE.add(new StatusMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
 
-                            currentScenario.clear();
-                            scenario.clear();
-                            currentScenario = scenario;
-                            break;
-                        }
+                        currentScenario.clear();
+                        scenario.clear();
+                        currentScenario = scenario;
+                        break;
                     } else {
                         currentScenario = scenario;
                         currentScenario.clear();

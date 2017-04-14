@@ -52,6 +52,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
@@ -91,6 +92,9 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 	private MainScenario mainScenario;
+
+	private CapturePicFragment capturePicFragment;
+	private OneStepSignRegisterFragment signRegistFragment;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -150,7 +154,7 @@ public class ChatActivity extends AppCompatActivity {
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
-			CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
+			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
@@ -192,7 +196,7 @@ public class ChatActivity extends AppCompatActivity {
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
-			OneStepSignRegisterFragment signRegistFragment = new OneStepSignRegisterFragment();
+			signRegistFragment = new OneStepSignRegisterFragment();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSaveListener(() -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
@@ -270,6 +274,15 @@ public class ChatActivity extends AppCompatActivity {
 			dialog.setTitle(action.getTitle());
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();
+		}
+
+		if(msg instanceof RequestRemoveControls) {
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			transaction.remove(capturePicFragment);
+			transaction.remove(signRegistFragment);
+			transaction.commit();
+
+			this.returnToInitialControl();
 		}
 
 		if (msg instanceof RequestSelectContact) {

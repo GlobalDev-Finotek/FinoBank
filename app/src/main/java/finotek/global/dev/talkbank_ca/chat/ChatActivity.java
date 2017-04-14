@@ -127,6 +127,12 @@ public class ChatActivity extends AppCompatActivity {
 		preInitControlViews();
 	}
 
+	@Override
+	protected void onPause() {
+		super.onPause();
+		hideExControl();
+	}
+
 	private void onNewMessageUpdated(Object msg) {
 		if (msg instanceof WaitForMessage) {
 			binding.waitMessage.setVisibility(View.VISIBLE);

@@ -39,20 +39,22 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
         LinearLayout group = (LinearLayout) holder.itemView;
         group.removeAllViews();
 
-        for (Transaction tx : data.getTransactions()) {
-            Context context = group.getContext();
-            View view = LayoutInflater.from(context).inflate(R.layout.chat_item_transaction, group, false);
-            ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
-            binding.setItem(tx);
-            group.addView(view);
+	    for (int i = 0; i < 4; ++i) {
+		    Transaction tx = data.getTransactions().get(i);
+		    Context context = group.getContext();
+		    View view = LayoutInflater.from(context).inflate(R.layout.chat_item_transaction, group, false);
+		    ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
+		    binding.setItem(tx);
+		    group.addView(view);
 
-            RxView.clicks(binding.transferBtn)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-	                MessageBox.INSTANCE.add(new ApplyScenario("transfer"));
-	                MessageBox.INSTANCE.add(new TransferToSomeone(tx.getName(), tx.getPrice()));
-                });
-        }
+		    RxView.clicks(binding.transferBtn)
+				    .throttleFirst(200, TimeUnit.MILLISECONDS)
+				    .subscribe(aVoid -> {
+					    MessageBox.INSTANCE.add(new ApplyScenario("transfer"));
+					    MessageBox.INSTANCE.add(new TransferToSomeone(tx.getName(), tx.getPrice()));
+				    });
+	    }
+
     }
 
     @Override

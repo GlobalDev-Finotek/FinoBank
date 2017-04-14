@@ -261,6 +261,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof EnableToEditMoney) {
 			ctBinding.editMoney.setEnabled(true);
 			ctBinding.editMoney.requestFocus();
+			ctBinding.gvKeypad.setLengthLimit(7);
 		}
 
 		if (msg instanceof ShowPdfView) {
@@ -375,7 +376,9 @@ public class ChatActivity extends AppCompatActivity {
 				});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
+
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
+
 		ctBinding.gvKeypad.onComplete(() -> {
 			// 잔액
 			int balance = TransactionDB.INSTANCE.getBalance();
@@ -386,6 +389,8 @@ public class ChatActivity extends AppCompatActivity {
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
+
+
 			if (money > balance) {
 				DangerDialog dialog = new DangerDialog(this);
 				dialog.setTitle(getString(R.string.common_string_warning));

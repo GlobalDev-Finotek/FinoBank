@@ -100,6 +100,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
         binding.setItem(agreement);
 
         binding.textView.setFontType(TalkBankTextView.FontType.Medium);
+        binding.textView.setTextSize(16);
         binding.arrow.setVisibility(View.INVISIBLE);
 
         binding.checkbox.setOnCheckedChangeListener((buttonView, isChecked) -> {

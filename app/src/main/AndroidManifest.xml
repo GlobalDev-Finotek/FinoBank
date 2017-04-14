@@ -11,6 +11,7 @@
         android:xlargeScreens="true"/>
 
     <uses-permission android:name="android.permission.CAMERA"/>
+
     <uses-feature android:name="android.hardware.camera2"/>
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -32,6 +33,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -43,7 +45,6 @@
             android:name=".user.sign.SignRegistrationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-
         <activity
             android:name=".user.profile.CaptureProfilePicActivity"
             android:screenOrientation="portrait">
@@ -65,13 +66,14 @@
             android:name=".MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-
         </activity>
-
         <activity
             android:name=".chat.ChatActivity"
             android:label="톡뱅"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".chat.TransactionViewMoreActivity">
+        </activity>
     </application>
+
 </manifest>

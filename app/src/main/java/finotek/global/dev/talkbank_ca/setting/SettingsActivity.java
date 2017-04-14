@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.setting;
 
-import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -89,8 +88,4 @@ public class SettingsActivity extends AppCompatActivity {
 	}
 
 
-	@Override
-	protected void attachBaseContext(Context base) {
-		super.attachBaseContext(LocaleHelper.onAttach(base));
-	}
 }

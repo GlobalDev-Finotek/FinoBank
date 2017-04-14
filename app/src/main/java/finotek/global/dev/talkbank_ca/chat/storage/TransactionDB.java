@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.chat.storage;
 
-import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 
@@ -25,6 +24,7 @@ public enum TransactionDB {
         tx.add(new Transaction("어머니", 0, 200000, 3033800, f.parseDateTime("2017-04-02 21:12:00")));
         tx.add(new Transaction("박예린", 0, 100000, 3233800, f.parseDateTime("2017-03-31 14:43:00")));
         tx.add(new Transaction("김가람", 0, 36200, 3333800, f.parseDateTime("2017-02-22 13:11:00")));
+        tx.add(new Transaction("어머니", 1, 400000, 3733800, f.parseDateTime("2017-04-02 21:12:00")));
 
         balance = 3033800;
     }

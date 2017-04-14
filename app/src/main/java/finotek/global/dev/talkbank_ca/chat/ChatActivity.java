@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
@@ -68,7 +69,9 @@ import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
+import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.util.Converter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
@@ -145,7 +148,8 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
 
-			binding.footer.addView(inflate(R.layout.chat_capture));
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
 			CapturePicFragment capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
@@ -157,25 +161,44 @@ public class ChatActivity extends AppCompatActivity {
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
 			});
+
+			capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
+
+				@Override
+				public void onSizeFull() {
+					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+							LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+					captureView.setLayoutParams(lp);
+				}
+
+				@Override
+				public void onSizeMinimize() {
+					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+							LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
+					captureView.setLayoutParams(lp);
+				}
+			});
+
 			tx.replace(R.id.chat_capture, capturePicFragment);
 			tx.commit();
 		}
 
-		if(msg instanceof RequestKeyboardInput) {
+		if (msg instanceof RequestKeyboardInput) {
 			openKeyboard(fiBinding.chatEditText);
 		}
 
 		if (msg instanceof RequestSignature) {
 			releaseControls();
 
-			binding.footer.addView(inflate(R.layout.chat_capture));
+			View signView = inflate(R.layout.chat_capture);
+			binding.footer.addView(signView);
 			OneStepSignRegisterFragment signRegistFragment = new OneStepSignRegisterFragment();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSaveListener(() -> {
-                PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
-                loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
-                loadingDialog.setDescription(getString(R.string.registration_string_wait));
-                loadingDialog.show();
+				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
+				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+				loadingDialog.setDescription(getString(R.string.registration_string_wait));
+				loadingDialog.show();
 
 				Observable.interval(1500, TimeUnit.MILLISECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
@@ -201,6 +224,27 @@ public class ChatActivity extends AppCompatActivity {
 						});
 			});
 
+			signRegistFragment.setOnSizeControlClick(new BaseSignRegisterFragment.OnSizeControlClick() {
+
+				boolean isFullSize = false;
+
+				@Override
+				public void onClick(BaseSignRegisterFragment.CanvasSize size) {
+
+					if (!isFullSize) {
+						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+						signView.setLayoutParams(lp);
+					} else {
+						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+								LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
+						signView.setLayoutParams(lp);
+					}
+
+					isFullSize = !isFullSize;
+				}
+			});
+
 			tx.replace(R.id.chat_capture, signRegistFragment);
 			tx.commit();
 		}
@@ -210,26 +254,27 @@ public class ChatActivity extends AppCompatActivity {
 
 			int balance = TransactionDB.INSTANCE.getBalance();
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
-            ctBinding.editMoney.setEnabled(false);
+			ctBinding.editMoney.setEnabled(false);
 			binding.footer.addView(ctBinding.getRoot());
 		}
 
-		if(msg instanceof EnableToEditMoney) {
-            ctBinding.editMoney.setEnabled(true);
-            ctBinding.editMoney.requestFocus();
-        }
+		if (msg instanceof EnableToEditMoney) {
+			ctBinding.editMoney.setEnabled(true);
+			ctBinding.editMoney.requestFocus();
+			ctBinding.gvKeypad.setLengthLimit(7);
+		}
 
-		if(msg instanceof ShowPdfView) {
-            ShowPdfView action = (ShowPdfView) msg;
-            PdfViewDialog dialog = new PdfViewDialog(this);
-            dialog.setTitle(action.getTitle());
-            dialog.setPdfAssets(action.getPdfAsset());
-            dialog.show();
-        }
+		if (msg instanceof ShowPdfView) {
+			ShowPdfView action = (ShowPdfView) msg;
+			PdfViewDialog dialog = new PdfViewDialog(this);
+			dialog.setTitle(action.getTitle());
+			dialog.setPdfAssets(action.getPdfAsset());
+			dialog.show();
+		}
 
-        if(msg instanceof RequestSelectContact) {
-            Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
-            startActivityForResult(intent, RESULT_PICK_CONTACT);
+		if (msg instanceof RequestSelectContact) {
+			Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+			startActivityForResult(intent, RESULT_PICK_CONTACT);
 		}
 
 		if (msg instanceof DismissKeyboard) {
@@ -316,7 +361,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
 		adapter.setDoOnControl(this::hideExControl);
-        adapter.setSettingControl(() -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
+		adapter.setSettingControl(() -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 		ecBinding.extendedControl.setAdapter(adapter);
 
 		RxViewPager.pageSelections(ecBinding.extendedControl)
@@ -331,7 +376,9 @@ public class ChatActivity extends AppCompatActivity {
 				});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
+
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
+
 		ctBinding.gvKeypad.onComplete(() -> {
 			// 잔액
 			int balance = TransactionDB.INSTANCE.getBalance();
@@ -342,6 +389,8 @@ public class ChatActivity extends AppCompatActivity {
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
+
+
 			if (money > balance) {
 				DangerDialog dialog = new DangerDialog(this);
 				dialog.setTitle(getString(R.string.common_string_warning));
@@ -397,7 +446,7 @@ public class ChatActivity extends AppCompatActivity {
 		inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
 	}
 
-	private void openKeyboard(View v){
+	private void openKeyboard(View v) {
 		v.requestFocus();
 		InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Activity.INPUT_METHOD_SERVICE);
 		inputMethodManager.showSoftInput(v, 0);
@@ -429,33 +478,33 @@ public class ChatActivity extends AppCompatActivity {
 
 	}
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
 
-        switch(requestCode) {
-            case RESULT_PICK_CONTACT:
-	            if (data != null) {
-		            Uri contactData = data.getData();
-		            Cursor c = getContentResolver().query(contactData, null, null, null, null);
-		            if (c.moveToFirst()) {
-			            String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
-			            String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
-			            String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
-			            String cNumber = "";
+		switch (requestCode) {
+			case RESULT_PICK_CONTACT:
+				if (data != null) {
+					Uri contactData = data.getData();
+					Cursor c = getContentResolver().query(contactData, null, null, null, null);
+					if (c.moveToFirst()) {
+						String id = c.getString(c.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
+						String name = c.getString(c.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME));
+						String hasPhone = c.getString(c.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER));
+						String cNumber = "";
 
-			            if (hasPhone.equalsIgnoreCase("1")) {
-				            Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
-				            phones.moveToFirst();
-				            cNumber = phones.getString(phones.getColumnIndex("data1"));
-			            }
+						if (hasPhone.equalsIgnoreCase("1")) {
+							Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + id, null, null);
+							phones.moveToFirst();
+							cNumber = phones.getString(phones.getColumnIndex("data1"));
+						}
 
-			            MessageBox.INSTANCE.add(new SelectedContact(name, cNumber));
-		            }
-	            }
-                break;
-        }
-    }
+						MessageBox.INSTANCE.add(new SelectedContact(name, cNumber));
+					}
+				}
+				break;
+		}
+	}
 
 	@Override
 	protected void onDestroy() {

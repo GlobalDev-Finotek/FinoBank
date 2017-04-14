@@ -163,7 +163,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="-1dp"
-                    android:background="@drawable/border_white_two_bottom_radius"
+                    android:background="@drawable/border_white_two"
                     android:orientation="horizontal"
                     android:padding="10dp">
 

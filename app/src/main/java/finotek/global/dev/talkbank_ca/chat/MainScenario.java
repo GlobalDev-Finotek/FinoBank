@@ -40,7 +40,9 @@ import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
 import io.realm.Realm;
 
 public class MainScenario {
@@ -80,6 +82,11 @@ public class MainScenario {
 				.subscribe(msg -> {
 					updateUIOn(msg);
 					onRequest(msg);
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(@NonNull Throwable throwable) throws Exception {
+
+					}
 				});
 
 		// 채팅 화면 설정
@@ -101,7 +108,7 @@ public class MainScenario {
 	}
 
 	private void firstScenario() {
-		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate()));
+		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 		eventBus.getObservable()
 				.subscribe(iEvent -> {
 					Log.d("FINO-TB", iEvent.getClass().getName());

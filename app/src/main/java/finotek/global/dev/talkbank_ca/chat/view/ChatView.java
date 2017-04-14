@@ -107,7 +107,10 @@ public class ChatView extends RecyclerView {
     }
 
     public void scrollToBottom() {
-        getLayoutManager().scrollToPosition(adapter.getItemCount() - 1);
+        LayoutManager lm = getLayoutManager();
+        if (lm != null) {
+            lm.scrollToPosition(adapter.getItemCount() - 1);
+        }
     }
 
     public enum ViewType {

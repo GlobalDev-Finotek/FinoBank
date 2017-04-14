@@ -127,19 +127,27 @@ public class MainScenario {
 	private void onRequest(Object msg) {
 		if (msg instanceof SendMessage) {
 			SendMessage recv = (SendMessage) msg;
+			Iterator<String> keySet = scenarioPool.keySet().iterator();
 
-			if (currentScenario == null) {
-				Iterator<String> keySet = scenarioPool.keySet().iterator();
+			while (keySet.hasNext()) {
+				String key = keySet.next();
+				Scenario scenario = scenarioPool.get(key);
 
-				while (keySet.hasNext()) {
-					String key = keySet.next();
-					Scenario scenario = scenarioPool.get(key);
+				if (scenario.decideOn(recv.getMessage())) {
+                    if(currentScenario != null) {
+                        if (!currentScenario.getName().equals(scenario.getName())) {
+                            MessageBox.INSTANCE.add(new RequestRemoveControls());
+                            MessageBox.INSTANCE.add(new StatusMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
 
-					if (scenario.decideOn(recv.getMessage())) {
-						currentScenario = scenario;
-						currentScenario.clear();
-						break;
-					}
+                            currentScenario.clear();
+                            scenario.clear();
+                            currentScenario = scenario;
+                            break;
+                        }
+                    } else {
+                        currentScenario = scenario;
+                        currentScenario.clear();
+                    }
 				}
 			}
 

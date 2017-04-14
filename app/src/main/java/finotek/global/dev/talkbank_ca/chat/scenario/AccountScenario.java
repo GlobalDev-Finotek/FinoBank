@@ -25,6 +25,11 @@ public class AccountScenario implements Scenario {
     }
 
     @Override
+    public String getName() {
+        return context.getString(R.string.scenario_account);
+    }
+
+    @Override
     public boolean decideOn(String msg) {
 	    return msg.equals(context.getResources().getString(R.string.main_string_open_account)) || msg.equals("계좌개설");
     }

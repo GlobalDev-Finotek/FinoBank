@@ -253,6 +253,7 @@
     <string name="dialog_chat_anything_help">더 필요한 사항이 있으신가요?</string>
     <string name="dialog_chat_transferred">이체되었습니다</string>
     <string name="dialog_chat_transferred_price_unit">원이</string>
+    <string name="dialog_chat_scenario_is_cancelled">\"%1$s\"이 취소되었습니다.\n\"%2$s\"을 진행합니다.</string>
     <string name="dialog_string_import_from_contact">주소록에서 가져옴</string>
     <string name="common_string_warning">경고</string>
     <string name="registration_string_please_sign_in">표시된 영역 안에 서명해 주세요.</string>
@@ -268,5 +269,10 @@
     <string name="setting_string_korean">한국어</string>
     <string name="setting_string_english">English</string>
     <string name="string_confirm">확인</string>
+
+    <string name="scenario_account">계좌 개설</string>
+    <string name="scenario_loan">소액 담보 대출</string>
+    <string name="scenario_send_mail">상담 메일 보내기</string>
+    <string name="scenario_transfer">계좌 이체</string>
 </resources>
 

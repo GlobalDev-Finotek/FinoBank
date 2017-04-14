@@ -30,7 +30,6 @@ import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 
 public class TransferScenario implements Scenario {
-
 	private DBHelper dbHelper;
 	private Context context;
 	private Step step = Step.Initial;
@@ -38,6 +37,11 @@ public class TransferScenario implements Scenario {
 	public TransferScenario(Context context, DBHelper dbHelper) {
 		this.context = context;
 		this.dbHelper = dbHelper;
+	}
+
+	@Override
+	public String getName() {
+		return context.getString(R.string.scenario_transfer);
 	}
 
 	@Override

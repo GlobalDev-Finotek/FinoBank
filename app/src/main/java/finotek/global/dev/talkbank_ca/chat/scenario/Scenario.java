@@ -4,5 +4,6 @@ public interface Scenario {
     boolean decideOn(String msg);
     void onReceive(Object msg);
     void onUserSend(String msg);
+    String getName();
     void clear();
 }

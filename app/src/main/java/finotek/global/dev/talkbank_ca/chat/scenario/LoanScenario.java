@@ -27,6 +27,11 @@ public class LoanScenario implements Scenario {
     }
 
     @Override
+    public String getName() {
+        return context.getString(R.string.scenario_loan);
+    }
+
+    @Override
     public boolean decideOn(String msg) {
         switch(msg) {
             case "집을 담보로 대출 받고 싶어":

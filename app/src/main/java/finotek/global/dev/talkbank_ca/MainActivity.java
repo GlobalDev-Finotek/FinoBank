@@ -12,8 +12,12 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -32,12 +36,11 @@ import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 
 
 public class MainActivity extends AppCompatActivity implements MainView {
-
-
 	private static final int MY_PERMISSION_READ_CALL_LOG = 1;
 	private final double AUTH_THRESHOLD = 0.6;
 
-	ActivityMainBinding binding;
+	private TextView tvContextAuthAccuracy;
+	private Button mainButton;
 
 	@Inject
 	RxEventBus eventBus;
@@ -54,7 +57,17 @@ public class MainActivity extends AppCompatActivity implements MainView {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getComponent().inject(this);
-		binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+
+		if(Locale.getDefault().getDisplayName().equals("ko")) {
+			setContentView(R.layout.activity_main);
+		} else {
+			setContentView(R.layout.activity_main_eng);
+		}
+
+		tvContextAuthAccuracy = (TextView) findViewById(R.id.tv_context_auth_accuracy);
+		mainButton = (Button) findViewById(R.id.main_button);
+
+
 
 		presenter.attachView(this);
 		checkPermission();
@@ -68,9 +81,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 					}
 
 					if (isFirst) {
-						binding.tvContextAuthAccuracy.setVisibility(View.INVISIBLE);
+						tvContextAuthAccuracy.setVisibility(View.INVISIBLE);
 					} else {
-						binding.tvContextAuthAccuracy.setVisibility(View.VISIBLE);
+						tvContextAuthAccuracy.setVisibility(View.VISIBLE);
 					}
 
 
@@ -170,20 +183,20 @@ public class MainActivity extends AppCompatActivity implements MainView {
 			text += getString(R.string.dialog_chat_verified_context_data_failed, score);
 		}
 
-		binding.tvContextAuthAccuracy.setText(text);
+		tvContextAuthAccuracy.setText(text);
 	}
 
 	@Override
 	public void setNextButtonText(boolean isFirst) {
 
-		RxView.clicks(binding.mainButton)
+		RxView.clicks(mainButton)
 				.subscribe(aVoid ->
 						presenter.moveToNextActivity(isFirst));
 
 		if (isFirst) {
-			binding.mainButton.setText(getString(R.string.main_button_register));
+			mainButton.setText(getString(R.string.main_button_register));
 		} else {
-			binding.mainButton.setText(getString(R.string.main_button_login));
+			mainButton.setText(getString(R.string.main_button_login));
 		}
 	}
 }

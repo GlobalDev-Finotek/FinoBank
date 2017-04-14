@@ -17,6 +17,11 @@ public class SendMailScenario implements Scenario {
     }
 
     @Override
+    public String getName() {
+        return context.getString(R.string.scenario_send_mail);
+    }
+
+    @Override
     public boolean decideOn(String msg) {
         return msg.equals(context.getResources().getString(R.string.main_button_send_the_conversation_to_e_mail));
     }

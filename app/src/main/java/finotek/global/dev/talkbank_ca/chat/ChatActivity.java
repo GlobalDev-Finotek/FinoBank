@@ -110,8 +110,14 @@ public class ChatActivity extends AppCompatActivity {
 		binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 
-		mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper);
+		Intent intent = getIntent();
 
+
+		if (intent != null) {
+			boolean isSigned = intent.getBooleanExtra("isSigned", true);
+			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
+
+		}
 		MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
 					if (msg instanceof EnableToEditMoney) {

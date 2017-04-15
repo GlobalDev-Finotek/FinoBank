@@ -13,6 +13,7 @@ import android.widget.LinearLayout;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
@@ -93,6 +94,9 @@ public class SignRegistrationActivity extends AppCompatActivity {
 							dialog.setButtonText(getString(R.string.setting_string_yes));
 							dialog.setDoneListener(() -> {
 								Intent intent2 = new Intent(SignRegistrationActivity.this, nextClass);
+								if(nextClass.equals(ChatActivity.class)) {
+									intent2.putExtra("isSigned", true);
+								}
 								intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
 								intent2.putExtras(intent.getExtras());
 								startActivity(intent2);

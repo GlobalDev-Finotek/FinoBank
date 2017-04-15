@@ -275,6 +275,8 @@
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
 
+    <string name="dialog_chat_verified_signed">Currently, the contextual score is %d. Authentication is succeeded by e-signature.</string>
+
     <string name="scenario_account">Open Account</string>
     <string name="scenario_loan">Secured Microcredit</string>
     <string name="scenario_send_mail">Send Conversations To Email</string>

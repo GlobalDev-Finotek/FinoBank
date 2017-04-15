@@ -54,7 +54,7 @@ public class MainScenario {
 	private Map<String, Scenario> scenarioPool;
 	private DBHelper dbHelper;
 
-	public MainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper) {
+	public MainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
 		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
@@ -95,7 +95,7 @@ public class MainScenario {
 		chatView.setLayoutManager(manager);
 
 		// 초기 시나리오 진행
-		this.firstScenario();
+		this.firstScenario(isSigned);
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
@@ -107,7 +107,7 @@ public class MainScenario {
 		currentScenario = null;
 	}
 
-	private void firstScenario() {
+	private void firstScenario(boolean isSigned) {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 		eventBus.getObservable()
 				.subscribe(iEvent -> {
@@ -118,8 +118,13 @@ public class MainScenario {
 
 					if (iEvent instanceof AccuracyMeasureEvent) {
 						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-						MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
-						MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
+						if (isSigned) {
+							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100))));
+						} else {
+							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
+							MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
+						}
+
 					}
 				});
 	}

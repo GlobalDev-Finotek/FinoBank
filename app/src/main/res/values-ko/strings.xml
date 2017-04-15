@@ -270,6 +270,8 @@
     <string name="setting_string_english">English</string>
     <string name="string_confirm">확인</string>
 
+    <string name="dialog_chat_verified_signed">현재 맥락 점수는 %d 점으로, 자필 서명인증을 통해 본인 인증 되었습니다</string>
+
     <string name="scenario_account">계좌 개설</string>
     <string name="scenario_loan">소액 담보 대출</string>
     <string name="scenario_send_mail">상담 메일 보내기</string>

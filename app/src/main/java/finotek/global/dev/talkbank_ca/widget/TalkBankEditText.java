@@ -3,6 +3,9 @@ package finotek.global.dev.talkbank_ca.widget;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.TypefaceSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
 
@@ -65,9 +68,17 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
         setDefaultFontSize();
 	}
 
+
 	private void init(Context context) {
 		Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Regular-Hestia.otf");
 		setTypeface(typeface);
+		setTextColor(ContextCompat.getColor(context, R.color.dark_50));
+
+		TypefaceSpan typefaceSpan = new CustomTypefaceSpan(typeface);
+		SpannableString spannableString = new SpannableString("");
+		spannableString.setSpan(typefaceSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
+
+		setHint(spannableString);
 
 		setOnFocusChangeListener((v, hasFocus) -> {
 			if (hasFocus) {
@@ -92,6 +103,10 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 		onModeChangeListener.onModeChange(mode);
 	}
 
+	public void setDefaultFontSize() {
+		setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
+	}
+
 	public enum MODE {
 		NORMAL, DISABLED, FOCUS, ERROR
 	}
@@ -99,8 +114,4 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 	interface OnModeChangeListener {
 		void onModeChange(MODE mode);
 	}
-
-    public void setDefaultFontSize(){
-        setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
-    }
 }

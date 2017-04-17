@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Talk Bank</string>
+    <string name="app_name">TalkBank</string>
     <string name="registration_string_register">Register</string>
     <string name="registration_string_basic_information">Your account</string>
     <string name="registration_string_phone_number">Phone number</string>
@@ -56,7 +56,7 @@
     <string name="registration_string_pin_code_type">Please type 6 digit PIN code</string>
     <string name="registration_string_pin_code_color_verify">When you try to verify PIN code, text and background color should be matched with registered color</string>
     <string name="registration_string_secure_keyboard_operating">Operating secured keyboard</string>
-    <string name="main_string_talkbank">Talk Bank</string>
+    <string name="main_string_talkbank">TalkBank</string>
     <string name="main_actoin_settings">Settings</string>
     <string name="main_action_seach">Seach</string>
     <string name="main_action_edit">Edit</string>

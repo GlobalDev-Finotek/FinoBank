@@ -12,9 +12,10 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@android:color/white"
+            android:textAlignment="center"
             android:text="@string/more_button"
             android:textColor="@color/primary"
-            android:drawableLeft="@drawable/ic_add_circle_outline_white_24dp"
+            android:drawableLeft="@drawable/btn_cplus"
             style="?android:attr/borderlessButtonStyle"
         />
     </RelativeLayout>

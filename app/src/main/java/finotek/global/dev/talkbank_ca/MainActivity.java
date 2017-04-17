@@ -4,7 +4,6 @@ package finotek.global.dev.talkbank_ca;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -17,15 +16,12 @@ import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
-import java.util.Locale;
-
 import javax.inject.Inject;
 
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.ChatActivity;
-import finotek.global.dev.talkbank_ca.databinding.ActivityMainBinding;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerMainComponent;
 import finotek.global.dev.talkbank_ca.inject.component.MainComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
@@ -33,6 +29,7 @@ import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
+import io.realm.Realm;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 
 
@@ -98,13 +95,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 	}
 
 	private void moveToNextActivity(boolean isValidUser) {
-
-		Intent intent;
 		if (isValidUser) {
-			intent = new Intent(this, ChatActivity.class);
-			intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-			startActivity(intent);
-			finish();
+            Intent intent = new Intent(this, ChatActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            startActivity(intent);
+            finish();
 		}
 
 	}

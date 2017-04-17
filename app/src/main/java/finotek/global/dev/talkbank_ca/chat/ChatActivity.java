@@ -114,10 +114,10 @@ public class ChatActivity extends AppCompatActivity {
 
 
 		if (intent != null) {
-			boolean isSigned = intent.getBooleanExtra("isSigned", true);
+			boolean isSigned = intent.getBooleanExtra("isSigned", false);
 			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
-
 		}
+
 		MessageBox.INSTANCE.observable
 				.flatMap(msg -> {
 					if (msg instanceof EnableToEditMoney) {

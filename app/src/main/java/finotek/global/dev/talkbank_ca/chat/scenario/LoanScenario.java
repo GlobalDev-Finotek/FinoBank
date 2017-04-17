@@ -2,6 +2,8 @@ package finotek.global.dev.talkbank_ca.chat.scenario;
 
 import android.content.Context;
 
+import org.joda.time.DateTime;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,12 +13,14 @@ import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
+import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
 public class LoanScenario implements Scenario {
     private Context context;
@@ -36,6 +40,8 @@ public class LoanScenario implements Scenario {
         switch(msg) {
             case "집을 담보로 대출 받고 싶어":
             case "소액 담보 대출":
+            case "소액 담보대출":
+            case "소액담보 대출":
             case "소액담보대출":
             case "담보 대출":
             case "담보대출":
@@ -51,10 +57,18 @@ public class LoanScenario implements Scenario {
     public void onReceive(Object msg) {
         if(msg instanceof SignatureVerified) {
             if(step == Step.Last) {
+                // 입금내역 추가
+                TransactionDB.INSTANCE.deposit(50000000);
+                TransactionDB.INSTANCE.addTx(
+                    new Transaction(context.getString(R.string.main_string_secured_mirocredit),
+                        1, 50000000, TransactionDB.INSTANCE.getBalance(), new DateTime()
+                    ));
+
                 MessageBox.INSTANCE.add(new RequestRemoveControls());
                 MessageBox.INSTANCE.add(new AgreementResult());
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)));
-                MessageBox.INSTANCE.add(new Done());
+
+                MessageBox.INSTANCE.delay(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)), 600);
+                MessageBox.INSTANCE.delay(new Done(), 800);
             }
         }
 

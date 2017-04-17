@@ -132,9 +132,9 @@ public class TransferScenario implements Scenario {
 			String name = TransactionDB.INSTANCE.getTxName();
 			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
             int money = TransactionDB.INSTANCE.getMoneyAsInt();
+			MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
 
             if(money >= 1000000) {
-                MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
                 MessageBox.INSTANCE.add(new RequestSignature());
             } else {

@@ -25,7 +25,7 @@ public class RecentTransactionScenario implements Scenario {
         return msg.equals("계좌조회") || msg.equals("계좌 조회") || msg.equals("최근거래내역") ||
                 msg.equals("최근 거래 내역") || msg.equals(context.getString(R.string.dialog_button_recent_transaction)) ||
                 msg.equals(context.getString(R.string.main_string_view_account_details)) || msg.equals("잔액조회") || msg.equals("잔액 조회") || msg.equals("거래내역")
-                || msg.equals("잔액") || msg.equals("최근거래 보기");
+                || msg.equals("잔액") || msg.equals("최근거래 보기") || msg.equals("최근 거래내역 보기");
     }
 
     @Override

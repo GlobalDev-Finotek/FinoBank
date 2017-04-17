@@ -42,6 +42,21 @@ public enum MessageBox {
             });
     }
 
+    public void delay(Object msg, int delay){
+        messages.add(msg);
+
+        Flowable.interval(delay, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .first((long) 1)
+                .subscribe(value -> {
+                    if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
+                        observable.onNext(new WaitForMessage());
+                    }
+
+                    observable.onNext(msg);
+                });
+    }
+
     public void removeAt(int index) {
         messages.remove(index);
     }

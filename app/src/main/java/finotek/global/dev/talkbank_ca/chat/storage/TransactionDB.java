@@ -45,6 +45,10 @@ public enum TransactionDB {
         this.balance -= money;
     }
 
+    public void deposit(int money){
+        this.balance += money;
+    }
+
     public String getTxName() {
         return txName;
     }

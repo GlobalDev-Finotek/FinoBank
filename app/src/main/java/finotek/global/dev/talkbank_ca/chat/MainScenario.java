@@ -134,33 +134,36 @@ public class MainScenario {
 	private void onRequest(Object msg) {
 		if (msg instanceof SendMessage) {
 			SendMessage recv = (SendMessage) msg;
-			Iterator<String> keySet = scenarioPool.keySet().iterator();
 
-			while (keySet.hasNext()) {
-				String key = keySet.next();
-				Scenario scenario = scenarioPool.get(key);
+            if(!recv.isOnlyDisplay()) {
+                Iterator<String> keySet = scenarioPool.keySet().iterator();
 
-				if (scenario.decideOn(recv.getMessage())) {
-                    if(currentScenario != null) {
-                        MessageBox.INSTANCE.add(new RequestRemoveControls());
-                        MessageBox.INSTANCE.add(new StatusMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
+                while (keySet.hasNext()) {
+                    String key = keySet.next();
+                    Scenario scenario = scenarioPool.get(key);
 
-                        currentScenario.clear();
-                        scenario.clear();
-                        currentScenario = scenario;
-                        break;
-                    } else {
-                        currentScenario = scenario;
-                        currentScenario.clear();
+                    if (scenario.decideOn(recv.getMessage())) {
+                        if (currentScenario != null) {
+                            MessageBox.INSTANCE.add(new RequestRemoveControls());
+                            MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
+
+                            currentScenario.clear();
+                            scenario.clear();
+                            currentScenario = scenario;
+                            break;
+                        } else {
+                            currentScenario = scenario;
+                            currentScenario.clear();
+                        }
                     }
-				}
-			}
+                }
 
-			if (currentScenario == null) {
-				this.respondToSendMessage(recv.getMessage());
-			} else {
-				currentScenario.onUserSend(recv.getMessage());
-			}
+                if (currentScenario == null) {
+                    this.respondToSendMessage(recv.getMessage());
+                } else {
+                    currentScenario.onUserSend(recv.getMessage());
+                }
+            }
 		} else {
 			if (currentScenario != null)
 				currentScenario.onReceive(msg);

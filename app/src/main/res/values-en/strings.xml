@@ -205,7 +205,7 @@
     <string name="string_save">Save</string>
     <string name="string_transfer">Transfer</string>
     <string name="string_price_unit">Price Unit</string>
-    <string name="dialog_string_context_auth">Context authentication</string>
+    <string name="dialog_string_context_auth">Context authentication (basic)</string>
     <string name="string_send">Send</string>
     <string name="string_setting">Setting</string>
     <string name="string_loan">Loan</string>
@@ -219,7 +219,7 @@
     <string name="dialog_string_won">Won</string>
     <string name="setting_string_voice_recognition">Authentication voice</string>
     <string name="setting_string_under">Less</string>
-    <string name="setting_string_suspicious_auth">Setting for fraud or unexpected situation</string>
+    <string name="setting_string_suspicious_auth">Settings for unexpected situation</string>
     <string name="setting_string_six_digit">Please type six digit PIN code</string>
     <string name="setting_string_secure_keyboard_operating">Operating secured keyboard</string>
     <string name="setting_string_registered_signature_purpose">Registered signature will be used for log-in and personal verification purpose</string>
@@ -235,7 +235,7 @@
     <string name="setting_string_auth_method_add">Add more authentication method</string>
     <string name="setting_string_auth_method_select_1">Select authentication methods (you are required to select more than one)</string>
     <string name="setting_string_auth_method_select_2">Select authentication methods (you are required to select more than two)</string>
-    <string name="setting_string_context_auth">Context authentication (basic)</string>
+    <string name="setting_string_context_auth">Context authentication</string>
     <string name="setting_string_edit_manually">Direct type</string>
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="setting_string_over">More</string>
@@ -275,7 +275,7 @@
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
 
-    <string name="dialog_chat_verified_signed">Currently, the contextual score is %d. Authentication is succeeded by e-signature.</string>
+    <string name="dialog_chat_verified_signed">Currently, the contextual score is %d.\nAuthentication is succeeded by e-signature.</string>
 
     <string name="scenario_account">Open Account</string>
     <string name="scenario_loan">Secured Microcredit</string>

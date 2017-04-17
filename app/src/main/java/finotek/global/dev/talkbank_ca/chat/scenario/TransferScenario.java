@@ -28,6 +28,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
+import io.realm.Realm;
 
 public class TransferScenario implements Scenario {
 	private DBHelper dbHelper;
@@ -57,6 +58,9 @@ public class TransferScenario implements Scenario {
 			String name = action.getName();
 			String money = NumberFormat.getNumberInstance().format(action.getMoney());
 
+			Realm realm = Realm.getDefaultInstance();
+			User user = realm.where(User.class).findAll().last();
+
             String message = "";
             if(action.getType() == TransferTo.TransactionType.ToSomeone) {
                 message = context.getResources().getString(R.string.dialog_chat_transfer_to_someone, name, money);
@@ -64,7 +68,7 @@ public class TransferScenario implements Scenario {
             } else {
                 DateTime dateTime = new DateTime();
                 int day = dateTime.getDayOfMonth();
-                message = context.getResources().getString(R.string.dialog_chat_transaction, name, money, day);
+                message = context.getResources().getString(R.string.dialog_chat_transaction, user.getName(), money, day);
                 step = Step.TransferByAI;
             }
 

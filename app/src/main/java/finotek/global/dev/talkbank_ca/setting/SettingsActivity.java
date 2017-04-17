@@ -61,26 +61,6 @@ public class SettingsActivity extends AppCompatActivity {
 					startActivity(intent);
 				});
 
-
-		RxView.clicks(binding.llLanguageSetting)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-
-					LanguageSelectDialog languageSelectDialog = new LanguageSelectDialog(this);
-					languageSelectDialog.setDoneListener(locale -> {
-						LocaleHelper.setLocale(SettingsActivity.this, locale);
-
-						Intent i = getBaseContext().getPackageManager()
-								.getLaunchIntentForPackage(getBaseContext().getPackageName());
-						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-						startActivity(i);
-						finish();
-					});
-
-					languageSelectDialog.show();
-
-				});
-
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd(" + BuildConfig.VERSION_CODE + ")");
 		String currentDateandTime = sdf.format(new Date());
 		binding.tvCurrentVersion.setText("ver." + currentDateandTime);

@@ -34,6 +34,7 @@ public class TransferScenario implements Scenario {
 	private DBHelper dbHelper;
 	private Context context;
 	private Step step = Step.Initial;
+	private boolean isProceeding = true;
 
 	public TransferScenario(Context context, DBHelper dbHelper) {
 		this.context = context;
@@ -88,6 +89,7 @@ public class TransferScenario implements Scenario {
         }
 
 		if (msg instanceof MoneyTransferred) {
+			isProceeding = false;
             String name = TransactionDB.INSTANCE.getTxName();
             String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
             int money = TransactionDB.INSTANCE.getMoneyAsInt();
@@ -198,6 +200,11 @@ public class TransferScenario implements Scenario {
 		step = Step.Initial;
 		TransactionDB.INSTANCE.setTxMoney("");
 		TransactionDB.INSTANCE.setTxName("");
+	}
+
+	@Override
+	public boolean isProceeding() {
+		return isProceeding;
 	}
 
 	private void selectAccounts() {

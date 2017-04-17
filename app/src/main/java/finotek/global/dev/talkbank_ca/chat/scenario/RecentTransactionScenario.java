@@ -55,4 +55,9 @@ public class RecentTransactionScenario implements Scenario {
     public void clear() {
 
     }
+
+    @Override
+    public boolean isProceeding() {
+        return true;
+    }
 }

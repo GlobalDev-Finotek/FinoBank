@@ -89,6 +89,11 @@ public class AccountScenario implements Scenario {
         step = Step.Initial;
     }
 
+    @Override
+    public boolean isProceeding() {
+        return true;
+    }
+
     private enum Step {
         Initial, CheckIDCard, TakeSign, Last
     }

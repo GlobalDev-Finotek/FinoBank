@@ -143,8 +143,9 @@ public class MainScenario {
                     Scenario scenario = scenarioPool.get(key);
 
                     if (scenario.decideOn(recv.getMessage())) {
-                        if (currentScenario != null) {
-                            MessageBox.INSTANCE.add(new RequestRemoveControls());
+                        MessageBox.INSTANCE.add(new RequestRemoveControls());
+
+                        if (currentScenario != null && currentScenario.isProceeding()) {
                             MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
 
                             currentScenario.clear();

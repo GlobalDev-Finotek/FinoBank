@@ -54,4 +54,9 @@ public class SendMailScenario implements Scenario {
     public void clear() {
         step = 0;
     }
+
+    @Override
+    public boolean isProceeding() {
+        return true;
+    }
 }

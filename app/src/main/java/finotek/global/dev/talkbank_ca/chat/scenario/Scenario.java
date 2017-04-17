@@ -6,4 +6,5 @@ public interface Scenario {
     void onUserSend(String msg);
     String getName();
     void clear();
+    boolean isProceeding();
 }

@@ -64,6 +64,11 @@
 
             </FrameLayout>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_two"/>
+
             <LinearLayout
                 android:id="@+id/ll_inst_wrapper"
                 android:layout_width="match_parent"

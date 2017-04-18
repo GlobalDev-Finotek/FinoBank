@@ -11,6 +11,7 @@
         android:xlargeScreens="true"/>
 
     <uses-permission android:name="android.permission.CAMERA"/>
+
     <uses-feature android:name="android.hardware.camera2"/>
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
@@ -28,35 +29,51 @@
         <activity
             android:name=".SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".user.UserRegistrationActivity">
+        <activity
+            android:name=".user.UserRegistrationActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".user.sign.SignRegistrationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
-
-        <activity android:name=".user.profile.CaptureProfilePicActivity">
+        <activity
+            android:name=".user.profile.CaptureProfilePicActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".user.PinRegistrationActivity">
+        <activity
+            android:name=".user.PinRegistrationActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".user.credit.CreditRegistrationActivity"/>
-        <activity android:name=".setting.SettingsActivity"/>
-        <activity android:name=".setting.SettingDetailActivity"/>
+        <activity
+            android:name=".user.credit.CreditRegistrationActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".setting.SettingsActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".setting.SettingDetailActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".MainActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
-
         </activity>
-
         <activity
             android:name=".chat.ChatActivity"
-            android:label="톡뱅">
+            android:label="톡뱅"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".chat.TransactionViewMoreActivity">
         </activity>
     </application>
+
 </manifest>

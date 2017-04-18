@@ -32,7 +32,6 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v13.app.FragmentCompat;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
 import android.util.Size;
 import android.util.SparseIntArray;
 import android.view.Display;
@@ -439,33 +438,24 @@ public class CapturePicFragment extends Fragment
 
 		binding.tvInst.setText(getString(R.string.registration_string_fits_area_take_picture));
 
-		binding.ibReload.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				unlockFocus();
-				binding.tvInst.setText(getString(R.string.registration_string_fits_area_take_picture));
-				binding.ibCapture.setVisibility(View.VISIBLE);
-				binding.ibOk.setVisibility(View.GONE);
-				binding.ibReload.setVisibility(View.GONE);
-				isCaptureDone = false;
-			}
-		});
-
 		binding.ibCapture.setOnClickListener(v -> {
 			binding.tvInst.setText("");
-
-
+			if (isCaptureDone) {
+				unlockFocus();
+				binding.tvInst.setText(getString(R.string.registration_string_fits_area_take_picture));
+				binding.ibCapture.setImageDrawable(ContextCompat.getDrawable(getActivity(),
+						R.drawable.btn_camera));
+				binding.ibOk.setVisibility(View.GONE);
+				isCaptureDone = false;
+			} else {
 				lockFocus();
-
-			binding.ibCapture.setVisibility(View.GONE);
-			binding.ibReload.setVisibility(View.VISIBLE);
+				binding.ibCapture.setImageDrawable(ContextCompat.getDrawable(getActivity(),
+						R.drawable.btn_reload));
 				binding.ibOk.setVisibility(View.VISIBLE);
-			binding.ibSize.setVisibility(View.GONE);
+				binding.ibSize.setVisibility(View.GONE);
+			}
 
 		});
-
-		DrawableCompat.setTint(binding.ibCapture.getDrawable(),
-				ContextCompat.getColor(getActivity(), R.color.colorPrimary));
 
 		binding.ibOk.setOnClickListener(v1 -> {
 			if (isCaptureDone) {
@@ -666,7 +656,6 @@ public class CapturePicFragment extends Fragment
 	}
 
 	/**
-
 	 */
 	@RequiresApi(api = Build.VERSION_CODES.M)
 	public void openCamera(int width, int height) {
@@ -760,8 +749,8 @@ public class CapturePicFragment extends Fragment
 					= mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 			mPreviewRequestBuilder.addTarget(surface);
 
-			//Rect zoomCropPreview = new Rect(594, 411, 1086, 1060); //(1092x820, 4:3 aspect ratio)
-			//mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, zoomCropPreview);
+			// Rect zoomCropPreview = new Rect(1094, 822, 2186, 1660); //(1092x820, 4:3 aspect ratio)
+			// mPreviewRequestBuilder.set(CaptureRequest.SCALER_CROP_REGION, zoomCropPreview);
 
 
 			// Here, we create a CameraCaptureSession for camera preview.
@@ -941,6 +930,9 @@ public class CapturePicFragment extends Fragment
 	 */
 	private void unlockFocus() {
 
+		binding.ibCapture.setImageDrawable(ContextCompat.getDrawable(getActivity(),
+				R.drawable.vector_drawable_icon_reload));
+
 		try {
 			// Reset the auto-focus trigger
 			mPreviewRequestBuilder.set(CaptureRequest.CONTROL_AF_TRIGGER,
@@ -968,7 +960,6 @@ public class CapturePicFragment extends Fragment
 		void onSizeFull();
 		void onSizeMinimize();
 	}
-
 
 
 	public interface OnCaptureListener {

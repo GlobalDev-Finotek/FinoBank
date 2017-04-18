@@ -25,6 +25,11 @@ public class AccountScenario implements Scenario {
     }
 
     @Override
+    public String getName() {
+        return context.getString(R.string.scenario_account);
+    }
+
+    @Override
     public boolean decideOn(String msg) {
 	    return msg.equals(context.getResources().getString(R.string.main_string_open_account)) || msg.equals("계좌개설");
     }
@@ -66,7 +71,7 @@ public class AccountScenario implements Scenario {
             // 본인이 맞으세요?
             case TakeSign:
                 if (msg.equals(context.getString(R.string.string_yes))) {
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_finger_tip_sign_user_register)));
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_sign_tip)));
                     MessageBox.INSTANCE.add(new RequestSignature());
                     step = Step.Last;
                 } else if (msg.equals(context.getString(R.string.string_no))) {
@@ -82,6 +87,11 @@ public class AccountScenario implements Scenario {
     @Override
     public void clear() {
         step = Step.Initial;
+    }
+
+    @Override
+    public boolean isProceeding() {
+        return true;
     }
 
     private enum Step {

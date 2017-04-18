@@ -133,7 +133,7 @@
     <string name="dialog_chat_verified_context_data">Result of analyzing context data is %1$d.\n Authentication is succeeded.</string>
     <string name="dialog_chat_ask_help">Hello %s How may I help you</string>
     <string name="dialog_button_open_account">Open account</string>
-    <string name="dialog_chat_recommandation">%s.\nI would like to recommend Finocation smart account.\n"Do you want to continue opening account?"</string>
+    <string name="dialog_chat_recommandation">Based on the results of %1$s\'s context data analysis, we recommend "TalkBang Smart Account".\n\n"TalkBang Smart Account" is a product that is used by customers with the same age and consumption patterns as %1$s.\n\nWould you like to open an account?</string>
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
     <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.\n What can I do for you?</string>
@@ -146,15 +146,20 @@
     <string name="dialog_string_license_number">Driver\'s license number</string>
     <string name="dialog_chat_correct_information">Is the above information correct?</string>
     <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>
-    <string name="dialog_chat_finger_tip_sign">Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
+    <string name="dialog_chat_finger_tip_sign">Sign your e-signature in the marked area by using fingertip, not finger nail</string>
+    <string name="dialog_chat_open_account_sign_tip">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. Is there anything else that I can help you with?</string>
     <string name="dialog_chat_anything_help">Is there anything else that I can help you with?</string>
-    <string name="dialog_chat_transaction">I\'ve checked your monthly transaction history. Would you like to transfer %1$s won to %2$s(010-5678-1234).</string>
-    <string name="dialog_button_transfer_other">Transfer to others</string>
+    <string name="dialog_chat_after_transfer_by_ai">Electric rates of %1$s won was transferred. Your current balance is %2$s won.\n\nAdditionally\nI checked %3$s \'s schedule\nTomorrow is mother\'s birthday.\n\nTo Mother (010&#8211;9876&#8211;5432)\nWould you like to transfer 1,000,000 won like last year\'s birthday?</string>
+    <string name="dialog_chat_after_transfer_to_mother">Mother</string>
+    <string name="dialog_chat_electricity_fare">Electric rates</string>
+    <string name="dialog_chat_transaction">I analyzed the context data of %1$s, You paid the electricity bill every month on the %3$d th.\n\nI checked your SMS message. This month\'s bill is %2$s won.\n\nWould you like to transfer the electricity bill of %2$s won?</string>
+    <string name="dialog_chat_transfer_to_someone">Would you like to transfer %2$s won to %1$s(010&#8211;5678&#8211;1234)?</string>
+    <string name="dialog_button_transfer_other">Talkbank AI Recommendation Transfer</string>
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
-    <string name="dialog_chat_after_transfer">You\'ve transferred %2$s won to %1$s(010-5678-1234). Your current balance is %3$s won. \n\n Is there anything else that I can help you with?</string>s
-    <string name="dialog_chat_send_transfer">Transfer %2$s won to\n%1$s (010-5678-1234)</string>
+    <string name="dialog_chat_after_transfer">You\'ve transferred %2$s won to %1$s(010&#8211;5678&#8211;1234). Your current balance is %3$s won. \n\n Is there anything else that I can help you with?</string>s
+    <string name="dialog_chat_send_transfer">Transfer %2$s won to\n%1$s (010&#8211;5678&#8211;1234)</string>
     <string name="dialog_button_recent_transaction">Recent Transactions</string>
     <string name="dialog_button_transfer_add">Additional Transfer</string>
     <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
@@ -184,7 +189,7 @@
     <string name="dialog_message_error">An unknown error has occurred! Please try again later.</string>
     <string name="dialog_contact">Contact</string>
     <string name="dialog_message_processing">Your message is being processed right now. Please wait.</string>
-    <string name="dialog_string_lack_of_balance">There is not enough balance.\nPlease re-enter the amount that you want to transfer.</string>
+    <string name="dialog_string_lack_of_balance">There is not enough balance.\nPlease re-enter the amount that\n"you want to transfer.</string>
     <string name="registration_string_signature">E-signature</string>
     <string name="setting_string_save">Save</string>
     <string name="setting_string_allowed_time">It\'s only activated in allowed time.</string>
@@ -200,7 +205,7 @@
     <string name="string_save">Save</string>
     <string name="string_transfer">Transfer</string>
     <string name="string_price_unit">Price Unit</string>
-    <string name="dialog_string_context_auth">Context authentication</string>
+    <string name="dialog_string_context_auth">Context authentication (basic)</string>
     <string name="string_send">Send</string>
     <string name="string_setting">Setting</string>
     <string name="string_loan">Loan</string>
@@ -214,7 +219,7 @@
     <string name="dialog_string_won">Won</string>
     <string name="setting_string_voice_recognition">Authentication voice</string>
     <string name="setting_string_under">Less</string>
-    <string name="setting_string_suspicious_auth">Setting for fraud or unexpected situation</string>
+    <string name="setting_string_suspicious_auth">Settings for unexpected situation</string>
     <string name="setting_string_six_digit">Please type six digit PIN code</string>
     <string name="setting_string_secure_keyboard_operating">Operating secured keyboard</string>
     <string name="setting_string_registered_signature_purpose">Registered signature will be used for log-in and personal verification purpose</string>
@@ -222,7 +227,7 @@
     <string name="dialog_chat_preview">Preview</string>
     <string name="dialog_chat_save">Save</string>
     <string name="registration_button_pin_code_chanage">Change PIN code</string>
-    <string name="registration_string_signature_twice">You will be signing twice to confirm your e-signaute.</string>
+    <string name="registration_string_signature_twice">You will be signing twice to confirm your e-signature.</string>
     <string name="setting_string_amount">Amount of transfer</string>
     <string name="setting_string_amount_auth">Authentication for amount of money</string>
     <string name="setting_string_auth_message">Authentication message</string>
@@ -230,7 +235,7 @@
     <string name="setting_string_auth_method_add">Add more authentication method</string>
     <string name="setting_string_auth_method_select_1">Select authentication methods (you are required to select more than one)</string>
     <string name="setting_string_auth_method_select_2">Select authentication methods (you are required to select more than two)</string>
-    <string name="setting_string_context_auth">Context authentication (basic)</string>
+    <string name="setting_string_context_auth">Context authentication</string>
     <string name="setting_string_edit_manually">Direct type</string>
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="setting_string_over">More</string>
@@ -244,7 +249,7 @@
     <string name="dialog_string_input_message">Please input a message.</string>
     <string name="dialog_chat_recognize_error">Can\'t understand what you said.\n Press \'+\' button to select the menu</string>
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
-    <string name="dialog_string_email_sent">Sent</string>
+    <string name="dialog_string_email_sent">An email has been sent.</string>
     <string name="dialog_string_email_cancel">Cancel</string>
     <string name="dialog_string_select_receiver">Please select someone who you want to transfer.</string>
     <string name="dialog_chat_send_to">send</string>
@@ -252,6 +257,7 @@
     <string name="dialog_chat_current_balance">Current balance is %1$s</string>
     <string name="dialog_chat_transferred">transferred</string>
     <string name="dialog_chat_transferred_price_unit">won</string>
+    <string name="dialog_chat_scenario_is_cancelled">\"%1$s\" has been cancelled,\nProceed to \"%2$s\".</string>
     <string name="dialog_string_import_from_contact">Import from contact</string>
     <string name="common_string_warning">Warning</string>
     <string name="registration_string_please_sign_in">Please sign in the marked area</string>
@@ -268,4 +274,12 @@
     <string name="friday">Fri</string>
     <string name="saturday">Sat</string>
     <string name="sunday">Sun</string>
+
+    <string name="dialog_chat_verified_signed">Currently, the contextual score is %d.\nAuthentication is succeeded by e-signature.</string>
+
+    <string name="scenario_account">Open Account</string>
+    <string name="scenario_loan">Secured Microcredit</string>
+    <string name="scenario_send_mail">Send Conversations To Email</string>
+    <string name="scenario_transfer">Transfer</string>
+    <string name="more_button">More</string>
 </resources>

@@ -30,6 +30,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
@@ -54,7 +55,7 @@ public class MainScenario {
 	private Map<String, Scenario> scenarioPool;
 	private DBHelper dbHelper;
 
-	public MainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper) {
+	public MainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
 		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
@@ -95,10 +96,11 @@ public class MainScenario {
 		chatView.setLayoutManager(manager);
 
 		// 초기 시나리오 진행
-		this.firstScenario();
+		this.firstScenario(isSigned);
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
+        scenarioPool.put("recentTransaction", new RecentTransactionScenario(context, dbHelper));
 		scenarioPool.put("transfer", new TransferScenario(context, dbHelper));
 		scenarioPool.put("loan", new LoanScenario(context));
 		scenarioPool.put("account", new AccountScenario(context));
@@ -107,19 +109,24 @@ public class MainScenario {
 		currentScenario = null;
 	}
 
-	private void firstScenario() {
+	private void firstScenario(boolean isSigned) {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 		eventBus.getObservable()
 				.subscribe(iEvent -> {
 					Log.d("FINO-TB", iEvent.getClass().getName());
 
-					Realm realm = Realm.getDefaultInstance();
-					User user = realm.where(User.class).findAll().last();
-
 					if (iEvent instanceof AccuracyMeasureEvent) {
+                        Realm realm = Realm.getDefaultInstance();
+                        User user = realm.where(User.class).findAll().last();
+
 						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-						MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
-						MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
+						if (isSigned) {
+                            MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100))));
+						} else {
+                            MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
+						}
+
+                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
 					}
 				});
 	}
@@ -128,26 +135,36 @@ public class MainScenario {
 		if (msg instanceof SendMessage) {
 			SendMessage recv = (SendMessage) msg;
 
-			if (currentScenario == null) {
-				Iterator<String> keySet = scenarioPool.keySet().iterator();
+            if(!recv.isOnlyDisplay()) {
+                Iterator<String> keySet = scenarioPool.keySet().iterator();
 
-				while (keySet.hasNext()) {
-					String key = keySet.next();
-					Scenario scenario = scenarioPool.get(key);
+                while (keySet.hasNext()) {
+                    String key = keySet.next();
+                    Scenario scenario = scenarioPool.get(key);
 
-					if (scenario.decideOn(recv.getMessage())) {
-						currentScenario = scenario;
-						currentScenario.clear();
-						break;
-					}
-				}
-			}
+                    if (scenario.decideOn(recv.getMessage())) {
+                        MessageBox.INSTANCE.add(new RequestRemoveControls());
 
-			if (currentScenario == null) {
-				this.respondToSendMessage(recv.getMessage());
-			} else {
-				currentScenario.onUserSend(recv.getMessage());
-			}
+                        if (currentScenario != null && currentScenario.isProceeding()) {
+                            MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
+
+                            currentScenario.clear();
+                            scenario.clear();
+                            currentScenario = scenario;
+                            break;
+                        } else {
+                            currentScenario = scenario;
+                            currentScenario.clear();
+                        }
+                    }
+                }
+
+                if (currentScenario == null) {
+                    this.respondToSendMessage(recv.getMessage());
+                } else {
+                    currentScenario.onUserSend(recv.getMessage());
+                }
+            }
 		} else {
 			if (currentScenario != null)
 				currentScenario.onReceive(msg);
@@ -242,24 +259,7 @@ public class MainScenario {
 
 	private void respondToSendMessage(String msg) {
 		String s = msg.trim();
-		if (s.equals("계좌조회") || s.equals("계좌 조회") || s.equals("최근거래내역") ||
-				s.equals("최근 거래 내역") || s.equals(context.getString(R.string.dialog_button_recent_transaction)) ||
-				s.equals(context.getString(R.string.main_string_view_account_details)) || s.equals("잔액조회") || s.equals("잔액 조회") || s.equals("거래내역")
-                || s.equals("잔액") || s.equals("최근거래 보기")) {
-
-			dbHelper.get(User.class).subscribe(users -> {
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
-						users.last().getName())));
-				RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
-				MessageBox.INSTANCE.add(rt);
-			}, throwable -> {
-
-			});
-
-
-		} else {
-			MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_recognize_error)));
-		}
+        MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_recognize_error)));
 	}
 
 	private boolean isImmediateMessage(Object msg) {

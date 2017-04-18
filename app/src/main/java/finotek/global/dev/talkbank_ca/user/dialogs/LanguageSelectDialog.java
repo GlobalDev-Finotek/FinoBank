@@ -18,6 +18,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.DialogLanguageSelectBinding;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 /**
@@ -57,6 +58,7 @@ public class LanguageSelectDialog extends Dialog {
 					this.dismiss();
 				});
 
+		setInitLocale();
 
 		binding.rbEnglish.setOnCheckedChangeListener((buttonView, isChecked) -> {
 			if (isChecked) {
@@ -106,6 +108,17 @@ public class LanguageSelectDialog extends Dialog {
 		this.setCanceledOnTouchOutside(false);
 		getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 		super.show();
+	}
+
+	private void setInitLocale() {
+
+		String locale = LocaleHelper.getLanguage(getContext());
+		if (locale.equals("ko")) {
+			binding.rbKorean.setChecked(true);
+		} else if (locale.equals("en")) {
+			binding.rbEnglish.setChecked(true);
+		}
+
 	}
 
 	public interface OnDoneListener {

@@ -17,6 +17,7 @@ public class NumberKeyboard extends GridView {
     private SecureKeyboardAdapter keyboardAdapter;
     private Runnable onCompleteListener = null;
     private EditText currentFocus = null;
+    private int limit;
 
     public NumberKeyboard(Context context) {
         super(context);
@@ -30,13 +31,21 @@ public class NumberKeyboard extends GridView {
         this.setOnItemClickListener((parent, view, position, id) -> {
             String key = (String) keyboardAdapter.getItem(position);
 
+
             if (position != keyboardAdapter.getCount() - 1 && currentFocus != null) {
+
+                if (currentFocus.length() > limit) {
+                    return;
+                }
+
                 String text = currentFocus.getText().toString();
                 if(text.length() < 12) {
                     text = text + key;
                     currentFocus.setText(numberFormat(text));
                 }
             }
+
+
         });
 
         keyboardAdapter.setOnBackPressListener(() -> {
@@ -49,6 +58,10 @@ public class NumberKeyboard extends GridView {
             if(this.onCompleteListener != null)
                 onCompleteListener.run();
         });
+    }
+
+    public void setLengthLimit(int limit) {
+        this.limit = limit;
     }
 
     public void addManagableTextField(final EditText editText){

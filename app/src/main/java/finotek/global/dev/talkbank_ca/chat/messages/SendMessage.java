@@ -11,6 +11,7 @@ public class SendMessage {
     @NonNull
     String message;
     int icon = -1;
+    boolean onlyDisplay = false;
 
     public SendMessage(String message, int icon) {
         this.message = message;

@@ -17,6 +17,7 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 public class CaptureProfilePicActivity extends AppCompatActivity {
 
 	private ActivityCaptureProfilePicBinding binding;
+	private CapturePicFragment capturePicFragment = new CapturePicFragment();
 	private boolean isCaptureDone;
 
 	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -27,25 +28,14 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 				R.layout.activity_capture_profile_pic);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbar.setTitle(getString(R.string.registration_string_profile_register));
+		// binding.toolbar.setTitle(getString(R.string.registration_string_profile_register));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
-
-		CapturePicFragment capturePicFragment = new CapturePicFragment();
 
 		FragmentTransaction transaction = getFragmentManager().beginTransaction();
 		transaction.add(R.id.fl_cam, capturePicFragment);
 		transaction.commit();
 
-		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				LinearLayout.LayoutParams.MATCH_PARENT);
-		binding.flCam.setLayoutParams(lp);
-		binding.appbar.setVisibility(View.GONE);
-
-		LinearLayout.LayoutParams lp2 = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-				Converter.dpToPx(350));
-		binding.flCam.setLayoutParams(lp2);
-		binding.appbar.setVisibility(View.VISIBLE);
 
 		capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
 			@Override
@@ -71,7 +61,7 @@ public class CaptureProfilePicActivity extends AppCompatActivity {
 			if (isCaptureDone) {
 				finish();
 			} else {
-				binding.tvInst.setText("촬영된 화면이 정확한지 확인해 주십시오.");
+				binding.tvInst.setText(getString(R.string.registration_string_picture_check));
 			}
 
 			isCaptureDone = !isCaptureDone;

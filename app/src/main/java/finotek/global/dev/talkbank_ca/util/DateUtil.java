@@ -11,7 +11,7 @@ public class DateUtil {
 	public static String currentDate(Context context) {
 
 		Calendar cal = Calendar.getInstance();
-		int month = cal.get(Calendar.MONTH);
+		int month = cal.get(Calendar.MONTH) + 1;
 		int day = cal.get(Calendar.DAY_OF_MONTH);
 
 		String strWeek = "";
@@ -34,5 +34,4 @@ public class DateUtil {
 
 		return String.format("%02d.%02d %s", month, day, strWeek);
 	}
-
 }

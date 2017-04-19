@@ -7,7 +7,6 @@
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -61,13 +60,33 @@
 
 
             </android.support.design.widget.AppBarLayout>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:text="@string/setting_string_pin_code"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="25dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="46dp"
+                android:layout_marginStart="16dp"
+                android:orientation="horizontal">
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="46dp"
+                    android:gravity="center_vertical"
+                    android:text="\u2022"
+                    android:textColor="@color/bullet"
+                    android:textSize="24sp"
+                    android:theme="@style/Stit"
+                    android:lineSpacingMultiplier="1.5"
+                    tb:custom_font="noto_medium" />
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/talkBankTextView10"
+                    android:layout_width="match_parent"
+                    android:layout_height="46dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="@string/setting_string_pin_code"
+                    android:theme="@style/Stit"
+                    tb:custom_font="noto_medium"/>
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_pincode_wrapper"
@@ -76,7 +95,6 @@
                 android:layout_gravity="center"
                 android:gravity="center"
                 android:orientation="horizontal">
-
             </LinearLayout>
 
             <LinearLayout
@@ -84,7 +102,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/border_white_three_radius"
                 android:orientation="vertical"
                 android:padding="15dp">
@@ -93,65 +111,47 @@
                     android:id="@+id/textView2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:text="@string/registration_string_pin_code_backgorund_color_select">
-                    </TextView>
+                </TextView>
 
-                <GridLayout
+                <LinearLayout
                     android:id="@+id/gl_pin_background"
+                    android:orientation="horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:columnCount="10"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="4dp"
-                    android:rowCount="1"
-                    android:useDefaultMargins="true">
-
-                </GridLayout>
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/textView15"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="@string/registration_string_pin_code_text_color_select">
-                    </TextView>
-
-                <GridLayout
+                    android:text="@string/registration_string_pin_code_text_color_select"
+                    android:layout_marginTop="7dp">
+                </TextView>
+                <LinearLayout
+                    android:orientation="horizontal"
                     android:id="@+id/gl_pin_text_color"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:columnCount="10"
-                    android:paddingBottom="4dp"
-                    android:paddingLeft="15dp"
-                    android:paddingRight="15dp"
-                    android:paddingTop="4dp"
-                    android:rowCount="1"
-                    android:useDefaultMargins="true">
-
-                </GridLayout>
-
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp">
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_inst_wrapper"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="7dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
                     android:paddingLeft="16dp"
-                    android:paddingRight="16dp">
-
+                    android:paddingRight="16dp"
+                    android:layout_marginBottom="3dp">
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -160,13 +160,14 @@
                         android:textColor="@color/bullet"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/talkBankTextView8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:text="@string/registration_string_pin_code_type"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_50"
                         tb:custom_font="noto_regular"/>
                 </LinearLayout>
 
@@ -176,7 +177,6 @@
                     android:orientation="horizontal"
                     android:paddingLeft="16dp"
                     android:paddingRight="16dp">
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -185,16 +185,16 @@
                         android:textColor="@color/bullet"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="4dp"
                         android:layout_weight="1"
                         android:text="@string/registration_string_pin_code_color_verify"
+                        android:textSize="14sp"
+                        android:textColor="@color/dark_50"
                         tb:custom_font="noto_regular"/>
                 </LinearLayout>
-
             </LinearLayout>
             <RelativeLayout
                 android:id="@+id/ll_secure_keyboard"
@@ -202,8 +202,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 android:visibility="invisible">
-
-
                 <GridView
                     android:id="@+id/gv_keypad"
                     android:layout_width="match_parent"
@@ -214,11 +212,8 @@
                     android:background="@color/pale_grey"
                     android:numColumns="4">
                 </GridView>
-
             </RelativeLayout>
-
         </LinearLayout>
-
     </android.support.design.widget.CoordinatorLayout>
 
 

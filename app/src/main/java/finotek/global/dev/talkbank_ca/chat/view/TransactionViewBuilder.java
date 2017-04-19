@@ -52,7 +52,7 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
 		    group.addView(view);
 
             RxView.clicks(binding.transferBtn)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
+                .throttleFirst(3000, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
 	                MessageBox.INSTANCE.add(new ApplyScenario("transfer"));
 	                MessageBox.INSTANCE.add(new TransferTo(tx.getName(), tx.getPrice(), TransferTo.TransactionType.ToSomeone));

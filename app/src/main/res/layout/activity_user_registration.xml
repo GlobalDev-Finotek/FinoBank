@@ -94,7 +94,7 @@
                             android:id="@+id/talkBankTextView"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/white_two"
+                            android:background="@color/setting_title_color"
                             android:gravity="center_vertical"
                             android:paddingBottom="16dp"
                             android:paddingLeft="16dp"

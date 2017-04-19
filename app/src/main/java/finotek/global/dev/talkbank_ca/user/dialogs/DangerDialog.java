@@ -6,8 +6,10 @@ import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -57,6 +59,11 @@ public class DangerDialog extends Dialog {
     public void show() {
         this.setCancelable(false);
         this.setCanceledOnTouchOutside(false);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = (int) ((int)displaymetrics.widthPixels * 0.85);
+
+        getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         super.show();
     }

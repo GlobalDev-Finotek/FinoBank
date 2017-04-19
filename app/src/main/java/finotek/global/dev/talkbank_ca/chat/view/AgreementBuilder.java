@@ -147,7 +147,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
                         MessageBox.INSTANCE.add(new RequestSignature());
                     } else {
                         // TODO 서명해달라는 메세지 표시
-                        Toast.makeText(context, "동의가 필요합니다", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.dialog_chat_string_confirm_message), Toast.LENGTH_SHORT).show();
                     }
 
                 });

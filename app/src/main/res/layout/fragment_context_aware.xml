@@ -184,7 +184,7 @@
                             android:layout_height="match_parent"
                             android:layout_marginTop="10dp"
                             android:layout_weight="1"
-                            android:background="@drawable/border_white_three_radius"
+                            android:background="@drawable/border_time_select"
                             android:orientation="vertical"
                             android:padding="15dp">
                             <LinearLayout
@@ -277,12 +277,14 @@
             android:id="@+id/btn_save"
             style="@style/RoundButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="52dp"
             android:layout_alignParentBottom="true"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_marginBottom="25dp"
             android:text="@string/setting_string_save"
-            android:theme="@style/RoundButton"/>
+            android:textSize="15sp"
+            android:theme="@style/RoundButton"
+            tb:tb_font="noto_medium" />
     </RelativeLayout>
 </layout>

@@ -62,15 +62,10 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		binding.llSecureKeyboard.setVisibility(View.VISIBLE);
 		// Start animation
 		binding.llSecureKeyboard.startAnimation(slide_up);
-
-
 		binding.llPincodeWrapper.setOnClickListener(v -> {
-
-
-			binding.llSecureKeyboard.setVisibility(View.VISIBLE);
+            binding.llSecureKeyboard.setVisibility(View.VISIBLE);
 			// Start animation
 			binding.llSecureKeyboard.startAnimation(slide_up);
-
 		});
 		for (int i = 0; i < PINCODE_LENGTH; ++i) {
 			TextView tv = generatePwdTextView();

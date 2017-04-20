@@ -4,33 +4,39 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical" >
-        <LinearLayout
+        android:orientation="vertical">
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white_two"
-            android:orientation="horizontal"
-            android:paddingBottom="10dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:paddingTop="10dp">
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                android:layout_width="wrap_content"
+            android:paddingBottom="1dp"
+            android:background="@color/white_two">
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginTop="3dp"
-                android:text="@string/setting_string_suspicious_auth"
-                android:textColor="@color/black"
-                android:theme="@style/Title"
-                tb:custom_font="noto_medium"/>
-            <com.suke.widget.SwitchButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                tb:sb_checked="true"
-                tb:sb_checked_color="@color/colorPrimary"
-                tb:sb_show_indicator="false"/>
-        </LinearLayout>
+                android:background="@color/setting_title_color"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="10dp">
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="7dp"
+                    android:text="@string/setting_string_suspicious_auth"
+                    android:textColor="@color/black"
+                    android:theme="@style/Title"
+                    tb:custom_font="noto_medium" />
+                <com.suke.widget.SwitchButton
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    tb:sb_checked="true"
+                    tb:sb_checked_color="@color/colorPrimary"
+                    tb:sb_show_indicator="false" />
+            </LinearLayout>
+        </FrameLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -226,13 +232,14 @@
                 android:id="@+id/btn_save"
                 style="@style/RoundButton"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"
+                android:layout_height="52dp"
                 android:layout_alignParentBottom="true"
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/setting_button_save"/>
+                android:text="@string/setting_button_save"
+                tb:tb_font="noto_medium" />
         </RelativeLayout>
     </LinearLayout>
 </layout>

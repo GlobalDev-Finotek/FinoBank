@@ -210,13 +210,11 @@
         </LinearLayout>
         <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/btn_save"
-            style="@style/RoundButton"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_height="52dp"
+            android:layout_margin="16dp"
             android:text="@string/string_save"
+            style="@style/RoundButton"
             tb:tb_font="noto_medium" />
     </LinearLayout>
 </layout>

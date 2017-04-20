@@ -13,11 +13,14 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import finotek.global.dev.talkbank_ca.R;
+
 public class NumberKeyboard extends GridView {
     private SecureKeyboardAdapter keyboardAdapter;
     private Runnable onCompleteListener = null;
     private EditText currentFocus = null;
     private int limit;
+    private Context context;
 
     public NumberKeyboard(Context context) {
         super(context);
@@ -26,6 +29,7 @@ public class NumberKeyboard extends GridView {
     public NumberKeyboard(Context context, AttributeSet attrs) {
         super(context, attrs);
 
+        this.context = context;
         keyboardAdapter = new SecureKeyboardAdapter(context, transferKeyboardSet());
         this.setAdapter(keyboardAdapter);
         this.setOnItemClickListener((parent, view, position, id) -> {
@@ -115,7 +119,7 @@ public class NumberKeyboard extends GridView {
         set.add("8");
         set.add("9");
         set.add("0");
-        set.add("이체");
+        set.add(context.getResources().getString(R.string.string_transfer));
         return set;
     }
 }

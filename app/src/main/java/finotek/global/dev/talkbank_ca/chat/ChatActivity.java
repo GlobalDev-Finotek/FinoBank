@@ -92,8 +92,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 	private MainScenario mainScenario;
-
-	private CapturePicFragment capturePicFragment;
+    private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 
 	@Override
@@ -101,7 +100,6 @@ public class ChatActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-
 		getComponent().inject(this);
 
 		setSupportActionBar(binding.toolbar);
@@ -109,9 +107,7 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setElevation(0);
 		binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
-
 		Intent intent = getIntent();
-
 
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
@@ -119,22 +115,23 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		MessageBox.INSTANCE.observable
-				.flatMap(msg -> {
-					if (msg instanceof EnableToEditMoney) {
-						return Observable.just(msg)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
-						return Observable.just(msg)
-								.debounce(2, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else {
-						return Observable.just(msg)
-								.delay(2000, TimeUnit.MILLISECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					}
-				})
-				.subscribe(this::onNewMessageUpdated, throwable -> {
-				});
+			.flatMap(msg -> {
+				if (msg instanceof EnableToEditMoney) {
+					return Observable.just(msg)
+							.observeOn(AndroidSchedulers.mainThread());
+				} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
+					return Observable.just(msg)
+							.debounce(2, TimeUnit.SECONDS)
+							.observeOn(AndroidSchedulers.mainThread());
+				} else {
+					return Observable.just(msg)
+							.delay(2000, TimeUnit.MILLISECONDS)
+							.observeOn(AndroidSchedulers.mainThread());
+				}
+			})
+			.subscribe(this::onNewMessageUpdated, throwable -> {
+
+			});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
@@ -311,7 +308,6 @@ public class ChatActivity extends AppCompatActivity {
 		clearInput();
 	}
 
-
 	private void expandControlClickEvent() {
 		if (isExControlAvailable)
 			runOnUiThread(this::hideExControl);
@@ -388,20 +384,18 @@ public class ChatActivity extends AppCompatActivity {
 		ecBinding.extendedControl.setAdapter(adapter);
 
 		RxViewPager.pageSelections(ecBinding.extendedControl)
-				.subscribe(pos -> {
-					if (pos == 0) {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-					} else {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-					}
-				});
+			.subscribe(pos -> {
+				if (pos == 0) {
+					ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+					ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+				} else {
+					ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+					ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+				}
+			});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
-
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
-
 		ctBinding.gvKeypad.onComplete(() -> {
 			// 잔액
 			int balance = TransactionDB.INSTANCE.getBalance();
@@ -412,7 +406,6 @@ public class ChatActivity extends AppCompatActivity {
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-
 
 			if (money > balance) {
 				DangerDialog dialog = new DangerDialog(this);

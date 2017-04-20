@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca.user;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -56,20 +57,25 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			setTextColorCircle(c);
 		}
 
-		Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(),
-				R.anim.slide_up);
-
+		Animation slide_up = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.slide_up);
 		binding.llSecureKeyboard.setVisibility(View.VISIBLE);
 		// Start animation
 		binding.llSecureKeyboard.startAnimation(slide_up);
 		binding.llPincodeWrapper.setOnClickListener(v -> {
             binding.llSecureKeyboard.setVisibility(View.VISIBLE);
-			// Start animation
 			binding.llSecureKeyboard.startAnimation(slide_up);
 		});
-		for (int i = 0; i < PINCODE_LENGTH; ++i) {
+
+		for (int i = 0; i < PINCODE_LENGTH; i++) {
 			TextView tv = generatePwdTextView();
 			tvPwd[i] = tv;
+
+            if(i == 0) {
+                tv.setBackground(getApplicationContext().getDrawable(R.drawable.pin_item_left));
+            } else if(i == PINCODE_LENGTH-1) {
+                tv.setBackground(getApplicationContext().getDrawable(R.drawable.pin_item_right));
+            }
+
 			binding.llPincodeWrapper.addView(tv);
 		}
 
@@ -99,26 +105,29 @@ public class PinRegistrationActivity extends AppCompatActivity {
 				startActivity(intent2);
 				finish();
 			});
-
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	@NonNull
 	private TextView generatePwdTextView() {
+        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+        int width = (int) (dpWidth - Converter.dpToPx(32)) / 6;
+
 		TextView tv = new TextView(this);
-		tv.setBackground(ContextCompat.getDrawable(this, R.drawable.border_black_blank));
-		tv.setMinEms(3);
-		tv.setPadding(0, 30, 0, 30);
+		tv.setBackground(ContextCompat.getDrawable(this, R.drawable.pin_item_middle));
 		tv.setGravity(Gravity.CENTER);
 		tv.setTextSize(15.5f);
+        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+                Converter.dpToPx(width), Converter.dpToPx(44));
+        param.weight = 1;
+        tv.setLayoutParams(param);
 		return tv;
 	}
 
 	private void setTextColorCircle(Pin.Color c) {
-
 		View iv2 = generateBackgroundColorCircle(c);
 		textColorCircles.add(iv2);
 		binding.glPinTextColor.addView(iv2);
@@ -177,7 +186,8 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		iv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				binding.llPincodeWrapper.setBackgroundColor((int) iv.getTag());
+                DrawableCompat.setTint(binding.llPincodeWrapper.getBackground(), (int) iv.getTag());
+
                 ImageView icon = (ImageView) iv.findViewById(R.id.icon);
 				icon.setImageDrawable(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.select_color));
 

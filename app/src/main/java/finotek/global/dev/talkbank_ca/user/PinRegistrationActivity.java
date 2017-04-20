@@ -48,7 +48,8 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_pin_registration);
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
-		binding.toolbarTitle.setText(getString(R.string.setting_string_pin_code));
+
+        binding.toolbarTitle.setText(getString(R.string.setting_string_pin_code));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
@@ -100,10 +101,14 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			Class nextClass = (Class) intent.getExtras().get("nextClass");
 
 			secureKeyboardAdapter.onCompletePressed(() -> {
-				Intent intent2 = new Intent(PinRegistrationActivity.this, nextClass);
-				intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-				startActivity(intent2);
-				finish();
+                if(nextClass == null) {
+                    Intent intent2 = new Intent(PinRegistrationActivity.this, nextClass);
+                    intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    startActivity(intent2);
+                    finish();
+                } else {
+                    finish();
+                }
 			});
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -235,5 +240,4 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 		return completeSets;
 	}
-
 }

@@ -165,36 +165,35 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/border_white_three_radius"
                 android:orientation="vertical"
-                android:padding="15dp">
-
+                android:paddingTop="20dp"
+                android:paddingBottom="20dp"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
                     android:paddingLeft="8dp">
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="0 %"
-                        tb:custom_font="noto_medium"/>
-
+                        tb:custom_font="noto_medium" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="center"
                         android:text="50 %"
-                        tb:custom_font="noto_medium"/>
-
+                        tb:custom_font="noto_medium" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:gravity="right"
                         android:text="100 %"
-                        tb:custom_font="noto_medium"/>
+                        tb:custom_font="noto_medium" />
                 </LinearLayout>
                 <com.etiennelawlor.discreteslider.library.ui.DiscreteSlider
                     android:id="@+id/discreteSlider"

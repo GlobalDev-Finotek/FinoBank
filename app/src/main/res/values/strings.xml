@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">TalkBank</string>
     <string name="registration_string_register">Register</string>
-    <string name="registration_string_basic_information">Your account</string>
+    <string name="registration_string_basic_information">My account</string>
     <string name="registration_string_phone_number">Phone number</string>
     <string name="registration_string_user_name">User\'s name</string>
     <string name="registration_string_signnature">E-signature</string>

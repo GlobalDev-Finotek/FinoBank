@@ -97,6 +97,8 @@
     <string name="setting_button_profile_register">인증 사진 등록</string>
     <string name="setting_button_profile_capture">사진 촬영</string>
     <string name="setting_string_pin_code">PIN 코드</string>
+    <string name="setting_string_pin_code_will_change">변경할 PIN 코드 입력</string>
+    <string name="setting_string_pin_code_will_change_confirm">변경할 PIN 코드 한번 더 입력</string>
     <string name="setting_button_pin_code_chanage">PIN 코드 변경</string>
     <string name="setting_button_save">저장</string>
     <string name="setting_string_save_success">저장되었습니다.</string>

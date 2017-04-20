@@ -48,7 +48,7 @@
                 android:background="@drawable/btn_send_primary"
                 android:text="@string/main_button_send"
                 android:textColor="@color/color_foreground"
-                app:tb_font="noto_light" />
+                app:tb_font="noto_regular" />
         </LinearLayout>
     </RelativeLayout>
 </layout>

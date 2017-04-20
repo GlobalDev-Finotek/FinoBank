@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,9 +58,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             if (!agr.isEmptyChild()) {
                 addChildAgreement(holder.binding.agreements, agr);
             }
-
         }
-
     }
 
     @Override
@@ -79,6 +78,10 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             childAgreementViewBindings.add(binding);
 
             binding.textView.setClickable(true);
+            binding.textView.setTextSize(14);
+            binding.textView.setFontType(TalkBankTextView.FontType.Light);
+            binding.textView.setTextColor(ContextCompat.getColor(context, R.color.dark_70));
+
             Runnable r = () -> MessageBox.INSTANCE.add(new ShowPdfView(childAgreement.getName(), childAgreement.getPdfAsset()));
 
             RxView.clicks(binding.textView)

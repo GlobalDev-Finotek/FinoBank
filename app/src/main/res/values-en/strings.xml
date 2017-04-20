@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">TalkBank</string>
     <string name="registration_string_register">Register</string>
-    <string name="registration_string_basic_information">Your account</string>
+    <string name="registration_string_basic_information">My account</string>
     <string name="registration_string_phone_number">Mobile phone number</string>
     <string name="registration_string_user_name">User\'s name</string>
     <string name="registration_string_signnature">E-signature</string>
@@ -98,6 +98,8 @@
     <string name="setting_button_profile_register">Register picture for verification</string>
     <string name="setting_button_profile_capture">Take picture of credit card</string>
     <string name="setting_string_pin_code">PIN code</string>
+    <string name="setting_string_pin_code_will_change">Enter PIN code to change</string>
+    <string name="setting_string_pin_code_will_change_confirm">Enter PIN code to change once more</string>
     <string name="setting_button_pin_code_chanage">Change PIN code</string>
     <string name="setting_button_save">Save</string>
     <string name="setting_string_save_success">Have been saved</string>

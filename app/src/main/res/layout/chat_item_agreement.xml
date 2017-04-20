@@ -21,15 +21,14 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"
             android:button="@drawable/checkbox_chat"
-            android:scaleX="0.9"
-            android:scaleY="0.9"/>
-
+            android:scaleX="1"
+            android:scaleY="1"/>
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="57dp"
+            android:layout_marginStart="47dp"
             android:text="@{item.name}"
             android:textColor="@color/dark_100"
             android:textSize="16sp"/>

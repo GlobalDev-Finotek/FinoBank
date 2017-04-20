@@ -1,38 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tb="http://schemas.android.com/apk/res-auto">
-
-    <android.support.v4.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:fitsSystemWindows="false">
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingLeft="15dp"
                 android:paddingRight="15dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
+                        android:textSize="24sp"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="match_parent"
                         android:layout_height="44dp"
@@ -43,12 +37,10 @@
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -59,7 +51,6 @@
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="8dp">
-
                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:id="@+id/textView11"
                             android:layout_width="wrap_content"
@@ -67,70 +58,60 @@
                             android:layout_weight="1"
                             android:text="@string/setting_string_all_app_collect"
                             tb:custom_font="noto_regular"/>
-
                         <com.suke.widget.SwitchButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            tb:sb_checked="true"
                             tb:sb_checked_color="@color/colorPrimary"
-                            tb:sb_show_indicator="false"/>
-
+                            tb:sb_show_indicator="false" />
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:background="@drawable/border_white_two_bottom_radius"
-
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
+                        android:layout_marginTop="-2dp"
                         android:paddingBottom="8dp"
                         android:paddingLeft="16dp"
                         android:paddingRight="16dp"
                         android:paddingTop="8dp">
-
                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/setting_string_one_app_select"
-                            tb:custom_font="noto_regular"/>
-
+                            tb:custom_font="noto_regular" />
                         <com.suke.widget.SwitchButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             tb:sb_checked_color="@color/colorPrimary"
-                            tb:sb_show_indicator="false"/>
-
+                            tb:sb_show_indicator="false" />
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-
                 android:orientation="vertical"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal">
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
+                        android:textSize="24sp"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
-
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/talkBankTextView6"
                         android:layout_width="match_parent"
@@ -142,12 +123,10 @@
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical">
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="50dp"
@@ -158,7 +137,6 @@
                         android:paddingLeft="15dp"
                         android:paddingRight="15dp"
                         android:paddingTop="8dp">
-
                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:id="@+id/talkBankTextView5"
                             android:layout_width="wrap_content"
@@ -167,29 +145,26 @@
                             android:layout_weight="0.89"
                             android:text="@string/setting_string__24hr"
                             tb:custom_font="noto_regular"/>
-
                         <com.suke.widget.SwitchButton
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
+                            tb:sb_checked="true"
                             tb:sb_checked_color="@color/colorPrimary"
                             tb:sb_show_indicator="false"/>
                     </LinearLayout>
-
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@drawable/border_white_two_bottom_radius"
                         android:orientation="vertical"
-                        android:padding="15dp"
-                        >
-
+                        android:layout_marginTop="-2dp"
+                        android:padding="15dp">
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="30dp"
                             android:gravity="center_vertical"
                             android:orientation="horizontal">
-
                             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
@@ -197,16 +172,13 @@
                                 android:layout_weight="1"
                                 android:text="@string/setting_string_time_setting"
                                 tb:custom_font="noto_regular"/>
-
                             <com.suke.widget.SwitchButton
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_vertical"
                                 tb:sb_checked_color="@color/colorPrimary"
                                 tb:sb_show_indicator="false"/>
-
                         </LinearLayout>
-
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
@@ -215,33 +187,26 @@
                             android:background="@drawable/border_white_three_radius"
                             android:orientation="vertical"
                             android:padding="15dp">
-
                             <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:orientation="horizontal"
-                                >
-
+                                android:orientation="horizontal">
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:orientation="vertical">
-
                                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:text="@string/setting_string_start"
-                                        tb:custom_font="noto_medium"
-                                        />
-
+                                        tb:custom_font="noto_medium" />
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:orientation="horizontal">
-
                                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                             android:id="@+id/tv_start"
                                             android:layout_width="wrap_content"
@@ -252,7 +217,6 @@
                                             android:textSize="24sp"
                                             android:theme="@style/TextLabelLarge"
                                             tb:custom_font="noto_medium"/>
-
                                         <ImageView
                                             android:layout_width="40dp"
                                             android:layout_height="wrap_content"
@@ -261,28 +225,23 @@
                                             android:tint="#801f2f41"
                                             tb:srcCompat="@drawable/vector_drawable_btn_back"/>
                                     </LinearLayout>
-
                                 </LinearLayout>
-
                                 <LinearLayout
                                     android:layout_width="match_parent"
                                     android:layout_height="match_parent"
                                     android:layout_weight="1"
                                     android:orientation="vertical">
-
                                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:text="@string/setting_string_end"
                                         tb:custom_font="noto_medium"/>
-
                                     <LinearLayout
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:orientation="horizontal">
-
                                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                             android:id="@+id/tv_end"
                                             android:layout_width="wrap_content"
@@ -292,7 +251,6 @@
                                             android:textSize="24sp"
                                             android:theme="@style/TextLabelLarge"
                                             tb:custom_font="noto_medium"/>
-
                                         <ImageView
                                             android:layout_width="40dp"
                                             android:layout_height="wrap_content"
@@ -301,11 +259,8 @@
                                             android:tint="#801f2f41"
                                             tb:srcCompat="@drawable/vector_drawable_btn_back"/>
                                     </LinearLayout>
-
                                 </LinearLayout>
-
                             </LinearLayout>
-
                             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -313,34 +268,21 @@
                                 android:layout_weight="1"
                                 android:text="@string/setting_string_allowed_time"
                                 tb:custom_font="noto_regular"/>
-
                         </LinearLayout>
-
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="16dp">
-
-                <finotek.global.dev.talkbank_ca.widget.TalkBankButton
-                    android:id="@+id/btn_save"
-                    style="@style/RoundButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="16dp"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:text="@string/setting_string_save"
-                    android:theme="@style/RoundButton"/>
-            </RelativeLayout>
-
         </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
-
+        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            android:id="@+id/btn_save"
+            style="@style/RoundButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="25dp"
+            android:text="@string/setting_string_save"
+            android:theme="@style/RoundButton"/>
+    </RelativeLayout>
 </layout>

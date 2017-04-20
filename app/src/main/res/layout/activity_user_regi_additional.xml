@@ -173,6 +173,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
                 android:orientation="vertical">
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -207,21 +208,15 @@
                     tb:tb_font="noto_medium" />
             </LinearLayout>
         </LinearLayout>
-        <RelativeLayout
+        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            android:id="@+id/btn_save"
+            style="@style/RoundButton"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
-                android:id="@+id/btn_save"
-                style="@style/RoundButton"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                android:layout_marginBottom="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/string_save"
-                tb:tb_font="noto_medium" />
-        </RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
+            android:text="@string/string_save"
+            tb:tb_font="noto_medium" />
     </LinearLayout>
 </layout>

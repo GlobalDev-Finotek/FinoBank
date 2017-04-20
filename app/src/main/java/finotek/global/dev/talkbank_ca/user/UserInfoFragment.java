@@ -40,11 +40,8 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
  */
 
 public class UserInfoFragment extends android.app.Fragment implements UserRegisterView {
-
-
 	@Inject
 	UserRegisterImpl presenter;
-
 	LayoutUserRegistrationBinding binding;
 
 	public static UserInfoFragment newInstance(String title) {
@@ -124,8 +121,6 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 				});
 
 		binding.llRegiAdditional.btnSave.setOnClickListener(v -> {
-
-
 			if (checkRequiredInformationFilled()) {
 				User user = generateUser();
 				presenter.saveUser(user);

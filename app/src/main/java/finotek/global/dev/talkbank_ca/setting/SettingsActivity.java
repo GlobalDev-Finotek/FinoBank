@@ -60,11 +60,6 @@ public class SettingsActivity extends AppCompatActivity {
 					intent.putExtra("type", PageType.ABNORMAL_TRANSACTION);
 					startActivity(intent);
 				});
-
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd(" + BuildConfig.VERSION_CODE + ")");
-		String currentDateandTime = sdf.format(new Date());
-		binding.tvCurrentVersion.setText("ver." + currentDateandTime);
-
 	}
 
 

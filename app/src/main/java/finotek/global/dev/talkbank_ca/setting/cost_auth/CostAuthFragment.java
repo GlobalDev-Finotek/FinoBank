@@ -12,27 +12,19 @@ import android.widget.TextView;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentCostAuthBinding;
 
-/**
- * Created by magyeong-ug on 21/03/2017.
- */
-
 public class CostAuthFragment extends android.app.Fragment {
-
-
 	View.OnClickListener costOnClickListener = new View.OnClickListener() {
-
 		private boolean isClicked;
 
 		@Override
 		public void onClick(View v) {
 			if (isClicked) {
-				v.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
-				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
-			} else {
 				v.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));
 				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
+			} else {
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 			}
-
 			isClicked = !isClicked;
 		}
 	};
@@ -58,7 +50,6 @@ public class CostAuthFragment extends android.app.Fragment {
 		binding.tvUnder.setOnClickListener(costOnClickListener);
 
 		binding.btnSave.setOnClickListener(v -> getActivity().onBackPressed());
-
 		binding.tvContextAu.setOnClickListener(costOnClickListener);
 		binding.tvPsignature.setOnClickListener(costOnClickListener);
 		binding.tvPinCode.setOnClickListener(costOnClickListener);

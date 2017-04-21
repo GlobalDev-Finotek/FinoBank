@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
     <RelativeLayout
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_bg">
         <ImageView
@@ -52,6 +52,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:tb_font="noto_medium" />
     </RelativeLayout>
 </layout>

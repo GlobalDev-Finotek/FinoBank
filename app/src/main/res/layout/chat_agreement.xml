@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginBottom="15dp">
         <LinearLayout
             android:id="@+id/agreements"
             android:orientation="vertical"
@@ -23,6 +24,7 @@
             android:background="@drawable/btn_sign"
             android:textSize="14sp"
             android:textColor="@color/primary"
-            android:text="@string/dialog_button_signature" />
+            android:text="@string/dialog_button_signature"
+            app:tb_font="noto_medium" />
     </LinearLayout>
 </layout>

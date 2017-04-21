@@ -9,6 +9,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import com.jakewharton.rxbinding2.view.RxView;
+
+import java.util.concurrent.TimeUnit;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivityCreditRegistrationBinding;
 import finotek.global.dev.talkbank_ca.model.CreditCard;
@@ -41,14 +45,12 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		transaction.commit();
 
 		capturePicFragment.takePicture(path -> {
-
 			if (!isCaptureDone) {
 				binding.llInstWrapper.setVisibility(View.GONE);
 				presenter.takePic(path);
 			} else {
 				finish();
 			}
-
 			isCaptureDone = !isCaptureDone;
 		});
 
@@ -79,8 +81,13 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 				binding.flCam.setLayoutParams(lp);
 				binding.appbar.setVisibility(View.VISIBLE);
 			}
-
 		});
+
+		RxView.clicks(binding.btnSave)
+			.throttleFirst(200, TimeUnit.MILLISECONDS)
+			.subscribe(aVoid -> {
+				finish();
+			});
 	}
 
 	@Override
@@ -93,6 +100,7 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 	public void displayCreditCardInfo(CreditCard card) {
 		binding.incWidget.getRoot().setVisibility(View.VISIBLE);
 		binding.incWidget.setCreditCard(card);
+		binding.btnSave.setVisibility(View.VISIBLE);
 	}
 
 }

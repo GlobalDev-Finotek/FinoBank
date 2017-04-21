@@ -40,11 +40,8 @@ import static android.content.Intent.FLAG_ACTIVITY_REORDER_TO_FRONT;
  */
 
 public class UserInfoFragment extends android.app.Fragment implements UserRegisterView {
-
-
 	@Inject
 	UserRegisterImpl presenter;
-
 	LayoutUserRegistrationBinding binding;
 
 	public static UserInfoFragment newInstance(String title) {
@@ -65,11 +62,8 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 	@Override
 	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 		binding = DataBindingUtil.inflate(inflater, R.layout.layout_user_registration, container, false);
-
 		getComponent().inject(this);
-
 		presenter.attachView(this);
-
 		presenter.showLastUser();
 
 		RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
@@ -116,7 +110,7 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 		RxView.clicks(binding.llRegiAdditional.btnPinRegistration)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					Intent intent = new Intent(getActivity(), PinRegistrationActivity.class);
+					Intent intent = new Intent(getActivity(), PinChangeActivity.class);
 					intent.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
 					intent.putExtra("nextClass", SettingDetailActivity.class);
 					intent.putExtra("type", PageType.USER_INFO);
@@ -124,8 +118,6 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 				});
 
 		binding.llRegiAdditional.btnSave.setOnClickListener(v -> {
-
-
 			if (checkRequiredInformationFilled()) {
 				User user = generateUser();
 				presenter.saveUser(user);

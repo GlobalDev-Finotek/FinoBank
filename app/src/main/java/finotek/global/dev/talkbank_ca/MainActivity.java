@@ -35,6 +35,7 @@ import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 
 public class MainActivity extends AppCompatActivity implements MainView {
 	private static final int MY_PERMISSION_READ_CALL_LOG = 1;
+	private static final int MY_PERMISSION_READ_CONTACTS = 2;
 	private final double AUTH_THRESHOLD = 0.6;
 
 	private TextView tvContextAuthAccuracy;
@@ -110,6 +111,16 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 	@Nullable
 	private void checkPermission() {
+		if(ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_DENIED) {
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
+
+			}
+			//사용자가 필요없는 경우 강제로 권한 획득
+			else {
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS},
+						MY_PERMISSION_READ_CONTACTS);
+			}
+		}
 
 		//현재 접근권한이 있는가
 		if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CALL_LOG) == PackageManager.PERMISSION_DENIED ||

@@ -57,10 +57,6 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentCapturePicBinding;
 
-/**
- * Created by kwm on 2017. 3. 6..
- */
-
 @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
 public class CapturePicFragment extends Fragment
 		implements FragmentCompat.OnRequestPermissionsResultCallback {

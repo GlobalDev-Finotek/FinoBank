@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#4083ff</color>
-    <color name="colorPrimaryDark">#1B356A</color>
+    <color name="colorPrimaryDark">#1F3D73</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="primary">@color/colorPrimary</color>
@@ -52,8 +52,6 @@
     <color name="cool_green_dark">#298f44</color>
     <color name="pale_grey">#eceff0</color>
 
-
-
     <color name="color_chat_divider">@color/dark_50</color>
     <color name="color_text_default">@color/dark_100</color>
     <color name="color_chat_background">@android:color/white</color>
@@ -64,5 +62,7 @@
     <color name="color_chat_status_message">#00B0E2</color>
     <color name="color_extended_control_bg">#e0e0e0</color>
     <color name="color_chat_agreement_border">#E5E5E5</color>
+
+    <color name="setting_title_color">#F2F2F2</color>
 
 </resources>

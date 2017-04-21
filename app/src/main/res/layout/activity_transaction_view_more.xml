@@ -45,7 +45,8 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerVertical="true"
                     android:theme="@style/Header"
-                    tb:custom_font="noto_medium"/>
+                    android:text="@string/dialog_button_recent_transaction"
+                    tb:custom_font="noto_medium" />
             </RelativeLayout>
 
 

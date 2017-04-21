@@ -19,6 +19,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.MoneyTransferred;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
+import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -197,6 +198,7 @@ public class TransferScenario implements Scenario {
 
 	@Override
 	public void clear() {
+		isProceeding = true;
 		step = Step.Initial;
 		TransactionDB.INSTANCE.setTxMoney("");
 		TransactionDB.INSTANCE.setTxName("");
@@ -216,6 +218,12 @@ public class TransferScenario implements Scenario {
 
 		MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)));
 		MessageBox.INSTANCE.add(new AccountList(accounts));
+
+		ConfirmRequest confirmRequest = new ConfirmRequest();
+		confirmRequest.addInfoEvent(context.getString(R.string.dialog_contact), () -> {
+			MessageBox.INSTANCE.add(new RequestSelectContact());
+		}, false);
+		MessageBox.INSTANCE.add(confirmRequest);
 		MessageBox.INSTANCE.add(new RequestTransferUI());
 	}
 

@@ -16,6 +16,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmControlEvent;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.widget.RoundButton;
+import finotek.global.dev.talkbank_ca.widget.TalkBankButton;
 
 public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest> {
     @Override
@@ -51,12 +52,7 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
             btn.setLayoutParams(params);
             btn.setButtonType(event.getButtonType());
             btn.setText(event.getName());
-
-// icon.
-//            if(event.getIcon() != 0) {
-//                btn.setCompoundDrawablesWithIntrinsicBounds(event.getIcon(), 0, 0, 0);
-//                btn.setIconPadding(3);
-//            }
+            btn.setFontType(TalkBankButton.FontType.Medium);
 
             holder.buttons.addView(btn);
             btn.requestLayout();

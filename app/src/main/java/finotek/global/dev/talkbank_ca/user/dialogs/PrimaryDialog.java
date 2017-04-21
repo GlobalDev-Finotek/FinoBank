@@ -2,12 +2,15 @@ package finotek.global.dev.talkbank_ca.user.dialogs;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.databinding.DataBindingUtil;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -77,6 +80,11 @@ public class PrimaryDialog extends Dialog {
     public void show() {
         this.setCancelable(false);
         this.setCanceledOnTouchOutside(false);
+        DisplayMetrics displaymetrics = new DisplayMetrics();
+        getWindow().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+        int width = (int) ((int)displaymetrics.widthPixels * 0.85);
+
+        getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         super.show();
     }

@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">TalkBank</string>
     <string name="registration_string_register">Register</string>
-    <string name="registration_string_basic_information">Your account</string>
+    <string name="registration_string_basic_information">My account</string>
     <string name="registration_string_phone_number">Mobile phone number</string>
     <string name="registration_string_user_name">User\'s name</string>
     <string name="registration_string_signnature">E-signature</string>
@@ -45,7 +45,7 @@
     <string name="registration_string_collecting_data_check">Please check collected data is correct</string>
     <string name="registration_string_credit_card_number">Credit card numbers</string>
     <string name="registration_string_credit_card_company">Credit card company</string>
-    <string name="registration_string_credit_card_expire_date">Credit card expire date (month/year)</string>
+    <string name="registration_string_credit_card_expire_date">Expire date (month/year)</string>
     <string name="registration_string_name">Name</string>
     <string name="registration_button_retake_picture">Re-take photo</string>
     <string name="registration_button_registration">Registration</string>
@@ -55,7 +55,7 @@
     <string name="registration_string_pin_code_text_color_select">Select PIN code text color</string>
     <string name="registration_string_pin_code_type">Please type 6 digit PIN code</string>
     <string name="registration_string_pin_code_color_verify">When you try to verify PIN code, text and background color should be matched with registered color</string>
-    <string name="registration_string_secure_keyboard_operating">Operating secured keyboard</string>
+    <string name="registration_string_secure_keyboard_operating">Secured keyboard operating</string>
     <string name="main_string_talkbank">TalkBank</string>
     <string name="main_actoin_settings">Settings</string>
     <string name="main_action_seach">Seach</string>
@@ -98,6 +98,8 @@
     <string name="setting_button_profile_register">Register picture for verification</string>
     <string name="setting_button_profile_capture">Take picture of credit card</string>
     <string name="setting_string_pin_code">PIN code</string>
+    <string name="setting_string_pin_code_will_change">Enter PIN code to change</string>
+    <string name="setting_string_pin_code_will_change_confirm">Enter PIN code to change once more</string>
     <string name="setting_button_pin_code_chanage">Change PIN code</string>
     <string name="setting_button_save">Save</string>
     <string name="setting_string_save_success">Have been saved</string>
@@ -131,7 +133,7 @@
     <string name="dialog_chat_verified_context_data_succeeded">Result of analyzing context data is %1$d.\n Authentication is succeeded.</string>
     <string name="dialog_chat_verified_context_data_failed">Result of analyzing context data is %1$d.\n Authentication is needed.</string>
     <string name="dialog_chat_verified_context_data">Result of analyzing context data is %1$d.\n Authentication is succeeded.</string>
-    <string name="dialog_chat_ask_help">Hello %s How may I help you</string>
+    <string name="dialog_chat_ask_help">Hello %s How may I help you?</string>
     <string name="dialog_button_open_account">Open account</string>
     <string name="dialog_chat_recommandation">Based on the results of %1$s\'s context data analysis, we recommend "TalkBang Smart Account".\n\n"TalkBang Smart Account" is a product that is used by customers with the same age and consumption patterns as %1$s.\n\nWould you like to open an account?</string>
     <string name="dialog_button_yes">Yes</string>
@@ -175,6 +177,7 @@
     <string name="dialog_string_home_address_type">Type in your home address</string>
     <string name="dialog_chat_loan_amount_type">You may loan up to 50 million won with 2% interest rate.
     please write the ammount of loan you would like to request</string>
+
     <string name="dialog_string_term_agreement_accept">Accept to terms of agreement</string>
     <string name="dialog_string_mandatory_term_accept">Agree to all required fields</string>
     <string name="dialog_string_loan_service_user_agreement">Loan service user agreement</string>
@@ -186,6 +189,7 @@
     <string name="dialog_chat_agreenment_accepted">Agreement have been accepted</string>
     <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n\n
     is there anything else I can help you with?</string>
+    <string name="dialog_chat_string_confirm_message">All Required Agreement is needed.</string>
     <string name="dialog_message_error">An unknown error has occurred! Please try again later.</string>
     <string name="dialog_contact">Contact</string>
     <string name="dialog_message_processing">Your message is being processed right now. Please wait.</string>

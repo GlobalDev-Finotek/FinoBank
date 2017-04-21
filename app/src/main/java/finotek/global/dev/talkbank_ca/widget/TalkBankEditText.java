@@ -72,13 +72,8 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 	private void init(Context context) {
 		Typeface typeface = Typeface.createFromAsset(context.getAssets(), "fonts/NotoSansKR-Regular-Hestia.otf");
 		setTypeface(typeface);
-		setTextColor(ContextCompat.getColor(context, R.color.dark_50));
 
 		TypefaceSpan typefaceSpan = new CustomTypefaceSpan(typeface);
-		SpannableString spannableString = new SpannableString("");
-		spannableString.setSpan(typefaceSpan, 0, spannableString.length(), Spanned.SPAN_INCLUSIVE_EXCLUSIVE);
-
-		setHint(spannableString);
 
 		setOnFocusChangeListener((v, hasFocus) -> {
 			if (hasFocus) {

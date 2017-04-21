@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <RelativeLayout
-        android:layout_width="300dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/dialog_bg">
-
         <ImageView
             android:id="@+id/icon"
             android:layout_width="match_parent"
@@ -17,7 +15,6 @@
             android:paddingTop="6dp"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_error_outline_white_24dp"/>
-
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
@@ -55,6 +52,7 @@
             android:gravity="center_vertical|center_horizontal"
             android:textColor="@android:color/white"
             android:textSize="14sp"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            app:tb_font="noto_medium" />
     </RelativeLayout>
 </layout>

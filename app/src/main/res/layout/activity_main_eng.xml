@@ -17,7 +17,6 @@
             android:contentDescription="Finotek Logo"
             android:tint="@color/colorPrimaryDark"
             tb:srcCompat="@drawable/vector_drawable_ci_finotek"/>
-
         <ImageView
             android:id="@+id/iv_intro"
             android:layout_below="@id/logo"
@@ -28,8 +27,6 @@
             android:elevation="0dp"
             android:tint="@color/black"
             app:srcCompat="@drawable/txt_intro_eng"/>
-
-
         <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/main_button"
             style="@style/RoundButton"
@@ -38,8 +35,8 @@
             android:layout_below="@id/iv_intro"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="48dp"
-            android:text="@string/registration_string_register"/>
-
+            android:text="@string/registration_string_register"
+            app:tb_font="noto_medium" />
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/tv_context_auth_accuracy"
             android:layout_width="wrap_content"
@@ -49,17 +46,15 @@
             android:layout_marginTop="21dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
-            android:textAlignment="center"
-            />
-
+            android:textAlignment="center" />
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="32dp"
-            android:text="Copyrightⓒ Finotek., All rights reserved"
-            android:textColor="@color/dark_30"
+            android:text="@string/main_string_copyright_finotek"
+            android:textColor="@color/dark_100"
             android:textSize="12sp"
             tb:custom_font="noto_light"/>
     </RelativeLayout>

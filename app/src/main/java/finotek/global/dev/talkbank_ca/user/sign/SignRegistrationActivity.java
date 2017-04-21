@@ -46,7 +46,8 @@ public class SignRegistrationActivity extends AppCompatActivity {
 			int mode = intent.getIntExtra("mode", SignMode.ONCE);
 
 			if (mode == SignMode.ONCE) {
-				binding.tvInst1.setText(getString(R.string.registration_string_fingertip_use));
+//				binding.tvInst1.setText(getString(R.string.registration_string_fingertip_use));
+				binding.tvInst1.setText(getString(R.string.dialog_string_finger_tip_sign_user_register));
 				binding.llInst2.setVisibility(View.GONE);
 				binding.llInst3.setVisibility(View.GONE);
 			} else if (mode == SignMode.TWICE) {

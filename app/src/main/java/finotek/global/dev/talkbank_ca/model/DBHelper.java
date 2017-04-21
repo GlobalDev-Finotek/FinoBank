@@ -1,5 +1,7 @@
 package finotek.global.dev.talkbank_ca.model;
 
+import javax.inject.Inject;
+
 import io.reactivex.Observable;
 import io.realm.Realm;
 import io.realm.RealmObject;
@@ -13,6 +15,7 @@ public class DBHelper {
 
 	private Realm realm;
 
+	@Inject
 	public DBHelper(Realm realm) {
 		this.realm = realm;
 	}

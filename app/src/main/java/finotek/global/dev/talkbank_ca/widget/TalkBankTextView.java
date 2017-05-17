@@ -54,10 +54,10 @@ public class TalkBankTextView extends android.support.v7.widget.AppCompatTextVie
 		setTypeface(tf);
 	}
 
-	public void setFontType(FontType fontType){
+	public void setFontType(FontType fontType) {
 		Typeface tf = null;
 
-		switch(fontType){
+		switch (fontType) {
 			case Light:
 				tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/NotoSansKR-Light-Hestia.otf");
 				break;

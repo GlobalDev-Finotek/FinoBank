@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AgreementRequest {
-    List<Agreement> agreements;
+	List<Agreement> agreements;
 }

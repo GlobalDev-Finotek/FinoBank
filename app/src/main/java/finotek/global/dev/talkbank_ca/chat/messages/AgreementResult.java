@@ -6,5 +6,5 @@ import lombok.Data;
 
 @Data
 public class AgreementResult {
-    private List<Agreement> agreements;
+	private List<Agreement> agreements;
 }

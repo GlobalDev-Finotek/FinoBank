@@ -102,6 +102,7 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 	public interface OnSizeControlClick {
 		void onClick(CanvasSize size);
 	}
+
 	public interface OnSignSaveListener {
 		void onSave();
 	}

@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ShowPdfView {
-    String title;
-    String pdfAsset;
+	String title;
+	String pdfAsset;
 }

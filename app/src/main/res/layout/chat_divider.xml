@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginStart="16dp">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_centerVertical="true"
-        android:background="#ced1d4" />
+        android:background="#ced1d4"/>
+
     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
         android:id="@+id/message"
-        android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="20dp"
+        android:layout_centerHorizontal="true"
+        android:background="@android:color/white"
         android:paddingEnd="20dp"
-        android:textSize="12sp"
+        android:paddingStart="20dp"
         android:textColor="#afb0b1"
-        android:background="@android:color/white" />
+        android:textSize="12sp"/>
 </RelativeLayout>

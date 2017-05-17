@@ -36,73 +36,73 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 	UserRegisterImpl presenter;
 	private ActivityUserRegistrationBinding binding;
 
-  @Override
-  protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-    binding = DataBindingUtil.setContentView(this, R.layout.activity_user_registration);
-	  getComponent().inject(this);
-	  presenter.attachView(this);
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		binding = DataBindingUtil.setContentView(this, R.layout.activity_user_registration);
+		getComponent().inject(this);
+		presenter.attachView(this);
 
-    binding.toolbar.setTitle(getString(R.string.registration_string_register));
-	  binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
-	  binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
-	  setSupportActionBar(binding.toolbar);
-	  getSupportActionBar().setTitle("");
-	  binding.appbar.setOutlineProvider(null);
-	  binding.toolbarTitle.setText(getString(R.string.registration_string_register));
-	  binding.ibBack.setOnClickListener(v -> onBackPressed());
+		binding.toolbar.setTitle(getString(R.string.registration_string_register));
+		binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
+		binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
+		setSupportActionBar(binding.toolbar);
+		getSupportActionBar().setTitle("");
+		binding.appbar.setOutlineProvider(null);
+		binding.toolbarTitle.setText(getString(R.string.registration_string_register));
+		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
-	  RxView.clicks(binding.btnCaptureProfile)
-			  .subscribe(aVoid ->
-					  startActivity(new Intent(this, CaptureProfilePicActivity.class)));
+		RxView.clicks(binding.btnCaptureProfile)
+				.subscribe(aVoid ->
+						startActivity(new Intent(this, CaptureProfilePicActivity.class)));
 
-	  binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(this));
-	  binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
+		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(this));
+		binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
 
-	  RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
-			  .subscribe(textViewAfterTextChangeEvent -> {
-				  if (textViewAfterTextChangeEvent.editable().length() > 0) {
-					  binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
-				  }
-			  });
+		RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
+				.subscribe(textViewAfterTextChangeEvent -> {
+					if (textViewAfterTextChangeEvent.editable().length() > 0) {
+						binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
+					}
+				});
 
-	  RxView.clicks(binding.btnCaptureCreidt)
-			  .subscribe(aVoid -> {
-				  Intent intent = new Intent(UserRegistrationActivity.this, CreditRegistrationActivity.class);
-				  intent.putExtra("nextClass", UserRegistrationActivity.class);
-				  startActivity(intent);
-			  });
+		RxView.clicks(binding.btnCaptureCreidt)
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(UserRegistrationActivity.this, CreditRegistrationActivity.class);
+					intent.putExtra("nextClass", UserRegistrationActivity.class);
+					startActivity(intent);
+				});
 
-	  RxView.clicks(binding.llRegiBasic.btnRegiSign)
-			  .subscribe(aVoid -> {
-				  Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
-				  intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
-				  intent.putExtra("nextClass", UserRegistrationActivity.class);
-				  startActivity(intent);
-			  });
+		RxView.clicks(binding.llRegiBasic.btnRegiSign)
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
+					intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
+					intent.putExtra("nextClass", UserRegistrationActivity.class);
+					startActivity(intent);
+				});
 
-	  RxView.clicks(binding.btnPinRegistration)
-			  .throttleFirst(200, TimeUnit.MILLISECONDS)
-			  .subscribe(aVoid -> {
-				  Intent intent = new Intent(UserRegistrationActivity.this, PinRegistrationActivity.class);
-				  intent.putExtra("nextClass", UserRegistrationActivity.class);
-				  startActivity(intent);
-			  });
+		RxView.clicks(binding.btnPinRegistration)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(UserRegistrationActivity.this, PinRegistrationActivity.class);
+					intent.putExtra("nextClass", UserRegistrationActivity.class);
+					startActivity(intent);
+				});
 
-	  binding.btnRegister.setOnClickListener(v -> {
+		binding.btnRegister.setOnClickListener(v -> {
 
-		  if (checkRequiredInformationFilled()) {
-			  User user = generateUser();
-			  presenter.saveUser(user);
-			  startActivity(new Intent(this,
-					  ChatActivity.class));
-			  finish();
-		  } else {
-			  Toast.makeText(this, getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
-		  }
-	  });
+			if (checkRequiredInformationFilled()) {
+				User user = generateUser();
+				presenter.saveUser(user);
+				startActivity(new Intent(this,
+						ChatActivity.class));
+				finish();
+			} else {
+				Toast.makeText(this, getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
+			}
+		});
 
-  }
+	}
 
 	private User generateUser() {
 		User user = new User();

@@ -14,8 +14,6 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.BuildConfig;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySettingsBinding;
-import finotek.global.dev.talkbank_ca.user.dialogs.LanguageSelectDialog;
-import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 
 public class SettingsActivity extends AppCompatActivity {
 

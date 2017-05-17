@@ -94,7 +94,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 							dialog.setButtonText(getString(R.string.setting_string_yes));
 							dialog.setDoneListener(() -> {
 								Intent intent2 = new Intent(SignRegistrationActivity.this, nextClass);
-								if(nextClass.equals(ChatActivity.class)) {
+								if (nextClass.equals(ChatActivity.class)) {
 									intent2.putExtra("isSigned", true);
 								}
 								intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);

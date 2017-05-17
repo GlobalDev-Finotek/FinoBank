@@ -1,4 +1,3 @@
-
 package finotek.global.dev.talkbank_ca;
 
 import android.Manifest;
@@ -29,34 +28,28 @@ import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
-import io.realm.Realm;
 import kr.co.finotek.finopass.finopassvalidator.CallLogVerifier;
 
 
 public class MainActivity extends AppCompatActivity implements MainView {
 	private static final int MY_PERMISSION_READ_CALL_LOG = 1;
 	private final double AUTH_THRESHOLD = 0.6;
-
-	private TextView tvContextAuthAccuracy;
-	private Button mainButton;
-
 	@Inject
 	RxEventBus eventBus;
-
 	@Inject
 	SharedPrefsHelper sharedPrefsHelper;
-
 	@Inject
 	MainPresenterImpl presenter;
-
 	@Inject
 	DBHelper dbHelper;
+	private TextView tvContextAuthAccuracy;
+	private Button mainButton;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getComponent().inject(this);
 
-        if(LocaleHelper.getLanguage(this).equals("ko")) {
+		if (LocaleHelper.getLanguage(this).equals("ko")) {
 			setContentView(R.layout.activity_main);
 		} else {
 			setContentView(R.layout.activity_main_eng);
@@ -64,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 		tvContextAuthAccuracy = (TextView) findViewById(R.id.tv_context_auth_accuracy);
 		mainButton = (Button) findViewById(R.id.main_button);
-
 
 
 		presenter.attachView(this);
@@ -96,10 +88,10 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 	private void moveToNextActivity(boolean isValidUser) {
 		if (isValidUser) {
-            Intent intent = new Intent(this, ChatActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
-            startActivity(intent);
-            finish();
+			Intent intent = new Intent(this, ChatActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+			startActivity(intent);
+			finish();
 		}
 
 	}

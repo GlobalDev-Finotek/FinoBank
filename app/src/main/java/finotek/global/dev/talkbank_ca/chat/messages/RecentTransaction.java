@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RecentTransaction {
-    List<Transaction> transactions;
+	List<Transaction> transactions;
 }

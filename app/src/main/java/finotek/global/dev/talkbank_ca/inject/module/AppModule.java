@@ -32,17 +32,17 @@ public class AppModule {
 		this.dbHelper = dbHelper;
 	}
 
-  @Provides
-  @Singleton
-  Context provideContext() {
-    return this.application;
-  }
+	@Provides
+	@Singleton
+	Context provideContext() {
+		return this.application;
+	}
 
-  @Provides
-  @Singleton
-  MyApplication provideApplication() {
-    return this.application;
-  }
+	@Provides
+	@Singleton
+	MyApplication provideApplication() {
+		return this.application;
+	}
 
 	@Provides
 	@Singleton
@@ -65,5 +65,5 @@ public class AppModule {
 	@Provides
 	SharedPreferences provideSharedPreferences() {
 		return this.application.getSharedPreferences("prefs", Context.MODE_PRIVATE);
-    }
+	}
 }

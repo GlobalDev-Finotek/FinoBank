@@ -1,10 +1,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     >
+
     <data>
+
         <variable
             name="item"
-            type="finotek.global.dev.talkbank_ca.chat.messages.Agreement" />
+            type="finotek.global.dev.talkbank_ca.chat.messages.Agreement"/>
     </data>
+
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -13,6 +16,7 @@
         android:layout_marginStart="1dp"
         android:layout_marginTop="1dp"
         android:background="@android:color/white">
+
         <CheckBox
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
@@ -33,6 +37,7 @@
             android:text="@{item.name}"
             android:textColor="@color/dark_100"
             android:textSize="16sp"/>
+
         <ImageView
             android:id="@+id/arrow"
             android:layout_width="wrap_content"

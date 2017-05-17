@@ -19,11 +19,14 @@ import io.realm.Realm;
 @Singleton
 @Component(modules = AppModule.class)
 public interface AppComponent {
-  Context context();
-  MyApplication myApplication();
-  SharedPrefsHelper getPreferenceHelper();
+	Context context();
+
+	MyApplication myApplication();
+
+	SharedPrefsHelper getPreferenceHelper();
 
 	DBHelper getDBHelper();
+
 	Realm getRealm();
 
 	RxEventBus getEventBus();

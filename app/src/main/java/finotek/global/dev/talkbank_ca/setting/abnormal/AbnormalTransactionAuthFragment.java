@@ -31,13 +31,13 @@ public class AbnormalTransactionAuthFragment extends android.app.Fragment {
 			"인증 메일", "인증 메세지", "신용카드 OCR", "인증 사진", "음성 인식"
 	};
 
-	View.OnClickListener abnormalOnClickListener = new View.OnClickListener(){
+	View.OnClickListener abnormalOnClickListener = new View.OnClickListener() {
 		private boolean isClicked;
 
 		@Override
 		public void onClick(View v) {
-			if(isClicked) {
-				v.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.info));
+			if (isClicked) {
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
 				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 			} else {
 				v.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.transparent));

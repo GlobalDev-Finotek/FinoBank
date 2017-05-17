@@ -65,7 +65,7 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 		super(context, attrs, defStyleAttr);
 		this.context = context;
 		init(context);
-        setDefaultFontSize();
+		setDefaultFontSize();
 	}
 
 

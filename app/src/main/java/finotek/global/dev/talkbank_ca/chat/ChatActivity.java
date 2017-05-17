@@ -76,6 +76,7 @@ import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
@@ -110,6 +111,7 @@ public class ChatActivity extends AppCompatActivity {
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 		Intent intent = getIntent();
 
+
 		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 		mLayoutManager.setReverseLayout(true);
 		mLayoutManager.setStackFromEnd(true);
@@ -128,16 +130,20 @@ public class ChatActivity extends AppCompatActivity {
 								.observeOn(AndroidSchedulers.mainThread());
 					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
 						return Observable.just(msg)
-								.debounce(2, TimeUnit.SECONDS)
+								.debounce(1, TimeUnit.SECONDS)
 								.observeOn(AndroidSchedulers.mainThread());
 					} else {
 						return Observable.just(msg)
-								.delay(2000, TimeUnit.MILLISECONDS)
+								.delay(1, TimeUnit.SECONDS)
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
 				.subscribe(this::onNewMessageUpdated, throwable -> {
 
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+					}
 				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
@@ -152,11 +158,13 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		if (msg instanceof WaitForMessage) {
-			binding.waitMessage.setVisibility(View.VISIBLE);
+			// TODO
+			// binding.waitMessage.setVisibility(View.VISIBLE);
 		}
 
 		if (msg instanceof MessageEmitted) {
-			binding.waitMessage.setVisibility(View.INVISIBLE);
+			// TOODO
+			// binding.waitMessage.setVisibility(View.INVISIBLE);
 		}
 
 		if (msg instanceof RequestTakeIDCard) {
@@ -198,6 +206,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestKeyboardInput) {
+
 			openKeyboard(fiBinding.chatEditText);
 		}
 
@@ -214,7 +223,7 @@ public class ChatActivity extends AppCompatActivity {
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
 				loadingDialog.show();
 
-				Observable.interval(1500, TimeUnit.MILLISECONDS)
+				Observable.interval(1, TimeUnit.SECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
 						.first((long) 1)
 						.subscribe(i -> {
@@ -286,14 +295,14 @@ public class ChatActivity extends AppCompatActivity {
 			dialog.show();
 		}
 
-		if(msg instanceof RequestRemoveControls) {
+		if (msg instanceof RequestRemoveControls) {
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if(capturePicFragment != null) {
-                transaction.remove(capturePicFragment);
-            }
-            if(signRegistFragment != null) {
-                transaction.remove(signRegistFragment);
-            }
+			if (capturePicFragment != null) {
+				transaction.remove(capturePicFragment);
+			}
+			if (signRegistFragment != null) {
+				transaction.remove(signRegistFragment);
+			}
 			transaction.commit();
 
 			this.returnToInitialControl();
@@ -323,8 +332,10 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
-		if (hasFocus)
+		if (hasFocus) {
+			binding.chatView.scrollToBottom();
 			runOnUiThread(this::hideExControl);
+		}
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {

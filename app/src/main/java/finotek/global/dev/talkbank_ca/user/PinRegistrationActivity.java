@@ -138,7 +138,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 				iv2.setImageDrawable(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.vector_drawable_icon_check));
 
 				/* 흰색은 검은 체크 표시로 처리 */
-				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int)iv2.getTag()) {
+				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int) iv2.getTag()) {
 					DrawableCompat.setTint(iv2.getDrawable(),
 							ContextCompat.getColor(PinRegistrationActivity.this, R.color.black));
 				} else {
@@ -170,7 +170,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 				iv.setImageDrawable(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.vector_drawable_icon_check));
 
 				/* 흰색은 검은 체크 표시로 처리 */
-				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int)iv.getTag()) {
+				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int) iv.getTag()) {
 					DrawableCompat.setTint(iv.getDrawable(),
 							ContextCompat.getColor(PinRegistrationActivity.this, R.color.black));
 				} else {

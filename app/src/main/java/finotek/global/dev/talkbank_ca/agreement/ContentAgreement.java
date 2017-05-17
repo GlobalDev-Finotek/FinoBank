@@ -1,22 +1,11 @@
 package finotek.global.dev.talkbank_ca.agreement;
 
-import android.content.Context;
-import android.content.Intent;
-import android.content.res.AssetManager;
-import android.graphics.Path;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
 
 import finotek.global.dev.talkbank_ca.R;
 
@@ -29,11 +18,21 @@ public class ContentAgreement extends AppCompatActivity {
 		setContentView(R.layout.activity_content_agreement);
 		int num = getIntent().getExtras().getInt("num");
 		switch (num) {
-			case 1 : first(); break;
-			case 2 : second(); break;
-			case 3 : third(); break;
-			case 4 : fourth(); break;
-			case 5 : fifth(); break;
+			case 1:
+				first();
+				break;
+			case 2:
+				second();
+				break;
+			case 3:
+				third();
+				break;
+			case 4:
+				fourth();
+				break;
+			case 5:
+				fifth();
+				break;
 		}
 	}
 
@@ -104,7 +103,6 @@ public class ContentAgreement extends AppCompatActivity {
 		String text = new String(buffer);
 
 		return text;
-
 
 
 	}

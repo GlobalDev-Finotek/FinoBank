@@ -109,7 +109,6 @@ public class ChatView extends RecyclerView {
 	public void scrollToBottom() {
 		postDelayed(() -> {
 			LayoutManager lm = getLayoutManager();
-//			scrollTo(0, lm.getHeight());
 			if (lm != null) {
 				lm.scrollToPosition(0);
 			}

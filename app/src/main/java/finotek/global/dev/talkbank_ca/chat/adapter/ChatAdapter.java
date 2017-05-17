@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.SparseArray;
 import android.util.TypedValue;
+import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	private SparseArray<ChatView.ViewBuilder> builders;
 	private ArrayList<DataWithType> items;
+	private int lastPosition = -1;
 
 	public ChatAdapter() {
 		builders = new SparseArray<>();
@@ -49,8 +52,18 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 				// lp.setMargins(0, top, 0, bottom);
 				holder.itemView.setLayoutParams(lp);
 			}
-
 			builder.bind(holder, items.get(position).getItem());
+		}
+	}
+
+	private void setAnimation(View itemView, int position) {
+		// If the bound view wasn't previously displayed on screen, it's animated
+		if (position > lastPosition) {
+			AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
+			anim.setDuration(1000);
+			itemView.startAnimation(anim);
+			lastPosition = position;
+
 		}
 	}
 
@@ -75,7 +88,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 			if (item.getViewType() == viewType) {
 				builders.get(viewType).onDelete();
 				items.remove(i);
-				notifyDataSetChanged();
+				notifyItemRemoved(i);
 			}
 		}
 	}
@@ -87,6 +100,6 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 	public void removeItem(int position) {
 		items.remove(position);
-		notifyDataSetChanged();
+		notifyItemRemoved(position);
 	}
 }

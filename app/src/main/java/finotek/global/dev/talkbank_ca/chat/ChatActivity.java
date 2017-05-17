@@ -77,6 +77,7 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
@@ -97,6 +98,7 @@ public class ChatActivity extends AppCompatActivity {
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -111,11 +113,11 @@ public class ChatActivity extends AppCompatActivity {
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 		Intent intent = getIntent();
 
-
 		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 		mLayoutManager.setReverseLayout(true);
 		mLayoutManager.setStackFromEnd(true);
 
+		binding.chatView.setItemAnimator(new FadeInUpAnimator());
 		binding.chatView.setLayoutManager(mLayoutManager);
 
 		if (intent != null) {
@@ -158,13 +160,11 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		if (msg instanceof WaitForMessage) {
-			// TODO
-			// binding.waitMessage.setVisibility(View.VISIBLE);
+			binding.waitMessage.smoothToShow();
 		}
 
 		if (msg instanceof MessageEmitted) {
-			// TOODO
-			// binding.waitMessage.setVisibility(View.INVISIBLE);
+			binding.waitMessage.smoothToHide();
 		}
 
 		if (msg instanceof RequestTakeIDCard) {
@@ -333,7 +333,6 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
 		if (hasFocus) {
-			binding.chatView.scrollToBottom();
 			runOnUiThread(this::hideExControl);
 		}
 	}

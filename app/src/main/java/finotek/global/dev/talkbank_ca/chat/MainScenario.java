@@ -6,6 +6,7 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
@@ -36,6 +37,8 @@ import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
+import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.realm.Realm;
 
@@ -56,20 +59,20 @@ public class MainScenario {
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
-//				.flatMap(msg -> {
-//					if (isImmediateMessage(msg)) {
-//						return Observable.just(msg);
-//					} else {
-//						return Observable.just(msg)
-//								.delay(1, TimeUnit.SECONDS)
-//								.observeOn(AndroidSchedulers.mainThread());
-//					}
-//				})
-//				.doOnNext(msg -> {
-//					if (!isImmediateMessage(msg)) {
-//						MessageBox.INSTANCE.add(new MessageEmitted());
-//					}
-//				})
+				.flatMap(msg -> {
+					if (isImmediateMessage(msg)) {
+						return Observable.just(msg);
+					} else {
+						return Observable.just(msg)
+								.delay(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.doOnNext(msg -> {
+					if (!isImmediateMessage(msg)) {
+						MessageBox.INSTANCE.add(new MessageEmitted());
+					}
+				})
 				.doOnError(e -> {
 					chatView.statusMessage(context.getResources().getString(R.string.dialog_message_error));
 				})

@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -92,7 +93,6 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 	private MainScenario mainScenario;
-
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 
@@ -101,7 +101,6 @@ public class ChatActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-
 		getComponent().inject(this);
 
 		setSupportActionBar(binding.toolbar);
@@ -109,9 +108,13 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setElevation(0);
 		binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
-
 		Intent intent = getIntent();
 
+		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+		mLayoutManager.setReverseLayout(true);
+		mLayoutManager.setStackFromEnd(true);
+
+		binding.chatView.setLayoutManager(mLayoutManager);
 
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
@@ -134,6 +137,7 @@ public class ChatActivity extends AppCompatActivity {
 					}
 				})
 				.subscribe(this::onNewMessageUpdated, throwable -> {
+
 				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
@@ -311,7 +315,6 @@ public class ChatActivity extends AppCompatActivity {
 		clearInput();
 	}
 
-
 	private void expandControlClickEvent() {
 		if (isExControlAvailable)
 			runOnUiThread(this::hideExControl);
@@ -399,9 +402,7 @@ public class ChatActivity extends AppCompatActivity {
 				});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
-
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
-
 		ctBinding.gvKeypad.onComplete(() -> {
 			// 잔액
 			int balance = TransactionDB.INSTANCE.getBalance();
@@ -412,7 +413,6 @@ public class ChatActivity extends AppCompatActivity {
 			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
-
 
 			if (money > balance) {
 				DangerDialog dialog = new DangerDialog(this);

@@ -29,7 +29,8 @@ public class ChatView extends RecyclerView {
         this.adapter = new ChatAdapter();
         setAdapter(adapter);
 
-        this.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
+
+	    this.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
         this.addChatViewBuilder(ViewType.IconicSend.ordinal(), new IconicSendViewBuilder(context));
         this.addChatViewBuilder(ViewType.Receive.ordinal(), new ReceiveViewBuilder());
         this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());

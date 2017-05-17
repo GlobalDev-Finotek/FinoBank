@@ -1,7 +1,6 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -34,7 +33,6 @@ import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
-import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -89,11 +87,6 @@ public class MainScenario {
 
 					}
 				});
-
-		// 채팅 화면 설정
-		LinearLayoutManager manager = new LinearLayoutManager(context);
-		manager.setStackFromEnd(true);
-		chatView.setLayoutManager(manager);
 
 		// 초기 시나리오 진행
 		this.firstScenario(isSigned);

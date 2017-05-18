@@ -59,7 +59,7 @@
                 <LinearLayout
                     android:id="@+id/ll_userinfo"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="54dp"
                     android:background="@drawable/border_white_two_top_radius"
                     android:orientation="horizontal"
                     android:padding="10dp">
@@ -78,14 +78,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="8dp"
                         android:tint="#94989e"
                         app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_ca"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="54dp"
                     android:layout_marginTop="-2dp"
                     android:background="@drawable/border_white_two"
                     android:orientation="horizontal"
@@ -104,14 +104,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="8dp"
                         android:tint="#94989e"
                         app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
                 <LinearLayout
                     android:id="@+id/ll_cost"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="54dp"
                     android:layout_marginTop="-2dp"
                     android:background="@drawable/border_white_two"
                     android:orientation="horizontal"
@@ -130,7 +130,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="0dp"
                         android:tint="#94989e"
                         app:srcCompat="@drawable/chevron_right_light"/>
@@ -138,7 +138,7 @@
                 <LinearLayout
                     android:id="@+id/ll_abnormal"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="54dp"
                     android:layout_marginTop="-2dp"
                     android:background="@drawable/border_white_two_bottom_radius"
                     android:orientation="horizontal"
@@ -157,7 +157,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="10dp"
-                        android:layout_marginTop="6dp"
+                        android:layout_marginTop="8dp"
                         android:elevation="0dp"
                         android:tint="#94989e"
                         app:srcCompat="@drawable/chevron_right_light"/>

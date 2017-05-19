@@ -2,23 +2,23 @@
 <resources>
     <declare-styleable name="RoundButton">
         <attr name="buttonType" format="enum">
-            <enum name="primary" value="0" />
-            <enum name="danger" value="1" />
-            <enum name="info" value="2" />
+            <enum name="primary" value="0"/>
+            <enum name="danger" value="1"/>
+            <enum name="info" value="2"/>
         </attr>
     </declare-styleable>
     <declare-styleable name="TalkBankTextView">
         <attr name="custom_font" format="enum">
-            <enum name="noto_regular" value="0" />
-            <enum name="noto_medium" value="1" />
-            <enum name="noto_light" value="2" />
+            <enum name="noto_regular" value="0"/>
+            <enum name="noto_medium" value="1"/>
+            <enum name="noto_light" value="2"/>
         </attr>
     </declare-styleable>
     <declare-styleable name="TalkBankButton">
         <attr name="tb_font" format="enum">
-            <enum name="noto_regular" value="0" />
-            <enum name="noto_medium" value="1" />
-            <enum name="noto_light" value="2" />
+            <enum name="noto_regular" value="0"/>
+            <enum name="noto_medium" value="1"/>
+            <enum name="noto_light" value="2"/>
         </attr>
     </declare-styleable>
     <declare-styleable name="IconButton">

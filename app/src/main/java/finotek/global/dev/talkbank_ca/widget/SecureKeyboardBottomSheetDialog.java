@@ -1,9 +1,6 @@
 package finotek.global.dev.talkbank_ca.widget;
 
-import android.app.Dialog;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
@@ -11,13 +8,11 @@ import android.support.design.widget.BottomSheetDialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.WidgetSecureKeyboardBinding;
 
 /**

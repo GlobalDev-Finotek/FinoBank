@@ -13,6 +13,7 @@ import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -75,6 +76,8 @@ import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
@@ -92,8 +95,9 @@ public class ChatActivity extends AppCompatActivity {
 	private View footerInputs = null;
 	private View transferView = null;
 	private MainScenario mainScenario;
-    private CapturePicFragment capturePicFragment;
+	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
+
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -109,29 +113,40 @@ public class ChatActivity extends AppCompatActivity {
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 		Intent intent = getIntent();
 
+		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+		mLayoutManager.setReverseLayout(true);
+		mLayoutManager.setStackFromEnd(true);
+
+		binding.chatView.setItemAnimator(new FadeInUpAnimator());
+		binding.chatView.setLayoutManager(mLayoutManager);
+
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
 			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
 
 		MessageBox.INSTANCE.observable
-			.flatMap(msg -> {
-				if (msg instanceof EnableToEditMoney) {
-					return Observable.just(msg)
-							.observeOn(AndroidSchedulers.mainThread());
-				} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
-					return Observable.just(msg)
-							.debounce(2, TimeUnit.SECONDS)
-							.observeOn(AndroidSchedulers.mainThread());
-				} else {
-					return Observable.just(msg)
-							.delay(2000, TimeUnit.MILLISECONDS)
-							.observeOn(AndroidSchedulers.mainThread());
-				}
-			})
-			.subscribe(this::onNewMessageUpdated, throwable -> {
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
+						return Observable.just(msg)
+								.debounce(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.subscribe(this::onNewMessageUpdated, throwable -> {
 
-			});
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+					}
+				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
@@ -145,11 +160,11 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		if (msg instanceof WaitForMessage) {
-			binding.waitMessage.setVisibility(View.VISIBLE);
+			binding.waitMessage.smoothToShow();
 		}
 
 		if (msg instanceof MessageEmitted) {
-			binding.waitMessage.setVisibility(View.INVISIBLE);
+			binding.waitMessage.smoothToHide();
 		}
 
 		if (msg instanceof RequestTakeIDCard) {
@@ -191,6 +206,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestKeyboardInput) {
+
 			openKeyboard(fiBinding.chatEditText);
 		}
 
@@ -207,7 +223,7 @@ public class ChatActivity extends AppCompatActivity {
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
 				loadingDialog.show();
 
-				Observable.interval(1500, TimeUnit.MILLISECONDS)
+				Observable.interval(1, TimeUnit.SECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
 						.first((long) 1)
 						.subscribe(i -> {
@@ -279,14 +295,14 @@ public class ChatActivity extends AppCompatActivity {
 			dialog.show();
 		}
 
-		if(msg instanceof RequestRemoveControls) {
+		if (msg instanceof RequestRemoveControls) {
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if(capturePicFragment != null) {
-                transaction.remove(capturePicFragment);
-            }
-            if(signRegistFragment != null) {
-                transaction.remove(signRegistFragment);
-            }
+			if (capturePicFragment != null) {
+				transaction.remove(capturePicFragment);
+			}
+			if (signRegistFragment != null) {
+				transaction.remove(signRegistFragment);
+			}
 			transaction.commit();
 
 			this.returnToInitialControl();
@@ -316,8 +332,9 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
-		if (hasFocus)
+		if (hasFocus) {
 			runOnUiThread(this::hideExControl);
+		}
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {
@@ -384,15 +401,15 @@ public class ChatActivity extends AppCompatActivity {
 		ecBinding.extendedControl.setAdapter(adapter);
 
 		RxViewPager.pageSelections(ecBinding.extendedControl)
-			.subscribe(pos -> {
-				if (pos == 0) {
-					ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-					ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-				} else {
-					ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-					ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-				}
-			});
+				.subscribe(pos -> {
+					if (pos == 0) {
+						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+					} else {
+						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
+						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
+					}
+				});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);

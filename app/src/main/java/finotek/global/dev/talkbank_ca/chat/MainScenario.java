@@ -1,7 +1,6 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 
 import java.util.HashMap;
@@ -40,9 +39,7 @@ import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 import io.realm.Realm;
 
 public class MainScenario {
@@ -82,24 +79,16 @@ public class MainScenario {
 				.subscribe(msg -> {
 					updateUIOn(msg);
 					onRequest(msg);
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(@NonNull Throwable throwable) throws Exception {
+				}, throwable -> {
 
-					}
 				});
-
-		// 채팅 화면 설정
-		LinearLayoutManager manager = new LinearLayoutManager(context);
-		manager.setStackFromEnd(true);
-		chatView.setLayoutManager(manager);
 
 		// 초기 시나리오 진행
 		this.firstScenario(isSigned);
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
-        scenarioPool.put("recentTransaction", new RecentTransactionScenario(context, dbHelper));
+		scenarioPool.put("recentTransaction", new RecentTransactionScenario(context, dbHelper));
 		scenarioPool.put("transfer", new TransferScenario(context, dbHelper));
 		scenarioPool.put("loan", new LoanScenario(context));
 		scenarioPool.put("account", new AccountScenario(context));
@@ -110,23 +99,24 @@ public class MainScenario {
 
 	private void firstScenario(boolean isSigned) {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
+
+
 		eventBus.getObservable()
 				.subscribe(iEvent -> {
 					Log.d("FINO-TB", iEvent.getClass().getName());
 
 					if (iEvent instanceof AccuracyMeasureEvent) {
-                        Realm realm = Realm.getDefaultInstance();
-                        User user = realm.where(User.class).findAll().last();
 
 						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
 						if (isSigned) {
-                            MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100))));
+							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100))));
 						} else {
-                            MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
+							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
 						}
-
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
 					}
+					Realm realm = Realm.getDefaultInstance();
+					User user = realm.where(User.class).findAll().last();
+					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
 				});
 	}
 
@@ -134,36 +124,36 @@ public class MainScenario {
 		if (msg instanceof SendMessage) {
 			SendMessage recv = (SendMessage) msg;
 
-            if(!recv.isOnlyDisplay()) {
-                Iterator<String> keySet = scenarioPool.keySet().iterator();
+			if (!recv.isOnlyDisplay()) {
+				Iterator<String> keySet = scenarioPool.keySet().iterator();
 
-                while (keySet.hasNext()) {
-                    String key = keySet.next();
-                    Scenario scenario = scenarioPool.get(key);
+				while (keySet.hasNext()) {
+					String key = keySet.next();
+					Scenario scenario = scenarioPool.get(key);
 
-                    if (scenario.decideOn(recv.getMessage())) {
-                        MessageBox.INSTANCE.add(new RequestRemoveControls());
+					if (scenario.decideOn(recv.getMessage())) {
+						MessageBox.INSTANCE.add(new RequestRemoveControls());
 
-                        if (currentScenario != null && currentScenario.isProceeding()) {
-                            MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
+						if (currentScenario != null && currentScenario.isProceeding()) {
+							MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_scenario_is_cancelled, currentScenario.getName(), scenario.getName())));
 
-                            currentScenario.clear();
-                            scenario.clear();
-                            currentScenario = scenario;
-                            break;
-                        } else {
-                            currentScenario = scenario;
-                            currentScenario.clear();
-                        }
-                    }
-                }
+							currentScenario.clear();
+							scenario.clear();
+							currentScenario = scenario;
+							break;
+						} else {
+							currentScenario = scenario;
+							currentScenario.clear();
+						}
+					}
+				}
 
-                if (currentScenario == null) {
-                    this.respondToSendMessage(recv.getMessage());
-                } else {
-                    currentScenario.onUserSend(recv.getMessage());
-                }
-            }
+				if (currentScenario == null) {
+					this.respondToSendMessage(recv.getMessage());
+				} else {
+					currentScenario.onUserSend(recv.getMessage());
+				}
+			}
 		} else {
 			if (currentScenario != null)
 				currentScenario.onReceive(msg);
@@ -175,6 +165,9 @@ public class MainScenario {
 	}
 
 	private void updateUIOn(Object msg) {
+
+		chatView.scrollToBottom();
+
 		// 보낸 메시지
 		if (msg instanceof SendMessage) {
 			SendMessage recv = (SendMessage) msg;
@@ -258,7 +251,7 @@ public class MainScenario {
 
 	private void respondToSendMessage(String msg) {
 		String s = msg.trim();
-        MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_recognize_error)));
+		MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_recognize_error)));
 	}
 
 	private boolean isImmediateMessage(Object msg) {

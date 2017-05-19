@@ -57,11 +57,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/color_chat_background">
+
             <finotek.global.dev.talkbank_ca.chat.view.ChatView
                 android:id="@+id/chat_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/footer">
+                android:layout_above="@+id/footer"
+                android:layout_marginBottom="40dp">
             </finotek.global.dev.talkbank_ca.chat.view.ChatView>
             <LinearLayout
                 android:id="@+id/footer"
@@ -70,23 +72,18 @@
                 android:layout_alignParentBottom="true"
                 android:orientation="vertical">
             </LinearLayout>
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+
+            <com.wang.avi.AVLoadingIndicatorView
                 android:id="@+id/wait_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_alignBottom="@+id/footer"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="false"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/wait_message"
-                android:paddingBottom="8dp"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:paddingTop="8dp"
-                android:text="@string/dialog_message_processing"
-                android:textAlignment="center"
-                android:textColor="@android:color/white"
-                android:textSize="12sp"
-                android:visibility="invisible" />
+                android:layout_marginBottom="40dp"
+                app:indicatorColor="@color/info"
+                app:indicatorName="BallPulseIndicator"/>
         </RelativeLayout>
 
     </LinearLayout>

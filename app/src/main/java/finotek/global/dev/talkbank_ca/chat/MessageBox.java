@@ -15,53 +15,53 @@ import io.reactivex.subjects.BehaviorSubject;
 
 // Singleton Instance
 public enum MessageBox {
-    INSTANCE;
+	INSTANCE;
 
-    public final BehaviorSubject<Object> observable;
-    private final List<Object> messages;
+	public final BehaviorSubject<Object> observable;
+	private final List<Object> messages;
 
-    MessageBox() {
-        messages = new ArrayList<>();
-        observable = BehaviorSubject.create();
-    }
+	MessageBox() {
+		messages = new ArrayList<>();
+		observable = BehaviorSubject.create();
+	}
 
-    public void add(Object msg) {
-        messages.add(msg);
+	public void add(Object msg) {
+		messages.add(msg);
 
-	    Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
+		Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
 
-        Flowable.interval(200, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .first((long) 1)
-            .subscribe(value -> {
-                if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-                    observable.onNext(new WaitForMessage());
-                }
+		Flowable.interval(200, TimeUnit.MILLISECONDS)
+				.observeOn(AndroidSchedulers.mainThread())
+				.first((long) 1)
+				.subscribe(value -> {
+					if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
+						observable.onNext(new WaitForMessage());
+					}
 
-                observable.onNext(msg);
-            });
-    }
+					observable.onNext(msg);
+				});
+	}
 
-    public void delay(Object msg, int delay){
-        messages.add(msg);
+	public void delay(Object msg, int delay) {
+		messages.add(msg);
 
-        Flowable.interval(delay, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .first((long) 1)
-                .subscribe(value -> {
-                    if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-                        observable.onNext(new WaitForMessage());
-                    }
+		Flowable.interval(delay, TimeUnit.MILLISECONDS)
+				.observeOn(AndroidSchedulers.mainThread())
+				.first((long) 1)
+				.subscribe(value -> {
+					if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
+						observable.onNext(new WaitForMessage());
+					}
 
-                    observable.onNext(msg);
-                });
-    }
+					observable.onNext(msg);
+				});
+	}
 
-    public void removeAt(int index) {
-        messages.remove(index);
-    }
+	public void removeAt(int index) {
+		messages.remove(index);
+	}
 
-    public int size() {
-        return messages.size();
-    }
+	public int size() {
+		return messages.size();
+	}
 }

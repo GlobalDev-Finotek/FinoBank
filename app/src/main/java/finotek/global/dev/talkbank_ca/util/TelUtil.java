@@ -10,23 +10,23 @@ import android.text.TextUtils;
  */
 
 public class TelUtil {
-  public static String getMyPhoneNumber(Context context) {
-    TelephonyManager tMgr =(TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);
-    String phoneNumber = tMgr.getLine1Number();
+	public static String getMyPhoneNumber(Context context) {
+		TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+		String phoneNumber = tMgr.getLine1Number();
 
-    if (TextUtils.isEmpty(phoneNumber)) {
-      return "0";
-    } else {
-      return phoneNumber;
-    }
-  }
+		if (TextUtils.isEmpty(phoneNumber)) {
+			return "0";
+		} else {
+			return phoneNumber;
+		}
+	}
 
-  public static String getDeviceName() {
-    String manufacturer = Build.MANUFACTURER;
-    String model = Build.MODEL;
-    if (model.startsWith(manufacturer)) {
-      return (model);
-    }
-    return (manufacturer) + " " + model;
-  }
+	public static String getDeviceName() {
+		String manufacturer = Build.MANUFACTURER;
+		String model = Build.MODEL;
+		if (model.startsWith(manufacturer)) {
+			return (model);
+		}
+		return (manufacturer) + " " + model;
+	}
 }

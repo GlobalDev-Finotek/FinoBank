@@ -63,16 +63,16 @@ public class TransferScenario implements Scenario {
 			Realm realm = Realm.getDefaultInstance();
 			User user = realm.where(User.class).findAll().last();
 
-            String message = "";
-            if(action.getType() == TransferTo.TransactionType.ToSomeone) {
-                message = context.getResources().getString(R.string.dialog_chat_transfer_to_someone, name, money);
-                step = Step.TransferToSomeone;
-            } else {
-                DateTime dateTime = new DateTime();
-                int day = dateTime.getDayOfMonth();
-                message = context.getResources().getString(R.string.dialog_chat_transaction, user.getName(), money, day);
-                step = Step.TransferByAI;
-            }
+			String message = "";
+			if (action.getType() == TransferTo.TransactionType.ToSomeone) {
+				message = context.getResources().getString(R.string.dialog_chat_transfer_to_someone, name, money);
+				step = Step.TransferToSomeone;
+			} else {
+				DateTime dateTime = new DateTime();
+				int day = dateTime.getDayOfMonth();
+				message = context.getResources().getString(R.string.dialog_chat_transaction, user.getName(), money, day);
+				step = Step.TransferByAI;
+			}
 
 			MessageBox.INSTANCE.add(new ReceiveMessage(message));
 
@@ -85,48 +85,48 @@ public class TransferScenario implements Scenario {
 			MessageBox.INSTANCE.add(request);
 		}
 
-		if(msg instanceof SignatureVerified) {
-            MessageBox.INSTANCE.add(new MoneyTransferred());
-        }
+		if (msg instanceof SignatureVerified) {
+			MessageBox.INSTANCE.add(new MoneyTransferred());
+		}
 
 		if (msg instanceof MoneyTransferred) {
 			isProceeding = false;
-            String name = TransactionDB.INSTANCE.getTxName();
-            String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-            int money = TransactionDB.INSTANCE.getMoneyAsInt();
+			String name = TransactionDB.INSTANCE.getTxName();
+			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+			int money = TransactionDB.INSTANCE.getMoneyAsInt();
 
-            TransactionDB.INSTANCE.transferMoney(money);
-            int balance = TransactionDB.INSTANCE.getBalance();
-            String balanceAsString = NumberFormat.getNumberInstance().format(balance);
-            TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
+			TransactionDB.INSTANCE.transferMoney(money);
+			int balance = TransactionDB.INSTANCE.getBalance();
+			String balanceAsString = NumberFormat.getNumberInstance().format(balance);
+			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
 			if (step == Step.TransferToSomeone) {
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString)));
+				MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString)));
 
-                ConfirmRequest request = new ConfirmRequest();
-                request.addInfoEvent(context.getResources().getString(R.string.dialog_button_recent_transaction), () -> {
-                    MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_recent_transaction)));
-                });
-                request.addPrimaryEvent(context.getResources().getString(R.string.dialog_button_transfer_add), () -> {
-                    MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_add)));
-                });
-                MessageBox.INSTANCE.add(request);
-                step = Step.TransferDone;
-			} else if(step == Step.TransferByAI) {
-                dbHelper.get(User.class)
-                    .subscribe(result -> {
-                        User user = result.last();
+				ConfirmRequest request = new ConfirmRequest();
+				request.addInfoEvent(context.getResources().getString(R.string.dialog_button_recent_transaction), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_recent_transaction)));
+				});
+				request.addPrimaryEvent(context.getResources().getString(R.string.dialog_button_transfer_add), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_add)));
+				});
+				MessageBox.INSTANCE.add(request);
+				step = Step.TransferDone;
+			} else if (step == Step.TransferByAI) {
+				dbHelper.get(User.class)
+						.subscribe(result -> {
+							User user = result.last();
 
-                        TransactionDB.INSTANCE.setTxName(context.getString(R.string.dialog_chat_after_transfer_to_mother));
-                        TransactionDB.INSTANCE.setTxMoney("1,000,000");
+							TransactionDB.INSTANCE.setTxName(context.getString(R.string.dialog_chat_after_transfer_to_mother));
+							TransactionDB.INSTANCE.setTxMoney("1,000,000");
 
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_after_transfer_by_ai, moneyAsString, balanceAsString, user.getName())));
-                        ConfirmRequest request = ConfirmRequest.buildYesOrNo(context);
-                        MessageBox.INSTANCE.add(request);
+							MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_after_transfer_by_ai, moneyAsString, balanceAsString, user.getName())));
+							ConfirmRequest request = ConfirmRequest.buildYesOrNo(context);
+							MessageBox.INSTANCE.add(request);
 
-                        step = Step.TransferToSomeone;
-                    });
-            }
+							step = Step.TransferToSomeone;
+						});
+			}
 		}
 
 		if (msg instanceof TransferButtonPressed) {
@@ -134,15 +134,15 @@ public class TransferScenario implements Scenario {
 
 			String name = TransactionDB.INSTANCE.getTxName();
 			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-            int money = TransactionDB.INSTANCE.getMoneyAsInt();
+			int money = TransactionDB.INSTANCE.getMoneyAsInt();
 			MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
 
-            if(money >= 1000000) {
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
-                MessageBox.INSTANCE.add(new RequestSignature());
-            } else {
-                MessageBox.INSTANCE.add(new MoneyTransferred());
-            }
+			if (money >= 1000000) {
+				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
+				MessageBox.INSTANCE.add(new RequestSignature());
+			} else {
+				MessageBox.INSTANCE.add(new MoneyTransferred());
+			}
 		}
 
 		if (msg instanceof Done) {
@@ -157,16 +157,16 @@ public class TransferScenario implements Scenario {
 				MessageBox.INSTANCE.add(new TransferTo(context.getResources().getString(R.string.dialog_chat_electricity_fare), 33750, TransferTo.TransactionType.ByAI));
 				break;
 			case TransferToSomeone:
-            case TransferByAI:
+			case TransferByAI:
 				if (msg.equals(context.getString(R.string.dialog_button_yes))) {
-                    int money = TransactionDB.INSTANCE.getMoneyAsInt();
+					int money = TransactionDB.INSTANCE.getMoneyAsInt();
 
-                    if(money >= 1000000) {
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
-                        MessageBox.INSTANCE.add(new RequestSignature());
-                    } else {
-                        MessageBox.INSTANCE.add(new MoneyTransferred());
-                    }
+					if (money >= 1000000) {
+						MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
+						MessageBox.INSTANCE.add(new RequestSignature());
+					} else {
+						MessageBox.INSTANCE.add(new MoneyTransferred());
+					}
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_button_no))) {
 					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_transfer_cancel)));
 					MessageBox.INSTANCE.add(new Done());

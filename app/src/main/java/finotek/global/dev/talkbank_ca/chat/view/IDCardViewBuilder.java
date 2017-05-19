@@ -11,31 +11,31 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.databinding.ChatIdCardBinding;
 
 public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
-    private class IDCardViewHolder extends RecyclerView.ViewHolder {
-        ChatIdCardBinding binding;
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		return new IDCardViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_id_card, parent, false));
+	}
 
-        public IDCardViewHolder(View itemView) {
-            super(itemView);
-            binding = DataBindingUtil.bind(itemView);
-        }
-    }
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, IDCardInfo data) {
+		IDCardViewHolder holder = (IDCardViewHolder) viewHolder;
+		holder.binding.cardType.setText(data.getType());
+		holder.binding.name.setText(data.getName());
+		holder.binding.jumin.setText(data.getJumin());
+		holder.binding.issueDate.setText(data.getIssueDate());
+	}
 
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        return new IDCardViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_id_card, parent, false));
-    }
+	@Override
+	public void onDelete() {
 
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, IDCardInfo data) {
-        IDCardViewHolder holder = (IDCardViewHolder) viewHolder;
-        holder.binding.cardType.setText(data.getType());
-        holder.binding.name.setText(data.getName());
-        holder.binding.jumin.setText(data.getJumin());
-        holder.binding.issueDate.setText(data.getIssueDate());
-    }
+	}
 
-    @Override
-    public void onDelete() {
+	private class IDCardViewHolder extends RecyclerView.ViewHolder {
+		ChatIdCardBinding binding;
 
-    }
+		public IDCardViewHolder(View itemView) {
+			super(itemView);
+			binding = DataBindingUtil.bind(itemView);
+		}
+	}
 }

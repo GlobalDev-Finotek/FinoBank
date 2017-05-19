@@ -21,7 +21,7 @@ public class RxEventBus {
 		return subject;
 	}
 
-	public void clear(){
+	public void clear() {
 		subject.onComplete();
 		subject = BehaviorSubject.create();
 	}

@@ -10,17 +10,17 @@ import finotek.global.dev.talkbank_ca.base.mvp.IMvpView;
  */
 
 interface CaptureProfileView extends IMvpView {
-  void setFlashButtonIcon(boolean flashState);
+	void setFlashButtonIcon(boolean flashState);
 
-  void stopRecording(String videoFilePath);
+	void stopRecording(String videoFilePath);
 
-  void setProgress(int progress);
+	void setProgress(int progress);
 
-  void requestVideoPermissions();
+	void requestVideoPermissions();
 
-  void setTransform(Matrix matrix);
+	void setTransform(Matrix matrix);
 
-  boolean isAvailableTextureView();
+	boolean isAvailableTextureView();
 
-  Surface getRecordingSurface(int width, int height);
+	Surface getRecordingSurface(int width, int height);
 }

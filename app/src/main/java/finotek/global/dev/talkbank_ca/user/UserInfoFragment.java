@@ -145,6 +145,7 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 
 		return !isNameEmpty && !isPhoneNumberEmpty;
 	}
+
 	private User generateUser() {
 		User user = new User();
 

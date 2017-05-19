@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class DataWithType {
-    int viewType;
-    Object item;
+	int viewType;
+	Object item;
 }

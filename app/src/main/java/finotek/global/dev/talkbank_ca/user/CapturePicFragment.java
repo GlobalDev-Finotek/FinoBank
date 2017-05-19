@@ -182,6 +182,34 @@ public class CapturePicFragment extends Fragment
 	 */
 	private int mSensorOrientation;
 	private FragmentCapturePicBinding binding;
+	/**
+	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
+	 * {@link TextureView}.
+	 */
+	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
+			= new TextureView.SurfaceTextureListener() {
+
+		@RequiresApi(api = Build.VERSION_CODES.M)
+		@Override
+		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+			openCamera(width, height);
+		}
+
+		@Override
+		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
+			configureTransform(width, height);
+		}
+
+		@Override
+		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
+			return true;
+		}
+
+		@Override
+		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
+		}
+
+	};
 	private boolean isCaptureDone;
 	private OnSizeChangeListener onSizeChangeListener;
 	/**
@@ -274,34 +302,6 @@ public class CapturePicFragment extends Fragment
 		@Override
 		public void onError(@NonNull CameraDevice cameraDevice, int error) {
 
-		}
-
-	};
-	/**
-	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
-	 * {@link TextureView}.
-	 */
-	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
-			= new TextureView.SurfaceTextureListener() {
-
-		@RequiresApi(api = Build.VERSION_CODES.M)
-		@Override
-		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
-			openCamera(width, height);
-		}
-
-		@Override
-		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
-			configureTransform(width, height);
-		}
-
-		@Override
-		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
-			return true;
-		}
-
-		@Override
-		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
 		}
 
 	};

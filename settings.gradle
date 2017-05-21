@@ -1,1 +1,1 @@
-include ':app', ':finopassvalidator'
+include ':app', ':log_collector'

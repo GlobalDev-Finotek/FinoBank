@@ -39,7 +39,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':finopassvalidator')
     compile 'joda-time:joda-time:2.9.7'
     compile 'com.github.barteksc:android-pdf-viewer:2.5.0'
     compile 'com.android.support:support-v4:25.3.1'
@@ -65,9 +64,4 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
 }
 
-task copy(type: Copy) {
-    from('/Users/magyeong-ug/workspace/TalkBank/app/build/outputs/apk')
-    into('/Users/magyeong-ug/Dropbox/2017_FinoPass/demo/deploy')
-    include('*.apk')
-}
 

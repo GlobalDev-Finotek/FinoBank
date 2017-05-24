@@ -1,7 +1,6 @@
 package globaldev.finotek.com.logcollector.log;
 
 import android.Manifest;
-import android.app.job.JobParameters;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -9,21 +8,14 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
-import io.reactivex.Observable;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Predicate;
 import io.reactivex.subjects.PublishSubject;
-import io.realm.Realm;
-import io.realm.RealmQuery;
-import io.realm.RealmResults;
 
 /**
  * Created by KoDeokyoon on 2017. 5. 2..
@@ -65,7 +57,7 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((MyApplication) getApplication()).getAppComponent().inject(this);
+		((FinopassApp) getApplication()).getAppComponent().inject(this);
 	}
 
 

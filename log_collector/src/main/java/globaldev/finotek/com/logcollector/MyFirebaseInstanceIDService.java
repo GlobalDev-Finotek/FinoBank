@@ -5,7 +5,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 /**
@@ -22,7 +22,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((MyApplication) getApplication()).getAppComponent().inject(this);
+		((FinopassApp) getApplication()).getAppComponent().inject(this);
 	}
 
 	/**

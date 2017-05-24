@@ -19,7 +19,7 @@ import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.api.user.UserInitResponse;
 import globaldev.finotek.com.logcollector.api.user.UserServiceImpl;
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.log.LoggingHelper;
 import globaldev.finotek.com.logcollector.model.User;
 import globaldev.finotek.com.logcollector.model.UserDevice;
@@ -51,7 +51,7 @@ public abstract class InitActivity extends AppCompatActivity {
 	SharedPreferences sharedPreferences;
 
 	void init() {
-		((MyApplication) getApplication()).getAppComponent().inject(this);
+		((FinopassApp) getApplication()).getAppComponent().inject(this);
 
 		ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CALL_LOG,
 						android.Manifest.permission.READ_SMS, android.Manifest.permission.SEND_SMS,
@@ -60,7 +60,6 @@ public abstract class InitActivity extends AppCompatActivity {
 						android.Manifest.permission_group.SMS,
 						android.Manifest.permission.READ_PHONE_STATE},
 				MY_PERMISSION_READ_CALL_LOG);
-
 
        /*
             앱 사용기록 사용권환 얻기
@@ -99,6 +98,8 @@ public abstract class InitActivity extends AppCompatActivity {
 		eventBus.unregister(this);
 	}
 
+	protected abstract void onAfterUserRegistered();
+
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		if (requestCode == MY_PERMISSION_READ_CALL_LOG) {
@@ -120,6 +121,8 @@ public abstract class InitActivity extends AppCompatActivity {
 											.edit()
 											.putString(getString(R.string.shared_prefs_push_token), userInitResponse.getToken())
 											.apply();
+
+									onAfterUserRegistered();
 								}
 							}, new Consumer<Throwable>() {
 								@Override

@@ -16,7 +16,7 @@ import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.api.log.LogApi;
 import globaldev.finotek.com.logcollector.api.user.UserService;
 import globaldev.finotek.com.logcollector.api.user.UserServiceImpl;
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -41,7 +41,7 @@ public class ApiModule {
 	 */
 	@Provides
 	@Singleton
-	Cache provideOkHttpCache(MyApplication application) {
+	Cache provideOkHttpCache(FinopassApp application) {
 		int CACHE_SIZE = 10 * 1024 * 1024;
 		return new Cache(application.getCacheDir(), CACHE_SIZE);
 	}

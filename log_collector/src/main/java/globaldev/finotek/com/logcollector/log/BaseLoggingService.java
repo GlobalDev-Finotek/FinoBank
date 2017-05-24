@@ -2,7 +2,6 @@ package globaldev.finotek.com.logcollector.log;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -45,7 +44,7 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 		realm.copyFromRealm(dataFromDB);
 		realm.commitTransaction();
 
-		Set<T> set = new HashSet<T>();
+		Set<T> set = new HashSet<>();
 		set.addAll(dataFromDB);
 		set.addAll(logData);
 

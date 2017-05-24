@@ -1,5 +1,7 @@
 package globaldev.finotek.com.logcollector.log;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony;
@@ -11,9 +13,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.R;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.MessageLog;
-import globaldev.finotek.com.logcollector.util.LogUtil;
+import globaldev.finotek.com.logcollector.util.AesInstance;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 /**
@@ -23,7 +26,14 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 
 	@Inject
+	Context context;
+
+	@Inject
+	SharedPreferences sharedPreferences;
+
+	@Inject
 	RxEventBus eventBus;
+	private AesInstance ai;
 
 
 	SMSLoggingService() {
@@ -34,7 +44,16 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((MyApplication) getApplication()).getAppComponent().inject(this);
+		((FinopassApp) getApplication()).getAppComponent().inject(this);
+		String key = sharedPreferences.getString(
+				context.getString(R.string.shared_prefs_push_token), "")
+				.substring(0, 16);
+
+		try {
+			ai = AesInstance.getInstance(key.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -63,12 +82,16 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 			String date = DateFormat.format("yyyy-MM-dd", timestamp).toString();
 			smslog.setLogTime(date);
 
-			String body = cursor.getString(3);
-			smslog.setText(body);
+			String body = " ";
+			try {
+				body = ai.encText(cursor.getString(3));
+				smslog.setText(body);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 
 			logData.add(smslog);
 		}
-
 	}
 
 	private String getNowTimeStr() {

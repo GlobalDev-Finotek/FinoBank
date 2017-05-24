@@ -20,7 +20,7 @@ import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
 import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionConfig;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
@@ -57,7 +57,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 	@Inject
 	public LoggingHelperImpl(Context context) {
 		this.context = context;
-		((MyApplication) context).getAppComponent().inject(this);
+		((FinopassApp) context).getAppComponent().inject(this);
 		loggingServiceMap = new HashMap<>();
 		mJobService =
 				(JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);

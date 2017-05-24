@@ -7,7 +7,7 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.log.LoggingHelper;
 
 /**
@@ -24,7 +24,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 	public void onCreate() {
 		super.onCreate();
 
-		((MyApplication) getApplication()).getAppComponent()
+		((FinopassApp) getApplication()).getAppComponent()
 				.inject(this);
 
 	}

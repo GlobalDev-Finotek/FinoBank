@@ -1,9 +1,10 @@
 package globaldev.finotek.com.logcollector.log;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.provider.CallLog;
 import android.text.TextUtils;
-
 
 import java.util.Calendar;
 import java.util.Date;
@@ -11,9 +12,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.R;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
-import globaldev.finotek.com.logcollector.util.LogUtil;
+import globaldev.finotek.com.logcollector.util.AesInstance;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 /**
@@ -25,7 +27,14 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 	@Inject
 	RxEventBus eventBus;
 
+	@Inject
+	Context context;
+
+	@Inject
+	SharedPreferences sharedPreferences;
+
 	private long startTime;
+	private AesInstance ai;
 
 	CallLogHistoryLoggingService() {
 
@@ -45,7 +54,17 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((MyApplication) getApplication()).getAppComponent().inject(this);
+		((FinopassApp) getApplication()).getAppComponent().inject(this);
+
+		String key = sharedPreferences.getString(
+				context.getString(R.string.shared_prefs_push_token), "")
+				.substring(0, 16);
+
+		try {
+			ai = AesInstance.getInstance(key.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -77,14 +96,15 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 				c.moveToFirst();
 
 				do {
-					String targetNumber = c.getString(0);
+					String targetNumber = ai.encText(c.getString(0));
+
 					int type = Integer.parseInt(c.getString(1)); // type, 3: missing call, 2: incoming call, 1: outgoing call
 					boolean isSent = false;
 					if (type == 2)
 						isSent = true;
 
 					String duration = c.getString(2);
-					String targetName = c.getString(3);
+					String targetName = ai.encText(c.getString(3));
 
 					if (TextUtils.isEmpty(targetName)) {
 						targetName = " ";
@@ -98,6 +118,8 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 				} while (c.moveToNext());
 			}
 		} catch (SecurityException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			if (c != null) c.close();

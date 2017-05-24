@@ -9,7 +9,7 @@ import android.text.TextUtils;
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 
 /**
  * Created by magyeong-ug on 02/05/2017.
@@ -18,7 +18,7 @@ import globaldev.finotek.com.logcollector.app.MyApplication;
 public class UserInfoGetter implements UserInfoService {
 
 	@Inject
-	MyApplication application;
+	FinopassApp application;
 
 	@Inject
 	SharedPreferences sharedPreferences;
@@ -27,7 +27,7 @@ public class UserInfoGetter implements UserInfoService {
 	Context context;
 
 	@Inject
-	UserInfoGetter(MyApplication application) {
+	UserInfoGetter(FinopassApp application) {
 		this.application = application;
 	}
 

@@ -11,7 +11,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.DeviceSecurityLevel;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
@@ -29,12 +29,11 @@ public class SecurityLevelLoggingService extends BaseLoggingService<DeviceSecuri
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((MyApplication) getApplication()).getAppComponent().inject(this);
+		((FinopassApp) getApplication()).getAppComponent().inject(this);
 	}
 
 	@Override
 	protected void parse() {
-
 
 		DeviceSecurityLevel log = new DeviceSecurityLevel();
 		// TODO getLockType 오류

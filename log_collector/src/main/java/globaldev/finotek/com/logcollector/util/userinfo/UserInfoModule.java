@@ -4,7 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import globaldev.finotek.com.logcollector.app.MyApplication;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
 
 /**
  * Created by magyeong-ug on 02/05/2017.
@@ -12,15 +12,15 @@ import globaldev.finotek.com.logcollector.app.MyApplication;
 @Module
 public class UserInfoModule {
 
-	MyApplication application;
+	FinopassApp application;
 
-	public UserInfoModule(MyApplication application) {
+	public UserInfoModule(FinopassApp application) {
 		this.application = application;
 	}
 
 	@Provides
 	@Singleton
-	public UserInfoService provideUserInfoGetter(MyApplication application) {
+	public UserInfoService provideUserInfoGetter(FinopassApp application) {
 		return new UserInfoGetter(application);
 	}
 

@@ -17,9 +17,9 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 public class AppModule {
 
 	private static final String SHARED_PREFS = "prefs";
-	private final MyApplication application;
+	private final FinopassApp application;
 
-	public AppModule(@NonNull MyApplication application) {
+	public AppModule(@NonNull FinopassApp application) {
 		this.application = application;
 	}
 
@@ -31,7 +31,7 @@ public class AppModule {
 
 	@Provides
 	@Singleton
-	MyApplication provideApplication() {
+	FinopassApp provideApplication() {
 		return this.application;
 	}
 

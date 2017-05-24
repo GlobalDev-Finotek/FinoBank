@@ -3,6 +3,7 @@ package globaldev.finotek.com.logcollector.app;
 import android.app.Application;
 
 import globaldev.finotek.com.logcollector.api.ApiModule;
+import globaldev.finotek.com.logcollector.db.FinopassRealmModule;
 import globaldev.finotek.com.logcollector.log.LoggingModule;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoModule;
 import io.realm.Realm;
@@ -12,7 +13,7 @@ import io.realm.RealmConfiguration;
  * Created by magyeong-ug on 26/04/2017.
  */
 
-public class MyApplication extends Application {
+public class FinopassApp extends Application {
 
 	AppComponent appComponent;
 
@@ -27,7 +28,8 @@ public class MyApplication extends Application {
 		Realm.init(this);
 
 		RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-				.name(Realm.DEFAULT_REALM_NAME)
+				.name("finopass.realm")
+				.modules(new FinopassRealmModule())
 				.deleteRealmIfMigrationNeeded()
 				.build();
 

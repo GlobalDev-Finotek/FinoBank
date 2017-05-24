@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.app;
 
-import android.app.Application;
 import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
@@ -8,10 +7,12 @@ import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
+import globaldev.finotek.com.logcollector.db.FinopassRealmModule;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class MyApplication extends Application {
+public class MyApplication extends FinopassApp {
 
 	AppComponent appComponent;
 	private DBHelper dbHelper;
@@ -20,11 +21,11 @@ public class MyApplication extends Application {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
 		Realm.init(this);
 
 		RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-				.name(Realm.DEFAULT_REALM_NAME)
+				.name("app.realm")
+				.modules(Realm.getDefaultModule(), new FinopassRealmModule())
 				.deleteRealmIfMigrationNeeded()
 				.build();
 
@@ -40,7 +41,7 @@ public class MyApplication extends Application {
 		return getApplicationContext();
 	}
 
-	public AppComponent getAppComponent() {
+	public AppComponent getMyAppComponent() {
 		return appComponent;
 	}
 

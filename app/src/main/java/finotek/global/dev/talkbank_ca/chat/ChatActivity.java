@@ -108,6 +108,7 @@ public class ChatActivity extends AppCompatActivity {
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 		getComponent().inject(this);
 
+
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		getSupportActionBar().setElevation(0);
@@ -342,7 +343,7 @@ public class ChatActivity extends AppCompatActivity {
         } else {
             fiBinding.sendButton.setImageResource(R.drawable.btn_mike);
         }
-	}g
+	}
 
 	private void clearInput() {
 		fiBinding.sendButton.setEnabled(false);
@@ -356,7 +357,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void showExControl() {
 		isExControlAvailable = true;
-		binding.footer.addView(exControlView);
+		binding.footer.addView(exControlView, 0);
 	}
 
 	private void preInitControlViews() {
@@ -366,6 +367,8 @@ public class ChatActivity extends AppCompatActivity {
 		transferView = inflate(R.layout.chat_transfer);
 
 		fiBinding = ChatFooterInputBinding.bind(footerInputs);
+        fiBinding.sendButton.setEnabled(false);
+
 		RxView.focusChanges(fiBinding.chatEditText)
 				.delay(100, TimeUnit.MILLISECONDS)
 				.subscribe(this::chatEditFieldFocusChanged);

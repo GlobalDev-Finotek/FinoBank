@@ -10,4 +10,5 @@ public class IDCardInfo {
 	String name;
 	String jumin;
 	String issueDate;
+	String imgPath;
 }

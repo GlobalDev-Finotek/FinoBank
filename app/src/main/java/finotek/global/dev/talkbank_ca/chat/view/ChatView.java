@@ -37,7 +37,7 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
 		this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
 		this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
-		this.addChatViewBuilder(ViewType.IDCard.ordinal(), new IDCardViewBuilder());
+		this.addChatViewBuilder(ViewType.IDCard.ordinal(), new IDCardViewBuilder(context));
 
 		this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder(context));
 		this.addChatViewBuilder(ViewType.Agreement.ordinal(), new AgreementBuilder(context));

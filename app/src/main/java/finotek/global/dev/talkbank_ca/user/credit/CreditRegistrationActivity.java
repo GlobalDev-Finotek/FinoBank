@@ -65,23 +65,23 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 		binding.appbar.setVisibility(View.VISIBLE);
 
 
-		capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
-			@Override
-			public void onSizeFull() {
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-						LinearLayout.LayoutParams.MATCH_PARENT);
-				binding.flCam.setLayoutParams(lp);
-				binding.appbar.setVisibility(View.GONE);
-			}
-
-			@Override
-			public void onSizeMinimize() {
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
-						Converter.dpToPx(350));
-				binding.flCam.setLayoutParams(lp);
-				binding.appbar.setVisibility(View.VISIBLE);
-			}
-		});
+//		capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
+//			@Override
+//			public void onSizeFull() {
+//				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//						LinearLayout.LayoutParams.MATCH_PARENT);
+//				binding.flCam.setLayoutParams(lp);
+//				binding.appbar.setVisibility(View.GONE);
+//			}
+//
+//			@Override
+//			public void onSizeMinimize() {
+//				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,
+//						Converter.dpToPx(350));
+//				binding.flCam.setLayoutParams(lp);
+//				binding.appbar.setVisibility(View.VISIBLE);
+//			}
+//		});
 
 		RxView.clicks(binding.btnSave)
 			.throttleFirst(200, TimeUnit.MILLISECONDS)

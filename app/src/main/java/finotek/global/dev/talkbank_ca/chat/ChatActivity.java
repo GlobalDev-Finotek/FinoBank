@@ -169,36 +169,21 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
+			releaseAllControls();
+
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
 			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
+				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path));
 				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
 				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(ChatActivity.this));
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
-			});
-
-			capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
-
-				@Override
-				public void onSizeFull() {
-					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-					captureView.setLayoutParams(lp);
-				}
-
-				@Override
-				public void onSizeMinimize() {
-					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
-					captureView.setLayoutParams(lp);
-				}
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
@@ -212,6 +197,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof RequestSignature) {
 			releaseControls();
+			releaseAllControls();
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
@@ -241,6 +227,8 @@ public class ChatActivity extends AppCompatActivity {
 								transaction.remove(signRegistFragment).commit();
 
 								dialog.dismiss();
+
+								returnToInitialControl();
 							});
 							dialog.show();
 						}, throwable -> {

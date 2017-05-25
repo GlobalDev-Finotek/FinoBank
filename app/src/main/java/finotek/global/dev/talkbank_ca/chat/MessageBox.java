@@ -38,7 +38,7 @@ public enum MessageBox {
                         return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
 
                     if(i == 2)
-                        return Flowable.just(msg).delay(500, TimeUnit.MILLISECONDS);
+                        return Flowable.just(msg).delay(600, TimeUnit.MILLISECONDS);
 
                     return null;
                 })
@@ -50,11 +50,11 @@ public enum MessageBox {
 				.observeOn(AndroidSchedulers.mainThread())
 				.concatMap(i -> {
                     if(i == 0)
-                        return Flowable.just(new WaitResult());
+                        return Flowable.just(new WaitResult()); 
                     if(i == 1)
                         return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
 
-                    return Flowable.just(msg[i-2]).delay(700, TimeUnit.MILLISECONDS);
+                    return Flowable.just(msg[i-2]).delay(600, TimeUnit.MILLISECONDS);
                 })
 				.subscribe(observable::onNext);
 	}

@@ -15,6 +15,10 @@ public class CreditCard extends RealmObject {
 	public Date expirationDate;
 	public String name;
 
+	public CreditCard(){
+
+	}
+
 	public static CreditCard getMockData() {
 		CreditCard creditCard = new CreditCard();
 		creditCard.company = "BC";

@@ -14,4 +14,8 @@ public class UserAdditionalInfo extends RealmObject {
 	String creditPicPath;
 	String profilePicPath;
 
+	public UserAdditionalInfo() {
+
+	}
+
 }

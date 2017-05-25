@@ -59,7 +59,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 		tvContextAuthAccuracy = (TextView) findViewById(R.id.tv_context_auth_accuracy);
 		mainButton = (Button) findViewById(R.id.main_button);
 
-
 		presenter.attachView(this);
 		checkPermission();
 
@@ -67,9 +66,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 				.subscribe(users -> {
 					boolean isFirst = false;
 
-					if (users.size() == 0) {
+					if (users.size() == 0)
 						isFirst = true;
-					}
 
 					if (isFirst) {
 						tvContextAuthAccuracy.setVisibility(View.INVISIBLE);
@@ -77,10 +75,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
 						tvContextAuthAccuracy.setVisibility(View.VISIBLE);
 					}
 
-
 					setNextButtonText(isFirst);
-
-
 				}, throwable -> {
 
 				});

@@ -44,5 +44,4 @@ public class SplashActivity extends AppCompatActivity {
 				.activityModule(new ActivityModule(this))
 				.build();
 	}
-
 }

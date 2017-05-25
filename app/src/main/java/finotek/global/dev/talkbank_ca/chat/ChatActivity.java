@@ -550,7 +550,7 @@ public class ChatActivity extends AppCompatActivity {
 	private ChatComponent getComponent() {
 		return DaggerChatComponent
 				.builder()
-				.appComponent(((MyApplication) getApplication()).getAppComponent())
+				.appComponent(((MyApplication) getApplication()).getMyAppComponent())
 				.activityModule(new ActivityModule(this))
 				.build();
 	}

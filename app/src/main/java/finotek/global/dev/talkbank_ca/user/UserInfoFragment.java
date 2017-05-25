@@ -168,7 +168,7 @@ public class UserInfoFragment extends android.app.Fragment implements UserRegist
 	private UserInfoComponent getComponent() {
 		return DaggerUserInfoComponent
 				.builder()
-				.appComponent(((MyApplication) getActivity().getApplication()).getAppComponent())
+				.appComponent(((MyApplication) getActivity().getApplication()).getMyAppComponent())
 				.activityModule(new ActivityModule(getActivity())).build();
 	}
 

@@ -1,7 +1,6 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,7 +8,6 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -99,25 +97,9 @@ public class MainScenario {
 
 	private void firstScenario(boolean isSigned) {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
-
-
-		eventBus.getObservable()
-				.subscribe(iEvent -> {
-					Log.d("FINO-TB", iEvent.getClass().getName());
-
-					if (iEvent instanceof AccuracyMeasureEvent) {
-
-						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-						if (isSigned) {
-							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100))));
-						} else {
-							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
-						}
-					}
 					Realm realm = Realm.getDefaultInstance();
 					User user = realm.where(User.class).findAll().last();
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
-				});
+		MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
 	}
 
 	private void onRequest(Object msg) {

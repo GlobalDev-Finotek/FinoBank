@@ -103,19 +103,22 @@ public class MainScenario {
 		eventBus.getObservable()
 				.subscribe(iEvent -> {
 					Log.d("FINO-TB", iEvent.getClass().getName());
-
-					if (iEvent instanceof AccuracyMeasureEvent) {
-
-						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-						if (isSigned) {
-							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100))));
-						} else {
-							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100))));
-						}
-					}
 					Realm realm = Realm.getDefaultInstance();
 					User user = realm.where(User.class).findAll().last();
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
+
+					StatusMessage status = null;
+					ReceiveMessage intro = new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName()));
+
+					if (iEvent instanceof AccuracyMeasureEvent) {
+						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
+						if (isSigned) {
+							status = new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100)));
+						} else {
+							status = new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100)));
+						}
+					}
+
+					MessageBox.INSTANCE.add(status, intro);
 				});
 	}
 

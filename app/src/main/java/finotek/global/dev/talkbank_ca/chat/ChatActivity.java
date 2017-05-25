@@ -20,6 +20,9 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -82,10 +85,13 @@ import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
+
 	@Inject
 	DBHelper dbHelper;
+
 	@Inject
 	RxEventBus eventBus;
+
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
@@ -98,7 +104,6 @@ public class ChatActivity extends AppCompatActivity {
 	private MainScenario mainScenario;
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
-
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -119,9 +124,10 @@ public class ChatActivity extends AppCompatActivity {
 		mLayoutManager.setStackFromEnd(true);
 
 		binding.chatView.setLayoutManager(mLayoutManager);
-		binding.chatView.setItemAnimator(new SlideInUpAnimator());
+        SlideInUpAnimator animator = new SlideInUpAnimator(new AccelerateInterpolator(1f));
+		binding.chatView.setItemAnimator(animator);
 
-		if (intent != null) {
+        if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
 			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
@@ -199,7 +205,6 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestKeyboardInput) {
-
 			openKeyboard(fiBinding.chatEditText);
 		}
 

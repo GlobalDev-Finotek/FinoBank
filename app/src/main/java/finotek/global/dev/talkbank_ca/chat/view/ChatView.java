@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
+import android.view.animation.DecelerateInterpolator;
+import android.view.animation.OvershootInterpolator;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
@@ -19,6 +21,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
  * @author david lee at finotek.
@@ -30,8 +33,7 @@ public class ChatView extends RecyclerView {
 		super(context, attrs);
 
 		this.adapter = new ChatAdapter();
-		setAdapter(new AlphaInAnimationAdapter(adapter));
-
+        setAdapter(adapter);
 
 		this.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
 		this.addChatViewBuilder(ViewType.IconicSend.ordinal(), new IconicSendViewBuilder(context));
@@ -105,12 +107,7 @@ public class ChatView extends RecyclerView {
 	}
 
 	public void scrollToBottom() {
-		postDelayed(() -> {
-			LayoutManager lm = getLayoutManager();
-			if (lm != null) {
-				lm.scrollToPosition(0);
-			}
-		}, 300);
+		getLayoutManager().scrollToPosition(0);
 	}
 
 	public enum ViewType {

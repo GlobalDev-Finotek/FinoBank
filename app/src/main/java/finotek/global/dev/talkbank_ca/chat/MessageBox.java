@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -24,21 +25,17 @@ public enum MessageBox {
 		observable = BehaviorSubject.create();
 	}
 
-	public void add(Object msg) {
+	public void add(Object... msg) {
+		Flowable.range(0, msg.length)
+				.observeOn(AndroidSchedulers.mainThread())
+				.concatMap(i -> Flowable.just(msg[i]).delay(500, TimeUnit.MILLISECONDS))
+				.subscribe(observable::onNext);
+	}
+
+	public void add(Object msg, int delay) {
 		messages.add(msg);
 
 		Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
-
-		Flowable.interval(200, TimeUnit.MILLISECONDS)
-				.observeOn(AndroidSchedulers.mainThread())
-				.first((long) 1)
-				.subscribe(value -> {
-					observable.onNext(msg);
-				});
-	}
-
-	public void delay(Object msg, int delay) {
-		messages.add(msg);
 
 		Flowable.interval(delay, TimeUnit.MILLISECONDS)
 				.observeOn(AndroidSchedulers.mainThread())
@@ -46,6 +43,14 @@ public enum MessageBox {
 				.subscribe(value -> {
 					observable.onNext(msg);
 				});
+	}
+
+	public void add(Object msg) {
+		add(msg, 200);
+	}
+
+	public void delay(Object msg, int delay) {
+		add(msg, delay);
 	}
 
 	public void removeAt(int index) {

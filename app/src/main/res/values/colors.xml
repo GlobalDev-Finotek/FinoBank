@@ -58,13 +58,14 @@
     <color name="chat_divider_text">#546463</color>
     <color name="chat_background">#EAE7DF</color>
     <color name="chat_send_bg">#defdc4</color>
+    <color name="chat_recommended_menu_text">#055d4f</color>
 
     <color name="color_chat_divider">@color/dark_50</color>
     <color name="color_text_default">@color/dark_100</color>
     <color name="color_send_disabled">#CFCFCF</color>
     <color name="color_send_enabled">@color/colorPrimary</color>
     <color name="color_extended_control_bg">#e0e0e0</color>
-    <color name="color_chat_agreement_border">#E5E5E5</color>
+    <color name="color_chat_agreement_border">@color/white_two</color>
 
     <color name="setting_title_color">#F2F2F2</color>
 

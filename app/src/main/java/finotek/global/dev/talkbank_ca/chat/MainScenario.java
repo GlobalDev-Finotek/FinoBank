@@ -25,6 +25,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
@@ -120,7 +121,17 @@ public class MainScenario {
 						}
 					}
 
-					MessageBox.INSTANCE.addAndWait(status, intro);
+					RecoMenuRequest req = new RecoMenuRequest();
+					req.setTitle("추천메뉴");
+					req.setDescription("제가 추천하는 사항은 아래 세가지입니다.\n원하시는 메뉴를 눌러주세요.");
+
+					req.addMenu(R.drawable.icon_like, "전기료 이체", null);
+					req.addMenu(R.drawable.icon_love, "여행 적금 가입", null);
+					req.addMenu(R.drawable.icon_love, "자동차 대출", null);
+					req.addMenu(R.drawable.icon_wow, "다음에 알려주세요.", null);
+
+
+					MessageBox.INSTANCE.addAndWait(status, intro, req);
 				});
 	}
 
@@ -207,6 +218,11 @@ public class MainScenario {
 				chatView.removeOf(ChatView.ViewType.Confirm);
 			});
 			chatView.confirm(request);
+		}
+
+		// 추천 메뉴 요청
+		if (msg instanceof RecoMenuRequest) {
+			chatView.recoMenu((RecoMenuRequest) msg);
 		}
 
 		// 신분증 스캔 결과

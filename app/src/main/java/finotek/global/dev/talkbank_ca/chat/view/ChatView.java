@@ -18,6 +18,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
 import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
@@ -41,6 +42,7 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
 		this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
 		this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
+        this.addChatViewBuilder(ViewType.RecoMenu.ordinal(), new RecoMenuViewBuilder(context));
 		this.addChatViewBuilder(ViewType.IDCard.ordinal(), new IDCardViewBuilder());
 
 		this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder(context));
@@ -104,6 +106,10 @@ public class ChatView extends RecyclerView {
 		addMessage(ViewType.Confirm.ordinal(), ev);
 	}
 
+	public void recoMenu(RecoMenuRequest req) {
+        addMessage(ViewType.RecoMenu.ordinal(), req);
+    }
+
 	private void addChatViewBuilder(int viewType, ViewBuilder builder) {
 		adapter.addChatViewBuilder(viewType, builder);
 	}
@@ -122,7 +128,7 @@ public class ChatView extends RecyclerView {
 
 	public enum ViewType {
 		Send, IconicSend, Receive, Divider, Status,
-		Confirm,
+		Confirm, RecoMenu,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult,
         Wait

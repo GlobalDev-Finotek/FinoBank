@@ -5,7 +5,8 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="41dp"
-        android:background="@drawable/chat_reco_menu_normal">
+        android:background="@drawable/chat_reco_menu_normal"
+        android:clickable="true">
         <View
             android:layout_alignParentTop="true"
             android:layout_width="match_parent"

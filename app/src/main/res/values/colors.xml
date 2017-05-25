@@ -61,7 +61,6 @@
 
     <color name="color_chat_divider">@color/dark_50</color>
     <color name="color_text_default">@color/dark_100</color>
-    <color name="color_chat_footer">#F5F4F5</color>
     <color name="color_send_disabled">#CFCFCF</color>
     <color name="color_send_enabled">@color/colorPrimary</color>
     <color name="color_extended_control_bg">#e0e0e0</color>

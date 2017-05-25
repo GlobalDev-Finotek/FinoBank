@@ -54,7 +54,7 @@ public enum MessageBox {
                     if(i == 1)
                         return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
 
-                    return Flowable.just(msg[i-2]).delay(500, TimeUnit.MILLISECONDS);
+                    return Flowable.just(msg[i-2]).delay(700, TimeUnit.MILLISECONDS);
                 })
 				.subscribe(observable::onNext);
 	}

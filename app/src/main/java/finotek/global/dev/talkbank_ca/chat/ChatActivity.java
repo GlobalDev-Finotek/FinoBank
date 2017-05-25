@@ -173,7 +173,7 @@ public class ChatActivity extends AppCompatActivity {
 				MessageBox.INSTANCE.addAndWait(
                     new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"),
                     new ReceiveMessage(getString(R.string.dialog_chat_correct_information)),
-                        ConfirmRequest.buildYesOrNo(ChatActivity.this)
+                    ConfirmRequest.buildYesOrNo(ChatActivity.this)
                 );
 				this.returnToInitialControl();
 
@@ -334,7 +334,11 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {
-		fiBinding.sendButton.setEnabled(!value.toString().isEmpty());
+        if(!value.toString().isEmpty()) {
+            fiBinding.sendButton.setImageResource(R.drawable.btn_mike);
+        } else {
+            fiBinding.sendButton.setImageResource(R.drawable.btn_send);
+        }
 	}
 
 	private void clearInput() {
@@ -345,13 +349,11 @@ public class ChatActivity extends AppCompatActivity {
 	private void hideExControl() {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
-		fiBinding.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
 	}
 
 	private void showExControl() {
 		isExControlAvailable = true;
 		binding.footer.addView(exControlView);
-		fiBinding.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
 	}
 
 	private void preInitControlViews() {

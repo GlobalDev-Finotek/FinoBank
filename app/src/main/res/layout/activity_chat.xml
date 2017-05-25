@@ -53,12 +53,15 @@
                 android:id="@+id/chat_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/footer" />
+                android:layout_above="@+id/footer"
+                android:requiresFadingEdge="vertical"
+                android:overScrollMode="ifContentScrolls" />
             <LinearLayout
                 android:id="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:layout_marginBottom="10dp"
                 android:orientation="vertical"></LinearLayout>
         </RelativeLayout>
     </LinearLayout>

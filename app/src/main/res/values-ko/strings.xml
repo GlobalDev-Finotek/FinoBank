@@ -282,7 +282,7 @@
     <string name="more_button">더보기</string>
     <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
-    <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73%(통화기록: 85%, 문자기록: 66%, 위치기록:54%)로 %1%s 님을 확인하였습니다. </string>
+    <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73점(통화기록: 85점, 문자기록: 66점, 위치기록:54점)으로 %1%s 님을 확인하였습니다. </string>
     <string name ="main_string_v2_login_hello">%1$s님 안녕하세요, </string>
     <string name ="main_string_v2_login_hello_M">좋은 아침이에요, 오늘도 즐거운 하루 되세요!!!</string>
     <string name ="main_string_v2_login_hello_L">식사는 하셨나요? 활기찬 오후 되세요~</string>
@@ -297,6 +297,8 @@
     <string name ="main_string_v2_login_open_saving_account">(추천)여행 적금 가입</string>
     <string name ="main_string_v2_login_loan_car">(추천) 자동차 대출</string>
     <string name ="main_string_v2_login_notify_again">다음에 알려주세요</string>
+    <string name ="main_string_v2_open_account_notice">계좌를 개설합니다.</string>
+    <string name ="main_string_v2_open_account_complete">계좌 개설이 완료 되었습니다</string>
     <string name ="main_string_v2_login_electricity_message">전기요금 납부 안내 메시지가 확인되었습니다.</string>
     <string name ="main_string_v2_login_electricity_compare">이번 달 요금은 %1$s원으로 지난 달보다 %1$s원 많이 쓰셨네요!</string>
     <string name ="main_string_v2_login_electricity_recommend"> 지금 추천드리는 공과금 납부 통장을 개설하고 이체하시면 바로 할일되는 공과금 납부 전용 통장을 만드시는 것은 어떠세요?</string>
@@ -308,15 +310,16 @@
     <string name ="main_string_v2_login_electricity_additional_picture">다른 신분증을 추가로 촬영하시겠어요?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">예</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>
+    <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 인증합니다</string>
     <string name ="main_string_v2_login_electricity_signature">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해주세요 </string>
-    <string name ="main_string_v2_login_electricity_account_confirm">계좌 개설이 완료 되었습니다 10%할인된 전기료 %1$s원이 공과금 계좌에서 납부 완료 되었습니다. </string>
+    <string name ="main_string_v2_login_electricity_account_confirm">10%%할인된 전기료 %1$s원이 공과금 계좌에서 납부 완료 되었습니다. </string>
     <string name ="main_string_v2_login_saving_ask">요즘 다낭에 대한 검색을 자주 하시던데... 혹시 해외 여행을 계획하고 있나요?  다낭은 12월부터 2월이 가장 여행하기 좋다고 하네요!</string>
     <string name ="main_string_v2_login_saving_recommend">아래 해외 여행을 위한 목돈 모으기 통장 가입 시 항공료 5% 할인 쿠폰을 드립니다. 이번 겨울 다낭 여행을 목표로 돈을 모으는게 어떨까요?</string>
     <string name ="main_string_v2_login_saving_no">아니요, 필요없어요</string>
     <string name ="main_string_v2_login_saving_no_confirm"> 아 그러시군요, 매일 이렇게 같이 있는데도 아직 %1$s님을 잘 모르나봐요.. 그럼 어떤것이 필요하세요?</string>
     <string name ="main_string_v2_login_saving_yes">예 통장을 만들게요</string>
     <string name ="main_string_v2_login_car_ask">혹시 자동차를 구입하실 생각인가요? 여러 브랜드의 자동차 매장에 방문하시는 것이 확인되었습니다.</string>
-    <string name ="main_string_v2_login_car_recommend">아래 자동차 대출은 2.5% 금리로 최고 7백만원까지 이용하실 수 있습니다. 자동차 대출을 신청하시겠습니까?</string>
+    <string name ="main_string_v2_login_car_recommend">아래 자동차 대출은 2.5%% 금리로 최고 7백만원까지 이용하실 수 있습니다. 자동차 대출을 신청하시겠습니까?</string>
     <string name ="main_string_v2_login_car_yes">예</string>
     <string name ="main_string_v2_login_car_no">아니요, 필요없어요</string>
     <string name ="main_string_v2_login_car_no_confirm"> 아 그러시군요, 매일 이렇게 같이 있는데도 아직 %1$s님을 잘 모르나봐요.. 그럼 어떤것이 필요하세요?</string>

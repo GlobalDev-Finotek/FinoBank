@@ -14,6 +14,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -77,6 +78,7 @@ import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInUpAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
@@ -116,8 +118,8 @@ public class ChatActivity extends AppCompatActivity {
 		mLayoutManager.setReverseLayout(true);
 		mLayoutManager.setStackFromEnd(true);
 
-		binding.chatView.setItemAnimator(new FadeInUpAnimator());
 		binding.chatView.setLayoutManager(mLayoutManager);
+		binding.chatView.setItemAnimator(new SlideInUpAnimator());
 
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);

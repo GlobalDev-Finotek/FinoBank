@@ -11,4 +11,7 @@
     <dimen name="zero">0dp</dimen>
     <dimen name="one">1dp</dimen>
     <dimen name="five">5dp</dimen>
+
+    <dimen name="chat_margin_bottom">10dp</dimen>
+    <dimen name="chat_margin_left_right">15dp</dimen>
 </resources>

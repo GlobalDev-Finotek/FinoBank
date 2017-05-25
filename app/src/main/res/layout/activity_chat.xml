@@ -5,8 +5,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:background="@color/chat_background">
+        android:orientation="vertical">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/appbar"
@@ -66,8 +65,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_above="@+id/footer"
-                android:layout_marginBottom="40dp"
-                android:layout_marginTop="10dp">
+                android:background="@color/chat_background">
             </finotek.global.dev.talkbank_ca.chat.view.ChatView>
             <LinearLayout
                 android:id="@+id/footer"

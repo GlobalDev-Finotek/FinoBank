@@ -17,6 +17,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
+import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
+import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
 
 /**
  * @author david lee at finotek.
@@ -28,7 +30,7 @@ public class ChatView extends RecyclerView {
 		super(context, attrs);
 
 		this.adapter = new ChatAdapter();
-		setAdapter(adapter);
+		setAdapter(new AlphaInAnimationAdapter(adapter));
 
 
 		this.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
@@ -100,10 +102,6 @@ public class ChatView extends RecyclerView {
 
 	public void removeOf(ViewType viewType) {
 		adapter.removeChatItem(viewType.ordinal());
-	}
-
-	public void removeLast() {
-		adapter.removeItem(adapter.getItemCount() - 1);
 	}
 
 	public void scrollToBottom() {

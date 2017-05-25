@@ -41,7 +41,6 @@ import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
@@ -130,7 +129,7 @@ public class ChatActivity extends AppCompatActivity {
 					if (msg instanceof EnableToEditMoney) {
 						return Observable.just(msg)
 								.observeOn(AndroidSchedulers.mainThread());
-					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
+					} else if (msg instanceof MessageEmitted) {
 						return Observable.just(msg)
 								.debounce(1, TimeUnit.SECONDS)
 								.observeOn(AndroidSchedulers.mainThread());
@@ -159,14 +158,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		if (msg instanceof WaitForMessage) {
-			binding.waitMessage.smoothToShow();
-		}
-
-		if (msg instanceof MessageEmitted) {
-			binding.waitMessage.smoothToHide();
-		}
-
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
 

@@ -21,7 +21,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -257,7 +256,7 @@ public class MainScenario {
 	private boolean isImmediateMessage(Object msg) {
 		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
 				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
-				msg instanceof WaitForMessage || msg instanceof MessageEmitted;
+				msg instanceof MessageEmitted;
 	}
 
 	public void release() {

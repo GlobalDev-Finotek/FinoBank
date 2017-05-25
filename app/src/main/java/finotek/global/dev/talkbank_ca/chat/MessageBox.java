@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import io.reactivex.Flowable;
@@ -34,10 +33,6 @@ public enum MessageBox {
 				.observeOn(AndroidSchedulers.mainThread())
 				.first((long) 1)
 				.subscribe(value -> {
-					if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-						observable.onNext(new WaitForMessage());
-					}
-
 					observable.onNext(msg);
 				});
 	}
@@ -49,10 +44,6 @@ public enum MessageBox {
 				.observeOn(AndroidSchedulers.mainThread())
 				.first((long) 1)
 				.subscribe(value -> {
-					if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-						observable.onNext(new WaitForMessage());
-					}
-
 					observable.onNext(msg);
 				});
 	}

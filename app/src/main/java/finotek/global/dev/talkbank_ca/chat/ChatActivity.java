@@ -334,12 +334,15 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {
-        if(!value.toString().isEmpty()) {
-            fiBinding.sendButton.setImageResource(R.drawable.btn_mike);
-        } else {
+        boolean enabled = !value.toString().isEmpty();
+        fiBinding.sendButton.setEnabled(enabled);
+
+        if(enabled) {
             fiBinding.sendButton.setImageResource(R.drawable.btn_send);
+        } else {
+            fiBinding.sendButton.setImageResource(R.drawable.btn_mike);
         }
-	}
+	}g
 
 	private void clearInput() {
 		fiBinding.sendButton.setEnabled(false);

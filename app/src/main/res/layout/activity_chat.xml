@@ -45,7 +45,6 @@
                     app:srcCompat="@drawable/btn_menu"/>
             </RelativeLayout>
         </android.support.design.widget.AppBarLayout>
-
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

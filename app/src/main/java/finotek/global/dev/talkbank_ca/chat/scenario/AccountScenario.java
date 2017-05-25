@@ -41,8 +41,10 @@ public class AccountScenario implements Scenario {
 	public void onReceive(Object msg) {
 		if (msg instanceof SignatureVerified) {
 			if (step == Step.Last) {
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_success)));
-				MessageBox.INSTANCE.add(new Done());
+				MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_success)),
+					new Done()
+				);
 			}
 		}
 
@@ -69,10 +71,12 @@ public class AccountScenario implements Scenario {
 					);
 					step = Step.TakeSign;
 				} else if (msg.equals(context.getString(R.string.string_no))) {
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)));
-					MessageBox.INSTANCE.add(new Done());
+					MessageBox.INSTANCE.addAndWait(
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)),
+						new Done()
+					);
 				} else {
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
 				}
 				break;
 			// 본인이 맞으세요?
@@ -89,7 +93,7 @@ public class AccountScenario implements Scenario {
 						new RequestTakeIDCard()
 					);
 				} else {
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
 				}
 				break;
 		}

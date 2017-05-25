@@ -102,15 +102,15 @@ public class LoanScenario implements Scenario {
 						new Done()
 					);
 				} else {
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
 				}
 				break;
 			case InputMoney:
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_amount_type)));
+				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_amount_type)));
 				step = Step.Agreement;
 				break;
 			case Agreement:
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_term_agreement_accept)));
+				ReceiveMessage receive = new ReceiveMessage(context.getResources().getString(R.string.dialog_string_term_agreement_accept));
 
 				List<Agreement> agreements = new ArrayList<>();
 				Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
@@ -125,12 +125,15 @@ public class LoanScenario implements Scenario {
 				agreements.add(required);
 				agreements.add(optional);
 
-				MessageBox.INSTANCE.add(new AgreementRequest(agreements));
-				MessageBox.INSTANCE.add(new DismissKeyboard());
+				MessageBox.INSTANCE.addAndWait(
+					receive,
+					new AgreementRequest(agreements),
+					new DismissKeyboard()
+				);
 				step = Step.Last;
 				break;
 			default:
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
 				break;
 		}
 	}

@@ -170,9 +170,11 @@ public class ChatActivity extends AppCompatActivity {
 			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
-				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
-				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(ChatActivity.this));
+				MessageBox.INSTANCE.addAndWait(
+                    new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"),
+                    new ReceiveMessage(getString(R.string.dialog_chat_correct_information)),
+                        ConfirmRequest.buildYesOrNo(ChatActivity.this)
+                );
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();

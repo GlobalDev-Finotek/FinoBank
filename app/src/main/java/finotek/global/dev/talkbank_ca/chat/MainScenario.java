@@ -21,6 +21,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -118,7 +120,7 @@ public class MainScenario {
 						}
 					}
 
-					MessageBox.INSTANCE.add(status, intro);
+					MessageBox.INSTANCE.addAndWait(status, intro);
 				});
 	}
 
@@ -248,6 +250,14 @@ public class MainScenario {
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
+		}
+
+		if(msg instanceof WaitResult) {
+			chatView.waiting();
+		}
+
+		if(msg instanceof WaitDone) {
+			chatView.waitingDone();
 		}
 	}
 

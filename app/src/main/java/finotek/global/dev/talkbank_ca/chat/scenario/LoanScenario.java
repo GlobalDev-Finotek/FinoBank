@@ -64,7 +64,7 @@ public class LoanScenario implements Scenario {
 								1, 50000000, TransactionDB.INSTANCE.getBalance(), new DateTime()
 						));
 
-				MessageBox.INSTANCE.add(
+				MessageBox.INSTANCE.addAndWait(
 					new RequestRemoveControls(),
 					new AgreementResult(),
 					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
@@ -83,7 +83,7 @@ public class LoanScenario implements Scenario {
 	public void onUserSend(String msg) {
 		switch (step) {
 			case Initial:
-				MessageBox.INSTANCE.add(
+				MessageBox.INSTANCE.addAndWait(
 					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_apply)),
 					ConfirmRequest.buildYesOrNo(context)
 				);
@@ -91,13 +91,13 @@ public class LoanScenario implements Scenario {
 				break;
 			case InputAddress:
 				if (msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
-					MessageBox.INSTANCE.add(
+					MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_string_home_address_type)),
-							new RequestKeyboardInput()
+						new RequestKeyboardInput()
 					);
 					step = Step.InputMoney;
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_button_no))) {
-					MessageBox.INSTANCE.add(
+					MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)),
 						new Done()
 					);

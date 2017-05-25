@@ -55,7 +55,7 @@ public class AccountScenario implements Scenario {
 	public void onUserSend(String msg) {
 		switch (step) {
 			case Initial:
-				MessageBox.INSTANCE.add(
+				MessageBox.INSTANCE.addAndWait(
 					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recommandation, user.getName())),
 					ConfirmRequest.buildYesOrNo(context)
 				);
@@ -63,7 +63,7 @@ public class AccountScenario implements Scenario {
 				break;
 			case CheckIDCard:
 				if (msg.equals(context.getString(R.string.string_yes))) {
-					MessageBox.INSTANCE.add(
+					MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_take_picture_id_card)),
 						new RequestTakeIDCard()
 					);
@@ -78,13 +78,13 @@ public class AccountScenario implements Scenario {
 			// 본인이 맞으세요?
 			case TakeSign:
 				if (msg.equals(context.getString(R.string.string_yes))) {
-					MessageBox.INSTANCE.add(
+					MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_sign_tip)),
 						new RequestSignature()
 					);
 					step = Step.Last;
 				} else if (msg.equals(context.getString(R.string.string_no))) {
-					MessageBox.INSTANCE.add(
+					MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_id_card_retake)),
 						new RequestTakeIDCard()
 					);

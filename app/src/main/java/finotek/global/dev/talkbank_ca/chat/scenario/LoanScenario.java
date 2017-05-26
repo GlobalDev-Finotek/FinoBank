@@ -64,8 +64,8 @@ public class LoanScenario implements Scenario {
 								1, 50000000, TransactionDB.INSTANCE.getBalance(), new DateTime()
 						));
 
+				MessageBox.INSTANCE.add(new RequestRemoveControls());
 				MessageBox.INSTANCE.addAndWait(
-					new RequestRemoveControls(),
 					new AgreementResult(),
 					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
 					new Done()

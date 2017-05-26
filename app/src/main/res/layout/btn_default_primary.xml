@@ -7,4 +7,4 @@
                                                       android:paddingEnd="20dp"
                                                       android:paddingStart="20dp"
                                                       android:textColor="@color/colorPrimary"
-                                                      android:textSize="14sp"/>
+                                                      android:textSize="@dimen/text_normal" />

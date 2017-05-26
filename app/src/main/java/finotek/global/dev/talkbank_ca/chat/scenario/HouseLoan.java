@@ -28,13 +28,13 @@ public class HouseLoan implements Scenario {
 
     @Override
     public String getName() {
-        return context.getString(R.string.main_string_v2_login_loan_house) ;
+        return context.getString(R.string.main_string_v2_login_house_loan) ;
     }
 
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals(context.getResources().getString(R.string.main_string_v2_login_loan_house));
+        return msg.equals(context.getResources().getString(R.string.main_string_v2_login_house_loan));
     }
 
     @Override

@@ -16,7 +16,7 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="23dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:baselineAligned="false">
@@ -28,8 +28,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/icon1"
-                        android:layout_width="57dp"
-                        android:layout_height="57dp"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank01" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -39,7 +39,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_open_account"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
                 <RelativeLayout
@@ -50,8 +51,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/icon2"
-                        android:layout_width="57dp"
-                        android:layout_height="57dp"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank02" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -61,7 +62,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_transfer"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
                 <RelativeLayout
@@ -72,8 +74,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/icon3"
-                        android:layout_width="57dp"
-                        android:layout_height="57dp"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank03" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -83,7 +85,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_view_account_details"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
             </LinearLayout>
@@ -91,7 +94,7 @@
                 android:orientation="horizontal"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
-                android:layout_marginTop="22dp"
+                android:layout_marginTop="23dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RelativeLayout
@@ -102,8 +105,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/icon4"
-                        android:layout_width="57dp"
-                        android:layout_height="57dp"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank04" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -113,7 +116,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_secured_mirocredit"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
                 <RelativeLayout
@@ -124,8 +128,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/icon5"
-                        android:layout_width="57dp"
-                        android:layout_height="57dp"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank05" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -135,7 +139,8 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_action_settings"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
                 <RelativeLayout
@@ -146,8 +151,8 @@
                     android:layout_weight="1">
                     <ImageView
                         android:id="@+id/icon6"
-                        android:layout_width="57dp"
-                        android:layout_height="57dp"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank06" />
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -158,7 +163,8 @@
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_button_send_the_conversation_to_e_mail"
                         android:textAlignment="center"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
             </LinearLayout>

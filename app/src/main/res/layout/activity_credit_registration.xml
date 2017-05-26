@@ -37,7 +37,8 @@
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_toEndOf="@id/ib_back"
+                    android:layout_marginStart="15dp"
                     android:layout_centerVertical="true"
                     android:theme="@style/Header"
                     tb:custom_font="noto_medium"/>
@@ -75,7 +76,7 @@
                     android:layout_marginLeft="4dp"
                     android:text="@string/setting_string_warning_backlight"
                     android:textColor="@color/dark_50"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/text_normal"
                     tb:custom_font="noto_regular"/>
             </LinearLayout>
             <LinearLayout
@@ -99,7 +100,7 @@
                     android:layout_marginStart="4dp"
                     android:text="@string/setting_string_purpose_registered_credit"
                     android:textColor="@color/dark_50"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/text_normal"
                     tb:custom_font="noto_regular"/>
             </LinearLayout>
         </LinearLayout>

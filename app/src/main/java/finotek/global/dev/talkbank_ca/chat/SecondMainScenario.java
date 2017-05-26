@@ -147,7 +147,7 @@ public class SecondMainScenario{
 
 		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_pay_electricity), null);
 		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
-		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_loan_house), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_house_loan), null);
 		req.addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
 
 		MessageBox.INSTANCE.addAndWait(

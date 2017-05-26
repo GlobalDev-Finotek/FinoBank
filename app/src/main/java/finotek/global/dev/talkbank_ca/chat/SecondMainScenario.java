@@ -23,8 +23,11 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
@@ -34,6 +37,7 @@ import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
+import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -85,7 +89,7 @@ public class SecondMainScenario{
 				});
 
 		// 초기 시나리오 진행
-		this.firstScenario(isSigned);
+		this.firstScenario();
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
@@ -98,11 +102,50 @@ public class SecondMainScenario{
 		currentScenario = null;
 	}
 
-	private void firstScenario(boolean isSigned) {
+	private void firstScenario() {
+		Realm realm = Realm.getDefaultInstance();
+		User user = realm.where(User.class).findAll().last();
+
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
+		MessageBox.INSTANCE.addAndWait(
+			new DividerMessage(DateUtil.currentDate(context)),
+			new ReceiveMessage((context.getResources().getString(R.string.main_string_v2_login_hello, user.getName()))),
+			new ReceiveMessage((context.getResources().getString(R.string.main_string_v2_result_context)))
+		);
 
-		eventBus.getObservable()
+		long temptime = System.currentTimeMillis();
+		String time = DateFormat.format("HH", temptime).toString();
+		int hour = Integer.parseInt(time);
+		if (hour >=6 && 13 > hour){
+			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_M)));
+
+		}else if (hour >= 12 && 19 > hour ){
+			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_L)));
+
+		}else if (hour >= 18) {
+			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_E)));
+		}
+		else if (hour >= 0  && 7 > hour ) {
+			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_N)));
+		}
+
+		MessageBox.INSTANCE.add(new ReceiveMessage((context.getResources().getString(R.string.main_string_v2_login_notify_balance, String.valueOf(TransactionDB.INSTANCE.getBalance())))));
+
+		RecoMenuRequest req = new RecoMenuRequest();
+		//req.setTitle("추천메뉴");
+		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));
+
+		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_pay_electricity), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_loan_car), null);
+
+		StatusMessage status = null;
+		ReceiveMessage intro = new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_notify_again));
+
+		MessageBox.INSTANCE.add(req);
+
+		/*eventBus.getObservable()
 				.subscribe(iEvent -> {
 					Log.d("FINO-TB", iEvent.getClass().getName());
 
@@ -152,7 +195,7 @@ public class SecondMainScenario{
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
 
 
-                });
+                });*/
 	}
 
 
@@ -242,6 +285,11 @@ public class SecondMainScenario{
 			chatView.confirm(request);
 		}
 
+		// 추천 메뉴 요청
+		if (msg instanceof RecoMenuRequest) {
+			chatView.recoMenu((RecoMenuRequest) msg);
+		}
+
 		// 신분증 스캔 결과
 		if (msg instanceof IDCardInfo) {
 			chatView.showIdCardInfo((IDCardInfo) msg);
@@ -283,6 +331,14 @@ public class SecondMainScenario{
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
+		}
+
+		if(msg instanceof WaitResult) {
+			chatView.waiting();
+		}
+
+		if(msg instanceof WaitDone) {
+			chatView.waitingDone();
 		}
 	}
 

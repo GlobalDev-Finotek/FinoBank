@@ -291,7 +291,7 @@
     <string name ="main_string_v2_login_notify_balance">지금 주거래 계좌에는 %1$s원 남아있습니다</string>
     <string name ="main_string_v2_login_recommend">아래 세가지 사항을 진행하시는 것을 추천합니다.</string>
     <string name ="main_string_v2_login_recommend_list">제가 추천하는 사항은 아래 세가지 입니다.</string>
-    <string name ="main_string_v2_login_recommend_task">맥락 데이터를 통해 파악한 %1$s님의 할 일은 / 금융업무는 다음과 같습니다.</string>
+    <string name ="main_string_v2_login_recommend_task">맥락 데이터를 통해 파악한 %1$s님의 할 일은 금융업무는 다음과 같습니다.</string>
     <string name ="main_string_v2_login_ask_step">어떤것을 진행하시겠어요?</string>
     <string name ="main_string_v2_login_pay_electricity">전기료 이체</string>
     <string name ="main_string_v2_login_open_saving_account">(추천)여행 적금 가입</string>

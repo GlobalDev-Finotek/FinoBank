@@ -1,11 +1,9 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
-import android.icu.text.SimpleDateFormat;
 import android.text.format.DateFormat;
 import android.util.Log;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
@@ -25,7 +23,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -55,7 +52,7 @@ public class SecondMainScenario{
 	private Map<String, Scenario> scenarioPool;
 	private DBHelper dbHelper;
 
-	public MainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
+	public SecondMainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
 		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
@@ -297,7 +294,7 @@ public class SecondMainScenario{
 	private boolean isImmediateMessage(Object msg) {
 		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
 				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
-				msg instanceof WaitForMessage || msg instanceof MessageEmitted;
+			  msg instanceof MessageEmitted;
 	}
 
 	public void release() {

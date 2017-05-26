@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -41,7 +42,6 @@ import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
@@ -77,14 +77,17 @@ import finotek.global.dev.talkbank_ca.util.Converter;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
-import jp.wasabeef.recyclerview.animators.FadeInUpAnimator;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
+
 	@Inject
 	DBHelper dbHelper;
+
 	@Inject
 	RxEventBus eventBus;
+
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
@@ -98,13 +101,13 @@ public class ChatActivity extends AppCompatActivity {
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 
-
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 		getComponent().inject(this);
+
 
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
@@ -117,10 +120,11 @@ public class ChatActivity extends AppCompatActivity {
 		mLayoutManager.setReverseLayout(true);
 		mLayoutManager.setStackFromEnd(true);
 
-		binding.chatView.setItemAnimator(new FadeInUpAnimator());
 		binding.chatView.setLayoutManager(mLayoutManager);
+        FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
+		binding.chatView.setItemAnimator(animator);
 
-		if (intent != null) {
+        if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
 			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
@@ -130,7 +134,7 @@ public class ChatActivity extends AppCompatActivity {
 					if (msg instanceof EnableToEditMoney) {
 						return Observable.just(msg)
 								.observeOn(AndroidSchedulers.mainThread());
-					} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
+					} else if (msg instanceof MessageEmitted) {
 						return Observable.just(msg)
 								.debounce(1, TimeUnit.SECONDS)
 								.observeOn(AndroidSchedulers.mainThread());
@@ -159,14 +163,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		if (msg instanceof WaitForMessage) {
-			binding.waitMessage.smoothToShow();
-		}
-
-		if (msg instanceof MessageEmitted) {
-			binding.waitMessage.smoothToHide();
-		}
-
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
 			releaseAllControls();
@@ -180,6 +176,7 @@ public class ChatActivity extends AppCompatActivity {
 				/*MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path));
 				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
 				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(ChatActivity.this));*/
+
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -191,7 +188,6 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestKeyboardInput) {
-
 			openKeyboard(fiBinding.chatEditText);
 		}
 
@@ -326,7 +322,14 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {
-		fiBinding.sendButton.setEnabled(!value.toString().isEmpty());
+        boolean enabled = !value.toString().isEmpty();
+        fiBinding.sendButton.setEnabled(enabled);
+
+        if(enabled) {
+            fiBinding.sendButton.setImageResource(R.drawable.btn_send);
+        } else {
+            fiBinding.sendButton.setImageResource(R.drawable.btn_mike);
+        }
 	}
 
 	private void clearInput() {
@@ -337,13 +340,11 @@ public class ChatActivity extends AppCompatActivity {
 	private void hideExControl() {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
-		fiBinding.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
 	}
 
 	private void showExControl() {
 		isExControlAvailable = true;
-		binding.footer.addView(exControlView);
-		fiBinding.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
+		binding.footer.addView(exControlView, 0);
 	}
 
 	private void preInitControlViews() {
@@ -353,6 +354,8 @@ public class ChatActivity extends AppCompatActivity {
 		transferView = inflate(R.layout.chat_transfer);
 
 		fiBinding = ChatFooterInputBinding.bind(footerInputs);
+        fiBinding.sendButton.setEnabled(false);
+
 		RxView.focusChanges(fiBinding.chatEditText)
 				.delay(100, TimeUnit.MILLISECONDS)
 				.subscribe(this::chatEditFieldFocusChanged);

@@ -55,9 +55,8 @@ public class MainActivity extends AppCompatActivity implements MainView {
 				.subscribe(users -> {
 					boolean isFirst = false;
 
-					if (users.size() == 0) {
+					if (users.size() == 0)
 						isFirst = true;
-					}
 
 					if (isFirst) {
 						tvContextAuthAccuracy.setVisibility(View.INVISIBLE);

@@ -36,11 +36,12 @@ public class RecentTransactionScenario implements Scenario {
 	@Override
 	public void onUserSend(String msg) {
 		dbHelper.get(User.class).subscribe(users -> {
-			MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
-					users.last().getName())));
-			RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
-			MessageBox.INSTANCE.add(rt);
-			MessageBox.INSTANCE.add(new Done());
+			MessageBox.INSTANCE.addAndWait(
+				new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
+					users.last().getName())),
+				new RecentTransaction(TransactionDB.INSTANCE.getTx()),
+				new Done()
+			);
 		}, throwable -> {
 
 		});

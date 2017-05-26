@@ -37,9 +37,7 @@ public class MainPresenterImpl extends BasePresenter<MainView> implements MainPr
 		if (isFirst) {
 			intent = new Intent(activity, UserRegistrationActivity.class);
 		} else {
-			intent = new Intent(activity, SignRegistrationActivity.class);
-			intent.putExtra("nextClass", ChatActivity.class);
-			intent.putExtra("mode", SignRegistrationActivity.SignMode.ONCE);
+			intent = new Intent(activity, ChatActivity.class);
 		}
 
 		activity.startActivity(intent);

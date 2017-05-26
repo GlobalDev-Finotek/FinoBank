@@ -39,3 +39,4 @@ public class SplashActivity extends InitActivity {
 
 
 }
+

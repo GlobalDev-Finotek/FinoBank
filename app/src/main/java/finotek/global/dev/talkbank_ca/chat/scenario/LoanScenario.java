@@ -64,11 +64,12 @@ public class LoanScenario implements Scenario {
 								1, 50000000, TransactionDB.INSTANCE.getBalance(), new DateTime()
 						));
 
-				MessageBox.INSTANCE.add(new RequestRemoveControls());
-				MessageBox.INSTANCE.add(new AgreementResult());
-
-				MessageBox.INSTANCE.delay(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)), 600);
-				MessageBox.INSTANCE.delay(new Done(), 800);
+				MessageBox.INSTANCE.addAndWait(
+					new RequestRemoveControls(),
+					new AgreementResult(),
+					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
+					new Done()
+				);
 			}
 		}
 
@@ -82,28 +83,34 @@ public class LoanScenario implements Scenario {
 	public void onUserSend(String msg) {
 		switch (step) {
 			case Initial:
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_apply)));
-				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context));
+				MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_apply)),
+					ConfirmRequest.buildYesOrNo(context)
+				);
 				step = Step.InputAddress;
 				break;
 			case InputAddress:
 				if (msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_home_address_type)));
-					MessageBox.INSTANCE.add(new RequestKeyboardInput());
+					MessageBox.INSTANCE.addAndWait(
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_string_home_address_type)),
+						new RequestKeyboardInput()
+					);
 					step = Step.InputMoney;
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_button_no))) {
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)));
-					MessageBox.INSTANCE.add(new Done());
+					MessageBox.INSTANCE.addAndWait(
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)),
+						new Done()
+					);
 				} else {
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
 				}
 				break;
 			case InputMoney:
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_amount_type)));
+				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_amount_type)));
 				step = Step.Agreement;
 				break;
 			case Agreement:
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_term_agreement_accept)));
+				ReceiveMessage receive = new ReceiveMessage(context.getResources().getString(R.string.dialog_string_term_agreement_accept));
 
 				List<Agreement> agreements = new ArrayList<>();
 				Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
@@ -118,12 +125,15 @@ public class LoanScenario implements Scenario {
 				agreements.add(required);
 				agreements.add(optional);
 
-				MessageBox.INSTANCE.add(new AgreementRequest(agreements));
-				MessageBox.INSTANCE.add(new DismissKeyboard());
+				MessageBox.INSTANCE.addAndWait(
+					receive,
+					new AgreementRequest(agreements),
+					new DismissKeyboard()
+				);
 				step = Step.Last;
 				break;
 			default:
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
 				break;
 		}
 	}

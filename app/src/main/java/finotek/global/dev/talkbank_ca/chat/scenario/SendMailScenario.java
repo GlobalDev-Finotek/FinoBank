@@ -36,16 +36,22 @@ public class SendMailScenario implements Scenario {
 	@Override
 	public void onUserSend(String msg) {
 		if (step == 0) {
-			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_receive_email)));
-			MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context));
+			MessageBox.INSTANCE.addAndWait(
+				new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_receive_email)),
+				ConfirmRequest.buildYesOrNo(context)
+			);
 			step = 1;
 		} else if (step == 1) {
 			if (msg.equals(context.getString(R.string.dialog_button_yes))) {
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_sent)));
-				MessageBox.INSTANCE.add(new Done());
+				MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_sent)),
+					new Done()
+				);
 			} else if (msg.equals(context.getString(R.string.dialog_button_no))) {
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_cancel)));
-				MessageBox.INSTANCE.add(new Done());
+				MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_cancel)),
+					new Done()
+				);
 			}
 		}
 	}

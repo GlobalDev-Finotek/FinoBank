@@ -71,6 +71,7 @@
                 android:textSize="14sp"
                 android:visibility="visible"/>
 
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
@@ -105,7 +106,7 @@
                 android:hint="@string/registration_string_user_name"
                 android:inputType="textPersonName"
                 android:textColor="@color/dark_50"
-                android:textSize="14sp"/>
+                android:textSize="@dimen/text_normal"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -175,7 +176,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="@string/registration_string_signature_reliability_instruction"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_normal"
                 android:theme="@style/Stit"
                 android:visibility="gone"
                 tb:custom_font="noto_regular"/>

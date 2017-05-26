@@ -28,18 +28,21 @@ public class HouseLoan implements Scenario {
 
     @Override
     public String getName() {
-        return context.getString(R.string.main_string_v2_login_loan_house) ;
+        return context.getString(R.string.main_string_v2_login_house_loan) ;
     }
 
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals(context.getResources().getString(R.string.main_string_v2_login_loan_house));
+         return msg.equals(context.getResources().getString(R.string.main_string_v2_login_house_loan));
+
     }
 
     @Override
     public void onReceive(Object msg) {
-
+        if(msg instanceof Done){
+            MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_secured_mirocredit)));
+        }
     }
 
     @Override
@@ -54,15 +57,10 @@ public class HouseLoan implements Scenario {
                 );
                 break;
             case question:
-                if(msg.equals(context.getResources().getString(R.string.string_yes)))
-                {
-                    //MessageBox.INSTANCE.add(new Done());
-                    MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.scenario_loan)));
-                }
-                else if (msg.equals(context.getResources().getString(R.string.string_no)))
-                {
-                    MessageBox.INSTANCE.addAndWait(
-                            new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_no_confirm, user.getName())));
+                if(msg.equals(context.getResources().getString(R.string.string_yes))) {
+                    MessageBox.INSTANCE.add(new Done());
+                } else if (msg.equals(context.getResources().getString(R.string.string_no))) {
+                    MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_no_confirm, user.getName())));
                 }
                 break;
 

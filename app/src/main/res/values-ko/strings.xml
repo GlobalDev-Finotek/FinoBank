@@ -71,7 +71,7 @@
     <string name="main_string_view_account_details">계좌 조회</string>
     <string name="main_string_secured_mirocredit">소액 담보대출</string>
     <string name="main_action_settings">환경 설정</string>
-    <string name="main_button_send_the_conversation_to_e_mail">상담내용 이메일로 보내기</string>
+    <string name="main_button_send_the_conversation_to_e_mail">이메일로 보내기</string>
     <string name="main_string_authentication_required">인증이 필요합니다.</string>
     <string name="main_string_authentication_succeed">인증에 성공했습니다.</string>
     <string name="setting_string_setting">설정</string>
@@ -298,7 +298,7 @@
     <string name ="main_string_v2_login_ask_step">어떤것을 진행하시겠어요?</string>
     <string name ="main_string_v2_login_pay_electricity">전기료 이체</string>
     <string name ="main_string_v2_login_open_saving_account">여행 적금 가입</string>
-    <string name ="main_string_v2_login_loan_house">주택 구매 대출</string>
+    <string name ="main_string_v2_login_house_loan">주택 구매 대출</string>
     <string name ="main_string_v2_login_notify_again">다음에 알려주세요</string>
     <string name ="main_string_v2_open_account_notice">계좌를 개설합니다.</string>
     <string name ="main_string_v2_open_account_complete">계좌 개설이 완료 되었습니다</string>
@@ -309,7 +309,8 @@
     <string name ="main_string_v2_login_electricity_confirm">%1$s님은 100만원 이하 이체일 경우 맥락 인증만으로 이체가 가능하며, 전기요금 %1$s원 이체를 완료했습니다.</string>
     <string name ="main_string_v2_login_electricity_balance">현재 계좌 잔액은  %1$s입니다. 맥락인증 이체 금액은 설정에서 변경 가능합니다.</string>
     <string name ="main_string_v2_login_electricity_yes">예, 통장 개설 후 이체할게요</string>
-    <string name ="main_string_v2_login_electricity_open_account">계좌 개설 시 본인 확인을 위해 신분증 (주민등록증, 운전면허증)이나 명함, 학생증이 필요합니다. 준비가 되셨으면 촬영을 진행해 주세요. (만약 아무 것도 없다면 손바닥을 전체를 촬영해주세요)</string>
+    <string name ="main_string_v2_login_electricity_open_account">계좌 개설 시 본인 확인을 위해 신분증 (주민등록증, 운전면허증)이나 명함, 학생증이 필요합니다. </string>
+    <string name ="main_string_v2_login_electricity_open_account_2">준비가 되셨으면 촬영을 진행해 주세요. (만약 아무 것도 없다면 손바닥을 전체를 촬영해주세요)</string>
     <string name ="main_string_v2_login_electricity_additional_picture">다른 신분증을 추가로 촬영하시겠어요?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">예</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>

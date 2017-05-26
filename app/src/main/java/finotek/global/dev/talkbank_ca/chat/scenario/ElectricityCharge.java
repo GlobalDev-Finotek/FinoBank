@@ -89,7 +89,7 @@ public class ElectricityCharge implements Scenario {
 
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_ask_step)));
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_loan_house));
+                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_house_loan));
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
                 }
                 break;
@@ -100,7 +100,7 @@ public class ElectricityCharge implements Scenario {
 
                 MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_ask_step)));
                 MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
-                MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_loan_house));
+                MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_house_loan));
                 MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
 
                 break;

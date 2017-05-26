@@ -6,6 +6,7 @@ import android.os.Bundle;
 
 import java.util.concurrent.TimeUnit;
 
+import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import globaldev.finotek.com.logcollector.InitActivity;
@@ -46,7 +47,7 @@ public class SplashActivity extends InitActivity {
 		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
 				.firstOrError()
 				.subscribe(aLong -> {
-					startActivity(new Intent(SplashActivity.this, MainActivity.class));
+					startActivity(new Intent(SplashActivity.this, ChatActivity.class));
 					finish();
 				});
 

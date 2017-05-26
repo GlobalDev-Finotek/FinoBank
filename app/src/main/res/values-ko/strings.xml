@@ -56,7 +56,7 @@
     <string name="registration_string_pin_code_type">6자리 숫자로 PIN 코드를 입력해 주세요.</string>
     <string name="registration_string_pin_code_color_verify">PIN 코드 인증 시 등록한 배경색과 글자색도 일치해야 합니다.</string>
     <string name="registration_string_secure_keyboard_operating">보안 키보드 작동 중</string>
-    <string name="main_string_talkbank">톡뱅</string>
+    <string name="main_string_talkbank">FinoBank</string>
     <string name="main_actoin_settings">설정</string>
     <string name="main_action_seach">Search</string>
     <string name="main_action_edit">Edit</string>
@@ -134,7 +134,7 @@
     <string name="dialog_chat_verified_context_data">현재 맥락 인증 점수는 %1$d점으로 본인 인증되었습니다.</string>
     <string name="dialog_chat_ask_help">%1$s님 안녕하세요. 무엇을 도와드릴까요?</string>
     <string name="dialog_button_open_account">계좌 개설</string>
-    <string name="dialog_chat_recommandation">%1$s님의 맥락데이터 분석결과\n\"톡뱅 스마트 계좌\"를 추천해 드립니다.\n\n\"톡뱅 스마트 계좌\"는 %1$s님과 같은 연령대와 소비패턴을 지닌 고객들이 많이 사용하는 상품입니다.\n\n계좌 개설을 진행하시겠어요?</string>
+    <string name="dialog_chat_recommandation">%1$s님의 맥락데이터 분석결과\n\"FinoBank 스마트 계좌\"를 추천해 드립니다.\n\n\"FinoBank 스마트 계좌\"는 %1$s님과 같은 연령대와 소비패턴을 지닌 고객들이 많이 사용하는 상품입니다.\n\n계좌 개설을 진행하시겠어요?</string>
     <string name="dialog_button_yes">예</string>
     <string name="dialog_button_no">아니요</string>
     <string name="dialog_chat_cancel_opening_bank">계좌 개설을 취소합니다.\n어떤것을 도와드릴까요?</string>
@@ -154,7 +154,7 @@
     <string name="dialog_chat_after_transfer_to_mother">어머니</string>
     <string name="dialog_chat_electricity_fare">전기요금</string>
     <string name="dialog_chat_transfer_to_someone">%1$s(010&#8211;5678&#8211;1234) 님에게 %2$s원을 이체하시겠습니까?</string>
-    <string name="dialog_button_transfer_other">톡뱅 인공지능 추천 이체</string>
+    <string name="dialog_button_transfer_other">FinoBank 인공지능 추천 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="dialog_chat_after_transfer">%1$s (010-5678-1234) 님에게 %2$s원을 이체하였습니다.\n현재 계좌 잔액은 %3$s원입니다.\n\n더 필요한 사항이 있으세요?</string>

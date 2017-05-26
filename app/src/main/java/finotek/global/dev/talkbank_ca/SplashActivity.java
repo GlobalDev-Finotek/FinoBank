@@ -27,7 +27,7 @@ public class SplashActivity extends InitActivity {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash_eng);
 		}
 
-		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
+		io.reactivex.Observable.interval(6, TimeUnit.SECONDS)
 				.firstOrError()
 				.subscribe(aLong -> {
 					Intent intent;

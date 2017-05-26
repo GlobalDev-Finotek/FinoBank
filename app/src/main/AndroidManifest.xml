@@ -73,7 +73,7 @@
         <activity
             android:name=".chat.ChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:label="톡뱅"
+            android:label="FinoBank"
 
             android:windowSoftInputMode="adjustResize">
         </activity>

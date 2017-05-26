@@ -8,6 +8,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -75,7 +76,7 @@ public class AccountScenario_v2 implements Scenario {
 
             case CheckIDCard:
                 if(msg.equals(context.getString(R.string.string_yes))) {
-                    MessageBox.INSTANCE.add(new RequestTakeIDCard());
+                    MessageBox.INSTANCE.add(new RequestPhoto());
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_additional_picture)));
                     MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context)); // 네, 아니오
                     break;
@@ -96,7 +97,7 @@ public class AccountScenario_v2 implements Scenario {
                     step = Step.Last;
                 } else if (msg.equals(context.getString(R.string.string_no))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_id_card_retake)));
-                    MessageBox.INSTANCE.add(new RequestTakeIDCard());
+                    MessageBox.INSTANCE.add(new RequestPhoto());
                 } else {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
                 }

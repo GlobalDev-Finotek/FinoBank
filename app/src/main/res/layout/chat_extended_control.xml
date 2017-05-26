@@ -39,7 +39,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_open_account"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
@@ -62,7 +62,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_transfer"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
@@ -85,7 +85,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_view_account_details"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
@@ -116,7 +116,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_string_secured_mirocredit"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
@@ -139,7 +139,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_action_settings"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>
@@ -163,7 +163,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="@string/main_button_send_the_conversation_to_e_mail"
                         android:textAlignment="center"
-                        android:textSize="12sp"
+                        android:textSize="@dimen/text_small"
                         android:textColor="@color/dark_100"
                         app:custom_font="noto_regular" />
                 </RelativeLayout>

@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:background="@drawable/btn_sign"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             android:textColor="@color/primary"
             android:text="@string/dialog_button_signature"
             app:tb_font="noto_medium" />

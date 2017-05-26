@@ -76,7 +76,7 @@
                     android:layout_marginLeft="4dp"
                     android:text="@string/setting_string_warning_backlight"
                     android:textColor="@color/dark_50"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/text_normal"
                     tb:custom_font="noto_regular"/>
             </LinearLayout>
             <LinearLayout
@@ -100,7 +100,7 @@
                     android:layout_marginStart="4dp"
                     android:text="@string/setting_string_purpose_registered_credit"
                     android:textColor="@color/dark_50"
-                    android:textSize="14sp"
+                    android:textSize="@dimen/text_normal"
                     tb:custom_font="noto_regular"/>
             </LinearLayout>
         </LinearLayout>

@@ -12,7 +12,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             android:textColor="@color/dark_100"
             app:custom_font="noto_medium" />
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/dark_100"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             app:custom_font="noto_regular" />
     </RelativeLayout>
 </layout>

@@ -303,7 +303,7 @@
     <string name ="main_string_v2_open_account_notice">계좌를 개설합니다.</string>
     <string name ="main_string_v2_open_account_complete">계좌 개설이 완료 되었습니다</string>
     <string name ="main_string_v2_login_electricity_message">전기요금 납부 안내 메시지가 확인되었습니다.</string>
-    <string name ="main_string_v2_login_electricity_compare">이번 달 요금은 %1$s원으로 지난 달보다 %1$s원 많이 쓰셨네요!</string>
+    <string name ="main_string_v2_login_electricity_compare">이번 달 요금은 %1$s원으로 지난 달보다 %2$s원 많이 쓰셨네요!</string>
     <string name ="main_string_v2_login_electricity_recommend"> 지금 추천드리는 공과금 납부 통장을 개설하고 이체하시면 바로 할일되는 공과금 납부 전용 통장을 만드시는 것은 어떠세요?</string>
     <string name ="main_string_v2_login_electricity_no">아니요, 그냥 이체할게요</string>
     <string name ="main_string_v2_login_electricity_confirm">%1$s님은 100만원 이하 이체일 경우 맥락 인증만으로 이체가 가능하며, 전기요금 %1$s원 이체를 완료했습니다.</string>
@@ -316,7 +316,7 @@
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>
     <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 인증합니다</string>
     <string name ="main_string_v2_login_electricity_signature">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해주세요 </string>
-    <string name ="main_string_v2_login_electricity_account_confirm">10%%할인된 전기료 %1$s원이 공과금 계좌에서 납부 완료 되었습니다. </string>
+    <string name ="main_string_v2_login_electricity_account_confirm">10\u0025할인된 전기료 %1$s원이 공과금 계좌에서 납부 완료 되었습니다. </string>
     <string name ="main_string_v2_login_saving_ask">요즘 다낭에 대한 검색을 자주 하시던데... 혹시 해외 여행을 계획하고 있나요?  다낭은 12월부터 2월이 가장 여행하기 좋다고 하네요!</string>
     <string name ="main_string_v2_login_saving_recommend">아래 해외 여행을 위한 목돈 모으기 통장 가입 시 항공료 5% 할인 쿠폰을 드립니다. 이번 겨울 다낭 여행을 목표로 돈을 모으는게 어떨까요?</string>
     <string name ="main_string_v2_login_saving_no">아니요, 필요없어요</string>

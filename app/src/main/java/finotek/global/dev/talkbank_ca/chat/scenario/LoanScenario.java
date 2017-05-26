@@ -19,6 +19,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
@@ -74,6 +75,7 @@ public class LoanScenario implements Scenario {
 		}
 
 		if (msg instanceof Done) {
+			new RecommendScenarioMenuRequest(context);
 			step = Step.Initial;
 		}
 	}

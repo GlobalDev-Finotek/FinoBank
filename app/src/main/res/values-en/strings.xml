@@ -288,7 +288,7 @@
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>
 
-    <string name ="main_string_v2_result_context">Result of Context, %1%s has been confirmed by total 73%% (Call Log: 85%%, SMS Log: 66%%, Location Log: 54%%) </string>
+    <string name ="main_string_v2_result_context">Result of Context, %1%s has been confirmed by total 73 points (Call Log: 85p., SMS Log: 66p., Location Log: 54p.) </string>
     <string name ="main_string_v2_login_hello">%1$s hello~ </string>
     <string name ="main_string_v2_login_hello_M">Good Morning, Have a nice day!!! </string>
     <string name ="main_string_v2_login_hello_L">Did you eat lunch? Enjoy the rest of your day~</string>
@@ -303,6 +303,8 @@
     <string name ="main_string_v2_login_open_saving_account">Open new traveling saving account </string>
     <string name ="main_string_v2_login_car_loan">car loan </string>
     <string name ="main_string_v2_login_notify_again">Let me know next</string>
+    <string name ="main_string_v2_open_account_notice">OK. Let\'s open an account.</string>
+    <string name ="main_string_v2_open_account_complete">You\'ve successfully opened your account. </string>
     <string name ="main_string_v2_login_electricity_message">Electricity bill payment message confirmed</string>
     <string name ="main_string_v2_login_electricity_compare">This month fee is %1$s which is %1$s increasing than last month.</string>
     <string name ="main_string_v2_login_electricity_recommend">After paying Electricity bill payment, I would you like to open new account for only bill payment. Do you want to proceed?</string>
@@ -314,15 +316,16 @@
     <string name ="main_string_v2_login_electricity_additional_picture">Do you want to take picture for additional ID card?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">Yes</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">No</string>
+    <string name ="main_string_v2_sign_necessary">We need to check your signature for open an account.</string>
     <string name ="main_string_v2_login_electricity_signature">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail </string>
-    <string name ="main_string_v2_login_electricity_account_confirm">You\'ve successfully opened your account. Electricity fee %1$s which is 10%% discounted has paid from bill payment account.</string>
+    <string name ="main_string_v2_login_electricity_account_confirm">Electricity fee %1$s which is 10%% discounted has paid from bill payment account.</string>
     <string name ="main_string_v2_login_saving_ask">These days, you are searching Da Nang.. So are you planning to have a trip? From December to February, it is said to be the best travel on Da Nang.</string>
     <string name ="main_string_v2_login_saving_recommend"> If you open saving account for traveling, i will give you Airline 5% discount coupon. Make a goal to save money for heading to Da Nang.</string>
     <string name ="main_string_v2_login_saving_no"> No thanks</string>
     <string name ="main_string_v2_login_saving_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>
     <string name ="main_string_v2_login_saving_yes">Yes, I want to open saving account</string>
     <string name ="main_string_v2_login_car_ask"> Do you have a plan to buy a new car? It has been confirmed that you visit several brands of auto dealer shop. </string>
-    <string name ="main_string_v2_login_car_recommend">You may request up to 7 million won and 2.5% interest rate.  do you want to apply loan?</string>
+    <string name ="main_string_v2_login_car_recommend">You may request up to 7 million won and 2.5%% interest rate.  do you want to apply loan?</string>
     <string name ="main_string_v2_login_car_yes">Yes</string>
     <string name ="main_string_v2_login_car_no">No thanks</string>
     <string name ="main_string_v2_login_car_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>

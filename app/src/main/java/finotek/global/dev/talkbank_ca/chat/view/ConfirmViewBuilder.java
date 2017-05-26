@@ -62,6 +62,7 @@ public class ConfirmViewBuilder implements  ChatView.ViewBuilder<ConfirmRequest>
                 .subscribe(aVoid -> {
                     if(event.isDisappearAfter()) {
                         data.getDoAfterEvent().run();
+
                     }
                     event.getListener().run();
                 });

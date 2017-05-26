@@ -8,9 +8,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginStart="16dp"
+            android:layout_marginBottom="@dimen/chat_margin_bottom"
+            android:layout_marginEnd="@dimen/chat_margin_left_right"
+            android:layout_marginStart="@dimen/chat_margin_left_right"
             android:background="@drawable/transfer_control_bg"
             android:orientation="vertical"
             android:padding="2dp">

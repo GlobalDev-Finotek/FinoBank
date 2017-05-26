@@ -74,15 +74,14 @@ public class TransferScenario implements Scenario {
 				step = Step.TransferByAI;
 			}
 
-			MessageBox.INSTANCE.add(new ReceiveMessage(message));
-
+			ReceiveMessage msgObject = new ReceiveMessage(message);
 			TransactionDB.INSTANCE.setTxName(name);
 			TransactionDB.INSTANCE.setTxMoney(money);
 			ConfirmRequest request = ConfirmRequest.buildYesOrNo(context);
 			request.addInfoEvent(context.getResources().getString(R.string.dialog_button_transfer_other), () -> {
 				MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_other)));
 			});
-			MessageBox.INSTANCE.add(request);
+			MessageBox.INSTANCE.addAndWait(msgObject, request);
 		}
 
 		if (msg instanceof SignatureVerified) {
@@ -101,8 +100,7 @@ public class TransferScenario implements Scenario {
 			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
 			if (step == Step.TransferToSomeone) {
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString)));
-
+				ReceiveMessage receive = new ReceiveMessage(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 				ConfirmRequest request = new ConfirmRequest();
 				request.addInfoEvent(context.getResources().getString(R.string.dialog_button_recent_transaction), () -> {
 					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_recent_transaction)));
@@ -110,7 +108,7 @@ public class TransferScenario implements Scenario {
 				request.addPrimaryEvent(context.getResources().getString(R.string.dialog_button_transfer_add), () -> {
 					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_add)));
 				});
-				MessageBox.INSTANCE.add(request);
+				MessageBox.INSTANCE.addAndWait(receive, request);
 				step = Step.TransferDone;
 			} else if (step == Step.TransferByAI) {
 				dbHelper.get(User.class)
@@ -138,8 +136,10 @@ public class TransferScenario implements Scenario {
 			MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
 
 			if (money >= 1000000) {
-				MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)));
-				MessageBox.INSTANCE.add(new RequestSignature());
+				MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
+					new RequestSignature()
+				);
 			} else {
 				MessageBox.INSTANCE.add(new MoneyTransferred());
 			}

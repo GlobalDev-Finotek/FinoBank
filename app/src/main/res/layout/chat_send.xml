@@ -2,8 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="15dp"
-    android:layout_marginEnd="16dp">
+    android:layout_marginBottom="@dimen/chat_margin_bottom"
+    android:layout_marginEnd="@dimen/chat_margin_left_right">
 
     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
         android:id="@+id/message"
@@ -13,5 +13,5 @@
         android:layout_marginStart="100dp"
         android:background="@drawable/chat_item_send"
         android:padding="15dp"
-        android:textColor="@color/color_foreground"/>
+        android:textColor="@color/dark_100" />
 </RelativeLayout>

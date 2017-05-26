@@ -15,5 +15,9 @@ class User extends RealmObject {
 	String name;
 	String signaturePath;
 
+	public User() {
+
+	}
+
 	UserAdditionalInfo additionalInfo;
 }

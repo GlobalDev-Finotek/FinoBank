@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -19,13 +21,16 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
@@ -89,7 +94,7 @@ public class MainScenario {
 		scenarioPool.put("recentTransaction", new RecentTransactionScenario(context, dbHelper));
 		scenarioPool.put("transfer", new TransferScenario(context, dbHelper));
 		scenarioPool.put("loan", new LoanScenario(context));
-		scenarioPool.put("account", new AccountScenario(context));
+		scenarioPool.put("account", new AccountScenario_v2(context));
 		scenarioPool.put("sendMail", new SendMailScenario(context));
 
 		currentScenario = null;
@@ -97,9 +102,38 @@ public class MainScenario {
 
 	private void firstScenario(boolean isSigned) {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
+
+
+		eventBus.getObservable()
+				.subscribe(iEvent -> {
+					Log.d("FINO-TB", iEvent.getClass().getName());
 					Realm realm = Realm.getDefaultInstance();
 					User user = realm.where(User.class).findAll().last();
-		MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName())));
+
+					StatusMessage status = null;
+					ReceiveMessage intro = new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName()));
+
+					if (iEvent instanceof AccuracyMeasureEvent) {
+						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
+						if (isSigned) {
+							status = new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100)));
+						} else {
+							status = new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100)));
+						}
+					}
+
+					RecoMenuRequest req = new RecoMenuRequest();
+					req.setTitle("추천메뉴");
+					req.setDescription("제가 추천하는 사항은 아래 세가지입니다.\n원하시는 메뉴를 눌러주세요.");
+
+					req.addMenu(R.drawable.icon_like, "전기료 이체", null);
+					req.addMenu(R.drawable.icon_love, "여행 적금 가입", null);
+					req.addMenu(R.drawable.icon_love, "자동차 대출", null);
+					req.addMenu(R.drawable.icon_wow, "다음에 알려주세요.", null);
+
+
+					MessageBox.INSTANCE.addAndWait(status, intro, req);
+				});
 	}
 
 	private void onRequest(Object msg) {
@@ -187,6 +221,11 @@ public class MainScenario {
 			chatView.confirm(request);
 		}
 
+		// 추천 메뉴 요청
+		if (msg instanceof RecoMenuRequest) {
+			chatView.recoMenu((RecoMenuRequest) msg);
+		}
+
 		// 신분증 스캔 결과
 		if (msg instanceof IDCardInfo) {
 			chatView.showIdCardInfo((IDCardInfo) msg);
@@ -229,6 +268,14 @@ public class MainScenario {
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
 		}
+
+		if(msg instanceof WaitResult) {
+			chatView.waiting();
+		}
+
+		if(msg instanceof WaitDone) {
+			chatView.waitingDone();
+		}
 	}
 
 	private void respondToSendMessage(String msg) {
@@ -239,7 +286,7 @@ public class MainScenario {
 	private boolean isImmediateMessage(Object msg) {
 		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
 				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
-				msg instanceof WaitForMessage || msg instanceof MessageEmitted;
+				msg instanceof MessageEmitted;
 	}
 
 	public void release() {

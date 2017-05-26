@@ -44,26 +44,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 	public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
 		ChatView.ViewBuilder builder = builders.get(getItemViewType(position));
 		if (builder != null) {
-			if (position == 0) {
-				RecyclerView.LayoutParams lp = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
-				DisplayMetrics dm = holder.itemView.getResources().getDisplayMetrics();
-				int top = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 15, dm);
-				int bottom = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 10, dm);
-				// lp.setMargins(0, top, 0, bottom);
-				holder.itemView.setLayoutParams(lp);
-			}
 			builder.bind(holder, items.get(position).getItem());
-		}
-	}
-
-	private void setAnimation(View itemView, int position) {
-		// If the bound view wasn't previously displayed on screen, it's animated
-		if (position > lastPosition) {
-			AlphaAnimation anim = new AlphaAnimation(0.0f, 1.0f);
-			anim.setDuration(1000);
-			itemView.startAnimation(anim);
-			lastPosition = position;
-
 		}
 	}
 
@@ -95,7 +76,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
 	public void addChatItem(DataWithType item) {
 		items.add(0, item);
-		notifyDataSetChanged();
+		notifyItemInserted(0);
 	}
 
 	public void removeItem(int position) {

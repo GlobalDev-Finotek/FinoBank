@@ -8,6 +8,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -48,19 +50,60 @@ public class AccountScenario_v2 implements Scenario {
         }
     }
 
+    public RecoMenuRequest getRequestConfirm() {
+        RecoMenuRequest req = new RecoMenuRequest();
+        //req.setTitle("추천메뉴");
+        req.setDescription(context.getResources().getString(R.string.main_string_v2_login_electricity_open_account));
+
+        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.string_yes_ready), null);
+        return req;
+    }
+
+    public RecoMenuRequest getIdPicConfirm() {
+        RecoMenuRequest req = new RecoMenuRequest();
+        //req.setTitle("추천메뉴");
+        req.setDescription(context.getResources().getString(R.string.dialog_chat_correct_information));
+
+        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.string_yes_its_ok), null);
+        req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.string_no_retake), null);
+        return req;
+    }
+
     @Override
     public void onUserSend(String msg) {
         switch (step) {
             case Initial:
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_open_account_notice)));
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_open_account)));
-                MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context)); // 네, 아니오
+                MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_open_account_notice)),
+                getRequestConfirm()
+                );
+                //MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context)); // 네, 아니오
                 step = Step.AskOpen;
                 break;
 
             case AskOpen:
-                if(msg.equals(context.getString(R.string.string_yes))) {
+                if(msg.equals(context.getString(R.string.string_yes_ready))) {
                     MessageBox.INSTANCE.add(new RequestTakeIDCard());
+                    getIdPicConfirm();
+                    step = Step.Retake;
+                }
+                break;
+
+            case Retake:
+                if(msg.equals(context.getString(R.string.string_yes_its_ok))) {
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_additional_picture)));
+                    MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context)); // 네, 아니오
+                    step = Step.OtherIDs;
+                }
+                else {
+                    getIdPicConfirm();
+                    step = Step.Retake;
+                }
+
+/*
+
+
+
+
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_additional_picture)));
                     MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context)); // 네, 아니오
                     step = Step.CheckIDCard;
@@ -70,12 +113,12 @@ public class AccountScenario_v2 implements Scenario {
                     MessageBox.INSTANCE.add(new Done());
                 } else {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
-                }
+                }*/
                 break;
 
             case CheckIDCard:
                 if(msg.equals(context.getString(R.string.string_yes))) {
-                    MessageBox.INSTANCE.add(new RequestTakeIDCard());
+                    MessageBox.INSTANCE.add(new RequestPhoto());
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_additional_picture)));
                     MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(context)); // 네, 아니오
                     break;
@@ -96,7 +139,7 @@ public class AccountScenario_v2 implements Scenario {
                     step = Step.Last;
                 } else if (msg.equals(context.getString(R.string.string_no))) {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_id_card_retake)));
-                    MessageBox.INSTANCE.add(new RequestTakeIDCard());
+                    MessageBox.INSTANCE.add(new RequestPhoto());
                 } else {
                     MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
                 }
@@ -117,6 +160,6 @@ public class AccountScenario_v2 implements Scenario {
     }
 
     private enum Step {
-        Initial, CheckIDCard, TakeSign, Last, AskOpen
+        Initial, CheckIDCard, TakeSign, Last, AskOpen, Retake, OtherIDs
     }
 }

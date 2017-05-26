@@ -87,7 +87,7 @@ public class MainScenario {
 				});
 
 		// 초기 시나리오 진행
-		this.firstScenario(isSigned);
+		this.firstScenario();
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
@@ -100,40 +100,21 @@ public class MainScenario {
 		currentScenario = null;
 	}
 
-	private void firstScenario(boolean isSigned) {
+	private void firstScenario() {
+		Realm realm = Realm.getDefaultInstance();
+		User user = realm.where(User.class).findAll().last();
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
+		ReceiveMessage intro = new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName()));
+		RecoMenuRequest req = new RecoMenuRequest();
+		req.setTitle("추천메뉴");
+		req.setDescription("제가 추천하는 사항은 아래 세가지입니다.\n원하시는 메뉴를 눌러주세요.");
 
-		eventBus.getObservable()
-				.subscribe(iEvent -> {
-					Log.d("FINO-TB", iEvent.getClass().getName());
-					Realm realm = Realm.getDefaultInstance();
-					User user = realm.where(User.class).findAll().last();
-
-					StatusMessage status = null;
-					ReceiveMessage intro = new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_ask_help, user.getName()));
-
-					if (iEvent instanceof AccuracyMeasureEvent) {
-						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-						if (isSigned) {
-							status = new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_signed, (int) (accuracy * 100)));
-						} else {
-							status = new StatusMessage(context.getResources().getString(R.string.dialog_chat_verified_context_data, (int) (accuracy * 100)));
-						}
-					}
-
-					RecoMenuRequest req = new RecoMenuRequest();
-					req.setTitle("추천메뉴");
-					req.setDescription("제가 추천하는 사항은 아래 세가지입니다.\n원하시는 메뉴를 눌러주세요.");
-
-					req.addMenu(R.drawable.icon_like, "전기료 이체", null);
-					req.addMenu(R.drawable.icon_love, "여행 적금 가입", null);
-					req.addMenu(R.drawable.icon_love, "자동차 대출", null);
-					req.addMenu(R.drawable.icon_wow, "다음에 알려주세요.", null);
-
-
-					MessageBox.INSTANCE.addAndWait(status, intro, req);
-				});
+		req.addMenu(R.drawable.icon_like, "전기료 이체", null);
+		req.addMenu(R.drawable.icon_love, "여행 적금 가입", null);
+		req.addMenu(R.drawable.icon_love, "자동차 대출", null);
+		req.addMenu(R.drawable.icon_wow, "다음에 알려주세요.", null);
+		MessageBox.INSTANCE.addAndWait(intro, req);
 	}
 
 	private void onRequest(Object msg) {

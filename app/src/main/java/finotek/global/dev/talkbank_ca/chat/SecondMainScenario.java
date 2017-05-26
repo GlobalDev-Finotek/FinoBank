@@ -150,8 +150,6 @@ public class SecondMainScenario{
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_loan_car));
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
-
-
                 });
 	}
 

@@ -48,6 +48,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
+
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
@@ -158,10 +160,10 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		if (msg instanceof RequestTakeIDCard) {
+
+		if (msg instanceof RequestPhoto) {
 			releaseControls();
 			releaseAllControls();
-
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -169,8 +171,27 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path));
-//				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
-//				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(ChatActivity.this));
+
+				this.returnToInitialControl();
+
+				FragmentTransaction transaction = getFragmentManager().beginTransaction();
+				transaction.remove(capturePicFragment).commit();
+			});
+
+			tx.replace(R.id.chat_capture, capturePicFragment);
+			tx.commit();
+		}
+
+		if (msg instanceof RequestTakeIDCard) {
+			releaseControls();
+			releaseAllControls();
+
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
+			capturePicFragment = CapturePicFragment.newInstance();
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			capturePicFragment.takePicture(path -> {
+				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""));
 
 				this.returnToInitialControl();
 
@@ -185,6 +206,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestKeyboardInput) {
 			openKeyboard(fiBinding.chatEditText);
 		}
+
 
 		if (msg instanceof RequestSignature) {
 			releaseControls();

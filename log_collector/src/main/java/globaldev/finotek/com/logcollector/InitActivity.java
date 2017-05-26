@@ -69,6 +69,8 @@ public abstract class InitActivity extends AppCompatActivity {
 			Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
 			startActivity(intent);
 		}
+
+
 	}
 
 	@Override

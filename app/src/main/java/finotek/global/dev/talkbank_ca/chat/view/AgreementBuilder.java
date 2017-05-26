@@ -146,8 +146,10 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
                 .subscribe(aVoid -> {
 
                     if (isRequiredFieldClicked) {
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_string_finger_tip_sign_user_register)));
-                        MessageBox.INSTANCE.add(new RequestSignature());
+                        MessageBox.INSTANCE.addAndWait(
+                            new ReceiveMessage(context.getString(R.string.dialog_string_finger_tip_sign_user_register)),
+                            new RequestSignature()
+                        );
                     } else {
                         // TODO 서명해달라는 메세지 표시
                         Toast.makeText(context, context.getString(R.string.dialog_chat_string_confirm_message), Toast.LENGTH_SHORT).show();

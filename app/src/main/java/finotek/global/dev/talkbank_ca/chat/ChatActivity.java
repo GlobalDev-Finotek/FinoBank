@@ -30,6 +30,7 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -37,6 +38,8 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
+import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
@@ -45,6 +48,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
@@ -169,8 +173,34 @@ public class ChatActivity extends AppCompatActivity {
 			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path));
+				MessageBox.INSTANCE.addAndWait(
+						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
+						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+				);
 
+				this.returnToInitialControl();
+
+				FragmentTransaction transaction = getFragmentManager().beginTransaction();
+				transaction.remove(capturePicFragment).commit();
+			});
+
+			tx.replace(R.id.chat_capture, capturePicFragment);
+			tx.commit();
+		}
+
+		if(msg instanceof RequestTakeAnotherIDCard) {
+			releaseControls();
+			releaseAllControls();
+
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
+			capturePicFragment = CapturePicFragment.newInstance();
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			capturePicFragment.takePicture(path -> {
+				MessageBox.INSTANCE.addAndWait(
+					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
+					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+				);
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -190,7 +220,10 @@ public class ChatActivity extends AppCompatActivity {
 			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""));
+				MessageBox.INSTANCE.addAndWait(
+					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+				);
 
 				this.returnToInitialControl();
 

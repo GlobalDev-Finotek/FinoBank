@@ -286,7 +286,7 @@
     <string name="dialog_chat_verified_signed">Currently, the contextual score is %d.\nAuthentication is succeeded by e-signature.</string>
 
     <string name="scenario_account">Open Account</string>
-    <string name="scenario_loan">Secured Microcredit</string>
+    <string name="scenario_loan">Secured microcredit</string>
     <string name="scenario_send_mail">Send Conversations To Email</string>
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>
@@ -315,7 +315,8 @@
     <string name ="main_string_v2_login_electricity_confirm"> %1$s, You can transfer money by context authentication when transferring money is below one million won. Also, Electricity fee  %1$s has paid.</string>
     <string name ="main_string_v2_login_electricity_balance"> Your account balance  %1$s. You can change amount of context authentication on the setting menu</string>
     <string name ="main_string_v2_login_electricity_yes">Yes, After paying Electricity bill, I want to open new account. </string>
-    <string name ="main_string_v2_login_electricity_open_account">To open an account, you need to verify yourself with your personal ID card or driver\'s license or Student card, or business card.   Please take a picture of your ID card when you are ready (If You do not have anything, please take picture of your palm)</string>
+    <string name ="main_string_v2_login_electricity_open_account">To open an account, you need to verify yourself with your personal ID card or driver\'s license or Student card, or business card.</string>
+    <string name ="main_string_v2_login_electricity_open_account_2">Please take a picture of your ID card when you are ready (If You do not have anything, please take picture of your palm)</string>
     <string name ="main_string_v2_login_electricity_additional_picture">Do you want to take picture for additional ID card?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">Yes</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">No</string>

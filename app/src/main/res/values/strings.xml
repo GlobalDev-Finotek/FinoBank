@@ -276,7 +276,7 @@
     <string name="sunday">Sun</string>
 
     <string name="scenario_account">Open Account</string>
-    <string name="scenario_loan">Secured Microcredit</string>
+    <string name="scenario_loan">Secured microcredit</string>
     <string name="scenario_send_mail">Send Conversations To Email</string>
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>

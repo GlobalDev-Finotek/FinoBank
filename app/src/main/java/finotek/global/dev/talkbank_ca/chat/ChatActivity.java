@@ -174,7 +174,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
+						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 

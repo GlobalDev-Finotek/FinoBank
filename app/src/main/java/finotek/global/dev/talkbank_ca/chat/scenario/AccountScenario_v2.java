@@ -56,7 +56,6 @@ public class AccountScenario_v2 implements Scenario {
 
     public RecoMenuRequest getRequestConfirm() {
         RecoMenuRequest req = new RecoMenuRequest();
-        //req.setTitle("추천메뉴");
         req.setDescription(context.getResources().getString(R.string.main_string_v2_login_electricity_open_account));
 
         req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.string_yes_ready), null);
@@ -65,7 +64,6 @@ public class AccountScenario_v2 implements Scenario {
 
     public RecoMenuRequest getIdPicConfirm() {
         RecoMenuRequest req = new RecoMenuRequest();
-        //req.setTitle("추천메뉴");
         req.setDescription(context.getResources().getString(R.string.dialog_chat_correct_information));
 
         req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.string_yes_its_ok), null);
@@ -88,7 +86,8 @@ public class AccountScenario_v2 implements Scenario {
 
             case AskOpen:
                 if (msg.equals(context.getString(R.string.string_yes))) {
-                    MessageBox.INSTANCE.addAndWait(new RequestTakeIDCard());
+                    MessageBox.INSTANCE.addAndWait(new RequestPhoto());
+                    step = Step.CheckIDCard;
                 }
 
                 break;
@@ -105,7 +104,6 @@ public class AccountScenario_v2 implements Scenario {
                     );
                     break;
                 }
-
 
                 // 본인이 맞으세요?
             case TakeSign:

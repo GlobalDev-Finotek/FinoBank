@@ -47,6 +47,7 @@ public class HouseLoan implements Scenario {
 
     @Override
     public void onUserSend(String msg) {
+        LeftScenario.scenarioList.remove("H");
         switch (step) {
             case Initial:
                 step = Step.question;

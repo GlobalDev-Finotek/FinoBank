@@ -43,6 +43,7 @@ public class TravelSaving implements Scenario {
 
     @Override
     public void onUserSend(String msg) {
+        LeftScenario.scenarioList.remove("T");
         switch (step) {
             case Initial:
                 step = Step.question;

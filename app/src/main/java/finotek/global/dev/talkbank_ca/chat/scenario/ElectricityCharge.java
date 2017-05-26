@@ -47,6 +47,7 @@ public class ElectricityCharge implements Scenario {
 
     @Override
     public void onUserSend(String msg) {
+        LeftScenario.scenarioList.remove("E");
         switch (step) {
             case Initial:
                 MessageBox.INSTANCE.addAndWait(

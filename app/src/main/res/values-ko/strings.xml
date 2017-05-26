@@ -295,7 +295,7 @@
     <string name ="main_string_v2_login_ask_step">어떤것을 진행하시겠어요?</string>
     <string name ="main_string_v2_login_pay_electricity">전기료 이체</string>
     <string name ="main_string_v2_login_open_saving_account">여행 적금 가입</string>
-    <string name ="main_string_v2_login_loan_house">주택 구매 대출</string>
+    <string name ="main_string_v2_login_house_loan">주택 구매 대출</string>
     <string name ="main_string_v2_login_notify_again">다음에 알려주세요</string>
     <string name ="main_string_v2_open_account_notice">계좌를 개설합니다.</string>
     <string name ="main_string_v2_open_account_complete">계좌 개설이 완료 되었습니다</string>

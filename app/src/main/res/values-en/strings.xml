@@ -288,7 +288,7 @@
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>
 
-    <string name ="main_string_v2_result_context">Result of Context, %1%s has been confirmed by total 73% (Call Log: 85%, SMS Log: 66%, Location Log: 54%) </string>
+    <string name ="main_string_v2_result_context">Result of Context, %1%s has been confirmed by total 73%% (Call Log: 85%%, SMS Log: 66%%, Location Log: 54%%) </string>
     <string name ="main_string_v2_login_hello">%1$s hello~ </string>
     <string name ="main_string_v2_login_hello_M">Good Morning, Have a nice day!!! </string>
     <string name ="main_string_v2_login_hello_L">Did you eat lunch? Enjoy the rest of your day~</string>
@@ -315,7 +315,7 @@
     <string name ="main_string_v2_login_electricity_additional_picture_yes">Yes</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">No</string>
     <string name ="main_string_v2_login_electricity_signature">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail </string>
-    <string name ="main_string_v2_login_electricity_account_confirm">You\'ve successfully opened your account. Electricity fee %1$s which is 10% discounted has paid from bill payment account.</string>
+    <string name ="main_string_v2_login_electricity_account_confirm">You\'ve successfully opened your account. Electricity fee %1$s which is 10%% discounted has paid from bill payment account.</string>
     <string name ="main_string_v2_login_saving_ask">These days, you are searching Da Nang.. So are you planning to have a trip? From December to February, it is said to be the best travel on Da Nang.</string>
     <string name ="main_string_v2_login_saving_recommend"> If you open saving account for traveling, i will give you Airline 5% discount coupon. Make a goal to save money for heading to Da Nang.</string>
     <string name ="main_string_v2_login_saving_no"> No thanks</string>

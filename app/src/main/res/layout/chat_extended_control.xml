@@ -1,34 +1,173 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
-    <RelativeLayout
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="224dp"
-        android:clickable="true"
-        android:focusableInTouchMode="true"
-        android:background="@color/color_extended_control_bg">
+        android:layout_height="240dp">
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="19dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-            <View
-                android:id="@+id/bullet1"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/bullet_activated" />
-            <View
-                android:id="@+id/bullet2"
-                android:layout_marginStart="13dp"
-                android:layout_width="10dp"
-                android:layout_height="10dp"
-                android:background="@drawable/bullet_deactivated" />
-        </LinearLayout>
-        <android.support.v4.view.ViewPager
-            android:id="@+id/extended_control"
-            android:layout_alignParentBottom="true"
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="170dp">
-        </android.support.v4.view.ViewPager>
-    </RelativeLayout>
+            android:layout_height="230dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusableInTouchMode="true"
+            android:background="@android:color/white">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="23dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:baselineAligned="false">
+                <RelativeLayout
+                    android:id="@+id/button1"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/icon1"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/icon_stankbank01" />
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@id/icon1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/main_string_open_account"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
+                        app:custom_font="noto_regular" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/button2"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/icon2"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/icon_stankbank02" />
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@id/icon2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/main_string_transfer"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
+                        app:custom_font="noto_regular" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/button3"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/icon3"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/icon_stankbank03" />
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@id/icon3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/main_string_view_account_details"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
+                        app:custom_font="noto_regular" />
+                </RelativeLayout>
+            </LinearLayout>
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginTop="23dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:id="@+id/button4"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/icon4"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/icon_stankbank04" />
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@id/icon4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/main_string_secured_mirocredit"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
+                        app:custom_font="noto_regular" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/button5"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/icon5"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/icon_stankbank05" />
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@id/icon5"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/main_action_settings"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
+                        app:custom_font="noto_regular" />
+                </RelativeLayout>
+                <RelativeLayout
+                    android:id="@+id/button6"
+                    android:clickable="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/icon6"
+                        android:layout_width="65dp"
+                        android:layout_height="65dp"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/icon_stankbank06" />
+                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                        android:layout_marginTop="2dp"
+                        android:layout_below="@id/icon6"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="@string/main_button_send_the_conversation_to_e_mail"
+                        android:textAlignment="center"
+                        android:textSize="@dimen/text_small"
+                        android:textColor="@color/dark_100"
+                        app:custom_font="noto_regular" />
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
 </layout>

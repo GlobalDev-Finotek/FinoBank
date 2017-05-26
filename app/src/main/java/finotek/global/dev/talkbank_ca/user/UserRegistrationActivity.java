@@ -149,7 +149,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 	private UserInfoComponent getComponent() {
 		return DaggerUserInfoComponent
 				.builder()
-				.appComponent(((MyApplication) getApplication()).getAppComponent())
+				.appComponent(((MyApplication) getApplication()).getMyAppComponent())
 				.activityModule(new ActivityModule(this)).build();
 	}
 

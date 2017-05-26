@@ -17,39 +17,39 @@ import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.databinding.ChatExControl1Binding;
 
 public class ExtendedControl1 extends Fragment {
-    private Runnable doOnControl;
+	private Runnable doOnControl;
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+	@Override
+	public void onCreate(@Nullable Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+	}
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.chat_ex_control_1, container, false);
-        ChatExControl1Binding binding = ChatExControl1Binding.bind(rootView);
+	@Override
+	public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+		ViewGroup rootView = (ViewGroup) inflater.inflate(R.layout.chat_ex_control_1, container, false);
+		ChatExControl1Binding binding = ChatExControl1Binding.bind(rootView);
 
-        RxView.clicks(binding.registerAccount)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> {
-                    MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.dialog_button_open_account), R.drawable.icon_talkbank01));
-                });
+		RxView.clicks(binding.registerAccount)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.doOnNext(aVoid -> doOnControl.run())
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.dialog_button_open_account), R.drawable.icon_talkbank01));
+				});
 
-        RxView.clicks(binding.transferMoney)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.dialog_button_transfer), R.drawable.icon_talkbank02)));
+		RxView.clicks(binding.transferMoney)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.doOnNext(aVoid -> doOnControl.run())
+				.subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.dialog_button_transfer), R.drawable.icon_talkbank02)));
 
-        RxView.clicks(binding.checkAccount)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .doOnNext(aVoid -> doOnControl.run())
-                .subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_string_view_account_details), R.drawable.icon_talkbank03)));
+		RxView.clicks(binding.checkAccount)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.doOnNext(aVoid -> doOnControl.run())
+				.subscribe(aVoid -> MessageBox.INSTANCE.add(new SendMessage(getContext().getString(R.string.main_string_view_account_details), R.drawable.icon_talkbank03)));
 
-        return rootView;
-    }
+		return rootView;
+	}
 
-    public void setDoOnControl(Runnable doOnControl) {
-        this.doOnControl = doOnControl;
-    }
+	public void setDoOnControl(Runnable doOnControl) {
+		this.doOnControl = doOnControl;
+	}
 }

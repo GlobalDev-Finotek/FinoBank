@@ -4,13 +4,13 @@
     <data>
         <variable
             name="account"
-            type="finotek.global.dev.talkbank_ca.chat.messages.Account" />
+            type="finotek.global.dev.talkbank_ca.chat.messages.Account"/>
     </data>
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="170dp"
         android:layout_height="79dp"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="@dimen/chat_margin_left_right"
         android:background="@drawable/border_round_gray"
         android:padding="15dp">
 
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:text="@{account.name}"
             android:textColor="@color/dark_100"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             app:custom_font="noto_medium"/>
 
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
@@ -37,7 +37,8 @@
             android:layout_alignParentBottom="true"
             android:text="@{account.history}"
             android:textColor="@color/dark_50"
-            android:textSize="12sp"/>
+            android:textSize="@dimen/text_small" />
+
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,6 +46,6 @@
             android:button="@drawable/checkbox_bookmark"
             android:checked="@{account.star}"
             android:scaleX="0.7"
-            android:scaleY="0.7" />
+            android:scaleY="0.7"/>
     </RelativeLayout>
 </layout>

@@ -2,7 +2,6 @@ package finotek.global.dev.talkbank_ca.inject.component;
 
 import dagger.Component;
 import finotek.global.dev.talkbank_ca.MainActivity;
-import finotek.global.dev.talkbank_ca.SplashActivity;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.inject.scope.PerActivity;
 
@@ -14,5 +13,4 @@ import finotek.global.dev.talkbank_ca.inject.scope.PerActivity;
 public interface MainComponent {
 	void inject(MainActivity activity);
 
-	void inject(SplashActivity splashActivity);
 }

@@ -11,29 +11,29 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 
 public class SendViewBuilder implements ChatView.ViewBuilder<SendMessage> {
-    private class SendViewHolder extends RecyclerView.ViewHolder {
-        TextView message;
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_send, parent, false);
+		return new SendViewHolder(view);
+	}
 
-        SendViewHolder(View itemView) {
-            super(itemView);
-            this.message = (TextView) itemView.findViewById(R.id.message);
-        }
-    }
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, SendMessage data) {
+		SendViewHolder holder = (SendViewHolder) viewHolder;
+		holder.message.setText(data.getMessage());
+	}
 
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_send, parent, false);
-        return new SendViewHolder(view);
-    }
+	@Override
+	public void onDelete() {
 
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, SendMessage data) {
-        SendViewHolder holder = (SendViewHolder) viewHolder;
-        holder.message.setText(data.getMessage());
-    }
+	}
 
-    @Override
-    public void onDelete() {
+	private class SendViewHolder extends RecyclerView.ViewHolder {
+		TextView message;
 
-    }
+		SendViewHolder(View itemView) {
+			super(itemView);
+			this.message = (TextView) itemView.findViewById(R.id.message);
+		}
+	}
 }

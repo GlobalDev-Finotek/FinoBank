@@ -40,6 +40,7 @@
             android:textAlignment="center"
             android:textColor="@color/dark_70"
             android:textSize="16sp"/>
+
         <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/done_btn"
             style="?android:attr/borderlessButtonStyle"
@@ -51,7 +52,7 @@
             android:background="@drawable/btn_dialog_warning"
             android:gravity="center_vertical|center_horizontal"
             android:textColor="@android:color/white"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             android:visibility="gone"
             app:tb_font="noto_medium" />
     </RelativeLayout>

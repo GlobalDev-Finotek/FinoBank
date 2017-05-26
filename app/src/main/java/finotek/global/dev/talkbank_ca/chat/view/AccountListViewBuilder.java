@@ -34,6 +34,7 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
 	public AccountListViewBuilder(Context context) {
 		this.context = context;
 	}
+
 	@Override
 	public RecyclerView.ViewHolder build(ViewGroup parent) {
 		ViewGroup view = (ViewGroup) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_list, parent, false);
@@ -64,85 +65,85 @@ public class AccountListViewBuilder implements ChatView.ViewBuilder<AccountList>
 
 	}
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
-        private ChatAccountListBinding listBinding;
-        private List<ChatItemAccountBinding> itemBindings = new ArrayList<>();
-        private List<Account> accountList;
+	private class ViewHolder extends RecyclerView.ViewHolder {
+		private ChatAccountListBinding listBinding;
+		private List<ChatItemAccountBinding> itemBindings = new ArrayList<>();
+		private List<Account> accountList;
 
-        ViewHolder(View itemView) {
-            super(itemView);
-            setIsRecyclable(false);
+		ViewHolder(View itemView) {
+			super(itemView);
+			setIsRecyclable(false);
 
-            listBinding = DataBindingUtil.bind(itemView);
+			listBinding = DataBindingUtil.bind(itemView);
 
-            MessageBox.INSTANCE.observable
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(msg -> {
-                    if(msg instanceof SelectedContact) {
-                        SelectedContact contact = (SelectedContact) msg;
-	                    Account acc = new Account(contact.getName(), contact.getPhoneNumber(), context.getString(R.string.dialog_string_import_from_contact), false);
-	                    acc.setFromContact(true);
-                        addContact(acc);
-                    }
-                });
-        }
+			MessageBox.INSTANCE.observable
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(msg -> {
+						if (msg instanceof SelectedContact) {
+							SelectedContact contact = (SelectedContact) msg;
+							Account acc = new Account(contact.getName(), contact.getPhoneNumber(), context.getString(R.string.dialog_string_import_from_contact), false);
+							acc.setFromContact(true);
+							addContact(acc);
+						}
+					});
+		}
 
-        public void addAccounts() {
-            for(int i = 0; i < accountList.size(); i++) {
-                Account act = accountList.get(i);
-                ChatItemAccountBinding binding = itemBindings.get(i);
+		public void addAccounts() {
+			for (int i = 0; i < accountList.size(); i++) {
+				Account act = accountList.get(i);
+				ChatItemAccountBinding binding = itemBindings.get(i);
 
-                // 마지막 엘리먼트에 오른쪽 Margin 추가
-                if(i == accountList.size() - 1) {
-                    LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.main.getLayoutParams();
-                    params.setMarginEnd(Converter.dpToPx(16));
-                    binding.main.setLayoutParams(params);
-                }
+				// 마지막 엘리먼트에 오른쪽 Margin 추가
+				if (i == accountList.size() - 1) {
+					LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) binding.main.getLayoutParams();
+					params.setMarginEnd(Converter.dpToPx(16));
+					binding.main.setLayoutParams(params);
+				}
 
-                binding.setAccount(act);
-                binding.main.setClickable(true);
-                RxView.clicks(binding.main)
-                    .throttleFirst(200, TimeUnit.MILLISECONDS)
-                    .subscribe(aVoid -> {
-                        deselectAccount();
-                        binding.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_primary));
+				binding.setAccount(act);
+				binding.main.setClickable(true);
+				RxView.clicks(binding.main)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(aVoid -> {
+							deselectAccount();
+							binding.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_primary));
 
-                        TransactionDB.INSTANCE.setTxName(act.getName());
-                        MessageBox.INSTANCE.add(new EnableToEditMoney());
-                    });
+							TransactionDB.INSTANCE.setTxName(act.getName());
+							MessageBox.INSTANCE.add(new EnableToEditMoney());
+						});
 
-                listBinding.accountList.addView(binding.getRoot());
-            }
-        }
+				listBinding.accountList.addView(binding.getRoot());
+			}
+		}
 
-        public void addContact(Account account){
-            deselectAccount();
+		public void addContact(Account account) {
+			deselectAccount();
 
-            final View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.chat_item_account, listBinding.accountList, false);
-            ChatItemAccountBinding itemBinding = ChatItemAccountBinding.bind(view);
-            itemBinding.setAccount(account);
-            itemBinding.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_primary));
-            listBinding.accountList.addView(view, 0);
+			final View view = LayoutInflater.from(itemView.getContext()).inflate(R.layout.chat_item_account, listBinding.accountList, false);
+			ChatItemAccountBinding itemBinding = ChatItemAccountBinding.bind(view);
+			itemBinding.setAccount(account);
+			itemBinding.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_primary));
+			listBinding.accountList.addView(view, 0);
 
-            TransactionDB.INSTANCE.setTxName(account.getName());
-            MessageBox.INSTANCE.add(new EnableToEditMoney   ());
+			TransactionDB.INSTANCE.setTxName(account.getName());
+			MessageBox.INSTANCE.add(new EnableToEditMoney());
 
-            itemBindings.add(itemBinding);
-            accountList.add(account);
-        }
+			itemBindings.add(itemBinding);
+			accountList.add(account);
+		}
 
-        private void deselectAccount(){
-            for(int k = 0; k < itemBindings.size(); k++) {
-                ChatItemAccountBinding b = itemBindings.get(k);
-                Account acc = accountList.get(k);
-                if(acc.isFromContact()) {
-                    listBinding.accountList.removeView(b.getRoot());
-                    itemBindings.remove(k);
-                    accountList.remove(k);
-                } else {
-                    b.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_gray));
-                }
-            }
-        }
-    }
+		private void deselectAccount() {
+			for (int k = 0; k < itemBindings.size(); k++) {
+				ChatItemAccountBinding b = itemBindings.get(k);
+				Account acc = accountList.get(k);
+				if (acc.isFromContact()) {
+					listBinding.accountList.removeView(b.getRoot());
+					itemBindings.remove(k);
+					accountList.remove(k);
+				} else {
+					b.main.setBackground(ContextCompat.getDrawable(itemView.getContext(), R.drawable.border_round_gray));
+				}
+			}
+		}
+	}
 }

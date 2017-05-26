@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">LogCollector</string>
+    <string name="shared_prefs_push_token">pushToken</string>
+</resources>

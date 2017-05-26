@@ -44,7 +44,8 @@
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
+                    android:layout_toEndOf="@id/ib_back"
+                    android:layout_marginStart="15dp"
                     android:layout_centerVertical="true"
                     android:theme="@style/Header"
                     tb:custom_font="noto_medium"/>
@@ -75,8 +76,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white_two"
-                        android:paddingTop="1dp"
-                        android:paddingBottom="1dp">
+                        android:paddingBottom="1dp"
+                        android:paddingTop="1dp">
+
                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:id="@+id/talkBankTextView9"
                             android:layout_width="match_parent"

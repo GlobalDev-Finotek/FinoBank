@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.app;
 
-import android.app.Application;
 import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
@@ -8,38 +7,32 @@ import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
-import finotek.global.dev.talkbank_ca.util.LocaleHelper;
+import globaldev.finotek.com.logcollector.app.FinopassApp;
+import globaldev.finotek.com.logcollector.db.FinopassRealmModule;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class MyApplication extends Application {
+public class MyApplication extends FinopassApp {
 
-	private static Context context;
 	AppComponent appComponent;
-	private RxEventBus eventBus;
-	private Realm realm;
 	private DBHelper dbHelper;
-
-	public static Context getGlobalContext() {
-		return context;
-	}
+	private RxEventBus eventBus;
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
-
 		Realm.init(this);
 
 		RealmConfiguration realmConfiguration = new RealmConfiguration.Builder()
-				.name(Realm.DEFAULT_REALM_NAME)
+				.name("app.realm")
+				.modules(Realm.getDefaultModule(), new FinopassRealmModule())
 				.deleteRealmIfMigrationNeeded()
 				.build();
 
 		Realm.setDefaultConfiguration(realmConfiguration);
-		realm = Realm.getDefaultInstance();
-		eventBus = new RxEventBus();
+		Realm realm = Realm.getDefaultInstance();
 		dbHelper = new DBHelper(realm);
-		context = getContext();
+		eventBus = new RxEventBus();
 
 		createDaggerInjections();
 	}
@@ -48,14 +41,14 @@ public class MyApplication extends Application {
 		return getApplicationContext();
 	}
 
-	public AppComponent getAppComponent() {
+	public AppComponent getMyAppComponent() {
 		return appComponent;
 	}
 
   private void createDaggerInjections() {
     appComponent = DaggerAppComponent
         .builder()
-		    .appModule(new AppModule(this, eventBus, realm, dbHelper))
+		    .appModule(new AppModule(this, eventBus, dbHelper))
 		    .build();
 
     appComponent.inject(this);

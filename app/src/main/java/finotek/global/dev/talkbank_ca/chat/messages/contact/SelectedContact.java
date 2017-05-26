@@ -6,6 +6,6 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SelectedContact {
-    String name;
-    String phoneNumber;
+	String name;
+	String phoneNumber;
 }

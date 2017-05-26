@@ -5,7 +5,7 @@ package finotek.global.dev.talkbank_ca.base.mvp;
  */
 
 public interface IPresenter<V extends IMvpView> {
-  void attachView(V mvpView);
+	void attachView(V mvpView);
 
-  void detachView();
+	void detachView();
 }

@@ -7,33 +7,50 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
-        <ImageView
-            android:id="@+id/iv_intro"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="153dp"
-            android:src="@drawable/txt_intro"
-            tb:custom_font="noto_medium"/>
-        <ImageView
-            android:layout_width="174dp"
-            android:layout_height="50dp"
-            android:layout_below="@+id/iv_intro"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
-            android:contentDescription="Finotek Logo"
-            app:srcCompat="@drawable/vector_drawable_ci_finotek"/>
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-            android:id="@+id/tv_copyright"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="32dp"
-            android:text="@string/main_string_copyright_finotek"
-            android:textColor="@android:color/white"
-            android:textSize="12sp"
-            app:custom_font="noto_light" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+            <ImageView
+                android:id="@+id/imageView9"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/chat_background"/>
+
+            <ImageView
+                android:id="@+id/iv_intro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="153dp"
+                android:src="@drawable/txt_intro"
+                tb:custom_font="noto_medium"/>
+
+            <ImageView
+                android:layout_width="174dp"
+                android:layout_height="50dp"
+                android:layout_below="@+id/iv_intro"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="26dp"
+                android:contentDescription="Finotek Logo"
+                app:srcCompat="@drawable/vector_drawable_ci_finotek"/>
+
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                android:id="@+id/tv_copyright"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="32dp"
+                android:background="@android:color/transparent"
+                android:text="@string/main_string_copyright_finotek"
+                android:textColor="@android:color/white"
+
+                android:textSize="@dimen/text_small"
+                app:custom_font="noto_light" />
+        </RelativeLayout>
     </RelativeLayout>
 </layout>

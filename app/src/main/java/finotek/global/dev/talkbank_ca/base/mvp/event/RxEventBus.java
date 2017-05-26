@@ -1,8 +1,5 @@
 package finotek.global.dev.talkbank_ca.base.mvp.event;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
@@ -24,7 +21,7 @@ public class RxEventBus {
 		return subject;
 	}
 
-	public void clear(){
+	public void clear() {
 		subject.onComplete();
 		subject = BehaviorSubject.create();
 	}

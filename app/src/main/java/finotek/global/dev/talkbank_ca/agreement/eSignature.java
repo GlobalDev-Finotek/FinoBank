@@ -1,7 +1,7 @@
 package finotek.global.dev.talkbank_ca.agreement;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import finotek.global.dev.talkbank_ca.R;
 

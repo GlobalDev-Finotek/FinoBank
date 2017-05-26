@@ -75,8 +75,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/white_two"
-                        android:paddingTop="1dp"
-                        android:paddingBottom="1dp">
+                        android:paddingBottom="1dp"
+                        android:paddingTop="1dp">
+
                         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                             android:id="@+id/talkBankTextView9"
                             android:layout_width="match_parent"

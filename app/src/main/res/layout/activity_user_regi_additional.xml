@@ -6,12 +6,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="1dp"
+            android:background="@color/white_two"
             android:paddingBottom="1dp"
-            android:background="@color/white_two">
+            android:paddingTop="1dp"
+            android:visibility="gone">
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/talkBankTextView"
                 android:layout_width="match_parent"
@@ -26,26 +29,31 @@
                 android:theme="@style/Title"
                 tb:custom_font="noto_medium"/>
         </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="16dp"
-            android:paddingRight="16dp">
+            android:paddingRight="16dp"
+            android:visibility="gone">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:orientation="horizontal">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:elevation="0dp"
                     android:text="\u2022"
                     android:textColor="@color/bullet"
                     android:textSize="24sp"
                     android:theme="@style/Stit"
-                    android:layout_marginTop="3dp"
                     tb:custom_font="noto_medium"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
@@ -56,29 +64,33 @@
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                 android:id="@+id/edt_emergency_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:hint="@string/registration_string_emergency_number"
-                android:textColorHint="@color/dark_30"
                 android:inputType="phone"
-                android:textSize="14sp"
-                android:textColor="@color/dark_50" />
+                android:textColor="@color/dark_50"
+                android:textColorHint="@color/dark_30"
+                android:textSize="14sp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:orientation="horizontal">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
                     android:gravity="center_vertical"
                     android:text="\u2022"
                     android:textColor="@color/bullet"
                     android:textSize="24sp"
-                    android:layout_marginTop="3dp"
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
@@ -89,33 +101,38 @@
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                 android:id="@+id/edt_email"
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:hint="@string/registration_string_email"
-                android:textColorHint="@color/dark_30"
                 android:inputType="textEmailAddress"
-                android:textSize="14sp"
-                android:textColor="@color/dark_50" />
+                android:textColor="@color/dark_50"
+                android:textColorHint="@color/dark_30"
+                android:textSize="14sp"/>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:orientation="horizontal">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
                         android:textSize="24sp"
-                        android:layout_marginTop="3dp"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
@@ -125,6 +142,7 @@
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                     android:id="@+id/btn_capture_creidt"
                     style="@style/InverseButton"
@@ -132,26 +150,30 @@
                     android:layout_height="46dp"
                     android:elevation="0dp"
                     android:text="@string/registration_button_credit_card_capture"
-                    tb:tb_font="noto_medium" />
+                    tb:tb_font="noto_medium"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:orientation="horizontal">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
                         android:textSize="24sp"
-                        android:layout_marginTop="3dp"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
@@ -162,33 +184,38 @@
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                     android:id="@+id/btn_capture_profile"
                     style="@style/InverseButton"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:text="@string/registration_button_profile_capture"
-                    tb:tb_font="noto_medium" />
+                    tb:tb_font="noto_medium"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:orientation="horizontal">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
                         android:gravity="center_vertical"
                         android:text="\u2022"
                         android:textColor="@color/bullet"
                         android:textSize="24sp"
-                        android:layout_marginTop="3dp"
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="match_parent"
                         android:layout_height="46dp"
@@ -199,22 +226,23 @@
                         android:theme="@style/Stit"
                         tb:custom_font="noto_medium"/>
                 </LinearLayout>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                     android:id="@+id/btn_pin_registration"
                     style="@style/InverseButton"
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:text="@string/registration_button_pin_code_chanage"
-                    tb:tb_font="noto_medium" />
+                    tb:tb_font="noto_medium"/>
             </LinearLayout>
         </LinearLayout>
         <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/btn_save"
+            style="@style/RoundButton"
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:layout_margin="16dp"
             android:text="@string/string_save"
-            style="@style/RoundButton"
             tb:tb_font="noto_medium" />
     </LinearLayout>
 </layout>

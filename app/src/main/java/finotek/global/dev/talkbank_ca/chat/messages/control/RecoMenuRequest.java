@@ -20,7 +20,6 @@ public class RecoMenuRequest {
             menus = new ArrayList<>();
 
 
-
         if(listener == null)
             listener = new Runnable() {
                 @Override
@@ -28,6 +27,7 @@ public class RecoMenuRequest {
                     MessageBox.INSTANCE.add(new SendMessage(name));
                 }
             };
+
         menus.add(new RecoMenu(icon, name, listener));
     }
 

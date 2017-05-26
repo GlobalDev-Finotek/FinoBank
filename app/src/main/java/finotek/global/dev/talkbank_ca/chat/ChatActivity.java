@@ -11,7 +11,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -26,7 +25,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -38,9 +36,7 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
-import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
@@ -49,10 +45,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
@@ -340,11 +334,13 @@ public class ChatActivity extends AppCompatActivity {
 	private void hideExControl() {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
+        binding.chatView.scrollToBottom();
 	}
 
 	private void showExControl() {
 		isExControlAvailable = true;
 		binding.footer.addView(exControlView, 0);
+        binding.chatView.scrollToBottom();
 	}
 
 	private void preInitControlViews() {
@@ -385,6 +381,50 @@ public class ChatActivity extends AppCompatActivity {
 
 		exControlView = inflate(R.layout.chat_extended_control);
 		ecBinding = DataBindingUtil.bind(exControlView);
+
+        // 하단 버튼 설정
+		RxView.clicks(ecBinding.button1)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_open_account), R.drawable.icon_talkbank01));
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button2)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_transfer), R.drawable.icon_talkbank02));
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button3)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_view_account_details), R.drawable.icon_talkbank03));
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button4)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_secured_mirocredit), R.drawable.icon_talkbank04));
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button5)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(ChatActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button6)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_tankbank06));
+					hideExControl();
+				});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);

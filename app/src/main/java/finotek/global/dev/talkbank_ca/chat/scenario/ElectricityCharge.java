@@ -5,6 +5,7 @@ import android.content.Context;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 
 /**
  * Created by jungwon on 5/26/2017.
@@ -26,7 +27,7 @@ public class ElectricityCharge implements Scenario {
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals("전기") || msg.equals("전기 요금") || msg.equals("공과금");
+        return msg.equals(R.string.dialog_chat_electricity_fare) || msg.equals("전기") || msg.equals("전기 요금") || msg.equals("공과금");
     }
 
     @Override
@@ -34,21 +35,33 @@ public class ElectricityCharge implements Scenario {
 
     }
 
+    public RecoMenuRequest getRequestConfirm() {
+        RecoMenuRequest req = new RecoMenuRequest();
+        //req.setTitle("추천메뉴");
+        req.setDescription(context.getResources().getString(R.string.main_string_v2_login_electricity_recommend));
+
+        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_electricity_yes), null);
+        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_electricity_no), null);
+        return req;
+    }
+
     @Override
     public void onUserSend(String msg) {
         switch (step) {
             case Initial:
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_message)));
-                MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_electricity_compare));
-                MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_electricity_recommend));
+                MessageBox.INSTANCE.addAndWait(
+                        new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_message)),
+                        new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_compare)),
+                        getRequestConfirm()
+                );
                 step = Step.question;
                 break;
             case question:
-                if(msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_yes)))
+                if(msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_message)))
                 {
                     step=Step.openTransfer;
                 }
-                else if (msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_no)))
+                else if (msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_compare)))
                 {
                     step=Step.onlyTransfer;
                 }

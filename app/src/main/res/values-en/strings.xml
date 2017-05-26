@@ -221,6 +221,9 @@
     <string name="string_balance">Balance</string>
     <string name="string_yes">Yes</string>
     <string name="string_no">No</string>
+    <string name="string_yes_ready">Yes, I am ready.</string>
+    <string name="string_yes_its_ok">Yes, It is OK.</string>
+    <string name="string_no_retake">No, Retake again.</string>
     <string name="dialog_string_won">Won</string>
     <string name="setting_string_voice_recognition">Authentication voice</string>
     <string name="setting_string_under">Less</string>

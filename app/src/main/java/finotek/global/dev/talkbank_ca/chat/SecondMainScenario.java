@@ -26,12 +26,14 @@ import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
 import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
+import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
@@ -65,6 +67,11 @@ public class SecondMainScenario{
 		this.dbHelper = dbHelper;
 		Realm realm = Realm.getDefaultInstance();
 		user = realm.where(User.class).findAll().last();
+
+        //Recommend scenario setup
+        LeftScenario.scenarioList.add("E");
+        LeftScenario.scenarioList.add("T");
+        LeftScenario.scenarioList.add("H");
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -141,7 +148,8 @@ public class SecondMainScenario{
 
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
-		RecoMenuRequest req = new RecoMenuRequest();
+        RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
+		/*RecoMenuRequest req = new RecoMenuRequest();
 		//req.setTitle("추천메뉴");
 		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));
 
@@ -149,7 +157,7 @@ public class SecondMainScenario{
 		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
 		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_house_loan), null);
 		req.addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
-
+        */
 		MessageBox.INSTANCE.addAndWait(
 				new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName())),
 				new ReceiveMessage(getGreetings()),

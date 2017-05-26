@@ -19,6 +19,7 @@ public class RecoMenuRequest {
         if(menus == null)
             menus = new ArrayList<>();
 
+
         if(listener == null)
             listener = new Runnable() {
                 @Override
@@ -29,4 +30,6 @@ public class RecoMenuRequest {
 
         menus.add(new RecoMenu(icon, name, listener));
     }
+
+
 }

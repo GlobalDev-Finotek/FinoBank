@@ -34,6 +34,7 @@ public enum MessageBox {
                 .concatMap(i -> {
                     if(i == 0)
                         return Flowable.just(new WaitResult());
+
                     if(i == 1)
                         return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
 

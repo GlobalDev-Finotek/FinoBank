@@ -2,16 +2,14 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.text.format.DateFormat;
-import android.util.Log;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -23,17 +21,24 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
+import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.TravelSaving;
+import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -51,12 +56,15 @@ public class SecondMainScenario{
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
 	private DBHelper dbHelper;
+	private User user;
 
 	public SecondMainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
 		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
 		this.dbHelper = dbHelper;
+		Realm realm = Realm.getDefaultInstance();
+		user = realm.where(User.class).findAll().last();
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -85,7 +93,7 @@ public class SecondMainScenario{
 				});
 
 		// 초기 시나리오 진행
-		this.firstScenario(isSigned);
+		this.firstScenario();
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
@@ -94,15 +102,65 @@ public class SecondMainScenario{
 		scenarioPool.put("loan", new LoanScenario(context));
 		scenarioPool.put("account", new AccountScenario(context));
 		scenarioPool.put("sendMail", new SendMailScenario(context));
+		scenarioPool.put("electricityCharge", new ElectricityCharge(context));
+		scenarioPool.put("houseLoan", new HouseLoan(context));
+		scenarioPool.put("travelSaving", new TravelSaving(context));
 
 		currentScenario = null;
 	}
 
-	private void firstScenario(boolean isSigned) {
+	private String getGreetings(){
+		long temptime = System.currentTimeMillis();
+		String time = DateFormat.format("HH", temptime).toString();
+		int hour = Integer.parseInt(time);
+
+		String greetingString = "";
+
+		if (hour >=6 && 13 > hour){
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M)+"\n";
+
+		}else if (hour >= 12 && 19 > hour ){
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_L)+"\n";
+
+		}else if (hour >= 18) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_E)+"\n";
+		}
+		else if (hour >= 0  && 7 > hour ) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N)+"\n";
+		}
+
+		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
+
+		return greetingString;
+	}
+
+	private void firstScenario() {
+
+
+
+
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
+		RecoMenuRequest req = new RecoMenuRequest();
+		//req.setTitle("추천메뉴");
+		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));
 
-		eventBus.getObservable()
+		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_pay_electricity), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_loan_house), null);
+		req.addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
+
+		MessageBox.INSTANCE.addAndWait(
+				new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName())),
+				new ReceiveMessage(getGreetings()),
+				req
+		);
+
+
+
+
+
+		/*eventBus.getObservable()
 				.subscribe(iEvent -> {
 					Log.d("FINO-TB", iEvent.getClass().getName());
 
@@ -150,7 +208,10 @@ public class SecondMainScenario{
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_loan_car));
                     MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
-                });
+
+
+                });*/
+
 	}
 
 
@@ -240,6 +301,11 @@ public class SecondMainScenario{
 			chatView.confirm(request);
 		}
 
+		// 추천 메뉴 요청
+		if (msg instanceof RecoMenuRequest) {
+			chatView.recoMenu((RecoMenuRequest) msg);
+		}
+
 		// 신분증 스캔 결과
 		if (msg instanceof IDCardInfo) {
 			chatView.showIdCardInfo((IDCardInfo) msg);
@@ -281,6 +347,14 @@ public class SecondMainScenario{
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
+		}
+
+		if(msg instanceof WaitResult) {
+			chatView.waiting();
+		}
+
+		if(msg instanceof WaitDone) {
+			chatView.waitingDone();
 		}
 	}
 

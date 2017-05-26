@@ -91,7 +91,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-	private MainScenario mainScenario;
+	private SecondMainScenario mainScenario;
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 
@@ -120,7 +120,7 @@ public class ChatActivity extends AppCompatActivity {
 
         if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
+			mainScenario = new SecondMainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
 
 		MessageBox.INSTANCE.observable

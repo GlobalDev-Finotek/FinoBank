@@ -53,7 +53,7 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
     private void setDescription(RecyclerView.ViewHolder viewHolder, RecoMenuRequest data){
         ViewHolder holder = (ViewHolder) viewHolder;
         ChatRecommendedDescBinding desc = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.chat_recommended_desc, holder.binding.menu, false);
-        if(data.getTitle().isEmpty()) {
+        if(data.getTitle() == null || data.getTitle().isEmpty()) {
             desc.title.setVisibility(View.GONE);
         } else {
             desc.title.setText(data.getTitle());

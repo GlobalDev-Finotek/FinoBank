@@ -386,22 +386,6 @@ public class ChatActivity extends AppCompatActivity {
 		exControlView = inflate(R.layout.chat_extended_control);
 		ecBinding = DataBindingUtil.bind(exControlView);
 
-		ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
-		adapter.setDoOnControl(this::hideExControl);
-		adapter.setSettingControl(() -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
-		ecBinding.extendedControl.setAdapter(adapter);
-
-		RxViewPager.pageSelections(ecBinding.extendedControl)
-				.subscribe(pos -> {
-					if (pos == 0) {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-					} else {
-						ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-						ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-					}
-				});
-
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
 		ctBinding.gvKeypad.onComplete(() -> {

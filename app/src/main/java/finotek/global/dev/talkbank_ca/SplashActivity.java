@@ -32,6 +32,10 @@ public class SplashActivity extends InitActivity {
 				.subscribe(aLong -> {
 					Intent intent;
 					if (Realm.getDefaultInstance().where(User.class).count() > 0) {
+						intent = new Intent(this, ChatActivity.class);
+						startActivity(intent);
+						finish();
+					} else {
 						intent = new Intent(this, MainActivity.class);
 						startActivity(intent);
 						finish();

@@ -2,16 +2,14 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.text.format.DateFormat;
-import android.util.Log;
 
+import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -32,11 +30,14 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPress
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
+import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.TravelSaving;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
@@ -55,12 +56,15 @@ public class SecondMainScenario{
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
 	private DBHelper dbHelper;
+	private User user;
 
 	public SecondMainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
 		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
 		this.dbHelper = dbHelper;
+		Realm realm = Realm.getDefaultInstance();
+		user = realm.where(User.class).findAll().last();
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -98,39 +102,44 @@ public class SecondMainScenario{
 		scenarioPool.put("loan", new LoanScenario(context));
 		scenarioPool.put("account", new AccountScenario(context));
 		scenarioPool.put("sendMail", new SendMailScenario(context));
+		scenarioPool.put("electricityCharge", new ElectricityCharge(context));
+		scenarioPool.put("houseLoan", new HouseLoan(context));
+		scenarioPool.put("travelSaving", new TravelSaving(context));
 
 		currentScenario = null;
 	}
 
-	private void firstScenario() {
-		Realm realm = Realm.getDefaultInstance();
-		User user = realm.where(User.class).findAll().last();
-
-		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
-
-		MessageBox.INSTANCE.addAndWait(
-			new DividerMessage(DateUtil.currentDate(context)),
-			new ReceiveMessage((context.getResources().getString(R.string.main_string_v2_login_hello, user.getName()))),
-			new ReceiveMessage((context.getResources().getString(R.string.main_string_v2_result_context)))
-		);
-
+	private String getGreetings(){
 		long temptime = System.currentTimeMillis();
 		String time = DateFormat.format("HH", temptime).toString();
 		int hour = Integer.parseInt(time);
+
+		String greetingString = "";
+
 		if (hour >=6 && 13 > hour){
-			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_M)));
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M)+"\n";
 
 		}else if (hour >= 12 && 19 > hour ){
-			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_L)));
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_L)+"\n";
 
 		}else if (hour >= 18) {
-			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_E)));
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_E)+"\n";
 		}
 		else if (hour >= 0  && 7 > hour ) {
-			MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_N)));
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N)+"\n";
 		}
 
-		MessageBox.INSTANCE.add(new ReceiveMessage((context.getResources().getString(R.string.main_string_v2_login_notify_balance, String.valueOf(TransactionDB.INSTANCE.getBalance())))));
+		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
+
+		return greetingString;
+	}
+
+	private void firstScenario() {
+
+
+
+
+		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
 		RecoMenuRequest req = new RecoMenuRequest();
 		//req.setTitle("추천메뉴");
@@ -138,12 +147,18 @@ public class SecondMainScenario{
 
 		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_pay_electricity), null);
 		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
-		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_loan_car), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_loan_house), null);
+		req.addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
 
-		StatusMessage status = null;
-		ReceiveMessage intro = new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_notify_again));
+		MessageBox.INSTANCE.addAndWait(
+				new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName())),
+				new ReceiveMessage(getGreetings()),
+				req
+		);
 
-		MessageBox.INSTANCE.add(req);
+
+
+
 
 		/*eventBus.getObservable()
 				.subscribe(iEvent -> {

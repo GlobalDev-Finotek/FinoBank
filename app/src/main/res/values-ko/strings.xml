@@ -15,8 +15,8 @@
     <string name="registration_string_emergency_number">비상 연락처</string>
     <string name="registration_string_number_only">숫자만 입력해 주세요(- 제외)</string>
     <string name="registration_string_email">이메일 주소</string>
-    <string name="registration_string_credit_card_register">신용카드 등록</string>
-    <string name="registration_button_credit_card_capture">신용카드 촬영</string>
+    <string name="registration_string_credit_housed_register">신용카드 등록</string>
+    <string name="registration_button_credit_housed_capture">신용카드 촬영</string>
     <string name="registration_string_profile_register">인증 사진 등록</string>
     <string name="registration_button_profile_capture">사진 촬영</string>
     <string name="registration_string_pin_code">PIN 코드</string>
@@ -43,9 +43,9 @@
     <string name="registration_string_warning_backlight">촬영 시 빛이 들어가면 인식이 잘 안 될 수 있으니 빛이 반사되지 않게 촬영해 주세요.</string>
     <string name="registration_string_purpose_registered_credit">등록한 신용카드는 필요 시 본인 확인용으로 사용됩니다.</string>
     <string name="registration_string_collecting_data_check">추출된 데이터가 정확한지 확인해 주십시오.</string>
-    <string name="registration_string_credit_card_number">카드 번호</string>
-    <string name="registration_string_credit_card_company">카드사</string>
-    <string name="registration_string_credit_card_expire_date">유효기간(월/년)</string>
+    <string name="registration_string_credit_housed_number">카드 번호</string>
+    <string name="registration_string_credit_housed_company">카드사</string>
+    <string name="registration_string_credit_housed_expire_date">유효기간(월/년)</string>
     <string name="registration_string_name">이름</string>
     <string name="registration_button_retake_picture">재촬영</string>
     <string name="registration_button_registration">등록</string>
@@ -92,8 +92,8 @@
     <string name="setting_string_additional_info">추가 정보(선택 입력)</string>
     <string name="setting_string_emergency_number">비상 연락처</string>
     <string name="setting_string_email">이메일 주소</string>
-    <string name="setting_button_credit_card_register">신용카드 등록</string>
-    <string name="setting_button_credit_card_capture">신용카드 촬영</string>
+    <string name="setting_button_credit_housed_register">신용카드 등록</string>
+    <string name="setting_button_credit_housed_capture">신용카드 촬영</string>
     <string name="setting_button_profile_register">인증 사진 등록</string>
     <string name="setting_button_profile_capture">사진 촬영</string>
     <string name="setting_string_pin_code">PIN 코드</string>
@@ -122,9 +122,9 @@
     <string name="setting_string_warning_backlight">촬영 시 빛이 들어가면 인식이 잘 안 될 수 있으니 빛이 반사되지 않게 촬영해 주세요.</string>
     <string name="setting_string_purpose_registered_credit">등록한 신용카드는 필요 시 본인 확인용으로 사용됩니다.</string>
     <string name="setting_string_collecting_data_check">추출된 데이터가 정확한지 확인해 주십시오.</string>
-    <string name="setting_string_credit_card_number">카드 번호</string>
-    <string name="setting_string_credit_card_company">카드사</string>
-    <string name="setting_string_credit_card_expire_date">유효기간(월/년)</string>
+    <string name="setting_string_credit_housed_number">카드 번호</string>
+    <string name="setting_string_credit_housed_company">카드사</string>
+    <string name="setting_string_credit_housed_expire_date">유효기간(월/년)</string>
     <string name="setting_string_name">이름</string>
     <string name="setting_string_retake_picture">재촬영</string>
     <string name="setting_string_register">등록</string>
@@ -138,14 +138,14 @@
     <string name="dialog_button_yes">네</string>
     <string name="dialog_button_no">아니오</string>
     <string name="dialog_chat_cancel_opening_bank">계좌 개설을 취소합니다.\n어떤것을 도와드릴까요?</string>
-    <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인을 위해 주민등록증이나 운전면허증이 필요합니다.\n준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
-    <string name="dialog_string_id_card_type">신분증 유형</string>
+    <string name="dialog_chat_take_picture_id_housed">계좌 개설 시 본인 확인을 위해 주민등록증이나 운전면허증이 필요합니다.\n준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
+    <string name="dialog_string_id_housed_type">신분증 유형</string>
     <string name="dialog_string_name">이름</string>
     <string name="dialog_string_id_number">주민등록번호</string>
     <string name="dialog_string_date_issued">발급일자</string>
     <string name="dialog_string_license_number">운전면허번호</string>
     <string name="dialog_chat_correct_information">위 내용이 맞으세요?</string>
-    <string name="dialog_chat_id_card_retake">신분증 촬영을 다시 진행합니다.</string>
+    <string name="dialog_chat_id_housed_retake">신분증 촬영을 다시 진행합니다.</string>
     <string name="dialog_chat_finger_tip_sign">자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_sign_tip">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?</string>
@@ -237,7 +237,7 @@
     <string name="setting_string_auth_method_select_2">인증 방법(다중 선택 가능, 2개 이상 선택 필수)</string>
     <string name="setting_string_context_auth">맥락 인증</string>
     <string name="setting_string_edit_manually">직접입력</string>
-    <string name="setting_string_ocr_credit_card">신용카드 OCR</string>
+    <string name="setting_string_ocr_credit_housed">신용카드 OCR</string>
     <string name="setting_string_over">이상</string>
     <string name="setting_string_picture_check">촬영된 화면이 정확한지 확인해 주십시오.</string>
     <string name="setting_string_pin_code_background_color_select">- PIN 코드 배경색 선택</string>
@@ -282,7 +282,7 @@
     <string name="more_button">더보기</string>
     <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
-    <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73점(통화기록: 85점, 문자기록: 66점, 위치기록:54점)으로 %1%s 님을 확인하였습니다. </string>
+    <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73점(통화기록: 85점, 문자기록: 66점, 위치기록:54점)으로 %1$s 님을 확인하였습니다. </string>
     <string name ="main_string_v2_login_hello">%1$s님 안녕하세요, </string>
     <string name ="main_string_v2_login_hello_M">좋은 아침이에요, 오늘도 즐거운 하루 되세요!!!</string>
     <string name ="main_string_v2_login_hello_L">식사는 하셨나요? 활기찬 오후 되세요~</string>
@@ -294,8 +294,8 @@
     <string name ="main_string_v2_login_recommend_task">맥락 데이터를 통해 파악한 %1$s님의 할 일은 금융업무는 다음과 같습니다.</string>
     <string name ="main_string_v2_login_ask_step">어떤것을 진행하시겠어요?</string>
     <string name ="main_string_v2_login_pay_electricity">전기료 이체</string>
-    <string name ="main_string_v2_login_open_saving_account">(추천)여행 적금 가입</string>
-    <string name ="main_string_v2_login_loan_car">(추천) 자동차 대출</string>
+    <string name ="main_string_v2_login_open_saving_account">여행 적금 가입</string>
+    <string name ="main_string_v2_login_loan_house">주택 구매 대출</string>
     <string name ="main_string_v2_login_notify_again">다음에 알려주세요</string>
     <string name ="main_string_v2_open_account_notice">계좌를 개설합니다.</string>
     <string name ="main_string_v2_open_account_complete">계좌 개설이 완료 되었습니다</string>
@@ -318,11 +318,11 @@
     <string name ="main_string_v2_login_saving_no">아니요, 필요없어요</string>
     <string name ="main_string_v2_login_saving_no_confirm"> 아 그러시군요, 매일 이렇게 같이 있는데도 아직 %1$s님을 잘 모르나봐요.. 그럼 어떤것이 필요하세요?</string>
     <string name ="main_string_v2_login_saving_yes">예 통장을 만들게요</string>
-    <string name ="main_string_v2_login_car_ask">혹시 자동차를 구입하실 생각인가요? 여러 브랜드의 자동차 매장에 방문하시는 것이 확인되었습니다.</string>
-    <string name ="main_string_v2_login_car_recommend">아래 자동차 대출은 2.5%% 금리로 최고 7백만원까지 이용하실 수 있습니다. 자동차 대출을 신청하시겠습니까?</string>
-    <string name ="main_string_v2_login_car_yes">예</string>
-    <string name ="main_string_v2_login_car_no">아니요, 필요없어요</string>
-    <string name ="main_string_v2_login_car_no_confirm"> 아 그러시군요, 매일 이렇게 같이 있는데도 아직 %1$s님을 잘 모르나봐요.. 그럼 어떤것이 필요하세요?</string>
+    <string name ="main_string_v2_login_house_ask">혹시 주택을 구입하실 생각인가요? 여러 부동산 거래 매장에 방문하시는 것이 확인되었습니다.</string>
+    <string name ="main_string_v2_login_house_recommend"> 대출은 2.5%% 금리로 최고 7백만원까지 이용하실 수 있습니다. 주택 담보 대출을 신청하시겠습니까?</string>
+    <string name ="main_string_v2_login_house_yes">예</string>
+    <string name ="main_string_v2_login_house_no">아니요, 필요없어요</string>
+    <string name ="main_string_v2_login_house_no_confirm"> 아 그러시군요, 매일 이렇게 같이 있는데도 아직 %1$s님을 잘 모르나봐요.. 그럼 어떤것이 필요하세요?</string>
 
     <string name = "main_string_v2_create_first">%1$s님 안녕하세요. 만나서 반가워요. 저는 편리한 금융 생활을 도와주는 "피노봇" 이라고 해요 놀라운 서비스를 시작하기 전에 몇가지 사항을 확인할깨요</string>
     <string name = "main_string_v2_create_information_check">제가 찾은 %1$s님의 정보는 다음과 같습니다. 이름: %1$s \n 휴대전화: 010-1234-5678 \n 이메일:gdhong@gmail.com \n 위 내용이 맞습니까? </string>

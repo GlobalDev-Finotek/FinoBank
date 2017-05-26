@@ -15,8 +15,8 @@
     <string name="registration_string_emergency_number">Emergency contact number</string>
     <string name="registration_string_number_only">Number only</string>
     <string name="registration_string_email">E-mail</string>
-    <string name="registration_string_credit_card_register">Register credit card</string>
-    <string name="registration_button_credit_card_capture">Take picture of credit card</string>
+    <string name="registration_string_credit_housed_register">Register credit card</string>
+    <string name="registration_button_credit_housed_capture">Take picture of credit card</string>
     <string name="registration_string_profile_register">Register authenticate picture</string>
     <string name="registration_button_profile_capture">Take picture of ID card</string>
     <string name="registration_string_pin_code">PIN code</string>
@@ -43,9 +43,9 @@
     <string name="registration_string_warning_backlight">The system may not recognize a ID card under the excessive light</string>
     <string name="registration_string_purpose_registered_credit">Registered credit card can be used for self-identification purpose</string>
     <string name="registration_string_collecting_data_check">Please check collected data is correct</string>
-    <string name="registration_string_credit_card_number">Credit card numbers</string>
-    <string name="registration_string_credit_card_company">Credit card company</string>
-    <string name="registration_string_credit_card_expire_date">Expire date (month/year)</string>
+    <string name="registration_string_credit_housed_number">Credit card numbers</string>
+    <string name="registration_string_credit_housed_company">Credit card company</string>
+    <string name="registration_string_credit_housed_expire_date">Expire date (month/year)</string>
     <string name="registration_string_name">Name</string>
     <string name="registration_button_retake_picture">Re-take photo</string>
     <string name="registration_button_registration">Registration</string>
@@ -93,8 +93,8 @@
     <string name="setting_string_additional_info">Additional information</string>
     <string name="setting_string_emergency_number">Emergency contact number</string>
     <string name="setting_string_email">E-mail address</string>
-    <string name="setting_button_credit_card_register">Register credit card</string>
-    <string name="setting_button_credit_card_capture">Take picture of credit card</string>
+    <string name="setting_button_credit_housed_register">Register credit card</string>
+    <string name="setting_button_credit_housed_capture">Take picture of credit card</string>
     <string name="setting_button_profile_register">Register picture for verification</string>
     <string name="setting_button_profile_capture">Take picture of credit card</string>
     <string name="setting_string_pin_code">PIN code</string>
@@ -123,9 +123,9 @@
     <string name="setting_string_warning_backlight">The system may not recognize a ID card under the excessive light</string>
     <string name="setting_string_purpose_registered_credit">Registered credit card can be used for self-identification purpose</string>
     <string name="setting_string_collecting_data_check">Please check collected data is correct</string>
-    <string name="setting_string_credit_card_number">Credit card numbers</string>
-    <string name="setting_string_credit_card_company">Credit card company</string>
-    <string name="setting_string_credit_card_expire_date">Expire date (month/year)</string>
+    <string name="setting_string_credit_housed_number">Credit card numbers</string>
+    <string name="setting_string_credit_housed_company">Credit card company</string>
+    <string name="setting_string_credit_housed_expire_date">Expire date (month/year)</string>
     <string name="setting_string_name">Name</string>
     <string name="setting_string_retake_picture">Re-take photo</string>
     <string name="setting_string_register">Register</string>
@@ -139,15 +139,15 @@
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
     <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.\n What can I do for you?</string>
-    <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license.
+    <string name="dialog_chat_take_picture_id_housed">To open an account, you need to verify yourself with your personal ID card or driver\'s license.
     Please take a picture of your ID card</string>
-    <string name="dialog_string_id_card_type">Verification ID type</string>
+    <string name="dialog_string_id_housed_type">Verification ID type</string>
     <string name="dialog_string_name">Name</string>
     <string name="dialog_string_id_number">ID numbers</string>
     <string name="dialog_string_date_issued">Date issued</string>
     <string name="dialog_string_license_number">Driver\'s license number</string>
     <string name="dialog_chat_correct_information">Is the above information correct?</string>
-    <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>
+    <string name="dialog_chat_id_housed_retake">Re-taking a picture of your ID card</string>
     <string name="dialog_chat_finger_tip_sign">Sign your e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_sign_tip">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. Is there anything else that I can help you with?</string>
@@ -242,7 +242,7 @@
     <string name="setting_string_auth_method_select_2">Select authentication methods (you are required to select more than two)</string>
     <string name="setting_string_context_auth">Context authentication</string>
     <string name="setting_string_edit_manually">Direct type</string>
-    <string name="setting_string_ocr_credit_card">Credit card OCR</string>
+    <string name="setting_string_ocr_credit_housed">Credit card OCR</string>
     <string name="setting_string_over">More</string>
     <string name="setting_string_picture_check">Please check your picture is correct</string>
     <string name="setting_string_pin_code_background_color_select">Select PIN code background color</string>
@@ -288,7 +288,7 @@
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>
 
-    <string name ="main_string_v2_result_context">Result of Context, %1%s has been confirmed by total 73 points (Call Log: 85p., SMS Log: 66p., Location Log: 54p.) </string>
+    <string name ="main_string_v2_result_context">Result of Context, %1$s has been confirmed by total 73 points (Call Log: 85p., SMS Log: 66p., Location Log: 54p.) </string>
     <string name ="main_string_v2_login_hello">%1$s hello~ </string>
     <string name ="main_string_v2_login_hello_M">Good Morning, Have a nice day!!! </string>
     <string name ="main_string_v2_login_hello_L">Did you eat lunch? Enjoy the rest of your day~</string>
@@ -301,7 +301,7 @@
     <string name ="main_string_v2_login_ask_step">What would you like to do? </string>
     <string name ="main_string_v2_login_pay_electricity">Pay electricity</string>
     <string name ="main_string_v2_login_open_saving_account">Open new traveling saving account </string>
-    <string name ="main_string_v2_login_car_loan">car loan </string>
+    <string name ="main_string_v2_login_house_loan">House loan </string>
     <string name ="main_string_v2_login_notify_again">Let me know next</string>
     <string name ="main_string_v2_open_account_notice">OK. Let\'s open an account.</string>
     <string name ="main_string_v2_open_account_complete">You\'ve successfully opened your account. </string>
@@ -324,11 +324,11 @@
     <string name ="main_string_v2_login_saving_no"> No thanks</string>
     <string name ="main_string_v2_login_saving_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>
     <string name ="main_string_v2_login_saving_yes">Yes, I want to open saving account</string>
-    <string name ="main_string_v2_login_car_ask"> Do you have a plan to buy a new car? It has been confirmed that you visit several brands of auto dealer shop. </string>
-    <string name ="main_string_v2_login_car_recommend">You may request up to 7 million won and 2.5%% interest rate.  do you want to apply loan?</string>
-    <string name ="main_string_v2_login_car_yes">Yes</string>
-    <string name ="main_string_v2_login_car_no">No thanks</string>
-    <string name ="main_string_v2_login_car_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>
+    <string name ="main_string_v2_login_house_ask"> Do you have a plan to buy a new house? It has been confirmed that you visit several brands of real estate agent office. </string>
+    <string name ="main_string_v2_login_house_recommend">You may request up to 7 million won and 2.5%% interest rate.  do you want to apply loan?</string>
+    <string name ="main_string_v2_login_house_yes">Yes</string>
+    <string name ="main_string_v2_login_house_no">No thanks</string>
+    <string name ="main_string_v2_login_house_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>
 
     <string name = "main_string_v2_create_first"> %1$s Hello, Nice to meet you. I call it "Finobot" to help you live a convenient financial life.  Before start the amazing service, I need to check some things. </string>
     <string name = "main_string_v2_create_information_check">I found your information. Name: %1$s \n Phone: 010-1234-5678 \n email:gdhong@gmail.com \n Is it correct? </string>

@@ -54,6 +54,25 @@ public class AccountScenario_v2 implements Scenario {
         }
     }
 
+    public RecoMenuRequest getRequestConfirm() {
+        RecoMenuRequest req = new RecoMenuRequest();
+        //req.setTitle("추천메뉴");
+        req.setDescription(context.getResources().getString(R.string.main_string_v2_login_electricity_open_account));
+
+        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.string_yes_ready), null);
+        return req;
+    }
+
+    public RecoMenuRequest getIdPicConfirm() {
+        RecoMenuRequest req = new RecoMenuRequest();
+        //req.setTitle("추천메뉴");
+        req.setDescription(context.getResources().getString(R.string.dialog_chat_correct_information));
+
+        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.string_yes_its_ok), null);
+        req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.string_no_retake), null);
+        return req;
+    }
+
     @Override
     public void onUserSend(String msg) {
         switch (step) {
@@ -63,22 +82,15 @@ public class AccountScenario_v2 implements Scenario {
                     new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_open_account)),
                     RecoMenuRequest.buildYesOrNo(context, context.getResources().getString(R.string.main_string_v2_login_electricity_open_account_2))
                 );
+
                 step = Step.AskOpen;
                 break;
 
             case AskOpen:
                 if (msg.equals(context.getString(R.string.string_yes))) {
                     MessageBox.INSTANCE.addAndWait(new RequestTakeIDCard());
-                    step = Step.CheckIDCard;
                 }
-                else if (msg.equals(context.getString(R.string.string_no))) {
-                    MessageBox.INSTANCE.addAndWait(
-                        new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)),
-                        new Done()
-                    );
-                } else {
-                    MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
-                }
+
                 break;
 
             case CheckIDCard:
@@ -128,6 +140,6 @@ public class AccountScenario_v2 implements Scenario {
     }
 
     private enum Step {
-        Initial, CheckIDCard, TakeSign, Last, AskOpen
+        Initial, CheckIDCard, TakeSign, Last, AskOpen, Retake, OtherIDs
     }
 }

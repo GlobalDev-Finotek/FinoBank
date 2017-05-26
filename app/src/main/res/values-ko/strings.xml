@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">톡뱅</string>
+    <string name="app_name">FinoBank</string>
     <string name="registration_string_register">사용자 등록</string>
     <string name="registration_string_basic_information">기본 정보(필수입력)</string>
     <string name="registration_string_phone_number">휴대전화 번호</string>

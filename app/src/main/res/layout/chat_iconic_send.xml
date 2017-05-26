@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:background="@drawable/chat_item_send"
+        android:background="@drawable/chat_send"
         android:orientation="horizontal"
         android:paddingBottom="10dp"
         android:paddingEnd="15dp"

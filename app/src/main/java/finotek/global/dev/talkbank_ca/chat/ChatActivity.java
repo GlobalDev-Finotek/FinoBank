@@ -165,6 +165,9 @@ public class ChatActivity extends AppCompatActivity {
 	private void onNewMessageUpdated(Object msg) {
 
 		if (msg instanceof RequestPhoto) {
+
+			binding.appbar.setVisibility(View.GONE);
+
 			releaseControls();
 			releaseAllControls();
 
@@ -178,7 +181,7 @@ public class ChatActivity extends AppCompatActivity {
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
-
+				binding.appbar.setVisibility(View.VISIBLE);
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -193,6 +196,8 @@ public class ChatActivity extends AppCompatActivity {
 			releaseControls();
 			releaseAllControls();
 
+			binding.appbar.setVisibility(View.GONE);
+
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
 			capturePicFragment = CapturePicFragment.newInstance();
@@ -203,6 +208,7 @@ public class ChatActivity extends AppCompatActivity {
 					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 				this.returnToInitialControl();
+				binding.appbar.setVisibility(View.VISIBLE);
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
@@ -216,6 +222,8 @@ public class ChatActivity extends AppCompatActivity {
 			releaseControls();
 			releaseAllControls();
 
+			binding.appbar.setVisibility(View.GONE);
+
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
 			capturePicFragment = CapturePicFragment.newInstance();
@@ -226,7 +234,9 @@ public class ChatActivity extends AppCompatActivity {
 					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
+				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
 
+				binding.appbar.setVisibility(View.VISIBLE);
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -245,6 +255,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestSignature) {
 			releaseControls();
 			releaseAllControls();
+			binding.appbar.setVisibility(View.GONE);
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
@@ -269,6 +280,8 @@ public class ChatActivity extends AppCompatActivity {
 							dialog.setDoneListener(() -> {
 								MessageBox.INSTANCE.add(new SignatureVerified());
 								returnToInitialControl();
+
+								binding.appbar.setVisibility(View.VISIBLE);
 
 								FragmentTransaction transaction = getFragmentManager().beginTransaction();
 								transaction.remove(signRegistFragment).commit();

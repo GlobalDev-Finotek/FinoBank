@@ -304,14 +304,14 @@
     <string name ="main_string_v2_open_account_complete">계좌 개설이 완료 되었습니다</string>
     <string name ="main_string_v2_login_electricity_message">전기요금 납부 안내 메시지가 확인되었습니다.</string>
     <string name ="main_string_v2_login_electricity_compare">이번 달 요금은 %1$s원으로 지난 달보다 %2$s원 많이 쓰셨네요!</string>
-    <string name ="main_string_v2_login_electricity_recommend"> 지금 추천드리는 공과금 납부 통장을 개설하고 이체하시면 바로 할일되는 공과금 납부 전용 통장을 만드시는 것은 어떠세요?</string>
+    <string name ="main_string_v2_login_electricity_recommend"> 지금 추천드리는 공과금 납부 통장을 개설하고 이체하시면 바로 할인되는 공과금 납부 전용 통장을 만드시는 것은 어떠세요?</string>
     <string name ="main_string_v2_login_electricity_no">아니요, 그냥 이체할게요</string>
     <string name ="main_string_v2_login_electricity_confirm">%1$s님은 100만원 이하 이체일 경우 맥락 인증만으로 이체가 가능하며, 전기요금 %1$s원 이체를 완료했습니다.</string>
     <string name ="main_string_v2_login_electricity_balance">현재 계좌 잔액은  %1$s입니다. 맥락인증 이체 금액은 설정에서 변경 가능합니다.</string>
     <string name ="main_string_v2_login_electricity_yes">예, 통장 개설 후 이체할게요</string>
     <string name ="main_string_v2_login_electricity_open_account">계좌 개설 시 본인 확인을 위해 신분증 (주민등록증, 운전면허증)이나 명함, 학생증이 필요합니다. </string>
     <string name ="main_string_v2_login_electricity_open_account_2">준비가 되셨으면 촬영을 진행해 주세요. (만약 아무 것도 없다면 손바닥을 전체를 촬영해주세요)</string>
-    <string name ="main_string_v2_login_electricity_additional_picture">다른 신분증을 추가로 촬영하시겠어요?</string>
+    <string name ="main_string_v2_login_electricity_additional_picture">추가로 촬영을 진행하시겠습니까?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">예</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>
     <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 인증합니다</string>

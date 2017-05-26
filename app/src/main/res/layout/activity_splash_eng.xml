@@ -41,7 +41,7 @@
                 android:layout_marginBottom="32dp"
                 android:text="@string/main_string_copyright_finotek"
                 android:textColor="@android:color/white"
-                android:textSize="12sp"
+                android:textSize="@dimen/text_small"
                 app:custom_font="noto_light" />
         </RelativeLayout>
     </RelativeLayout>

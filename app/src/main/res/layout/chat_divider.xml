@@ -15,7 +15,7 @@
         android:paddingBottom="7dp"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
-        android:textSize="12sp"
+        android:textSize="@dimen/text_small"
         android:textColor="@color/chat_divider_text"
         android:background="@drawable/chat_item_divider" />
 </RelativeLayout>

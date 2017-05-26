@@ -178,6 +178,7 @@ public class ChatActivity extends AppCompatActivity {
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
+
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -224,6 +225,7 @@ public class ChatActivity extends AppCompatActivity {
 					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
 					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
+
 
 				this.returnToInitialControl();
 
@@ -367,6 +369,9 @@ public class ChatActivity extends AppCompatActivity {
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
 		if (hasFocus) {
 			runOnUiThread(this::hideExControl);
+            runOnUiThread(() -> {
+                binding.chatView.scrollToBottom();
+            });
 		}
 	}
 
@@ -375,9 +380,9 @@ public class ChatActivity extends AppCompatActivity {
         fiBinding.sendButton.setEnabled(enabled);
 
         if(enabled) {
-            fiBinding.sendButton.setImageResource(R.drawable.btn_send);
+            fiBinding.sendButton.setImageResource(R.drawable.btn_send_50);
         } else {
-            fiBinding.sendButton.setImageResource(R.drawable.btn_mike);
+            fiBinding.sendButton.setImageResource(R.drawable.btn_mike_50);
         }
 	}
 
@@ -389,7 +394,6 @@ public class ChatActivity extends AppCompatActivity {
 	private void hideExControl() {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
-        binding.chatView.scrollToBottom();
 	}
 
 	private void showExControl() {
@@ -441,28 +445,28 @@ public class ChatActivity extends AppCompatActivity {
 		RxView.clicks(ecBinding.button1)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_open_account), R.drawable.icon_talkbank01));
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_open_account), R.drawable.icon_stankbank01));
 					hideExControl();
 				});
 
 		RxView.clicks(ecBinding.button2)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_transfer), R.drawable.icon_talkbank02));
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_transfer), R.drawable.icon_stankbank02));
 					hideExControl();
 				});
 
 		RxView.clicks(ecBinding.button3)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_view_account_details), R.drawable.icon_talkbank03));
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_view_account_details), R.drawable.icon_stankbank03));
 					hideExControl();
 				});
 
 		RxView.clicks(ecBinding.button4)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_secured_mirocredit), R.drawable.icon_talkbank04));
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_secured_mirocredit), R.drawable.icon_stankbank04));
 					hideExControl();
 				});
 
@@ -477,7 +481,7 @@ public class ChatActivity extends AppCompatActivity {
 		RxView.clicks(ecBinding.button6)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_tankbank06));
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_stankbank06));
 					hideExControl();
 				});
 

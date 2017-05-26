@@ -12,6 +12,10 @@
     <dimen name="one">1dp</dimen>
     <dimen name="five">5dp</dimen>
 
-    <dimen name="chat_margin_bottom">10dp</dimen>
+    <dimen name="chat_margin_bottom">8dp</dimen>
     <dimen name="chat_margin_left_right">15dp</dimen>
+
+    <dimen name="text_small">12sp</dimen>
+    <dimen name="text_normal">14sp</dimen>
+    <dimen name="text_large">18sp</dimen>
 </resources>

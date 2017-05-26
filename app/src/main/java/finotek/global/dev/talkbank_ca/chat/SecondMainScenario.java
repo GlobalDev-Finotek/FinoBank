@@ -136,9 +136,6 @@ public class SecondMainScenario{
 
 	private void firstScenario() {
 
-
-
-
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
 		RecoMenuRequest req = new RecoMenuRequest();

@@ -2,7 +2,7 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="50dp">
         <LinearLayout
             android:id="@+id/footer_inputs"
             android:layout_width="match_parent"
@@ -18,8 +18,8 @@
                 <ImageButton
                     android:id="@+id/show_ex_control"
                     android:layout_alignParentStart="true"
-                    android:layout_width="25dp"
-                    android:layout_height="25dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:layout_marginEnd="6dp"
                     android:layout_marginStart="10dp"
                     android:layout_centerVertical="true"
@@ -43,8 +43,8 @@
             </RelativeLayout>
             <ImageButton
                 android:id="@+id/send_button"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginEnd="10dp"
                 android:src="@drawable/btn_mike" />
         </LinearLayout>

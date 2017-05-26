@@ -71,7 +71,7 @@
     <string name="main_string_view_account_details">계좌 조회</string>
     <string name="main_string_secured_mirocredit">소액 담보대출</string>
     <string name="main_action_settings">환경 설정</string>
-    <string name="main_button_send_the_conversation_to_e_mail">상담내용 이메일로 보내기</string>
+    <string name="main_button_send_the_conversation_to_e_mail">이메일로 보내기</string>
     <string name="main_string_authentication_required">인증이 필요합니다.</string>
     <string name="main_string_authentication_succeed">인증에 성공했습니다.</string>
     <string name="setting_string_setting">설정</string>

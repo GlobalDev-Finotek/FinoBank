@@ -7,9 +7,11 @@ import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ResultReceiver;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
@@ -81,6 +83,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
+import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
@@ -109,14 +112,13 @@ public class ChatActivity extends AppCompatActivity {
 
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
-
+    
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 		getComponent().inject(this);
-
 
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
@@ -166,6 +168,15 @@ public class ChatActivity extends AppCompatActivity {
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
+
+        // keyboard event
+        KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
+            @Override
+            public void onToggleSoftKeyboard(boolean isVisible) {
+                if(isVisible)
+                    binding.chatView.scrollToBottom();
+            }
+        });
 	}
 
 	@Override
@@ -466,6 +477,8 @@ public class ChatActivity extends AppCompatActivity {
 		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
 		ivCtrl.animate().rotation(45).setInterpolator(new LinearInterpolator())
 				.setDuration(300);
+
+        binding.chatView.scrollToBottom();
 	}
 
 	private void preInitControlViews() {
@@ -594,21 +607,21 @@ public class ChatActivity extends AppCompatActivity {
 	 */
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-			View v = getCurrentFocus();
-			if (v instanceof EditText) {
-				Rect editTextRect = new Rect();
-				v.getGlobalVisibleRect(editTextRect);
+        if(ev.getAction() == MotionEvent.ACTION_UP) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect editTextRect = new Rect();
+                v.getGlobalVisibleRect(editTextRect);
 
-				Rect sendButtonRect = new Rect();
-				fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
+                Rect sendButtonRect = new Rect();
+                fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
 
-				if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
-						&& !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-					dismissKeyboard(v);
-				}
-			}
-		}
+                if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
+                        && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                    dismissKeyboard(v);
+                }
+            }
+        }
 
 		return super.dispatchTouchEvent(ev);
 	}

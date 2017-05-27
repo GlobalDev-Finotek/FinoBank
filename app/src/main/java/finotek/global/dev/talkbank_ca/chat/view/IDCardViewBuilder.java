@@ -61,10 +61,10 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 				holder.binding.jumin.setText(data.getJumin());
 				holder.binding.issueDate.setText(data.getIssueDate());
 
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-						Converter.dpToPx(180), Converter.dpToPx(320));
-				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_XY);
-				holder.binding.idCardImg.setLayoutParams(lp);
+//				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+//						Converter.dpToPx(180), Converter.dpToPx(320));
+//				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_XY);
+//				holder.binding.idCardImg.setLayoutParams(lp);
 				holder.binding.idCardImg
 						.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
 			}

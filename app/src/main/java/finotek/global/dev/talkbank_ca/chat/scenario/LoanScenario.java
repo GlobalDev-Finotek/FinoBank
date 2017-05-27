@@ -72,14 +72,13 @@ public class LoanScenario implements Scenario {
 				MessageBox.INSTANCE.addAndWait(
 					new AgreementResult(),
 					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
-					new RecommendScenarioMenuRequest(context),
 					new Done()
 				);
 			}
 		}
 
 		if (msg instanceof Done) {
-			new RecommendScenarioMenuRequest(context);
+			MessageBox.INSTANCE.add(new RecommendScenarioMenuRequest(context));
 			step = Step.Initial;
 		}
 	}

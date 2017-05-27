@@ -149,3 +149,4 @@ public class TransferScenario implements Scenario {
 		Initial, TransferToSomeone, TransferByAI, TransferDone
 	}
 }
+

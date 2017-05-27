@@ -22,23 +22,13 @@
 
             <ImageView
                 android:id="@+id/logo"
-                android:layout_width="174dp"
-                android:layout_height="50dp"
+                android:layout_width="222dp"
+                android:layout_height="40dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="180dp"
+                android:layout_marginTop="211dp"
                 android:contentDescription="Finotek Logo"
-                app:srcCompat="@drawable/vector_drawable_ci_finotek"/>
-
-            <ImageView
-                android:id="@+id/iv_intro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/logo"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="26dp"
-                android:src="@drawable/txt_intro_eng"
-                tb:custom_font="noto_medium"/>
+                app:srcCompat="@drawable/logo_finobank"/>
 
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/tv_copyright"

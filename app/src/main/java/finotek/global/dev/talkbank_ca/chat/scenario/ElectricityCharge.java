@@ -53,6 +53,7 @@ public class ElectricityCharge implements Scenario {
         //req.setTitle("추천메뉴");
         req.setDescription(context.getResources().getString(R.string.main_string_recommend_electric_transfer_ask));
 
+
         req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes), null);
         req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_recommend_electric_transfer_no), null);
         return req;

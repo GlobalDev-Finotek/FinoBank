@@ -9,6 +9,8 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 
@@ -17,6 +19,7 @@ import java.io.IOException;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.databinding.ChatIdCardBinding;
+import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.MyTransformation;
 
 public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
@@ -44,17 +47,24 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 
 			if (!TextUtils.isEmpty(imgPath)) {
 				holder.binding.idCardInfo.setVisibility(View.GONE);
+
 				Glide.with(context)
 						.load(imgPath)
 						.transform(new MyTransformation(context, orientation))
 						.into(holder.binding.idCardImg);
 
 			} else {
+
 				holder.binding.idCardInfo.setVisibility(View.VISIBLE);
 				holder.binding.cardType.setText(data.getType());
 				holder.binding.name.setText(data.getName());
 				holder.binding.jumin.setText(data.getJumin());
 				holder.binding.issueDate.setText(data.getIssueDate());
+
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+						Converter.dpToPx(180), Converter.dpToPx(320));
+				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_XY);
+				holder.binding.idCardImg.setLayoutParams(lp);
 				holder.binding.idCardImg
 						.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
 			}

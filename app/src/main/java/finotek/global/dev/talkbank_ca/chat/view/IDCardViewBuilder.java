@@ -21,6 +21,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.databinding.ChatIdCardBinding;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.MyTransformation;
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 	private final Context context;
@@ -47,10 +48,14 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 
 			if (!TextUtils.isEmpty(imgPath)) {
 				holder.binding.idCardInfo.setVisibility(View.GONE);
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+						Converter.dpToPx(200), Converter.dpToPx(240));
+				holder.binding.idCardImg.setLayoutParams(lp);
+				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_START);
 
 				Glide.with(context)
 						.load(imgPath)
-						.transform(new MyTransformation(context, orientation))
+						.bitmapTransform(new RoundedCornersTransformation(context, 40, 0, RoundedCornersTransformation.CornerType.ALL))
 						.into(holder.binding.idCardImg);
 
 			} else {
@@ -61,10 +66,7 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 				holder.binding.jumin.setText(data.getJumin());
 				holder.binding.issueDate.setText(data.getIssueDate());
 
-//				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-//						Converter.dpToPx(180), Converter.dpToPx(320));
-//				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_XY);
-//				holder.binding.idCardImg.setLayoutParams(lp);
+
 				holder.binding.idCardImg
 						.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
 			}

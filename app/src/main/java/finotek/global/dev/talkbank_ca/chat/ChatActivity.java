@@ -578,36 +578,38 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
 		ctBinding.gvKeypad.onComplete(() -> {
-			// 잔액
-			int balance = TransactionDB.INSTANCE.getBalance();
-			String moneyAsString = ctBinding.editMoney.getText().toString();
-			int money = 0;
-			try {
-				money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			}
+            if(!(TransactionDB.INSTANCE.getTxName() == null || TransactionDB.INSTANCE.getTxName().equals(""))) {
+                // 잔액
+                int balance = TransactionDB.INSTANCE.getBalance();
+                String moneyAsString = ctBinding.editMoney.getText().toString();
+                int money = 0;
+                try {
+                    money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
 
-			if (money > balance) {
-				DangerDialog dialog = new DangerDialog(this);
-				dialog.setTitle(getString(R.string.common_string_warning));
-				dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
-				dialog.setButtonText(getString(R.string.setting_string_yes));
-				dialog.setDoneListener(() -> {
-					ctBinding.editMoney.setText("");
-					ctBinding.editMoney.requestFocus();
+                if (money > balance) {
+                    DangerDialog dialog = new DangerDialog(this);
+                    dialog.setTitle(getString(R.string.common_string_warning));
+                    dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
+                    dialog.setButtonText(getString(R.string.setting_string_yes));
+                    dialog.setDoneListener(() -> {
+                        ctBinding.editMoney.setText("");
+                        ctBinding.editMoney.requestFocus();
 
-					dialog.dismiss();
-				});
-				dialog.show();
-			} else {
-				TransactionDB.INSTANCE.setTxMoney(moneyAsString);
+                        dialog.dismiss();
+                    });
+                    dialog.show();
+                } else {
+                    TransactionDB.INSTANCE.setTxMoney(moneyAsString);
 
-				ctBinding.editMoney.setText("");
-				this.returnToInitialControl();
+                    ctBinding.editMoney.setText("");
+                    this.returnToInitialControl();
 
-				MessageBox.INSTANCE.add(new TransferButtonPressed());
-			}
+                    MessageBox.INSTANCE.add(new TransferButtonPressed());
+                }
+            }
 		});
 
 		binding.footer.addView(footerInputs);

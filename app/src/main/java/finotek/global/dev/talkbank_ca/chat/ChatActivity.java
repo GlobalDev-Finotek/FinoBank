@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
@@ -445,7 +446,8 @@ public class ChatActivity extends AppCompatActivity {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
 		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
-		ivCtrl.setAnimation(null);
+		ivCtrl.animate().rotation(0).setInterpolator(new LinearInterpolator())
+				.setDuration(300);
 
 	}
 
@@ -453,12 +455,8 @@ public class ChatActivity extends AppCompatActivity {
 		isExControlAvailable = true;
 		binding.footer.addView(exControlView, 0);
 		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
-		RotateAnimation anim = new RotateAnimation(0, 60f,
-				Animation.RELATIVE_TO_SELF, 0.5f,
-				Animation.RELATIVE_TO_SELF, 0.5f);
-		anim.setRepeatCount(Animation.ABSOLUTE);
-		anim.setDuration(700);
-		ivCtrl.startAnimation(anim);
+		ivCtrl.animate().rotation(45).setInterpolator(new LinearInterpolator())
+				.setDuration(300);
 	}
 
 	private void preInitControlViews() {

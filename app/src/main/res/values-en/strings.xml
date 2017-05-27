@@ -69,9 +69,9 @@
     <string name="main_string_open_account">Open account</string>
     <string name="main_string_transfer">Transfer</string>
     <string name="main_string_view_account_details">Check account</string>
-    <string name="main_string_secured_mirocredit">Secured mirocredit</string>
+    <string name="main_string_secured_mirocredit">Secured microcredit</string>
     <string name="main_action_settings">Settings</string>
-    <string name="main_button_send_the_conversation_to_e_mail">Send conversations to e-mail</string>
+    <string name="main_button_send_the_conversation_to_e_mail">Send to e-mail</string>
     <string name="main_string_authentication_required">Authentication is required</string>
     <string name="main_string_authentication_succeed">Authentication is succeed</string>
     <string name="setting_string_setting">Settings</string>

@@ -352,7 +352,6 @@ public class CapturePicFragment extends Fragment
 		} else if (notBigEnough.size() > 0) {
 			return Collections.max(notBigEnough, new CompareSizesByArea());
 		} else {
-
 			return choices[0];
 		}
 	}

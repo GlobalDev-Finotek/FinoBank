@@ -14,6 +14,7 @@ public class ReceiveViewBuilder implements ChatView.ViewBuilder<ReceiveMessage> 
 	@Override
 	public RecyclerView.ViewHolder build(ViewGroup parent) {
 		RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_receive, parent, false);
+		view.setTag(ReceiveViewHolder.class.getName());
 		return new ReceiveViewHolder(view);
 	}
 
@@ -28,7 +29,7 @@ public class ReceiveViewBuilder implements ChatView.ViewBuilder<ReceiveMessage> 
 
 	}
 
-	private class ReceiveViewHolder extends RecyclerView.ViewHolder {
+	public class ReceiveViewHolder extends RecyclerView.ViewHolder {
 		TextView message;
 
 		ReceiveViewHolder(View itemView) {

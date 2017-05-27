@@ -5,20 +5,13 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:background="@android:color/white">
 
         <finotek.global.dev.talkbank_ca.widget.DrawingCanvas
             android:id="@+id/drawingCanvas"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
-
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            app:srcCompat="@drawable/back_grid"/>
 
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/tv_inst"
@@ -33,10 +26,10 @@
             android:id="@+id/ib_next"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_gravity="bottom|center_horizontal"
-            android:layout_marginBottom="15dp"
+            android:layout_alignParentTop="false"
+            android:layout_centerHorizontal="false"
+            android:layout_gravity="right|center_vertical"
+            android:layout_marginRight="15dp"
             android:background="@drawable/btn_next_disable"
             android:padding="10dp"/>
 
@@ -51,6 +44,7 @@
             android:layout_marginRight="41dp"
             android:background="@drawable/white_small_circle_border"
             android:tint="@color/colorPrimary"
+            android:visibility="gone"
             app:srcCompat="@drawable/vector_drawable_icon_fullsize"/>
 
         <ImageView

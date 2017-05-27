@@ -7,11 +7,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white_two"
-            android:paddingBottom="1dp">
+            >
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                 android:id="@+id/textView"
                 android:layout_width="match_parent"
@@ -21,14 +23,13 @@
                 android:padding="16dp"
                 android:text="@string/registration_string_basic_information"
                 android:theme="@style/Title"
-                tb:custom_font="noto_medium" />
+                tb:custom_font="noto_medium"/>
         </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:paddingBottom="16dp"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
@@ -36,7 +37,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
                 android:orientation="horizontal"
-                android:visibility="gone">
+                android:visibility="visible">
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
@@ -68,8 +69,9 @@
                 android:inputType="phone"
                 android:text="0"
                 android:textColor="@color/dark_50"
-                android:textSize="@dimen/text_normal"
-                android:visibility="gone"/>
+                android:textSize="14sp"
+                android:visibility="visible"/>
+
 
             <LinearLayout
                 android:layout_width="match_parent"

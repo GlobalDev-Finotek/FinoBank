@@ -50,8 +50,7 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.Agreement.ordinal(), new AgreementBuilder(context));
 		this.addChatViewBuilder(ViewType.AgreementResult.ordinal(), new AgreementResultBuilder());
 		this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder(context));
-
-        this.addChatViewBuilder(ViewType.Wait.ordinal(), new WaitViewBuilder());
+		this.addChatViewBuilder(ViewType.Wait.ordinal(), new WaitViewBuilder());
 	}
 
 	public void showIdCardInfo(IDCardInfo info) {

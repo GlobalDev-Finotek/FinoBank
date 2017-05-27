@@ -2,7 +2,7 @@
 <resources>
     <string name="app_name">FinoBank</string>
     <string name="registration_string_register">Register</string>
-    <string name="registration_string_basic_information">My account</string>
+    <string name="registration_string_basic_information">Your account</string>
     <string name="registration_string_phone_number">Phone number</string>
     <string name="registration_string_user_name">User\'s name</string>
     <string name="registration_string_signnature">E-signature</string>
@@ -276,7 +276,7 @@
     <string name="sunday">Sun</string>
 
     <string name="scenario_account">Open Account</string>
-    <string name="scenario_loan">Secured Microcredit</string>
+    <string name="scenario_loan">Secured microcredit</string>
     <string name="scenario_send_mail">Send Conversations To Email</string>
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>

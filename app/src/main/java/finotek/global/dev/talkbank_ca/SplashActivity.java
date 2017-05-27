@@ -28,14 +28,22 @@ public class SplashActivity extends AppCompatActivity {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash_eng);
 		}
 
-		startActivity(new Intent(SplashActivity.this, MainActivity.class));
-//
-//		Intent intent;
-//		if (Realm.getDefaultInstance().where(User.class).count() > 0) {
-//			intent = new Intent(this, MainActivity.class);
-//			startActivity(intent);
-//			finish();
-//		}
+
+		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
+				.firstOrError()
+				.subscribe(aLong -> {
+					Intent intent;
+					if (Realm.getDefaultInstance().where(User.class).count() > 0) {
+						intent = new Intent(this, ChatActivity.class);
+						startActivity(intent);
+						finish();
+					} else {
+						intent = new Intent(this, MainActivity.class);
+						startActivity(intent);
+						finish();
+					}
+				});
+
 
 	}
 

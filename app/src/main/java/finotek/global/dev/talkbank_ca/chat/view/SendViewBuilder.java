@@ -14,6 +14,7 @@ public class SendViewBuilder implements ChatView.ViewBuilder<SendMessage> {
 	@Override
 	public RecyclerView.ViewHolder build(ViewGroup parent) {
 		RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_send, parent, false);
+		view.setTag(SendViewHolder.class.getName());
 		return new SendViewHolder(view);
 	}
 
@@ -28,7 +29,7 @@ public class SendViewBuilder implements ChatView.ViewBuilder<SendMessage> {
 
 	}
 
-	private class SendViewHolder extends RecyclerView.ViewHolder {
+	public class SendViewHolder extends RecyclerView.ViewHolder {
 		TextView message;
 
 		SendViewHolder(View itemView) {

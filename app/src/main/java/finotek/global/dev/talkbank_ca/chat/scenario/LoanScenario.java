@@ -19,6 +19,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
@@ -37,6 +39,8 @@ public class LoanScenario implements Scenario {
 
 	@Override
 	public boolean decideOn(String msg) {
+		if (msg.equals(context.getResources().getString(R.string.main_string_recommend_house_yes)))
+			return true;
 		switch (msg) {
 			case "집을 담보로 대출 받고 싶어":
 			case "소액 담보 대출":
@@ -68,12 +72,14 @@ public class LoanScenario implements Scenario {
 				MessageBox.INSTANCE.addAndWait(
 					new AgreementResult(),
 					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
+					new RecommendScenarioMenuRequest(context),
 					new Done()
 				);
 			}
 		}
 
 		if (msg instanceof Done) {
+			new RecommendScenarioMenuRequest(context);
 			step = Step.Initial;
 		}
 	}
@@ -83,9 +89,15 @@ public class LoanScenario implements Scenario {
 	public void onUserSend(String msg) {
 		switch (step) {
 			case Initial:
+
+				RecoMenuRequest req = new RecoMenuRequest();
+
+				req.setDescription(context.getResources().getString(R.string.dialog_chat_loan_apply));
+				req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.string_yes), null);
+				req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.string_no), null);
+
 				MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_apply)),
-					ConfirmRequest.buildYesOrNo(context)
+						req
 				);
 				step = Step.InputAddress;
 				break;
@@ -133,7 +145,8 @@ public class LoanScenario implements Scenario {
 				step = Step.Last;
 				break;
 			default:
-				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+				//MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+				MessageBox.INSTANCE.addAndWait(new RecommendScenarioMenuRequest(context));
 				break;
 		}
 	}

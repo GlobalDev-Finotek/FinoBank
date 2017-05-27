@@ -21,6 +21,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.MoneyTransferred;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferTo;
@@ -146,6 +147,7 @@ public class TransferScenario implements Scenario {
 		}
 
 		if (msg instanceof Done) {
+			new RecommendScenarioMenuRequest(context);
 			this.clear();
 		}
 	}

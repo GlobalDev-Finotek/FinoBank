@@ -877,7 +877,7 @@ public class CapturePicFragment extends Fragment
 			}
 			// This is the CaptureRequest.Builder that we use to take a picture.
 			final CaptureRequest.Builder captureBuilder =
-					mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+					mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 			captureBuilder.addTarget(mImageReader.getSurface());
 
 			// Use the same AE and AF modes as the preview.

@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
@@ -18,10 +19,15 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -57,6 +63,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
+import finotek.global.dev.talkbank_ca.chat.view.ViewItemDecoration;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
@@ -97,7 +104,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-	private SecondMainScenario mainScenario;
+	private MainScenario mainScenario;
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 
@@ -123,10 +130,12 @@ public class ChatActivity extends AppCompatActivity {
 		binding.chatView.setLayoutManager(mLayoutManager);
         FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
 		binding.chatView.setItemAnimator(animator);
+		// TODO 아이템 간 패딩 정리
+		// binding.chatView.addItemDecoration(new ViewItemDecoration());
 
-        if (intent != null) {
+		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-			mainScenario = new SecondMainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
+			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
 
 		MessageBox.INSTANCE.observable
@@ -166,8 +175,9 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof RequestPhoto) {
 
-			binding.appbar.setVisibility(View.GONE);
-
+			hideAppBar();
+			hideStatusBar();
+			binding.footer.setPadding(0, 0, 0, 0);
 			releaseControls();
 			releaseAllControls();
 
@@ -181,7 +191,8 @@ public class ChatActivity extends AppCompatActivity {
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
-				binding.appbar.setVisibility(View.VISIBLE);
+				showAppBar();
+				showStatusBar();
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
@@ -195,8 +206,9 @@ public class ChatActivity extends AppCompatActivity {
 		if(msg instanceof RequestTakeAnotherIDCard) {
 			releaseControls();
 			releaseAllControls();
-
-			binding.appbar.setVisibility(View.GONE);
+			binding.footer.setPadding(0, 0, 0, 0);
+			hideStatusBar();
+			hideAppBar();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -208,7 +220,8 @@ public class ChatActivity extends AppCompatActivity {
 					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 				this.returnToInitialControl();
-				binding.appbar.setVisibility(View.VISIBLE);
+				showAppBar();
+				showStatusBar();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
@@ -221,8 +234,9 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
 			releaseAllControls();
-
-			binding.appbar.setVisibility(View.GONE);
+			binding.footer.setPadding(0, 0, 0, 0);
+			hideAppBar();
+			hideStatusBar();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -236,8 +250,9 @@ public class ChatActivity extends AppCompatActivity {
 
 				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
 
-				binding.appbar.setVisibility(View.VISIBLE);
+				showAppBar();
 				this.returnToInitialControl();
+				showStatusBar();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
@@ -255,7 +270,10 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestSignature) {
 			releaseControls();
 			releaseAllControls();
-			binding.appbar.setVisibility(View.GONE);
+			hideAppBar();
+			hideStatusBar();
+			binding.footer.setPadding(0, 0, 0, 0);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
@@ -281,7 +299,8 @@ public class ChatActivity extends AppCompatActivity {
 								MessageBox.INSTANCE.add(new SignatureVerified());
 								returnToInitialControl();
 
-								binding.appbar.setVisibility(View.VISIBLE);
+								showAppBar();
+								showStatusBar();
 
 								FragmentTransaction transaction = getFragmentManager().beginTransaction();
 								transaction.remove(signRegistFragment).commit();
@@ -289,6 +308,7 @@ public class ChatActivity extends AppCompatActivity {
 								dialog.dismiss();
 
 								returnToInitialControl();
+								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 							});
 							dialog.show();
 						}, throwable -> {
@@ -366,6 +386,23 @@ public class ChatActivity extends AppCompatActivity {
 		}
 	}
 
+	private void showStatusBar() {
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
+
+	private void showAppBar() {
+		binding.appbar.setVisibility(View.VISIBLE);
+	}
+
+	private void hideAppBar() {
+		binding.appbar.setVisibility(View.GONE);
+	}
+
+	private void hideStatusBar() {
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
+
 	public void onSendButtonClickEvent() {
 		String msg = fiBinding.chatEditText.getText().toString();
 		MessageBox.INSTANCE.add(new SendMessage(msg));
@@ -407,12 +444,21 @@ public class ChatActivity extends AppCompatActivity {
 	private void hideExControl() {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
+		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
+		ivCtrl.setAnimation(null);
+
 	}
 
 	private void showExControl() {
 		isExControlAvailable = true;
 		binding.footer.addView(exControlView, 0);
-        binding.chatView.scrollToBottom();
+		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
+		RotateAnimation anim = new RotateAnimation(0, 60f,
+				Animation.RELATIVE_TO_SELF, 0.5f,
+				Animation.RELATIVE_TO_SELF, 0.5f);
+		anim.setRepeatCount(Animation.ABSOLUTE);
+		anim.setDuration(700);
+		ivCtrl.startAnimation(anim);
 	}
 
 	private void preInitControlViews() {
@@ -585,6 +631,11 @@ public class ChatActivity extends AppCompatActivity {
 	private void returnToInitialControl() {
 		releaseAllControls();
 		binding.footer.addView(footerInputs);
+
+		binding.footer.setPadding(Converter.dpToPx(5),
+				Converter.dpToPx(5),
+				Converter.dpToPx(5),
+				Converter.dpToPx(5));
 	}
 
 	private View inflate(int layoutId) {

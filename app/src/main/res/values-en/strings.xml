@@ -255,7 +255,7 @@
     <string name="setting_string_pin_code_type">Type new PIN code</string>
     <string name="setting_string_profile_picture">Authentication picture</string>
     <string name="dialog_string_input_message">Please input a message.</string>
-    <string name="dialog_chat_recognize_error">Can\'t understand what you said.\n Press \'+\' button to select the menu</string>
+    <string name="dialog_chat_recognize_error">If you do not have the menu you want, press \'+\' button to select the menu</string>
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
     <string name="dialog_string_email_sent">An email has been sent.</string>
     <string name="dialog_string_email_cancel">Cancel</string>
@@ -368,7 +368,7 @@
     <string name = "main_string_recommend_electric_transfer_ask">Would you like to transfer 51,490won to your payment account?</string>
     <string name = "main_string_recommend_electric_transfer_yes">Yes, please.</string>
     <string name = "main_string_recommend_electric_transfer_no">No, thanks.</string>
-    <string name = "main_string_recommend_electric_transfer_success">Electricity bill %1$s has paid from bill payment account. The balance is %2$s. </string>
+    <string name = "main_string_recommend_electric_transfer_success">Electricity bill %1$s has paid from bill payment account. The balance is %2$s. Less than 1 million won has been verified by Contextual Verification.</string>
     <string name = "main_string_recommend_electric_transfer_fail">Not enough deposit.</string>
     <string name = "main_string_recommend_electric_transfer_cancle">Request is canceled.</string>
 
@@ -379,7 +379,7 @@
     <string name = "main_string_recommend_parents_intro">According to the contextual information, it is a day to give pocket money to parents today every month. Do you want to transfer 300 million won to your parents?</string>
     <string name = "main_string_recommend_parents_yes">Yes, please.</string>
     <string name = "main_string_recommend_parents_no">No, thanks.</string>
-    <string name ="main_string_recommend_parents_success">Pocket money 300,000 won has been transferred to the mother\'s account. The balance is %1$s. </string>
+    <string name ="main_string_recommend_parents_success">Pocket money 300,000 won has been transferred to the mother\'s account. The balance is %1$s. Less than 1 million won has been verified by Contextual Verification.</string>
     <string name ="main_string_recommend_parents_fail">Not enough deposit.</string>
     <string name ="main_string_recommend_parents_cancle">Request is canceled.</string>
 

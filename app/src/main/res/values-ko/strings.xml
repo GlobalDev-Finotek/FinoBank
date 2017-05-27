@@ -147,7 +147,7 @@
     <string name="dialog_chat_correct_information">위 내용이 맞으세요?</string>
     <string name="dialog_chat_id_housed_retake">신분증 촬영을 다시 진행합니다.</string>
     <string name="dialog_chat_finger_tip_sign">자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
-    <string name="dialog_chat_open_account_sign_tip">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+    <string name="dialog_chat_open_account_sign_tip">자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="dialog_chat_open_account_success">계좌개설이 완료 되었습니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_chat_transaction">%1$s님의 맥락데이터 분석결과 매달 %3$d일 전기요금를 납부 하셨습니다.\n\n문자메시지를 보니 이번 달 요금은 %2$s원 입니다.\n\n전기요금 %2$s원을 이체 하시겠어요?</string>
     <string name="dialog_chat_after_transfer_by_ai">전기요금 %1$s원을 이체 하였습니다. 현재 계좌 잔액은 %2$s원입니다.\n\n추가적으로\n%3$s님의 일정표를 확인해 보니\n내일은 어머니 생신입니다.\n\n어머니(010&#8211;9876&#8211;5432)에게 작년 생신과 같이 1,000,000원을 이체 하시겠어요?</string>
@@ -172,7 +172,7 @@
     <string name="dialog_string_amount_transfer">이체 금액</string>
     <string name="dialog_chat_microedit_cancel">소액 담보대출을 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_home_address_type">집 주소를 입력해 주세요.</string>
-    <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만 원까지2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요</string>
+    <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만 원까지 2.0%의 금리로 대출 가능합니다.\n\n대출 신청 금액을 입력해 주세요</string>
     <string name="dialog_string_term_agreement_accept">약관 확인 및 동의를 진행해 주세요.</string>
     <string name="dialog_string_mandatory_term_accept">필수 항목 전체 동의</string>
     <string name="dialog_string_loan_service_user_agreement">대출 서비스 이용 약관</string>
@@ -250,7 +250,7 @@
     <string name="setting_string_pin_code_type">변경할 PIN 코드 입력</string>
     <string name="setting_string_profile_picture">인증 사진</string>
     <string name="dialog_string_input_message">메세지를 입력해주세요.</string>
-    <string name="dialog_chat_recognize_error">무슨 말씀인지 모르겠어요.\n메뉴를 선택하려면 + 버튼을 눌러주세요.</string>
+    <string name="dialog_chat_recognize_error">원하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
     <string name="dialog_chat_receive_email">상담 내역을 이메일로 받아보시겠습니까?</string>
     <string name="dialog_string_email_sent">전송되었습니다.</string>
     <string name="dialog_string_email_cancel">취소되었습니다.</string>
@@ -259,7 +259,7 @@
     <string name="dialog_chat_anything_help">더 필요한 사항이 있으신가요?</string>
     <string name="dialog_chat_transferred">이체되었습니다</string>
     <string name="dialog_chat_transferred_price_unit">원이</string>
-    <string name="dialog_chat_scenario_is_cancelled">\"%1$s\"이(가) 취소되었습니다.\n\"%2$s\"을 진행합니다.</string>
+    <string name="dialog_chat_scenario_is_cancelled">앞서 진행하던 내용이 취소되었습니다.\n\"%2$s\"을 진행합니다.</string>
     <string name="dialog_string_import_from_contact">주소록에서 가져옴</string>
     <string name="common_string_warning">경고</string>
     <string name="registration_string_please_sign_in">표시된 영역 안에 서명해 주세요.</string>
@@ -285,7 +285,7 @@
     <string name="more_button">더보기</string>
     <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
-    <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73점(통화기록: 85점, 문자기록: 66점, 위치기록:54점)으로 %1$s 님을 확인하였습니다. </string>
+    <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73점 \n (통화기록: 85점, 문자기록: 66점, 위치기록:54점)\n 으로 %1$s 님을 확인하였습니다. </string>
     <string name ="main_string_v2_login_hello">%1$s님 안녕하세요, </string>
     <string name ="main_string_v2_login_hello_M">좋은 아침이에요, 오늘도 즐거운 하루 되세요!!!</string>
     <string name ="main_string_v2_login_hello_L">식사는 하셨나요? 활기찬 오후 되세요~</string>
@@ -294,11 +294,11 @@
     <string name ="main_string_v2_login_notify_balance">지금 주거래 계좌에는 %1$s원 남아있습니다</string>
     <string name ="main_string_v2_login_recommend">아래 세가지 사항을 진행하시는 것을 추천합니다.</string>
     <string name ="main_string_v2_login_recommend_list">제가 추천하는 사항은 아래 세가지 입니다.</string>
-    <string name ="main_string_v2_login_recommend_task">맥락 데이터를 통해 파악한 %1$s님의 할 일은 금융업무는 다음과 같습니다.</string>
+    <string name ="main_string_v2_login_recommend_task">맥락 데이터를 통해 파악한 %1$s님의 금융업무는 다음과 같습니다.</string>
     <string name ="main_string_v2_login_ask_step">어떤것을 진행하시겠어요?</string>
     <string name ="main_string_v2_login_pay_electricity">전기료 이체</string>
     <string name ="main_string_v2_login_open_saving_account">여행 적금 가입</string>
-    <string name ="main_string_v2_login_house_loan">주택 구매 대출</string>
+    <string name ="main_string_v2_login_house_loan">주택 담보 대출</string>
     <string name ="main_string_v2_login_notify_again">다음에 알려주세요</string>
     <string name ="main_string_v2_open_account_notice">계좌를 개설합니다.</string>
     <string name ="main_string_v2_open_account_complete">계좌 개설이 완료 되었습니다</string>
@@ -314,7 +314,7 @@
     <string name ="main_string_v2_login_electricity_additional_picture">추가로 촬영을 진행하시겠습니까?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">예</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>
-    <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 인증합니다</string>
+    <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 인증합니다.</string>
     <string name ="main_string_v2_login_electricity_signature">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해주세요 </string>
 
     <string name ="main_string_v2_login_electricity_account_confirm">전기료 %1$s 원이 공과금 계좌에서 납부 완료 되었습니다. </string>
@@ -363,7 +363,7 @@
     <string name = "main_string_recommend_electric_transfer_ask">가상 납부 계좌로 51,490원 이체하시겠습니까?</string>
     <string name = "main_string_recommend_electric_transfer_yes">예, 지금 이체 하겠습니다.</string>
     <string name = "main_string_recommend_electric_transfer_no">아니오, 나중에 하겠습니다.</string>
-    <string name ="main_string_recommend_electric_transfer_success">전기료 %1$s원이 주계좌에서 납부 완료 되었습니다. 이체 후 잔액은 %2$s 입니다. </string>
+    <string name ="main_string_recommend_electric_transfer_success">전기료 %1$s원이 주계좌에서 납부 완료 되었습니다. 이체 후 잔액은 %2$s 입니다.\n 100만원 이하이므로 맥락인증으로 인증되었습니다.</string>
     <string name ="main_string_recommend_electric_transfer_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_electric_transfer_cancle">취소되었습니다.</string>
 
@@ -374,7 +374,7 @@
     <string name = "main_string_recommend_parents_ask">어머님 계좌로 300,000만원을 이체하시겠습니까?</string>
     <string name = "main_string_recommend_parents_yes">예, 이체해주세요.</string>
     <string name = "main_string_recommend_parents_no">아니오, 나중에 하겠습니다.</string>
-    <string name ="main_string_recommend_parents_success">용돈 300,000원이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 %1$s 입니다. </string>
+    <string name ="main_string_recommend_parents_success">용돈 300,000원이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 %1$s 입니다. \n 100만원 이하이므로 맥락인증으로 인증되었습니다.</string>
     <string name ="main_string_recommend_parents_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_parents_cancle">취소되었습니다.</string>
 

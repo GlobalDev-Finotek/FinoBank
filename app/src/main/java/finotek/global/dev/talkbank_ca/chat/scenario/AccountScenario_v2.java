@@ -46,7 +46,8 @@ public class AccountScenario_v2 implements Scenario {
             if (step == Step.Last) {
                 MessageBox.INSTANCE.addAndWait(
                     new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_open_account_complete)),
-                    new Done()
+                    new Done(),
+                    new RecommendScenarioMenuRequest(context)
                 );
             }
         }
@@ -122,7 +123,7 @@ public class AccountScenario_v2 implements Scenario {
                         new RequestTakeAnotherIDCard()
                     );
                 } else {
-                    MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
+                    MessageBox.INSTANCE.addAndWait(new RecommendScenarioMenuRequest(context));
                 }
                 break;
 

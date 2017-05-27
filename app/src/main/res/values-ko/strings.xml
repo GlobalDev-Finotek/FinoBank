@@ -356,6 +356,7 @@
     <string name = "main_string_v2_create_signature_agree_no_confirm_no">아니요</string>
     <string name = "main_string_v2_create_signature_agree_no_confirm_no_again">사용자 등록이 종료되었습니다. 원하실때 언제든 다시 사용자 등록을 시작해주세요. 빨리 뵀으면 좋겠네요.</string>
 
+    <string name = "main_string_recommend_menu">추천 메뉴</string>
     <string name = "main_string_recommend_electric_title">전기료 납부</string>
     <string name = "main_string_recommend_electric_transfer_ask">가상 납부 계좌로 51,490원 이체하시겠습니까?</string>
     <string name = "main_string_recommend_electric_transfer_yes">예, 지금 이체 하겠습니다.</string>
@@ -366,9 +367,18 @@
 
     <string name = "main_string_recommend_travel_yes">예, 계좌를 개설해주세요.</string>
 
-
-
     <string name = "main_string_recommend_parents_title">부모님 용돈</string>
-    <string name = "main_string_recommend_parents_intro">맥락 정보에 의하면 매달 오늘 부모님께 용돈을 드리는 날입니다. 부모님께 300,000만원을 이체하시겠습니까?</string>
+    <string name = "main_string_recommend_parents_intro">맥락 정보에 의하면 매달 오늘 부모님께 용돈을 드리는 날입니다. </string>
+    <string name = "main_string_recommend_parents_ask">어머님 계좌로 300,000만원을 이체하시겠습니까?</string>
+    <string name = "main_string_recommend_parents_yes">예, 이체해주세요.</string>
+    <string name = "main_string_recommend_parents_no">아니오, 나중에 하겠습니다.</string>
+    <string name ="main_string_recommend_parents_success">용돈 300,000원이 어머니 계좌로 이체 되었습니다. </string>
+    <string name ="main_string_recommend_parents_fail">잔액이 부족합니다.</string>
+    <string name ="main_string_recommend_parents_cancle">취소되었습니다.</string>
+
+
+    <string name = "main_string_recommend_house_yes">예, 대출을 진행해주세요.</string>
+
+    <string name = "main_string_recommend_finished">오늘의 추천 사항은 모두 완료되었습니다. 더 필요한 것이 있으시면 \'+\'를 누르세요.</string>
 </resources>
 

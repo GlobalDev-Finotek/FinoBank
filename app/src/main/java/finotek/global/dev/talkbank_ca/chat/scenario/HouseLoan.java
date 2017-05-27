@@ -8,6 +8,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.model.User;
 import io.realm.Realm;
 
@@ -51,17 +53,23 @@ public class HouseLoan implements Scenario {
         switch (step) {
             case Initial:
                 step = Step.question;
+
+                RecoMenuRequest req = new RecoMenuRequest();
+
+                req.setDescription(context.getResources().getString(R.string.main_string_v2_login_house_recommend));
+                req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_recommend_house_yes), null);
+                req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.string_no), null);
+
                 MessageBox.INSTANCE.addAndWait(
                     new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_ask)),
-                    new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_recommend)),
-                    ConfirmRequest.buildYesOrNo(context)
+                        req
                 );
                 break;
             case question:
-                if(msg.equals(context.getResources().getString(R.string.string_yes))) {
-                    MessageBox.INSTANCE.add(new Done());
-                } else if (msg.equals(context.getResources().getString(R.string.string_no))) {
-                    MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_no_confirm, user.getName())));
+                if (msg.equals(context.getResources().getString(R.string.string_no))) {
+                    MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_no_confirm, user.getName())),
+                            new RecommendScenarioMenuRequest(context));
+
                 }
                 break;
 

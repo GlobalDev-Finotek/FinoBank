@@ -90,21 +90,15 @@ public class TransferScenario implements Scenario {
 			String balanceAsString = NumberFormat.getNumberInstance().format(balance);
 			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
-            RecoMenuRequest req = new RecoMenuRequest();
-            req.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
-            req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.dialog_button_recent_transaction), () -> {
-                MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_recent_transaction)));
-            });
-            req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_button_transfer_add), () -> {
-                MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.dialog_button_transfer_add)));
-            });
-			MessageBox.INSTANCE.addAndWait(req);
+            RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
+            request.setTitle("");
+            request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-			step = Step.TransferDone;
-		}
+            MessageBox.INSTANCE.addAndWait(request, new Done());
+            step = Step.TransferDone;
+        }
 
 		if (msg instanceof Done) {
-			new RecommendScenarioMenuRequest(context);
 			this.clear();
 		}
 	}
@@ -115,24 +109,6 @@ public class TransferScenario implements Scenario {
 			case Initial:
 				selectAccounts();
 				step = Step.TransferToSomeone;
-				break;
-			case TransferDone:
-				if (msg.equals(context.getResources().getString(R.string.dialog_button_recent_transaction))) {
-					dbHelper.get(User.class)
-							.subscribe(users -> {
-								MessageBox.INSTANCE.add(new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction, users.last().getName())));
-								RecentTransaction rt = new RecentTransaction(TransactionDB.INSTANCE.getTx());
-								MessageBox.INSTANCE.add(rt);
-								MessageBox.INSTANCE.add(new Done());
-							}, throwable -> {
-
-							});
-				} else if (msg.equals(context.getResources().getString(R.string.dialog_button_transfer_add))) {
-					selectAccounts();
-					step = Step.TransferToSomeone;
-				} else {
-					MessageBox.INSTANCE.add(new Done());
-				}
 				break;
 		}
 	}

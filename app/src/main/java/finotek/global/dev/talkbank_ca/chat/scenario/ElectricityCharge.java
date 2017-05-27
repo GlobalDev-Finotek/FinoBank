@@ -34,8 +34,8 @@ public class ElectricityCharge implements Scenario {
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals(R.string.main_string_v2_login_pay_electricity) ||
-                msg.equals("전기") || msg.equals("전기료 이체") || msg.equals("공과금") || msg.equals("Pay electricity");
+        return msg.equals(R.string.main_string_recommend_electric_title) ||
+                msg.equals("Payment of electricity bill") || msg.equals("전기료 납부") || msg.equals("Pay electricity");
     }
 
     @Override
@@ -51,10 +51,10 @@ public class ElectricityCharge implements Scenario {
     public RecoMenuRequest getRequestConfirm() {
         RecoMenuRequest req = new RecoMenuRequest();
         //req.setTitle("추천메뉴");
-        req.setDescription(context.getResources().getString(R.string.main_string_v2_login_electricity_recommend));
+        req.setDescription(context.getResources().getString(R.string.main_string_recommend_electric_transfer_ask));
 
-        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_electricity_yes), null);
-        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_electricity_no), null);
+        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes), null);
+        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_recommend_electric_transfer_no), null);
         return req;
     }
 
@@ -72,61 +72,36 @@ public class ElectricityCharge implements Scenario {
                 step = Step.question;
                 break;
             case question:
-                if(msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_yes)))
+                if(msg.equals(context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes)))
                 {
-                    MessageBox.INSTANCE.add(
-                            new SendMessage(context.getResources().getString(R.string.main_string_open_account)));
+                    String message;
+                    if(TransactionDB.INSTANCE.getBalance() < 51490)
+                        message = context.getResources().getString(
+                                R.string.main_string_recommend_electric_transfer_fail);
+                    else {
+                        TransactionDB.INSTANCE.deposit(-51490);
+                        message = context.getResources().getString(
+                                R.string.main_string_recommend_electric_transfer_success,
+                                NumberFormat.getInstance().format(51490));
+                    }
 
-                    //step=Step.openTransfer;
+                    MessageBox.INSTANCE.addAndWait(
+                            new ReceiveMessage(message),
+                            //new Done(),
+                            new RecommendScenarioMenuRequest(context)
+
+                    );
                 }
-                else if (msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_no)))
+                else if (msg.equals(context.getResources().getString(R.string.main_string_recommend_electric_transfer_no)))
                 {
 
                     MessageBox.INSTANCE.addAndWait(
-                            new ReceiveMessage(context.getResources().getString(
-                                    R.string.main_string_v2_login_electricity_account_confirm,
-                                    NumberFormat.getInstance().format(51490))));
-                    TransactionDB.INSTANCE.deposit(-51490);
+                            //new Done(),
+                            new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_electric_transfer_cancle)),
+                            new RecommendScenarioMenuRequest(context)
+                    );
                 }
                 break;
-            /*case openTransfer:
-                //계좌이체 프로세스 추가 필요
-
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_open_account)));
-
-                //촬영 프로세스 추가 필요
-
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_additional_picture)));
-
-                if(msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_additional_picture_yes)))
-                {
-                    step=Step.againPicture;
-                }
-                else if (msg.equals(context.getResources().getString(R.string.main_string_v2_login_electricity_additional_picture_no)))
-                {
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_signature)));
-
-                    //서명 프로세스 추가 필요
-
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_account_confirm)));
-
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_ask_step)));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_house_loan));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
-                }
-                break;*/
-            /*case onlyTransfer:
-                //계좌이체 프로세스 추가 필요
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_confirm)));
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_balance)));
-
-                MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_ask_step)));
-                MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
-                MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_house_loan));
-                MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
-
-                break;*/
         }
     }
 

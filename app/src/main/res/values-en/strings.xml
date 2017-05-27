@@ -322,7 +322,7 @@
     <string name ="main_string_v2_login_electricity_additional_picture_no">No</string>
     <string name ="main_string_v2_sign_necessary">We need to check your signature for open an account.</string>
     <string name ="main_string_v2_login_electricity_signature">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail </string>
-    <string name ="main_string_v2_login_electricity_account_confirm">Electricity fee %1$s which is 10\u0025 discounted has paid from bill payment account.</string>
+
     <string name ="main_string_v2_login_saving_ask">These days, you are searching Da Nang.. So are you planning to have a trip? From December to February, it is said to be the best travel on Da Nang.</string>
     <string name ="main_string_v2_login_saving_recommend"> If you open saving account for traveling, i will give you Airline 5% discount coupon. Make a goal to save money for heading to Da Nang.</string>
     <string name ="main_string_v2_login_saving_no"> No thanks</string>
@@ -362,6 +362,17 @@
     <string name = "main_string_v2_create_signature_agree_no_confirm_no">No</string>
     <string name = "main_string_v2_create_signature_agree_no_confirm_no_again">User registration has been closed. When you want to use this service, please register again. I hope I see you soon. </string>
 
+    <string name = "main_string_recommend_electric_title">Payment of electricity bill</string>
+    <string name = "main_string_recommend_electric_transfer_ask">Would you like to transfer 51,490won to your payment account?</string>
+    <string name = "main_string_recommend_electric_transfer_yes">Yes, please.</string>
+    <string name = "main_string_recommend_electric_transfer_no">No, thanks.</string>
+    <string name = "main_string_recommend_electric_transfer_success">Electricity bill %1$s has paid from bill payment account.</string>
+    <string name = "main_string_recommend_electric_transfer_fail">Not enough deposit.</string>
+    <string name = "main_string_recommend_electric_transfer_cancle">Request is canceled.</string>
 
+    <string name = "main_string_recommend_travel_yes">Yes, open an account please</string>
+
+    <string name = "main_string_recommend_parents_title">Parents pocket money</string>
+    <string name = "main_string_recommend_parents_intro">According to the contextual information, it is a day to give pocket money to parents today every month. Do you want to transfer 300 million won to your parents?</string>
 
 </resources>

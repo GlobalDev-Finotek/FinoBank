@@ -21,7 +21,9 @@ public class RecommendScenarioMenuRequest extends RecoMenuRequest{
 
             for (String s : LeftScenario.scenarioList) {
                 if (s.equals("E"))
-                    addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_pay_electricity), null);
+                    addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_electric_title), null);
+                if (s.equals("P"))
+                    addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_parents_title), null);
                 if (s.equals("T"))
                     addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
                 if (s.equals("H"))

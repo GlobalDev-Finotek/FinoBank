@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.os.Message;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,8 +15,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenu;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.databinding.ChatRecommendedButtonBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatRecommendedDescBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatRecommendedMenuBinding;
@@ -77,6 +80,7 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
                     menu.getListener().run();
+                    MessageBox.INSTANCE.add(new RequestRemoveControls());
                 });
         }
 

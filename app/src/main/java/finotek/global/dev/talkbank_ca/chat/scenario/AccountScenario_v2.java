@@ -36,7 +36,8 @@ public class AccountScenario_v2 implements Scenario {
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals(context.getResources().getString(R.string.main_string_open_account)) || msg.equals("계좌개설");
+        return msg.equals(context.getResources().getString(R.string.main_string_open_account)) || msg.equals("계좌개설") ||
+                msg.equals(context.getResources().getString(R.string.main_string_recommend_travel_yes));
     }
 
     @Override

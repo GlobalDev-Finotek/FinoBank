@@ -1,6 +1,8 @@
 package finotek.global.dev.talkbank_ca.chat.scenario;
 
+import android.Manifest;
 import android.content.Context;
+import android.support.v4.app.ActivityCompat;
 
 import org.joda.time.DateTime;
 
@@ -13,7 +15,7 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.Account;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
@@ -21,17 +23,13 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.MoneyTransferred;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferTo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
-import finotek.global.dev.talkbank_ca.model.User;
-import io.realm.Realm;
 
 public class TransferScenario implements Scenario {
 	private DBHelper dbHelper;
@@ -67,8 +65,8 @@ public class TransferScenario implements Scenario {
 
 			if (money >= 1000000) {
 				MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
-						new RequestSignature()
+                    new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
+                    new RequestSignature()
 				);
 			} else {
 				MessageBox.INSTANCE.add(new MoneyTransferred());
@@ -142,7 +140,8 @@ public class TransferScenario implements Scenario {
             new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
             new AccountList(accounts),
             confirmRequest,
-            new RequestTransferUI()
+            new RequestTransferUI(),
+            new RequestContactPermission()
         );
 	}
 

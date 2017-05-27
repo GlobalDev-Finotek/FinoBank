@@ -1,9 +1,13 @@
 package finotek.global.dev.talkbank_ca.chat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
@@ -14,6 +18,7 @@ import android.os.Handler;
 import android.os.ResultReceiver;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -47,6 +52,7 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
@@ -405,6 +411,11 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof DismissKeyboard) {
 			returnToInitialControl();
 		}
+
+		if(msg instanceof RequestContactPermission) {
+            if(!hasContactPermission())
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
+        }
 	}
 
 	private void showStatusBar() {
@@ -723,5 +734,9 @@ public class ChatActivity extends AppCompatActivity {
 				.activityModule(new ActivityModule(this))
 				.build();
 	}
+
+	private boolean hasContactPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS ) == PackageManager.PERMISSION_GRANTED;
+    }
 
 }

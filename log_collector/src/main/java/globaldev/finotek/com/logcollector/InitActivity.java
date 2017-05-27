@@ -91,7 +91,6 @@ public abstract class InitActivity extends AppCompatActivity {
 		int mode = appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS,
 				android.os.Process.myUid(), getPackageName());
 		return mode == AppOpsManager.MODE_ALLOWED;
-
 	}
 
 	@Override

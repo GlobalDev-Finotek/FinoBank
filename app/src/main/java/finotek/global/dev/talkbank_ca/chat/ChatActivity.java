@@ -176,6 +176,8 @@ public class ChatActivity extends AppCompatActivity {
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
+
+                binding.chatView.scrollToBottom();
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
@@ -196,6 +198,8 @@ public class ChatActivity extends AppCompatActivity {
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
+
+                binding.chatView.scrollToBottom();
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
@@ -241,6 +245,8 @@ public class ChatActivity extends AppCompatActivity {
 								dialog.dismiss();
 
 								returnToInitialControl();
+
+                                binding.chatView.scrollToBottom();
 							});
 							dialog.show();
 						}, throwable -> {
@@ -547,7 +553,6 @@ public class ChatActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 	}
 
 	@Override

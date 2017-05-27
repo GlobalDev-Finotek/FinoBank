@@ -359,7 +359,6 @@ public class MainScenario_v2 {
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
-			chatView.removeOf(ChatView.ViewType.RecoMenu);
 		}
 
 		if(msg instanceof WaitResult) {

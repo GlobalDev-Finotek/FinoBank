@@ -82,7 +82,6 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
                 .throttleFirst(200, TimeUnit.MILLISECONDS)
                 .subscribe(aVoid -> {
                     menu.getListener().run();
-                    MessageBox.INSTANCE.add(new RequestRemoveControls());
                 });
         }
 

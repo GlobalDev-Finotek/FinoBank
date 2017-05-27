@@ -72,7 +72,6 @@ public class LoanScenario implements Scenario {
 				MessageBox.INSTANCE.addAndWait(
 					new AgreementResult(),
 					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
-					new RecommendScenarioMenuRequest(context),
 					new Done()
 				);
 			}

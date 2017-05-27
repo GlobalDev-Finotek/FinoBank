@@ -135,7 +135,7 @@
     <string name="dialog_chat_verified_context_data">Result of analyzing context data is %1$d.\n Authentication is succeeded.</string>
     <string name="dialog_chat_ask_help">Hello %s How may I help you?</string>
     <string name="dialog_button_open_account">Open account</string>
-    <string name="dialog_chat_recommandation">Based on the results of %1$s\'s context data analysis, we recommend "TalkBang Smart Account".\n\n"TalkBang Smart Account" is a product that is used by customers with the same age and consumption patterns as %1$s.\n\nWould you like to open an account?</string>
+    <string name="dialog_chat_recommandation">Based on the results of %1$s\'s context data analysis, we recommend "TalkBang Smart Account".\n"TalkBang Smart Account" is a product that is used by customers with the same age and consumption patterns as %1$s.\nWould you like to open an account?</string>
     <string name="dialog_button_yes">Yes</string>
     <string name="dialog_button_no">No</string>
     <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.\n What can I do for you?</string>
@@ -152,15 +152,15 @@
     <string name="dialog_chat_open_account_sign_tip">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. Is there anything else that I can help you with?</string>
     <string name="dialog_chat_anything_help">Is there anything else that I can help you with?</string>
-    <string name="dialog_chat_after_transfer_by_ai">Electric rates of %1$s won was transferred. Your current balance is %2$s won.\n\nAdditionally\nI checked %3$s \'s schedule\nTomorrow is mother\'s birthday.\n\nTo Mother (010&#8211;9876&#8211;5432)\nWould you like to transfer 1,000,000 won like last year\'s birthday?</string>
+    <string name="dialog_chat_after_transfer_by_ai">Electric rates of %1$s won was transferred. Your current balance is %2$s won.\nAdditionally\nI checked %3$s \'s schedule\nTomorrow is mother\'s birthday.\nTo Mother (010&#8211;9876&#8211;5432)\nWould you like to transfer 1,000,000 won like last year\'s birthday?</string>
     <string name="dialog_chat_after_transfer_to_mother">Mother</string>
     <string name="dialog_chat_electricity_fare">Electric rates</string>
-    <string name="dialog_chat_transaction">I analyzed the context data of %1$s, You paid the electricity bill every month on the %3$d th.\n\nI checked your SMS message. This month\'s bill is %2$s won.\n\nWould you like to transfer the electricity bill of %2$s won?</string>
+    <string name="dialog_chat_transaction">I analyzed the context data of %1$s, You paid the electricity bill every month on the %3$d th.\nI checked your SMS message. This month\'s bill is %2$s won.\nWould you like to transfer the electricity bill of %2$s won?</string>
     <string name="dialog_chat_transfer_to_someone">Would you like to transfer %2$s won to %1$s(010&#8211;5678&#8211;1234)?</string>
     <string name="dialog_button_transfer_other">Talkbank AI Recommendation Transfer</string>
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
-    <string name="dialog_chat_after_transfer">You\'ve transferred %2$s won to %1$s(010&#8211;5678&#8211;1234). Your current balance is %3$s won. \n\n Is there anything else that I can help you with?</string>
+    <string name="dialog_chat_after_transfer">You\'ve transferred %2$s won to %1$s(010&#8211;5678&#8211;1234). Your current balance is %3$s won. \nIs there anything else that I can help you with?</string>
     s
     <string name="dialog_chat_send_transfer">Transfer %2$s won to\n%1$s (010&#8211;5678&#8211;1234)</string>
     <string name="dialog_button_recent_transaction">Recent Transactions</string>
@@ -188,7 +188,7 @@
     <string name="dialog_string_optional_term_agreement">Agree to all optional fields</string>
     <string name="dialog_string_customer_information_agreement">Customer\'s information agreement</string>
     <string name="dialog_chat_agreenment_accepted">Agreement have been accepted</string>
-    <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n\n
+    <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n
     is there anything else I can help you with?</string>
     <string name="dialog_chat_string_confirm_message">All Required Agreement is needed.</string>
     <string name="dialog_message_error">An unknown error has occurred! Please try again later.</string>
@@ -231,7 +231,7 @@
     <string name="setting_string_six_digit">Please type six digit PIN code</string>
     <string name="setting_string_secure_keyboard_operating">Operating secured keyboard</string>
     <string name="setting_string_registered_signature_purpose">Registered signature will be used for log-in and personal verification purpose</string>
-    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan" \n you may request up to 50 million won and 2.0% interest rate \n\n do you want to apply loan?</string>
+    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan". \nYou may request up to 50 million won and 2.0% interest rate. \nDo you want to apply loan?</string>
     <string name="dialog_chat_preview">Preview</string>
     <string name="dialog_chat_save">Save</string>
     <string name="registration_button_pin_code_chanage">Change PIN code</string>
@@ -317,7 +317,7 @@
     <string name ="main_string_v2_login_electricity_yes">Yes, After paying Electricity bill, I want to open new account. </string>
     <string name ="main_string_v2_login_electricity_open_account">To open an account, you need to verify yourself with your personal ID card or driver\'s license or Student card, or business card.</string>
     <string name ="main_string_v2_login_electricity_open_account_2">Please take a picture of your ID card when you are ready (If You do not have anything, please take picture of your palm)</string>
-    <string name ="main_string_v2_login_electricity_additional_picture">Do you want to take picture for additional ID card?</string>
+    <string name ="main_string_v2_login_electricity_additional_picture">Do you want to take more pictures?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">Yes</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">No</string>
     <string name ="main_string_v2_sign_necessary">We need to check your signature for open an account.</string>

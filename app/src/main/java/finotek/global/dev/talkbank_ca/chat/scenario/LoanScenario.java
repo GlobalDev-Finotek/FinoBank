@@ -79,7 +79,7 @@ public class LoanScenario implements Scenario {
 		}
 
 		if (msg instanceof Done) {
-			new RecommendScenarioMenuRequest(context);
+			MessageBox.INSTANCE.add(new RecommendScenarioMenuRequest(context));
 			step = Step.Initial;
 		}
 	}

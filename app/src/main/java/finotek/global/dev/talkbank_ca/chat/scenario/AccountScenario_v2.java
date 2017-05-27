@@ -77,7 +77,9 @@ public class AccountScenario_v2 implements Scenario {
                     step = Step.CheckIDCard;
                 }
                 else if (msg.equals(context.getString(R.string.string_no))) {
-                    MessageBox.INSTANCE.addAndWait(new Done(), new RecommendScenarioMenuRequest(context));
+                    MessageBox.INSTANCE.addAndWait(new Done(),
+                            new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_cancel)),
+                            new RecommendScenarioMenuRequest(context));
                     step = Step.CheckIDCard;
                 }
 
@@ -91,7 +93,7 @@ public class AccountScenario_v2 implements Scenario {
                 else if(msg.equals(context.getString(R.string.string_no))){
                     step = Step.TakeSign;
                     MessageBox.INSTANCE.addAndWait(
-                        RecoMenuRequest.buildYesOrNo(context, context.getResources().getString(R.string.main_string_v2_sign_necessary) +
+                        RecoMenuRequest.buildYesOrNo(context, context.getResources().getString(R.string.main_string_v2_sign_necessary) + " " +
                         context.getResources().getString(R.string.dialog_chat_open_account_sign_tip))
                     );
                     break;

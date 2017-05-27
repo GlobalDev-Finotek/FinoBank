@@ -303,7 +303,7 @@
     <string name ="main_string_v2_login_recommend_task">%1$s, Here is a list for your task by analysing context data. </string>
     <string name ="main_string_v2_login_ask_step">What would you like to do? </string>
     <string name ="main_string_v2_login_pay_electricity">Pay electricity</string>
-    <string name ="main_string_v2_login_open_saving_account">Open new travel savings account </string>
+    <string name ="main_string_v2_login_open_saving_account">Open new trip account </string>
     <string name ="main_string_v2_login_house_loan">House loan </string>
     <string name ="main_string_v2_login_notify_again">Let me know next</string>
     <string name ="main_string_v2_open_account_notice">OK. Let\'s open an account.</string>

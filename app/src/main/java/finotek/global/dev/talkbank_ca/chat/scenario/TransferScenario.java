@@ -21,6 +21,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.MoneyTransferred;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -33,6 +34,7 @@ import finotek.global.dev.talkbank_ca.model.User;
 import io.realm.Realm;
 
 public class TransferScenario implements Scenario {
+
     private DBHelper dbHelper;
     private Context context;
     private Step step = Step.Initial;
@@ -233,3 +235,4 @@ public class TransferScenario implements Scenario {
         Initial, TransferToSomeone, TransferByAI, TransferDone
     }
 }
+

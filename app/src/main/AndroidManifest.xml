@@ -74,7 +74,6 @@
             android:name=".chat.ChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="FinoBank"
-
             android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".chat.TransactionViewMoreActivity">

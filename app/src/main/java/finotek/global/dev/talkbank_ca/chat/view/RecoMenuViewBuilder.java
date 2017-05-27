@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca.chat.view;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.os.Message;
+import android.support.v4.content.res.ResourcesCompat;
 import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -37,17 +38,7 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
 
     @Override
     public void bind(RecyclerView.ViewHolder viewHolder, RecoMenuRequest data) {
-        List<RecoMenu> menus = data.getMenus();
-        ViewHolder holder = (ViewHolder) viewHolder;
-        holder.binding.menu.removeAllViews();
-
-        setDescription(viewHolder, data);
-
-        if(menus != null){
-            for(int i = 0; i < menus.size(); i++) {
-                addMenu(holder, menus.get(i), i == menus.size()-1);
-            }
-        }
+        addMenus((ViewHolder) viewHolder, data);
     }
 
     @Override
@@ -55,8 +46,7 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
 
     }
 
-    private void setDescription(RecyclerView.ViewHolder viewHolder, RecoMenuRequest data){
-        ViewHolder holder = (ViewHolder) viewHolder;
+    private void setDescription(ViewHolder holder, RecoMenuRequest data){
         ChatRecommendedDescBinding desc = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.chat_recommended_desc, holder.binding.menu, false);
         if(data.getTitle() == null || data.getTitle().isEmpty()) {
             desc.title.setVisibility(View.GONE);
@@ -68,7 +58,20 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
         holder.binding.menu.addView(desc.getRoot());
     }
 
-    private void addMenu(ViewHolder holder, RecoMenu menu, boolean isLast){
+    private void addMenus(ViewHolder holder, RecoMenuRequest data) {
+        List<RecoMenu> menus = data.getMenus();
+        holder.binding.menu.removeAllViews();
+
+        setDescription(holder, data);
+
+        if(menus != null){
+            for(int i = 0; i < menus.size(); i++) {
+                addMenu(holder, menus.get(i), i == menus.size()-1, data);
+            }
+        }
+    }
+
+    private void addMenu(ViewHolder holder, RecoMenu menu, boolean isLast, RecoMenuRequest data){
         ChatRecommendedButtonBinding btn = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.chat_recommended_button, holder.binding.menu, false);
         btn.icon.setImageResource(menu.getIcon());
         btn.textView.setText(menu.getMenuName());
@@ -77,12 +80,19 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
             btn.main.setBackground(context.getDrawable(R.drawable.chat_reco_menu_bottom));
         }
 
-        if(menu.getListener() != null){
-            RxView.clicks(btn.main)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-                    menu.getListener().run();
-                });
+        if(!data.isEnabled()) {
+            btn.main.setClickable(false);
+        } else {
+            if (menu.getListener() != null) {
+                RxView.clicks(btn.main)
+                        .throttleFirst(200, TimeUnit.MILLISECONDS)
+                        .subscribe(aVoid -> {
+                            menu.getListener().run();
+
+                            data.setEnabled(false);
+                            addMenus(holder, data);
+                        });
+            }
         }
 
         holder.binding.menu.addView(btn.getRoot());

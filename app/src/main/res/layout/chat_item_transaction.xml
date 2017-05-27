@@ -36,22 +36,6 @@
             android:text="@{item.name}"
             app:custom_font="noto_medium"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
-            android:id="@+id/transfer_btn"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="5dp"
-            android:layout_toEndOf="@id/name"
-            android:background="@drawable/btn_small_round_default"
-            android:paddingEnd="5dp"
-            android:paddingStart="5dp"
-            android:text="@string/string_transfer"
-            android:textAllCaps="false"
-            android:textColor="@color/dark_100"
-            android:textSize="@dimen/text_small"
-            app:tb_font="noto_light"/>
-
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

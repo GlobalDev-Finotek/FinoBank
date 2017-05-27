@@ -43,8 +43,10 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
 
         setDescription(viewHolder, data);
 
-        for(int i = 0; i < menus.size(); i++) {
-            addMenu(holder, menus.get(i), i == menus.size()-1);
+        if(menus != null){
+            for(int i = 0; i < menus.size(); i++) {
+                addMenu(holder, menus.get(i), i == menus.size()-1);
+            }
         }
     }
 

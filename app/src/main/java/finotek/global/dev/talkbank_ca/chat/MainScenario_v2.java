@@ -35,6 +35,7 @@ import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.PocketMoney;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
@@ -117,6 +118,7 @@ public class MainScenario_v2 {
 		scenarioPool.put("electricityCharge", new ElectricityCharge(context));
 		scenarioPool.put("houseLoan", new HouseLoan(context));
 		scenarioPool.put("travelSaving", new TravelSaving(context));
+		scenarioPool.put("pocketMoney", new PocketMoney(context));
 
 		currentScenario = null;
 	}

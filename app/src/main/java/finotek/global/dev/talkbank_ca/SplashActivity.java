@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,7 +17,7 @@ import io.realm.Realm;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SplashActivity extends InitActivity {
+public class SplashActivity extends AppCompatActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class SplashActivity extends InitActivity {
 		} else {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash_eng);
 		}
+
 
 		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
 				.firstOrError()
@@ -45,17 +47,17 @@ public class SplashActivity extends InitActivity {
 
 	}
 
-	@Override
-	protected void onAfterUserRegistered() {
+//	@Override
+//	protected void onAfterUserRegistered() {
+//
+//		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
+//				.firstOrError()
+//				.subscribe(aLong -> {
+//					startActivity(new Intent(SplashActivity.this, ChatActivity.class));
+//					finish();
+//				});
 
-		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
-				.firstOrError()
-				.subscribe(aLong -> {
-					startActivity(new Intent(SplashActivity.this, ChatActivity.class));
-					finish();
-				});
-
-	}
+//	}
 
 
 }

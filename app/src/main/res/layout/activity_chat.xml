@@ -60,6 +60,7 @@
 
             <finotek.global.dev.talkbank_ca.chat.view.ChatView
                 android:id="@+id/chat_view"
+                android:layout_above="@+id/footer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:overScrollMode="ifContentScrolls"

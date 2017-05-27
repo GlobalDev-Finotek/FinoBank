@@ -135,7 +135,7 @@ public class ChatActivity extends AppCompatActivity {
         FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
 		binding.chatView.setItemAnimator(animator);
 		// TODO 아이템 간 패딩 정리
-		// binding.chatView.addItemDecoration(new ViewItemDecoration());
+		// binding.chatView.addItemDecoration(new ViewItemD3ecoration());
 
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);

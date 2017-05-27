@@ -376,7 +376,7 @@ public class MainScenario_v2 {
 	}
 
 	private boolean isImmediateMessage(Object msg) {
-		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
+		return msg instanceof SendMessage ||
 				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
 			  msg instanceof MessageEmitted;
 	}

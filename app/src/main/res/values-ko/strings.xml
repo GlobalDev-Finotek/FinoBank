@@ -363,7 +363,7 @@
     <string name = "main_string_recommend_electric_transfer_ask">가상 납부 계좌로 51,490원 이체하시겠습니까?</string>
     <string name = "main_string_recommend_electric_transfer_yes">예, 지금 이체 하겠습니다.</string>
     <string name = "main_string_recommend_electric_transfer_no">아니오, 나중에 하겠습니다.</string>
-    <string name ="main_string_recommend_electric_transfer_success">전기료 %1$s원이 주계좌에서 납부 완료 되었습니다. </string>
+    <string name ="main_string_recommend_electric_transfer_success">전기료 %1$s원이 주계좌에서 납부 완료 되었습니다. 이체 후 잔액은 %2$s 입니다. </string>
     <string name ="main_string_recommend_electric_transfer_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_electric_transfer_cancle">취소되었습니다.</string>
 
@@ -374,7 +374,7 @@
     <string name = "main_string_recommend_parents_ask">어머님 계좌로 300,000만원을 이체하시겠습니까?</string>
     <string name = "main_string_recommend_parents_yes">예, 이체해주세요.</string>
     <string name = "main_string_recommend_parents_no">아니오, 나중에 하겠습니다.</string>
-    <string name ="main_string_recommend_parents_success">용돈 300,000원이 어머니 계좌로 이체 되었습니다. </string>
+    <string name ="main_string_recommend_parents_success">용돈 300,000원이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 %1$s 입니다. </string>
     <string name ="main_string_recommend_parents_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_parents_cancle">취소되었습니다.</string>
 

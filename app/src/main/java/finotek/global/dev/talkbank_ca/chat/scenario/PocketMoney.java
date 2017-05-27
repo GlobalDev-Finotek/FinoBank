@@ -79,7 +79,7 @@ public class PocketMoney implements Scenario{
                     else {
                         TransactionDB.INSTANCE.deposit(-300000);
                         message = context.getResources().getString(
-                                R.string.main_string_recommend_parents_success);
+                                R.string.main_string_recommend_parents_success, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
                     }
 
                     MessageBox.INSTANCE.addAndWait(

@@ -54,8 +54,8 @@ public class ElectricityCharge implements Scenario {
         req.setDescription(context.getResources().getString(R.string.main_string_recommend_electric_transfer_ask));
 
 
-        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes), null);
-        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_recommend_electric_transfer_no), null);
+        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes), null);
+        req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.main_string_recommend_electric_transfer_no), null);
         return req;
     }
 
@@ -83,7 +83,7 @@ public class ElectricityCharge implements Scenario {
                         TransactionDB.INSTANCE.deposit(-51490);
                         message = context.getResources().getString(
                                 R.string.main_string_recommend_electric_transfer_success,
-                                NumberFormat.getInstance().format(51490));
+                                NumberFormat.getInstance().format(51490), NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
                     }
 
                     MessageBox.INSTANCE.addAndWait(

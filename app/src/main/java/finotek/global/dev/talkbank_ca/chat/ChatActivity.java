@@ -37,7 +37,6 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Consumer;
 
 import javax.inject.Inject;
 
@@ -45,7 +44,6 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
-import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
@@ -105,7 +103,9 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-	private MainScenario mainScenario;
+
+	private MainScenario_v2 mainScenario;
+
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 
@@ -136,7 +136,8 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
+
+			mainScenario = new MainScenario_v2(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
 
 		MessageBox.INSTANCE.observable

@@ -8,34 +8,34 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
 /**
- * Created by jungwon on 5/26/2017.
+ * Created by KoDeokyoon on 2017. 5. 27..
  */
 
-public class ElectricityCharge implements Scenario {
+public class PocketMoney implements Scenario{
+
     private Context context;
     private Step step = Step.Initial;
 
-    public ElectricityCharge(Context context) {
+    public PocketMoney(Context context) {
         this.context = context;
     }
 
     @Override
     public String getName() {
-        return context.getString(R.string.main_string_v2_login_pay_electricity) ;
+        return context.getString(R.string.main_string_recommend_parents_title) ;
     }
 
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals(R.string.main_string_recommend_electric_title) ||
-                msg.equals("Payment of electricity bill") || msg.equals("전기료 납부") || msg.equals("Pay electricity");
+        return msg.equals(R.string.main_string_recommend_parents_title) ||
+                msg.equals("Parents pocket money") || msg.equals("부모님 용돈");
     }
 
     @Override
@@ -51,39 +51,35 @@ public class ElectricityCharge implements Scenario {
     public RecoMenuRequest getRequestConfirm() {
         RecoMenuRequest req = new RecoMenuRequest();
         //req.setTitle("추천메뉴");
-        req.setDescription(context.getResources().getString(R.string.main_string_recommend_electric_transfer_ask));
+        req.setDescription(context.getResources().getString(R.string.main_string_recommend_parents_ask));
 
-
-        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes), null);
-        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_recommend_electric_transfer_no), null);
+        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_parents_yes), null);
+        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_recommend_parents_no), null);
         return req;
     }
 
     @Override
     public void onUserSend(String msg) {
-        LeftScenario.scenarioList.remove("E");
+        LeftScenario.scenarioList.remove("P");
         switch (step) {
             case Initial:
                 MessageBox.INSTANCE.addAndWait(
-                        new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_message)),
-                        new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_compare,
-                                NumberFormat.getInstance().format(51490), NumberFormat.getInstance().format(35460))),
+                        new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_intro)),
                         getRequestConfirm()
                 );
                 step = Step.question;
                 break;
             case question:
-                if(msg.equals(context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes)))
+                if(msg.equals(context.getResources().getString(R.string.main_string_recommend_parents_yes)))
                 {
                     String message;
-                    if(TransactionDB.INSTANCE.getBalance() < 51490)
+                    if(TransactionDB.INSTANCE.getBalance() < 300000)
                         message = context.getResources().getString(
-                                R.string.main_string_recommend_electric_transfer_fail);
+                                R.string.main_string_recommend_parents_fail);
                     else {
-                        TransactionDB.INSTANCE.deposit(-51490);
+                        TransactionDB.INSTANCE.deposit(-300000);
                         message = context.getResources().getString(
-                                R.string.main_string_recommend_electric_transfer_success,
-                                NumberFormat.getInstance().format(51490));
+                                R.string.main_string_recommend_parents_success);
                     }
 
                     MessageBox.INSTANCE.addAndWait(
@@ -93,12 +89,12 @@ public class ElectricityCharge implements Scenario {
 
                     );
                 }
-                else if (msg.equals(context.getResources().getString(R.string.main_string_recommend_electric_transfer_no)))
+                else if (msg.equals(context.getResources().getString(R.string.main_string_recommend_parents_no)))
                 {
 
                     MessageBox.INSTANCE.addAndWait(
                             //new Done(),
-                            new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_electric_transfer_cancle)),
+                            new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_cancle)),
                             new RecommendScenarioMenuRequest(context)
                     );
                 }

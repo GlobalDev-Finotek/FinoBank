@@ -35,6 +35,7 @@ import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.PocketMoney;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
@@ -50,7 +51,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.realm.Realm;
 
-public class SecondMainScenario{
+public class MainScenario_v2 {
 	private final Disposable disposable;
 	private Context context;
 	private RxEventBus eventBus;
@@ -60,7 +61,7 @@ public class SecondMainScenario{
 	private DBHelper dbHelper;
 	private User user;
 
-	public SecondMainScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
+	public MainScenario_v2(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
 		this.context = context;
 		this.chatView = chatView;
 		this.eventBus = eventBus;
@@ -69,9 +70,14 @@ public class SecondMainScenario{
 		user = realm.where(User.class).findAll().last();
 
         //Recommend scenario setup
-        LeftScenario.scenarioList.add("E");
-        LeftScenario.scenarioList.add("T");
-        LeftScenario.scenarioList.add("H");
+		if(!LeftScenario.scenarioList.contains("E"))
+        	LeftScenario.scenarioList.add("E");
+		if(!LeftScenario.scenarioList.contains("P"))
+			LeftScenario.scenarioList.add("P");
+		if(!LeftScenario.scenarioList.contains("T"))
+        	LeftScenario.scenarioList.add("T");
+		if(!LeftScenario.scenarioList.contains("H"))
+        	LeftScenario.scenarioList.add("H");
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -112,6 +118,7 @@ public class SecondMainScenario{
 		scenarioPool.put("electricityCharge", new ElectricityCharge(context));
 		scenarioPool.put("houseLoan", new HouseLoan(context));
 		scenarioPool.put("travelSaving", new TravelSaving(context));
+		scenarioPool.put("pocketMoney", new PocketMoney(context));
 
 		currentScenario = null;
 	}
@@ -352,6 +359,7 @@ public class SecondMainScenario{
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
+			chatView.removeOf(ChatView.ViewType.RecoMenu);
 		}
 
 		if(msg instanceof WaitResult) {
@@ -377,6 +385,4 @@ public class SecondMainScenario{
 	public void release() {
 		disposable.dispose();
 	}
-
-
 }

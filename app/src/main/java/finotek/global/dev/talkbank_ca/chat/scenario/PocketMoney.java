@@ -53,8 +53,8 @@ public class PocketMoney implements Scenario{
         //req.setTitle("추천메뉴");
         req.setDescription(context.getResources().getString(R.string.main_string_recommend_parents_ask));
 
-        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_parents_yes), null);
-        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_recommend_parents_no), null);
+        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_recommend_parents_yes), null);
+        req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.main_string_recommend_parents_no), null);
         return req;
     }
 

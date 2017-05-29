@@ -7,10 +7,6 @@ import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
 import finotek.global.dev.talkbank_ca.model.User;
 import io.realm.Realm;
 
-/**
- * Created by KoDeokyoon on 2017. 5. 26..
- */
-
 public class RecommendScenarioMenuRequest extends RecoMenuRequest{
 
     public RecommendScenarioMenuRequest(Context context){

@@ -17,6 +17,7 @@ public class RecoMenuRequest {
     List<RecoMenu> menus;
 
     Runnable doAfterEvent;
+    boolean enabled = true;
 
     public void addMenu(int icon, String name, Runnable listener){
         if(menus == null)

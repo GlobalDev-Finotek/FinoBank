@@ -97,8 +97,7 @@ public class ChatView extends RecyclerView {
         removeOf(ViewType.Wait);
     }
 
-	public void
-	transactionList(RecentTransaction data) {
+	public void transactionList(RecentTransaction data) {
 		addMessage(ViewType.RecentTransaction.ordinal(), data);
 	}
 

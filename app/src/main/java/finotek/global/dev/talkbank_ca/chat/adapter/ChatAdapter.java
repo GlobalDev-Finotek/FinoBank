@@ -69,7 +69,9 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 			if (item.getViewType() == viewType) {
 				builders.get(viewType).onDelete();
 				items.remove(i);
-				notifyItemRemoved(i);
+
+				if(item.getViewType() != ChatView.ViewType.AccountList.ordinal() && item.getViewType() != ChatView.ViewType.Confirm.ordinal())
+					notifyItemRemoved(i);
 			}
 		}
 	}

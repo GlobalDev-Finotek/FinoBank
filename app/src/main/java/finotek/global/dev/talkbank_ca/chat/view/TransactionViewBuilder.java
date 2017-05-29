@@ -50,13 +50,6 @@ public class TransactionViewBuilder implements ChatView.ViewBuilder<RecentTransa
 		    ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
 		    binding.setItem(tx);
 		    group.addView(view);
-
-            RxView.clicks(binding.transferBtn)
-                .throttleFirst(3000, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-	                MessageBox.INSTANCE.add(new ApplyScenario("transfer"));
-	                MessageBox.INSTANCE.add(new TransferTo(tx.getName(), tx.getPrice(), TransferTo.TransactionType.ToSomeone));
-                });
         }
 
         View moreButtonLayout = LayoutInflater.from(context).inflate(R.layout.chat_item_more, group, false);

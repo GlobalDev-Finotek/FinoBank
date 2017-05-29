@@ -57,7 +57,7 @@ public abstract class InitActivity extends AppCompatActivity {
 						android.Manifest.permission.READ_SMS, android.Manifest.permission.SEND_SMS,
 						android.Manifest.permission.BROADCAST_SMS, android.Manifest.permission.RECEIVE_SMS,
 						Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-						android.Manifest.permission_group.SMS,
+						Manifest.permission.ACCESS_WIFI_STATE, android.Manifest.permission_group.SMS,
 						android.Manifest.permission.READ_PHONE_STATE},
 				MY_PERMISSION_READ_CALL_LOG);
 

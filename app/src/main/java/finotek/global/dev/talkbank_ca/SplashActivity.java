@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca;
 
 import android.*;
+import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
@@ -36,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
 
 
 		ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CALL_LOG,
-						android.Manifest.permission.READ_SMS,
+						android.Manifest.permission.READ_SMS, Manifest.permission.ACCESS_WIFI_STATE,
 						android.Manifest.permission.READ_PHONE_STATE},
 				MY_PERMISSION_READ_CALL_LOG);
 
@@ -65,17 +66,7 @@ public class SplashActivity extends AppCompatActivity {
 
 	}
 
-	//	@Override
-//	protected void onAfterUserRegistered() {
-//
-//		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
-//				.firstOrError()
-//				.subscribe(aLong -> {
-//					startActivity(new Intent(SplashActivity.this, ChatActivity.class));
-//					finish();
-//				});
 
-//	}
 
 
 }

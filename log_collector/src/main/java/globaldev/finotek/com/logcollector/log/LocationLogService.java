@@ -49,7 +49,7 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		}
 	};
 
-	LocationLogService() {
+	public LocationLogService() {
 
 	}
 

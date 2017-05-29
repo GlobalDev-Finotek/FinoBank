@@ -21,7 +21,7 @@ public class SecurityLevelLoggingService extends BaseLoggingService<DeviceSecuri
 	@Inject
 	RxEventBus eventBus;
 
-	SecurityLevelLoggingService() {
+	public SecurityLevelLoggingService() {
 
 	}
 

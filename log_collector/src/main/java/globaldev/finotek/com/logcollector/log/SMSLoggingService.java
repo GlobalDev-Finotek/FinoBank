@@ -36,7 +36,7 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 	private AesInstance ai;
 
 
-	SMSLoggingService() {
+	public SMSLoggingService() {
 
 	}
 

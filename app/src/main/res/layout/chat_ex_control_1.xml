@@ -18,7 +18,7 @@
             android:drawableLeft="@drawable/icon_stankbank01"
             android:text="@string/main_string_open_account"
             android:textColor="@color/ex_control"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             app:iconPadding="-2dp"
             app:tb_font="noto_medium" />
         <finotek.global.dev.talkbank_ca.widget.IconButton
@@ -31,7 +31,7 @@
             android:drawableLeft="@drawable/icon_stankbank02"
             android:text="@string/main_string_transfer"
             android:textColor="@color/ex_control"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             app:iconPadding="-2dp"
             app:tb_font="noto_medium" />
         <finotek.global.dev.talkbank_ca.widget.IconButton
@@ -44,7 +44,7 @@
             android:drawableLeft="@drawable/icon_stankbank03"
             android:text="@string/main_string_view_account_details"
             android:textColor="@color/ex_control"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_normal"
             app:iconPadding="-2dp"
             app:tb_font="noto_medium" />
     </LinearLayout>

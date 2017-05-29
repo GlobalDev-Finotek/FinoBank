@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.user.sign;
 
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		Intent intent = getIntent();
 
@@ -95,7 +97,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 							dialog.setButtonText(getString(R.string.setting_string_yes));
 							dialog.setDoneListener(() -> {
 								Intent intent2 = new Intent(SignRegistrationActivity.this, nextClass);
-								if(nextClass.equals(ChatActivity.class)) {
+								if (nextClass.equals(ChatActivity.class)) {
 									intent2.putExtra("isSigned", true);
 								}
 								intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);

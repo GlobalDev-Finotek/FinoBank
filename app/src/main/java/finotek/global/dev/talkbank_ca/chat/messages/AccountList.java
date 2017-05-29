@@ -8,5 +8,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class AccountList {
-    List<Account> list;
+	List<Account> list;
 }

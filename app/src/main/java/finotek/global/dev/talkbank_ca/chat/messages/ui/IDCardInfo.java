@@ -6,8 +6,9 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class IDCardInfo {
-    String type;
-    String name;
-    String jumin;
-    String issueDate;
+	String type;
+	String name;
+	String jumin;
+	String issueDate;
+	String imgPath;
 }

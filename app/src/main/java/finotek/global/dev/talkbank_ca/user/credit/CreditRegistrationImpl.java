@@ -14,7 +14,7 @@ class CreditRegistrationImpl extends BasePresenter<CreditRegistrationView> imple
 	private Context context;
 
 	CreditRegistrationImpl(Context context) {
-			this.context = context;
+		this.context = context;
 	}
 
 	@Override

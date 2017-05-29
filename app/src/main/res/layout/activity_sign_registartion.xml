@@ -4,8 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tb="http://schemas.android.com/tools"
     >
-    <RelativeLayout android:layout_width="fill_parent"
-                    android:layout_height="fill_parent">
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,10 +48,11 @@
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
+                        android:layout_toEndOf="@id/ib_back"
+                        android:layout_marginStart="15dp"
                         android:layout_centerVertical="true"
                         android:theme="@style/Header"
-                        app:custom_font="noto_medium" />
+                        app:custom_font="noto_medium"/>
 
                 </RelativeLayout>
 
@@ -59,7 +62,7 @@
             <FrameLayout
                 android:id="@+id/fl_content"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
+                android:layout_height="match_parent"
                 >
 
             </FrameLayout>
@@ -78,7 +81,8 @@
                 android:layout_marginTop="20dp"
                 android:orientation="vertical"
                 android:paddingLeft="16dp"
-                android:paddingRight="16dp">
+                android:paddingRight="16dp"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/ll_inst_1"
@@ -86,12 +90,14 @@
                     android:layout_height="match_parent"
                     android:layout_marginBottom="3dp"
                     android:orientation="horizontal">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="\u2022"
                         android:textColor="#95989a"
                         tb:custom_font="noto_regular"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_inst_1"
                         android:layout_width="match_parent"
@@ -99,7 +105,7 @@
                         android:paddingLeft="7dp"
                         android:text="@string/registration_string_signature_twice"
                         android:textColor="@color/dark_50"
-                        tb:custom_font="noto_regular" />
+                        tb:custom_font="noto_regular"/>
                 </LinearLayout>
 
                 <LinearLayout

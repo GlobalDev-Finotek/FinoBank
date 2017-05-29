@@ -182,34 +182,6 @@ public class CapturePicFragment extends Fragment
 	 */
 	private int mSensorOrientation;
 	private FragmentCapturePicBinding binding;
-	/**
-	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
-	 * {@link TextureView}.
-	 */
-	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
-			= new TextureView.SurfaceTextureListener() {
-
-		@RequiresApi(api = Build.VERSION_CODES.M)
-		@Override
-		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
-			openCamera(width, height);
-		}
-
-		@Override
-		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
-			configureTransform(width, height);
-		}
-
-		@Override
-		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
-			return true;
-		}
-
-		@Override
-		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
-		}
-
-	};
 	private boolean isCaptureDone;
 	private OnSizeChangeListener onSizeChangeListener;
 	/**
@@ -305,6 +277,34 @@ public class CapturePicFragment extends Fragment
 		}
 
 	};
+	/**
+	 * {@link TextureView.SurfaceTextureListener} handles several lifecycle events on a
+	 * {@link TextureView}.
+	 */
+	private final TextureView.SurfaceTextureListener mSurfaceTextureListener
+			= new TextureView.SurfaceTextureListener() {
+
+		@RequiresApi(api = Build.VERSION_CODES.M)
+		@Override
+		public void onSurfaceTextureAvailable(SurfaceTexture texture, int width, int height) {
+			openCamera(width, height);
+		}
+
+		@Override
+		public void onSurfaceTextureSizeChanged(SurfaceTexture texture, int width, int height) {
+			configureTransform(width, height);
+		}
+
+		@Override
+		public boolean onSurfaceTextureDestroyed(SurfaceTexture texture) {
+			return true;
+		}
+
+		@Override
+		public void onSurfaceTextureUpdated(SurfaceTexture texture) {
+		}
+
+	};
 	private int orgPreviewWidth;
 	private int orgPreviewHeight;
 
@@ -352,7 +352,6 @@ public class CapturePicFragment extends Fragment
 		} else if (notBigEnough.size() > 0) {
 			return Collections.max(notBigEnough, new CompareSizesByArea());
 		} else {
-
 			return choices[0];
 		}
 	}
@@ -490,7 +489,7 @@ public class CapturePicFragment extends Fragment
 	@Override
 	public void onActivityCreated(Bundle savedInstanceState) {
 		super.onActivityCreated(savedInstanceState);
-		mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+		mFile = new File(getActivity().getExternalFilesDir(null), System.currentTimeMillis() + ".jpg");
 
 	}
 
@@ -877,7 +876,7 @@ public class CapturePicFragment extends Fragment
 			}
 			// This is the CaptureRequest.Builder that we use to take a picture.
 			final CaptureRequest.Builder captureBuilder =
-					mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_STILL_CAPTURE);
+					mCameraDevice.createCaptureRequest(CameraDevice.TEMPLATE_PREVIEW);
 			captureBuilder.addTarget(mImageReader.getSurface());
 
 			// Use the same AE and AF modes as the preview.
@@ -954,6 +953,7 @@ public class CapturePicFragment extends Fragment
 
 	public interface OnSizeChangeListener {
 		void onSizeFull();
+
 		void onSizeMinimize();
 	}
 

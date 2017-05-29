@@ -2,11 +2,13 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tb="http://schemas.android.com/apk/res-auto">
+
     <RelativeLayout
         android:id="@+id/wrapper_splash"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@android:color/white">
+
         <ImageView
             android:id="@+id/logo"
             android:layout_width="174dp"
@@ -19,9 +21,9 @@
             tb:srcCompat="@drawable/vector_drawable_ci_finotek"/>
         <ImageView
             android:id="@+id/iv_intro"
-            android:layout_below="@id/logo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="26dp"
             android:elevation="0dp"
@@ -55,7 +57,7 @@
             android:layout_marginBottom="32dp"
             android:text="@string/main_string_copyright_finotek"
             android:textColor="@color/dark_100"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_small"
             tb:custom_font="noto_light"/>
     </RelativeLayout>
 </layout>

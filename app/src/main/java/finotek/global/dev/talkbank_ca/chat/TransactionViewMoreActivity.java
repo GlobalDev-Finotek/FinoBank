@@ -31,7 +31,6 @@ public class TransactionViewMoreActivity extends AppCompatActivity {
 			ChatItemTransactionBinding binding = ChatItemTransactionBinding.bind(view);
 			binding.setItem(tx);
 
-			binding.transferBtn.setVisibility(View.GONE);
 			rootBinding.list.addView(view);
 		}
 	}

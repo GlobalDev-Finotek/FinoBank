@@ -106,7 +106,7 @@
                                     android:text="10만원"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
-                                    android:textSize="14sp"
+                                    android:textSize="@dimen/text_normal"
                                     tb:custom_font="noto_regular"/>
                             </LinearLayout>
                             <LinearLayout
@@ -124,7 +124,7 @@
                                     android:text="50만원"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
-                                    android:textSize="14sp"
+                                    android:textSize="@dimen/text_normal"
                                     tb:custom_font="noto_regular"/>
                             </LinearLayout>
                         </TableRow>
@@ -145,7 +145,7 @@
                                     android:text="100만원"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
-                                    android:textSize="14sp"
+                                    android:textSize="@dimen/text_normal"
                                     tb:custom_font="noto_regular"/>
                             </LinearLayout>
                             <LinearLayout
@@ -162,7 +162,7 @@
                                     android:text="500만원"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
-                                    android:textSize="14sp"
+                                    android:textSize="@dimen/text_normal"
                                     tb:custom_font="noto_regular"/>
                             </LinearLayout>
                         </TableRow>
@@ -173,7 +173,7 @@
                             android:text="@string/setting_string_edit_manually"
                             android:textAlignment="center"
                             android:textColor="#80182333"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/text_normal"
                             tb:custom_font="noto_regular"/>
                     </TableLayout>
                     <TableLayout
@@ -201,7 +201,7 @@
                                     android:text="@string/setting_string_under"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
-                                    android:textSize="14sp"
+                                    android:textSize="@dimen/text_normal"
                                     tb:custom_font="noto_regular">
                                 </finotek.global.dev.talkbank_ca.widget.TalkBankTextView>
                             </LinearLayout>
@@ -220,7 +220,7 @@
                                     android:text="@string/setting_string_over"
                                     android:textAlignment="center"
                                     android:textColor="#80182333"
-                                    android:textSize="14sp"
+                                    android:textSize="@dimen/text_normal"
                                     tb:custom_font="noto_regular"/>
                             </LinearLayout>
                         </TableRow>
@@ -268,7 +268,7 @@
                             android:text="@string/setting_string_context_auth"
                             android:textAlignment="center"
                             android:textColor="@color/white"
-                            android:textSize="14sp"
+                            android:textSize="@dimen/text_normal"
                             tb:custom_font="noto_regular"/>
                         <TableRow
                             android:layout_width="wrap_content"
@@ -283,7 +283,7 @@
                                 android:text="@string/setting_string_signature"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                 android:id="@+id/tv_PinCode"
@@ -294,7 +294,7 @@
                                 android:text="@string/setting_string_pin_code"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                         </TableRow>
                         <TableRow
@@ -310,7 +310,7 @@
                                 android:text="@string/setting_string_emergency_number"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                 android:id="@+id/tv_au_mail"
@@ -321,7 +321,7 @@
                                 android:text="@string/setting_string_auth_mail"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                         </TableRow>
                         <TableRow
@@ -337,7 +337,7 @@
                                 android:text="@string/setting_string_auth_message"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                 android:id="@+id/tv_credit_card_ocr"
@@ -348,7 +348,7 @@
                                 android:text="@string/setting_string_ocr_credit_card"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                         </TableRow>
                         <TableRow
@@ -364,7 +364,7 @@
                                 android:text="@string/setting_string_profile_picture"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                             <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                                 android:id="@+id/tv_voice"
@@ -375,7 +375,7 @@
                                 android:text="@string/setting_string_voice_recognition"
                                 android:textAlignment="center"
                                 android:textColor="#80182333"
-                                android:textSize="14sp"
+                                android:textSize="@dimen/text_normal"
                                 tb:custom_font="noto_regular"/>
                         </TableRow>
                     </TableLayout>
@@ -395,7 +395,7 @@
                         android:layout_marginRight="15dp"
                         android:layout_marginTop="20dp"
                         android:text="@string/setting_string_auth_method_add"
-                        android:textSize="14sp"
+                        android:textSize="@dimen/text_normal"
                         android:visibility="visible"
                         tb:tb_font="noto_medium" />
                 </LinearLayout>

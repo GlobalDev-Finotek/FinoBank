@@ -11,29 +11,30 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 
 public class ReceiveViewBuilder implements ChatView.ViewBuilder<ReceiveMessage> {
-    private class ReceiveViewHolder extends RecyclerView.ViewHolder {
-        TextView message;
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_receive, parent, false);
+		view.setTag(ReceiveViewHolder.class.getName());
+		return new ReceiveViewHolder(view);
+	}
 
-        ReceiveViewHolder(View itemView) {
-            super(itemView);
-            this.message = (TextView) itemView.findViewById(R.id.message);
-        }
-    }
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, ReceiveMessage data) {
+		ReceiveViewHolder holder = (ReceiveViewHolder) viewHolder;
+		holder.message.setText(data.getMessage());
+	}
 
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        RelativeLayout view = (RelativeLayout) LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_receive, parent, false);
-        return new ReceiveViewHolder(view);
-    }
+	@Override
+	public void onDelete() {
 
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, ReceiveMessage data) {
-        ReceiveViewHolder holder = (ReceiveViewHolder) viewHolder;
-        holder.message.setText(data.getMessage());
-    }
+	}
 
-    @Override
-    public void onDelete() {
+	public class ReceiveViewHolder extends RecyclerView.ViewHolder {
+		TextView message;
 
-    }
+		ReceiveViewHolder(View itemView) {
+			super(itemView);
+			this.message = (TextView) itemView.findViewById(R.id.message);
+		}
+	}
 }

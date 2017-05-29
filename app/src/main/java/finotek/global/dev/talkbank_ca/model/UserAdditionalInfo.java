@@ -9,9 +9,13 @@ import lombok.Data;
 
 @Data
 public class UserAdditionalInfo extends RealmObject {
-  String emergencyPhoneNumber;
-  String email;
-  String creditPicPath;
-  String profilePicPath;
+	String emergencyPhoneNumber;
+	String email;
+	String creditPicPath;
+	String profilePicPath;
+
+	public UserAdditionalInfo() {
+
+	}
 
 }

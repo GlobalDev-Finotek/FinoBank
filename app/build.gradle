@@ -14,6 +14,9 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
+    aaptOptions {
+        cruncherEnabled = false
+    }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -39,7 +42,6 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile project(':finopassvalidator')
     compile 'joda-time:joda-time:2.9.7'
     compile 'com.github.barteksc:android-pdf-viewer:2.5.0'
     compile 'com.android.support:support-v4:25.3.1'
@@ -58,14 +60,13 @@ dependencies {
     compile 'com.github.lawloretienne:discreteslider:0.0.9'
     compile 'com.tsengvn:typekit:1.0.1'
     compile 'com.github.zcweng:switch-button:0.0.3@aar'
+    compile 'jp.wasabeef:recyclerview-animators:2.2.6'
+    compile 'com.wang.avi:library:2.1.3'
+    compile 'jp.wasabeef:glide-transformations:2.0.2'
 
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
     provided 'javax.annotation:jsr250-api:1.0'
+    compile project(':log_collector')
 }
 
-task copy(type: Copy) {
-    from('/Users/magyeong-ug/workspace/TalkBank/app/build/outputs/apk')
-    into('/Users/magyeong-ug/Dropbox/2017_FinoPass/demo/deploy')
-    include('*.apk')
-}
 

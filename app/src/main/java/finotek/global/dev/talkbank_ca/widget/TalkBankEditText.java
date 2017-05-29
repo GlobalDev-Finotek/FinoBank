@@ -3,8 +3,6 @@ package finotek.global.dev.talkbank_ca.widget;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
-import android.text.SpannableString;
-import android.text.Spanned;
 import android.text.style.TypefaceSpan;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -65,7 +63,7 @@ public class TalkBankEditText extends android.support.v7.widget.AppCompatEditTex
 		super(context, attrs, defStyleAttr);
 		this.context = context;
 		init(context);
-        setDefaultFontSize();
+		setDefaultFontSize();
 	}
 
 

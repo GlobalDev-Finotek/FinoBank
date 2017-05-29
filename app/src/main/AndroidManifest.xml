@@ -11,9 +11,7 @@
         android:xlargeScreens="true"/>
 
     <uses-permission android:name="android.permission.CAMERA"/>
-
     <uses-feature android:name="android.hardware.camera2"/>
-
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
@@ -74,11 +72,27 @@
         </activity>
         <activity
             android:name=".chat.ChatActivity"
-            android:label="톡뱅"
-            android:screenOrientation="portrait">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="FinoBank"
+            android:windowSoftInputMode="adjustResize">
         </activity>
         <activity android:name=".chat.TransactionViewMoreActivity">
         </activity>
+
+        <service
+            android:name=".TalkBankMessageService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+            </intent-filter>
+        </service>
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
+        <service
+            android:name=".TalkBankInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

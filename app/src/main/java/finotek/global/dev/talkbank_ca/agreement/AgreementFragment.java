@@ -19,7 +19,7 @@ import finotek.global.dev.talkbank_ca.databinding.ActivityAgreementBinding;
 
 public class AgreementFragment extends Fragment {
 
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState){
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState) {
 		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_agreement, container, false);
 		View view = binding.getRoot();
 // check one -> click all
@@ -46,8 +46,7 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
-				{
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
 					binding.radioButton.setChecked(true);
 				}
 
@@ -57,8 +56,7 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
-				{
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
 					binding.radioButton.setChecked(true);
 				}
 
@@ -69,8 +67,7 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
-				{
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
 					binding.radioButton.setChecked(true);
 				}
 
@@ -81,8 +78,7 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked())
-				{
+				if (binding.radioButton2.isChecked() && binding.radioButton3.isChecked() && binding.radioButton4.isChecked() && binding.radioButton5.isChecked()) {
 					binding.radioButton.setChecked(true);
 				}
 
@@ -106,7 +102,7 @@ public class AgreementFragment extends Fragment {
 		binding.radioButton7.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if(binding.radioButton7.isChecked()) {
+				if (binding.radioButton7.isChecked()) {
 					binding.radioButton6.setChecked(true);
 				}
 			}
@@ -126,8 +122,8 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				// open contentAgreement page with sending "num" "[number]"
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",1);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 1);
 
 				startActivity(move);
 			}
@@ -137,8 +133,8 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",2);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 2);
 
 				startActivity(move);
 			}
@@ -148,8 +144,8 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",3);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 3);
 
 				startActivity(move);
 			}
@@ -159,8 +155,8 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",4);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 4);
 
 				startActivity(move);
 			}
@@ -170,8 +166,8 @@ public class AgreementFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 
-				Intent move = new Intent(getActivity().getApplicationContext(),ContentAgreement.class);
-				move.putExtra("num",5);
+				Intent move = new Intent(getActivity().getApplicationContext(), ContentAgreement.class);
+				move.putExtra("num", 5);
 
 				startActivity(move);
 			}

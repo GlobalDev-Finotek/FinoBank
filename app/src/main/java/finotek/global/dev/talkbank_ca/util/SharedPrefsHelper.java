@@ -5,8 +5,6 @@ import android.content.SharedPreferences;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import finotek.global.dev.talkbank_ca.app.MyApplication;
-
 /**
  * Created by magyeong-ug on 09/03/2017.
  */

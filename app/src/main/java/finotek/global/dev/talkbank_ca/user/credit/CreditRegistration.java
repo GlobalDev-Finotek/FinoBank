@@ -9,7 +9,7 @@ import finotek.global.dev.talkbank_ca.base.mvp.IPresenter;
 interface CreditRegistration extends IPresenter<CreditRegistrationView> {
 	/**
 	 * @param path 사진 저장된 경로
-	 * 사진 촬영
+	 *             사진 촬영
 	 */
 	void takePic(String path);
 

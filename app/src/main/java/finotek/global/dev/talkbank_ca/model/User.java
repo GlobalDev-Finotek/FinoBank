@@ -11,9 +11,13 @@ import lombok.Data;
 public
 @Data
 class User extends RealmObject {
-  String phoneNumber;
-  String name;
-  String signaturePath;
+	String phoneNumber;
+	String name;
+	String signaturePath;
 
-  UserAdditionalInfo additionalInfo;
+	public User() {
+
+	}
+
+	UserAdditionalInfo additionalInfo;
 }

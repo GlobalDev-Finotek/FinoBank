@@ -1,30 +1,44 @@
 package finotek.global.dev.talkbank_ca.chat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.app.AppOpsManager;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.icu.util.Calendar;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.ResultReceiver;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.jakewharton.rxbinding2.support.v4.view.RxViewPager;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -36,11 +50,11 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.extensions.ControlPagerAdapter;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
@@ -48,14 +62,16 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
+import finotek.global.dev.talkbank_ca.chat.view.ViewItemDecoration;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
@@ -73,15 +89,21 @@ import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
+import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Action;
+import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
+
 	@Inject
 	DBHelper dbHelper;
+
 	@Inject
 	RxEventBus eventBus;
+
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
@@ -91,10 +113,12 @@ public class ChatActivity extends AppCompatActivity {
 	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
-	private MainScenario mainScenario;
-    private CapturePicFragment capturePicFragment;
-	private OneStepSignRegisterFragment signRegistFragment;
 
+	private MainScenario_v2 mainScenario;
+
+	private CapturePicFragment capturePicFragment;
+	private OneStepSignRegisterFragment signRegistFragment;
+    
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -109,81 +133,153 @@ public class ChatActivity extends AppCompatActivity {
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 		Intent intent = getIntent();
 
+		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
+		mLayoutManager.setReverseLayout(true);
+		mLayoutManager.setStackFromEnd(true);
+
+		binding.chatView.setLayoutManager(mLayoutManager);
+        FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
+		binding.chatView.setItemAnimator(animator);
+		// TODO 아이템 간 패딩 정리
+		// binding.chatView.addItemDecoration(new ViewItemD3ecoration());
+
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-			mainScenario = new MainScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
+
+			mainScenario = new MainScenario_v2(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
 
 		MessageBox.INSTANCE.observable
-			.flatMap(msg -> {
-				if (msg instanceof EnableToEditMoney) {
-					return Observable.just(msg)
-							.observeOn(AndroidSchedulers.mainThread());
-				} else if (msg instanceof MessageEmitted || msg instanceof WaitForMessage) {
-					return Observable.just(msg)
-							.debounce(2, TimeUnit.SECONDS)
-							.observeOn(AndroidSchedulers.mainThread());
-				} else {
-					return Observable.just(msg)
-							.delay(2000, TimeUnit.MILLISECONDS)
-							.observeOn(AndroidSchedulers.mainThread());
-				}
-			})
-			.subscribe(this::onNewMessageUpdated, throwable -> {
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else if (msg instanceof MessageEmitted) {
+						return Observable.just(msg)
+								.debounce(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.subscribe(this::onNewMessageUpdated, throwable -> {
 
-			});
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+					}
+				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
 
 		preInitControlViews();
+
+        // keyboard event
+        KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
+            @Override
+            public void onToggleSoftKeyboard(boolean isVisible) {
+                if(isVisible)
+                    binding.chatView.scrollToBottom();
+            }
+        });
 	}
 
 	@Override
 	protected void onPause() {
 		super.onPause();
-		hideExControl();
+		// hideExControl();
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		if (msg instanceof WaitForMessage) {
-			binding.waitMessage.setVisibility(View.VISIBLE);
-		}
 
-		if (msg instanceof MessageEmitted) {
-			binding.waitMessage.setVisibility(View.INVISIBLE);
-		}
+		if (msg instanceof RequestPhoto) {
 
-		if (msg instanceof RequestTakeIDCard) {
+			hideAppBar();
+			hideStatusBar();
+			binding.footer.setPadding(0, 0, 0, 0);
 			releaseControls();
+			releaseAllControls();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
 			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.add(new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10"));
-				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
-				MessageBox.INSTANCE.add(ConfirmRequest.buildYesOrNo(ChatActivity.this));
+				MessageBox.INSTANCE.addAndWait(
+						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+				);
+
+				showAppBar();
+				showStatusBar();
 				this.returnToInitialControl();
 
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
 			});
 
-			capturePicFragment.setOnSizeChangeListener(new CapturePicFragment.OnSizeChangeListener() {
+			tx.replace(R.id.chat_capture, capturePicFragment);
+			tx.commit();
+		}
 
-				@Override
-				public void onSizeFull() {
-					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-					captureView.setLayoutParams(lp);
-				}
+		if(msg instanceof RequestTakeAnotherIDCard) {
+			releaseControls();
+			releaseAllControls();
+			binding.footer.setPadding(0, 0, 0, 0);
+			hideStatusBar();
+			hideAppBar();
 
-				@Override
-				public void onSizeMinimize() {
-					LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-							LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
-					captureView.setLayoutParams(lp);
-				}
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
+			capturePicFragment = CapturePicFragment.newInstance();
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			capturePicFragment.takePicture(path -> {
+				MessageBox.INSTANCE.addAndWait(
+					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
+					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+				);
+				this.returnToInitialControl();
+				showAppBar();
+				showStatusBar();
+
+				FragmentTransaction transaction = getFragmentManager().beginTransaction();
+				transaction.remove(capturePicFragment).commit();
+
+                binding.chatView.scrollToBottom();
+			});
+
+			tx.replace(R.id.chat_capture, capturePicFragment);
+			tx.commit();
+		}
+
+		if (msg instanceof RequestTakeIDCard) {
+			releaseControls();
+			releaseAllControls();
+			binding.footer.setPadding(0, 0, 0, 0);
+			hideAppBar();
+			hideStatusBar();
+
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
+			capturePicFragment = CapturePicFragment.newInstance();
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			capturePicFragment.takePicture(path -> {
+				MessageBox.INSTANCE.addAndWait(
+					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+				);
+
+				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
+
+				showAppBar();
+				this.returnToInitialControl();
+				showStatusBar();
+
+				FragmentTransaction transaction = getFragmentManager().beginTransaction();
+				transaction.remove(capturePicFragment).commit();
+
+                binding.chatView.scrollToBottom();
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
@@ -194,8 +290,14 @@ public class ChatActivity extends AppCompatActivity {
 			openKeyboard(fiBinding.chatEditText);
 		}
 
+
 		if (msg instanceof RequestSignature) {
 			releaseControls();
+			releaseAllControls();
+			hideAppBar();
+			hideStatusBar();
+			binding.footer.setPadding(0, 0, 0, 0);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
@@ -207,7 +309,7 @@ public class ChatActivity extends AppCompatActivity {
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
 				loadingDialog.show();
 
-				Observable.interval(1500, TimeUnit.MILLISECONDS)
+				Observable.interval(1, TimeUnit.SECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
 						.first((long) 1)
 						.subscribe(i -> {
@@ -221,10 +323,19 @@ public class ChatActivity extends AppCompatActivity {
 								MessageBox.INSTANCE.add(new SignatureVerified());
 								returnToInitialControl();
 
+								showAppBar();
+								showStatusBar();
+
 								FragmentTransaction transaction = getFragmentManager().beginTransaction();
 								transaction.remove(signRegistFragment).commit();
 
 								dialog.dismiss();
+
+								returnToInitialControl();
+
+                                binding.chatView.scrollToBottom();
+								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
 							});
 							dialog.show();
 						}, throwable -> {
@@ -279,14 +390,14 @@ public class ChatActivity extends AppCompatActivity {
 			dialog.show();
 		}
 
-		if(msg instanceof RequestRemoveControls) {
+		if (msg instanceof RequestRemoveControls) {
 			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            if(capturePicFragment != null) {
-                transaction.remove(capturePicFragment);
-            }
-            if(signRegistFragment != null) {
-                transaction.remove(signRegistFragment);
-            }
+			if (capturePicFragment != null) {
+				transaction.remove(capturePicFragment);
+			}
+			if (signRegistFragment != null) {
+				transaction.remove(signRegistFragment);
+			}
 			transaction.commit();
 
 			this.returnToInitialControl();
@@ -300,6 +411,28 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof DismissKeyboard) {
 			returnToInitialControl();
 		}
+
+		if(msg instanceof RequestContactPermission) {
+            if(!hasContactPermission())
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
+        }
+	}
+
+	private void showStatusBar() {
+		getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+	}
+
+	private void showAppBar() {
+		binding.appbar.setVisibility(View.VISIBLE);
+	}
+
+	private void hideAppBar() {
+		binding.appbar.setVisibility(View.GONE);
+	}
+
+	private void hideStatusBar() {
+		getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+				WindowManager.LayoutParams.FLAG_FULLSCREEN);
 	}
 
 	public void onSendButtonClickEvent() {
@@ -316,12 +449,23 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
-		if (hasFocus)
+		if (hasFocus) {
 			runOnUiThread(this::hideExControl);
+            runOnUiThread(() -> {
+                binding.chatView.scrollToBottom();
+            });
+		}
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {
-		fiBinding.sendButton.setEnabled(!value.toString().isEmpty());
+        boolean enabled = !value.toString().isEmpty();
+        fiBinding.sendButton.setEnabled(enabled);
+
+        if(enabled) {
+            fiBinding.sendButton.setImageResource(R.drawable.btn_send_50);
+        } else {
+            fiBinding.sendButton.setImageResource(R.drawable.btn_mike_50);
+        }
 	}
 
 	private void clearInput() {
@@ -332,13 +476,20 @@ public class ChatActivity extends AppCompatActivity {
 	private void hideExControl() {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
-		fiBinding.showExControl.setImageResource(R.drawable.ic_add_white_24dp);
+		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
+		ivCtrl.animate().rotation(0).setInterpolator(new LinearInterpolator())
+				.setDuration(300);
+
 	}
 
 	private void showExControl() {
 		isExControlAvailable = true;
-		binding.footer.addView(exControlView);
-		fiBinding.showExControl.setImageResource(R.drawable.ic_close_white_24dp);
+		binding.footer.addView(exControlView, 0);
+		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
+		ivCtrl.animate().rotation(45).setInterpolator(new LinearInterpolator())
+				.setDuration(300);
+
+        binding.chatView.scrollToBottom();
 	}
 
 	private void preInitControlViews() {
@@ -348,6 +499,8 @@ public class ChatActivity extends AppCompatActivity {
 		transferView = inflate(R.layout.chat_transfer);
 
 		fiBinding = ChatFooterInputBinding.bind(footerInputs);
+        fiBinding.sendButton.setEnabled(false);
+
 		RxView.focusChanges(fiBinding.chatEditText)
 				.delay(100, TimeUnit.MILLISECONDS)
 				.subscribe(this::chatEditFieldFocusChanged);
@@ -378,55 +531,85 @@ public class ChatActivity extends AppCompatActivity {
 		exControlView = inflate(R.layout.chat_extended_control);
 		ecBinding = DataBindingUtil.bind(exControlView);
 
-		ControlPagerAdapter adapter = new ControlPagerAdapter(getSupportFragmentManager());
-		adapter.setDoOnControl(this::hideExControl);
-		adapter.setSettingControl(() -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
-		ecBinding.extendedControl.setAdapter(adapter);
+        // 하단 버튼 설정
+		RxView.clicks(ecBinding.button1)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_open_account), R.drawable.icon_stankbank01));
+					hideExControl();
+				});
 
-		RxViewPager.pageSelections(ecBinding.extendedControl)
-			.subscribe(pos -> {
-				if (pos == 0) {
-					ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-					ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-				} else {
-					ecBinding.bullet1.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_deactivated));
-					ecBinding.bullet2.setBackground(ContextCompat.getDrawable(this, R.drawable.bullet_activated));
-				}
-			});
+		RxView.clicks(ecBinding.button2)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_transfer), R.drawable.icon_stankbank02));
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button3)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_view_account_details), R.drawable.icon_stankbank03));
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button4)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_secured_mirocredit), R.drawable.icon_stankbank04));
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button5)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(ChatActivity.this, SettingsActivity.class);
+                    startActivity(intent);
+					hideExControl();
+				});
+
+		RxView.clicks(ecBinding.button6)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_stankbank06));
+					hideExControl();
+				});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
 		ctBinding.gvKeypad.onComplete(() -> {
-			// 잔액
-			int balance = TransactionDB.INSTANCE.getBalance();
-			String moneyAsString = ctBinding.editMoney.getText().toString();
-			int money = 0;
-			try {
-				money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
-			}
+            if(!(TransactionDB.INSTANCE.getTxName() == null || TransactionDB.INSTANCE.getTxName().equals(""))) {
+                // 잔액
+                int balance = TransactionDB.INSTANCE.getBalance();
+                String moneyAsString = ctBinding.editMoney.getText().toString();
+                int money = 0;
+                try {
+                    money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
 
-			if (money > balance) {
-				DangerDialog dialog = new DangerDialog(this);
-				dialog.setTitle(getString(R.string.common_string_warning));
-				dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
-				dialog.setButtonText(getString(R.string.setting_string_yes));
-				dialog.setDoneListener(() -> {
-					ctBinding.editMoney.setText("");
-					ctBinding.editMoney.requestFocus();
+                if (money > balance) {
+                    DangerDialog dialog = new DangerDialog(this);
+                    dialog.setTitle(getString(R.string.common_string_warning));
+                    dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
+                    dialog.setButtonText(getString(R.string.setting_string_yes));
+                    dialog.setDoneListener(() -> {
+                        ctBinding.editMoney.setText("");
+                        ctBinding.editMoney.requestFocus();
 
-					dialog.dismiss();
-				});
-				dialog.show();
-			} else {
-				TransactionDB.INSTANCE.setTxMoney(moneyAsString);
+                        dialog.dismiss();
+                    });
+                    dialog.show();
+                } else {
+                    TransactionDB.INSTANCE.setTxMoney(moneyAsString);
 
-				ctBinding.editMoney.setText("");
-				this.returnToInitialControl();
+                    ctBinding.editMoney.setText("");
+                    this.returnToInitialControl();
 
-				MessageBox.INSTANCE.add(new TransferButtonPressed());
-			}
+                    MessageBox.INSTANCE.add(new TransferButtonPressed());
+                }
+            }
 		});
 
 		binding.footer.addView(footerInputs);
@@ -437,21 +620,21 @@ public class ChatActivity extends AppCompatActivity {
 	 */
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-		if (ev.getAction() == MotionEvent.ACTION_DOWN) {
-			View v = getCurrentFocus();
-			if (v instanceof EditText) {
-				Rect editTextRect = new Rect();
-				v.getGlobalVisibleRect(editTextRect);
+        if(ev.getAction() == MotionEvent.ACTION_UP) {
+            View v = getCurrentFocus();
+            if (v instanceof EditText) {
+                Rect editTextRect = new Rect();
+                v.getGlobalVisibleRect(editTextRect);
 
-				Rect sendButtonRect = new Rect();
-				fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
+                Rect sendButtonRect = new Rect();
+                fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
 
-				if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
-						&& !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-					dismissKeyboard(v);
-				}
-			}
-		}
+                if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
+                        && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+                    dismissKeyboard(v);
+                }
+            }
+        }
 
 		return super.dispatchTouchEvent(ev);
 	}
@@ -481,6 +664,11 @@ public class ChatActivity extends AppCompatActivity {
 	private void returnToInitialControl() {
 		releaseAllControls();
 		binding.footer.addView(footerInputs);
+
+		binding.footer.setPadding(Converter.dpToPx(5),
+				Converter.dpToPx(5),
+				Converter.dpToPx(5),
+				Converter.dpToPx(5));
 	}
 
 	private View inflate(int layoutId) {
@@ -491,7 +679,6 @@ public class ChatActivity extends AppCompatActivity {
 	@Override
 	protected void onResume() {
 		super.onResume();
-
 	}
 
 	@Override
@@ -545,9 +732,13 @@ public class ChatActivity extends AppCompatActivity {
 	private ChatComponent getComponent() {
 		return DaggerChatComponent
 				.builder()
-				.appComponent(((MyApplication) getApplication()).getAppComponent())
+				.appComponent(((MyApplication) getApplication()).getMyAppComponent())
 				.activityModule(new ActivityModule(this))
 				.build();
 	}
+
+	private boolean hasContactPermission() {
+        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS ) == PackageManager.PERMISSION_GRANTED;
+    }
 
 }

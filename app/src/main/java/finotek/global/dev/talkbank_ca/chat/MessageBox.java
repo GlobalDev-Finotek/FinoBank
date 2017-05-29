@@ -6,62 +6,82 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import finotek.global.dev.talkbank_ca.chat.messages.WaitForMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
+import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import io.reactivex.Flowable;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
 // Singleton Instance
 public enum MessageBox {
-    INSTANCE;
+	INSTANCE;
 
-    public final BehaviorSubject<Object> observable;
-    private final List<Object> messages;
+	public final BehaviorSubject<Object> observable;
+	private final List<Object> messages;
 
-    MessageBox() {
-        messages = new ArrayList<>();
-        observable = BehaviorSubject.create();
-    }
+	MessageBox() {
+		messages = new ArrayList<>();
+		observable = BehaviorSubject.create();
+	}
 
-    public void add(Object msg) {
-        messages.add(msg);
-
-	    Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
-
-        Flowable.interval(200, TimeUnit.MILLISECONDS)
-            .observeOn(AndroidSchedulers.mainThread())
-            .first((long) 1)
-            .subscribe(value -> {
-                if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-                    observable.onNext(new WaitForMessage());
-                }
-
-                observable.onNext(msg);
-            });
-    }
-
-    public void delay(Object msg, int delay){
-        messages.add(msg);
-
-        Flowable.interval(delay, TimeUnit.MILLISECONDS)
+    public void addAndWait(ReceiveMessage msg) {
+        Flowable.range(0, 3)
                 .observeOn(AndroidSchedulers.mainThread())
-                .first((long) 1)
-                .subscribe(value -> {
-                    if (!(msg instanceof EnableToEditMoney) && !(msg instanceof SelectedContact)) {
-                        observable.onNext(new WaitForMessage());
-                    }
+                .concatMap(i -> {
+                    if(i == 0)
+                        return Flowable.just(new WaitResult());
 
-                    observable.onNext(msg);
-                });
+                    if(i == 1)
+                        return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
+
+                    if(i == 2)
+                        return Flowable.just(msg).delay(600, TimeUnit.MILLISECONDS);
+
+                    return null;
+                })
+                .subscribe(observable::onNext);
     }
 
-    public void removeAt(int index) {
-        messages.remove(index);
-    }
+	public void addAndWait(Object... msg) {
+		Flowable.range(0, msg.length+2)
+				.observeOn(AndroidSchedulers.mainThread())
+				.concatMap(i -> {
+                    if(i == 0)
+                        return Flowable.just(new WaitResult()); 
+                    if(i == 1)
+                        return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
 
-    public int size() {
-        return messages.size();
-    }
+                    return Flowable.just(msg[i-2]).delay(600, TimeUnit.MILLISECONDS);
+                })
+				.subscribe(observable::onNext);
+	}
+
+	public void add(Object msg, int delay) {
+		messages.add(msg);
+
+		Log.d("FINO-TB", "Message Received: " + msg.getClass().getName());
+
+		Flowable.interval(delay, TimeUnit.MILLISECONDS)
+				.observeOn(AndroidSchedulers.mainThread())
+				.first((long) 1)
+				.subscribe(value -> {
+					observable.onNext(msg);
+				});
+	}
+
+	public void add(Object msg) {
+		add(msg, 200);
+	}
+
+	public void removeAt(int index) {
+		messages.remove(index);
+	}
+
+	public int size() {
+		return messages.size();
+	}
 }

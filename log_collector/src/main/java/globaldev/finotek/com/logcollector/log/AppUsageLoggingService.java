@@ -32,7 +32,7 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 
 	AesInstance ai;
 
-	AppUsageLoggingService() {
+	public AppUsageLoggingService() {
 	}
 
 	@Override

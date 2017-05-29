@@ -36,7 +36,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 	private long startTime;
 	private AesInstance ai;
 
-	CallLogHistoryLoggingService() {
+	public CallLogHistoryLoggingService() {
 
 	}
 

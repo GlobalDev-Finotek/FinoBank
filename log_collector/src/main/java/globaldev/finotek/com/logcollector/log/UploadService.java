@@ -10,7 +10,7 @@ import java.util.List;
 public class UploadService extends BaseLoggingService {
 
 
-	UploadService() {
+	public UploadService() {
 
 	}
 

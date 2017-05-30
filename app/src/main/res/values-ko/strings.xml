@@ -172,7 +172,7 @@
     <string name="dialog_string_amount_transfer">이체 금액</string>
     <string name="dialog_chat_microedit_cancel">소액 담보대출을 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_home_address_type">집 주소를 입력해 주세요.</string>
-    <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만 &#8361; 까지 2.0%의 금리로 대출 가능합니다.\n대출 신청 금액을 입력해 주세요</string>
+    <string name="dialog_chat_loan_amount_type">입력하신 주소로 담보 설정 시 최대 5천만원 까지 2.0%의 금리로 대출 가능합니다.\n대출 신청 금액을 입력해 주세요</string>
     <string name="dialog_string_term_agreement_accept">약관 확인 및 동의를 진행해 주세요.</string>
     <string name="dialog_string_mandatory_term_accept">필수 항목 전체 동의</string>
     <string name="dialog_string_loan_service_user_agreement">대출 서비스 이용 약관</string>
@@ -226,7 +226,7 @@
     <string name="setting_string_six_digit">6자리 숫자로 PIN 코드를 입력해 주세요.</string>
     <string name="setting_string_secure_keyboard_operating">보안 키보드 작동 중</string>
     <string name="setting_string_registered_signature_purpose">등록한 사진은 필요 시 본인 확인용으로 사용됩니다.</string>
-    <string name="dialog_chat_loan_apply">거래 내역 확인 결과, “&#8361; 데이 대출”을 추천합니다.\n최대 5천만 &#8361;  이내, 최저 금리는 2.0%입니다.\n대출을 신청하시겠습니까?</string>
+    <string name="dialog_chat_loan_apply">거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만원 이내, 최저 금리는 2.0%입니다.\n대출을 신청하시겠습니까?</string>
     <string name="dialog_chat_preview">미리보기</string>
     <string name="dialog_chat_save">저장</string>
     <string name="registration_button_pin_code_chanage">PIN 코드 변경</string>
@@ -250,7 +250,7 @@
     <string name="setting_string_pin_code_type">변경할 PIN 코드 입력</string>
     <string name="setting_string_profile_picture">인증 사진</string>
     <string name="dialog_string_input_message">메세지를 입력해주세요.</string>
-    <string name="dialog_chat_recognize_error">&#8361; 하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
+    <string name="dialog_chat_recognize_error">원하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
     <string name="dialog_chat_receive_email">상담 내역을 이메일로 받아보시겠습니까?</string>
     <string name="dialog_string_email_sent">전송되었습니다.</string>
     <string name="dialog_string_email_cancel">취소되었습니다.</string>
@@ -379,7 +379,6 @@
     <string name ="main_string_recommend_parents_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_parents_cancle">취소되었습니다.</string>
 
-
     <string name = "main_string_recommend_house_yes">예, 대출을 진행해주세요.</string>
 
     <string name = "main_string_recommend_finished">오늘의 추천 사항은 모두 완료되었습니다. 더 필요한 것이 있으시면 \'+\'를 누르세요.</string>
@@ -393,4 +392,3 @@
     <string name="dialog_string_id_card_type">신분증 유형</string>
     <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인을 위해 주민등록증이나 운전면허증이 필요합니다. 준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
 </resources>
-

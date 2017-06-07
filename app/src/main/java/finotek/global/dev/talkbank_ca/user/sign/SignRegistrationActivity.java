@@ -83,7 +83,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 				PrimaryDialog loadingDialog = new PrimaryDialog(SignRegistrationActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
-				loadingDialog.show();
+				loadingDialog.showWithRatio(0.50f);
 
 				Observable.interval(1500, TimeUnit.MILLISECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
@@ -105,7 +105,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 								startActivity(intent2);
 								finish();
 							});
-							dialog.show();
+							dialog.showWithRatio(0.50f);
 						});
 			});
 		} catch (NullPointerException e) {

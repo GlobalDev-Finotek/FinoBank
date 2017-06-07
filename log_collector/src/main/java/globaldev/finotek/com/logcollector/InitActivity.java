@@ -25,6 +25,7 @@ import globaldev.finotek.com.logcollector.model.User;
 import globaldev.finotek.com.logcollector.model.UserDevice;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoService;
+import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
 /**
@@ -33,7 +34,7 @@ import io.reactivex.functions.Consumer;
 
 public abstract class InitActivity extends AppCompatActivity {
 
-	private static final int MY_PERMISSION_READ_CALL_LOG = 11234;
+	public static final int PERMISSION_READ_LOG = 11234;
 
 	@Inject
 	RxEventBus eventBus;
@@ -59,15 +60,16 @@ public abstract class InitActivity extends AppCompatActivity {
 						Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
 						Manifest.permission.ACCESS_WIFI_STATE, android.Manifest.permission_group.SMS,
 						android.Manifest.permission.READ_PHONE_STATE},
-				MY_PERMISSION_READ_CALL_LOG);
+				PERMISSION_READ_LOG);
 
-       /*
-            앱 사용기록 사용권환 얻기
-            > 나타나는 설정 화면에서 앱 사용기록 접근 허용으로 체크해야합니다.
-        */
+    /*
+    앱 사용기록 사용권환 얻기 -> 나타나는 설정 화면에서 앱 사용기록 접근 허용으로 체크해야합니다.
+    */
 		if (!hasPermission()) {
 			Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
 			startActivity(intent);
+		} else {
+			onAlreadyRegistered();
 		}
 
 
@@ -101,9 +103,11 @@ public abstract class InitActivity extends AppCompatActivity {
 
 	protected abstract void onAfterUserRegistered();
 
+	protected abstract void onAlreadyRegistered();
+
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		if (requestCode == MY_PERMISSION_READ_CALL_LOG) {
+		if (requestCode == PERMISSION_READ_LOG) {
 			eventBus.subscribe(RxEventBus.REGISTER_FCM, this, new Consumer<Object>() {
 				@Override
 				public void accept(Object o) throws Exception {
@@ -123,17 +127,21 @@ public abstract class InitActivity extends AppCompatActivity {
 											.putString(getString(R.string.shared_prefs_push_token), userInitResponse.getToken())
 											.apply();
 
-									onAfterUserRegistered();
+
 								}
 							}, new Consumer<Throwable>() {
 								@Override
 								public void accept(Throwable throwable) throws Exception {
 									FirebaseCrash.report(throwable);
 								}
+							}, new Action() {
+								@Override
+								public void run() throws Exception {
+									onAfterUserRegistered();
+								}
 							});
 				}
 			});
-
 		}
 	}
 }

@@ -20,7 +20,6 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.databinding.ChatIdCardBinding;
 import finotek.global.dev.talkbank_ca.util.Converter;
-import finotek.global.dev.talkbank_ca.util.MyTransformation;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
@@ -48,16 +47,16 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 				ExifInterface exifInterface = new ExifInterface(imgPath);
 				int orientation = Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
 
-
 				holder.binding.idCardInfo.setVisibility(View.GONE);
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 						Converter.dpToPx(200), Converter.dpToPx(240));
 				holder.binding.idCardImg.setLayoutParams(lp);
-				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_START);
+				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_END);
 
 				Glide.with(context)
 						.load(imgPath)
 						.bitmapTransform(new RoundedCornersTransformation(context, 40, 0, RoundedCornersTransformation.CornerType.ALL))
+						.fitCenter()
 						.into(holder.binding.idCardImg);
 
 			} else {

@@ -3,16 +3,19 @@ package globaldev.finotek.com.logcollector.model;
 import com.google.gson.Gson;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by JungwonSeo on 2017-04-26.
  */
-
+@RealmClass
 public class ApplicationLog extends RealmObject {
 	public String appName;
 	public String startTime;
 	public double duration;
 	int type = ActionType.GATHER_APP_USAGE_LOG;
+	@PrimaryKey
 	private String logTime = String.valueOf(System.currentTimeMillis());
 
 	public ApplicationLog() {

@@ -104,11 +104,13 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 						isSent = true;
 
 					String duration = c.getString(2);
-					String targetName = ai.encText(c.getString(3));
+					String targetName = c.getString(3);
 
 					if (TextUtils.isEmpty(targetName)) {
 						targetName = " ";
 					}
+
+					targetName = ai.encText(targetName);
 
 					String logTime = c.getString(4);
 

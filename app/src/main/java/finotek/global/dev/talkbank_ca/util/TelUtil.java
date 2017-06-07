@@ -12,13 +12,18 @@ import android.text.TextUtils;
 
 public class TelUtil {
 	public static String getMyPhoneNumber(Context context) {
-		TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		String phoneNumber = tMgr.getLine1Number();
 
-		if (TextUtils.isEmpty(phoneNumber)) {
+		try {
+			TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+			String phoneNumber = tMgr.getLine1Number();
+
+			if (TextUtils.isEmpty(phoneNumber)) {
+				return "0";
+			} else {
+				return phoneNumber;
+			}
+		} catch (Exception e) {
 			return "0";
-		} else {
-			return phoneNumber;
 		}
 	}
 

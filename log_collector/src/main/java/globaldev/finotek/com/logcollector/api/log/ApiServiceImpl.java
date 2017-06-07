@@ -43,6 +43,7 @@ public class ApiServiceImpl {
 						.setParam(historyLogUploadLogParam)
 						.build();
 
+
 		return logService.updateCallLog(updateLogRequest)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
@@ -60,7 +61,6 @@ public class ApiServiceImpl {
 				new BaseRequest.Builder<UploadLogParam<LocationLog>>()
 						.setParam(historyLogUploadLogParam)
 						.build();
-
 		return logService.updateLocationLog(updateLogRequest)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
@@ -77,7 +77,6 @@ public class ApiServiceImpl {
 				new BaseRequest.Builder<UploadLogParam<ApplicationLog>>()
 						.setParam(applicationLogUploadLogParam)
 						.build();
-
 		return logService.updateAppUsageLog(updateLogRequest)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread());
@@ -94,7 +93,6 @@ public class ApiServiceImpl {
 				new BaseRequest.Builder<UploadLogParam<DeviceSecurityLevel>>()
 						.setParam(deviceSecureLogParam)
 						.build();
-
 		return logService.updateDeviceSecurityLog(updateLogRequest)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread());
@@ -111,7 +109,6 @@ public class ApiServiceImpl {
 				new BaseRequest.Builder<UploadLogParam<MessageLog>>()
 						.setParam(messageLogUploadLogParam)
 						.build();
-
 		return logService.updateSMSLog(updateLogRequest)
 				.subscribeOn(Schedulers.newThread())
 				.observeOn(AndroidSchedulers.mainThread());

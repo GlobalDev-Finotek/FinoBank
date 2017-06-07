@@ -286,7 +286,7 @@
     <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
     <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73점 \n (통화기록: 85점, 문자기록: 66점, 위치기록:54점)\n 으로 %1$s 님을 확인하였습니다. </string>
-    <string name ="main_string_v2_login_hello">%1$s님 안녕하세요, </string>
+    <string name="main_string_v2_login_hello">%1$s님 안녕하세요\n</string>
     <string name ="main_string_v2_login_hello_M">좋은 아침이에요, 오늘도 즐거운 하루 되세요!!!</string>
     <string name ="main_string_v2_login_hello_L">식사는 하셨나요? 활기찬 오후 되세요~</string>
     <string name ="main_string_v2_login_hello_E">오늘 하루는 어떠셨나요? 좋은 음악을 들으며 하루를 되돌아보는 시간을 갖는건 어떨까요?</string>
@@ -306,7 +306,7 @@
     <string name ="main_string_v2_login_electricity_compare">이번 달 요금은 %1$s&#8361; 으로 지난 달보다 %2$s&#8361;  많이 쓰셨네요!</string>
     <string name ="main_string_v2_login_electricity_recommend"> 지금 추천드리는 공과금 납부 통장을 개설하고 이체하시면 바로 할인되는 공과금 납부 전용 통장을 만드시는 것은 어떠세요?</string>
     <string name ="main_string_v2_login_electricity_no">아니요, 그냥 이체할게요</string>
-    <string name ="main_string_v2_login_electricity_confirm">%1$s님은 100만&#8361;  이하 이체일 경우 맥락 인증만으로 이체가 가능하며, 전기요금 %1$s&#8361;
+    <string name="main_string_v2_login_electricity_confirm">%1$s님은 1000,000&#8361;  이하 이체일 경우 맥락 인증만으로 이체가 가능하며, 전기요금 %1$s&#8361;
  이체를 완료했습니다.</string>
     <string name ="main_string_v2_login_electricity_balance">현재 계좌 잔액은  %1$s입니다. 맥락인증 이체 금액은 설정에서 변경 가능합니다.</string>
     <string name ="main_string_v2_login_electricity_yes">예, 통장 개설 후 이체할게요</string>
@@ -326,7 +326,7 @@
     <string name ="main_string_v2_login_saving_no_confirm"> 아 그러시군요, 매일 이렇게 같이 있는데도 아직 %1$s님을 잘 모르나봐요.. 그럼 어떤것이 필요하세요?</string>
     <string name ="main_string_v2_login_saving_yes">예 통장을 만들게요</string>
     <string name ="main_string_v2_login_house_ask">혹시 주택을 구입하실 생각인가요? 여러 부동산 거래 매장에 방문하시는 것이 확인되었습니다.</string>
-    <string name ="main_string_v2_login_house_recommend"> 대출은 2.5%% 금리로 최고 7백만&#8361; 까지 이용하실 수 있습니다. 주택 담보 대출을 신청하시겠습니까?</string>
+    <string name="main_string_v2_login_house_recommend"> 대출은 2.5% 금리로 최고 7000,000&#8361; 까지 이용하실 수 있습니다. 주택 담보 대출을 신청하시겠습니까?</string>
     <string name ="main_string_v2_login_house_yes">예</string>
     <string name ="main_string_v2_login_house_no">아니요, 필요없어요</string>
     <string name ="main_string_v2_login_house_no_confirm"> 아 그러시군요, 매일 이렇게 같이 있는데도 아직 %1$s님을 잘 모르나봐요.. 그럼 어떤것이 필요하세요?</string>
@@ -364,7 +364,7 @@
     <string name = "main_string_recommend_electric_transfer_ask">가상 납부 계좌로 51,490&#8361;  이체하시겠습니까?</string>
     <string name = "main_string_recommend_electric_transfer_yes">예, 지금 이체 하겠습니다.</string>
     <string name = "main_string_recommend_electric_transfer_no">아니오, 나중에 하겠습니다.</string>
-    <string name ="main_string_recommend_electric_transfer_success">전기료 %1$s&#8361; 이 주계좌에서 납부 완료 되었습니다. 이체 후 잔액은 %2$s 입니다.\n 100만&#8361;  이하이므로 맥락인증으로 인증되었습니다.</string>
+    <string name="main_string_recommend_electric_transfer_success">전기료 %1$s&#8361; 이 주계좌에서 납부 완료 되었습니다. 이체 후 잔액은 %2$s 입니다.\n 1000,000&#8361;  이하이므로 맥락인증으로 인증되었습니다.</string>
     <string name ="main_string_recommend_electric_transfer_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_electric_transfer_cancle">취소되었습니다.</string>
 
@@ -372,10 +372,10 @@
 
     <string name = "main_string_recommend_parents_title">부모님 용돈</string>
     <string name = "main_string_recommend_parents_intro">맥락 정보에 의하면 매달 오늘 부모님께 용돈을 드리는 날입니다. </string>
-    <string name = "main_string_recommend_parents_ask">어머님 계좌로 300,000만&#8361; 을 이체하시겠습니까?</string>
+    <string name="main_string_recommend_parents_ask">어머님 계좌로 300,000&#8361; 을 이체하시겠습니까?</string>
     <string name = "main_string_recommend_parents_yes">예, 이체해주세요.</string>
     <string name = "main_string_recommend_parents_no">아니오, 나중에 하겠습니다.</string>
-    <string name ="main_string_recommend_parents_success">용돈 300,000&#8361; 이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 %1$s 입니다. \n 100만&#8361;  이하이므로 맥락인증으로 인증되었습니다.</string>
+    <string name="main_string_recommend_parents_success">용돈 300,000&#8361; 이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 %1$s 입니다. \n 1000,000&#8361;  이하이므로 맥락인증으로 인증되었습니다.</string>
     <string name ="main_string_recommend_parents_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_parents_cancle">취소되었습니다.</string>
 

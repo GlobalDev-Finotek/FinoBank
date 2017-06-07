@@ -6,7 +6,9 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 
 import java.util.List;
 
@@ -61,7 +63,7 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 	}
 
 
-
+	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Override
 	protected void parse() {
 

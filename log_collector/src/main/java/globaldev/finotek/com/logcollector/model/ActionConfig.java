@@ -13,6 +13,7 @@ public class ActionConfig<T> {
 	boolean requiresDeviceIdle;
 	boolean persisted;
 	T option;
+	private long minimumLatency;
 
 	public T getOption() {
 		return option;
@@ -76,6 +77,10 @@ public class ActionConfig<T> {
 
 	public void setPersisted(boolean persisted) {
 		this.persisted = persisted;
+	}
+
+	public long getMinimumLatency() {
+		return minimumLatency;
 	}
 
 	public static class CallHistoryLogOption {

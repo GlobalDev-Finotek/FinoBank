@@ -56,7 +56,7 @@
     <string name="registration_string_pin_code_type">Please type 6 digit PIN code</string>
     <string name="registration_string_pin_code_color_verify">When you try to verify PIN code, text and background color should be matched with registered color</string>
     <string name="registration_string_secure_keyboard_operating">Secured keyboard operating</string>
-    <string name="main_string_talkbank">TalkBank</string>
+    <string name="main_string_talkbank">FinoBank</string>
     <string name="main_actoin_settings">Settings</string>
     <string name="main_action_seach">Seach</string>
     <string name="main_action_edit">Edit</string>
@@ -156,7 +156,7 @@
     <string name="dialog_chat_electricity_fare">Electric rates</string>
     <string name="dialog_chat_transaction">I analyzed the context data of %1$s, You paid the electricity bill every month on the %3$d th.\nI checked your SMS message. This month\'s bill is %2$s won.\nWould you like to transfer the electricity bill of %2$s won?</string>
     <string name="dialog_chat_transfer_to_someone">Would you like to transfer %2$s won to %1$s(010&#8211;5678&#8211;1234)?</string>
-    <string name="dialog_button_transfer_other">Talkbank AI Recommendation Transfer</string>
+    <string name="dialog_button_transfer_other">Finobank AI Recommendation Transfer</string>
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
     <string name="dialog_chat_after_transfer">You\'ve transferred %2$s won to %1$s(010&#8211;5678&#8211;1234). Your current balance is %3$s won. \nIs there anything else that I can help you with?</string>
@@ -329,7 +329,7 @@
     <string name ="main_string_v2_login_saving_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>
     <string name ="main_string_v2_login_saving_yes">Yes, I want to open saving account</string>
     <string name ="main_string_v2_login_house_ask"> Do you have a plan to buy a new house? It has been confirmed that you visit several brands of real estate agent office. </string>
-    <string name ="main_string_v2_login_house_recommend">You may request up to 7 million won and 2.5%% interest rate.  do you want to apply loan?</string>
+    <string name ="main_string_v2_login_house_recommend">You may request up to 7 million won and 2.5% interest rate.  do you want to apply loan?</string>
     <string name ="main_string_v2_login_house_yes">Yes</string>
     <string name ="main_string_v2_login_house_no">No thanks</string>
     <string name ="main_string_v2_login_house_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>

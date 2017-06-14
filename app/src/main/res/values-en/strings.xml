@@ -56,7 +56,7 @@
     <string name="registration_string_pin_code_type">Please type 6 digit PIN code</string>
     <string name="registration_string_pin_code_color_verify">When you try to verify PIN code, text and background color should be matched with registered color</string>
     <string name="registration_string_secure_keyboard_operating">Secured keyboard operating</string>
-    <string name="main_string_talkbank">TalkBank</string>
+    <string name="main_string_talkbank">FinoBank</string>
     <string name="main_actoin_settings">Settings</string>
     <string name="main_action_seach">Seach</string>
     <string name="main_action_edit">Edit</string>
@@ -152,17 +152,17 @@
     <string name="dialog_chat_open_account_sign_tip">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail</string>
     <string name="dialog_chat_open_account_success">You\'ve successfully opened your account. Is there anything else that I can help you with?</string>
     <string name="dialog_chat_anything_help">Is there anything else that I can help you with?</string>
-    <string name="dialog_chat_after_transfer_by_ai">Electric rates of %1$s &#8361;  was transferred. Your current balance is %2$s &#8361; .\nAdditionally\nI checked %3$s \'s schedule\nTomorrow is mother\'s birthday.\nTo Mother (010&#8211;9876&#8211;5432)\nWould you like to transfer 1,000,000 &#8361;  like last year\'s birthday?</string>
+    <string name="dialog_chat_after_transfer_by_ai">Electric rates of &#8361;%1$s was transferred. Your current balance is &#8361;%2$s .\nAdditionally\nI checked %3$s \'s schedule\nTomorrow is mother\'s birthday.\nTo Mother (010&#8211;9876&#8211;5432)\nWould you like to transfer &#8361;1,000,000 like last year\'s birthday?</string>
     <string name="dialog_chat_after_transfer_to_mother">Mother</string>
     <string name="dialog_chat_electricity_fare">Electric rates</string>
-    <string name="dialog_chat_transaction">I analyzed the context data of %1$s, You paid the electricity bill every month on the %3$d th.\nI checked your SMS message. This month\'s bill is %2$s &#8361; .\nWould you like to transfer the electricity bill of %2$s &#8361; ?</string>
-    <string name="dialog_chat_transfer_to_someone">Would you like to transfer %2$s &#8361;  to %1$s(010&#8211;5678&#8211;1234)?</string>
-    <string name="dialog_button_transfer_other">Talkbank AI Recommendation Transfer</string>
+    <string name="dialog_chat_transaction">I analyzed the context data of %1$s, You paid the electricity bill every month on the %3$d th.\nI checked your SMS message. This month\'s bill is &#8361;%2$s .\nWould you like to transfer the electricity bill of &#8361;%2$s?</string>
+    <string name="dialog_chat_transfer_to_someone">Would you like to transfer &#8361;%2$s to %1$s(010&#8211;5678&#8211;1234)?</string>
+    <string name="dialog_button_transfer_other">Finobank AI Recommendation Transfer</string>
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
-    <string name="dialog_chat_after_transfer">You\'ve transferred %2$s &#8361;  to %1$s(010&#8211;5678&#8211;1234). Your current balance is %3$s &#8361; . \nIs there anything else that I can help you with?</string>
+    <string name="dialog_chat_after_transfer">You\'ve transferred &#8361;%2$s to %1$s(010&#8211;5678&#8211;1234). Your current balance is &#8361;%3$s. \nIs there anything else that I can help you with?</string>
     s
-    <string name="dialog_chat_send_transfer">Transfer %2$s &#8361;  to\n%1$s (010&#8211;5678&#8211;1234)</string>
+    <string name="dialog_chat_send_transfer">Transfer &#8361;%2$s to\n%1$s (010&#8211;5678&#8211;1234)</string>
     <string name="dialog_button_recent_transaction">Recent Transactions</string>
     <string name="dialog_button_transfer_add">Additional Transfer</string>
     <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
@@ -176,7 +176,7 @@
     <string name="dialog_string_amount_transfer">Amount</string>
     <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. What can i help you?</string>
     <string name="dialog_string_home_address_type">Type in your home address</string>
-    <string name="dialog_chat_loan_amount_type">You may loan up to 50 million &#8361;  with 2% interest rate.
+    <string name="dialog_chat_loan_amount_type">You may loan up to 50 million won with 2% interest rate.
     please write the ammount of loan you would like to request</string>
 
     <string name="dialog_string_term_agreement_accept">Accept to terms of agreement</string>
@@ -230,7 +230,7 @@
     <string name="setting_string_six_digit">Please type six digit PIN code</string>
     <string name="setting_string_secure_keyboard_operating">Operating secured keyboard</string>
     <string name="setting_string_registered_signature_purpose">Registered signature will be used for log-in and personal verification purpose</string>
-    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan". \nYou may request up to 50 million &#8361;  and 2.0% interest rate. \nDo you want to apply loan?</string>
+    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan". \nYou may request up to 50 million won and 2.0% interest rate. \nDo you want to apply loan?</string>
     <string name="dialog_chat_preview">Preview</string>
     <string name="dialog_chat_save">Save</string>
     <string name="registration_button_pin_code_chanage">Change PIN code</string>
@@ -296,7 +296,7 @@
     <string name ="main_string_v2_login_hello_L">Did you eat lunch? Enjoy the rest of your day~</string>
     <string name ="main_string_v2_login_hello_E"> How was it today? Listening to music and enjoy the rest of your day.</string>
     <string name ="main_string_v2_login_hello_N">it is lovely night. Have a sweet dream.</string>
-    <string name ="main_string_v2_login_notify_balance">For now, your balance of main account is %1$s.</string>
+    <string name ="main_string_v2_login_notify_balance">For now, your balance of main account is &#8361;%1$s.</string>
     <string name ="main_string_v2_login_recommend">I would you like to recommend to do these three process.</string>
     <string name ="main_string_v2_login_recommend_list">I recommend you to do these three lists.</string>
     <string name ="main_string_v2_login_recommend_task">%1$s, Here is a list for your task by analysing context data. </string>
@@ -308,10 +308,10 @@
     <string name ="main_string_v2_open_account_notice">OK. Let\'s open an account.</string>
     <string name ="main_string_v2_open_account_complete">You\'ve successfully opened your account. </string>
     <string name ="main_string_v2_login_electricity_message">Electricity bill payment message confirmed</string>
-    <string name ="main_string_v2_login_electricity_compare">This month fee is %1$s which is %2$s increasing than last month.</string>
+    <string name ="main_string_v2_login_electricity_compare">This month fee is &#8361;%1$s which is &#8361;%2$s increasing than last month.</string>
     <string name ="main_string_v2_login_electricity_recommend">After paying Electricity bill payment, I would you like to open new account for only bill payment. Do you want to proceed?</string>
     <string name ="main_string_v2_login_electricity_no">No, I only want to pay Electricity bill </string>
-    <string name ="main_string_v2_login_electricity_confirm"> %1$s, You can transfer money by context authentication when transferring money is below one million &#8361; . Also, Electricity fee  %1$s has paid.</string>
+    <string name ="main_string_v2_login_electricity_confirm"> %1$s, You can transfer money by context authentication when transferring money is below one million won. Also, Electricity fee &#8361;%1$s has paid.</string>
     <string name ="main_string_v2_login_electricity_balance"> Your account balance  %1$s. You can change amount of context authentication on the setting menu</string>
     <string name ="main_string_v2_login_electricity_yes">Yes, After paying Electricity bill, I want to open new account. </string>
     <string name ="main_string_v2_login_electricity_open_account">To open an account, you need to verify yourself with your personal ID card or driver\'s license or Student card, or business card.</string>
@@ -322,14 +322,14 @@
     <string name ="main_string_v2_sign_necessary">We need to check your signature for open an account.</string>
     <string name ="main_string_v2_login_electricity_signature">Finally, Sign your registered e-signature in the marked area by using fingertip, not finger nail </string>
 
-    <string name ="main_string_v2_login_electricity_account_confirm">Electricity fee %1$s has paid from bill payment account.</string>
+    <string name ="main_string_v2_login_electricity_account_confirm">Electricity fee &#8361;%1$s has paid from bill payment account.</string>
     <string name ="main_string_v2_login_saving_ask">These days, you are searching Da Nang.. So are you planning to have a trip? From December to February, it is said to be the best travel on Da Nang.</string>
     <string name ="main_string_v2_login_saving_recommend"> If you open saving account for traveling, i will give you Airline 5% discount coupon. Make a goal to save money for heading to Da Nang.</string>
     <string name ="main_string_v2_login_saving_no"> No thanks</string>
     <string name ="main_string_v2_login_saving_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>
     <string name ="main_string_v2_login_saving_yes">Yes, I want to open saving account</string>
     <string name ="main_string_v2_login_house_ask"> Do you have a plan to buy a new house? It has been confirmed that you visit several brands of real estate agent office. </string>
-    <string name ="main_string_v2_login_house_recommend">You may request up to 7 million &#8361;  and 2.5%% interest rate.  do you want to apply loan?</string>
+    <string name ="main_string_v2_login_house_recommend">You may request up to 7 million won and 2.5% interest rate.  do you want to apply loan?</string>
     <string name ="main_string_v2_login_house_yes">Yes</string>
     <string name ="main_string_v2_login_house_no">No thanks</string>
     <string name ="main_string_v2_login_house_no_confirm"> Oh Okay.. I do not know %1$s yet even though I am being together everyday. So, what do you need?</string>
@@ -354,7 +354,7 @@
     <string name = "main_string_v2_create_signature_agree_congratulation"> Congratulation!! User has been registered.</string>
     <string name = "main_string_v2_create_signature_agree_question">Please answer some questions in oder to understand your taste</string>
     <string name = "main_string_v2_create_signature_agree_ask">What can i help you </string>
-    <string name = "main_string_v2_create_signature_agree_transfer"> I found message from %1$s that request transfer money. Would you like to transfer the %1$s &#8361;  that you borrowed for lunch today?</string>
+    <string name = "main_string_v2_create_signature_agree_transfer"> I found message from %1$s that request transfer money. Would you like to transfer the &#8361;%1$s that you borrowed for lunch today?</string>
 
     <string name = "main_string_v2_create_signature_agree_no">No</string>
     <string name = "main_string_v2_create_signature_agree_no_confirm">If you do not agree for collecting context authentication data, you will not be able to use this service. Are you okay with it?</string>
@@ -364,21 +364,22 @@
 
     <string name = "main_string_recommend_menu">Recommendations</string>
     <string name = "main_string_recommend_electric_title">Payment of electricity bill</string>
-    <string name = "main_string_recommend_electric_transfer_ask">Would you like to transfer 51,490&#8361;  to your payment account?</string>
+    <string name = "main_string_recommend_electric_transfer_ask">Would you like to transfer
+        &#8361;51,490 to your payment account?</string>
     <string name = "main_string_recommend_electric_transfer_yes">Yes, please.</string>
     <string name = "main_string_recommend_electric_transfer_no">No, thanks.</string>
-    <string name = "main_string_recommend_electric_transfer_success">Electricity bill %1$s has paid from bill payment account. The balance is %2$s. Less than 1 million &#8361;  has been verified by Contextual Verification.</string>
+    <string name = "main_string_recommend_electric_transfer_success">Electricity bill &#8361;%1$s has paid from bill payment account. The balance is &#8361;%2$s. Less than 1 million won has been verified by Contextual Verification.</string>
     <string name = "main_string_recommend_electric_transfer_fail">Not enough deposit.</string>
     <string name = "main_string_recommend_electric_transfer_cancle">Request is canceled.</string>
 
     <string name = "main_string_recommend_travel_yes">Yes, open an account please</string>
 
     <string name = "main_string_recommend_parents_title">Parents pocket money</string>
-    <string name = "main_string_recommend_parents_ask">Would you like to transfer 300,000&#8361;  to your mother\'s account?</string>
-    <string name = "main_string_recommend_parents_intro">According to the contextual information, it is a day to give pocket money to parents today every month. Do you want to transfer 300 million &#8361;  to your parents?</string>
+    <string name = "main_string_recommend_parents_ask">Would you like to transfer &#8361;300,000 to your mother\'s account?</string>
+    <string name = "main_string_recommend_parents_intro">According to the contextual information, it is a day to give pocket money to parents today every month. Do you want to transfer &#8361;300,000 to your parents?</string>
     <string name = "main_string_recommend_parents_yes">Yes, please.</string>
     <string name = "main_string_recommend_parents_no">No, thanks.</string>
-    <string name ="main_string_recommend_parents_success">Pocket money 300,000 &#8361;  has been transferred to the mother\'s account. The balance is %1$s. Less than 1 million &#8361;  has been verified by Contextual Verification.</string>
+    <string name ="main_string_recommend_parents_success">Pocket money &#8361;300,000 has been transferred to the mother\'s account. The balance is &#8361;%1$s. Less than 1 million won  has been verified by Contextual Verification.</string>
     <string name ="main_string_recommend_parents_fail">Not enough deposit.</string>
     <string name ="main_string_recommend_parents_cancle">Request is canceled.</string>
 

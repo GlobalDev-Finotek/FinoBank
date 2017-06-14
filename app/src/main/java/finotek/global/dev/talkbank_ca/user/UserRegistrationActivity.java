@@ -33,18 +33,19 @@ import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
 
 public class UserRegistrationActivity extends AppCompatActivity implements UserRegisterView {
 
+	private final int REGISTER_SIGN = 1;
 	@Inject
 	UserRegisterImpl presenter;
 	private ActivityUserRegistrationBinding binding;
+	private boolean isSigned;
 
-  	@Override
-  	protected void onCreate(Bundle savedInstanceState) {
-    	super.onCreate(savedInstanceState);
-    	binding = DataBindingUtil.setContentView(this, R.layout.activity_user_registration);
-	  	getComponent().inject(this);
-	  	presenter.attachView(this);
-
-    	binding.toolbar.setTitle(getString(R.string.registration_string_register));
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		binding = DataBindingUtil.setContentView(this, R.layout.activity_user_registration);
+		getComponent().inject(this);
+		presenter.attachView(this);
+		binding.toolbar.setTitle(getString(R.string.registration_string_register));
 		binding.toolbar.setBackgroundColor(ContextCompat.getColor(this, R.color.colorPrimary));
 		binding.toolbar.setTitleTextColor(ContextCompat.getColor(this, android.R.color.white));
 		setSupportActionBar(binding.toolbar);
@@ -56,53 +57,53 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 		binding.llRegiAdditional.btnSave.setVisibility(View.GONE);
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureProfile)
-			  .subscribe(aVoid ->
-					  startActivity(new Intent(this, CaptureProfilePicActivity.class)));
+				.subscribe(aVoid ->
+						startActivity(new Intent(this, CaptureProfilePicActivity.class)));
 
 		binding.llRegiBasic.edtPhoneNumber.setText(TelUtil.getMyPhoneNumber(this));
 		binding.llRegiBasic.edtPhoneNumber.setMode(TalkBankEditText.MODE.DISABLED);
 
 		RxTextView.afterTextChangeEvents(binding.llRegiBasic.edtUserName)
-		  .subscribe(textViewAfterTextChangeEvent -> {
-			  if (textViewAfterTextChangeEvent.editable().length() > 0) {
-				  binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
-			  }
-		  });
+				.subscribe(textViewAfterTextChangeEvent -> {
+					if (textViewAfterTextChangeEvent.editable().length() > 0) {
+						binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.FOCUS);
+					}
+				});
 
 		RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
-		  .subscribe(aVoid -> {
-			  Intent intent = new Intent(UserRegistrationActivity.this, CreditRegistrationActivity.class);
-			  intent.putExtra("nextClass", UserRegistrationActivity.class);
-			  startActivity(intent);
-		  });
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(UserRegistrationActivity.this, CreditRegistrationActivity.class);
+					intent.putExtra("nextClass", UserRegistrationActivity.class);
+					startActivity(intent);
+				});
 
 		RxView.clicks(binding.llRegiBasic.btnRegiSign)
-		  .subscribe(aVoid -> {
-			  Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
-			  intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
-			  intent.putExtra("nextClass", UserRegistrationActivity.class);
-			  startActivity(intent);
-		  });
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
+					intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
+					intent.putExtra("nextClass", UserRegistrationActivity.class);
+					startActivityForResult(intent, REGISTER_SIGN);
+				});
 
 		RxView.clicks(binding.llRegiAdditional.btnPinRegistration)
-		  .throttleFirst(200, TimeUnit.MILLISECONDS)
-		  .subscribe(aVoid -> {
-			  Intent intent = new Intent(UserRegistrationActivity.this, PinRegistrationActivity.class);
-			  intent.putExtra("nextClass", UserRegistrationActivity.class);
-			  startActivity(intent);
-		  });
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					Intent intent = new Intent(UserRegistrationActivity.this, PinRegistrationActivity.class);
+					intent.putExtra("nextClass", UserRegistrationActivity.class);
+					startActivity(intent);
+				});
 
 		binding.btnRegister.setOnClickListener(v -> {
 			if (checkRequiredInformationFilled()) {
 				User user = generateUser();
 				presenter.saveUser(user);
 				startActivity(new Intent(this, ChatActivity.class));
-			  	finish();
+				finish();
 			} else {
-			  	Toast.makeText(this, getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
+				Toast.makeText(this, getString(R.string.setting_string_type_all_field), Toast.LENGTH_SHORT).show();
 			}
 		});
-  }
+	}
 
 	private User generateUser() {
 		User user = new User();
@@ -120,6 +121,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 
 		boolean isNameEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtUserName.getText().toString());
 		boolean isPhoneNumberEmpty = TextUtils.isEmpty(binding.llRegiBasic.edtPhoneNumber.getText().toString());
+		boolean isEmergencyNumberEmpty = TextUtils.isEmpty(binding.llRegiAdditional.edtEmergencyPhoneNumber.getText().toString());
 		boolean isRequiredCheck = binding.cbContextAuth.isChecked();
 
 		if (isNameEmpty) {
@@ -130,7 +132,12 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 			binding.llRegiBasic.edtUserName.setMode(TalkBankEditText.MODE.ERROR);
 		}
 
-		return !isNameEmpty && !isPhoneNumberEmpty && isRequiredCheck;
+		if (isEmergencyNumberEmpty) {
+			binding.llRegiAdditional.edtEmergencyPhoneNumber.setMode(TalkBankEditText.MODE.ERROR);
+		}
+
+		return !isNameEmpty && !isPhoneNumberEmpty && !isEmergencyNumberEmpty
+				&& isRequiredCheck && isSigned;
 	}
 
 	private UserAdditionalInfo getAdditionalInfo() {
@@ -157,5 +164,14 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 	public void showLastUserData(User user) {
 		binding.llRegiBasic.edtUserName.setText(user.getName());
 		binding.llRegiBasic.edtPhoneNumber.setText(user.getPhoneNumber());
+	}
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REGISTER_SIGN) {
+			isSigned = true;
+		}
+
 	}
 }

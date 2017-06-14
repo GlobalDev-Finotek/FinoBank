@@ -60,37 +60,41 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 	protected void parse() {
 
 		Uri uri = Uri.parse("content://sms");
-		Cursor cursor = getContentResolver().query(uri,
-				new String[]{"_id", "address", "date", "body"},
-				Telephony.Sms.DATE + " BETWEEN ? AND ? ",
-				new String[]{getMinus6HoursTimeStr(), getNowTimeStr()}, "date DESC");
+
+		try {
+			Cursor cursor = getContentResolver().query(uri,
+					new String[]{"_id", "address", "date", "body"},
+					Telephony.Sms.DATE + " BETWEEN ? AND ? ",
+					new String[]{getMinus6HoursTimeStr(), getNowTimeStr()}, "date DESC");
 
 
-		int count = 0;
-		while (cursor.moveToNext()) {
+			int count = 0;
+			while (cursor.moveToNext()) {
 
-			MessageLog smslog = new MessageLog();
-			smslog.setTargetName(" ");
+				MessageLog smslog = new MessageLog();
+				smslog.setTargetName(" ");
 
-			long messageId = cursor.getLong(0);
-			// smslog.setid(messageId);
+				long messageId = cursor.getLong(0);
+				// smslog.setid(messageId);
 
-			String address = cursor.getString(1);
-			smslog.setTargetNumber(address);
+				String address = cursor.getString(1);
+				smslog.setTargetNumber(address);
 
-			long timestamp = cursor.getLong(2);
-			String date = DateFormat.format("yyyy-MM-dd", timestamp).toString();
-			smslog.setLogTime(date);
+				long timestamp = cursor.getLong(2);
+				String date = DateFormat.format("yyyy-MM-dd", timestamp).toString();
+				smslog.setLogTime(date);
 
-			String body = " ";
-			try {
-				body = ai.encText(cursor.getString(3));
+				String body = " ";
+				try {
+					body = ai.encText(cursor.getString(3));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				smslog.setText(body);
-			} catch (Exception e) {
-				e.printStackTrace();
+				logData.add(smslog);
 			}
-
-			logData.add(smslog);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

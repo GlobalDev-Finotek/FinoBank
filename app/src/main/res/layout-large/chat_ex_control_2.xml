@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="28dp"
+        android:orientation="vertical"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
+        <finotek.global.dev.talkbank_ca.widget.IconButton
+            android:id="@+id/btn_loan"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ex_control_button"
+            android:drawableLeft="@drawable/icon_stankbank04"
+            android:text="@string/main_string_secured_mirocredit"
+            android:textColor="@color/ex_control"
+            android:textSize="@dimen/text_normal"
+            app:iconPadding="0dp"
+            app:tb_font="noto_medium" />
+        <finotek.global.dev.talkbank_ca.widget.IconButton
+            android:id="@+id/btn_setting"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ex_control_button"
+            android:drawableLeft="@drawable/icon_stankbank05"
+            android:text="@string/main_action_settings"
+            android:textColor="@color/ex_control"
+            android:textSize="@dimen/text_normal"
+            app:iconPadding="0dp"
+            app:tb_font="noto_medium" />
+        <finotek.global.dev.talkbank_ca.widget.IconButton
+            android:id="@+id/btn_send_email"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ex_control_button"
+            android:drawableLeft="@drawable/icon_stankbank06"
+            android:text="@string/main_button_send_the_conversation_to_e_mail"
+            android:textColor="@color/ex_control"
+            android:textSize="@dimen/text_normal"
+            app:iconPadding="0dp"
+            app:tb_font="noto_medium" />
+    </LinearLayout>
+</layout>

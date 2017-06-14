@@ -78,11 +78,15 @@ public class PrimaryDialog extends Dialog {
 
     @Override
     public void show() {
+        showWithRatio(0.85f);
+    }
+
+    public void showWithRatio(float withRatio){
         this.setCancelable(false);
         this.setCanceledOnTouchOutside(false);
         DisplayMetrics displaymetrics = new DisplayMetrics();
         getWindow().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        int width = (int) ((int)displaymetrics.widthPixels * 0.85);
+        int width = (int) ((int)displaymetrics.widthPixels * withRatio);
 
         getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

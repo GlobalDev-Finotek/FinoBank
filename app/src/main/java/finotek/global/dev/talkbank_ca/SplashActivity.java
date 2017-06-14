@@ -1,12 +1,9 @@
 package finotek.global.dev.talkbank_ca;
 
-import android.*;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -34,49 +31,32 @@ public class SplashActivity extends AppCompatActivity {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash_eng);
 		}
 
-
-		ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.READ_CALL_LOG,
-						android.Manifest.permission.READ_SMS,
-						android.Manifest.permission.READ_PHONE_STATE},
-				MY_PERMISSION_READ_CALL_LOG);
-
+		moveToNextActivity();
 	}
+
+	private void moveToNextActivity() {
+		io.reactivex.Observable.interval(2, TimeUnit.SECONDS)
+				.firstOrError()
+				.subscribe(aLong -> {
+					Intent intent;
+					if (Realm.getDefaultInstance().where(User.class).count() > 0) {
+						intent = new Intent(this, ChatActivity.class);
+						startActivity(intent);
+						finish();
+					} else {
+						intent = new Intent(this, MainActivity.class);
+						startActivity(intent);
+						finish();
+					}
+				});
+	}
+
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-
-		if (grantResults[0] == PackageManager.PERMISSION_GRANTED ) {
-			io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
-					.firstOrError()
-					.subscribe(aLong -> {
-						Intent intent;
-						if (Realm.getDefaultInstance().where(User.class).count() > 0) {
-							intent = new Intent(this, ChatActivity.class);
-							startActivity(intent);
-							finish();
-						} else {
-							intent = new Intent(this, MainActivity.class);
-							startActivity(intent);
-							finish();
-						}
-					});
+		if (InitActivity.PERMISSION_READ_LOG == requestCode) {
+			super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 		}
-
 	}
-
-	//	@Override
-//	protected void onAfterUserRegistered() {
-//
-//		io.reactivex.Observable.interval(3, TimeUnit.SECONDS)
-//				.firstOrError()
-//				.subscribe(aLong -> {
-//					startActivity(new Intent(SplashActivity.this, ChatActivity.class));
-//					finish();
-//				});
-
-//	}
-
-
 }
 

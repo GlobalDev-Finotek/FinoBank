@@ -85,7 +85,7 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
         } else {
             if (menu.getListener() != null) {
                 RxView.clicks(btn.main)
-                        .throttleFirst(200, TimeUnit.MILLISECONDS)
+                        .throttleFirst(300, TimeUnit.MILLISECONDS)
                         .subscribe(aVoid -> {
                             menu.getListener().run();
 

@@ -307,7 +307,7 @@ public class ChatActivity extends AppCompatActivity {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
-				loadingDialog.show();
+				loadingDialog.showWithRatio(0.50f);
 
 				Observable.interval(1, TimeUnit.SECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
@@ -337,7 +337,7 @@ public class ChatActivity extends AppCompatActivity {
 								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 							});
-							dialog.show();
+							dialog.showWithRatio(0.50f);
 						}, throwable -> {
 						});
 			});

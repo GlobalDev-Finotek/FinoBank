@@ -1,8 +1,9 @@
 <resources>
+    <!-- for tablet -->
+    <dimen name="text_agreement_item">20sp</dimen>
+    <dimen name="text_small">20sp</dimen>
+    <dimen name="text_normal">24sp</dimen>
+    <dimen name="text_large">32sp</dimen>
 
-    <!--
-         Customize dimensions originally defined in res/values/dimens.xml (such as
-         screen margins) for sw600dp devices (e.g. 7" tablets) here.
-    -->
-
+    <dimen name="bar_size">80dp</dimen>
 </resources>

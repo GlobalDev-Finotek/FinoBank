@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="@dimen/chat_margin_bottom"
+    android:layout_marginStart="@dimen/chat_margin_left_right">
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:background="@drawable/chat_item_receive"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+        <com.wang.avi.AVLoadingIndicatorView
+            android:layout_width="64dp"
+            android:layout_height="60dp"
+            app:indicatorName="BallPulseIndicator"
+            app:indicatorColor="#CCC" />
+    </FrameLayout>
+</RelativeLayout>

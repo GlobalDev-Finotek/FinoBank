@@ -1,6 +1,7 @@
 package finotek.global.dev.talkbank_ca.util;
 
 import android.content.Context;
+import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
@@ -11,14 +12,24 @@ import android.text.TextUtils;
 
 public class TelUtil {
 	public static String getMyPhoneNumber(Context context) {
-		TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-		String phoneNumber = tMgr.getLine1Number();
 
-		if (TextUtils.isEmpty(phoneNumber)) {
+		try {
+			TelephonyManager tMgr = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+			String phoneNumber = tMgr.getLine1Number();
+
+			if (TextUtils.isEmpty(phoneNumber)) {
+				return "0";
+			} else {
+				return phoneNumber;
+			}
+		} catch (Exception e) {
 			return "0";
-		} else {
-			return phoneNumber;
 		}
+	}
+
+	public static String getMacAddress(Context context) {
+		WifiManager wm = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
+		return wm.getConnectionInfo().getMacAddress();
 	}
 
 	public static String getDeviceName() {

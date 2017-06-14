@@ -4,14 +4,16 @@ import com.google.gson.Gson;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
+import io.realm.annotations.RealmClass;
 
 /**
  * Created by JungwonSeo on 2017-04-26.
  */
-
+@RealmClass
 public class LocationLog extends RealmObject {
 	public double latitude;
 	public double longitute;
+
 	@PrimaryKey
 	protected long logTime;
 	int type = ActionType.GATHER_LOCATION_LOG;

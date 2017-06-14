@@ -3,6 +3,7 @@ package globaldev.finotek.com.logcollector.model;
 import com.google.gson.Gson;
 
 import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
 
 /**
@@ -14,6 +15,7 @@ public class CallHistoryLog extends RealmObject {
 	public String duration;
 	public String targetNumber;
 	public String targetName;
+	@PrimaryKey
 	protected String logTime;
 	int type = ActionType.GATHER_CALL_LOG;
 

@@ -130,6 +130,11 @@ public class MainScenario_v2 {
 
 		String greetingString = "";
 
+		User user = Realm.getDefaultInstance().where(User.class).findAll().last();
+		if (user != null) {
+			greetingString = context.getResources().getString(R.string.main_string_v2_login_hello, user.getName());
+		}
+
 		if (hour >=6 && 13 > hour){
 			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M)+"\n";
 

@@ -18,4 +18,7 @@
     <dimen name="text_small">12sp</dimen>
     <dimen name="text_normal">14sp</dimen>
     <dimen name="text_large">18sp</dimen>
+    <dimen name="text_agreement_item">16sp</dimen>
+
+    <dimen name="bar_size">?attr/actionBarSize</dimen>
 </resources>

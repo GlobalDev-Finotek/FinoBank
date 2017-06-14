@@ -52,7 +52,7 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 
 		notifyJobDone(new ArrayList<T>(set));
 
-		return false;
+		return true;
 	}
 
 	private void writeLogString(List<T> logData) {

@@ -39,11 +39,9 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 		IDCardViewHolder holder = (IDCardViewHolder) viewHolder;
 
 		try {
-
 			String imgPath = data.getImgPath();
 
 			if (!TextUtils.isEmpty(imgPath)) {
-
 				ExifInterface exifInterface = new ExifInterface(imgPath);
 				int orientation = Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
 
@@ -51,34 +49,25 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 						Converter.dpToPx(200), Converter.dpToPx(240));
 				holder.binding.idCardImg.setLayoutParams(lp);
-				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_END);
+				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_XY);
 
 				Glide.with(context)
 						.load(imgPath)
 						.bitmapTransform(new RoundedCornersTransformation(context, 40, 0, RoundedCornersTransformation.CornerType.ALL))
 						.fitCenter()
 						.into(holder.binding.idCardImg);
-
 			} else {
-
 				holder.binding.idCardInfo.setVisibility(View.VISIBLE);
 				holder.binding.cardType.setText(data.getType());
 				holder.binding.name.setText(data.getName());
 				holder.binding.jumin.setText(data.getJumin());
 				holder.binding.issueDate.setText(data.getIssueDate());
 
-
-				holder.binding.idCardImg
-						.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
+				holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
 			}
-
-
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-
-
 	}
 
 	@Override

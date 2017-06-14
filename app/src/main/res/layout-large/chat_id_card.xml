@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/chat_margin_bottom"
+        android:layout_marginEnd="@dimen/chat_margin_left_right"
+        android:layout_marginStart="@dimen/chat_margin_left_right"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/id_card_img"
+            android:layout_width="416dp"
+            android:layout_height="325dp"
+            android:contentDescription="ID Card"
+            android:scaleType="fitCenter" />
+
+        <TableLayout
+            android:id="@+id/id_card_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#E5E4E4"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="1dp"
+                android:background="#fff">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    style="@style/table_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_string_id_card_type"
+                    android:textSize="@dimen/text_normal"
+                    />
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/card_type"
+                    style="@style/table_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_normal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="#fff">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    style="@style/table_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_string_name"
+                    android:textSize="@dimen/text_normal" />
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/name"
+                    style="@style/table_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_normal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="#fff">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    style="@style/table_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_string_id_number"
+                    android:textSize="@dimen/text_normal" />
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/jumin"
+                    style="@style/table_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_normal" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="1dp"
+                android:layout_marginLeft="1dp"
+                android:layout_marginRight="1dp"
+                android:background="#fff">
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    style="@style/table_head"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/dialog_string_date_issued"
+                    android:textSize="@dimen/text_normal" />
+
+                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    android:id="@+id/issue_date"
+                    style="@style/table_body"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/text_normal"/>
+            </TableRow>
+        </TableLayout>
+    </LinearLayout>
+</layout>

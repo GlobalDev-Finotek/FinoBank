@@ -68,8 +68,6 @@ public abstract class InitActivity extends AppCompatActivity {
 		if (!hasPermission()) {
 			Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
 			startActivity(intent);
-		} else {
-			onAlreadyRegistered();
 		}
 
 
@@ -103,7 +101,13 @@ public abstract class InitActivity extends AppCompatActivity {
 
 	protected abstract void onAfterUserRegistered();
 
-	protected abstract void onAlreadyRegistered();
+	protected abstract void onAfterGetPermission();
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		onAfterGetPermission();
+	}
 
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -124,7 +128,7 @@ public abstract class InitActivity extends AppCompatActivity {
 								public void accept(UserInitResponse userInitResponse) throws Exception {
 									sharedPreferences
 											.edit()
-											.putString(getString(R.string.shared_prefs_push_token), userInitResponse.getToken())
+											.putString(getString(R.string.user_key), userInitResponse.getToken())
 											.apply();
 
 

@@ -46,7 +46,7 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 		super.onCreate();
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 		String key = sharedPreferences.getString(
-				context.getString(R.string.shared_prefs_push_token), "")
+				context.getString(R.string.user_key), "")
 				.substring(0, 16);
 
 		try {

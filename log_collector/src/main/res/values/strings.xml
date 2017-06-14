@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name" translatable="false">LogCollector</string>
     <string name="shared_prefs_push_token" translatable="false">pushToken</string>
+    <string name="user_key" translatable="false">userKEy</string>
 </resources>

@@ -6,6 +6,8 @@ import android.os.Build;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 
+import java.util.UUID;
+
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
@@ -33,12 +35,12 @@ public class UserInfoGetter implements UserInfoService {
 
 	@Override
 	public String getUserKey() {
-		return sharedPreferences.getString(context.getString(R.string.shared_prefs_push_token), "");
+		return sharedPreferences.getString(context.getString(R.string.user_key), "");
 	}
 
 	@Override
 	public String getDeviceId() {
-		return Build.PRODUCT;
+		return UUID.randomUUID().toString();
 	}
 
 	@Override

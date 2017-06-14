@@ -1,9 +1,11 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.*;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -18,9 +20,7 @@ import io.realm.Realm;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SplashActivity extends AppCompatActivity {
-
-	private static final int MY_PERMISSION_READ_CALL_LOG = 45;
+public class SplashActivity extends InitActivity  {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,9 +30,18 @@ public class SplashActivity extends AppCompatActivity {
 		} else {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash_eng);
 		}
+	}
 
+	@Override
+	protected void onAfterUserRegistered() {
 		moveToNextActivity();
 	}
+
+	@Override
+	protected void onAfterGetPermission() {
+		moveToNextActivity();
+	}
+
 
 	private void moveToNextActivity() {
 		io.reactivex.Observable.interval(2, TimeUnit.SECONDS)

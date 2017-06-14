@@ -142,7 +142,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 
 	private void callUploadApi(int jobId) {
 
-		final String userKey = sharedPreferences.getString(context.getString(R.string.shared_prefs_push_token), "");
+		final String userKey = sharedPreferences.getString(context.getString(R.string.user_key), "");
 
 		switch (jobId) {
 			case ActionType.GATHER_APP_USAGE_LOG:

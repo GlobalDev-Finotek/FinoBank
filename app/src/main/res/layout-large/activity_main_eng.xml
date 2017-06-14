@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tb="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/wrapper_splash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="174dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="180dp"
+            android:contentDescription="Finotek Logo"
+            android:tint="@color/colorPrimaryDark"
+            tb:srcCompat="@drawable/vector_drawable_ci_finotek"/>
+        <ImageView
+            android:id="@+id/iv_intro"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="26dp"
+            android:elevation="0dp"
+            android:tint="@color/black"
+            app:srcCompat="@drawable/txt_intro_eng"/>
+        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            android:id="@+id/main_button"
+            style="@style/RoundButton"
+            android:layout_width="360dp"
+            android:layout_height="80dp"
+            android:layout_below="@id/iv_intro"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="48dp"
+            android:textSize="26sp"
+            android:text="@string/registration_string_register"
+            app:tb_font="noto_medium" />
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            android:id="@+id/tv_context_auth_accuracy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/main_button"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="21dp"
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            android:textAlignment="center" />
+        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="32dp"
+            android:text="@string/main_string_copyright_finotek"
+            android:textColor="@color/dark_100"
+            android:textSize="@dimen/text_small"
+            tb:custom_font="noto_light"/>
+    </RelativeLayout>
+</layout>

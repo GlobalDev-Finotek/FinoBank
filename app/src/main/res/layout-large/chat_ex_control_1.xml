@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="28dp"
+        android:orientation="vertical"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
+        <finotek.global.dev.talkbank_ca.widget.IconButton
+            android:id="@+id/register_account"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@drawable/ex_control_button"
+            android:drawableLeft="@drawable/icon_stankbank01"
+            android:text="@string/main_string_open_account"
+            android:textColor="@color/ex_control"
+            android:textSize="@dimen/text_normal"
+            app:iconPadding="-2dp"
+            app:tb_font="noto_medium" />
+        <finotek.global.dev.talkbank_ca.widget.IconButton
+            android:id="@+id/transfer_money"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ex_control_button"
+            android:drawableLeft="@drawable/icon_stankbank02"
+            android:text="@string/main_string_transfer"
+            android:textColor="@color/ex_control"
+            android:textSize="@dimen/text_normal"
+            app:iconPadding="-2dp"
+            app:tb_font="noto_medium" />
+        <finotek.global.dev.talkbank_ca.widget.IconButton
+            android:id="@+id/check_account"
+            style="?android:attr/borderlessButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginTop="15dp"
+            android:background="@drawable/ex_control_button"
+            android:drawableLeft="@drawable/icon_stankbank03"
+            android:text="@string/main_string_view_account_details"
+            android:textColor="@color/ex_control"
+            android:textSize="@dimen/text_normal"
+            app:iconPadding="-2dp"
+            app:tb_font="noto_medium" />
+    </LinearLayout>
+</layout>

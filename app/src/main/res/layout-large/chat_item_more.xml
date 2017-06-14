@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:layout_marginTop="1dp"
+        android:background="@android:color/white">
+        <finotek.global.dev.talkbank_ca.widget.IconButton
+            android:id="@+id/more_button"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@android:color/white"
+            android:textAlignment="center"
+            android:text="@string/more_button"
+            android:textSize="18sp"
+            android:textColor="@color/primary"
+            android:drawableLeft="@drawable/btn_cplus"
+            app:tb_font="noto_medium"
+            style="?android:attr/borderlessButtonStyle"
+        />
+    </RelativeLayout>
+</layout>

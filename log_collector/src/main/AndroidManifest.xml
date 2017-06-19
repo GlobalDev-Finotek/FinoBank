@@ -4,7 +4,10 @@
           package="globaldev.finotek.com.logcollector">
 
 
+<<<<<<< HEAD
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+=======
+>>>>>>> Develop (#32)
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>

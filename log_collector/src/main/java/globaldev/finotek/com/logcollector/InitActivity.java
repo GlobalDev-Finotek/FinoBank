@@ -68,8 +68,9 @@ public abstract class InitActivity extends AppCompatActivity {
 		if (!hasPermission()) {
 			Intent intent = new Intent(Settings.ACTION_USAGE_ACCESS_SETTINGS);
 			startActivity(intent);
+		} else {
+			onAfterUserRegistered();
 		}
-
 
 	}
 

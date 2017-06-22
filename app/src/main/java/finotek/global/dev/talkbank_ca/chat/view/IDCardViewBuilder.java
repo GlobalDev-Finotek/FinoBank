@@ -44,7 +44,6 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 			if (!TextUtils.isEmpty(imgPath)) {
 				ExifInterface exifInterface = new ExifInterface(imgPath);
 				int orientation = Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
-
 				holder.binding.idCardInfo.setVisibility(View.GONE);
 				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
 						Converter.dpToPx(200), Converter.dpToPx(240));

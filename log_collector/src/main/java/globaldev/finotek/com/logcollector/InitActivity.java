@@ -70,6 +70,7 @@ public abstract class InitActivity extends AppCompatActivity {
 			startActivity(intent);
 		} else {
 			onAfterUserRegistered();
+
 		}
 
 	}

@@ -219,7 +219,7 @@
     <string name="string_yes_ready">예, 준비가 되었습니다.</string>
     <string name="string_yes_its_ok">예, 맞습니다.</string>
     <string name="string_no_retake">아니오, 다시 촬영할게요.</string>
-    <string name="dialog_string_won">원</string>
+    <string name="dialog_string_won">&#8361; </string>
     <string name="setting_string_voice_recognition">음성 인식</string>
     <string name="setting_string_under">이하</string>
     <string name="setting_string_suspicious_auth">이상 거래 시 인증 설정</string>
@@ -250,7 +250,7 @@
     <string name="setting_string_pin_code_type">변경할 PIN 코드 입력</string>
     <string name="setting_string_profile_picture">인증 사진</string>
     <string name="dialog_string_input_message">메세지를 입력해주세요.</string>
-    <string name="dialog_chat_recognize_error">원하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
+    <string name="dialog_chat_recognize_error">&#8361; 하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
     <string name="dialog_chat_receive_email">상담 내역을 이메일로 받아보시겠습니까?</string>
     <string name="dialog_string_email_sent">전송되었습니다.</string>
     <string name="dialog_string_email_cancel">취소되었습니다.</string>
@@ -258,7 +258,7 @@
     <string name="dialog_chat_send_to">님에게</string>
     <string name="dialog_chat_anything_help">더 필요한 사항이 있으신가요?</string>
     <string name="dialog_chat_transferred">이체되었습니다</string>
-    <string name="dialog_chat_transferred_price_unit">원이</string>
+    <string name="dialog_chat_transferred_price_unit">&#8361; 이</string>
     <string name="dialog_chat_scenario_is_cancelled">앞서 진행하던 내용이 취소되었습니다.\n\"%2$s\"을 진행합니다.</string>
     <string name="dialog_string_import_from_contact">주소록에서 가져옴</string>
     <string name="common_string_warning">경고</string>
@@ -350,13 +350,12 @@
     <string name = "main_string_v2_create_signature_agree_congratulation"> 축하합니다!! 사용자 등록이 완료되었습니다.</string>
     <string name = "main_string_v2_create_signature_agree_question">%1$s님의 취향을 파악하기 위해 몇가지 질문에 답변해주세요</string>
     <string name = "main_string_v2_create_signature_agree_ask">무엇을 도와드릴까요?</string>
-
     <string name = "main_string_v2_create_signature_agree_transfer">%1$s님이 보내신 입금 요청 문자가 확인되었습니다. 오늘 점심 값으로 사용하신 &#8361;%1$s을 이체할까요?</string>
     <string name = "main_string_v2_create_signature_agree_no">아니요</string>
     <string name = "main_string_v2_create_signature_agree_no_confirm">맥락 인증 데이터 수집에 동의하지 않으시면 서비스를 이용하실 수 없습니다 동의하시겠습니까?</string>
     <string name = "main_string_v2_create_signature_agree_no_confirm_yes">예</string>
     <string name = "main_string_v2_create_signature_agree_no_confirm_no">아니요</string>
-    <string name = "main_string_v2_create_signature_agree_no_confirm_no_again">사용자 등록이 종료되었습니다. 원하실때 언제든 다시 사용자 등록을 시작해주세요. 빨리 뵀으면 좋겠네요.</string>
+    <string name = "main_string_v2_create_signature_agree_no_confirm_no_again">사용자 등록이 종료되었습니다. &#8361; 하실때 언제든 다시 사용자 등록을 시작해주세요. 빨리 뵀으면 좋겠네요.</string>
 
     <string name = "main_string_recommend_menu">추천 메뉴</string>
     <string name = "main_string_recommend_electric_title">전기료 납부</string>

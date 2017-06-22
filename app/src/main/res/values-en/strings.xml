@@ -176,7 +176,7 @@
     <string name="dialog_string_amount_transfer">Amount</string>
     <string name="dialog_chat_microedit_cancel">Secured mirocredit is canceld. What can i help you?</string>
     <string name="dialog_string_home_address_type">Type in your home address</string>
-    <string name="dialog_chat_loan_amount_type">You may loan up to 50 million won with 2% interest rate.
+    <string name="dialog_chat_loan_amount_type">You may loan up to 50 million &#8361;  with 2% interest rate.
     please write the ammount of loan you would like to request</string>
 
     <string name="dialog_string_term_agreement_accept">Accept to terms of agreement</string>
@@ -230,7 +230,7 @@
     <string name="setting_string_six_digit">Please type six digit PIN code</string>
     <string name="setting_string_secure_keyboard_operating">Operating secured keyboard</string>
     <string name="setting_string_registered_signature_purpose">Registered signature will be used for log-in and personal verification purpose</string>
-    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan". \nYou may request up to 50 million won and 2.0% interest rate. \nDo you want to apply loan?</string>
+    <string name="dialog_chat_loan_apply">I\'ve checked your account details and I would like to recommend "Finocation one-day loan". \nYou may request up to 50 million &#8361;  and 2.0% interest rate. \nDo you want to apply loan?</string>
     <string name="dialog_chat_preview">Preview</string>
     <string name="dialog_chat_save">Save</string>
     <string name="registration_button_pin_code_chanage">Change PIN code</string>

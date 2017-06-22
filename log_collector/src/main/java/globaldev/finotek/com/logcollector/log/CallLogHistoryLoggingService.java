@@ -112,9 +112,9 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 					targetName = ai.encText(targetName);
 
-					String logTime = c.getString(4);
+					String timestamp = c.getString(4);
 
-					logData.add(new CallHistoryLog(logTime, isSent, duration, targetNumber, targetName));
+					logData.add(new CallHistoryLog(timestamp, isSent, duration, targetNumber, targetName));
 
 
 				} while (c.moveToNext());

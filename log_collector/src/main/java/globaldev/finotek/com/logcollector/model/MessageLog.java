@@ -15,12 +15,16 @@ public class MessageLog extends RealmObject {
 	public boolean isSent;
 	public String targetNumber;
 	public String targetName;
+	public long timestamp;
 	public int length;
 	public String text;
-
-	@PrimaryKey
-	protected String logTime;
 	int type = ActionType.GATHER_MESSAGE_LOG;
+	@PrimaryKey
+	private String logTime = String.valueOf(System.currentTimeMillis());
+
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;
+	}
 
 	public String getLogTime() {
 		return logTime;

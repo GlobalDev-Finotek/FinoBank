@@ -13,17 +13,17 @@ import io.realm.annotations.RealmClass;
 public class LocationLog extends RealmObject {
 	public double latitude;
 	public double longitute;
-
-	@PrimaryKey
-	protected long logTime;
 	int type = ActionType.GATHER_LOCATION_LOG;
+	long timestamp;
+	@PrimaryKey
+	private String logTime = String.valueOf(System.currentTimeMillis());
 
 	public LocationLog() {
 
 	}
 
-	public LocationLog(long logTime, double latitude, double longitude) {
-		this.logTime = logTime;
+	public LocationLog(long timestamp, double latitude, double longitude) {
+		this.timestamp = timestamp;
 		this.latitude = latitude;
 		this.longitute = longitude;
 	}

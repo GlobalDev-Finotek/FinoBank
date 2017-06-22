@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony;
-import android.text.format.DateFormat;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -81,8 +80,7 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 				smslog.setTargetNumber(address);
 
 				long timestamp = cursor.getLong(2);
-				String date = DateFormat.format("yyyy-MM-dd", timestamp).toString();
-				smslog.setLogTime(date);
+				smslog.setTimestamp(timestamp);
 
 				String body = " ";
 				try {

@@ -15,16 +15,17 @@ public class CallHistoryLog extends RealmObject {
 	public String duration;
 	public String targetNumber;
 	public String targetName;
-	@PrimaryKey
-	protected String logTime;
 	int type = ActionType.GATHER_CALL_LOG;
+	@PrimaryKey
+	private String logTime = String.valueOf(System.currentTimeMillis());
+	private String timestamp;
 
 	public CallHistoryLog() {
 
 	}
 
-	public CallHistoryLog(String logTime, boolean isSent, String duration, String targetNumber, String targetName) {
-		this.logTime = logTime;
+	public CallHistoryLog(String timestamp, boolean isSent, String duration, String targetNumber, String targetName) {
+		this.timestamp = timestamp;
 		this.isSent = isSent;
 		this.duration = duration;
 		this.targetNumber = targetNumber;

@@ -13,6 +13,9 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.io.File;
+import java.io.FileOutputStream;
+
 import finotek.global.dev.talkbank_ca.R;
 
 /**
@@ -37,6 +40,7 @@ public class DrawingCanvas extends View {
 	private void init() {
 		drawPath = new Path();
 		drawPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+		this.setDrawingCacheEnabled(true);
 
 		drawPaint.setColor(ContextCompat.getColor(context, R.color.black));
 		drawPaint.setAntiAlias(true);
@@ -48,10 +52,36 @@ public class DrawingCanvas extends View {
 		drawPaint.setDither(true);
 
 		canvasPaint = new Paint(Paint.DITHER_FLAG);
+
+
 	}
 
 	public void setOnCanvasTouchListener(OnCanvasTouchListener onCanvasTouchListener) {
 		this.onCanvasTouchListener = onCanvasTouchListener;
+	}
+
+	public void save() {
+		String path = context.getExternalFilesDir(null) + "/mySign.png";
+
+
+		this.buildDrawingCache();
+		Bitmap b = Bitmap.createBitmap(this.getDrawingCache());
+		this.setDrawingCacheEnabled(false);
+
+		if (b != null) {
+			try {
+				File f = new File(path);
+				FileOutputStream fos = new FileOutputStream(f);
+
+				b.compress(Bitmap.CompressFormat.PNG, 100, fos);
+				fos.close();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+
 	}
 
 	@Override

@@ -78,7 +78,10 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 						throwable -> {
 						},
 						() -> {
-							if (onSaveListener != null) onSaveListener.onSave();
+							if (onSaveListener != null) {
+								onSaveListener.onSave();
+								binding.drawingCanvas.save();
+							}
 						});
 
 		return binding.getRoot();

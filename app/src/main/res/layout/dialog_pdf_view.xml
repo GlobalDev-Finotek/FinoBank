@@ -51,12 +51,21 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <com.github.barteksc.pdfviewer.PDFView
-                android:id="@+id/pdf_view"
+            <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/title_bg">
-            </com.github.barteksc.pdfviewer.PDFView>
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true">
+
+                <ImageView
+                    android:id="@+id/pdf_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/title_bg"
+                    android:adjustViewBounds="true">
+                </ImageView>
+            </ScrollView>
+
         </RelativeLayout>
     </RelativeLayout>
 </layout>

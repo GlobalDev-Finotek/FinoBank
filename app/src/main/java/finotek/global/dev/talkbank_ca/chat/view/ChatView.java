@@ -5,14 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
@@ -20,9 +19,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
  * @author david lee at finotek.
@@ -45,7 +41,7 @@ public class ChatView extends RecyclerView {
 
 		this.addChatViewBuilder(ViewType.RecoMenu.ordinal(), new RecoMenuViewBuilder(context));
 		this.addChatViewBuilder(ViewType.IDCard.ordinal(), new IDCardViewBuilder(context));
-
+		this.addChatViewBuilder(ViewType.Image.ordinal(), new ImageViewBuilder(context));
 		this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder(context));
 		this.addChatViewBuilder(ViewType.Agreement.ordinal(), new AgreementBuilder(context));
 		this.addChatViewBuilder(ViewType.AgreementResult.ordinal(), new AgreementResultBuilder());
@@ -125,12 +121,16 @@ public class ChatView extends RecyclerView {
 		getLayoutManager().scrollToPosition(0);
 	}
 
+	public void imageMessage(String imgPath) {
+		addMessage(ViewType.Image.ordinal(), new ImageMessage(imgPath));
+	}
+
 	public enum ViewType {
 		Send, IconicSend, Receive, Divider, Status,
 		Confirm, RecoMenu,
 		IDCard, RecentTransaction, AccountList,
-		Agreement, AgreementResult,
-        Wait
+		Agreement, AgreementResult, Image,
+		Wait
 	}
 
 	public interface ViewBuilder<T> {

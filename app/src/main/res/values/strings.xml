@@ -394,4 +394,15 @@
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="dialog_string_id_housed_type">Verification ID type</string>
     <string name="dialog_chat_take_picture_id_housed">To open an account, you need to verify yourself with your personal ID card or driver\'s license. Please take a picture of your ID card</string>
+    <string name="main_string_cardif_greetings">Hi, I\'m Cardif assistant.</string>
+    <string name="main_string_cardif_recommend_title">Would you like to start CPI subscription?</string>
+    <string name="main_string_cardif_start_subscription">Start subscription</string>
+    <string name="main_string_cardif_more_inform_CPI">More information for CPI</string>
+    <string name="main_string_cardif_CPI_scenario">CPI subscription</string>
+    <string name="main_string_cardif_CPI_agreement_desc">Do you agree to the Agreement to Collect and Use Personal Information?</string>
+    <string name="main_string_cardif_CPI_agree">Agree</string>
+    <string name="main_string_cardif_CPI_disagree">Disagree</string>
+    <string name="main_string_cardif_CPI_birth">Please enter your date of birth (DD.MM.YYYY)</string>
+    <string name="main_string_cardif_CPI_name">Please enter your name</string>
+    <string name="main_string_cardif_CPI_doctor">Let me start Illness Declaration. Have you seen a doctor last 3 months?</string>
 </resources>

@@ -151,6 +151,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateAppUsageLog(userKey, (List<ApplicationLog>) o)
+								.retry(5)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -177,6 +178,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateDeviceSecurityLog(userKey, (List<DeviceSecurityLevel>) o)
+								.retry(5)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -203,6 +205,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateCallLog(userKey, (List<CallHistoryLog>) o)
+								.retry(5)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -228,6 +231,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateLocationLog(userKey, (List<LocationLog>) o)
+								.retry(5)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -253,6 +257,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateSMSLog(userKey, (List<MessageLog>) o)
+								.retry(5)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {

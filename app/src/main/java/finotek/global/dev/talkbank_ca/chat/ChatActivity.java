@@ -48,6 +48,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestUserInformation;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
@@ -283,6 +284,21 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof RequestKeyboardInput) {
 			openKeyboard(fiBinding.chatEditText);
+		}
+
+		if (msg instanceof RequestUserInformation) {
+			PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
+			loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+			loadingDialog.setDescription(getString(R.string.registration_string_wait));
+			loadingDialog.show();
+
+			Observable.interval(1, TimeUnit.SECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.first((long) 1)
+					.subscribe(i -> {
+						MessageBox.INSTANCE.add(new SignatureVerified());
+						loadingDialog.dismiss();
+					});
 		}
 
 

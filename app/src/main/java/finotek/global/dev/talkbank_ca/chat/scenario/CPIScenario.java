@@ -5,6 +5,7 @@ import android.content.Context;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
@@ -75,7 +76,10 @@ public class CPIScenario implements Scenario {
 				break;
 
 			case Birth:
-				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getString(R.string.main_string_cardif_CPI_birth)));
+				MessageBox.INSTANCE.addAndWait(
+						new ReceiveMessage(context.getString(R.string.main_string_cardif_CPI_birth)),
+						new DismissKeyboard()
+				);
 				step = Step.Doctor;
 				break;
 			case Doctor:

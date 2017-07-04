@@ -31,6 +31,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.CPIScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario_Cardif;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
@@ -97,6 +98,7 @@ public class CardifScenario {
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
 		scenarioPool.put(CPIScenario.class.getSimpleName(), new CPIScenario(context));
+		scenarioPool.put(LoanScenario_Cardif.class.getSimpleName(), new LoanScenario_Cardif(context));
 
 		currentScenario = null;
 	}

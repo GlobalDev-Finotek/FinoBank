@@ -405,4 +405,19 @@
     <string name="main_string_cardif_CPI_birth">Please enter your date of birth (DD.MM.YYYY)</string>
     <string name="main_string_cardif_CPI_name">Please enter your name</string>
     <string name="main_string_cardif_CPI_doctor">Let me start Illness Declaration. Have you seen a doctor last 3 months?</string>
+    <string name="dialog_string_cardif_loan_amount">Let\'s go to loan information. What is the amount of loan? (ex. 1,000,000 KRW)</string>
+    <string name="dialog_string_cardif_loan_period">How long is the loan period? (Years)</string>
+    <string name="dialog_string_cardif_loan_startdate">When was the start date of loan? (DD.MM.YYYY)</string>
+    <string name="dialog_agree">Agree</string>
+    <string name="string_disagree">Disagree</string>
+    <string name="string_agree">Agree</string>
+    <string name="dialog_string_cardif_loan_agree">Please click following button to agree to check your loan and Credit</string>
+    <string name="dialog_chat_loan_select">I\'ve checked your Loan Information details and I would like to recommend. Which option do you want?</string>
+    <string name="dialog_chat_cardif_loan_opt1">1. Base :    subscription amount 100M KRW,    monthly premium 9,000 KRW</string>
+    <string name="dialog_chat_cardif_loan_opt2">2. Base + Cancer Insurance :    subcription amount 100M KRW, monthly premium 35,000 KRW</string>
+    <string name="dialog_chat_cardif_loan_opt3">3. Base + 3 major diseases Insurance :    subscription amount 100M KRW,    monthly premium 41,000 KRW</string>
+    <string name="dialog_chat_cardif_loan_opt4">4. I need more information</string>
+    <string name="dialog_chat_loan_inform">Cardif\'s Cancer Insurance option covers Gastric, Liver, Lung, Colon, and Prostate cancer. If you want more details, please click to icon below. (More information) Or, click to icon below to resume subscription</string>
+    <string name="dialog_chat_cardif_loan_more_inform">More information</string>
+    <string name="dialog_chat_cardif_loan_resume_subscription">Resume subscription</string>
 </resources>

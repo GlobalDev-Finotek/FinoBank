@@ -356,8 +356,10 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof ShowPdfView) {
 			ShowPdfView action = (ShowPdfView) msg;
+
 			PdfViewDialog dialog = new PdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
+//			dialog.setSignArea(30, 10);
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();
 		}

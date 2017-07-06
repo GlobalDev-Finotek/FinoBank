@@ -59,7 +59,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnLoanServicePreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(loanText, "loan_service.pdf"));
+						MessageBox.INSTANCE.add(new ShowPdfView(loanText, "out1.png"));
 					});
 
 			RxView.clicks(binding.bntLoanServiceSave)
@@ -73,7 +73,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnCreditInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, "credit_inform.pdf"));
+						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, "out2.png"));
 					});
 
 			RxView.clicks(binding.btnCreditInforSave)
@@ -87,7 +87,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnLoanTransactionPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, "credit_inform.pdf"));
+						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, "out3.png"));
 					});
 
 			RxView.clicks(binding.btnLoanTransactionSave)
@@ -102,7 +102,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnContractInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, "credit_inform.pdf"));
+						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, "out4.png"));
 					});
 
 			RxView.clicks(binding.btnContractInformSave)

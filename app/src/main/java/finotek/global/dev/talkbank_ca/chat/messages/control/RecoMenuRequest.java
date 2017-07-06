@@ -25,11 +25,8 @@ public class RecoMenuRequest {
 
 
         if(listener == null)
-            listener = new Runnable() {
-                @Override
-                public void run() {
-                    MessageBox.INSTANCE.add(new SendMessage(name));
-                }
+            listener = () -> {
+                MessageBox.INSTANCE.add(new SendMessage(name));
             };
 
         menus.add(new RecoMenu(icon, name, listener));

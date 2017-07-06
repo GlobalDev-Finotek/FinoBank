@@ -18,6 +18,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -58,13 +59,17 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationDone;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardShown;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCardDone;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -76,6 +81,7 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.RemoteCallFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
@@ -113,7 +119,8 @@ public class ChatActivity extends AppCompatActivity {
 
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
-    
+	private RemoteCallFragment remoteCallFragment;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -188,67 +195,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-
-		if (msg instanceof RequestPhoto) {
-
-			hideAppBar();
-			hideStatusBar();
-			binding.footer.setPadding(0, 0, 0, 0);
-			releaseControls();
-			releaseAllControls();
-
-			View captureView = inflate(R.layout.chat_capture);
-			binding.footer.addView(captureView);
-			capturePicFragment = CapturePicFragment.newInstance();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
-						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-				);
-
-				showAppBar();
-				showStatusBar();
-				this.returnToInitialControl();
-
-				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				transaction.remove(capturePicFragment).commit();
-			});
-
-			tx.replace(R.id.chat_capture, capturePicFragment);
-			tx.commit();
-		}
-
-		if(msg instanceof RequestTakeAnotherIDCard) {
-			releaseControls();
-			releaseAllControls();
-			binding.footer.setPadding(0, 0, 0, 0);
-			hideStatusBar();
-			hideAppBar();
-
-			View captureView = inflate(R.layout.chat_capture);
-			binding.footer.addView(captureView);
-			capturePicFragment = CapturePicFragment.newInstance();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.addAndWait(
-					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
-					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-				);
-				this.returnToInitialControl();
-				showAppBar();
-				showStatusBar();
-
-				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				transaction.remove(capturePicFragment).commit();
-
-                binding.chatView.scrollToBottom();
-			});
-
-			tx.replace(R.id.chat_capture, capturePicFragment);
-			tx.commit();
-		}
-
 		if (msg instanceof RequestTakeIDCard) {
 			releaseControls();
 			releaseAllControls();
@@ -261,28 +207,50 @@ public class ChatActivity extends AppCompatActivity {
 			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.addAndWait(
-					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
-					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-				);
-
-				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
-
-				showAppBar();
-				this.returnToInitialControl();
-				showStatusBar();
-
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				transaction.remove(capturePicFragment).commit();
+				remoteCallFragment = new RemoteCallFragment();
+				transaction.replace(R.id.chat_capture, remoteCallFragment);
+				transaction.commit();
 
-                binding.chatView.scrollToBottom();
+				MessageBox.INSTANCE.add(new RequestTakeIDCardDone(), 5000);
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
 			tx.commit();
 		}
 
+		if(msg instanceof RequestTakeIDCardDone) {
+			MessageBox.INSTANCE.addAndWait(
+					new IDCardInfo("Driver's License", "박승남", "680707-1243132", "2012.11.02", ""),
+					new IDCardShown()
+				);
+
+			showAppBar();
+			this.returnToInitialControl();
+			showStatusBar();
+
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			transaction.remove(remoteCallFragment).commit();
+			binding.chatView.scrollToBottom();
+		}
+
+		if(msg instanceof CPIAuthenticationWait) {
+			PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
+			loadingDialog.setTitle("We are searching your information.");
+			loadingDialog.setDescription("Please wait.");
+			loadingDialog.show();
+
+			Observable.interval(4, TimeUnit.SECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.first((long) 1)
+					.subscribe(i -> {
+						MessageBox.INSTANCE.add(new CPIAuthenticationDone());
+						loadingDialog.dismiss();
+					});
+		}
+
 		if (msg instanceof RequestKeyboardInput) {
+            fiBinding.chatEditText.setInputType(((RequestKeyboardInput) msg).getInputType());
 			openKeyboard(fiBinding.chatEditText);
 		}
 
@@ -300,7 +268,6 @@ public class ChatActivity extends AppCompatActivity {
 						loadingDialog.dismiss();
 					});
 		}
-
 
 		if (msg instanceof RequestSignature) {
 			releaseControls();
@@ -385,12 +352,6 @@ public class ChatActivity extends AppCompatActivity {
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
 			ctBinding.editMoney.setEnabled(false);
 			binding.footer.addView(ctBinding.getRoot());
-		}
-
-		if (msg instanceof EnableToEditMoney) {
-			ctBinding.editMoney.setEnabled(true);
-			ctBinding.editMoney.requestFocus();
-			ctBinding.gvKeypad.setLengthLimit(7);
 		}
 
 		if (msg instanceof ShowPdfView) {
@@ -663,11 +624,13 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void releaseControls() {
+        fiBinding.chatEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 		dismissKeyboard(fiBinding.chatEditText);
 		hideExControl();
 	}
 
 	private void releaseAllControls() {
+        fiBinding.chatEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 		dismissKeyboard(fiBinding.chatEditText);
 		binding.footer.removeAllViews();
 	}

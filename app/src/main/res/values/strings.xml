@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FinoBank</string>
+    <string name="app_name">BNP Paribas Cardif</string>
     <string name="registration_string_register">Register</string>
     <string name="registration_string_basic_information">My account</string>
     <string name="registration_string_phone_number">Mobile phone number</string>
@@ -394,6 +394,7 @@
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="dialog_string_id_housed_type">Verification ID type</string>
     <string name="dialog_chat_take_picture_id_housed">To open an account, you need to verify yourself with your personal ID card or driver\'s license. Please take a picture of your ID card</string>
+
     <string name="main_string_cardif_greetings">Hi, I\'m Cardif assistant.</string>
     <string name="main_string_cardif_recommend_title">Would you like to start CPI subscription?</string>
     <string name="main_string_cardif_start_subscription">Start subscription</string>
@@ -404,7 +405,32 @@
     <string name="main_string_cardif_CPI_disagree">Disagree</string>
     <string name="main_string_cardif_CPI_birth">Please enter your date of birth (DD.MM.YYYY)</string>
     <string name="main_string_cardif_CPI_name">Please enter your name</string>
+    <string name="main_string_cardif_CPI_subscription_canceled">CPI subscription process is canceled. What can i help you?</string>
+    <string name="main_string_cardif_CPI_loan_question">Let\'s go to loan information. What is the amount of loan?\n(ex. 1,000,000 KRW)</string>
+    <string name="main_string_cardif_CPI_period_question">How long is the loan period? (Years)</string>
+    <string name="main_string_cardif_CPI_date_question">When was the start date of loan?\n(DD.MM.YYYY)</string>
+    <string name="main_string_cardif_CPI_select_option_desc">I\'ve checked your Loan information details and I would like to recommend.\nWhich option do you want?</string>
     <string name="main_string_cardif_CPI_doctor">Let me start Illness Declaration. Have you seen a doctor last 3 months?</string>
+    <string name="main_string_cardif_CPI_option1">1. Base:\nSubscription amount 100M KRW,\nMonthly premium 9,000 KRW</string>
+    <string name="main_string_cardif_CPI_option1_answer">1. Base</string>
+    <string name="main_string_cardif_CPI_option2">2. Base + Cancer Insurance\nSubscription amount 100M KRW,\nMonthly premium 35,000 KRW</string>
+    <string name="main_string_cardif_CPI_option2_answer">2. Base + Cancer Insurance</string>
+    <string name="main_string_cardif_CPI_option3">3. Base + 3 major diseases insurance:\nSubscription amount 100M KRW,\nMonthly premium 41,000 KRW</string>
+    <string name="main_string_cardif_CPI_option3_answer">3. Base + 3 major diseases insurance</string>
+    <string name="main_string_cardif_CPI_option4">4. I need more information</string>
+    <string name="main_string_cardif_CPI_cancel_option">4. Cancel</string>
+    <string name="main_string_cardif_CPI_subscription_completed">Thank you for making contract with Cardif.</string>
+    <string name="main_string_cardif_any_help">Do you need help? What can I do for you?</string>
+    <string name="main_string_cardif_CPI_more_answered_desc">Cardif\'s Cancer Insurance option covers Gastric, Liver, Lung, Colon, and Prostate cancer.\nIf you want more details, please click to icon below.\n\n(More information)\nOr, click to icon below to resume subscription</string>
+    <string name="main_string_cardif_CPI_more_answered_option1">More Information</string>
+    <string name="main_string_cardif_CPI_more_answered_option2">Resume Subscription</string>
+    <string name="main_string_cardif_CPI_select_identification">Thank you for your information.\nPlease click the button to Idenfify you </string>
+    <string name="main_string_cardif_CPI_start_identification">Start Identification</string>
+    <string name="main_string_cardif_CPI_select_sign_on_contract">Thank you for your cooperation\nFinally, please click the button to sign on contract</string>
+    <string name="main_string_cardif_CPI_sign_on_contract">Sign on the contract</string>
+    <string name="main_string_cardif_CPI_agree_to_check_desc">Please click following button to agree to check your loan and Credit</string>
+    <string name="main_string_cardif_CPI_please_select_authentication_certificate">Please choose and verify your official authentication certificate.</string>
+
     <string name="dialog_string_cardif_loan_amount">Let\'s go to loan information. What is the amount of loan? (ex. 1,000,000 KRW)</string>
     <string name="dialog_string_cardif_loan_period">How long is the loan period? (Years)</string>
     <string name="dialog_string_cardif_loan_startdate">When was the start date of loan? (DD.MM.YYYY)</string>

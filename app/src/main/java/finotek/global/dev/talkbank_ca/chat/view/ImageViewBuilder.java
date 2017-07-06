@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.databinding.ChatImageBinding;
+import finotek.global.dev.talkbank_ca.setting.PageType;
 
 /**
  * Created by magyeong-ug on 04/07/2017.
@@ -33,16 +34,12 @@ public class ImageViewBuilder implements ChatView.ViewBuilder<ImageMessage> {
 	public void bind(RecyclerView.ViewHolder viewHolder, ImageMessage data) {
 		ImageViewHolder holder = (ImageViewHolder) viewHolder;
 
-		String imgPath = data.getImgPath();
+		Integer imgPath = data.getImgPath();
 
-		if (!TextUtils.isEmpty(imgPath)) {
-
+		if (imgPath == null) {
 			holder.binding.chatIvImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
-
-//			Glide.with(context)
-//					.load(imgPath)
-//					.fitCenter()
-//					.into(holder.binding.chatIvImg);
+		} else {
+			holder.binding.chatIvImg.setImageDrawable(ContextCompat.getDrawable(context, imgPath));
 		}
 	}
 

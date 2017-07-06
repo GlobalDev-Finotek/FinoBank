@@ -104,19 +104,13 @@ public class CardifScenario {
 	}
 
 	private void firstScenario() {
-
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
-
-		MessageBox.INSTANCE.add(new ImageMessage("http://www.pngmart.com/files/1/Cat-PNG-File.png"));
 		MessageBox.INSTANCE.addAndWait(
-				new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_greetings)), req
+			new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_greetings)), req
 		);
-
-
 	}
-
 
 	private void onRequest(Object msg) {
 		if (msg instanceof SendMessage) {
@@ -163,7 +157,6 @@ public class CardifScenario {
 	}
 
 	private void updateUIOn(Object msg) {
-
 		chatView.scrollToBottom();
 
 		// 보낸 메시지

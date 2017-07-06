@@ -154,10 +154,9 @@ public class MainScenario_v2 {
 	}
 
 	private void firstScenario() {
-
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
-
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
+
 		/*RecoMenuRequest req = new RecoMenuRequest();
 		//req.setTitle("추천메뉴");
 		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));

@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ImageMessage {
-	String imgPath;
+	Integer imgPath;
 }

@@ -6,11 +6,9 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
 
 public class RecommendScenarioMenuRequest extends RecoMenuRequest{
-
     public RecommendScenarioMenuRequest(Context context){
         if(!LeftScenario.scenarioList.isEmpty()) {
-
-            setTitle(context.getResources().getString(R.string.main_string_cardif_recommend_title));
+            setDescription(context.getResources().getString(R.string.main_string_cardif_recommend_title));
 
             for (String s : LeftScenario.scenarioList) {
                 if (s.equals("E"))
@@ -18,10 +16,8 @@ public class RecommendScenarioMenuRequest extends RecoMenuRequest{
                 else if (s.equals("P"))
                     addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_more_inform_CPI), null);
             }
-        }
-        else{
+        } else {
             setDescription(context.getResources().getString(R.string.main_string_recommend_finished));
-
         }
     }
 }

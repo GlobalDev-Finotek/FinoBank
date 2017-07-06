@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FinoBank</string>
+    <string name="app_name">BNP Paribas Cardif</string>
     <string name="registration_string_register">사용자 등록</string>
     <string name="registration_string_basic_information">기본 정보(필수입력)</string>
     <string name="registration_string_phone_number">휴대전화 번호</string>
@@ -56,7 +56,7 @@
     <string name="registration_string_pin_code_type">6자리 숫자로 PIN 코드를 입력해 주세요.</string>
     <string name="registration_string_pin_code_color_verify">PIN 코드 인증 시 등록한 배경색과 글자색도 일치해야 합니다.</string>
     <string name="registration_string_secure_keyboard_operating">보안 키보드 작동 중</string>
-    <string name="main_string_talkbank">FinoBank</string>
+    <string name="main_string_talkbank">BNP Paribas Cardif</string>
     <string name="main_actoin_settings">설정</string>
     <string name="main_action_seach">Search</string>
     <string name="main_action_edit">Edit</string>

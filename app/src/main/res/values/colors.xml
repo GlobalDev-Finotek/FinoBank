@@ -56,7 +56,7 @@
     <color name="chat_status_text">#5a5e45</color>
     <color name="chat_divider_bg">#cfe8ed</color>
     <color name="chat_divider_text">#546463</color>
-    <color name="chat_background">#CDEADF</color>
+    <color name="chat_background">#EAE8DF </color>
     <color name="chat_send_bg">#defdc4</color>
     <color name="chat_recommended_menu_text">#055d4f</color>
 

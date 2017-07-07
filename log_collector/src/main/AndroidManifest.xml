@@ -60,11 +60,6 @@
             android:permission="android.permission.BIND_JOB_SERVICE">
         </service>
         <service
-            android:name=".log.UploadService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-        </service>
-        <service
             android:name=".log.LocationLogService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE">

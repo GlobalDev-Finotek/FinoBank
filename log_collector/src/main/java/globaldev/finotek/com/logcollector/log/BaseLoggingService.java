@@ -2,6 +2,8 @@ package globaldev.finotek.com.logcollector.log;
 
 import android.app.job.JobParameters;
 import android.app.job.JobService;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,6 +20,7 @@ import io.realm.RealmObject;
  */
 public abstract class BaseLoggingService<T extends RealmObject> extends JobService {
 
+	public int JOB_ID;
 	protected Realm realm;
 	protected List<T> logData = new ArrayList<>();
 
@@ -25,19 +28,22 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 		this.realm = Realm.getDefaultInstance();
 	}
 
+	protected void parse(boolean isGetAllData) {
+		logData.addAll(getData(isGetAllData));
+		notifyJobDone(logData);
+	}
 
-	/**
-	 * Parse context log. it is different from each logging services.
-	 */
-	protected abstract void parse();
+	public abstract List<T> getData(boolean isGetAllData);
 
 	protected abstract void notifyJobDone(List<T> logData);
 
-
+	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
 	@Override
 	public boolean onStartJob(JobParameters params) {
+		boolean isGetallData = params.getExtras().getBoolean("isGetAllData");
+
 		LogUtil.write(getClass().getCanonicalName() + " parse started");
-		parse();
+		parse(isGetallData);
 		LogUtil.write(getClass().getCanonicalName() + " parse ended");
 		realm.beginTransaction();
 		ArrayList<T> dataFromDB = new ArrayList<>();
@@ -61,7 +67,6 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 			LogUtil.write(t.toString() + "\n");
 		}
 	}
-
 
 	@Override
 	public boolean onStopJob(JobParameters params) {

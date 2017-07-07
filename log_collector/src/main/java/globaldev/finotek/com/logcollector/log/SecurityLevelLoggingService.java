@@ -7,6 +7,7 @@ import android.os.Environment;
 import android.provider.Settings;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -33,7 +34,7 @@ public class SecurityLevelLoggingService extends BaseLoggingService<DeviceSecuri
 	}
 
 	@Override
-	protected void parse() {
+	protected void parse(boolean isGetAllData) {
 
 		DeviceSecurityLevel log = new DeviceSecurityLevel();
 		// TODO getLockType 오류
@@ -44,6 +45,11 @@ public class SecurityLevelLoggingService extends BaseLoggingService<DeviceSecuri
 
 		logData.add(log);
 
+	}
+
+	@Override
+	public List<DeviceSecurityLevel> getData(boolean isGetAllData) {
+		return new ArrayList<>();
 	}
 
 	@Override

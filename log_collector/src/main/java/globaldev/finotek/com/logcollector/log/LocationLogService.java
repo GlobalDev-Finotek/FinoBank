@@ -10,11 +10,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.app.FinopassApp;
+import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 import io.reactivex.subjects.PublishSubject;
@@ -52,7 +54,7 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 	};
 
 	public LocationLogService() {
-
+		JOB_ID = ActionType.GATHER_LOCATION_LOG;
 	}
 
 
@@ -62,10 +64,11 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 	}
 
-
 	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Override
-	protected void parse() {
+	public List<LocationLog> getData(boolean isGetAllData) {
+
+		ArrayList<LocationLog> locationLogs = new ArrayList<>();
 
 		LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
@@ -91,11 +94,12 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		}
 
 		if (currentLocation != null) {
-			LocationLog log = new LocationLog(currentLocation.getTime(),
+			LocationLog l = new LocationLog(currentLocation.getTime(),
 					currentLocation.getLatitude(), currentLocation.getLongitude());
-			logData.add(log);
+			locationLogs.add(l);
 		}
 
+		return locationLogs;
 	}
 
 	@Override

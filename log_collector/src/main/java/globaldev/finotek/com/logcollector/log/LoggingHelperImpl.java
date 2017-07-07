@@ -151,6 +151,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateAppUsageLog(userKey, (List<ApplicationLog>) o)
+								.retry(3)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -165,6 +166,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 									@Override
 									public void run() throws Exception {
 										clearDBData(ApplicationLog.class);
+										mJobService.cancel(ActionType.GATHER_APP_USAGE_LOG);
 									}
 								});
 					}
@@ -177,6 +179,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateDeviceSecurityLog(userKey, (List<DeviceSecurityLevel>) o)
+								.retry(3)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -191,6 +194,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 									@Override
 									public void run() throws Exception {
 										clearDBData(DeviceSecurityLevel.class);
+										mJobService.cancel(ActionType.GATHER_DEVICE_SECURITY_LOG);
 									}
 								});
 					}
@@ -203,6 +207,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateCallLog(userKey, (List<CallHistoryLog>) o)
+								.retry(3)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -217,6 +222,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 									@Override
 									public void run() throws Exception {
 										clearDBData(CallHistoryLog.class);
+										mJobService.cancel(ActionType.GATHER_CALL_LOG);
 									}
 								});
 					}
@@ -228,6 +234,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateLocationLog(userKey, (List<LocationLog>) o)
+								.retry(3)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -242,6 +249,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 									@Override
 									public void run() throws Exception {
 										clearDBData(LocationLog.class);
+										mJobService.cancel(ActionType.GATHER_LOCATION_LOG);
 									}
 								});
 					}
@@ -253,6 +261,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					@Override
 					public void accept(Object o) throws Exception {
 						logService.updateSMSLog(userKey, (List<MessageLog>) o)
+								.retry(3)
 								.subscribe(new Consumer() {
 									@Override
 									public void accept(Object o) throws Exception {
@@ -267,6 +276,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 									@Override
 									public void run() throws Exception {
 										clearDBData(MessageLog.class);
+										mJobService.cancel(ActionType.GATHER_MESSAGE_LOG);
 									}
 								});
 					}
@@ -309,13 +319,6 @@ public class LoggingHelperImpl implements LoggingHelper {
 			case ActionType.GATHER_MESSAGE_LOG:
 				loggingServiceMap.put(ActionType.GATHER_MESSAGE_LOG,
 						SMSLoggingService.class.getName());
-				break;
-
-			case ActionType.UPLOAD_LOG:
-				if (!loggingServiceMap.containsKey(ActionType.UPLOAD_LOG)) {
-					loggingServiceMap.put(ActionType.UPLOAD_LOG,
-							UploadService.class.getName());
-				}
 				break;
 
 			default:

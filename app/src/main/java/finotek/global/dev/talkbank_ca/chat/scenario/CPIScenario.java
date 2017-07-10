@@ -5,6 +5,7 @@ import android.text.InputType;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
@@ -13,6 +14,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.RemoteCallDone;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardShown;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
@@ -44,11 +48,24 @@ public class CPIScenario implements Scenario {
 	public void onReceive(Object msg) {
 		if(msg instanceof IDCardShown) {
 			RecoMenuRequest req = new RecoMenuRequest();
+			req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_authenticate_on_remote_call));
+			req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_authenticate_on_remote_call), () -> {
+				MessageBox.INSTANCE.add(new RequestRemoteCall());
+			});
+			MessageBox.INSTANCE.addAndWait(req);
+			step = Step.IdentificationProcess;
+		}
+
+		if(msg instanceof RemoteCallDone) {
+			ImageMessage contract = new ImageMessage();
+			contract.setImgPath(R.drawable.contract);
+
+			RecoMenuRequest req = new RecoMenuRequest();
 			req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_sign_on_contract));
 			req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_sign_on_contract), () -> {
 				MessageBox.INSTANCE.add(new RequestSignature());
 			});
-            MessageBox.INSTANCE.addAndWait(req);
+			MessageBox.INSTANCE.addAndWait(contract, req);
 			step = Step.SignatureProcess;
 		}
 
@@ -71,15 +88,27 @@ public class CPIScenario implements Scenario {
 
             step = Step.UserSelectedOption;            // 사용자가 옵션을 선택함
         }
+
+        if(msg instanceof CPIContractIsDone) {
+			ImageMessage signedContract = new ImageMessage();
+			signedContract.setStringImagePath(context.getExternalFilesDir(null) + "/mySignedContract.png");
+
+            MessageBox.INSTANCE.addAndWait(
+				signedContract,
+                new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_subscription_completed)),
+                new Done()
+            );
+        }
 	}
 
 	public RecoMenuRequest getRequestConfirm(int desc) {
 		RecoMenuRequest req = new RecoMenuRequest();
-		//req.setTitle("추천메뉴");
 		req.setDescription(context.getResources().getString(desc));
 
 		req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_agree), null);
-		req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.main_string_cardif_CPI_disagree), null);
+		req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.main_string_cardif_CPI_disagree), () -> {
+
+        }, true);
 		return req;
 	}
 
@@ -130,10 +159,6 @@ public class CPIScenario implements Scenario {
 				break;
 			case PeriodQuestion:
 				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_period_question)));
-				step = Step.DateQuestion;
-				break;
-			case DateQuestion:
-				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_date_question)));
 				step = Step.AgreeToCheck;
 				break;
             case AgreeToCheck:
@@ -146,14 +171,17 @@ public class CPIScenario implements Scenario {
             case Authentication:
                 if (msg.equals(context.getResources().getString(R.string.main_string_cardif_CPI_agree))) {
                     RecoMenuRequest req = new RecoMenuRequest();
-                    Runnable listener = () -> {
-                        MessageBox.INSTANCE.add(new CPIAuthenticationWait());
-                    };
 
                     req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_please_select_authentication_certificate));
-                    req.addMenu(R.drawable.icon_haha, "Kim Sung Won\nexpired at: 2017-08-08\ntype: personal usage", listener);
-                    req.addMenu(R.drawable.icon_haha, "Kim Woo Seob\nexpired at: 2017-11-09\ntype: personal usage", listener);
-                    req.addMenu(R.drawable.icon_haha, "Lee Kyung Jin\nexpired at: 2017-09-25\ntype: personal usage (banking)", listener);
+                    req.addMenu(R.drawable.icon_haha, "Park Seung Nam\nexpired at: 2017-09-08\ntype: personal usage", () -> {
+                        selectUser("Park Seung Nam");
+                    });
+                    req.addMenu(R.drawable.icon_haha, "Kim Woo Seob\nexpired at: 2017-11-09\ntype: personal usage", () -> {
+                        selectUser("Kim Woo Seob");
+                    });
+                    req.addMenu(R.drawable.icon_haha, "Lee Kyung Jin\nexpired at: 2017-09-25\ntype: personal usage (banking)", () -> {
+                        selectUser("Lee Kyung Jin");
+                    });
                     MessageBox.INSTANCE.addAndWait(req);
                 } else if (msg.equals(context.getResources().getString(R.string.main_string_cardif_CPI_disagree))) {
                     MessageBox.INSTANCE.addAndWait(
@@ -161,6 +189,10 @@ public class CPIScenario implements Scenario {
                             new Done()
                     );
                 }
+
+                break;
+            case AuthenticationPassword:
+                MessageBox.INSTANCE.add(new CPIAuthenticationWait());
                 step = Step.SelectOption;
                 break;
 			case UserSelectedOption:
@@ -209,7 +241,9 @@ public class CPIScenario implements Scenario {
 						req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option3), () -> {
 							MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option3_answer)));
 						});
-						req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_cancel_option), null);
+                        req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option4), () -> {
+
+                        }, true);
 						MessageBox.INSTANCE.addAndWait(new DismissKeyboard(), req);
 
 						step = Step.UserSelectedOption;
@@ -229,10 +263,19 @@ public class CPIScenario implements Scenario {
 		return false;
 	}
 
+	private void selectUser(String name) {
+        MessageBox.INSTANCE.addAndWait(
+            new ReceiveMessage("You selected " + name + ", Please type the password."),
+            new RequestKeyboardInput(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)
+        );
+
+        step = Step.AuthenticationPassword;
+    }
+
 	private enum Step {
 		Initial, Agreement, Birth, Name,
 		Doctor, LoanQuestion, PeriodQuestion, DateQuestion, AgreeToCheck,
-		Authentication, SelectOption, UserSelectedOption,
+		Authentication, AuthenticationPassword, SelectOption, UserSelectedOption,
 		MoreInformation, MoreInformationAnswer,
 		IdentificationProcess, SignatureProcess
 	}

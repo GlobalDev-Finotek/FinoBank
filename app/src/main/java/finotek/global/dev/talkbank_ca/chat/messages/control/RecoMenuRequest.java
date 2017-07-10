@@ -19,7 +19,7 @@ public class RecoMenuRequest {
     Runnable doAfterEvent;
     boolean enabled = true;
 
-    public void addMenu(int icon, String name, Runnable listener){
+    public void addMenu(int icon, String name, Runnable listener, boolean avoidDisable) {
         if(menus == null)
             menus = new ArrayList<>();
 
@@ -29,7 +29,11 @@ public class RecoMenuRequest {
                 MessageBox.INSTANCE.add(new SendMessage(name));
             };
 
-        menus.add(new RecoMenu(icon, name, listener));
+        menus.add(new RecoMenu(icon, name, listener, avoidDisable));
+    }
+
+    public void addMenu(int icon, String name, Runnable listener){
+        addMenu(icon, name, listener, false);
     }
 
     public static RecoMenuRequest buildYesOrNo(Context context, String description){

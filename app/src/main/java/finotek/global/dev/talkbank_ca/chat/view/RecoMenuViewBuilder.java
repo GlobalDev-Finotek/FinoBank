@@ -89,7 +89,9 @@ public class RecoMenuViewBuilder implements ChatView.ViewBuilder<RecoMenuRequest
                         .subscribe(aVoid -> {
                             menu.getListener().run();
 
-                            data.setEnabled(false);
+                            if(!menu.isAvoidDisable())
+                                data.setEnabled(false);
+
                             addMenus(holder, data);
                         });
             }

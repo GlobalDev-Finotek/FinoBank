@@ -121,8 +121,8 @@ public class ChatView extends RecyclerView {
 		getLayoutManager().scrollToPosition(0);
 	}
 
-	public void imageMessage(Integer imgPath) {
-		addMessage(ViewType.Image.ordinal(), new ImageMessage(imgPath));
+	public void imageMessage(ImageMessage imageMessage) {
+		addMessage(ViewType.Image.ordinal(), imageMessage);
 	}
 
 	public enum ViewType {

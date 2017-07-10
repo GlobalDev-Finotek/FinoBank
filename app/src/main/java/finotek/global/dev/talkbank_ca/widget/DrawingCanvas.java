@@ -10,6 +10,7 @@ import android.graphics.Path;
 import android.graphics.PorterDuff;
 import android.support.v4.content.ContextCompat;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -52,8 +53,6 @@ public class DrawingCanvas extends View {
 		drawPaint.setDither(true);
 
 		canvasPaint = new Paint(Paint.DITHER_FLAG);
-
-
 	}
 
 	public void setOnCanvasTouchListener(OnCanvasTouchListener onCanvasTouchListener) {
@@ -62,11 +61,17 @@ public class DrawingCanvas extends View {
 
 	public void save() {
 		String path = context.getExternalFilesDir(null) + "/mySign.png";
+		Log.d("BNP-APP", "signature is saved.");
 
+//		this.buildDrawingCache();
+//		Bitmap b = Bitmap.createBitmap(this.getDrawingCache());
+//		this.setDrawingCacheEnabled(false);
 
-		this.buildDrawingCache();
-		Bitmap b = Bitmap.createBitmap(this.getDrawingCache());
-		this.setDrawingCacheEnabled(false);
+		Log.d("BNP-APP", "Measured Width: " + this.getMeasuredWidth() + ", Measured Height: " + getMeasuredHeight());
+
+		Bitmap b = Bitmap.createBitmap(this.getMeasuredWidth(), this.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
+		Canvas canvas = new Canvas(b);
+		this.draw(canvas);
 
 		if (b != null) {
 			try {
@@ -80,8 +85,6 @@ public class DrawingCanvas extends View {
 				e.printStackTrace();
 			}
 		}
-
-
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
@@ -37,7 +39,17 @@ public class ImageViewBuilder implements ChatView.ViewBuilder<ImageMessage> {
 		Integer imgPath = data.getImgPath();
 
 		if (imgPath == null) {
-			holder.binding.chatIvImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
+			if(data.getStringImagePath() != null && !data.getStringImagePath().isEmpty()) {
+				BitmapFactory.Options options = new BitmapFactory.Options();
+				options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+
+				String path = data.getStringImagePath();
+				Bitmap signedContract = BitmapFactory.decodeFile(path, options).copy(Bitmap.Config.ARGB_8888, true);
+
+				holder.binding.chatIvImg.setImageBitmap(signedContract);
+			} else {
+				holder.binding.chatIvImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
+			}
 		} else {
 			holder.binding.chatIvImg.setImageDrawable(ContextCompat.getDrawable(context, imgPath));
 		}

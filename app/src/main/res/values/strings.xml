@@ -403,12 +403,12 @@
     <string name="main_string_cardif_CPI_agreement_desc">Do you agree to the Agreement to Collect and Use Personal Information?</string>
     <string name="main_string_cardif_CPI_agree">Agree</string>
     <string name="main_string_cardif_CPI_disagree">Disagree</string>
-    <string name="main_string_cardif_CPI_birth">Please enter your date of birth (DD.MM.YYYY)</string>
+    <string name="main_string_cardif_CPI_birth">Please enter your date of birth (DDMMYYYY)</string>
     <string name="main_string_cardif_CPI_name">Please enter your name</string>
     <string name="main_string_cardif_CPI_subscription_canceled">CPI subscription process is canceled. What can i help you?</string>
     <string name="main_string_cardif_CPI_loan_question">Let\'s go to loan information. What is the amount of loan?\n(ex. 1,000,000 KRW)</string>
     <string name="main_string_cardif_CPI_period_question">How long is the loan period? (Years)</string>
-    <string name="main_string_cardif_CPI_date_question">When was the start date of loan?\n(DD.MM.YYYY)</string>
+    <string name="main_string_cardif_CPI_date_question">When was the start date of loan?\n(DDMMYYYY)</string>
     <string name="main_string_cardif_CPI_select_option_desc">I\'ve checked your Loan information details and I would like to recommend.\nWhich option do you want?</string>
     <string name="main_string_cardif_CPI_doctor">Let me start Illness Declaration. Have you seen a doctor last 3 months?</string>
     <string name="main_string_cardif_CPI_option1">1. Base:\nSubscription amount 100M KRW,\nMonthly premium 9,000 KRW</string>
@@ -428,12 +428,14 @@
     <string name="main_string_cardif_CPI_start_identification">Start Identification</string>
     <string name="main_string_cardif_CPI_select_sign_on_contract">Thank you for your cooperation\nFinally, please click the button to sign on contract</string>
     <string name="main_string_cardif_CPI_sign_on_contract">Sign on the contract</string>
+    <string name="main_string_cardif_CPI_select_authenticate_on_remote_call">Thanks\nNow, please click the button to authenticate who you are through video call</string>
+    <string name="main_string_cardif_CPI_authenticate_on_remote_call">Start to call to the call center agent</string>
     <string name="main_string_cardif_CPI_agree_to_check_desc">Please click following button to agree to check your loan and Credit</string>
     <string name="main_string_cardif_CPI_please_select_authentication_certificate">Please choose and verify your official authentication certificate.</string>
 
     <string name="dialog_string_cardif_loan_amount">Let\'s go to loan information. What is the amount of loan? (ex. 1,000,000 KRW)</string>
     <string name="dialog_string_cardif_loan_period">How long is the loan period? (Years)</string>
-    <string name="dialog_string_cardif_loan_startdate">When was the start date of loan? (DD.MM.YYYY)</string>
+    <string name="dialog_string_cardif_loan_startdate">When was the start date of loan? (DDMMYYYY)</string>
     <string name="dialog_agree">Agree</string>
     <string name="string_disagree">Disagree</string>
     <string name="string_agree">Agree</string>

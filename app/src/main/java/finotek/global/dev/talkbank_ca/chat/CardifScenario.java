@@ -104,11 +104,15 @@ public class CardifScenario {
 	}
 
 	private void firstScenario() {
-		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
-
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
+		ImageMessage mainImage = new ImageMessage();
+		mainImage.setImgPath(R.drawable.main);
+
 		MessageBox.INSTANCE.addAndWait(
-			new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_greetings)), req
+            mainImage,
+            new DividerMessage(DateUtil.currentDate(context)),
+			new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_greetings)),
+			req
 		);
 	}
 
@@ -183,7 +187,7 @@ public class CardifScenario {
 
 		if (msg instanceof ImageMessage) {
 			ImageMessage recv = (ImageMessage) msg;
-			chatView.imageMessage(recv.getImgPath());
+			chatView.imageMessage(recv);
 		}
 
 		// 구분선
@@ -265,7 +269,7 @@ public class CardifScenario {
 
 	private boolean isImmediateMessage(Object msg) {
 		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
-				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
+				msg instanceof TransferButtonPressed ||
 				msg instanceof MessageEmitted;
 	}
 

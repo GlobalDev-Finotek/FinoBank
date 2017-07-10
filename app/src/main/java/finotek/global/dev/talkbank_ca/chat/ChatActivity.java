@@ -48,28 +48,28 @@ import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
-import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestUserInformation;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
-import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.RemoteCallDone;
+import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardShown;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCardDone;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -81,7 +81,8 @@ import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
-import finotek.global.dev.talkbank_ca.user.RemoteCallFragment;
+import finotek.global.dev.talkbank_ca.user.cardif.ContractFragment;
+import finotek.global.dev.talkbank_ca.user.cardif.RemoteCallFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
@@ -120,6 +121,7 @@ public class ChatActivity extends AppCompatActivity {
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
 	private RemoteCallFragment remoteCallFragment;
+	private ContractFragment contractFragment;
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -191,7 +193,6 @@ public class ChatActivity extends AppCompatActivity {
 	@Override
 	protected void onPause() {
 		super.onPause();
-		// hideExControl();
 	}
 
 	private void onNewMessageUpdated(Object msg) {
@@ -204,35 +205,58 @@ public class ChatActivity extends AppCompatActivity {
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
+
 			capturePicFragment = CapturePicFragment.newInstance();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
-				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				remoteCallFragment = new RemoteCallFragment();
-				transaction.replace(R.id.chat_capture, remoteCallFragment);
-				transaction.commit();
+                MessageBox.INSTANCE.addAndWait(
+                    new IDCardInfo("Driver's License", "박승남", "680707-1243132", "2012.11.02", ""),
+                    new IDCardShown()
+                );
 
-				MessageBox.INSTANCE.add(new RequestTakeIDCardDone(), 5000);
+                showAppBar();
+                this.returnToInitialControl();
+                showStatusBar();
+
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.remove(capturePicFragment).commit();
+                binding.chatView.scrollToBottom();
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
 			tx.commit();
 		}
 
-		if(msg instanceof RequestTakeIDCardDone) {
-			MessageBox.INSTANCE.addAndWait(
-					new IDCardInfo("Driver's License", "박승남", "680707-1243132", "2012.11.02", ""),
-					new IDCardShown()
-				);
+		if(msg instanceof RequestRemoteCall) {
+            releaseControls();
+            releaseAllControls();
+            binding.footer.setPadding(0, 0, 0, 0);
+            hideAppBar();
+            hideStatusBar();
 
-			showAppBar();
-			this.returnToInitialControl();
-			showStatusBar();
+            View captureView = inflate(R.layout.chat_capture);
+            binding.footer.addView(captureView);
 
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			transaction.remove(remoteCallFragment).commit();
-			binding.chatView.scrollToBottom();
+            remoteCallFragment = new RemoteCallFragment();
+            remoteCallFragment.setVideoURL("android.resource://"+  getPackageName() + "/" + R.raw.lady_teller);
+            remoteCallFragment.setStopListener(() -> {
+                MessageBox.INSTANCE.add(new RemoteCallDone(), 500);
+            });
+
+            FragmentTransaction tx = getFragmentManager().beginTransaction();
+            tx.replace(R.id.chat_capture, remoteCallFragment);
+            tx.commit();
 		}
+
+		if(msg instanceof RemoteCallDone) {
+            showAppBar();
+            this.returnToInitialControl();
+            showStatusBar();
+
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.remove(remoteCallFragment).commit();
+            binding.chatView.scrollToBottom();
+        }
 
 		if(msg instanceof CPIAuthenticationWait) {
 			PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
@@ -299,21 +323,32 @@ public class ChatActivity extends AppCompatActivity {
 							dialog.setButtonText(getString(R.string.setting_string_yes));
 							dialog.setDoneListener(() -> {
 								MessageBox.INSTANCE.add(new SignatureVerified());
-								returnToInitialControl();
-
-								showAppBar();
-								showStatusBar();
-
-								FragmentTransaction transaction = getFragmentManager().beginTransaction();
-								transaction.remove(signRegistFragment).commit();
-
 								dialog.dismiss();
-
-								returnToInitialControl();
-
-                                binding.chatView.scrollToBottom();
 								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+								contractFragment = new ContractFragment();
+								contractFragment.setConfirmListener(() -> {
+									returnToInitialControl();
+									showAppBar();
+									showStatusBar();
+									binding.chatView.scrollToBottom();
+
+									MessageBox.INSTANCE.add(new CPIContractIsDone());
+								});
+								contractFragment.setCancelListener(() -> {
+									returnToInitialControl();
+									showAppBar();
+									showStatusBar();
+									binding.chatView.scrollToBottom();
+
+									MessageBox.INSTANCE.addAndWait(
+										new ReceiveMessage(getString(R.string.main_string_cardif_CPI_subscription_canceled)),
+										new Done()
+									);
+								});
+								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+								transaction.replace(R.id.chat_capture, contractFragment)
+										   .commit();
 							});
 							dialog.showWithRatio(0.50f);
 						}, throwable -> {
@@ -411,6 +446,9 @@ public class ChatActivity extends AppCompatActivity {
 
 	public void onSendButtonClickEvent() {
 		String msg = fiBinding.chatEditText.getText().toString();
+        if(fiBinding.chatEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD))
+            msg = msg.replaceAll(".", "*");
+
 		MessageBox.INSTANCE.add(new SendMessage(msg));
 		clearInput();
 	}
@@ -450,19 +488,11 @@ public class ChatActivity extends AppCompatActivity {
 	private void hideExControl() {
 		isExControlAvailable = false;
 		binding.footer.removeView(exControlView);
-		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
-		ivCtrl.animate().rotation(0).setInterpolator(new LinearInterpolator())
-				.setDuration(300);
-
 	}
 
 	private void showExControl() {
 		isExControlAvailable = true;
 		binding.footer.addView(exControlView, 0);
-		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
-		ivCtrl.animate().rotation(45).setInterpolator(new LinearInterpolator())
-				.setDuration(300);
-
         binding.chatView.scrollToBottom();
 	}
 
@@ -481,13 +511,6 @@ public class ChatActivity extends AppCompatActivity {
 
 		RxTextView.textChanges(fiBinding.chatEditText)
 				.subscribe(this::chatEditFieldTextChanged);
-
-		RxView.clicks(fiBinding.showExControl)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.delay(100, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					expandControlClickEvent();
-				});
 
 		RxView.clicks(fiBinding.sendButton)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)

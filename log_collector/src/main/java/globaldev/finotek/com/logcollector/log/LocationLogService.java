@@ -38,10 +38,13 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 
 	private Location currentLocation = null;
 
+
+
 	private LocationListener mLocationListener = new LocationListener() {
 
 		@Override
 		public void onLocationChanged(Location location) {
+			currentLocation = location;
 		}
 
 		@Override
@@ -92,6 +95,7 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		List<String> providers = lm.getProviders(true);
 		for (String prov : providers) {
 			Location l = lm.getLastKnownLocation(prov);
+
 			if (l != null) {
 				currentLocation = l;
 			}

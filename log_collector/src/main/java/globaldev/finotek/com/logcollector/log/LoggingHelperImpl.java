@@ -108,15 +108,17 @@ public class LoggingHelperImpl implements LoggingHelper {
 				if (actionType > 0) {
 					registerService(actionType, json);
 
-					JobInfo job = new JobInfo.Builder(actionType, new ComponentName(context, loggingServiceMap.get(actionType)))
+					JobInfo.Builder jobBuilder = new JobInfo.Builder(actionType, new ComponentName(context, loggingServiceMap.get(actionType)))
 							.setRequiredNetworkType(actionConfig.getRequiredNetworkType())
 							.setRequiresCharging(actionConfig.isRequiresCharging())
-							// .setPeriodic(actionConfig.getPeriod())
 							.setRequiresDeviceIdle(actionConfig.isRequiresDeviceIdle())
-							.setPersisted(actionConfig.isPersisted())
-							.build();
+							.setPersisted(actionConfig.isPersisted());
 
-					jobInfos.add(job);
+					if(actionType == ActionType.GATHER_LOCATION_LOG) {
+						jobBuilder.setPeriodic(actionConfig.getPeriod());
+					}
+
+					jobInfos.add(jobBuilder.build());
 				}
 			} catch (NumberFormatException e) {
 				e.printStackTrace();

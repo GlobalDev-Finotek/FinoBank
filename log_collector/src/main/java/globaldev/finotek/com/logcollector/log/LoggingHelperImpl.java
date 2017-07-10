@@ -11,27 +11,17 @@ import com.google.gson.Gson;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.R;
 import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionConfig;
 import globaldev.finotek.com.logcollector.model.ActionType;
-import globaldev.finotek.com.logcollector.model.ApplicationLog;
-import globaldev.finotek.com.logcollector.model.CallHistoryLog;
-import globaldev.finotek.com.logcollector.model.DeviceSecurityLevel;
-import globaldev.finotek.com.logcollector.model.LocationLog;
-import globaldev.finotek.com.logcollector.model.MessageLog;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.realm.Realm;
 
 /**
  * Created by magyeong-ug on 26/04/2017.
@@ -94,7 +84,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 
 	private void scheduleLoggingService(JobInfo job) {
 		if (JobScheduler.RESULT_SUCCESS == mJobService.schedule(job)) {
-			callUploadApi(job.getId());
+			System.out.println("service success");
 		}
 	}
 
@@ -107,9 +97,6 @@ public class LoggingHelperImpl implements LoggingHelper {
 
 		ArrayList<JobInfo> jobInfos = new ArrayList<>();
 		ArrayList<String> keySet = new ArrayList<>(dataMap.keySet());
-
-		/* UPLOAD LOG 가 마지막에 위치해야 함 */
-		Collections.sort(keySet);
 
 		for (String key : keySet) {
 			String json = dataMap.get(key);
@@ -124,7 +111,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 					JobInfo job = new JobInfo.Builder(actionType, new ComponentName(context, loggingServiceMap.get(actionType)))
 							.setRequiredNetworkType(actionConfig.getRequiredNetworkType())
 							.setRequiresCharging(actionConfig.isRequiresCharging())
-							.setPeriodic(actionConfig.getPeriod())
+							// .setPeriodic(actionConfig.getPeriod())
 							.setRequiresDeviceIdle(actionConfig.isRequiresDeviceIdle())
 							.setPersisted(actionConfig.isPersisted())
 							.build();
@@ -140,158 +127,8 @@ public class LoggingHelperImpl implements LoggingHelper {
 		return jobInfos;
 	}
 
-	private void callUploadApi(int jobId) {
 
-		final String userKey = sharedPreferences.getString(context.getString(R.string.user_key), "");
 
-		switch (jobId) {
-			case ActionType.GATHER_APP_USAGE_LOG:
-
-				eventBus.subscribe(RxEventBus.PARSING_APP_USAGE_FINISHED, this, new Consumer<Object>() {
-					@Override
-					public void accept(Object o) throws Exception {
-						logService.updateAppUsageLog(userKey, (List<ApplicationLog>) o)
-								.retry(3)
-								.subscribe(new Consumer() {
-									@Override
-									public void accept(Object o) throws Exception {
-										System.out.print(o);
-									}
-								}, new Consumer<Throwable>() {
-									@Override
-									public void accept(Throwable throwable) throws Exception {
-										System.out.print(throwable);
-									}
-								}, new Action() {
-									@Override
-									public void run() throws Exception {
-										clearDBData(ApplicationLog.class);
-										mJobService.cancel(ActionType.GATHER_APP_USAGE_LOG);
-									}
-								});
-					}
-				});
-				break;
-
-			case ActionType.GATHER_DEVICE_SECURITY_LOG:
-
-				eventBus.subscribe(RxEventBus.PARSING_SECURITY_FINISHED, this, new Consumer<Object>() {
-					@Override
-					public void accept(Object o) throws Exception {
-						logService.updateDeviceSecurityLog(userKey, (List<DeviceSecurityLevel>) o)
-								.retry(3)
-								.subscribe(new Consumer() {
-									@Override
-									public void accept(Object o) throws Exception {
-										System.out.print(o);
-									}
-								}, new Consumer<Throwable>() {
-									@Override
-									public void accept(Throwable throwable) throws Exception {
-										System.out.print(throwable);
-									}
-								}, new Action() {
-									@Override
-									public void run() throws Exception {
-										clearDBData(DeviceSecurityLevel.class);
-										mJobService.cancel(ActionType.GATHER_DEVICE_SECURITY_LOG);
-									}
-								});
-					}
-				});
-				break;
-
-			case ActionType.GATHER_CALL_LOG:
-
-				eventBus.subscribe(RxEventBus.PARSING_CALL_FINISHED, this, new Consumer<Object>() {
-					@Override
-					public void accept(Object o) throws Exception {
-						logService.updateCallLog(userKey, (List<CallHistoryLog>) o)
-								.retry(3)
-								.subscribe(new Consumer() {
-									@Override
-									public void accept(Object o) throws Exception {
-										System.out.print(o);
-									}
-								}, new Consumer<Throwable>() {
-									@Override
-									public void accept(Throwable throwable) throws Exception {
-										System.out.print(throwable);
-									}
-								}, new Action() {
-									@Override
-									public void run() throws Exception {
-										clearDBData(CallHistoryLog.class);
-										mJobService.cancel(ActionType.GATHER_CALL_LOG);
-									}
-								});
-					}
-				});
-				break;
-
-			case ActionType.GATHER_LOCATION_LOG:
-				eventBus.subscribe(RxEventBus.PARSING_LOCATION_FINISHED, this, new Consumer<Object>() {
-					@Override
-					public void accept(Object o) throws Exception {
-						logService.updateLocationLog(userKey, (List<LocationLog>) o)
-								.retry(3)
-								.subscribe(new Consumer() {
-									@Override
-									public void accept(Object o) throws Exception {
-										System.out.print(o);
-									}
-								}, new Consumer<Throwable>() {
-									@Override
-									public void accept(Throwable throwable) throws Exception {
-										System.out.print(throwable);
-									}
-								}, new Action() {
-									@Override
-									public void run() throws Exception {
-										clearDBData(LocationLog.class);
-										mJobService.cancel(ActionType.GATHER_LOCATION_LOG);
-									}
-								});
-					}
-				});
-				break;
-
-			case ActionType.GATHER_MESSAGE_LOG:
-				eventBus.subscribe(RxEventBus.PARSING_SMS_FINISHED, this, new Consumer<Object>() {
-					@Override
-					public void accept(Object o) throws Exception {
-						logService.updateSMSLog(userKey, (List<MessageLog>) o)
-								.retry(3)
-								.subscribe(new Consumer() {
-									@Override
-									public void accept(Object o) throws Exception {
-										System.out.print(o);
-									}
-								}, new Consumer<Throwable>() {
-									@Override
-									public void accept(Throwable throwable) throws Exception {
-										System.out.print(throwable);
-									}
-								}, new Action() {
-									@Override
-									public void run() throws Exception {
-										clearDBData(MessageLog.class);
-										mJobService.cancel(ActionType.GATHER_MESSAGE_LOG);
-									}
-								});
-					}
-				});
-				break;
-		}
-
-	}
-
-	private void clearDBData(Class clazz) {
-		Realm realm = Realm.getDefaultInstance();
-		realm.beginTransaction();
-		realm.delete(clazz);
-		realm.commitTransaction();
-	}
 
 	private void registerService(int actionType, String json) {
 		switch (actionType) {
@@ -309,11 +146,6 @@ public class LoggingHelperImpl implements LoggingHelper {
 			case ActionType.GATHER_LOCATION_LOG:
 				loggingServiceMap.put(ActionType.GATHER_LOCATION_LOG,
 						LocationLogService.class.getName());
-				break;
-
-			case ActionType.GATHER_DEVICE_SECURITY_LOG:
-				loggingServiceMap.put(ActionType.GATHER_DEVICE_SECURITY_LOG,
-						SecurityLevelLoggingService.class.getName());
 				break;
 
 			case ActionType.GATHER_MESSAGE_LOG:

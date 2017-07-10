@@ -14,6 +14,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
+import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
@@ -34,6 +35,9 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 	@Inject
 	SharedPreferences sharedPreferences;
+
+	@Inject
+	ApiServiceImpl logService;
 
 	private long startTime;
 	private AesInstance ai;
@@ -141,10 +145,32 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 	}
 
+	/*
 	@Override
-	protected void notifyJobDone(List<CallHistoryLog> logData) {
-		eventBus.publish(RxEventBus.PARSING_CALL_FINISHED, logData);
+	protected void uploadLogs(String userKey) {
+
+		logService.updateCallLog(userKey, logData)
+				.retry(3)
+				.subscribe(new Consumer() {
+					@Override
+					public void accept(Object o) throws Exception {
+						System.out.print(o);
+					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+						saveLogs();
+						System.out.print(throwable);
+					}
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+						clearDB(CallHistoryLog.class);
+					}
+				});
+
 	}
+	*/
 
 
 }

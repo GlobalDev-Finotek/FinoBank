@@ -113,12 +113,32 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 		return appLogs;
 	}
 
+
+	/*
 	@Override
-	protected void notifyJobDone(List<ApplicationLog> logData) {
-		eventBus.publish(RxEventBus.PARSING_APP_USAGE_FINISHED, logData);
+	protected void uploadLogs(String userKey) {
+
+		logService.updateAppUsageLog(userKey, logData)
+				.retry(3)
+				.subscribe(new Consumer() {
+					@Override
+					public void accept(Object o) throws Exception {
+						System.out.print(o);
+					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+						saveLogs();
+						System.out.print(throwable);
+					}
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+						clearDB(ApplicationLog.class);
+					}
+				});
 	}
-
-
+	*/
 
 
 }

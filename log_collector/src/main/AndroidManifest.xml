@@ -50,11 +50,6 @@
         </service>
 
         <service
-            android:name=".log.SecurityLevelLoggingService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-        </service>
-        <service
             android:name=".log.AppUsageLoggingService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE">

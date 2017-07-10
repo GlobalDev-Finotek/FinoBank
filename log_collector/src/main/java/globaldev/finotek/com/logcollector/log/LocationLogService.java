@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.LocationLog;
@@ -26,6 +27,9 @@ import io.reactivex.subjects.PublishSubject;
  */
 
 public class LocationLogService extends BaseLoggingService<LocationLog> {
+
+	@Inject
+	ApiServiceImpl logService;
 
 	@Inject
 	RxEventBus eventBus;
@@ -102,10 +106,33 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		return locationLogs;
 	}
 
+
+
+	/*
 	@Override
-	protected void notifyJobDone(List<LocationLog> logData) {
-		eventBus.publish(RxEventBus.PARSING_LOCATION_FINISHED, logData);
+	protected void uploadLogs(String userKey) {
+
+		logService.updateLocationLog(userKey, logData)
+				.retry(3)
+				.subscribe(new Consumer() {
+					@Override
+					public void accept(Object o) throws Exception {
+						System.out.print(o);
+					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+						saveLogs();
+						System.out.print(throwable);
+					}
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+						clearDB(LocationLog.class);
+					}
+				});
 	}
+	*/
 
 
 }

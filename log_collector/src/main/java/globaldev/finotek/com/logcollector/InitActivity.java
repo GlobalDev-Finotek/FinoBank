@@ -18,8 +18,6 @@ import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import org.reactivestreams.Subscription;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,12 +32,6 @@ import globaldev.finotek.com.logcollector.log.BaseLoggingService;
 import globaldev.finotek.com.logcollector.log.CallLogHistoryLoggingService;
 import globaldev.finotek.com.logcollector.log.LocationLogService;
 import globaldev.finotek.com.logcollector.log.SMSLoggingService;
-import globaldev.finotek.com.logcollector.model.ActionType;
-import globaldev.finotek.com.logcollector.model.ApplicationLog;
-import globaldev.finotek.com.logcollector.model.CallHistoryLog;
-import globaldev.finotek.com.logcollector.model.DeviceSecurityLevel;
-import globaldev.finotek.com.logcollector.model.LocationLog;
-import globaldev.finotek.com.logcollector.model.MessageLog;
 import globaldev.finotek.com.logcollector.model.User;
 import globaldev.finotek.com.logcollector.model.UserDevice;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
@@ -144,7 +136,7 @@ public abstract class InitActivity extends AppCompatActivity {
 
 
 	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
-	private void uploadAllLogs(final String userKey) {
+	private void uploadAllLogs() {
 		List<BaseLoggingService> allLoggingServices = getAllLoggingServices();
 
 		for (BaseLoggingService loggingService : allLoggingServices) {
@@ -163,145 +155,7 @@ public abstract class InitActivity extends AppCompatActivity {
 
 			jobService.schedule(job);
 
-			switch (loggingService.JOB_ID) {
-				case ActionType.GATHER_APP_USAGE_LOG:
 
-					eventBus.subscribe(RxEventBus.PARSING_APP_USAGE_FINISHED, this, new Consumer<Object>() {
-						@Override
-						public void accept(Object o) throws Exception {
-							logService.updateAppUsageLog(userKey, (List<ApplicationLog>) o)
-									.subscribe(new Consumer() {
-										@Override
-										public void accept(Object o) throws Exception {
-											System.out.print(o);
-										}
-									}, new Consumer<Throwable>() {
-										@Override
-										public void accept(Throwable throwable) throws Exception {
-											System.out.print(throwable);
-										}
-									}, new Action() {
-										@Override
-										public void run() throws Exception {
-
-										}
-									}, new Consumer<Subscription>() {
-										@Override
-										public void accept(Subscription subscription) throws Exception {
-											jobService.cancel(ActionType.GATHER_APP_USAGE_LOG);
-										}
-									});
-						}
-					});
-					break;
-
-				case ActionType.GATHER_DEVICE_SECURITY_LOG:
-
-					eventBus.subscribe(RxEventBus.PARSING_SECURITY_FINISHED, this, new Consumer<Object>() {
-						@Override
-						public void accept(Object o) throws Exception {
-							logService.updateDeviceSecurityLog(userKey, (List<DeviceSecurityLevel>) o)
-									.subscribe(new Consumer() {
-										@Override
-										public void accept(Object o) throws Exception {
-											System.out.print(o);
-										}
-									}, new Consumer<Throwable>() {
-										@Override
-										public void accept(Throwable throwable) throws Exception {
-											System.out.print(throwable);
-										}
-									}, new Action() {
-										@Override
-										public void run() throws Exception {
-										}
-									}, new Consumer<Subscription>() {
-										@Override
-										public void accept(Subscription subscription) throws Exception {
-											jobService.cancel(ActionType.GATHER_DEVICE_SECURITY_LOG);
-										}
-									});
-						}
-					});
-
-					break;
-
-				case ActionType.GATHER_CALL_LOG:
-
-					eventBus.subscribe(RxEventBus.PARSING_CALL_FINISHED, this, new Consumer<Object>() {
-						@Override
-						public void accept(Object o) throws Exception {
-							logService.updateCallLog(userKey, (List<CallHistoryLog>) o)
-									.subscribe(new Consumer() {
-										@Override
-										public void accept(Object o) throws Exception {
-											System.out.print(o);
-										}
-									}, new Consumer<Throwable>() {
-										@Override
-										public void accept(Throwable throwable) throws Exception {
-											System.out.print(throwable);
-										}
-									}, new Action() {
-										@Override
-										public void run() throws Exception {
-											jobService.cancel(ActionType.GATHER_CALL_LOG);
-										}
-									});
-						}
-					});
-					break;
-
-				case ActionType.GATHER_LOCATION_LOG:
-					eventBus.subscribe(RxEventBus.PARSING_LOCATION_FINISHED, this, new Consumer<Object>() {
-						@Override
-						public void accept(Object o) throws Exception {
-							logService.updateLocationLog(userKey, (List<LocationLog>) o)
-									.subscribe(new Consumer() {
-										@Override
-										public void accept(Object o) throws Exception {
-											System.out.print(o);
-										}
-									}, new Consumer<Throwable>() {
-										@Override
-										public void accept(Throwable throwable) throws Exception {
-											System.out.print(throwable);
-										}
-									}, new Action() {
-										@Override
-										public void run() throws Exception {
-											jobService.cancel(ActionType.GATHER_LOCATION_LOG);
-										}
-									});
-						}
-					});
-					break;
-
-				case ActionType.GATHER_MESSAGE_LOG:
-					eventBus.subscribe(RxEventBus.PARSING_SMS_FINISHED, this, new Consumer<Object>() {
-						@Override
-						public void accept(Object o) throws Exception {
-							logService.updateSMSLog(userKey, (List<MessageLog>) o)
-									.subscribe(new Consumer() {
-										@Override
-										public void accept(Object o) throws Exception {
-											System.out.print(o);
-										}
-									}, new Consumer<Throwable>() {
-										@Override
-										public void accept(Throwable throwable) throws Exception {
-											System.out.print(throwable);
-										}
-									}, new Action() {
-										@Override
-										public void run() throws Exception {
-											jobService.cancel(ActionType.GATHER_MESSAGE_LOG);
-										}
-									});
-						}
-					});
-					break;
-			}
 		}
 
 
@@ -332,8 +186,6 @@ public abstract class InitActivity extends AppCompatActivity {
 											.putString(getString(R.string.user_key), userKey)
 											.apply();
 
-									uploadAllLogs(userKey);
-
 								}
 							}, new Consumer<Throwable>() {
 								@Override
@@ -341,8 +193,10 @@ public abstract class InitActivity extends AppCompatActivity {
 									System.out.println(throwable.getMessage());
 								}
 							}, new Action() {
+								@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
 								@Override
 								public void run() throws Exception {
+									uploadAllLogs();
 									onAfterUserRegistered();
 								}
 							});

@@ -13,6 +13,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
+import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.MessageLog;
@@ -26,6 +27,8 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 
 
+	@Inject
+	ApiServiceImpl logService;
 
 	@Inject
 	SharedPreferences sharedPreferences;
@@ -122,10 +125,31 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 
 	}
 
+
+	/*
 	@Override
-	protected void notifyJobDone(List<MessageLog> logData) {
-		eventBus.publish(RxEventBus.PARSING_SMS_FINISHED, logData);
+	protected void uploadLogs(String userKey) {
+		logService.updateSMSLog(userKey, logData)
+				.retry(3)
+				.subscribe(new Consumer() {
+					@Override
+					public void accept(Object o) throws Exception {
+						System.out.print(o);
+					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+						saveLogs();
+						System.out.print(throwable);
+					}
+				}, new Action() {
+					@Override
+					public void run() throws Exception {
+						clearDB(MessageLog.class);
+					}
+				});
 	}
+	*/
 
 
 }

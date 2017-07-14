@@ -114,7 +114,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 							.setRequiresDeviceIdle(actionConfig.isRequiresDeviceIdle())
 							.setPersisted(actionConfig.isPersisted());
 
-					if(actionType == ActionType.GATHER_LOCATION_LOG) {
+					if (actionType == ActionType.GATHER_LOCATION_LOG) {
 						jobBuilder.setPeriodic(actionConfig.getPeriod());
 					}
 

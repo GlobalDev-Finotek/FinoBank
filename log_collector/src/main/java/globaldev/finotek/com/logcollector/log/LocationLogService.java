@@ -10,7 +10,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -44,7 +43,13 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 
 		@Override
 		public void onLocationChanged(Location location) {
-			currentLocation = location;
+			LocationLog l = new LocationLog(location.getTime(),
+					location.getLatitude(), location.getLongitude());
+
+			realm.beginTransaction();
+			realm.insertOrUpdate(l);
+			realm.commitTransaction();
+
 		}
 
 		@Override
@@ -71,11 +76,14 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 	}
 
+	@Override
+	protected Class getDBClass() {
+		return LocationLog.class;
+	}
+
 	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Override
-	public List<LocationLog> getData(boolean isGetAllData) {
-
-		ArrayList<LocationLog> locationLogs = new ArrayList<>();
+	public void getData(boolean isGetAllData) {
 
 		LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
@@ -104,39 +112,9 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		if (currentLocation != null) {
 			LocationLog l = new LocationLog(currentLocation.getTime(),
 					currentLocation.getLatitude(), currentLocation.getLongitude());
-			locationLogs.add(l);
+			logData.add(l);
 		}
 
-		return locationLogs;
 	}
-
-
-
-	/*
-	@Override
-	protected void uploadLogs(String userKey) {
-
-		logService.updateLocationLog(userKey, logData)
-				.retry(3)
-				.subscribe(new Consumer() {
-					@Override
-					public void accept(Object o) throws Exception {
-						System.out.print(o);
-					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(Throwable throwable) throws Exception {
-						saveLogs();
-						System.out.print(throwable);
-					}
-				}, new Action() {
-					@Override
-					public void run() throws Exception {
-						clearDB(LocationLog.class);
-					}
-				});
-	}
-	*/
-
 
 }

@@ -22,12 +22,12 @@ import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.realm.Realm;
 import io.realm.RealmObject;
+import io.realm.RealmResults;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
 
 
 /**
@@ -40,6 +40,7 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 	protected Realm realm;
 	protected List<T> logData = new ArrayList<>();
 	protected ApiServiceImpl logService;
+
 
 	BaseLoggingService() {
 
@@ -63,10 +64,12 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 	}
 
 	protected void parse(boolean isGetAllData) {
-		logData.addAll(getData(isGetAllData));
+		getData(isGetAllData);
 	}
 
-	public abstract List<T> getData(boolean isGetAllData);
+	protected abstract Class getDBClass();
+
+	public abstract void getData(boolean isGetAllData);
 
 	@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
 	@Override
@@ -76,21 +79,15 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 		LogUtil.write(getClass().getCanonicalName() + " parse started");
 		parse(isGetallData);
 		LogUtil.write(getClass().getCanonicalName() + " parse ended");
-		realm.beginTransaction();
-		ArrayList<T> dataFromDB = new ArrayList<>();
-		realm.copyFromRealm(dataFromDB);
-		realm.commitTransaction();
+
+		RealmResults rl = realm.where(getDBClass()).findAll();
+		List<T> copiedFromDB = realm.copyFromRealm(rl);
 
 		Set<T> set = new HashSet<>();
-		set.addAll(dataFromDB);
+		set.addAll(copiedFromDB);
 		set.addAll(logData);
 
-		writeLogString(logData);
-
-		String userKey = getSharedPreferences(AppModule.SHARED_PREFS, MODE_PRIVATE).getString(
-				getBaseContext().getString(R.string.user_key), "");
-		uploadLogs(userKey);
-		jobFinished(params, true);
+		uploadLogs(params, new ArrayList<>(set), isGetallData);
 		return true;
 	}
 
@@ -100,27 +97,34 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 		return true;
 	}
 
-	protected void uploadLogs(String userKey) {
+	protected void uploadLogs(final JobParameters params, final List<T> logs, boolean isGetAllData) {
 
-		logService.upload(userKey, JOB_ID, logData)
+		if (logs.size() == 0) return;
+
+		String userKey = getSharedPreferences(AppModule.SHARED_PREFS, MODE_PRIVATE).getString(
+				getBaseContext().getString(R.string.user_key), "");
+
+		logService.upload(userKey, JOB_ID, logs, isGetAllData)
 				.retry(3)
 				.subscribe(new Consumer() {
 					@Override
 					public void accept(Object o) throws Exception {
-						System.out.print(o);
+						System.out.println(o);
 					}
 				}, new Consumer<Throwable>() {
 					@Override
 					public void accept(Throwable throwable) throws Exception {
 						saveLogs();
-						System.out.print(throwable);
+						jobFinished(params, true);
 					}
 				}, new Action() {
 					@Override
 					public void run() throws Exception {
-
+						jobFinished(params, false);
+						clearDB(logs.get(0).getClass());
 					}
 				});
+
 
 	}
 
@@ -132,20 +136,14 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 	}
 
 	protected void clearDB(Class clazz) {
-		Realm realm = Realm.getDefaultInstance();
 		realm.beginTransaction();
 		realm.delete(clazz);
 		realm.commitTransaction();
+		realm.close();
 	}
 
-	private void writeLogString(List<T> logData) {
-
-		for (T t : logData) {
-			LogUtil.write(t.toString() + "\n");
-		}
+	private void writeLogString(T logData) {
+		LogUtil.write(logData.toString() + "\n");
 	}
-
-
-
 
 }

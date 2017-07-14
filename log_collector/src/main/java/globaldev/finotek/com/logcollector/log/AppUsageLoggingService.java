@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -58,9 +57,12 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 	}
 
 	@Override
-	public List<ApplicationLog> getData(boolean isGetAllData) {
+	protected Class getDBClass() {
+		return ApplicationLog.class;
+	}
 
-		ArrayList<ApplicationLog> appLogs = new ArrayList<>();
+	@Override
+	public void getData(boolean isGetAllData) {
 
 		UsageStatsManager usm =
 				(UsageStatsManager) getBaseContext().getSystemService(Context.USAGE_STATS_SERVICE);
@@ -100,7 +102,7 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 							String.valueOf(u.getFirstTimeStamp()),
 							duration);
 
-					appLogs.add(log);
+					logData.add(log);
 				}
 
 			} catch (PackageManager.NameNotFoundException e) {
@@ -110,7 +112,6 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 			}
 		}
 
-		return appLogs;
 	}
 
 

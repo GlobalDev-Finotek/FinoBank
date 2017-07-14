@@ -5,10 +5,8 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.Telephony;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -57,11 +55,14 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 		}
 	}
 
+	@Override
+	protected Class getDBClass() {
+		return MessageLog.class;
+	}
+
 
 	@Override
-	public List<MessageLog> getData(boolean isGetAllData) {
-
-		ArrayList<MessageLog> messageLogs = new ArrayList<>();
+	public void getData(boolean isGetAllData) {
 
 		Uri uri = Uri.parse("content://sms");
 
@@ -101,14 +102,12 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 					e.printStackTrace();
 				}
 				smslog.setText(body);
-				messageLogs.add(smslog);
+				logData.add(smslog);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			return messageLogs;
 		}
 
-		return messageLogs;
 	}
 
 	private String getNowTimeStr() {

@@ -4,7 +4,7 @@ import globaldev.finotek.com.logcollector.api.message.BaseRequest;
 import globaldev.finotek.com.logcollector.api.message.BaseResponse;
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
-import retrofit2.http.PUT;
+import retrofit2.http.POST;
 
 /**
  * Created by magyeong-ug on 26/04/2017.
@@ -13,7 +13,7 @@ import retrofit2.http.PUT;
 public interface LogApi {
 
 
-	@PUT("log")
+	@POST("logs")
 	Flowable<BaseResponse>
 	update(@Body BaseRequest logs);
 

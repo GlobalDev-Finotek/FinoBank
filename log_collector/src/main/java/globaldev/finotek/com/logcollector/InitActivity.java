@@ -69,8 +69,8 @@ public abstract class InitActivity extends AppCompatActivity {
 						android.Manifest.permission.READ_SMS, android.Manifest.permission.SEND_SMS,
 						android.Manifest.permission.BROADCAST_SMS, android.Manifest.permission.RECEIVE_SMS,
 						Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-						Manifest.permission.ACCESS_WIFI_STATE, android.Manifest.permission_group.SMS,
-						android.Manifest.permission.READ_PHONE_STATE},
+						Manifest.permission.GET_ACCOUNTS, Manifest.permission.ACCESS_WIFI_STATE,
+						android.Manifest.permission_group.SMS, android.Manifest.permission.READ_PHONE_STATE},
 				PERMISSION_READ_LOG);
 
     /*
@@ -169,7 +169,7 @@ public abstract class InitActivity extends AppCompatActivity {
 				public void accept(Object o) throws Exception {
 					String pushToken = (String) o;
 
-					final User user = new User(userInfoGetter.getPhoneNumber(), " ", "gender");
+					final User user = new User(userInfoGetter.getPhoneNumber(), userInfoGetter.getUserName(), userInfoGetter.getEmail(), "gender");
 
 					UserDevice device = new UserDevice(userInfoGetter.getDeviceId(),
 							userInfoGetter.getDeviceType(), userInfoGetter.getDeviceModel(), true, pushToken);

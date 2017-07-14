@@ -6,10 +6,8 @@ import android.database.Cursor;
 import android.provider.CallLog;
 import android.text.TextUtils;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -70,9 +68,12 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 	}
 
 	@Override
-	public List<CallHistoryLog> getData(boolean isGetAllData) {
+	protected Class getDBClass() {
+		return CallHistoryLog.class;
+	}
 
-		ArrayList<CallHistoryLog> callLogs = new ArrayList<>();
+	@Override
+	public void getData(boolean isGetAllData) {
 
 		Cursor c = null;
 		String[] projection = new String[]{
@@ -123,7 +124,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 					String timestamp = c.getString(4);
 
-					callLogs.add(new CallHistoryLog(timestamp, isSent, duration, targetNumber, targetName));
+					logData.add(new CallHistoryLog(timestamp, isSent, duration, targetNumber, targetName));
 
 
 				} while (c.moveToNext());
@@ -134,7 +135,6 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 			if (c != null) c.close();
 		}
 
-		return callLogs;
 	}
 
 	private String getMinus6HoursTimeStr() {
@@ -145,32 +145,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 	}
 
-	/*
-	@Override
-	protected void uploadLogs(String userKey) {
 
-		logService.updateCallLog(userKey, logData)
-				.retry(3)
-				.subscribe(new Consumer() {
-					@Override
-					public void accept(Object o) throws Exception {
-						System.out.print(o);
-					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(Throwable throwable) throws Exception {
-						saveLogs();
-						System.out.print(throwable);
-					}
-				}, new Action() {
-					@Override
-					public void run() throws Exception {
-						clearDB(CallHistoryLog.class);
-					}
-				});
-
-	}
-	*/
 
 
 }

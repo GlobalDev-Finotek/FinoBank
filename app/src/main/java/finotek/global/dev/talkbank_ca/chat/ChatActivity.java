@@ -58,6 +58,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v1;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v2;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v3;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
@@ -365,11 +368,38 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestTransferUI) {
 			releaseAllControls();
 
-			int balance = TransactionDB.INSTANCE.getBalance();
+			int balance = TransactionDB.INSTANCE.getMainBalance();
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
 			ctBinding.editMoney.setEnabled(false);
 			binding.footer.addView(ctBinding.getRoot());
 		}
+
+        if (msg instanceof RequestTransferUI_v1) {
+            releaseAllControls();
+
+            int balance = TransactionDB.INSTANCE.getFirstAlternativeBalance();
+            ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+            ctBinding.editMoney.setEnabled(false);
+            binding.footer.addView(ctBinding.getRoot());
+        }
+
+        if (msg instanceof RequestTransferUI_v2) {
+            releaseAllControls();
+
+            int balance = TransactionDB.INSTANCE.getSecondAlternativeBalance();
+            ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+            ctBinding.editMoney.setEnabled(false);
+            binding.footer.addView(ctBinding.getRoot());
+        }
+
+        if (msg instanceof RequestTransferUI_v3) {
+            releaseAllControls();
+
+            int balance = TransactionDB.INSTANCE.getThirdAlternativeBalance();
+            ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+            ctBinding.editMoney.setEnabled(false);
+            binding.footer.addView(ctBinding.getRoot());
+        }
 
 		if (msg instanceof EnableToEditMoney) {
 			ctBinding.editMoney.setEnabled(true);
@@ -575,7 +605,7 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding.gvKeypad.onComplete(() -> {
             if(!(TransactionDB.INSTANCE.getTxName() == null || TransactionDB.INSTANCE.getTxName().equals(""))) {
                 // 잔액
-                int balance = TransactionDB.INSTANCE.getBalance();
+                int balance = TransactionDB.INSTANCE.getMainBalance();
                 String moneyAsString = ctBinding.editMoney.getText().toString();
                 int money = 0;
                 try {

@@ -160,9 +160,25 @@
     <string name="dialog_button_transfer_other">Finobank AI Recommendation Transfer</string>
     <string name="dialog_chat_transfer_cancel">Transfer is canceled. How may I help you</string>
     <string name="dialog_string_finger_tip_sign_user_register"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
+
+    <string name ="dialog_chat_before_transfer">I found out your preferred account \n HAPPY BANK : 123-244-33334.\n Are you going to use this account for transfer?</string>
+    <string name = "dialog_chat_select_bank">Please select banks to use transferring service.</string>
+    <string name = "dialog_chat_select_bank_yes"> Yes </string>
+    <string name = "dialog_chat_select_bank_no"> No</string>
+    <string name = "dialog_chat_bank_select">Please select other bank account</string>
+    <string name = "dialog_chat_bank_select_A1">Pig Bank : 222-432-3323242</string>
+    <string name = "dialog_chat_bank_select_A2">Speed Bank : 333-424-332112</string>
+    <string name = "dialog_chat_bank_select_A3">Enjoy Bank : 444-5555-3584254</string>
+    <string name = "dialog_chat_bank_balance">Selected account balance is &#8361;%3$s. Are you going to use this account for transfer?</string>
+    <string name = "dialog_chat_bank_select_cancel">Cancel </string>
+
+
+
     <string name="dialog_chat_after_transfer">You\'ve transferred &#8361;%2$s to %1$s(010&#8211;5678&#8211;1234). Your current balance is &#8361;%3$s. \nIs there anything else that I can help you with?</string>
-    s
     <string name="dialog_chat_send_transfer">Transfer &#8361;%2$s to\n%1$s (010&#8211;5678&#8211;1234)</string>
+
+
+
     <string name="dialog_button_recent_transaction">Recent Transactions</string>
     <string name="dialog_button_transfer_add">Additional Transfer</string>
     <string name="dialog_chat_someone_recent_transaction">%s\'s recent transaction</string>
@@ -387,7 +403,7 @@
 
     <string name = "main_string_recommend_finished">All the recommend tasks are finished. Press \'+\' button .</string>
     <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>
-    <string name="registration_button_credit_card_capture">신용카드 촬영</string>
+    <string name="registration_button_credit_card_capture">take Credit card</string>
     <string name="registration_string_credit_card_company">Credit card company</string>
     <string name="registration_string_credit_card_register">Register credit card</string>
     <string name="registration_string_credit_card_expire_date">Expire date (month/year)</string>

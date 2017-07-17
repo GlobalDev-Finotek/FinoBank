@@ -73,13 +73,13 @@ public class PocketMoney implements Scenario{
                 if(msg.equals(context.getResources().getString(R.string.main_string_recommend_parents_yes)))
                 {
                     String message;
-                    if(TransactionDB.INSTANCE.getBalance() < 300000)
+                    if(TransactionDB.INSTANCE.getMainBalance() < 300000)
                         message = context.getResources().getString(
                                 R.string.main_string_recommend_parents_fail);
                     else {
                         TransactionDB.INSTANCE.deposit(-300000);
                         message = context.getResources().getString(
-                                R.string.main_string_recommend_parents_success, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
+                                R.string.main_string_recommend_parents_success, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getMainBalance()));
                     }
 
                     MessageBox.INSTANCE.addAndWait(

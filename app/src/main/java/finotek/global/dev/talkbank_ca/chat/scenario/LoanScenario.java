@@ -65,7 +65,7 @@ public class LoanScenario implements Scenario {
 				TransactionDB.INSTANCE.deposit(50000000);
 				TransactionDB.INSTANCE.addTx(
 						new Transaction(context.getString(R.string.main_string_secured_mirocredit),
-								1, 50000000, TransactionDB.INSTANCE.getBalance(), new DateTime()
+								1, 50000000, TransactionDB.INSTANCE.getMainBalance(), new DateTime()
 						));
 
 				MessageBox.INSTANCE.add(new RequestRemoveControls());

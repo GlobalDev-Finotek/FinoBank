@@ -76,14 +76,14 @@ public class ElectricityCharge implements Scenario {
                 if(msg.equals(context.getResources().getString(R.string.main_string_recommend_electric_transfer_yes)))
                 {
                     String message;
-                    if(TransactionDB.INSTANCE.getBalance() < 51490)
+                    if(TransactionDB.INSTANCE.getMainBalance() < 51490)
                         message = context.getResources().getString(
                                 R.string.main_string_recommend_electric_transfer_fail);
                     else {
                         TransactionDB.INSTANCE.deposit(-51490);
                         message = context.getResources().getString(
                                 R.string.main_string_recommend_electric_transfer_success,
-                                NumberFormat.getInstance().format(51490), NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
+                                NumberFormat.getInstance().format(51490), NumberFormat.getInstance().format(TransactionDB.INSTANCE.getMainBalance()));
                     }
 
                     MessageBox.INSTANCE.addAndWait(

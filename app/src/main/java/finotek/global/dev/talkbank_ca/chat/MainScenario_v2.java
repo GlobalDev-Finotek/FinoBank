@@ -148,7 +148,7 @@ public class MainScenario_v2 {
 			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N)+"\n";
 		}
 
-		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
+		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getMainBalance()));
 
 		return greetingString;
 	}

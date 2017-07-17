@@ -157,6 +157,20 @@
     <string name="dialog_button_transfer_other">FinoBank 인공지능 추천 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+
+
+    <string name ="dialog_chat_before_transfer">주거래 계좌\n 행복은행 : 123-244-33334 \n이 확인되었습니다.\n 이 계좌를 사용하시겠습니까?</string>
+    <string name = "dialog_chat_select_bank"> 사용하실 은행을 선택해 주세요.</string>
+    <string name = "dialog_chat_select_bank_yes"> 예</string>
+    <string name = "dialog_chat_select_bank_no"> 아니요</string>
+    <string name = "dialog_chat_bank_select">거래를 원하시는 은행을 선택해 주세요</string>
+    <string name = "dialog_chat_bank_select_A1">돼지은행 : 222-432-3323242</string>
+    <string name = "dialog_chat_bank_select_A2">빠른은행 : 333-424-332112</string>
+    <string name = "dialog_chat_bank_select_A3">기쁨은행 : 444-5555-3584254</string>
+    <string name = "dialog_chat_bank_balance">선택된 은행에 계좌 잔액은 &#8361;%1$s 입니다. 이체를 계속 진행하시겠습니까?</string>
+    <string name = "dialog_chat_bank_select_cancel">거래 취소 </string>
+    <string name = "dialog_chat_select_bank_yes2"> 예</string>
+
     <string name="dialog_chat_after_transfer">%1$s (010-5678-1234) 님에게 &#8361;%2$s을 이체하였습니다.\n현재 계좌 잔액은 &#8361;%3$s입니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_chat_send_transfer">%1$s (010-5678-1234) 님에게\n&#8361;%2$s을 이체</string>
     <string name="dialog_button_recent_transaction">최근 거래내역 보기</string>
@@ -250,7 +264,7 @@
     <string name="setting_string_pin_code_type">변경할 PIN 코드 입력</string>
     <string name="setting_string_profile_picture">인증 사진</string>
     <string name="dialog_string_input_message">메세지를 입력해주세요.</string>
-    <string name="dialog_chat_recognize_error">&#8361; 하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
+    <string name="dialog_chat_recognize_error">원하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
     <string name="dialog_chat_receive_email">상담 내역을 이메일로 받아보시겠습니까?</string>
     <string name="dialog_string_email_sent">전송되었습니다.</string>
     <string name="dialog_string_email_cancel">취소되었습니다.</string>

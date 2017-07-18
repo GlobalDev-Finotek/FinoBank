@@ -78,6 +78,8 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingTop="5dp"></LinearLayout>
+
         </RelativeLayout>
+
     </LinearLayout>
 </layout>

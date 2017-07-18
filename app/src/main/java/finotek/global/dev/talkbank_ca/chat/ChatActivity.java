@@ -67,6 +67,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.TransferRequestSignature;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -84,6 +85,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
 import io.reactivex.Observable;
@@ -115,7 +117,8 @@ public class ChatActivity extends AppCompatActivity {
 
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
-    
+    private TransferSignRegisterFragment transferSignRegistFragment;
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -299,8 +302,10 @@ public class ChatActivity extends AppCompatActivity {
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
-			signRegistFragment = new OneStepSignRegisterFragment();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
+
+            signRegistFragment = new OneStepSignRegisterFragment();
+
+            FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSaveListener(() -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
@@ -364,6 +369,84 @@ public class ChatActivity extends AppCompatActivity {
 			tx.replace(R.id.chat_capture, signRegistFragment);
 			tx.commit();
 		}
+
+        if (msg instanceof TransferRequestSignature) {
+            releaseControls();
+            releaseAllControls();
+            hideAppBar();
+            hideStatusBar();
+            binding.footer.setPadding(0, 0, 0, 0);
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+            View signView = inflate(R.layout.chat_capture);
+            binding.footer.addView(signView);
+
+            transferSignRegistFragment = new TransferSignRegisterFragment();
+
+            FragmentTransaction tx = getFragmentManager().beginTransaction();
+            transferSignRegistFragment.setOnSaveListener(() -> {
+                PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
+                loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+                loadingDialog.setDescription(getString(R.string.registration_string_wait));
+                loadingDialog.showWithRatio(0.50f);
+
+                Observable.interval(1, TimeUnit.SECONDS)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .first((long) 1)
+                        .subscribe(i -> {
+                            loadingDialog.dismiss();
+
+                            SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+                            dialog.setTitle(getString(R.string.setting_string_signature_verified));
+                            dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+                            dialog.setButtonText(getString(R.string.setting_string_yes));
+                            dialog.setDoneListener(() -> {
+                                MessageBox.INSTANCE.add(new SignatureVerified());
+                                returnToInitialControl();
+
+                                showAppBar();
+                                showStatusBar();
+
+                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                                transaction.remove(transferSignRegistFragment).commit();
+
+                                dialog.dismiss();
+
+                                returnToInitialControl();
+
+                                binding.chatView.scrollToBottom();
+                                setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+                            });
+                            dialog.showWithRatio(0.50f);
+                        }, throwable -> {
+                        });
+            });
+
+            transferSignRegistFragment.setOnSizeControlClick(new BaseSignRegisterFragment.OnSizeControlClick() {
+
+                boolean isFullSize = false;
+
+                @Override
+                public void onClick(BaseSignRegisterFragment.CanvasSize size) {
+
+                    if (!isFullSize) {
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+                        signView.setLayoutParams(lp);
+                    } else {
+                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
+                        signView.setLayoutParams(lp);
+                    }
+
+                    isFullSize = !isFullSize;
+                }
+            });
+
+            tx.replace(R.id.chat_capture, transferSignRegistFragment);
+            tx.commit();
+        }
 
 		if (msg instanceof RequestTransferUI) {
 			releaseAllControls();

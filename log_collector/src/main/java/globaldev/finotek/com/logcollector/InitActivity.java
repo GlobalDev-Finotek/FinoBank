@@ -84,6 +84,7 @@ public abstract class InitActivity extends AppCompatActivity {
 
 		}
 
+
 	}
 
 	@Override
@@ -198,6 +199,7 @@ public abstract class InitActivity extends AppCompatActivity {
 								public void run() throws Exception {
 									uploadAllLogs();
 									onAfterUserRegistered();
+									eventBus.unregister(InitActivity.this);
 								}
 							});
 				}

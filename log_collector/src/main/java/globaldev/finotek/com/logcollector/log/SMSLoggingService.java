@@ -90,6 +90,7 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 				// smslog.setid(messageId);
 
 				String address = cursor.getString(1);
+				address = ai.encText(address);
 				smslog.setTargetNumber(address);
 
 				long timestamp = cursor.getLong(2);

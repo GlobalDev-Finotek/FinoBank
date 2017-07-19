@@ -94,6 +94,7 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 			try {
 				PackageInfo foregroundAppPackageInfo = pm.getPackageInfo(u.getPackageName(), 0);
 				String label = String.valueOf(foregroundAppPackageInfo.applicationInfo.loadLabel(pm));
+				label = ai.encText(label);
 
 				long duration = u.getTotalTimeInForeground();
 

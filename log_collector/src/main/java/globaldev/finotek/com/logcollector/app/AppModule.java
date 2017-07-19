@@ -16,7 +16,7 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 @Module
 public class AppModule {
 
-	private static final String SHARED_PREFS = "prefs";
+	public static final String SHARED_PREFS = "prefs";
 	private final FinopassApp application;
 
 	public AppModule(@NonNull FinopassApp application) {

@@ -14,7 +14,9 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
+import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 import io.reactivex.subjects.PublishSubject;
@@ -26,16 +28,28 @@ import io.reactivex.subjects.PublishSubject;
 public class LocationLogService extends BaseLoggingService<LocationLog> {
 
 	@Inject
+	ApiServiceImpl logService;
+
+	@Inject
 	RxEventBus eventBus;
 
 	private PublishSubject<List<LocationLog>> logPublishSubject = PublishSubject.create();
 
 	private Location currentLocation = null;
 
+
+
 	private LocationListener mLocationListener = new LocationListener() {
 
 		@Override
 		public void onLocationChanged(Location location) {
+			LocationLog l = new LocationLog(location.getTime(),
+					location.getLatitude(), location.getLongitude());
+
+			realm.beginTransaction();
+			realm.insertOrUpdate(l);
+			realm.commitTransaction();
+
 		}
 
 		@Override
@@ -52,7 +66,7 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 	};
 
 	public LocationLogService() {
-
+		JOB_ID = ActionType.GATHER_LOCATION_LOG;
 	}
 
 
@@ -62,10 +76,14 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 	}
 
+	@Override
+	protected Class getDBClass() {
+		return LocationLog.class;
+	}
 
 	@RequiresApi(api = Build.VERSION_CODES.M)
 	@Override
-	protected void parse() {
+	public void getData(boolean isGetAllData) {
 
 		LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
@@ -85,23 +103,18 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 		List<String> providers = lm.getProviders(true);
 		for (String prov : providers) {
 			Location l = lm.getLastKnownLocation(prov);
+
 			if (l != null) {
 				currentLocation = l;
 			}
 		}
 
 		if (currentLocation != null) {
-			LocationLog log = new LocationLog(currentLocation.getTime(),
+			LocationLog l = new LocationLog(currentLocation.getTime(),
 					currentLocation.getLatitude(), currentLocation.getLongitude());
-			logData.add(log);
+			logData.add(l);
 		}
 
 	}
-
-	@Override
-	protected void notifyJobDone(List<LocationLog> logData) {
-		eventBus.publish(RxEventBus.PARSING_LOCATION_FINISHED, logData);
-	}
-
 
 }

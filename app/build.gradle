@@ -9,7 +9,7 @@ android {
         applicationId "finotek.global.dev.talkbank_ca"
         minSdkVersion 23
         targetSdkVersion 24
-        versionCode 8
+        versionCode 15
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }

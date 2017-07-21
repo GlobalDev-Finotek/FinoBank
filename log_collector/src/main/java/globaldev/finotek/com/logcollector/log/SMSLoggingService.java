@@ -11,7 +11,6 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
-import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.MessageLog;
@@ -26,14 +25,10 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 
 
 	@Inject
-	ApiServiceImpl logService;
-
-	@Inject
 	SharedPreferences sharedPreferences;
 
 	@Inject
 	RxEventBus eventBus;
-	private AesInstance ai;
 
 
 	public SMSLoggingService() {
@@ -44,15 +39,7 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 	public void onCreate() {
 		super.onCreate();
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
-		String key = sharedPreferences.getString(
-				getBaseContext().getString(R.string.user_key), "")
-				.substring(0, 16);
 
-		try {
-			ai = AesInstance.getInstance(key.getBytes());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -63,7 +50,16 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 
 	@Override
 	public void getData(boolean isGetAllData) {
+		String key = sharedPreferences.getString(
+				getBaseContext().getString(R.string.user_key), "")
+				.substring(0, 16);
 
+		AesInstance ai = null;
+		try {
+			ai = AesInstance.getInstance(key.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		Uri uri = Uri.parse("content://sms");
 
 		try {
@@ -84,24 +80,30 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 			while (cursor.moveToNext()) {
 
 				MessageLog smslog = new MessageLog();
-				smslog.setTargetName(" ");
 
 				long messageId = cursor.getLong(0);
 				// smslog.setid(messageId);
 
 				String address = cursor.getString(1);
-				address = ai.encText(address);
-				smslog.setTargetNumber(address);
+
 
 				long timestamp = cursor.getLong(2);
-				smslog.setTimestamp(timestamp);
+
 
 				String body = " ";
 				try {
-					body = ai.encText(cursor.getString(3));
+					body = cursor.getString(3);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+
+				if (ai != null) {
+					address = ai.encText(address);
+					body = ai.encText(body);
+				}
+
+				smslog.setTimestamp(timestamp);
+				smslog.setTargetNumber(address);
 				smslog.setText(body);
 				logData.add(smslog);
 			}
@@ -124,32 +126,6 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 		return String.valueOf(c.getTimeInMillis());
 
 	}
-
-
-	/*
-	@Override
-	protected void uploadLogs(String userKey) {
-		logService.updateSMSLog(userKey, logData)
-				.retry(3)
-				.subscribe(new Consumer() {
-					@Override
-					public void accept(Object o) throws Exception {
-						System.out.print(o);
-					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(Throwable throwable) throws Exception {
-						saveLogs();
-						System.out.print(throwable);
-					}
-				}, new Action() {
-					@Override
-					public void run() throws Exception {
-						clearDB(MessageLog.class);
-					}
-				});
-	}
-	*/
 
 
 }

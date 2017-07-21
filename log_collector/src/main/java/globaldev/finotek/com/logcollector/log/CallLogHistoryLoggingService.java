@@ -12,7 +12,6 @@ import java.util.Date;
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
-import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
@@ -34,11 +33,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 	@Inject
 	SharedPreferences sharedPreferences;
 
-	@Inject
-	ApiServiceImpl logService;
-
 	private long startTime;
-	private AesInstance ai;
 
 	public CallLogHistoryLoggingService() {
 		JOB_ID = ActionType.GATHER_CALL_LOG;
@@ -56,15 +51,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 		super.onCreate();
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 
-		String key = sharedPreferences.getString(
-				getBaseContext().getString(R.string.user_key), "")
-				.substring(0, 16);
 
-		try {
-			ai = AesInstance.getInstance(key.getBytes());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
@@ -74,6 +61,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 	@Override
 	public void getData(boolean isGetAllData) {
+
 
 		Cursor c = null;
 		String[] projection = new String[]{
@@ -101,12 +89,26 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 			e.printStackTrace();
 		}
 
+		String key = sharedPreferences.getString(
+				getBaseContext().getString(R.string.user_key), "")
+				.substring(0, 16);
+
+
+		AesInstance ai = null;
 		try {
+			ai = AesInstance.getInstance(key.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		try {
+
 			if (c.getCount() != 0) {
 				c.moveToFirst();
 
 				do {
-					String targetNumber = ai.encText(c.getString(0));
+					String targetNumber = c.getString(0);
+
 
 					int type = Integer.parseInt(c.getString(1)); // type, 3: missing call, 2: incoming call, 1: outgoing call
 					boolean isSent = false;
@@ -120,9 +122,13 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 						targetName = " ";
 					}
 
-					targetName = ai.encText(targetName);
 
 					String timestamp = c.getString(4);
+
+					if (ai != null) {
+						targetName = ai.encText(targetName);
+						targetNumber = ai.encText(targetNumber);
+					}
 
 					logData.add(new CallHistoryLog(timestamp, isSent, duration, targetNumber, targetName));
 

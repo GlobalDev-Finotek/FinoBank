@@ -14,7 +14,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
-import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
@@ -29,10 +28,7 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 	@Inject
 	SharedPreferences sharedPreferences;
 
-	@Inject
-	ApiServiceImpl logService;
 
-	AesInstance ai;
 
 	public AppUsageLoggingService() {
 		JOB_ID = ActionType.GATHER_APP_USAGE_LOG;
@@ -44,16 +40,6 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 		super.onCreate();
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 
-		String key = sharedPreferences.getString(
-				getBaseContext().getString(R.string.user_key), "")
-				.substring(0, 16);
-
-		try {
-			ai = AesInstance.getInstance(key.getBytes());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	@Override
@@ -63,6 +49,17 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 
 	@Override
 	public void getData(boolean isGetAllData) {
+
+		String key = sharedPreferences.getString(
+				getBaseContext().getString(R.string.user_key), "")
+				.substring(0, 16);
+
+		AesInstance ai = null;
+		try {
+			ai = AesInstance.getInstance(key.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		UsageStatsManager usm =
 				(UsageStatsManager) getBaseContext().getSystemService(Context.USAGE_STATS_SERVICE);
@@ -94,7 +91,9 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 			try {
 				PackageInfo foregroundAppPackageInfo = pm.getPackageInfo(u.getPackageName(), 0);
 				String label = String.valueOf(foregroundAppPackageInfo.applicationInfo.loadLabel(pm));
-				label = ai.encText(label);
+
+				if (ai != null)
+					label = ai.encText(label);
 
 				long duration = u.getTotalTimeInForeground();
 
@@ -106,41 +105,11 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 					logData.add(log);
 				}
 
-			} catch (PackageManager.NameNotFoundException e) {
-				e.printStackTrace();
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
 
 	}
-
-
-	/*
-	@Override
-	protected void uploadLogs(String userKey) {
-
-		logService.updateAppUsageLog(userKey, logData)
-				.retry(3)
-				.subscribe(new Consumer() {
-					@Override
-					public void accept(Object o) throws Exception {
-						System.out.print(o);
-					}
-				}, new Consumer<Throwable>() {
-					@Override
-					public void accept(Throwable throwable) throws Exception {
-						saveLogs();
-						System.out.print(throwable);
-					}
-				}, new Action() {
-					@Override
-					public void run() throws Exception {
-						clearDB(ApplicationLog.class);
-					}
-				});
-	}
-	*/
-
 
 }

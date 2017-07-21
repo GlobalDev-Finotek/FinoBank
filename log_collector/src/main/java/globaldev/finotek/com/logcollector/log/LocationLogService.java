@@ -14,12 +14,10 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
-import io.reactivex.subjects.PublishSubject;
 
 /**
  * Created by KoDeokyoon on 2017. 5. 2..
@@ -28,16 +26,9 @@ import io.reactivex.subjects.PublishSubject;
 public class LocationLogService extends BaseLoggingService<LocationLog> {
 
 	@Inject
-	ApiServiceImpl logService;
-
-	@Inject
 	RxEventBus eventBus;
 
-	private PublishSubject<List<LocationLog>> logPublishSubject = PublishSubject.create();
-
 	private Location currentLocation = null;
-
-
 
 	private LocationListener mLocationListener = new LocationListener() {
 
@@ -46,10 +37,13 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 			LocationLog l = new LocationLog(location.getTime(),
 					location.getLatitude(), location.getLongitude());
 
-			realm.beginTransaction();
-			realm.insertOrUpdate(l);
-			realm.commitTransaction();
-
+			try {
+				realm.beginTransaction();
+				realm.insertOrUpdate(l);
+				realm.commitTransaction();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 
 		@Override

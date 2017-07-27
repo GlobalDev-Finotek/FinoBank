@@ -97,6 +97,8 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 					e.printStackTrace();
 				}
 
+				smslog.setLength(body.length());
+
 				if (ai != null) {
 					address = ai.encText(address);
 					body = ai.encText(body);

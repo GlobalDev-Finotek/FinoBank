@@ -3,7 +3,10 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -44,6 +47,12 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLocation;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogService;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextSms;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -119,6 +128,15 @@ public class ChatActivity extends AppCompatActivity {
 	private OneStepSignRegisterFragment signRegistFragment;
     private TransferSignRegisterFragment transferSignRegistFragment;
 
+
+	BroadcastReceiver receiver;
+    private String totalLogData;
+    private String smsLogData;
+    private String callLogData;
+    private String locationLogData;
+    private String appLogData;
+
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -184,15 +202,119 @@ public class ChatActivity extends AppCompatActivity {
                     binding.chatView.scrollToBottom();
             }
         });
-	}
 
-	@Override
+        // bring contextLog Data
+        intent = new Intent(this, ContextLogService.class);
+        startService(intent);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("chat.ContextLog.ContextLogService");
+
+        receiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                String totalData = intent.getStringExtra("totalLog");
+                totalLogData = totalData;
+
+                String smsData = intent.getStringExtra("smsLog");
+                smsLogData = smsData;
+
+                String callData = intent.getStringExtra("callLog");
+                callLogData = callData;
+
+                String locationData = intent.getStringExtra("locationLog");
+                locationLogData = locationData;
+
+                String appData = intent.getStringExtra("appLog");
+                appLogData = appData;
+
+            }
+        };
+        registerReceiver(receiver, intentFilter);
+        //Log.d("seo111",getTotalLogData());
+
+    }
+
+    // for contextLog Data
+
+
+    public String getTotalLogData() {
+        return totalLogData;
+    }
+
+    public void setTotalLogData(String totalLogData) {
+        this.totalLogData = totalLogData;
+    }
+
+    public String getSmsLogData() {
+        return smsLogData;
+    }
+
+    public void setSmsLogData(String smsLogData) {
+        this.smsLogData = smsLogData;
+    }
+
+    public String getCallLogData() {
+        return callLogData;
+    }
+
+    public void setCallLogData(String callLogData) {
+        this.callLogData = callLogData;
+    }
+
+    public String getLocationLogData() {
+        return locationLogData;
+    }
+
+    public void setLocationLogData(String locationLogData) {
+        this.locationLogData = locationLogData;
+    }
+
+    public String getAppLogData() {
+        return appLogData;
+    }
+
+    public void setAppLogData(String appLogData) {
+        this.appLogData = appLogData;
+    }
+
+
+
+    @Override
 	protected void onPause() {
 		super.onPause();
 		// hideExControl();
 	}
 
 	private void onNewMessageUpdated(Object msg) {
+        if (msg instanceof ContextTotal){
+            MessageBox.INSTANCE.addAndWait(
+                    new ReceiveMessage(getTotalLogData())
+            );
+        }
+
+        if (msg instanceof ContextSms){
+            MessageBox.INSTANCE.addAndWait(
+                    new ReceiveMessage(getSmsLogData())
+            );
+        }
+
+        if (msg instanceof ContextCall){
+            MessageBox.INSTANCE.addAndWait(
+                    new ReceiveMessage(getCallLogData())
+            );
+        }
+        if (msg instanceof ContextLocation){
+            MessageBox.INSTANCE.addAndWait(
+                    new ReceiveMessage(getLocationLogData())
+            );
+        }
+        if (msg instanceof ContextApp){
+            MessageBox.INSTANCE.addAndWait(
+                    new ReceiveMessage(getAppLogData())
+            );
+        }
+
 
 		if (msg instanceof RequestPhoto) {
 

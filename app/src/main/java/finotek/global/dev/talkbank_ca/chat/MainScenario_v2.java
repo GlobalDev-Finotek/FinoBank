@@ -31,6 +31,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPress
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
+import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
 import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
@@ -119,6 +120,7 @@ public class MainScenario_v2 {
 		scenarioPool.put("houseLoan", new HouseLoan(context));
 		scenarioPool.put("travelSaving", new TravelSaving(context));
 		scenarioPool.put("pocketMoney", new PocketMoney(context));
+		scenarioPool.put("contextSearch", new ContextSearch(context));
 
 		currentScenario = null;
 	}

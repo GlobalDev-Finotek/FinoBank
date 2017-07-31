@@ -91,6 +91,13 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
+        <service
+            android:name=".chat.ContextLog.ContextLogService">
+            <intent-filter>
+                <action android:name = "chat.ContextLog.ContextLogService"/>
+            </intent-filter>
+        </service>
+
     </application>
 
 </manifest>

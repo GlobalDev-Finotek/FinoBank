@@ -410,6 +410,14 @@
     <string name="registration_string_credit_card_number">Credit card number</string>
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="dialog_string_id_card_type">Verification ID type</string>
-    <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license. Please take a picture of your ID card</string>
-    <string name="dialog_string_won">Won</string>
+
+    <string name ="dialog_chat_contextlog_search">show context Data</string>
+    <string name ="dialog_chat_contextlog_search_initMessage">Determine what data you want to see</string>
+    <string name ="dialog_chat_contextlog_sms">SMS history</string>
+    <string name ="dialog_chat_contextlog_call">Call history</string>
+    <string name ="dialog_chat_contextlog_location">Location history</string>
+    <string name ="dialog_chat_contextlog_application">Application use history</string>
+    <string name ="dialog_chat_contextlog_total">Total Context</string>
+    <string name = "dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
+
 </resources>

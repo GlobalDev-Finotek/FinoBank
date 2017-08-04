@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -66,31 +67,36 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 
 		long startTime = 0, endTime = 0;
 
+
+		List<UsageStats> usageStatsList = new ArrayList<>();
+
 		if (isGetAllData) {
-			Calendar calendar = Calendar.getInstance();
-			calendar.setTime(new Date());
-			endTime = calendar.getTimeInMillis();
 
-			calendar.add(Calendar.HOUR, -1);
+			Calendar beginCal = Calendar.getInstance();
+			beginCal.add(Calendar.YEAR, -2);
 
-			startTime = calendar.getTimeInMillis();
+			usageStatsList = usm.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY,
+					beginCal.getTimeInMillis(),
+					System.currentTimeMillis());
+
 		} else {
 			Calendar calendar = Calendar.getInstance();
 			calendar.setTime(new Date());
-			endTime = calendar.getTimeInMillis();
-
-			calendar.add(Calendar.HOUR, -1);
+			calendar.add(Calendar.DATE, -1);
 
 			startTime = calendar.getTimeInMillis();
+
+			usageStatsList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
+					startTime, System.currentTimeMillis());
 		}
 
-		List<UsageStats> usageStatsList = usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, startTime, endTime);
 
 		for (UsageStats u : usageStatsList) {
 			PackageManager pm = getBaseContext().getPackageManager();
 			try {
 				PackageInfo foregroundAppPackageInfo = pm.getPackageInfo(u.getPackageName(), 0);
 				String label = String.valueOf(foregroundAppPackageInfo.applicationInfo.loadLabel(pm));
+				String packageName = foregroundAppPackageInfo.applicationInfo.packageName;
 
 				if (ai != null)
 					label = ai.encText(label);
@@ -101,6 +107,8 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 					ApplicationLog log = new ApplicationLog(label,
 							String.valueOf(u.getFirstTimeStamp()),
 							duration);
+
+					log.packageName = packageName;
 
 					logData.add(log);
 				}

@@ -13,6 +13,7 @@ import io.realm.annotations.RealmClass;
 public class ApplicationLog extends RealmObject {
 	public String appName;
 	public String startTime;
+	public String packageName;
 	public double duration;
 	int type = ActionType.GATHER_APP_USAGE_LOG;
 	@PrimaryKey

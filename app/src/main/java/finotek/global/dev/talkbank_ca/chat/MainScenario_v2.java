@@ -31,6 +31,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPress
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
+import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
 import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
@@ -119,6 +120,7 @@ public class MainScenario_v2 {
 		scenarioPool.put("houseLoan", new HouseLoan(context));
 		scenarioPool.put("travelSaving", new TravelSaving(context));
 		scenarioPool.put("pocketMoney", new PocketMoney(context));
+		scenarioPool.put("contextSearch", new ContextSearch(context));
 
 		currentScenario = null;
 	}
@@ -148,7 +150,7 @@ public class MainScenario_v2 {
 			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N)+"\n";
 		}
 
-		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
+		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getMainBalance()));
 
 		return greetingString;
 	}

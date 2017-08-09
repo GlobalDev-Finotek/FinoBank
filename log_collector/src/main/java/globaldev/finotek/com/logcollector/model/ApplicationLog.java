@@ -14,7 +14,17 @@ import io.realm.annotations.RealmClass;
  */
 @RealmClass
 public class ApplicationLog extends RealmObject implements Parcelable {
-	public String packageName;
+	public static final Creator<ApplicationLog> CREATOR = new Creator<ApplicationLog>() {
+		@Override
+		public ApplicationLog createFromParcel(Parcel in) {
+			return new ApplicationLog(in);
+		}
+
+		@Override
+		public ApplicationLog[] newArray(int size) {
+			return new ApplicationLog[size];
+		}
+	};
 	public String appName;
 	public String startTime;
 	public String packageName;
@@ -41,18 +51,6 @@ public class ApplicationLog extends RealmObject implements Parcelable {
 		type = in.readInt();
 		logTime = in.readString();
 	}
-
-	public static final Creator<ApplicationLog> CREATOR = new Creator<ApplicationLog>() {
-		@Override
-		public ApplicationLog createFromParcel(Parcel in) {
-			return new ApplicationLog(in);
-		}
-
-		@Override
-		public ApplicationLog[] newArray(int size) {
-			return new ApplicationLog[size];
-		}
-	};
 
 	public String getAppName() {
 		return appName;

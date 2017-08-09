@@ -14,31 +14,6 @@ import io.realm.annotations.RealmClass;
  */
 @RealmClass
 public class LocationLog extends RealmObject implements Parcelable {
-	public double latitude;
-	public double longitute;
-	int type = ActionType.GATHER_LOCATION_LOG;
-	long timestamp;
-	@PrimaryKey
-	private String logTime = String.valueOf(System.currentTimeMillis());
-
-	public LocationLog() {
-
-	}
-
-	public LocationLog(long timestamp, double latitude, double longitude) {
-		this.timestamp = timestamp;
-		this.latitude = latitude;
-		this.longitute = longitude;
-	}
-
-
-	protected LocationLog(Parcel in) {
-		latitude = in.readDouble();
-		longitute = in.readDouble();
-		logTime = in.readLong();
-		type = in.readInt();
-	}
-
 	public static final Creator<LocationLog> CREATOR = new Creator<LocationLog>() {
 		@Override
 		public LocationLog createFromParcel(Parcel in) {
@@ -50,6 +25,30 @@ public class LocationLog extends RealmObject implements Parcelable {
 			return new LocationLog[size];
 		}
 	};
+	public double latitude;
+	public double longitute;
+	int type = ActionType.GATHER_LOCATION_LOG;
+	long timestamp;
+	@PrimaryKey
+	private long logTime = System.currentTimeMillis();
+
+	public LocationLog() {
+
+	}
+
+
+	public LocationLog(long timestamp, double latitude, double longitude) {
+		this.timestamp = timestamp;
+		this.latitude = latitude;
+		this.longitute = longitude;
+	}
+
+	protected LocationLog(Parcel in) {
+		latitude = in.readDouble();
+		longitute = in.readDouble();
+		logTime = in.readLong();
+		type = in.readInt();
+	}
 
 	@Override
 	public String toString() {

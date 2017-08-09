@@ -911,6 +911,8 @@ public class ChatActivity extends AppCompatActivity {
 		super.onDestroy();
 		mainScenario.release();
 		eventBus.clear();
+
+		unregisterReceiver(receiver);
 	}
 
 	@Override

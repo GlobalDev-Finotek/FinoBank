@@ -30,8 +30,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
@@ -71,7 +69,6 @@ public class ContextLogService extends Service {
 
 	@Override
 	public void onCreate() {
-		Log.d("seo11", collector(30));
 		super.onCreate();
 
 		SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
@@ -208,11 +205,6 @@ public class ContextLogService extends Service {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-
-
-//	              string = String.format("%n number: %s%n type: %s%n duration: %s%n cachedName: %s%n date: %s%n id: %s%n",
-//                        number, type, duration, cachedName, date, id);
-
 				callList.add(historyLog);
 			}
 		}
@@ -280,8 +272,13 @@ public class ContextLogService extends Service {
 
 				if (dataTime(endTime).before(currentTime()) && dataTime(endTime).after(searchZone(targetTime))) {
 					ApplicationLog applicationLog = new ApplicationLog();
-					applicationLog.packageName = ai.encText(foregroundAppPackageInfo.packageName);
-					applicationLog.setAppName(ai.encText(label));
+					applicationLog.packageName = (foregroundAppPackageInfo.packageName);
+					applicationLog.setAppName(label);
+
+					if (ai != null) {
+						applicationLog.packageName = ai.encText(applicationLog.packageName);
+						applicationLog.appName = ai.encText(applicationLog.appName);
+					}
 
 					applicationLog.setStartTime(startTime);
 					applicationLog.duration = u.getTotalTimeInForeground();

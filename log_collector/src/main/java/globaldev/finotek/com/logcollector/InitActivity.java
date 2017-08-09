@@ -197,7 +197,7 @@ public abstract class InitActivity extends AppCompatActivity {
 								@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP_MR1)
 								@Override
 								public void run() throws Exception {
-									uploadAllLogs();
+									// uploadAllLogs();
 									onAfterUserRegistered();
 									eventBus.unregister(InitActivity.this);
 								}

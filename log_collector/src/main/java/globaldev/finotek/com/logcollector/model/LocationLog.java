@@ -32,6 +32,25 @@ public class LocationLog extends RealmObject implements Parcelable {
 	}
 
 
+	protected LocationLog(Parcel in) {
+		latitude = in.readDouble();
+		longitute = in.readDouble();
+		logTime = in.readLong();
+		type = in.readInt();
+	}
+
+	public static final Creator<LocationLog> CREATOR = new Creator<LocationLog>() {
+		@Override
+		public LocationLog createFromParcel(Parcel in) {
+			return new LocationLog(in);
+		}
+
+		@Override
+		public LocationLog[] newArray(int size) {
+			return new LocationLog[size];
+		}
+	};
+
 	@Override
 	public String toString() {
 		return new Gson().toJson(this);
@@ -44,6 +63,9 @@ public class LocationLog extends RealmObject implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-
+		dest.writeDouble(latitude);
+		dest.writeDouble(longitute);
+		dest.writeLong(logTime);
+		dest.writeInt(type);
 	}
 }

@@ -33,6 +33,27 @@ public class ApplicationLog extends RealmObject implements Parcelable {
 		this.duration = duration;
 	}
 
+	protected ApplicationLog(Parcel in) {
+		packageName = in.readString();
+		appName = in.readString();
+		startTime = in.readString();
+		duration = in.readDouble();
+		type = in.readInt();
+		logTime = in.readString();
+	}
+
+	public static final Creator<ApplicationLog> CREATOR = new Creator<ApplicationLog>() {
+		@Override
+		public ApplicationLog createFromParcel(Parcel in) {
+			return new ApplicationLog(in);
+		}
+
+		@Override
+		public ApplicationLog[] newArray(int size) {
+			return new ApplicationLog[size];
+		}
+	};
+
 	public String getAppName() {
 		return appName;
 	}
@@ -77,6 +98,11 @@ public class ApplicationLog extends RealmObject implements Parcelable {
 
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
-
+		dest.writeString(packageName);
+		dest.writeString(appName);
+		dest.writeString(startTime);
+		dest.writeDouble(duration);
+		dest.writeInt(type);
+		dest.writeString(logTime);
 	}
 }

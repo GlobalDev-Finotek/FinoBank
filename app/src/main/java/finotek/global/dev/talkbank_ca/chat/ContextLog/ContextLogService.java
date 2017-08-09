@@ -6,6 +6,7 @@ import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -28,6 +29,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
@@ -71,7 +74,9 @@ public class ContextLogService extends Service {
 		Log.d("seo11", collector(30));
 		super.onCreate();
 
-		String key = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+		SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
+
+		String key = sharedPreferences
 				.getString(getBaseContext().getString(globaldev.finotek.com.logcollector.R.string.user_key), "")
 				.substring(0, 16);
 
@@ -125,7 +130,7 @@ public class ContextLogService extends Service {
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentTime());
-		cal.add(Calendar.MINUTE, -inputTime);
+		cal.add(Calendar.MINUTE, - inputTime);
 
 		Date changedTime = cal.getTime();
 
@@ -278,7 +283,7 @@ public class ContextLogService extends Service {
 					applicationLog.packageName = ai.encText(foregroundAppPackageInfo.packageName);
 					applicationLog.setAppName(ai.encText(label));
 
-
+					applicationLog.setStartTime(startTime);
 					applicationLog.duration = u.getTotalTimeInForeground();
 
 					appList.add(applicationLog);

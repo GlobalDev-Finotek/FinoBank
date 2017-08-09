@@ -82,7 +82,6 @@ public abstract class InitActivity extends AppCompatActivity {
 		} else {
 			onAfterUserRegistered();
 
-
 		}
 
 	}

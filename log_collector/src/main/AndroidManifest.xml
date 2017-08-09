@@ -4,6 +4,7 @@
           package="globaldev.finotek.com.logcollector">
 
 
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.WRITE_CONTACTS"/>
@@ -50,17 +51,7 @@
         </service>
 
         <service
-            android:name=".log.SecurityLevelLoggingService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-        </service>
-        <service
             android:name=".log.AppUsageLoggingService"
-            android:exported="true"
-            android:permission="android.permission.BIND_JOB_SERVICE">
-        </service>
-        <service
-            android:name=".log.UploadService"
             android:exported="true"
             android:permission="android.permission.BIND_JOB_SERVICE">
         </service>

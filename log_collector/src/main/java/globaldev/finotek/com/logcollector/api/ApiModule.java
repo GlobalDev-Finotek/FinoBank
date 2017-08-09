@@ -69,7 +69,7 @@ public class ApiModule {
 	@Singleton
 	OkHttpClient provideOkHttpClient(Cache cache) {
 		return new OkHttpClient.Builder()
-				.connectTimeout(30, TimeUnit.SECONDS)
+				.connectTimeout(1, TimeUnit.MINUTES)
 				.cache(cache)
 				.build();
 	}

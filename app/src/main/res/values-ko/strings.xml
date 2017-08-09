@@ -157,6 +157,23 @@
     <string name="dialog_button_transfer_other">FinoBank 인공지능 추천 이체</string>
     <string name="dialog_chat_transfer_cancel">계좌 이체를 취소합니다.\n어떤것을 도와드릴까요?</string>
     <string name="dialog_string_finger_tip_sign_user_register">사용자 등록 시 입력한 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+
+
+    <string name ="dialog_chat_before_transfer">주거래 계좌\n 행복은행 : 123-244-33334 \n이 확인되었습니다.\n 이 계좌를 사용하시겠습니까?</string>
+    <string name = "dialog_chat_select_bank"> 사용하실 은행을 선택해 주세요.</string>
+    <string name = "dialog_chat_select_bank_yes"> 예</string>
+    <string name = "dialog_chat_select_bank_no"> 아니요</string>
+    <string name = "dialog_chat_bank_select">거래를 원하시는 은행을 선택해 주세요</string>
+    <string name = "dialog_chat_bank_select_main">행복은행 : 123-244-33334</string>
+    <string name = "dialog_chat_bank_select_A1">돼지은행 : 222-432-3323242</string>
+    <string name = "dialog_chat_bank_select_A2">빠른은행 : 333-424-332112</string>
+    <string name = "dialog_chat_bank_select_A3">기쁨은행 : 444-5555-3584254</string>
+    <string name = "dialog_chat_bank_balance">선택된 은행에 계좌 잔액은 &#8361;%1$s 입니다. 이체를 계속 진행하시겠습니까?</string>
+    <string name = "dialog_chat_bank_select_cancel">거래 취소 </string>
+    <string name = "dialog_chat_select_bank_yes2"> 예</string>
+    <string name = "dialog_chat_select_bank_select"> 어느 계좌를 사용해서 이체하시겠습니까?</string>
+
+
     <string name="dialog_chat_after_transfer">%1$s (010-5678-1234) 님에게 &#8361;%2$s을 이체하였습니다.\n현재 계좌 잔액은 &#8361;%3$s입니다.\n더 필요한 사항이 있으세요?</string>
     <string name="dialog_chat_send_transfer">%1$s (010-5678-1234) 님에게\n&#8361;%2$s을 이체</string>
     <string name="dialog_button_recent_transaction">최근 거래내역 보기</string>
@@ -250,7 +267,7 @@
     <string name="setting_string_pin_code_type">변경할 PIN 코드 입력</string>
     <string name="setting_string_profile_picture">인증 사진</string>
     <string name="dialog_string_input_message">메세지를 입력해주세요.</string>
-    <string name="dialog_chat_recognize_error">&#8361; 하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
+    <string name="dialog_chat_recognize_error">원하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
     <string name="dialog_chat_receive_email">상담 내역을 이메일로 받아보시겠습니까?</string>
     <string name="dialog_string_email_sent">전송되었습니다.</string>
     <string name="dialog_string_email_cancel">취소되었습니다.</string>
@@ -359,10 +376,10 @@
 
     <string name = "main_string_recommend_menu">추천 메뉴</string>
     <string name = "main_string_recommend_electric_title">전기료 납부</string>
-    <string name = "main_string_recommend_electric_transfer_ask">가상 납부 계좌로 &#8361;51,490 이체하시겠습니까?</string>
+    <string name = "main_string_recommend_electric_transfer_ask">어느 계좌로 &#8361;51,490을 지불 하시겠습니까?</string>
     <string name = "main_string_recommend_electric_transfer_yes">예, 지금 이체 하겠습니다.</string>
     <string name = "main_string_recommend_electric_transfer_no">아니오, 나중에 하겠습니다.</string>
-    <string name = "main_string_recommend_electric_transfer_success">전기료 &#8361;%1$s이 주계좌에서 납부 완료 되었습니다. 이체 후 잔액은 &#8361;%2$s 입니다.\n &#8361;1,000,000 이하이므로 맥락인증으로 인증되었습니다.</string>
+    <string name = "main_string_recommend_electric_transfer_success">전기료 &#8361;%1$s이 선택한 계좌에서 납부 완료 되었습니다. 이체 후 잔액은 &#8361;%2$s 입니다.\n &#8361;1,000,000 이하이므로 맥락인증으로 인증되었습니다.</string>
     <string name ="main_string_recommend_electric_transfer_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_electric_transfer_cancle">취소되었습니다.</string>
 
@@ -373,7 +390,7 @@
     <string name="main_string_recommend_parents_ask">어머님 계좌로 &#8361;300,000을 이체하시겠습니까?</string>
     <string name = "main_string_recommend_parents_yes">예, 이체해주세요.</string>
     <string name = "main_string_recommend_parents_no">아니오, 나중에 하겠습니다.</string>
-    <string name="main_string_recommend_parents_success">용돈 &#8361;300,000이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 &#8361;%1$s 입니다. \n &#8361;1,000,000 이하이므로 맥락인증으로 인증되었습니다.</string>
+    <string name="main_string_recommend_parents_success">용돈 &#8361;%1$s이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 &#8361;%2$s 입니다. \n &#8361;1,000,000 이하이므로 맥락인증으로 인증되었습니다.</string>
     <string name ="main_string_recommend_parents_fail">잔액이 부족합니다.</string>
     <string name ="main_string_recommend_parents_cancle">취소되었습니다.</string>
 
@@ -390,5 +407,15 @@
     <string name="setting_string_ocr_credit_card">신용카드 OCR</string>
     <string name="dialog_string_id_card_type">신분증 유형</string>
     <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인을 위해 주민등록증이나 운전면허증이 필요합니다. 준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
+
+    <string name ="dialog_chat_contextlog_search">맥락 조회</string>
+    <string name ="dialog_chat_contextlog_search_initMessage">원하는 항목을 선택하시면 해당 데이터가 조회가 됩니다.</string>
+    <string name ="dialog_chat_contextlog_sms">문자 조회 조회</string>
+    <string name ="dialog_chat_contextlog_call">통화 기록 조회</string>
+    <string name ="dialog_chat_contextlog_location">위치 조회</string>
+    <string name ="dialog_chat_contextlog_application">어플리케이션 조회</string>
+    <string name ="dialog_chat_contextlog_total">전체 조회</string>
+    <string name = "dialog_chat_contextlog_result">30분 전부터의 맥락 데이터 입니다.</string>
+
 </resources>
 

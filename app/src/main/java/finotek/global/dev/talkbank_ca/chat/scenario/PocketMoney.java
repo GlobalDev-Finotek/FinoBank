@@ -58,6 +58,50 @@ public class PocketMoney implements Scenario{
         return req;
     }
 
+    public RecoMenuRequest askBank() {
+        RecoMenuRequest req = new RecoMenuRequest();
+        req.setDescription(context.getResources().getString(R.string.dialog_chat_select_bank_select));
+        req.addMenu(R.drawable.icon_speak, context.getResources().getString(R.string.dialog_chat_bank_select_main), null);
+        req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_chat_bank_select_A1), null);
+        req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_bank_select_A2), null);
+        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_bank_select_A3), null);
+        req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_bank_select_cancel), null);
+        return req;
+    }
+    public void question (int balance, int deposit){
+        String message;
+        if (balance < 300000)
+            message = context.getResources().getString(
+                    R.string.main_string_recommend_parents_fail);
+        else {
+            if (deposit == 0){
+                TransactionDB.INSTANCE.deposit(-300000);
+                balance = TransactionDB.INSTANCE.getMainBalance();
+            }
+            else if (deposit ==1){
+                TransactionDB.INSTANCE.depositV1(-300000);
+                balance = TransactionDB.INSTANCE.getFirstAlternativeBalance();
+            }
+            else if (deposit ==2){
+                TransactionDB.INSTANCE.depositV2(-300000);
+                balance = TransactionDB.INSTANCE.getSecondAlternativeBalance();
+            }
+            else if (deposit ==3){
+                TransactionDB.INSTANCE.depositV3(-300000);
+                balance = TransactionDB.INSTANCE.getThirdAlternativeBalance();
+            }
+
+            message = context.getResources().getString(
+                    R.string.main_string_recommend_parents_success,
+                    NumberFormat.getInstance().format(51490), NumberFormat.getInstance().format(balance));
+        }
+
+        MessageBox.INSTANCE.addAndWait(
+                new ReceiveMessage(message),
+                new RecommendScenarioMenuRequest(context)
+        );
+    }
+
     @Override
     public void onUserSend(String msg) {
         LeftScenario.scenarioList.remove("P");
@@ -70,24 +114,11 @@ public class PocketMoney implements Scenario{
                 step = Step.question;
                 break;
             case question:
-                if(msg.equals(context.getResources().getString(R.string.main_string_recommend_parents_yes)))
-                {
-                    String message;
-                    if(TransactionDB.INSTANCE.getBalance() < 300000)
-                        message = context.getResources().getString(
-                                R.string.main_string_recommend_parents_fail);
-                    else {
-                        TransactionDB.INSTANCE.deposit(-300000);
-                        message = context.getResources().getString(
-                                R.string.main_string_recommend_parents_success, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getBalance()));
-                    }
-
+                if(msg.equals(context.getResources().getString(R.string.main_string_recommend_parents_yes))) {
                     MessageBox.INSTANCE.addAndWait(
-                            new ReceiveMessage(message),
-                            //new Done(),
-                            new RecommendScenarioMenuRequest(context)
-
+                            askBank()
                     );
+                    step = Step.bank;
                 }
                 else if (msg.equals(context.getResources().getString(R.string.main_string_recommend_parents_no)))
                 {
@@ -97,10 +128,31 @@ public class PocketMoney implements Scenario{
                             new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_cancle)),
                             new RecommendScenarioMenuRequest(context)
                     );
+                } break;
+            case bank:
+                if(msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_main))) {
+                    question (TransactionDB.INSTANCE.getMainBalance(), 0);
+                }
+                else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A1))) {
+                    question (TransactionDB.INSTANCE.getFirstAlternativeBalance(), 1);
+                }
+                else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A2))) {
+                    question (TransactionDB.INSTANCE.getSecondAlternativeBalance(), 2);
+                }
+                else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A3))) {
+                    question (TransactionDB.INSTANCE.getThirdAlternativeBalance(), 3);
+                }
+                else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_cancel))) {
+                    MessageBox.INSTANCE.addAndWait(
+                            new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_cancle)),
+                            new RecommendScenarioMenuRequest(context)
+                    );
                 }
                 break;
+
         }
-    }
+        }
+
 
     @Override
     public void clear() {
@@ -113,6 +165,7 @@ public class PocketMoney implements Scenario{
     }
 
     private enum Step {
-        Initial, question, onlyTransfer, openTransfer, againPicture
+        Initial, question, bank, onlyTransfer, openTransfer, againPicture
     }
 }
+

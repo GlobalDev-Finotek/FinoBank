@@ -13,9 +13,9 @@ import io.realm.annotations.RealmClass;
 public class DeviceSecurityLevel extends RealmObject {
 	public boolean isLocked;
 	public String lockType;
-	@PrimaryKey
-	protected String logTime;
 	int type = ActionType.GATHER_DEVICE_SECURITY_LOG;
+	@PrimaryKey
+	private String logTime = String.valueOf(System.currentTimeMillis());
 
 	@Override
 	public String toString() {

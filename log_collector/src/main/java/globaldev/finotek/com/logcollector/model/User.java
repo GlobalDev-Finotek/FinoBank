@@ -7,11 +7,13 @@ package globaldev.finotek.com.logcollector.model;
 public class User {
 	String phoneNumber;
 	String name;
+	String email;
 	String gender = "male";
 
-	public User(String phoneNumber, String name, String gender) {
+	public User(String phoneNumber, String name, String email, String gender) {
 		this.phoneNumber = phoneNumber;
 		this.name = name;
+		this.email = email;
 		this.gender = gender;
 	}
 

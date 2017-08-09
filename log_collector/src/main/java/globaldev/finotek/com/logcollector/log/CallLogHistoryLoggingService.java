@@ -8,12 +8,12 @@ import android.text.TextUtils;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
+import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.util.AesInstance;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
@@ -34,14 +34,9 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 	SharedPreferences sharedPreferences;
 
 	private long startTime;
-	private AesInstance ai;
 
 	public CallLogHistoryLoggingService() {
-
-	}
-
-	CallLogHistoryLoggingService(long startTime) {
-		this.startTime = startTime;
+		JOB_ID = ActionType.GATHER_CALL_LOG;
 	}
 
 
@@ -56,19 +51,17 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 		super.onCreate();
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 
-		String key = sharedPreferences.getString(
-				context.getString(R.string.user_key), "")
-				.substring(0, 16);
 
-		try {
-			ai = AesInstance.getInstance(key.getBytes());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 	@Override
-	protected void parse() {
+	protected Class getDBClass() {
+		return CallHistoryLog.class;
+	}
+
+	@Override
+	public void getData(boolean isGetAllData) {
+
 
 		Cursor c = null;
 		String[] projection = new String[]{
@@ -81,22 +74,41 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 		};
 
 		String nowStr = getNowTimeStr();
-
 		try {
-			c = getContentResolver().query(CallLog.Calls.CONTENT_URI, projection,
-					CallLog.Calls.DATE + " BETWEEN ? AND ? ", new String[]{getMinus6HoursTimeStr(), nowStr}, CallLog.Calls._ID + " DESC");
 
+			if (isGetAllData) {
+
+				c = getContentResolver().query(CallLog.Calls.CONTENT_URI, projection,
+						null, null, CallLog.Calls._ID + " DESC");
+			} else {
+
+				c = getContentResolver().query(CallLog.Calls.CONTENT_URI, projection,
+						CallLog.Calls.DATE + " BETWEEN ? AND ? ", new String[]{getMinus6HoursTimeStr(), nowStr}, CallLog.Calls._ID + " DESC");
+			}
 		} catch (SecurityException e) {
 			e.printStackTrace();
 		}
 
+		String key = sharedPreferences.getString(
+				getBaseContext().getString(R.string.user_key), "")
+				.substring(0, 16);
+
+
+		AesInstance ai = null;
+		try {
+			ai = AesInstance.getInstance(key.getBytes());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		try {
+
 			if (c.getCount() != 0) {
 				c.moveToFirst();
 
 				do {
-					String targetNumber = ai.encText(c.getString(0));
+					String targetNumber = c.getString(0);
+
 
 					int type = Integer.parseInt(c.getString(1)); // type, 3: missing call, 2: incoming call, 1: outgoing call
 					boolean isSent = false;
@@ -110,17 +122,19 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 						targetName = " ";
 					}
 
-					targetName = ai.encText(targetName);
 
-					String logTime = c.getString(4);
+					String timestamp = c.getString(4);
 
-					logData.add(new CallHistoryLog(logTime, isSent, duration, targetNumber, targetName));
+					if (ai != null) {
+						targetName = ai.encText(targetName);
+						targetNumber = ai.encText(targetNumber);
+					}
+
+					logData.add(new CallHistoryLog(timestamp, isSent, duration, targetNumber, targetName));
 
 
 				} while (c.moveToNext());
 			}
-		} catch (SecurityException e) {
-			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -137,9 +151,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 	}
 
-	@Override
-	protected void notifyJobDone(List<CallHistoryLog> logData) {
-		eventBus.publish(RxEventBus.PARSING_CALL_FINISHED, logData);
-	}
+
+
 
 }

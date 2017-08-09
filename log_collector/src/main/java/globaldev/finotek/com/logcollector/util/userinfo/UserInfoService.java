@@ -5,6 +5,11 @@ package globaldev.finotek.com.logcollector.util.userinfo;
  */
 
 public interface UserInfoService {
+
+	String getUserName();
+
+	String getEmail();
+
 	String getUserKey();
 
 	String getDeviceId();

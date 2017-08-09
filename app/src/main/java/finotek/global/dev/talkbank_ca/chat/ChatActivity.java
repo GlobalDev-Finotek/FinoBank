@@ -3,7 +3,10 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.Manifest;
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -37,6 +40,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -44,6 +48,12 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLocation;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogService;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextSms;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -58,12 +68,16 @@ import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v1;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v2;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v3;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.TransferRequestSignature;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -81,8 +95,13 @@ import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
+import globaldev.finotek.com.logcollector.model.ApplicationLog;
+import globaldev.finotek.com.logcollector.model.CallHistoryLog;
+import globaldev.finotek.com.logcollector.model.LocationLog;
+import globaldev.finotek.com.logcollector.model.MessageLog;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
@@ -112,7 +131,16 @@ public class ChatActivity extends AppCompatActivity {
 
 	private CapturePicFragment capturePicFragment;
 	private OneStepSignRegisterFragment signRegistFragment;
-    
+	private TransferSignRegisterFragment transferSignRegistFragment;
+
+	private BroadcastReceiver receiver;
+	private String totalLogData;
+	private List<MessageLog> smsLogData;
+	private List<CallHistoryLog> callLogData;
+	private List<LocationLog> locationLogData;
+	private List<ApplicationLog> appLogData;
+
+
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -133,7 +161,7 @@ public class ChatActivity extends AppCompatActivity {
 		mLayoutManager.setStackFromEnd(true);
 
 		binding.chatView.setLayoutManager(mLayoutManager);
-        FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
+		FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
 		binding.chatView.setItemAnimator(animator);
 		// TODO 아이템 간 패딩 정리
 		// binding.chatView.addItemDecoration(new ViewItemD3ecoration());
@@ -170,15 +198,54 @@ public class ChatActivity extends AppCompatActivity {
 
 		preInitControlViews();
 
-        // keyboard event
-        KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
-            @Override
-            public void onToggleSoftKeyboard(boolean isVisible) {
-                if(isVisible)
-                    binding.chatView.scrollToBottom();
-            }
-        });
+		// keyboard event
+		KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
+			@Override
+			public void onToggleSoftKeyboard(boolean isVisible) {
+				if (isVisible)
+					binding.chatView.scrollToBottom();
+			}
+		});
+
+		// bring contextLog Data
+		intent = new Intent(this, ContextLogService.class);
+		startService(intent);
+
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("chat.ContextLog.ContextLogService");
+
+		receiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				String totalData = intent.getStringExtra("totalLog");
+				totalLogData = totalData;
+
+				smsLogData = intent.getParcelableArrayListExtra("smsLog");
+
+				callLogData = intent.getParcelableArrayListExtra("callLog");
+
+				locationLogData = intent.getParcelableArrayListExtra("locationLog");
+
+				appLogData = intent.getParcelableArrayListExtra("appLog");
+
+			}
+		};
+		registerReceiver(receiver, intentFilter);
+
 	}
+
+
+
+	public String getTotalLogData() {
+		return totalLogData;
+	}
+
+	public void setTotalLogData(String totalLogData) {
+		this.totalLogData = totalLogData;
+	}
+
+
+
 
 	@Override
 	protected void onPause() {
@@ -187,6 +254,34 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
+		if (msg instanceof ContextTotal) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(getTotalLogData())
+			);
+		}
+
+		if (msg instanceof ContextSms) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(smsLogData.toString())
+			);
+		}
+
+		if (msg instanceof ContextCall) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(callLogData.toString())
+			);
+		}
+		if (msg instanceof ContextLocation) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(locationLogData.toString())
+			);
+		}
+		if (msg instanceof ContextApp) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(appLogData.toString())
+			);
+		}
+
 
 		if (msg instanceof RequestPhoto) {
 
@@ -218,7 +313,7 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
-		if(msg instanceof RequestTakeAnotherIDCard) {
+		if (msg instanceof RequestTakeAnotherIDCard) {
 			releaseControls();
 			releaseAllControls();
 			binding.footer.setPadding(0, 0, 0, 0);
@@ -231,8 +326,8 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
-					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
+						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 				this.returnToInitialControl();
 				showAppBar();
@@ -241,7 +336,7 @@ public class ChatActivity extends AppCompatActivity {
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
 
-                binding.chatView.scrollToBottom();
+				binding.chatView.scrollToBottom();
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
@@ -261,8 +356,8 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-					new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
-					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
 				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
@@ -274,7 +369,7 @@ public class ChatActivity extends AppCompatActivity {
 				FragmentTransaction transaction = getFragmentManager().beginTransaction();
 				transaction.remove(capturePicFragment).commit();
 
-                binding.chatView.scrollToBottom();
+				binding.chatView.scrollToBottom();
 			});
 
 			tx.replace(R.id.chat_capture, capturePicFragment);
@@ -296,7 +391,9 @@ public class ChatActivity extends AppCompatActivity {
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
+
 			signRegistFragment = new OneStepSignRegisterFragment();
+
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSaveListener(() -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
@@ -328,7 +425,7 @@ public class ChatActivity extends AppCompatActivity {
 
 								returnToInitialControl();
 
-                                binding.chatView.scrollToBottom();
+								binding.chatView.scrollToBottom();
 								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
 							});
@@ -362,10 +459,115 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
+		if (msg instanceof TransferRequestSignature) {
+			releaseControls();
+			releaseAllControls();
+			hideAppBar();
+			hideStatusBar();
+			binding.footer.setPadding(0, 0, 0, 0);
+			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+			View signView = inflate(R.layout.chat_capture);
+			binding.footer.addView(signView);
+
+			transferSignRegistFragment = new TransferSignRegisterFragment();
+
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			transferSignRegistFragment.setOnSaveListener(() -> {
+				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
+				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+				loadingDialog.setDescription(getString(R.string.registration_string_wait));
+				loadingDialog.showWithRatio(0.50f);
+
+				Observable.interval(1, TimeUnit.SECONDS)
+						.observeOn(AndroidSchedulers.mainThread())
+						.first((long) 1)
+						.subscribe(i -> {
+							loadingDialog.dismiss();
+
+							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+							dialog.setTitle(getString(R.string.setting_string_signature_verified));
+							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+							dialog.setButtonText(getString(R.string.setting_string_yes));
+							dialog.setDoneListener(() -> {
+								MessageBox.INSTANCE.add(new SignatureVerified());
+								returnToInitialControl();
+
+								showAppBar();
+								showStatusBar();
+
+								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+								transaction.remove(transferSignRegistFragment).commit();
+
+								dialog.dismiss();
+
+								returnToInitialControl();
+
+								binding.chatView.scrollToBottom();
+								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+							});
+							dialog.showWithRatio(0.50f);
+						}, throwable -> {
+						});
+			});
+
+			transferSignRegistFragment.setOnSizeControlClick(new BaseSignRegisterFragment.OnSizeControlClick() {
+
+				boolean isFullSize = false;
+
+				@Override
+				public void onClick(BaseSignRegisterFragment.CanvasSize size) {
+
+					if (!isFullSize) {
+						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
+						signView.setLayoutParams(lp);
+					} else {
+						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+								LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
+						signView.setLayoutParams(lp);
+					}
+
+					isFullSize = !isFullSize;
+				}
+			});
+
+			tx.replace(R.id.chat_capture, transferSignRegistFragment);
+			tx.commit();
+		}
+
 		if (msg instanceof RequestTransferUI) {
 			releaseAllControls();
 
-			int balance = TransactionDB.INSTANCE.getBalance();
+			int balance = TransactionDB.INSTANCE.getMainBalance();
+			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+			ctBinding.editMoney.setEnabled(false);
+			binding.footer.addView(ctBinding.getRoot());
+		}
+
+		if (msg instanceof RequestTransferUI_v1) {
+			releaseAllControls();
+
+			int balance = TransactionDB.INSTANCE.getFirstAlternativeBalance();
+			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+			ctBinding.editMoney.setEnabled(false);
+			binding.footer.addView(ctBinding.getRoot());
+		}
+
+		if (msg instanceof RequestTransferUI_v2) {
+			releaseAllControls();
+
+			int balance = TransactionDB.INSTANCE.getSecondAlternativeBalance();
+			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
+			ctBinding.editMoney.setEnabled(false);
+			binding.footer.addView(ctBinding.getRoot());
+		}
+
+		if (msg instanceof RequestTransferUI_v3) {
+			releaseAllControls();
+
+			int balance = TransactionDB.INSTANCE.getThirdAlternativeBalance();
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
 			ctBinding.editMoney.setEnabled(false);
 			binding.footer.addView(ctBinding.getRoot());
@@ -407,10 +609,10 @@ public class ChatActivity extends AppCompatActivity {
 			returnToInitialControl();
 		}
 
-		if(msg instanceof RequestContactPermission) {
-            if(!hasContactPermission())
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
-        }
+		if (msg instanceof RequestContactPermission) {
+			if (!hasContactPermission())
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
+		}
 	}
 
 	private void showStatusBar() {
@@ -446,21 +648,21 @@ public class ChatActivity extends AppCompatActivity {
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
 		if (hasFocus) {
 			runOnUiThread(this::hideExControl);
-            runOnUiThread(() -> {
-                binding.chatView.scrollToBottom();
-            });
+			runOnUiThread(() -> {
+				binding.chatView.scrollToBottom();
+			});
 		}
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {
-        boolean enabled = !value.toString().isEmpty();
-        fiBinding.sendButton.setEnabled(enabled);
+		boolean enabled = !value.toString().isEmpty();
+		fiBinding.sendButton.setEnabled(enabled);
 
-        if(enabled) {
-            fiBinding.sendButton.setImageResource(R.drawable.btn_send_50);
-        } else {
-            fiBinding.sendButton.setImageResource(R.drawable.btn_mike_50);
-        }
+		if (enabled) {
+			fiBinding.sendButton.setImageResource(R.drawable.btn_send_50);
+		} else {
+			fiBinding.sendButton.setImageResource(R.drawable.btn_mike_50);
+		}
 	}
 
 	private void clearInput() {
@@ -484,7 +686,7 @@ public class ChatActivity extends AppCompatActivity {
 		ivCtrl.animate().rotation(45).setInterpolator(new LinearInterpolator())
 				.setDuration(300);
 
-        binding.chatView.scrollToBottom();
+		binding.chatView.scrollToBottom();
 	}
 
 	private void preInitControlViews() {
@@ -494,7 +696,7 @@ public class ChatActivity extends AppCompatActivity {
 		transferView = inflate(R.layout.chat_transfer);
 
 		fiBinding = ChatFooterInputBinding.bind(footerInputs);
-        fiBinding.sendButton.setEnabled(false);
+		fiBinding.sendButton.setEnabled(false);
 
 		RxView.focusChanges(fiBinding.chatEditText)
 				.delay(100, TimeUnit.MILLISECONDS)
@@ -526,7 +728,7 @@ public class ChatActivity extends AppCompatActivity {
 		exControlView = inflate(R.layout.chat_extended_control);
 		ecBinding = DataBindingUtil.bind(exControlView);
 
-        // 하단 버튼 설정
+		// 하단 버튼 설정
 		RxView.clicks(ecBinding.button1)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
@@ -559,7 +761,7 @@ public class ChatActivity extends AppCompatActivity {
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
 					Intent intent = new Intent(ChatActivity.this, SettingsActivity.class);
-                    startActivity(intent);
+					startActivity(intent);
 					hideExControl();
 				});
 
@@ -573,38 +775,38 @@ public class ChatActivity extends AppCompatActivity {
 		ctBinding = ChatTransferBinding.bind(transferView);
 		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
 		ctBinding.gvKeypad.onComplete(() -> {
-            if(!(TransactionDB.INSTANCE.getTxName() == null || TransactionDB.INSTANCE.getTxName().equals(""))) {
-                // 잔액
-                int balance = TransactionDB.INSTANCE.getBalance();
-                String moneyAsString = ctBinding.editMoney.getText().toString();
-                int money = 0;
-                try {
-                    money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
+			if (!(TransactionDB.INSTANCE.getTxName() == null || TransactionDB.INSTANCE.getTxName().equals(""))) {
+				// 잔액
+				int balance = TransactionDB.INSTANCE.getMainBalance();
+				String moneyAsString = ctBinding.editMoney.getText().toString();
+				int money = 0;
+				try {
+					money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				}
 
-                if (money > balance) {
-                    DangerDialog dialog = new DangerDialog(this);
-                    dialog.setTitle(getString(R.string.common_string_warning));
-                    dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
-                    dialog.setButtonText(getString(R.string.setting_string_yes));
-                    dialog.setDoneListener(() -> {
-                        ctBinding.editMoney.setText("");
-                        ctBinding.editMoney.requestFocus();
+				if (money > balance) {
+					DangerDialog dialog = new DangerDialog(this);
+					dialog.setTitle(getString(R.string.common_string_warning));
+					dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
+					dialog.setButtonText(getString(R.string.setting_string_yes));
+					dialog.setDoneListener(() -> {
+						ctBinding.editMoney.setText("");
+						ctBinding.editMoney.requestFocus();
 
-                        dialog.dismiss();
-                    });
-                    dialog.show();
-                } else {
-                    TransactionDB.INSTANCE.setTxMoney(moneyAsString);
+						dialog.dismiss();
+					});
+					dialog.show();
+				} else {
+					TransactionDB.INSTANCE.setTxMoney(moneyAsString);
 
-                    ctBinding.editMoney.setText("");
-                    this.returnToInitialControl();
+					ctBinding.editMoney.setText("");
+					this.returnToInitialControl();
 
-                    MessageBox.INSTANCE.add(new TransferButtonPressed());
-                }
-            }
+					MessageBox.INSTANCE.add(new TransferButtonPressed());
+				}
+			}
 		});
 
 		binding.footer.addView(footerInputs);
@@ -615,21 +817,21 @@ public class ChatActivity extends AppCompatActivity {
 	 */
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(ev.getAction() == MotionEvent.ACTION_UP) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect editTextRect = new Rect();
-                v.getGlobalVisibleRect(editTextRect);
+		if (ev.getAction() == MotionEvent.ACTION_UP) {
+			View v = getCurrentFocus();
+			if (v instanceof EditText) {
+				Rect editTextRect = new Rect();
+				v.getGlobalVisibleRect(editTextRect);
 
-                Rect sendButtonRect = new Rect();
-                fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
+				Rect sendButtonRect = new Rect();
+				fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
 
-                if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
-                        && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-                    dismissKeyboard(v);
-                }
-            }
-        }
+				if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
+						&& !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+					dismissKeyboard(v);
+				}
+			}
+		}
 
 		return super.dispatchTouchEvent(ev);
 	}
@@ -709,6 +911,8 @@ public class ChatActivity extends AppCompatActivity {
 		super.onDestroy();
 		mainScenario.release();
 		eventBus.clear();
+
+		unregisterReceiver(receiver);
 	}
 
 	@Override
@@ -733,7 +937,7 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private boolean hasContactPermission() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS ) == PackageManager.PERMISSION_GRANTED;
-    }
+		return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
+	}
 
 }

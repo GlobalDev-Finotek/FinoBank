@@ -13,8 +13,6 @@ import globaldev.finotek.com.logcollector.log.LocationLogService;
 import globaldev.finotek.com.logcollector.log.LoggingHelperImpl;
 import globaldev.finotek.com.logcollector.log.LoggingModule;
 import globaldev.finotek.com.logcollector.log.SMSLoggingService;
-import globaldev.finotek.com.logcollector.log.SecurityLevelLoggingService;
-import globaldev.finotek.com.logcollector.log.UploadService;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoModule;
 
 /**
@@ -32,11 +30,8 @@ public interface AppComponent {
 
 	void inject(CallLogHistoryLoggingService callLogHistoryLoggingService);
 
-	void inject(SecurityLevelLoggingService securityLevelLoggingService);
 
 	void inject(InitActivity initActivity);
-
-	void inject(UploadService uploadService);
 
 	void inject(LocationLogService locationLogService);
 

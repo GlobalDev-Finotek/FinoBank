@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +16,7 @@ import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.R;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
+import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.util.AesInstance;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
@@ -22,77 +24,100 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 
 	@Inject
-	Context context;
-
-	@Inject
 	RxEventBus eventBus;
 
 	@Inject
 	SharedPreferences sharedPreferences;
 
-	AesInstance ai;
+
 
 	public AppUsageLoggingService() {
+		JOB_ID = ActionType.GATHER_APP_USAGE_LOG;
 	}
+
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
 		((FinopassApp) getApplication()).getAppComponent().inject(this);
 
+	}
+
+	@Override
+	protected Class getDBClass() {
+		return ApplicationLog.class;
+	}
+
+	@Override
+	public void getData(boolean isGetAllData) {
+
 		String key = sharedPreferences.getString(
-				context.getString(R.string.user_key), "")
+				getBaseContext().getString(R.string.user_key), "")
 				.substring(0, 16);
 
+		AesInstance ai = null;
 		try {
 			ai = AesInstance.getInstance(key.getBytes());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
 
-	@Override
-	protected void parse() {
-		List<UsageStats> usageStatsList = this.getUsageStatsList(getBaseContext());
+		UsageStatsManager usm =
+				(UsageStatsManager) getBaseContext().getSystemService(Context.USAGE_STATS_SERVICE);
+
+		long startTime = 0, endTime = 0;
+
+
+		List<UsageStats> usageStatsList = new ArrayList<>();
+
+		if (isGetAllData) {
+
+			Calendar beginCal = Calendar.getInstance();
+			beginCal.add(Calendar.YEAR, -2);
+
+			usageStatsList = usm.queryUsageStats(UsageStatsManager.INTERVAL_YEARLY,
+					beginCal.getTimeInMillis(),
+					System.currentTimeMillis());
+
+		} else {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(new Date());
+			calendar.add(Calendar.DATE, -1);
+
+			startTime = calendar.getTimeInMillis();
+
+			usageStatsList = usm.queryUsageStats(UsageStatsManager.INTERVAL_DAILY,
+					startTime, System.currentTimeMillis());
+		}
+
 
 		for (UsageStats u : usageStatsList) {
-			PackageManager pm = context.getPackageManager();
+			PackageManager pm = getBaseContext().getPackageManager();
 			try {
 				PackageInfo foregroundAppPackageInfo = pm.getPackageInfo(u.getPackageName(), 0);
-				String label = ai.encText(String.valueOf(foregroundAppPackageInfo.applicationInfo.loadLabel(pm)));
+				String label = String.valueOf(foregroundAppPackageInfo.applicationInfo.loadLabel(pm));
+				String packageName = foregroundAppPackageInfo.applicationInfo.packageName;
 
-				ApplicationLog log = new ApplicationLog(label,
-						String.valueOf(u.getTotalTimeInForeground()),
-						u.getLastTimeUsed());
+				if (ai != null)
+					label = ai.encText(label);
 
-				logData.add(log);
-			} catch (PackageManager.NameNotFoundException e) {
-				e.printStackTrace();
+				long duration = u.getTotalTimeInForeground();
+
+				if (duration > 0) {
+					ApplicationLog log = new ApplicationLog(label,
+							String.valueOf(u.getFirstTimeStamp()),
+							duration);
+
+					log.packageName = packageName;
+
+					logData.add(log);
+				}
+
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}
 
-	@Override
-	protected void notifyJobDone(List<ApplicationLog> logData) {
-		eventBus.publish(RxEventBus.PARSING_APP_USAGE_FINISHED, logData);
-	}
-
-
-	private List<UsageStats> getUsageStatsList(Context context) {
-		UsageStatsManager usm =
-				(UsageStatsManager) context.getSystemService(Context.USAGE_STATS_SERVICE);
-
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(new Date());
-		long endTime = calendar.getTimeInMillis();
-
-		calendar.add(Calendar.HOUR, -1);
-
-		long startTime = calendar.getTimeInMillis();
-
-		return usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, startTime, endTime);
 	}
 
 }

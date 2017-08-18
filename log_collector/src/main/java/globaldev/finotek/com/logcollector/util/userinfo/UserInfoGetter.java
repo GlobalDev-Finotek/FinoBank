@@ -42,7 +42,7 @@ public class UserInfoGetter implements UserInfoService {
 
 		AccountManager manager = AccountManager.get(application);
 		Account[] accounts = manager.getAccountsByType("com.google");
-		List<String> possibleEmails = new LinkedList<String>();
+		List<String> possibleEmails = new LinkedList<>();
 
 		for (Account account : accounts) {
 			// TODO: Check possibleEmail against an email regex or treat

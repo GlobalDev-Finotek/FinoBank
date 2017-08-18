@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -13,7 +15,7 @@ import io.realm.annotations.RealmClass;
  * Created by JungwonSeo on 2017-04-26.
  */
 @RealmClass
-public class MessageLog extends RealmObject implements Parcelable {
+public class MessageLog extends RealmObject implements Parcelable, ValueQueryGenerator {
 
 	public static final Creator<MessageLog> CREATOR = new Creator<MessageLog>() {
 		@Override
@@ -123,5 +125,18 @@ public class MessageLog extends RealmObject implements Parcelable {
 		dest.writeString(text);
 		dest.writeString(logTime);
 		dest.writeInt(type);
+	}
+
+	@Override
+	public HashMap<String, String> generate() {
+		HashMap<String, String> queryMap = new HashMap<>();
+		queryMap.put("targetNumber", this.targetNumber);
+
+		return queryMap;
+	}
+
+	@Override
+	public int getLogType() {
+		return type;
 	}
 }

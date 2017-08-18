@@ -5,15 +5,19 @@ package globaldev.finotek.com.logcollector.model;
  */
 
 public class ActionConfig<T> {
-	int actionType;
-	long period;
-	long deadline;
-	int requiredNetworkType;
-	boolean requiresCharging;
-	boolean requiresDeviceIdle;
-	boolean persisted;
-	T option;
+	private int actionType;
+	private long period;
+	private long deadline;
+	private int requiredNetworkType;
+	private boolean requiresCharging;
+	private boolean requiresDeviceIdle;
+	private boolean persisted;
+	private T option;
 	private long minimumLatency;
+
+	public ActionConfig(int actionType) {
+		this.actionType = actionType;
+	}
 
 	public T getOption() {
 		return option;
@@ -27,9 +31,6 @@ public class ActionConfig<T> {
 		return actionType;
 	}
 
-	public void setActionType(int actionType) {
-		this.actionType = actionType;
-	}
 
 	public long getPeriod() {
 		return period;
@@ -83,17 +84,8 @@ public class ActionConfig<T> {
 		return minimumLatency;
 	}
 
-	public static class CallHistoryLogOption {
-		int elapsedTime;
 
-		public int getElapsedTime() {
-			return elapsedTime;
-		}
-
-		public void setElapsedTime(int elapsedTime) {
-			this.elapsedTime = elapsedTime;
-		}
+	public void setMinimumLatency(long minimumLatency) {
+		this.minimumLatency = minimumLatency;
 	}
-
-
 }

@@ -51,7 +51,7 @@ public class Base64 {
 	 * @return A String containing the Base64 encoded data.
 	 */
 	public static String encodeString(String s) {
-		return new String(encode(s.getBytes()));
+		return encode(s.getBytes());
 	}
 
 	/**
@@ -61,11 +61,9 @@ public class Base64 {
 	 * @param s      A String to be encoded.
 	 * @param encode String的编码
 	 * @return A String containing the Base64 encoded data.
-	 * @throws UnsupportedEncodingException
-	 * @throws UnsupportedEncodingException
 	 */
 	public static String encodeString(String s, String encode) throws Exception {
-		return new String(encode(s.getBytes(encode)));
+		return encode(s.getBytes(encode));
 	}
 
 	/**

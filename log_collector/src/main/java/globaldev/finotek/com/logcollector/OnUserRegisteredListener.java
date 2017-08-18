@@ -5,5 +5,5 @@ package globaldev.finotek.com.logcollector;
  */
 
 public interface OnUserRegisteredListener {
-	void onUserRegistered(String name);
+	void onUserRegistered();
 }

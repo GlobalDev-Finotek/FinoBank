@@ -87,7 +87,7 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 		set.addAll(copiedFromDB);
 		set.addAll(logData);
 
-		uploadLogs(params, new ArrayList<>(set), isGetallData);
+		uploadLogs(params, new ArrayList<>(set));
 		return true;
 	}
 
@@ -97,14 +97,14 @@ public abstract class BaseLoggingService<T extends RealmObject> extends JobServi
 		return true;
 	}
 
-	protected void uploadLogs(final JobParameters params, final List<T> logs, boolean isGetAllData) {
+	protected void uploadLogs(final JobParameters params, final List<T> logs) {
 
 		if (logs.size() == 0) return;
 
 		String userKey = getSharedPreferences(AppModule.SHARED_PREFS, MODE_PRIVATE).getString(
 				getBaseContext().getString(R.string.user_key), "");
 
-		logService.upload(userKey, JOB_ID, logs, isGetAllData)
+		logService.upload(userKey, JOB_ID, logs)
 				.retry(3)
 				.subscribe(new Consumer() {
 					@Override

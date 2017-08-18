@@ -169,10 +169,10 @@ public abstract class InitActivity extends AppCompatActivity {
 				public void accept(Object o) throws Exception {
 					String pushToken = (String) o;
 
-					final User user = new User(userInfoGetter.getPhoneNumber(), userInfoGetter.getUserName(), userInfoGetter.getEmail(), "gender");
+					final User user = new User(userInfoGetter.getPhoneNumber(), userInfoGetter.getUserName(), userInfoGetter.getEmail());
 
 					UserDevice device = new UserDevice(userInfoGetter.getDeviceId(),
-							userInfoGetter.getDeviceType(), userInfoGetter.getDeviceModel(), true, pushToken);
+							userInfoGetter.getDeviceType(), userInfoGetter.getDeviceModel(), pushToken);
 
 					userService.init(user, device)
 							.subscribe(new Consumer<UserInitResponse>() {

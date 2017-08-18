@@ -21,7 +21,7 @@ public class LogUtil {
 		StringBuilder builder = new StringBuilder();
 
 		try {
-			String[] command = new String[] { "logcat", "-d", TAG, "*:S" };
+			String[] command = new String[]{"logcat", "-d", TAG, "*:S"};
 
 			Process process = Runtime.getRuntime().exec(command);
 
@@ -30,7 +30,7 @@ public class LogUtil {
 
 			String line;
 			while ((line = bufferedReader.readLine()) != null) {
-					builder.append(line);
+				builder.append(line);
 
 			}
 		} catch (IOException ex) {

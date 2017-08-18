@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,7 +27,6 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 
 	@Inject
 	SharedPreferences sharedPreferences;
-
 
 
 	public AppUsageLoggingService() {
@@ -65,10 +63,9 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 		UsageStatsManager usm =
 				(UsageStatsManager) getBaseContext().getSystemService(Context.USAGE_STATS_SERVICE);
 
-		long startTime = 0, endTime = 0;
+		long startTime;
 
-
-		List<UsageStats> usageStatsList = new ArrayList<>();
+		List<UsageStats> usageStatsList;
 
 		if (isGetAllData) {
 

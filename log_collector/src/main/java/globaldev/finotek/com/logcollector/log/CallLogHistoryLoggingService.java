@@ -103,6 +103,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 
 		try {
 
+			assert c != null;
 			if (c.getCount() != 0) {
 				c.moveToFirst();
 
@@ -130,7 +131,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 						targetNumber = ai.encText(targetNumber);
 					}
 
-					logData.add(new CallHistoryLog(timestamp, isSent, duration, targetNumber, targetName));
+					logData.add(new CallHistoryLog(isSent, duration, targetNumber, targetName));
 
 
 				} while (c.moveToNext());
@@ -150,8 +151,6 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 		return String.valueOf(c.getTimeInMillis());
 
 	}
-
-
 
 
 }

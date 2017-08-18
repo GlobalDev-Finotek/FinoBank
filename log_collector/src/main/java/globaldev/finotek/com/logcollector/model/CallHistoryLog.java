@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.google.gson.Gson;
 
+import java.util.HashMap;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 import io.realm.annotations.RealmClass;
@@ -13,7 +15,7 @@ import io.realm.annotations.RealmClass;
  * Created by JungwonSeo on 2017-04-26.
  */
 @RealmClass
-public class CallHistoryLog extends RealmObject implements Parcelable {
+public class CallHistoryLog extends RealmObject implements Parcelable, ValueQueryGenerator {
 	public boolean isSent;
 	public String duration;
 	public String targetNumber;
@@ -21,14 +23,12 @@ public class CallHistoryLog extends RealmObject implements Parcelable {
 	int type = ActionType.GATHER_CALL_LOG;
 	@PrimaryKey
 	private String logTime = String.valueOf(System.currentTimeMillis());
-	private String timestamp;
 
 	public CallHistoryLog() {
 
 	}
 
-	public CallHistoryLog(String timestamp, boolean isSent, String duration, String targetNumber, String targetName) {
-		this.timestamp = timestamp;
+	public CallHistoryLog(boolean isSent, String duration, String targetNumber, String targetName) {
 		this.isSent = isSent;
 		this.duration = duration;
 		this.targetNumber = targetNumber;
@@ -75,6 +75,20 @@ public class CallHistoryLog extends RealmObject implements Parcelable {
 		dest.writeString(targetName);
 		dest.writeString(logTime);
 		dest.writeInt(type);
+	}
+
+
+	@Override
+	public HashMap<String, String> generate() {
+		HashMap<String, String> queryMap = new HashMap<>();
+		queryMap.put("targetNumber", this.targetNumber);
+
+		return queryMap;
+	}
+
+	@Override
+	public int getLogType() {
+		return type;
 	}
 }
 

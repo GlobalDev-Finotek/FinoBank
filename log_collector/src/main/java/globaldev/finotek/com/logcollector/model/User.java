@@ -8,13 +8,13 @@ public class User {
 	String phoneNumber;
 	String name;
 	String email;
-	String gender = "male";
+	String gender;
 
-	public User(String phoneNumber, String name, String email, String gender) {
+	public User(String phoneNumber, String name, String email) {
 		this.phoneNumber = phoneNumber;
 		this.name = name;
 		this.email = email;
-		this.gender = gender;
+		this.gender = " ";
 	}
 
 	public String getPhoneNumber() {

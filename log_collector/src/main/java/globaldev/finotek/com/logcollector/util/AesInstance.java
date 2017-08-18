@@ -26,19 +26,16 @@ public class AesInstance {
 		this.decCipher.init(Cipher.DECRYPT_MODE, skeySpec, ivc);
 	}
 
-	public static final AesInstance getInstance(byte[] key) throws Exception {
-		AesInstance sub = new AesInstance(key);
-		return sub;
+	public static AesInstance getInstance(byte[] key) throws Exception {
+		return new AesInstance(key);
 	}
 
 	public byte[] encBytes(byte[] srcBytes) throws Exception {
-		byte[] encrypted = encCipher.doFinal(srcBytes);
-		return encrypted;
+		return encCipher.doFinal(srcBytes);
 	}
 
 	public byte[] decBytes(byte[] srcBytes) throws Exception {
-		byte[] decrypted = decCipher.doFinal(srcBytes);
-		return decrypted;
+		return decCipher.doFinal(srcBytes);
 	}
 
 	public String encText(String srcStr) throws Exception {

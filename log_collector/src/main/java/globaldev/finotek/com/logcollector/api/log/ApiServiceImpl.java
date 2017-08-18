@@ -1,13 +1,14 @@
 package globaldev.finotek.com.logcollector.api.log;
 
-import com.google.gson.Gson;
-
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.inject.Inject;
 
 import globaldev.finotek.com.logcollector.api.message.BaseRequest;
 import globaldev.finotek.com.logcollector.api.message.BaseResponse;
+import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
 import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
@@ -21,13 +22,46 @@ public class ApiServiceImpl<T> {
 	@Inject
 	LogApi logService;
 
-
 	@Inject
 	public ApiServiceImpl(LogApi logService) {
 		this.logService = logService;
 	}
 
-	public Flowable<BaseResponse> upload(String userKey, int actionType, List<T> logs, boolean isGetAllData) {
+	static class RecentLogParam {
+		public String userKey;
+		public List<LogParamDatas> logs = new ArrayList<>();
+
+		static class LogParamDatas {
+			public int type;
+			public HashMap<String, String> queryMap;
+		}
+	}
+
+
+	public Flowable<BaseResponse> getRecentLogs(String userKey, List<ValueQueryGenerator> logs) {
+
+		RecentLogParam recentLogParam = new RecentLogParam();
+		recentLogParam.userKey = userKey;
+
+		for (ValueQueryGenerator vgq : logs) {
+			RecentLogParam.LogParamDatas params = new RecentLogParam.LogParamDatas();
+			params.type = vgq.getLogType();
+			params.queryMap = vgq.generate();
+			recentLogParam.logs.add(params);
+		}
+
+		BaseRequest<RecentLogParam> getRecentLogRequest =
+				new BaseRequest.Builder<RecentLogParam>()
+						.setParam(recentLogParam)
+						.build();
+
+		return logService.getRecentLogs(getRecentLogRequest)
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread());
+
+	}
+
+	public Flowable<BaseResponse> upload(String userKey, int actionType, List<T> logs) {
 		UploadLogParam<T> uploadLogParam = new UploadLogParam<>();
 		uploadLogParam.userKey = userKey;
 		uploadLogParam.logs = logs;
@@ -38,25 +72,14 @@ public class ApiServiceImpl<T> {
 						.setParam(uploadLogParam)
 						.build();
 
-
-		String mode = "";
-
-		if (isGetAllData) {
-			mode = "init";
-		} else {
-			mode = "running";
-		}
-
-		String json = new Gson().toJson(updateLogRequest);
-
 		return logService.update(updateLogRequest)
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread());
 	}
 
-	class UploadLogParam<T> {
+	private class UploadLogParam<Type> {
 		int type;
 		String userKey;
-		List<T> logs;
+		List<Type> logs;
 	}
 }

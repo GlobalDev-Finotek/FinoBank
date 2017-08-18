@@ -11,11 +11,11 @@ public class UserDevice {
 	private boolean isInUse = false;
 	private String pushToken;
 
-	public UserDevice(String key, String type, String model, boolean isInUse, String pushToken) {
+	public UserDevice(String key, String type, String model, String pushToken) {
 		this.deviceKey = key;
 		this.type = type;
 		this.model = model;
-		this.isInUse = isInUse;
+		this.isInUse = true;
 		this.pushToken = pushToken;
 	}
 

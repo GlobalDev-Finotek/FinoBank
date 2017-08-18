@@ -76,13 +76,13 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 						new String[]{getMinus6HoursTimeStr(), getNowTimeStr()}, "date DESC");
 			}
 
-			int count = 0;
+			assert cursor != null;
+
+
 			while (cursor.moveToNext()) {
 
 				MessageLog smslog = new MessageLog();
 
-				long messageId = cursor.getLong(0);
-				// smslog.setid(messageId);
 
 				String address = cursor.getString(1);
 
@@ -109,6 +109,9 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 				smslog.setText(body);
 				logData.add(smslog);
 			}
+
+			cursor.close();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

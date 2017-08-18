@@ -17,6 +17,10 @@ public interface LogApi {
 	Flowable<BaseResponse>
 	update(@Body BaseRequest logs);
 
+	@POST("recents")
+	Flowable<BaseResponse>
+	getRecentLogs(@Body BaseRequest logs);
+
 //	@PUT("log")
 //	Flowable<BaseResponse>
 //	updateDeviceSecurityLog(@Body BaseRequest<ApiServiceImpl.UploadLogParam<DeviceSecurityLevel>> logs);

@@ -5,6 +5,7 @@ import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
@@ -20,8 +21,12 @@ import javax.inject.Inject;
 import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionConfig;
-import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
+
+import static globaldev.finotek.com.logcollector.model.ActionType.GATHER_APP_USAGE_LOG;
+import static globaldev.finotek.com.logcollector.model.ActionType.GATHER_CALL_LOG;
+import static globaldev.finotek.com.logcollector.model.ActionType.GATHER_LOCATION_LOG;
+import static globaldev.finotek.com.logcollector.model.ActionType.GATHER_MESSAGE_LOG;
 
 /**
  * Created by magyeong-ug on 26/04/2017.
@@ -93,7 +98,7 @@ public class LoggingHelperImpl implements LoggingHelper {
 	}
 
 
-	private List<JobInfo> parseJobInfo(Map<String, String> dataMap) throws NumberFormatException, UnregisteredServiceException {
+	private List<JobInfo> parseJobInfo(Map<String, String> dataMap) throws UnregisteredServiceException {
 
 		ArrayList<JobInfo> jobInfos = new ArrayList<>();
 		ArrayList<String> keySet = new ArrayList<>(dataMap.keySet());
@@ -101,28 +106,31 @@ public class LoggingHelperImpl implements LoggingHelper {
 		for (String key : keySet) {
 			String json = dataMap.get(key);
 
-			try {
-				ActionConfig actionConfig = new Gson().fromJson(json, ActionConfig.class);
-				int actionType = actionConfig.getActionType();
+			ActionConfig actionConfig = new Gson().fromJson(json, ActionConfig.class);
+			int actionType = actionConfig.getActionType();
 
-				if (actionType > 0) {
-					registerService(actionType, json);
+			if (actionType > 0) {
+				registerService(actionType);
 
-					JobInfo.Builder jobBuilder = new JobInfo.Builder(actionType, new ComponentName(context, loggingServiceMap.get(actionType)))
-							.setRequiredNetworkType(actionConfig.getRequiredNetworkType())
-							.setRequiresCharging(actionConfig.isRequiresCharging())
-							.setRequiresDeviceIdle(actionConfig.isRequiresDeviceIdle())
-							.setPersisted(actionConfig.isPersisted());
+				String serviceName = loggingServiceMap.get(actionType);
 
-					if (actionType == ActionType.GATHER_LOCATION_LOG) {
-						jobBuilder.setPeriodic(actionConfig.getPeriod());
-					}
-
-					jobInfos.add(jobBuilder.build());
+				if (TextUtils.isEmpty(serviceName)) {
+					throw new UnregisteredServiceException();
 				}
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
+
+				JobInfo.Builder jobBuilder = new JobInfo.Builder(actionType, new ComponentName(context, serviceName))
+						.setRequiredNetworkType(actionConfig.getRequiredNetworkType())
+						.setRequiresCharging(actionConfig.isRequiresCharging())
+						.setRequiresDeviceIdle(actionConfig.isRequiresDeviceIdle())
+						.setPersisted(actionConfig.isPersisted());
+
+				if (actionType == GATHER_LOCATION_LOG) {
+					jobBuilder.setPeriodic(actionConfig.getPeriod());
+				}
+
+				jobInfos.add(jobBuilder.build());
 			}
+
 		}
 
 
@@ -130,28 +138,24 @@ public class LoggingHelperImpl implements LoggingHelper {
 	}
 
 
-
-
-	private void registerService(int actionType, String json) {
+	private void registerService(int actionType) {
 		switch (actionType) {
-			case ActionType.GATHER_CALL_LOG:
-				ActionConfig<ActionConfig.CallHistoryLogOption> actionConfig =
-						new Gson().fromJson(json, getType(ActionConfig.class, ActionConfig.CallHistoryLogOption.class));
-				loggingServiceMap.put(ActionType.GATHER_CALL_LOG, CallLogHistoryLoggingService.class.getName());
+			case GATHER_CALL_LOG:
+				loggingServiceMap.put(GATHER_CALL_LOG, CallLogHistoryLoggingService.class.getName());
 				break;
 
-			case ActionType.GATHER_APP_USAGE_LOG:
-				loggingServiceMap.put(ActionType.GATHER_APP_USAGE_LOG,
+			case GATHER_APP_USAGE_LOG:
+				loggingServiceMap.put(GATHER_APP_USAGE_LOG,
 						AppUsageLoggingService.class.getName());
 				break;
 
-			case ActionType.GATHER_LOCATION_LOG:
-				loggingServiceMap.put(ActionType.GATHER_LOCATION_LOG,
+			case GATHER_LOCATION_LOG:
+				loggingServiceMap.put(GATHER_LOCATION_LOG,
 						LocationLogService.class.getName());
 				break;
 
-			case ActionType.GATHER_MESSAGE_LOG:
-				loggingServiceMap.put(ActionType.GATHER_MESSAGE_LOG,
+			case GATHER_MESSAGE_LOG:
+				loggingServiceMap.put(GATHER_MESSAGE_LOG,
 						SMSLoggingService.class.getName());
 				break;
 

@@ -82,6 +82,10 @@ public class CallHistoryLog extends RealmObject implements Parcelable, ValueQuer
 	public HashMap<String, String> generate() {
 		HashMap<String, String> queryMap = new HashMap<>();
 		queryMap.put("targetNumber", this.targetNumber);
+		queryMap.put("targetName", this.targetName);
+		queryMap.put("duration", this.duration);
+		queryMap.put("logTime", this.logTime);
+		queryMap.put("isSent", String.valueOf(this.isSent));
 
 		return queryMap;
 	}

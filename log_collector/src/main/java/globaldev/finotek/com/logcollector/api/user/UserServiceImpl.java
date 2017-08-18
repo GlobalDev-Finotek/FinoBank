@@ -3,8 +3,6 @@ package globaldev.finotek.com.logcollector.api.user;
 
 import org.reactivestreams.Publisher;
 
-import javax.inject.Inject;
-
 import globaldev.finotek.com.logcollector.api.message.BaseRequest;
 import globaldev.finotek.com.logcollector.api.message.BaseResponse;
 import globaldev.finotek.com.logcollector.api.message.Header;
@@ -18,13 +16,10 @@ import io.reactivex.schedulers.Schedulers;
 /**
  * Created by magyeong-ug on 28/04/2017.
  */
-
 public class UserServiceImpl {
 
-	@Inject
-	UserService userService;
+	private UserService userService;
 
-	@Inject
 	public UserServiceImpl(UserService userService) {
 		this.userService = userService;
 	}

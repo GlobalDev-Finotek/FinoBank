@@ -29,6 +29,7 @@ public class ApplicationLog extends RealmObject implements Parcelable, ValueQuer
 	};
 	public String appName;
 	public String startTime;
+	public String lastTimeUsed;
 	public String packageName;
 	public double duration;
 	int type = ActionType.GATHER_APP_USAGE_LOG;
@@ -47,6 +48,7 @@ public class ApplicationLog extends RealmObject implements Parcelable, ValueQuer
 
 	protected ApplicationLog(Parcel in) {
 		packageName = in.readString();
+		lastTimeUsed = in.readString();
 		appName = in.readString();
 		startTime = in.readString();
 		duration = in.readDouble();
@@ -99,6 +101,7 @@ public class ApplicationLog extends RealmObject implements Parcelable, ValueQuer
 	@Override
 	public void writeToParcel(Parcel dest, int flags) {
 		dest.writeString(packageName);
+		dest.writeString(lastTimeUsed);
 		dest.writeString(appName);
 		dest.writeString(startTime);
 		dest.writeDouble(duration);
@@ -111,6 +114,10 @@ public class ApplicationLog extends RealmObject implements Parcelable, ValueQuer
 	public HashMap<String, String> generate() {
 		HashMap<String, String> queryMap = new HashMap<>();
 		queryMap.put("appName", this.appName);
+		queryMap.put("lastTimeUsed", this.lastTimeUsed);
+		queryMap.put("duration", String.valueOf(this.duration));
+		queryMap.put("logTime", this.logTime);
+		queryMap.put("startTime", this.startTime);
 
 		return queryMap;
 	}

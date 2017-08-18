@@ -11,22 +11,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import globaldev.finotek.com.logcollector.R;
-import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.util.AesInstance;
-import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 
-	@Inject
-	RxEventBus eventBus;
 
-	@Inject
-	SharedPreferences sharedPreferences;
+	private SharedPreferences sharedPreferences;
 
 
 	public AppUsageLoggingService() {
@@ -37,8 +30,7 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((FinopassApp) getApplication()).getAppComponent().inject(this);
-
+		sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
 	}
 
 	@Override
@@ -104,7 +96,7 @@ public class AppUsageLoggingService extends BaseLoggingService<ApplicationLog> {
 					ApplicationLog log = new ApplicationLog(label,
 							String.valueOf(u.getFirstTimeStamp()),
 							duration);
-
+					log.lastTimeUsed = String.valueOf(u.getLastTimeStamp());
 					log.packageName = packageName;
 
 					logData.add(log);

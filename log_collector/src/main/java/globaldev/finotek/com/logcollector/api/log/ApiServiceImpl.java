@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import javax.inject.Inject;
-
 import globaldev.finotek.com.logcollector.api.message.BaseRequest;
 import globaldev.finotek.com.logcollector.api.message.BaseResponse;
 import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
@@ -19,10 +17,8 @@ import io.reactivex.schedulers.Schedulers;
 
 public class ApiServiceImpl<T> {
 
-	@Inject
 	LogApi logService;
 
-	@Inject
 	public ApiServiceImpl(LogApi logService) {
 		this.logService = logService;
 	}
@@ -54,6 +50,7 @@ public class ApiServiceImpl<T> {
 				new BaseRequest.Builder<RecentLogParam>()
 						.setParam(recentLogParam)
 						.build();
+
 
 		return logService.getRecentLogs(getRecentLogRequest)
 				.subscribeOn(Schedulers.io())

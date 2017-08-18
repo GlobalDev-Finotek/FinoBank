@@ -1,5 +1,6 @@
 package finotek.global.dev.talkbank_ca.app;
 
+import android.app.Application;
 import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
@@ -7,12 +8,11 @@ import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
-import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.db.FinopassRealmModule;
 import io.realm.Realm;
 import io.realm.RealmConfiguration;
 
-public class MyApplication extends FinopassApp {
+public class MyApplication extends Application {
 
 	AppComponent appComponent;
 	private DBHelper dbHelper;

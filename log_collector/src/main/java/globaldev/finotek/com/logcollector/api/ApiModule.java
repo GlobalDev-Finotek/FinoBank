@@ -1,22 +1,19 @@
 package globaldev.finotek.com.logcollector.api;
 
 
+import android.app.Application;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Singleton;
-
-import dagger.Module;
-import dagger.Provides;
 import globaldev.finotek.com.logcollector.api.file.FileApi;
 import globaldev.finotek.com.logcollector.api.file.FileServiceImpl;
 import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.api.log.LogApi;
 import globaldev.finotek.com.logcollector.api.user.UserService;
 import globaldev.finotek.com.logcollector.api.user.UserServiceImpl;
-import globaldev.finotek.com.logcollector.app.FinopassApp;
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -27,10 +24,41 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by magyeong-ug on 26/04/2017.
  * Dagger module for organizing API service
  */
-@Module
 public class ApiModule {
 
 	private static final String BASE_URL = "https://dvikqteix2.execute-api.ap-northeast-2.amazonaws.com/prod/finopass/";
+
+	public ApiServiceImpl getApiService(Application application) {
+		Cache cache = provideOkHttpCache(application);
+		OkHttpClient okHttpClient = provideOkHttpClient(cache);
+		Gson gson = new GsonBuilder().create();
+
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl(BASE_URL)
+				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				.client(okHttpClient)
+				.build();
+
+		LogApi logApiService = retrofit.create(LogApi.class);
+		return new ApiServiceImpl(logApiService);
+	}
+
+	public UserServiceImpl getUserService(Application application) {
+		Cache cache = provideOkHttpCache(application);
+		OkHttpClient okHttpClient = provideOkHttpClient(cache);
+		Gson gson = new GsonBuilder().create();
+
+		Retrofit retrofit = new Retrofit.Builder()
+				.baseUrl(BASE_URL)
+				.addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+				.addConverterFactory(GsonConverterFactory.create(gson))
+				.client(okHttpClient)
+				.build();
+
+		UserService userApiService = retrofit.create(UserService.class);
+		return new UserServiceImpl(userApiService);
+	}
 
 	/**
 	 * Provide ok http cache cache.
@@ -39,9 +67,7 @@ public class ApiModule {
 	 * @param application application instance of app
 	 * @return the cache
 	 */
-	@Provides
-	@Singleton
-	Cache provideOkHttpCache(FinopassApp application) {
+	Cache provideOkHttpCache(Application application) {
 		int CACHE_SIZE = 10 * 1024 * 1024;
 		return new Cache(application.getCacheDir(), CACHE_SIZE);
 	}
@@ -52,8 +78,6 @@ public class ApiModule {
 	 *
 	 * @return the gson
 	 */
-	@Provides
-	@Singleton
 	Gson provideGson() {
 		GsonBuilder gsonBuilder = new GsonBuilder();
 		return gsonBuilder.create();
@@ -65,8 +89,6 @@ public class ApiModule {
 	 * @param cache the cache
 	 * @return the ok http client
 	 */
-	@Provides
-	@Singleton
 	OkHttpClient provideOkHttpClient(Cache cache) {
 		return new OkHttpClient.Builder()
 				.connectTimeout(1, TimeUnit.MINUTES)
@@ -81,8 +103,6 @@ public class ApiModule {
 	 * @param okHttpClient the ok http client
 	 * @return the retrofit
 	 */
-	@Provides
-	@Singleton
 	Retrofit provideRetrofit(Gson gson, OkHttpClient okHttpClient) {
 		return new Retrofit.Builder()
 				.baseUrl(BASE_URL)
@@ -98,8 +118,6 @@ public class ApiModule {
 	 * @param retrofit the retrofit
 	 * @return the user service
 	 */
-	@Provides
-	@Singleton
 	UserService provideUserApiService(Retrofit retrofit) {
 		return retrofit.create(UserService.class);
 	}
@@ -110,8 +128,6 @@ public class ApiModule {
 	 * @param userService injected by in this module
 	 * @return the user service
 	 */
-	@Provides
-	@Singleton
 	UserServiceImpl provideUserServiceImpl(UserService userService) {
 		return new UserServiceImpl(userService);
 	}
@@ -123,8 +139,6 @@ public class ApiModule {
 	 * @param retrofit the retrofit
 	 * @return the push service
 	 */
-	@Provides
-	@Singleton
 	LogApi provideLogApiService(Retrofit retrofit) {
 		return retrofit.create(LogApi.class);
 	}
@@ -135,8 +149,6 @@ public class ApiModule {
 	 * @param logService injected by in this module
 	 * @return the push service
 	 */
-	@Provides
-	@Singleton
 	ApiServiceImpl provideLogServiceImpl(LogApi logService) {
 		return new ApiServiceImpl(logService);
 	}
@@ -147,8 +159,6 @@ public class ApiModule {
 	 * @param retrofit the retrofit
 	 * @return file service
 	 */
-	@Provides
-	@Singleton
 	FileApi provideFileApiService(Retrofit retrofit) {
 		return retrofit.create(FileApi.class);
 	}
@@ -159,8 +169,6 @@ public class ApiModule {
 	 * @param fileApi injected by in this module
 	 * @return the push service
 	 */
-	@Provides
-	@Singleton
 	FileServiceImpl provideFileServiceImpl(FileApi fileApi) {
 		return new FileServiceImpl(fileApi);
 	}

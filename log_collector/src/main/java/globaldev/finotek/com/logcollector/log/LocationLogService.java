@@ -12,12 +12,8 @@ import android.support.annotation.RequiresApi;
 
 import java.util.List;
 
-import javax.inject.Inject;
-
-import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.LocationLog;
-import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 /**
  * Created by KoDeokyoon on 2017. 5. 2..
@@ -25,8 +21,6 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 public class LocationLogService extends BaseLoggingService<LocationLog> {
 
-	@Inject
-	RxEventBus eventBus;
 
 	private Location currentLocation = null;
 
@@ -67,7 +61,6 @@ public class LocationLogService extends BaseLoggingService<LocationLog> {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((FinopassApp) getApplication()).getAppComponent().inject(this);
 	}
 
 	@Override

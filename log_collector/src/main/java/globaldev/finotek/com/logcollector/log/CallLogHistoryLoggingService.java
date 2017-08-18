@@ -9,14 +9,10 @@ import android.text.TextUtils;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import globaldev.finotek.com.logcollector.R;
-import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.util.AesInstance;
-import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 /**
  * Created by KoDeokyoon on 2017. 4. 27..
@@ -24,16 +20,9 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistoryLog> {
 
-	@Inject
-	RxEventBus eventBus;
 
-	@Inject
-	Context context;
+	private SharedPreferences sharedPreferences;
 
-	@Inject
-	SharedPreferences sharedPreferences;
-
-	private long startTime;
 
 	public CallLogHistoryLoggingService() {
 		JOB_ID = ActionType.GATHER_CALL_LOG;
@@ -49,8 +38,7 @@ public class CallLogHistoryLoggingService extends BaseLoggingService<CallHistory
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((FinopassApp) getApplication()).getAppComponent().inject(this);
-
+		sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
 	}
 

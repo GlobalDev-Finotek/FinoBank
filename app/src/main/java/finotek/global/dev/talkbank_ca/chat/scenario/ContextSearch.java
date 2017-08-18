@@ -3,11 +3,11 @@ package finotek.global.dev.talkbank_ca.chat.scenario;
 import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextApp;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextCall;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLocation;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextSms;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextTotal;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;

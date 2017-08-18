@@ -17,7 +17,7 @@ public interface LogApi {
 	Flowable<BaseResponse>
 	update(@Body BaseRequest logs);
 
-	@POST("recents")
+	@POST("inference")
 	Flowable<BaseResponse>
 	getRecentLogs(@Body BaseRequest logs);
 

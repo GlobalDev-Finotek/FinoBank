@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.chat.ContextLog;
+package finotek.global.dev.talkbank_ca.chat.context_log;
 
 import android.Manifest;
 import android.app.Service;
@@ -157,7 +157,11 @@ public class ContextLogService extends Service {
 
 				MessageLog messageLog = new MessageLog();
 				messageLog.setLength(body.length());
-				messageLog.text = body;
+				try {
+					messageLog.text = ai.encText(body);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				messageLog.setLogTime(String.valueOf(timeStamp));
 				messageLog.setTargetNumber(address);
 
@@ -200,7 +204,7 @@ public class ContextLogService extends Service {
 				historyLog.duration = duration;
 
 				try {
-					historyLog.targetNumber = number;
+					historyLog.targetNumber = ai.encText(number);
 					historyLog.targetName = ai.encText(cachedName);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -237,12 +241,12 @@ public class ContextLogService extends Service {
 				currentLocation = l;
 			}
 		}
+		if (currentLocation != null) {
+			long timeStamp = currentLocation.getTime();
+			String date = DateFormat.format("yyyy-MM-dd HH:mm:ss", timeStamp).toString();
 
-		long timeStamp = currentLocation.getTime();
-		String date = DateFormat.format("yyyy-MM-dd HH:mm:ss", timeStamp).toString();
-
-		double dLatitude = currentLocation.getLatitude();
-		double dLongitude = currentLocation.getLongitude();
+			double dLatitude = currentLocation.getLatitude();
+			double dLongitude = currentLocation.getLongitude();
 
 		if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
 			LocationLog locationLog = new LocationLog();
@@ -252,6 +256,7 @@ public class ContextLogService extends Service {
 		} else {
 			String errorMessage = "there is no location data within" + targetTime;
 			System.out.print(errorMessage);
+		}
 		}
 
 		return locationList;
@@ -280,10 +285,13 @@ public class ContextLogService extends Service {
 						applicationLog.appName = ai.encText(applicationLog.appName);
 					}
 
-					applicationLog.setStartTime(startTime);
+					applicationLog.setStartTime(String.valueOf(u.getFirstTimeStamp()));
+					applicationLog.lastTimeUsed = String.valueOf(u.getLastTimeStamp());
 					applicationLog.duration = u.getTotalTimeInForeground();
 
-					appList.add(applicationLog);
+					if(u.getTotalTimeInForeground() > 0) {
+						appList.add(applicationLog);
+					}
 				}
 			} catch (PackageManager.NameNotFoundException e) {
 				e.printStackTrace();

@@ -4,24 +4,16 @@ import android.app.job.JobInfo;
 import android.app.job.JobScheduler;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.text.TextUtils;
 
 import com.google.gson.Gson;
 
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.inject.Inject;
-
-import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
-import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionConfig;
-import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 import static globaldev.finotek.com.logcollector.model.ActionType.GATHER_APP_USAGE_LOG;
 import static globaldev.finotek.com.logcollector.model.ActionType.GATHER_CALL_LOG;
@@ -35,24 +27,12 @@ import static globaldev.finotek.com.logcollector.model.ActionType.GATHER_MESSAGE
 public class LoggingHelperImpl implements LoggingHelper {
 
 	private final JobScheduler mJobService;
-	@Inject
-	Context context;
-
-	@Inject
-	SharedPreferences sharedPreferences;
-
-	@Inject
-	ApiServiceImpl logService;
-
-	@Inject
-	RxEventBus eventBus;
-
+	private Context context;
 	private HashMap<Integer, String> loggingServiceMap;
 
-	@Inject
+
 	public LoggingHelperImpl(Context context) {
 		this.context = context;
-		((FinopassApp) context).getAppComponent().inject(this);
 		loggingServiceMap = new HashMap<>();
 		mJobService =
 				(JobScheduler) context.getSystemService(Context.JOB_SCHEDULER_SERVICE);
@@ -101,9 +81,9 @@ public class LoggingHelperImpl implements LoggingHelper {
 	private List<JobInfo> parseJobInfo(Map<String, String> dataMap) throws UnregisteredServiceException {
 
 		ArrayList<JobInfo> jobInfos = new ArrayList<>();
-		ArrayList<String> keySet = new ArrayList<>(dataMap.keySet());
 
-		for (String key : keySet) {
+
+		for (String key : dataMap.keySet()) {
 			String json = dataMap.get(key);
 
 			ActionConfig actionConfig = new Gson().fromJson(json, ActionConfig.class);
@@ -165,24 +145,5 @@ public class LoggingHelperImpl implements LoggingHelper {
 
 	}
 
-
-	private Type getType(final Class<?> rawClass, final Class<?> parameter) {
-		return new ParameterizedType() {
-			@Override
-			public Type[] getActualTypeArguments() {
-				return new Type[]{parameter};
-			}
-
-			@Override
-			public Type getRawType() {
-				return rawClass;
-			}
-
-			@Override
-			public Type getOwnerType() {
-				return null;
-			}
-		};
-	}
 
 }

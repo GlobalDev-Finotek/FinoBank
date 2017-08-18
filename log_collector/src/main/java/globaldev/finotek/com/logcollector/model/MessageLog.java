@@ -131,7 +131,10 @@ public class MessageLog extends RealmObject implements Parcelable, ValueQueryGen
 	public HashMap<String, String> generate() {
 		HashMap<String, String> queryMap = new HashMap<>();
 		queryMap.put("targetNumber", this.targetNumber);
-
+		queryMap.put("targetName", this.targetName);
+		queryMap.put("text", this.text);
+		queryMap.put("length", String.valueOf(this.length));
+		queryMap.put("logTime", this.logTime);
 		return queryMap;
 	}
 

@@ -40,6 +40,7 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -48,12 +49,12 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextApp;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextCall;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLocation;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogService;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextSms;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextTotal;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -98,13 +99,22 @@ import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
+import globaldev.finotek.com.logcollector.Finopass;
+import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.model.MessageLog;
+import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
+import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import io.reactivex.Observable;
+import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
+import io.reactivex.functions.Function;
+import io.realm.RealmObject;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
@@ -116,6 +126,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	@Inject
 	RxEventBus eventBus;
+
 
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
@@ -135,10 +146,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	private BroadcastReceiver receiver;
 	private String totalLogData;
-	private List<MessageLog> smsLogData;
-	private List<CallHistoryLog> callLogData;
-	private List<LocationLog> locationLogData;
-	private List<ApplicationLog> appLogData;
+
 
 
 	@Override
@@ -207,9 +215,7 @@ public class ChatActivity extends AppCompatActivity {
 			}
 		});
 
-		// bring contextLog Data
-		intent = new Intent(this, ContextLogService.class);
-		startService(intent);
+
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("chat.ContextLog.ContextLogService");
@@ -219,14 +225,24 @@ public class ChatActivity extends AppCompatActivity {
 			public void onReceive(Context context, Intent intent) {
 				String totalData = intent.getStringExtra("totalLog");
 				totalLogData = totalData;
+				List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
+				List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
+				List<LocationLog> locationLogData  = intent.getParcelableArrayListExtra("locationLog");
+				List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
 
-				smsLogData = intent.getParcelableArrayListExtra("smsLog");
+				ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
+				queryMaps.addAll(smsLogData);
+				queryMaps.addAll(callLogData);
+				queryMaps.addAll(locationLogData);
+				queryMaps.addAll(appLogData);
 
-				callLogData = intent.getParcelableArrayListExtra("callLog");
-
-				locationLogData = intent.getParcelableArrayListExtra("locationLog");
-
-				appLogData = intent.getParcelableArrayListExtra("appLog");
+				Finopass.getInstance(ChatActivity.this).getScore(queryMaps)
+				.subscribe(new Consumer() {
+					@Override
+					public void accept(@NonNull Object o) throws Exception {
+						System.out.println(o);
+					}
+				});
 
 			}
 		};
@@ -255,32 +271,32 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		if (msg instanceof ContextTotal) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(getTotalLogData())
-			);
+			// bring contextLog Data
+			Intent intent = new Intent(this, ContextLogService.class);
+			startService(intent);
 		}
-
-		if (msg instanceof ContextSms) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(smsLogData.toString())
-			);
-		}
-
-		if (msg instanceof ContextCall) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(callLogData.toString())
-			);
-		}
-		if (msg instanceof ContextLocation) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(locationLogData.toString())
-			);
-		}
-		if (msg instanceof ContextApp) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(appLogData.toString())
-			);
-		}
+//
+//		if (msg instanceof ContextSms) {
+//			MessageBox.INSTANCE.addAndWait(
+//					new ReceiveMessage(smsLogData.toString())
+//			);
+//		}
+//
+//		if (msg instanceof ContextCall) {
+//			MessageBox.INSTANCE.addAndWait(
+//					new ReceiveMessage(callLogData.toString())
+//			);
+//		}
+//		if (msg instanceof ContextLocation) {
+//			MessageBox.INSTANCE.addAndWait(
+//					new ReceiveMessage(locationLogData.toString())
+//			);
+//		}
+//		if (msg instanceof ContextApp) {
+//			MessageBox.INSTANCE.addAndWait(
+//					new ReceiveMessage(appLogData.toString())
+//			);
+//		}
 
 
 		if (msg instanceof RequestPhoto) {

@@ -8,8 +8,6 @@ import java.lang.annotation.Retention;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.inject.Inject;
-
 import globaldev.finotek.com.logcollector.model.ActionType;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -37,7 +35,6 @@ public class RxEventBus {
 	private static SparseArray<BehaviorSubject<Object>> sSubjectMap = new SparseArray<>();
 	private static Map<Object, CompositeDisposable> sSubscriptionsMap = new HashMap<>();
 
-	@Inject
 	public RxEventBus() {
 		// hidden constructor
 	}

@@ -1,5 +1,6 @@
 package globaldev.finotek.com.logcollector.log;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.net.Uri;
@@ -8,14 +9,10 @@ import android.provider.Telephony;
 import java.util.Calendar;
 import java.util.Date;
 
-import javax.inject.Inject;
-
 import globaldev.finotek.com.logcollector.R;
-import globaldev.finotek.com.logcollector.app.FinopassApp;
 import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.MessageLog;
 import globaldev.finotek.com.logcollector.util.AesInstance;
-import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 
 /**
  * Created by JungwonSeo on 2017-04-27.
@@ -24,11 +21,7 @@ import globaldev.finotek.com.logcollector.util.eventbus.RxEventBus;
 public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 
 
-	@Inject
-	SharedPreferences sharedPreferences;
-
-	@Inject
-	RxEventBus eventBus;
+	private SharedPreferences sharedPreferences;
 
 
 	public SMSLoggingService() {
@@ -38,8 +31,7 @@ public class SMSLoggingService extends BaseLoggingService<MessageLog> {
 	@Override
 	public void onCreate() {
 		super.onCreate();
-		((FinopassApp) getApplication()).getAppComponent().inject(this);
-
+		sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
 	}
 
 	@Override

@@ -49,11 +49,7 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
@@ -67,6 +63,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextAnalyzed;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v1;
@@ -100,21 +97,14 @@ import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
 import globaldev.finotek.com.logcollector.Finopass;
-import globaldev.finotek.com.logcollector.api.log.ApiServiceImpl;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.model.MessageLog;
 import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
-import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import io.reactivex.Observable;
-import io.reactivex.ObservableSource;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
-import io.reactivex.functions.Function;
-import io.realm.RealmObject;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
@@ -146,7 +136,6 @@ public class ChatActivity extends AppCompatActivity {
 
 	private BroadcastReceiver receiver;
 	private String totalLogData;
-
 
 
 	@Override
@@ -216,7 +205,6 @@ public class ChatActivity extends AppCompatActivity {
 		});
 
 
-
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("chat.ContextLog.ContextLogService");
 
@@ -227,7 +215,7 @@ public class ChatActivity extends AppCompatActivity {
 				totalLogData = totalData;
 				List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
 				List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
-				List<LocationLog> locationLogData  = intent.getParcelableArrayListExtra("locationLog");
+				List<LocationLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
 				List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
 
 				ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
@@ -236,21 +224,21 @@ public class ChatActivity extends AppCompatActivity {
 				queryMaps.addAll(locationLogData);
 				queryMaps.addAll(appLogData);
 
-				Finopass.getInstance(ChatActivity.this).getScore(queryMaps)
-				.subscribe(new Consumer() {
-					@Override
-					public void accept(@NonNull Object o) throws Exception {
-						System.out.println(o);
-					}
-				});
+				Finopass.getInstance(ChatActivity.this)
+						.getScore(queryMaps)
+						.subscribe(
+								scoreParams -> MessageBox.INSTANCE.add(new ContextAnalyzed(scoreParams)),
+								throwable -> {
+									System.out.println(throwable);
+								}, () -> {
+
+								});
 
 			}
 		};
 		registerReceiver(receiver, intentFilter);
 
 	}
-
-
 
 	public String getTotalLogData() {
 		return totalLogData;
@@ -259,9 +247,6 @@ public class ChatActivity extends AppCompatActivity {
 	public void setTotalLogData(String totalLogData) {
 		this.totalLogData = totalLogData;
 	}
-
-
-
 
 	@Override
 	protected void onPause() {
@@ -275,7 +260,6 @@ public class ChatActivity extends AppCompatActivity {
 			Intent intent = new Intent(this, ContextLogService.class);
 			startService(intent);
 		}
-//
 //		if (msg instanceof ContextSms) {
 //			MessageBox.INSTANCE.addAndWait(
 //					new ReceiveMessage(smsLogData.toString())

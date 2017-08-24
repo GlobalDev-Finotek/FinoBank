@@ -5,8 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.view.animation.DecelerateInterpolator;
-import android.view.animation.OvershootInterpolator;
 
 import finotek.global.dev.talkbank_ca.chat.adapter.ChatAdapter;
 import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
@@ -20,9 +18,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
-import jp.wasabeef.recyclerview.adapters.AlphaInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.ScaleInAnimationAdapter;
-import jp.wasabeef.recyclerview.adapters.SlideInBottomAnimationAdapter;
 
 /**
  * @author david lee at finotek.
@@ -34,7 +29,7 @@ public class ChatView extends RecyclerView {
 		super(context, attrs);
 
 		this.adapter = new ChatAdapter();
-        setAdapter(adapter);
+		setAdapter(adapter);
 
 		this.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
 		this.addChatViewBuilder(ViewType.IconicSend.ordinal(), new IconicSendViewBuilder(context));
@@ -89,13 +84,13 @@ public class ChatView extends RecyclerView {
 		addMessage(ViewType.AccountList.ordinal(), accountList);
 	}
 
-    public void waiting() {
-        addMessage(ViewType.Wait.ordinal(), null);
-    }
+	public void waiting() {
+		addMessage(ViewType.Wait.ordinal(), null);
+	}
 
-    public void waitingDone() {
-        removeOf(ViewType.Wait);
-    }
+	public void waitingDone() {
+		removeOf(ViewType.Wait);
+	}
 
 	public void transactionList(RecentTransaction data) {
 		addMessage(ViewType.RecentTransaction.ordinal(), data);
@@ -106,8 +101,8 @@ public class ChatView extends RecyclerView {
 	}
 
 	public void recoMenu(RecoMenuRequest req) {
-        addMessage(ViewType.RecoMenu.ordinal(), req);
-    }
+		addMessage(ViewType.RecoMenu.ordinal(), req);
+	}
 
 	private void addChatViewBuilder(int viewType, ViewBuilder builder) {
 		adapter.addChatViewBuilder(viewType, builder);
@@ -130,7 +125,7 @@ public class ChatView extends RecyclerView {
 		Confirm, RecoMenu,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult,
-        Wait
+		Wait
 	}
 
 	public interface ViewBuilder<T> {

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -14,6 +16,7 @@
             android:background="@drawable/transfer_control_bg"
             android:orientation="vertical"
             android:padding="2dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -21,13 +24,15 @@
                 android:baselineAligned="true"
                 android:orientation="horizontal"
                 android:padding="14dp">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_balance"
                     android:textColor="@color/dark_100"
                     android:textSize="@dimen/text_normal"
-                    app:custom_font="noto_medium" />
+                    app:custom_font="noto_medium"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/balance"
                     android:layout_width="0dp"
@@ -37,6 +42,7 @@
                     android:textColor="@color/dark_100"
                     android:textSize="@dimen/text_small"
                     app:custom_font="noto_medium"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -44,8 +50,9 @@
                     android:text="@string/dialog_string_won"
                     android:textColor="@color/dark_100"
                     android:textSize="@dimen/text_small"
-                    app:custom_font="noto_medium" />
+                    app:custom_font="noto_medium"/>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="45dp"
@@ -55,13 +62,15 @@
                 android:paddingEnd="14dp"
                 android:paddingStart="14dp"
                 android:paddingTop="10dp">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="65dp"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_amount_transfer"
                     android:textColor="@color/dark_100"
                     android:textSize="@dimen/text_normal"
-                    app:custom_font="noto_medium" />
+                    app:custom_font="noto_medium"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                     android:id="@+id/edit_money"
                     android:layout_width="0dp"
@@ -72,7 +81,8 @@
                     android:gravity="end"
                     android:padding="0dp"
                     android:textColor="@color/coral_pink"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -83,11 +93,13 @@
                     app:custom_font="noto_medium"/>
             </LinearLayout>
         </LinearLayout>
+
         <RelativeLayout
             android:id="@+id/ll_secure_keyboard"
             android:layout_width="match_parent"
             android:layout_height="167dp"
             android:orientation="vertical">
+
             <finotek.global.dev.talkbank_ca.widget.NumberKeyboard
                 android:id="@+id/gv_keypad"
                 android:layout_width="match_parent"

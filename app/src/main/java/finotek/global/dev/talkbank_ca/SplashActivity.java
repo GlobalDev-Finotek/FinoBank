@@ -18,7 +18,7 @@ import io.realm.Realm;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
-public class SplashActivity extends AppCompatActivity  {
+public class SplashActivity extends AppCompatActivity {
 	private Finopass finopass;
 
 	@Override
@@ -34,7 +34,8 @@ public class SplashActivity extends AppCompatActivity  {
 		}
 
 
-		finopass.registerObservable().subscribe(aBoolean -> moveToNextActivity());
+		finopass.registerObservable()
+				.subscribe(aBoolean -> moveToNextActivity());
 
 
 	}

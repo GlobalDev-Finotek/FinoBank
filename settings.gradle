@@ -1,0 +1,4 @@
+include ':app'
+include ':log_collector'
+project(':log_collector').projectDir = new File(settingsDir, '../log_collector')
+

@@ -45,14 +45,14 @@ public class MyApplication extends Application {
 		return appComponent;
 	}
 
-  private void createDaggerInjections() {
-    appComponent = DaggerAppComponent
-        .builder()
-		    .appModule(new AppModule(this, eventBus, dbHelper))
-		    .build();
+	private void createDaggerInjections() {
+		appComponent = DaggerAppComponent
+				.builder()
+				.appModule(new AppModule(this, eventBus, dbHelper))
+				.build();
 
-    appComponent.inject(this);
-  }
+		appComponent.inject(this);
+	}
 
 
 }

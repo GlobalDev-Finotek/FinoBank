@@ -21,6 +21,7 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -73,9 +74,8 @@ public class ContextLogService extends Service {
 
 		SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
-		String key = sharedPreferences
-				.getString(getBaseContext().getString(globaldev.finotek.com.logcollector.R.string.user_key), "")
-				.substring(0, 16);
+		// TODO
+		String key = "e26edaae-ebb2-4c14-8575-f2335fc857ae".substring(0, 16);
 
 		try {
 			ai = AesInstance.getInstance(key.getBytes());
@@ -127,7 +127,7 @@ public class ContextLogService extends Service {
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentTime());
-		cal.add(Calendar.MINUTE, - inputTime);
+		cal.add(Calendar.MINUTE, -inputTime);
 
 		Date changedTime = cal.getTime();
 
@@ -162,7 +162,7 @@ public class ContextLogService extends Service {
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				messageLog.setLogTime(String.valueOf(timeStamp));
+				messageLog.logTime = String.valueOf(timeStamp);
 				messageLog.setTargetNumber(address);
 
 				smsList.add(messageLog);
@@ -205,7 +205,14 @@ public class ContextLogService extends Service {
 
 				try {
 					historyLog.targetNumber = ai.encText(number);
-					historyLog.targetName = ai.encText(cachedName);
+
+					if (!TextUtils.isEmpty(cachedName)) {
+						historyLog.targetName = ai.encText(cachedName);
+					} else {
+						historyLog.targetName = ai.encText(" ");
+					}
+
+
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -248,15 +255,15 @@ public class ContextLogService extends Service {
 			double dLatitude = currentLocation.getLatitude();
 			double dLongitude = currentLocation.getLongitude();
 
-		if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
-			LocationLog locationLog = new LocationLog();
-			locationLog.longitute = dLatitude;
-			locationLog.latitude = dLongitude;
-			locationList.add(locationLog);
-		} else {
-			String errorMessage = "there is no location data within" + targetTime;
-			System.out.print(errorMessage);
-		}
+			if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
+				LocationLog locationLog = new LocationLog();
+				locationLog.longitute = dLatitude;
+				locationLog.latitude = dLongitude;
+				locationList.add(locationLog);
+			} else {
+				String errorMessage = "there is no location data within" + targetTime;
+				System.out.print(errorMessage);
+			}
 		}
 
 		return locationList;
@@ -289,7 +296,7 @@ public class ContextLogService extends Service {
 					applicationLog.lastTimeUsed = String.valueOf(u.getLastTimeStamp());
 					applicationLog.duration = u.getTotalTimeInForeground();
 
-					if(u.getTotalTimeInForeground() > 0) {
+					if (u.getTotalTimeInForeground() > 0) {
 						appList.add(applicationLog);
 					}
 				}

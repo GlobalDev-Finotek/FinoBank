@@ -92,7 +92,7 @@
         <service
             android:name=".chat.context_log.ContextLogService">
             <intent-filter>
-                <action android:name = "chat.ContextLog.ContextLogService"/>
+                <action android:name="chat.ContextLog.ContextLogService"/>
             </intent-filter>
         </service>
 

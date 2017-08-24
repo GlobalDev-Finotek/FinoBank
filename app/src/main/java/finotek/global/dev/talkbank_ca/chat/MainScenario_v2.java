@@ -70,15 +70,15 @@ public class MainScenario_v2 {
 		Realm realm = Realm.getDefaultInstance();
 		user = realm.where(User.class).findAll().last();
 
-        //Recommend scenario setup
-		if(!LeftScenario.scenarioList.contains("E"))
-        	LeftScenario.scenarioList.add("E");
-		if(!LeftScenario.scenarioList.contains("P"))
+		//Recommend scenario setup
+		if (!LeftScenario.scenarioList.contains("E"))
+			LeftScenario.scenarioList.add("E");
+		if (!LeftScenario.scenarioList.contains("P"))
 			LeftScenario.scenarioList.add("P");
-		if(!LeftScenario.scenarioList.contains("T"))
-        	LeftScenario.scenarioList.add("T");
-		if(!LeftScenario.scenarioList.contains("H"))
-        	LeftScenario.scenarioList.add("H");
+		if (!LeftScenario.scenarioList.contains("T"))
+			LeftScenario.scenarioList.add("T");
+		if (!LeftScenario.scenarioList.contains("H"))
+			LeftScenario.scenarioList.add("H");
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -125,7 +125,7 @@ public class MainScenario_v2 {
 		currentScenario = null;
 	}
 
-	private String getGreetings(){
+	private String getGreetings() {
 		long temptime = System.currentTimeMillis();
 		String time = DateFormat.format("HH", temptime).toString();
 		int hour = Integer.parseInt(time);
@@ -137,17 +137,16 @@ public class MainScenario_v2 {
 			greetingString = context.getResources().getString(R.string.main_string_v2_login_hello, user.getName());
 		}
 
-		if (hour >=6 && 13 > hour){
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M)+"\n";
+		if (hour >= 6 && 13 > hour) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M) + "\n";
 
-		}else if (hour >= 12 && 19 > hour ){
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_L)+"\n";
+		} else if (hour >= 12 && 19 > hour) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_L) + "\n";
 
-		}else if (hour >= 18) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_E)+"\n";
-		}
-		else if (hour >= 0  && 7 > hour ) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N)+"\n";
+		} else if (hour >= 18) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_E) + "\n";
+		} else if (hour >= 0 && 7 > hour) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N) + "\n";
 		}
 
 		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getMainBalance()));
@@ -159,7 +158,7 @@ public class MainScenario_v2 {
 
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
-        RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
+		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
 		/*RecoMenuRequest req = new RecoMenuRequest();
 		//req.setTitle("추천메뉴");
 		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));
@@ -232,7 +231,6 @@ public class MainScenario_v2 {
                 });*/
 
 	}
-
 
 
 	private void onRequest(Object msg) {
@@ -368,11 +366,11 @@ public class MainScenario_v2 {
 			chatView.removeOf(ChatView.ViewType.Agreement);
 		}
 
-		if(msg instanceof WaitResult) {
+		if (msg instanceof WaitResult) {
 			chatView.waiting();
 		}
 
-		if(msg instanceof WaitDone) {
+		if (msg instanceof WaitDone) {
 			chatView.waitingDone();
 		}
 	}
@@ -385,7 +383,7 @@ public class MainScenario_v2 {
 	private boolean isImmediateMessage(Object msg) {
 		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
 				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
-			  msg instanceof MessageEmitted;
+				msg instanceof MessageEmitted;
 	}
 
 	public void release() {

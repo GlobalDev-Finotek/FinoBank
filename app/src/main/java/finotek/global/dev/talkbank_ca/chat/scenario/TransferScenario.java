@@ -37,313 +37,303 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 
 public class TransferScenario implements Scenario {
-    private DBHelper dbHelper;
-    private Context context;
-    private Step step = Step.BankAsk;
-    private boolean isProceeding = true;
-    private int navigateNum = 0;
+	private DBHelper dbHelper;
+	private Context context;
+	private Step step = Step.BankAsk;
+	private boolean isProceeding = true;
+	private int navigateNum = 0;
 
 
-    public TransferScenario(Context context, DBHelper dbHelper) {
-        this.context = context;
-        this.dbHelper = dbHelper;
-    }
+	public TransferScenario(Context context, DBHelper dbHelper) {
+		this.context = context;
+		this.dbHelper = dbHelper;
+	}
 
-    @Override
-    public String getName() {
-        return context.getString(R.string.scenario_transfer);
-    }
+	@Override
+	public String getName() {
+		return context.getString(R.string.scenario_transfer);
+	}
 
-    @Override
-    public boolean decideOn(String msg) {
-        return msg.equals("계좌이체") || msg.equals(context.getResources().getString(R.string.dialog_button_transfer))
-                || msg.equals("이체") || msg.equals("송금");
-    }
+	@Override
+	public boolean decideOn(String msg) {
+		return msg.equals("계좌이체") || msg.equals(context.getResources().getString(R.string.dialog_button_transfer))
+				|| msg.equals("이체") || msg.equals("송금");
+	}
 
-    @Override
-    public void onReceive(Object msg) {
-        if (msg instanceof TransferButtonPressed) {
-            MessageBox.INSTANCE.add(new RequestRemoveControls());
+	@Override
+	public void onReceive(Object msg) {
+		if (msg instanceof TransferButtonPressed) {
+			MessageBox.INSTANCE.add(new RequestRemoveControls());
 
-            String name = TransactionDB.INSTANCE.getTxName();
-            String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-            int money = TransactionDB.INSTANCE.getMoneyAsInt();
-            MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
+			String name = TransactionDB.INSTANCE.getTxName();
+			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+			int money = TransactionDB.INSTANCE.getMoneyAsInt();
+			MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
 
-            if (money >= 1000000) {
-                MessageBox.INSTANCE.addAndWait(
-                        new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
-                        new TransferRequestSignature()
-                );
-            } else {
-                if (navigateNum == 1) {
-                    MessageBox.INSTANCE.add(new MoneyTransferred());
-                }
-                 if (navigateNum == 2) {
-                    MessageBox.INSTANCE.add(new alterOne());
-                }
-                 if (navigateNum == 3){
-                    MessageBox.INSTANCE.add(new alterTwo());
-                }
-                 if (navigateNum == 4){
-                    MessageBox.INSTANCE.add(new alterThree());
-                }
-            }
-        }
+			if (money >= 1000000) {
+				MessageBox.INSTANCE.addAndWait(
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
+						new TransferRequestSignature()
+				);
+			} else {
+				if (navigateNum == 1) {
+					MessageBox.INSTANCE.add(new MoneyTransferred());
+				}
+				if (navigateNum == 2) {
+					MessageBox.INSTANCE.add(new alterOne());
+				}
+				if (navigateNum == 3) {
+					MessageBox.INSTANCE.add(new alterTwo());
+				}
+				if (navigateNum == 4) {
+					MessageBox.INSTANCE.add(new alterThree());
+				}
+			}
+		}
 
-        if (msg instanceof SignatureVerified) {
-            if (navigateNum == 1) {
-                MessageBox.INSTANCE.add(new MoneyTransferred());
-            }
-             if (navigateNum == 2) {
-                MessageBox.INSTANCE.add(new alterOne());
-            }
-             if (navigateNum == 3){
-                MessageBox.INSTANCE.add(new alterTwo());
-            }
-             if (navigateNum == 4){
-                MessageBox.INSTANCE.add(new alterThree());
-            }
-        }
+		if (msg instanceof SignatureVerified) {
+			if (navigateNum == 1) {
+				MessageBox.INSTANCE.add(new MoneyTransferred());
+			}
+			if (navigateNum == 2) {
+				MessageBox.INSTANCE.add(new alterOne());
+			}
+			if (navigateNum == 3) {
+				MessageBox.INSTANCE.add(new alterTwo());
+			}
+			if (navigateNum == 4) {
+				MessageBox.INSTANCE.add(new alterThree());
+			}
+		}
 
-        if (msg instanceof MoneyTransferred) {
-            isProceeding = false;
-            String name = TransactionDB.INSTANCE.getTxName();
-            String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-            int money = TransactionDB.INSTANCE.getMoneyAsInt();
+		if (msg instanceof MoneyTransferred) {
+			isProceeding = false;
+			String name = TransactionDB.INSTANCE.getTxName();
+			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+			int money = TransactionDB.INSTANCE.getMoneyAsInt();
 
-            TransactionDB.INSTANCE.transferMoney(money);
-            int balance = TransactionDB.INSTANCE.getMainBalance();
-            String balanceAsString = NumberFormat.getNumberInstance().format(balance);
-            TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
+			TransactionDB.INSTANCE.transferMoney(money);
+			int balance = TransactionDB.INSTANCE.getMainBalance();
+			String balanceAsString = NumberFormat.getNumberInstance().format(balance);
+			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
-            RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
-            request.setTitle("");
-            request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
+			RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
+			request.setTitle("");
+			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-            MessageBox.INSTANCE.addAndWait(request, new Done());
-            step = Step.TransferDone;
-        }
-        if (msg instanceof alterOne) {
-            isProceeding = false;
-            String name = TransactionDB.INSTANCE.getTxName();
-            String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-            int money = TransactionDB.INSTANCE.getMoneyAsInt();
+			MessageBox.INSTANCE.addAndWait(request, new Done());
+			step = Step.TransferDone;
+		}
+		if (msg instanceof alterOne) {
+			isProceeding = false;
+			String name = TransactionDB.INSTANCE.getTxName();
+			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+			int money = TransactionDB.INSTANCE.getMoneyAsInt();
 
-            TransactionDB.INSTANCE.transferMoneyV1(money);
-            int balance = TransactionDB.INSTANCE.getFirstAlternativeBalance();
+			TransactionDB.INSTANCE.transferMoneyV1(money);
+			int balance = TransactionDB.INSTANCE.getFirstAlternativeBalance();
 
-            String balanceAsString = NumberFormat.getNumberInstance().format(balance);
-            TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
+			String balanceAsString = NumberFormat.getNumberInstance().format(balance);
+			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
-            RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
-            request.setTitle("");
-            request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
+			RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
+			request.setTitle("");
+			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-            MessageBox.INSTANCE.addAndWait(request, new Done());
-            step = Step.TransferDone;
-        }
-        if (msg instanceof alterTwo) {
-            isProceeding = false;
-            String name = TransactionDB.INSTANCE.getTxName();
-            String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-            int money = TransactionDB.INSTANCE.getMoneyAsInt();
+			MessageBox.INSTANCE.addAndWait(request, new Done());
+			step = Step.TransferDone;
+		}
+		if (msg instanceof alterTwo) {
+			isProceeding = false;
+			String name = TransactionDB.INSTANCE.getTxName();
+			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+			int money = TransactionDB.INSTANCE.getMoneyAsInt();
 
-            TransactionDB.INSTANCE.transferMoneyV2(money);
-            int balance = TransactionDB.INSTANCE.getSecondAlternativeBalance();
+			TransactionDB.INSTANCE.transferMoneyV2(money);
+			int balance = TransactionDB.INSTANCE.getSecondAlternativeBalance();
 
-            String balanceAsString = NumberFormat.getNumberInstance().format(balance);
-            TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
+			String balanceAsString = NumberFormat.getNumberInstance().format(balance);
+			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
-            RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
-            request.setTitle("");
-            request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
+			RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
+			request.setTitle("");
+			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-            MessageBox.INSTANCE.addAndWait(request, new Done());
-            step = Step.TransferDone;
-        }
+			MessageBox.INSTANCE.addAndWait(request, new Done());
+			step = Step.TransferDone;
+		}
 
-        if (msg instanceof alterThree) {
-            isProceeding = false;
-            String name = TransactionDB.INSTANCE.getTxName();
-            String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-            int money = TransactionDB.INSTANCE.getMoneyAsInt();
+		if (msg instanceof alterThree) {
+			isProceeding = false;
+			String name = TransactionDB.INSTANCE.getTxName();
+			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+			int money = TransactionDB.INSTANCE.getMoneyAsInt();
 
-            TransactionDB.INSTANCE.transferMoneyV3(money);
-            int balance = TransactionDB.INSTANCE.getThirdAlternativeBalance();
+			TransactionDB.INSTANCE.transferMoneyV3(money);
+			int balance = TransactionDB.INSTANCE.getThirdAlternativeBalance();
 
-            String balanceAsString = NumberFormat.getNumberInstance().format(balance);
-            TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
+			String balanceAsString = NumberFormat.getNumberInstance().format(balance);
+			TransactionDB.INSTANCE.addTx(new Transaction(name, 0, money, balance, new DateTime()));
 
-            RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
-            request.setTitle("");
-            request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
-
-
-
-            MessageBox.INSTANCE.addAndWait(request, new Done());
-            step = Step.TransferDone;
-        }
-        if (msg instanceof Done) {
-            this.clear();
-        }
+			RecommendScenarioMenuRequest request = new RecommendScenarioMenuRequest(context);
+			request.setTitle("");
+			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
 
-    }
-
-    public void confirmBankSelection (int balance){
-        RecoMenuRequest req = new RecoMenuRequest();
-        req.setDescription(context.getResources().getString(R.string.dialog_chat_bank_balance, balance));
-        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_select_bank_yes), null);
-        req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_select_bank_no), null);
-        MessageBox.INSTANCE.addAndWait(
-               req
-        );
-        step = Step.BankChoice;
-    }
-
-    @Override
-    public void onUserSend(String msg) {
-        RecoMenuRequest req = new RecoMenuRequest();
-        req.setDescription(context.getResources().getString(R.string.dialog_chat_before_transfer));
-        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_select_bank_yes), null);
-        req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_select_bank_no), null);
-        switch (step) {
-            case BankAsk:
-
-                MessageBox.INSTANCE.addAndWait(
-                        req
-                );
-                step = Step.BankAnswer;
-                break;
-
-            case BankAnswer:
-                if (msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_yes))) {
-                    Accounts(1);
-                } else if ((msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_no)))) {
-                    RecoMenuRequest selectbank = new RecoMenuRequest();
-                    selectbank.setDescription(context.getResources().getString(R.string.dialog_chat_bank_select));
-                    selectbank.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_chat_bank_select_A1), null);
-                    selectbank.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_bank_select_A2), null);
-                    selectbank.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_bank_select_A3), null);
-                    selectbank.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_bank_select_cancel), null);
-
-                    MessageBox.INSTANCE.addAndWait(
-                            selectbank
-                    );
-                    step = Step.Question;
-                    break;
-                }
-            case Question:
-                if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A1)))
-                {
-                    confirmBankSelection(TransactionDB.INSTANCE.getFirstAlternativeBalance());
-                    this.navigateNum = 2;
-                }
-                else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A2)))
-                {
-                    confirmBankSelection(TransactionDB.INSTANCE.getSecondAlternativeBalance());
-                    this.navigateNum = 3;
-                }
-                else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A3)))
-                {
-                    confirmBankSelection(TransactionDB.INSTANCE.getThirdAlternativeBalance());
-                    this.navigateNum = 4;
-                }
-                 else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_cancel))){
-                    MessageBox.INSTANCE.addAndWait(new ReceiveMessage(
-                            context.getResources().getString(R.string.dialog_chat_transfer_cancel)),
-                            new RecommendScenarioMenuRequest(context)
-                    );
-                }
-                break;
-
-            case BankChoice:
-                if (msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_yes))) {
-                    Accounts(navigateNum);
-                }
-                else if (msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_no))) {
-                    RecoMenuRequest selectbank = new RecoMenuRequest();
-                    selectbank.setDescription(context.getResources().getString(R.string.dialog_chat_bank_select));
-                    selectbank.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_chat_bank_select_A1), null);
-                    selectbank.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_bank_select_A2), null);
-                    selectbank.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_bank_select_A3), null);
-                    selectbank.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_bank_select_cancel), null);
-
-                    MessageBox.INSTANCE.addAndWait(
-                            selectbank
-                    );                }
-                break;
-        }
-
-    }
-
-    @Override
-    public void clear() {
-        isProceeding = true;
-        step = Step.BankAsk;
-        TransactionDB.INSTANCE.setTxMoney("");
-        TransactionDB.INSTANCE.setTxName("");
-    }
-
-    @Override
-    public boolean isProceeding() {
-        return isProceeding;
-    }
-
-    private void Accounts(int navigateNum){
-        this.navigateNum = navigateNum;
-        List<Account> accounts = new ArrayList<>();
-        accounts.add(new Account("어머니", "2017/01/25", "200,000 원 " + context.getString(R.string.string_transfer).toLowerCase(), true));
-        accounts.add(new Account("박예린", "2017/01/11", "100,000 원 " + context.getString(R.string.string_transfer).toLowerCase(), false));
-        accounts.add(new Account("김가람", "2017/01/11", "36,200 원 " + context.getString(R.string.string_transfer).toLowerCase(), false));
-        accounts.add(new Account("김이솔", "2017/01/10", "100,000 원 " + context.getString(R.string.dialog_string_deposit).toLowerCase(), false));
-
-        ConfirmRequest confirmRequest = new ConfirmRequest();
-        confirmRequest.addInfoEvent(context.getString(R.string.dialog_contact), () -> {
-            MessageBox.INSTANCE.add(new RequestSelectContact());
-        }, false);
-
-        if (navigateNum == 1) {
-            MessageBox.INSTANCE.addAndWait(
-                    new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
-                    new AccountList(accounts),
-                    confirmRequest,
-                    new RequestTransferUI(),
-                    new RequestContactPermission()
-            );
-        }
-        else if (navigateNum == 2){
-            MessageBox.INSTANCE.addAndWait(
-                    new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
-                    new AccountList(accounts),
-                    confirmRequest,
-                    new RequestTransferUI_v1(),
-                    new RequestContactPermission()
-            );
-        }
-        else if (navigateNum == 3){
-            MessageBox.INSTANCE.addAndWait(
-                    new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
-                    new AccountList(accounts),
-                    confirmRequest,
-                    new RequestTransferUI_v2(),
-                    new RequestContactPermission()
-            );
-        }
-        else if (navigateNum == 4){
-            MessageBox.INSTANCE.addAndWait(
-                    new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
-                    new AccountList(accounts),
-                    confirmRequest,
-                    new RequestTransferUI_v3(),
-                    new RequestContactPermission()
-            );
-        }
-    }
+			MessageBox.INSTANCE.addAndWait(request, new Done());
+			step = Step.TransferDone;
+		}
+		if (msg instanceof Done) {
+			this.clear();
+		}
 
 
-    private enum Step {
-        BankAsk, BankAnswer, Question, BankChoice, Initial, TransferToSomeone, TransferByAI, TransferDone
-    }
+	}
+
+	public void confirmBankSelection(int balance) {
+		RecoMenuRequest req = new RecoMenuRequest();
+		req.setDescription(context.getResources().getString(R.string.dialog_chat_bank_balance, balance));
+		req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_select_bank_yes), null);
+		req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_select_bank_no), null);
+		MessageBox.INSTANCE.addAndWait(
+				req
+		);
+		step = Step.BankChoice;
+	}
+
+	@Override
+	public void onUserSend(String msg) {
+		RecoMenuRequest req = new RecoMenuRequest();
+		req.setDescription(context.getResources().getString(R.string.dialog_chat_before_transfer));
+		req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_select_bank_yes), null);
+		req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_select_bank_no), null);
+		switch (step) {
+			case BankAsk:
+
+				MessageBox.INSTANCE.addAndWait(
+						req
+				);
+				step = Step.BankAnswer;
+				break;
+
+			case BankAnswer:
+				if (msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_yes))) {
+					Accounts(1);
+				} else if ((msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_no)))) {
+					RecoMenuRequest selectbank = new RecoMenuRequest();
+					selectbank.setDescription(context.getResources().getString(R.string.dialog_chat_bank_select));
+					selectbank.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_chat_bank_select_A1), null);
+					selectbank.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_bank_select_A2), null);
+					selectbank.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_bank_select_A3), null);
+					selectbank.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_bank_select_cancel), null);
+
+					MessageBox.INSTANCE.addAndWait(
+							selectbank
+					);
+					step = Step.Question;
+					break;
+				}
+			case Question:
+				if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A1))) {
+					confirmBankSelection(TransactionDB.INSTANCE.getFirstAlternativeBalance());
+					this.navigateNum = 2;
+				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A2))) {
+					confirmBankSelection(TransactionDB.INSTANCE.getSecondAlternativeBalance());
+					this.navigateNum = 3;
+				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A3))) {
+					confirmBankSelection(TransactionDB.INSTANCE.getThirdAlternativeBalance());
+					this.navigateNum = 4;
+				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_cancel))) {
+					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(
+									context.getResources().getString(R.string.dialog_chat_transfer_cancel)),
+							new RecommendScenarioMenuRequest(context)
+					);
+				}
+				break;
+
+			case BankChoice:
+				if (msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_yes))) {
+					Accounts(navigateNum);
+				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_select_bank_no))) {
+					RecoMenuRequest selectbank = new RecoMenuRequest();
+					selectbank.setDescription(context.getResources().getString(R.string.dialog_chat_bank_select));
+					selectbank.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_chat_bank_select_A1), null);
+					selectbank.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_bank_select_A2), null);
+					selectbank.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_bank_select_A3), null);
+					selectbank.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.dialog_chat_bank_select_cancel), null);
+
+					MessageBox.INSTANCE.addAndWait(
+							selectbank
+					);
+				}
+				break;
+		}
+
+	}
+
+	@Override
+	public void clear() {
+		isProceeding = true;
+		step = Step.BankAsk;
+		TransactionDB.INSTANCE.setTxMoney("");
+		TransactionDB.INSTANCE.setTxName("");
+	}
+
+	@Override
+	public boolean isProceeding() {
+		return isProceeding;
+	}
+
+	private void Accounts(int navigateNum) {
+		this.navigateNum = navigateNum;
+		List<Account> accounts = new ArrayList<>();
+		accounts.add(new Account("어머니", "2017/01/25", "200,000 원 " + context.getString(R.string.string_transfer).toLowerCase(), true));
+		accounts.add(new Account("박예린", "2017/01/11", "100,000 원 " + context.getString(R.string.string_transfer).toLowerCase(), false));
+		accounts.add(new Account("김가람", "2017/01/11", "36,200 원 " + context.getString(R.string.string_transfer).toLowerCase(), false));
+		accounts.add(new Account("김이솔", "2017/01/10", "100,000 원 " + context.getString(R.string.dialog_string_deposit).toLowerCase(), false));
+
+		ConfirmRequest confirmRequest = new ConfirmRequest();
+		confirmRequest.addInfoEvent(context.getString(R.string.dialog_contact), () -> {
+			MessageBox.INSTANCE.add(new RequestSelectContact());
+		}, false);
+
+		if (navigateNum == 1) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
+					new AccountList(accounts),
+					confirmRequest,
+					new RequestTransferUI(),
+					new RequestContactPermission()
+			);
+		} else if (navigateNum == 2) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
+					new AccountList(accounts),
+					confirmRequest,
+					new RequestTransferUI_v1(),
+					new RequestContactPermission()
+			);
+		} else if (navigateNum == 3) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
+					new AccountList(accounts),
+					confirmRequest,
+					new RequestTransferUI_v2(),
+					new RequestContactPermission()
+			);
+		} else if (navigateNum == 4) {
+			MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getString(R.string.dialog_string_select_receiver)),
+					new AccountList(accounts),
+					confirmRequest,
+					new RequestTransferUI_v3(),
+					new RequestContactPermission()
+			);
+		}
+	}
+
+
+	private enum Step {
+		BankAsk, BankAnswer, Question, BankChoice, Initial, TransferToSomeone, TransferByAI, TransferDone
+	}
 }

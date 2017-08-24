@@ -88,6 +88,7 @@ public class ContextLogService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Intent getContextLog = new Intent();
 		getContextLog.setAction("chat.ContextLog.ContextLogService");
+		getContextLog.putExtra("askType", intent.getStringExtra("askType"));
 		getContextLog.putExtra("totalLog", collector(30));
 		getContextLog.putParcelableArrayListExtra("smsLog", (ArrayList<? extends Parcelable>) getSms(30));
 		getContextLog.putParcelableArrayListExtra("callLog", (ArrayList<? extends Parcelable>) getCall(30));
@@ -95,9 +96,8 @@ public class ContextLogService extends Service {
 		getContextLog.putParcelableArrayListExtra("appLog", (ArrayList<? extends Parcelable>) getApp(30));
 		sendBroadcast(getContextLog);
 
-
 		Log.d("seo", collector(30));
-
+		stopSelf();
 		return START_STICKY;
 	}
 

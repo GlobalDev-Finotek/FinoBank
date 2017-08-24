@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.text.format.DateFormat;
+import android.util.Log;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -47,6 +48,7 @@ import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
+import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;

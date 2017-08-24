@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -49,7 +50,11 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
@@ -57,6 +62,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
@@ -97,9 +103,6 @@ import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
 import globaldev.finotek.com.logcollector.Finopass;
-import globaldev.finotek.com.logcollector.model.ApplicationLog;
-import globaldev.finotek.com.logcollector.model.CallHistoryLog;
-import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.model.MessageLog;
 import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
 import io.reactivex.Observable;
@@ -109,6 +112,8 @@ import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
+	static final int PERMISSION_REQUEST_READ_SMS = 100;
+	static final int PERMISSION_REQUEST_READ_CALL_LOG = 101;
 	private static final int PERMISSION_CAMERA = 2;
 
 	@Inject
@@ -135,12 +140,18 @@ public class ChatActivity extends AppCompatActivity {
 	private TransferSignRegisterFragment transferSignRegistFragment;
 
 	private BroadcastReceiver receiver;
-	private String totalLogData;
 
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
+		int smsPermissionCheck = ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.READ_SMS);
+		if(smsPermissionCheck != PackageManager.PERMISSION_GRANTED) {
+			ActivityCompat.requestPermissions(ChatActivity.this,
+					new String[]{Manifest.permission.READ_SMS},
+					PERMISSION_REQUEST_READ_SMS);
+		}
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 		getComponent().inject(this);
@@ -165,7 +176,6 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-
 			mainScenario = new MainScenario_v2(this, binding.chatView, eventBus, dbHelper, isSigned);
 		}
 
@@ -211,23 +221,53 @@ public class ChatActivity extends AppCompatActivity {
 		receiver = new BroadcastReceiver() {
 			@Override
 			public void onReceive(Context context, Intent intent) {
-				String totalData = intent.getStringExtra("totalLog");
-				totalLogData = totalData;
-				List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
-				List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
-				List<LocationLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
-				List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
+                String askType = intent.getStringExtra("askType");
 
-				ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
-				queryMaps.addAll(smsLogData);
-				queryMaps.addAll(callLogData);
-				queryMaps.addAll(locationLogData);
-				queryMaps.addAll(appLogData);
+                ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
+
+                if(askType.equals("smsLog") || askType.equals("totalLog")) {
+                    List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
+                    queryMaps.addAll(smsLogData);
+                    Log.d("FINOPASS", "sms logs: " + smsLogData);
+                }
+
+                if(askType.equals("callLog") || askType.equals("totalLog")) {
+                    List<MessageLog> callLogData = intent.getParcelableArrayListExtra("callLog");
+                    queryMaps.addAll(callLogData);
+                    Log.d("FINOPASS", "call logs: " + callLogData);
+                }
+
+                if(askType.equals("locationLog") || askType.equals("totalLog")) {
+                    List<MessageLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
+                    queryMaps.addAll(locationLogData);
+                    Log.d("FINOPASS", "location logs: " + locationLogData);
+                }
+
+                if(askType.equals("appLog") || askType.equals("totalLog")) {
+                    List<MessageLog> appLogData = intent.getParcelableArrayListExtra("appLog");
+                    queryMaps.addAll(appLogData);
+                    Log.d("FINOPASS", "app logs: " + appLogData);
+                }
 
 				Finopass.getInstance(ChatActivity.this)
 						.getScore(queryMaps)
 						.subscribe(
-								scoreParams -> MessageBox.INSTANCE.add(new ContextAnalyzed(scoreParams)),
+								scoreParams -> {
+									Log.d("FINOPASS", "FINOPASS in ChatActivity");
+									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+
+                                    String message = "";
+                                    if(scoreParams.messages == null || scoreParams.messages.size() == 0) {
+                                        message = getString(R.string.dialog_chat_contextlog_result_nothing);
+                                    } else {
+                                        message = scoreParams.messages.toString();
+                                    }
+
+									MessageBox.INSTANCE.addAndWait(
+                                        new ReceiveMessage(getString(R.string.dialog_chat_contextlog_result_message, (int) scoreParams.finalScore, message)),
+                                        new Done()
+                                    );
+								},
 								throwable -> {
 									System.out.println(throwable);
 								}, () -> {
@@ -240,14 +280,6 @@ public class ChatActivity extends AppCompatActivity {
 
 	}
 
-	public String getTotalLogData() {
-		return totalLogData;
-	}
-
-	public void setTotalLogData(String totalLogData) {
-		this.totalLogData = totalLogData;
-	}
-
 	@Override
 	protected void onPause() {
 		super.onPause();
@@ -256,31 +288,32 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		if (msg instanceof ContextTotal) {
-			// bring contextLog Data
 			Intent intent = new Intent(this, ContextLogService.class);
+            intent.putExtra("askType", "totalLog");
 			startService(intent);
 		}
-//		if (msg instanceof ContextSms) {
-//			MessageBox.INSTANCE.addAndWait(
-//					new ReceiveMessage(smsLogData.toString())
-//			);
-//		}
-//
-//		if (msg instanceof ContextCall) {
-//			MessageBox.INSTANCE.addAndWait(
-//					new ReceiveMessage(callLogData.toString())
-//			);
-//		}
-//		if (msg instanceof ContextLocation) {
-//			MessageBox.INSTANCE.addAndWait(
-//					new ReceiveMessage(locationLogData.toString())
-//			);
-//		}
-//		if (msg instanceof ContextApp) {
-//			MessageBox.INSTANCE.addAndWait(
-//					new ReceiveMessage(appLogData.toString())
-//			);
-//		}
+
+		if (msg instanceof ContextSms) {
+            Intent intent = new Intent(this, ContextLogService.class);
+            intent.putExtra("askType", "smsLog");
+            startService(intent);
+		}
+
+		if (msg instanceof ContextCall) {
+            Intent intent = new Intent(this, ContextLogService.class);
+            intent.putExtra("askType", "callLog");
+            startService(intent);
+		}
+		if (msg instanceof ContextLocation) {
+            Intent intent = new Intent(this, ContextLogService.class);
+            intent.putExtra("askType", "locationLog");
+            startService(intent);
+		}
+		if (msg instanceof ContextApp) {
+            Intent intent = new Intent(this, ContextLogService.class);
+            intent.putExtra("askType", "appLog");
+            startService(intent);
+		}
 
 
 		if (msg instanceof RequestPhoto) {
@@ -903,6 +936,18 @@ public class ChatActivity extends AppCompatActivity {
 					}
 				}
 				break;
+		}
+	}
+
+	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		if(requestCode == PERMISSION_REQUEST_READ_SMS) {
+			int callLogPermissionCheck = ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.READ_CALL_LOG);
+			if(callLogPermissionCheck != PackageManager.PERMISSION_GRANTED) {
+				ActivityCompat.requestPermissions(ChatActivity.this,
+						new String[]{Manifest.permission.READ_CALL_LOG},
+						PERMISSION_REQUEST_READ_CALL_LOG);
+			}
 		}
 	}
 

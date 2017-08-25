@@ -416,7 +416,7 @@
     <string name="dialog_chat_contextlog_application">어플리케이션 조회</string>
     <string name="dialog_chat_contextlog_total">전체 조회</string>
     <string name="dialog_chat_contextlog_result">30분 전부터의 맥락 데이터 입니다.</string>
-    <string name="dialog_chat_contextlog_result_message">현재 맥락인증 점수는 %1$d점으로 사유는 다음과 같습니다.\n`%2$s`</string>
+    <string name="dialog_chat_contextlog_result_message">현재 맥락인증 점수는 %1$f점으로 사유는 다음과 같습니다.\n`%2$s`</string>
     <string name="dialog_chat_contextlog_result_nothing">사유없음</string>
 
 </resources>

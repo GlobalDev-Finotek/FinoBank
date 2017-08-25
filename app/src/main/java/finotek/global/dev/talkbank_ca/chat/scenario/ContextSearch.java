@@ -18,7 +18,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.context.ContextAnalyzed;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
-import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
 
 
 /**
@@ -44,7 +43,7 @@ public class ContextSearch implements Scenario {
 			ContextAnalyzed contextAnalyzedMsg = (ContextAnalyzed) msg;
 			List<BaseScoreParam> scoreParamList = contextAnalyzedMsg.getScoreParams().messages;
 
-            Log.d("FINOPASS", "ContextAnalyzed in ContextSearch Scenario");
+			Log.d("FINOPASS", "ContextAnalyzed in ContextSearch Scenario");
 			Log.d("FINOPASS", scoreParamList.toString());
 		}
 

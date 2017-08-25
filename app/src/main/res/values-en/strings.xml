@@ -418,7 +418,7 @@
     <string name="dialog_chat_contextlog_application">Application use history</string>
     <string name="dialog_chat_contextlog_total">Total Context</string>
     <string name="dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
-    <string name="dialog_chat_contextlog_result_message">The current context authentication score is %1$d, and the reasons are as follows\n`%2$s`</string>
+    <string name="dialog_chat_contextlog_result_message">The current context authentication score is %1$f, and the reasons are as follows\n`%2$s`</string>
     <string name="dialog_chat_contextlog_result_nothing">There is no reason.</string>
 
 </resources>

@@ -31,6 +31,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import finotek.global.dev.talkbank_ca.R;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
@@ -74,8 +75,9 @@ public class ContextLogService extends Service {
 
 		SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
-		// TODO
-		String key = "e26edaae-ebb2-4c14-8575-f2335fc857ae".substring(0, 16);
+		String key = sharedPreferences
+				.getString(getString(R.string.user_key, ""), "")
+				.substring(0, 16);
 
 		try {
 			ai = AesInstance.getInstance(key.getBytes());

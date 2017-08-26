@@ -22,7 +22,7 @@ public class Agreement extends Fragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedlnstanceState) {
 		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_agreement, container, false);
 		View view = binding.getRoot();
-// check one -> click all
+		// check one -> click all
 		binding.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

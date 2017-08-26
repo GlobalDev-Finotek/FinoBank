@@ -40,6 +40,8 @@ import android.widget.Toast;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -102,8 +104,14 @@ import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
 import globaldev.finotek.com.logcollector.Finopass;
+import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
+import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
+import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.MessageLog;
 import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
+import globaldev.finotek.com.logcollector.util.AesInstance;
+import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
+import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
@@ -259,7 +267,7 @@ public class ChatActivity extends AppCompatActivity {
 									if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
 										message = getString(R.string.dialog_chat_contextlog_result_nothing);
 									} else {
-										message = scoreParams.messages.toString();
+										message = buildScoreMessages(scoreParams);
 									}
 
 									MessageBox.INSTANCE.addAndWait(
@@ -971,6 +979,32 @@ public class ChatActivity extends AppCompatActivity {
 
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
+
+	private String buildScoreMessages(ContextScoreResponse scoreResponse) throws Exception {
+        String messages = "";
+        int size = scoreResponse.messages.size();
+        for(int i = 0; i < size; i++) {
+            BaseScoreParam msg = scoreResponse.messages.get(i);
+            Log.d("FINOPASS", msg.toString());
+            UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
+            AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
+
+            switch(msg.type) {
+                case ActionType.GATHER_APP_USAGE_LOG:
+                    String appName = aes.decText(msg.param.get("appName"));
+                    messages += (i+1) + ": " + getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
+                    break;
+            }
+
+            if(i != size-1)
+                messages += ",\n\n";
+
+            String appName = aes.decText(msg.param.get("appName"));
+            Log.d("FINOPASS", "params: " + msg.param + ", appName: " + appName);
+        }
+
+        return messages;
+    }
 
 	private ChatComponent getComponent() {
 		return DaggerChatComponent

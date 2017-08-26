@@ -420,5 +420,6 @@
     <string name="dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
     <string name="dialog_chat_contextlog_result_message">The current context authentication score is %1$f, and the reasons are as follows\n`%2$s`</string>
     <string name="dialog_chat_contextlog_result_nothing">There is no reason.</string>
+    <string name="contextlog_result_message_app_usage">You used %1$s app(rank:%2$.1f) %3$.0f minute ago. You get %4$.1f points.</string>
 
 </resources>

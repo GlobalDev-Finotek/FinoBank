@@ -14,11 +14,8 @@ import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
-import finotek.global.dev.talkbank_ca.chat.messages.context.ContextAnalyzed;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
-import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
-
 
 /**
  * Created by jungwon on 7/31/2017.
@@ -39,14 +36,6 @@ public class ContextSearch implements Scenario {
 
 	@Override
 	public void onReceive(Object msg) {
-		if (msg instanceof ContextAnalyzed) {
-			ContextAnalyzed contextAnalyzedMsg = (ContextAnalyzed) msg;
-			List<BaseScoreParam> scoreParamList = contextAnalyzedMsg.getScoreParams().messages;
-
-			Log.d("FINOPASS", "ContextAnalyzed in ContextSearch Scenario");
-			Log.d("FINOPASS", scoreParamList.toString());
-		}
-
 		if(msg instanceof Done) {
             step = Step.question;
             MessageBox.INSTANCE.addAndWait(new RecommendScenarioMenuRequest(context));

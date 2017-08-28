@@ -92,6 +92,7 @@ import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
+import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
@@ -115,6 +116,7 @@ import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
+import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
@@ -270,8 +272,13 @@ public class ChatActivity extends AppCompatActivity {
 										message = buildScoreMessages(scoreParams);
 									}
 
+									User user = Realm.getDefaultInstance().where(User.class).findAll().last();
+                                    String userName = "";
+                                    if(user != null)
+                                        userName = user.getName();
+
 									MessageBox.INSTANCE.addAndWait(
-											new ReceiveMessage(getString(R.string.dialog_chat_contextlog_result_message, scoreParams.finalScore, message)),
+											new ReceiveMessage(getString(R.string.dialog_chat_contextlog_result_message, userName, scoreParams.finalScore * 100, message)),
 											new Done()
 									);
 								},
@@ -997,7 +1004,7 @@ public class ChatActivity extends AppCompatActivity {
             }
 
             if(i != size-1)
-                messages += ",\n\n";
+                messages += "\n\n";
 
             String appName = aes.decText(msg.param.get("appName"));
             Log.d("FINOPASS", "params: " + msg.param + ", appName: " + appName);

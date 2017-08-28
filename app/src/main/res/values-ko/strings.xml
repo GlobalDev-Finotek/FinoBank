@@ -416,8 +416,10 @@
     <string name="dialog_chat_contextlog_application">어플리케이션 조회</string>
     <string name="dialog_chat_contextlog_total">전체 조회</string>
     <string name="dialog_chat_contextlog_result">30분 전부터의 맥락 데이터 입니다.</string>
-    <string name="dialog_chat_contextlog_result_message">현재 맥락인증 점수는 %1$f점으로 사유는 다음과 같습니다.\n`%2$s`</string>
+    <string name="dialog_chat_contextlog_result_message">시스템이 판단한 \'%1$s\' 님일 확률은 %2$.2f%로 사유는 다음과 같습니다.\n\n%3$s</string>
     <string name="dialog_chat_contextlog_result_nothing">사유없음</string>
-    <string name="contextlog_result_message_app_usage">당신은 %1$s앱(친밀도:%2$.1f)을 %3$.0f분전에 이용하였으므로 %4$.2f 점을 얻었습니다.</string>
+    <string name="contextlog_result_message_app_usage">당신은 %1$s앱(친밀도 %2$.0f위)을 %3$.0f분전에 이용하였으므로 %4$.2f 점을 얻었습니다.</string>
+    <string name="contextlog_authentication_succeeded">인증 통과 되었습니다. (최소 본인확률 70%)</string>
+    <string name="contextlog_authentication_waring">이 요청을 하려면 추가인증이 필요합니다. (최소 본인확률 90%)</string>
 </resources>
 

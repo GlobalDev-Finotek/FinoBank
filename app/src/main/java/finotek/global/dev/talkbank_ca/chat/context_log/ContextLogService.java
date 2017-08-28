@@ -204,6 +204,7 @@ public class ContextLogService extends Service {
 				CallHistoryLog historyLog = new CallHistoryLog();
 
 				historyLog.duration = duration;
+				historyLog.logTime = String.valueOf(timeStamp);
 
 				try {
 					historyLog.targetNumber = ai.encText(number);
@@ -261,6 +262,7 @@ public class ContextLogService extends Service {
 				LocationLog locationLog = new LocationLog();
 				locationLog.longitute = dLatitude;
 				locationLog.latitude = dLongitude;
+				locationLog.logTime = timeStamp;
 				locationList.add(locationLog);
 			} else {
 				String errorMessage = "there is no location data within" + targetTime;
@@ -285,7 +287,7 @@ public class ContextLogService extends Service {
 				String endTime = DateFormat.format("yyyy-MM-dd HH:mm:ss", u.getLastTimeStamp()).toString();
 
 				if (dataTime(endTime).before(currentTime()) && dataTime(endTime).after(searchZone(targetTime))) {
-					ApplicationLog applicationLog = new ApplicationLog();
+					ApplicationLog applicationLog = new ApplicationLog(dataTime(endTime).getTime());
 					applicationLog.packageName = (foregroundAppPackageInfo.packageName);
 					applicationLog.setAppName(label);
 

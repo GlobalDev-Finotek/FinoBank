@@ -163,14 +163,14 @@ public class MainScenario_v2 {
         float appUsageScore = pref.getAppUsageScore();
         float callScore = pref.getCallScore();
         float locationScore = pref.getLocationScore();
-        float total = pref.getTotalScore();
+        float finalScore = pref.getFinalScore();
 
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
         MessageBox.INSTANCE.addAndWait(
-                new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName(), total, callScore, smsScore, locationScore, appUsageScore)),
-                new ReceiveMessage(getGreetings()),
-                req
+            new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName(), finalScore)),
+            new ReceiveMessage(getGreetings()),
+            req
         );
 
 		/*RecoMenuRequest req = new RecoMenuRequest();

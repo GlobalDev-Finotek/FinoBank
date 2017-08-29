@@ -60,7 +60,7 @@ public class ContextSearch implements Scenario {
 			String userName = "";
 			if (user != null) userName = user.getName();
 
-			MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, userName, scoreParams.finalScore * 100, message)), new Done());
+			MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, message)), new Done());
 		}
 	}
 
@@ -68,7 +68,25 @@ public class ContextSearch implements Scenario {
 	public void onUserSend(String msg) {
 		switch (step) {
             case question:
-				MessageBox.INSTANCE.addAndWait(buildRecommendedMenu());
+                Log.d("FINOTEK", "search message started");
+            	ContextAuthPref pref = new ContextAuthPref(context);
+				String message = "";
+				ContextScoreResponse scoreParams = pref.getScoreParams();
+                Log.d("FINOTEK", "search message started.." + scoreParams.toString());
+				if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
+					message = context.getResources().getString(R.string.dialog_chat_contextlog_result_nothing);
+				} else {
+					message = buildScoreMessages(scoreParams);
+				}
+                Log.d("FINOTEK", "message builded");
+
+				User user = Realm.getDefaultInstance().where(User.class).findAll().last();
+				String userName = "";
+				if (user != null) userName = user.getName();
+
+				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, message)), new Done());
+//				MessageBox.INSTANCE.addAndWait(buildRecommendedMenu());
+                Log.d("FINOTEK", "search message ended");
 				step = Step.ask;
 				break;
 			case ask:
@@ -151,14 +169,24 @@ public class ContextSearch implements Scenario {
 					String appName = msg.param.get("appName");
 					messages += (i+1) + ": " + context.getResources().getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
 					break;
-				case ActionType.GATHER_CALL_LOG:
-					// TO-DO 메시지 처리
+				case ActionType.GATHER_CALL_LOG: {
+                    String targetName = msg.param.get("targetName");
+                    if (targetName == null || targetName.isEmpty() || targetName.equals(" "))
+                        targetName = "아무개";
+
+                    messages += (i + 1) + ": " + context.getResources().getString(R.string.contextlog_result_phone_call, targetName, msg.rank, msg.beforeTime, msg.score);
+                }
 					break;
-				case ActionType.GATHER_MESSAGE_LOG:
-					// TO-DO 메시지 처리
-					break;
+				case ActionType.GATHER_MESSAGE_LOG: {
+                    String targetNumber = msg.param.get("targetNumber");
+                    if(targetNumber == null || targetNumber.isEmpty() || targetNumber.equals("null"))
+                        targetNumber = "아무개";
+
+                    messages += (i + 1) + ": " + context.getResources().getString(R.string.contextlog_result_message, targetNumber, msg.rank, msg.beforeTime, msg.score);
+                }
+                    break;
 				case ActionType.GATHER_LOCATION_LOG:
-					messages += (i+1) + ": " + "location";
+					messages += (i+1) + ": " + context.getResources().getString(R.string.contextlog_result_location, Float.valueOf(msg.param.get("latitude")), Float.valueOf(msg.param.get("longitude")), msg.rank, msg.score);
 					break;
 			}
 

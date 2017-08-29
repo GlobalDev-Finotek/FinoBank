@@ -223,6 +223,26 @@ public class ChatActivity extends AppCompatActivity {
 
 				if (askType.equals("appLog") || askType.equals("totalLog")) {
 					List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
+					if(appLogData != null) {
+						int skyHomeAppId = 0;
+						int size = appLogData.size();
+						for(int i = 0; i < size; i++) {
+							ApplicationLog log = appLogData.get(i);
+							try {
+								UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
+								AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
+
+								if(aes.decText(log.appName).equals("SKY 홈")) {
+									skyHomeAppId = i;
+								}
+							} catch(Exception e){
+								e.printStackTrace();
+							}
+						}
+
+						appLogData.remove(skyHomeAppId);
+					}
+
 					queryMaps.addAll(appLogData);
 					Log.d("FINOPASS", "app logs: " + appLogData);
 				}
@@ -232,6 +252,7 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(
 							scoreParams -> {
 								Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+								decodeScoreParams(scoreParams);
 
 								if(isFirstAuth) {
 									Log.d("FINOPASS", "첫번째 맥락인증 요청");
@@ -261,11 +282,9 @@ public class ChatActivity extends AppCompatActivity {
 									isFirstAuth = false;
 									Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
 								} else {
-									decodeScoreParams(scoreParams);
 									MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
 								}
 							});
-
 			}
 		};
 		registerReceiver(receiver, intentFilter);
@@ -977,6 +996,14 @@ public class ChatActivity extends AppCompatActivity {
 				switch (msg.type) {
 					case ActionType.GATHER_APP_USAGE_LOG:
 						msg.param.put("appName", aes.decText(msg.param.get("appName")));
+						break;
+					case ActionType.GATHER_CALL_LOG:
+						if(msg.param.get("targetName") != null && !msg.param.get("targetName").isEmpty())
+							msg.param.put("targetName", aes.decText(msg.param.get("targetName")));
+						break;
+					case ActionType.GATHER_MESSAGE_LOG:
+						if(msg.param.get("targetNumber") != null && !msg.param.get("targetNumber").isEmpty())
+							msg.param.put("targetNumber", aes.decText(msg.param.get("targetNumber")));
 						break;
 				}
 			}

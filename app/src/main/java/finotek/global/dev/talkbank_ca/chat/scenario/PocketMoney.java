@@ -16,8 +16,10 @@ import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
+import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
+import io.realm.Realm;
 
 /**
  * Created by KoDeokyoon on 2017. 5. 27..
@@ -119,12 +121,15 @@ public class PocketMoney implements Scenario {
                 R.string.main_string_recommend_parents_success,
                 NumberFormat.getInstance().format(51490),
                 NumberFormat.getInstance().format(balance),
-                pref.getTotalScore()
+                pref.getFinalScore()
             );
 		}
 
+        Realm realm = Realm.getDefaultInstance();
+        User user = realm.where(User.class).findAll().last();
+		float finalScore = pref.getFinalScore();
 		MessageBox.INSTANCE.addAndWait(
-			new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+			new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, user.getName(), finalScore)),
 			new ReceiveMessage(message),
 			new RecommendScenarioMenuRequest(context)
 		);

@@ -2,6 +2,7 @@ package finotek.global.dev.talkbank_ca.util;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import com.google.gson.Gson;
 
@@ -13,6 +14,7 @@ import globaldev.finotek.com.logcollector.model.ActionType;
 public class ContextAuthPref {
     private SharedPreferences pref;
     private final String SCORE_APP_LOG = "score_app_log";
+    private final String SCORE_FINAL_SCORE_KEY = "final_score";
     private final String SCORE_APP_USAGE_KEY = "score_app_usage";
     private final String SCORE_CALL_KEY = "score_call";
     private final String SCORE_MESSAGE_KEY = "score_message";
@@ -52,11 +54,12 @@ public class ContextAuthPref {
         }
 
         Gson gson = new Gson();
-        editor.putString(SCORE_APP_LOG, gson.toJson(response.messages));
+        editor.putString(SCORE_APP_LOG, gson.toJson(response));
         editor.putFloat(SCORE_APP_USAGE_KEY, app_usage_score);
         editor.putFloat(SCORE_CALL_KEY, app_call_score);
         editor.putFloat(SCORE_LOCATION_KEY, app_location_score);
         editor.putFloat(SCORE_MESSAGE_KEY, app_message_score);
+        editor.putFloat(SCORE_FINAL_SCORE_KEY, (float) (response.finalScore * 100));
         editor.apply();
     }
 
@@ -83,5 +86,20 @@ public class ContextAuthPref {
         total += getLocationScore();
         total += getMessageScore();
         return total;
+    }
+
+    public float getFinalScore() {
+        return pref.getFloat(SCORE_FINAL_SCORE_KEY, 0.0f);
+    }
+
+    public ContextScoreResponse getScoreParams() {
+        try {
+            Gson gson = new Gson();
+            Log.d("FINOTEK", "context score response stosred as : " + pref.getString(SCORE_APP_LOG, "failed"));
+            return gson.fromJson(pref.getString(SCORE_APP_LOG, ""), ContextScoreResponse.class);
+        } catch(Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

@@ -290,7 +290,7 @@
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>
 
-    <string name="main_string_v2_result_context">Result of Context, %1$s has been confirmed by total 73 points (Call Log: 85p., SMS Log: 66p., Location Log: 54p.) </string>
+    <string name="main_string_v2_result_context">Result of Context, %1$s has been confirmed by total %2$.1f points (Call Log: %3$.1f, SMS Log: %4$.1f, Location Log: %5$.1f, App Usage Log: %6$.1f) </string>
     <string name="main_string_v2_login_hello">%1$s hello~ </string>
     <string name="main_string_v2_login_hello_M">Good Morning, Have a nice day!!! </string>
     <string name="main_string_v2_login_hello_L">Did you eat lunch? Enjoy the rest of your day~</string>

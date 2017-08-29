@@ -17,13 +17,14 @@ import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SucceededMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
+import finotek.global.dev.talkbank_ca.chat.messages.WarningMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
@@ -47,6 +48,7 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
 import io.reactivex.Observable;
@@ -91,11 +93,6 @@ public class MainScenario_v2 {
 						return Observable.just(msg)
 								.delay(1, TimeUnit.SECONDS)
 								.observeOn(AndroidSchedulers.mainThread());
-					}
-				})
-				.doOnNext(msg -> {
-					if (!isImmediateMessage(msg)) {
-						MessageBox.INSTANCE.add(new MessageEmitted());
 					}
 				})
 				.doOnError(e -> {
@@ -157,10 +154,21 @@ public class MainScenario_v2 {
 	}
 
 	private void firstScenario() {
+        ContextAuthPref pref = new ContextAuthPref(context);
+        float smsScore = pref.getMessageScore();
+        float appUsageScore = pref.getAppUsageScore();
+        float callScore = pref.getCallScore();
+        float locationScore = pref.getLocationScore();
+        float total = smsScore + appUsageScore + callScore + locationScore;
 
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
-
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
+        MessageBox.INSTANCE.addAndWait(
+                new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName(), total, callScore, smsScore, locationScore, appUsageScore)),
+                new ReceiveMessage(getGreetings()),
+                req
+        );
+
 		/*RecoMenuRequest req = new RecoMenuRequest();
 		//req.setTitle("추천메뉴");
 		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));
@@ -170,11 +178,6 @@ public class MainScenario_v2 {
 		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_house_loan), null);
 		req.addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
         */
-		MessageBox.INSTANCE.addAndWait(
-				new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName())),
-				new ReceiveMessage(getGreetings()),
-				req
-		);
 
 
 
@@ -280,6 +283,7 @@ public class MainScenario_v2 {
 	}
 
 	private void updateUIOn(Object msg) {
+        Log.d("FINOTEK", msg.getClass().getName() + " message emitted.");
 
 		chatView.scrollToBottom();
 
@@ -309,6 +313,16 @@ public class MainScenario_v2 {
 		if (msg instanceof DividerMessage) {
 			DividerMessage recv = (DividerMessage) msg;
 			chatView.dividerMessage(recv.getMessage());
+		}
+
+		if (msg instanceof WarningMessage) {
+			WarningMessage recv = (WarningMessage) msg;
+			chatView.warningMessage(recv.getMessage());
+		}
+
+		if(msg instanceof SucceededMessage) {
+			SucceededMessage recv = (SucceededMessage) msg;
+			chatView.succeededMessage(recv.getMessage());
 		}
 
 		// 예, 아니오 선택 요청
@@ -363,6 +377,7 @@ public class MainScenario_v2 {
 		}
 
 		if (msg instanceof RequestRemoveControls) {
+            Log.d("FINOTEK", "remove controls proceeded.");
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
@@ -384,8 +399,7 @@ public class MainScenario_v2 {
 
 	private boolean isImmediateMessage(Object msg) {
 		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
-				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
-				msg instanceof MessageEmitted;
+				msg instanceof TransferButtonPressed || msg instanceof DividerMessage;
 	}
 
 	public void release() {

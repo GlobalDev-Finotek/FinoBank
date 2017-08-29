@@ -1,6 +1,8 @@
 package finotek.global.dev.talkbank_ca.chat.scenario;
 
 import android.content.Context;
+import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 import org.joda.time.DateTime;
 
@@ -15,7 +17,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SucceededMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.Transaction;
+import finotek.global.dev.talkbank_ca.chat.messages.WarningMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.MoneyTransferred;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
@@ -43,7 +47,6 @@ public class TransferScenario implements Scenario {
 	private boolean isProceeding = true;
 	private int navigateNum = 0;
 
-
 	public TransferScenario(Context context, DBHelper dbHelper) {
 		this.context = context;
 		this.dbHelper = dbHelper;
@@ -63,47 +66,60 @@ public class TransferScenario implements Scenario {
 	@Override
 	public void onReceive(Object msg) {
 		if (msg instanceof TransferButtonPressed) {
-			MessageBox.INSTANCE.add(new RequestRemoveControls());
-
 			String name = TransactionDB.INSTANCE.getTxName();
 			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
 			int money = TransactionDB.INSTANCE.getMoneyAsInt();
-			MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
+
+            MessageBox.INSTANCE.add(new RequestRemoveControls());
+            MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
 
 			if (money >= 1000000) {
 				MessageBox.INSTANCE.addAndWait(
+						new WarningMessage(context.getResources().getString(R.string.contextlog_authentication_waring, "이도현", 85.2)),
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
 						new TransferRequestSignature()
 				);
 			} else {
-				if (navigateNum == 1) {
-					MessageBox.INSTANCE.add(new MoneyTransferred());
+				Object recvMessage = null;
+				switch (navigateNum) {
+					case 1:
+						recvMessage = new MoneyTransferred(true);
+						break;
+					case 2:
+						recvMessage = new alterOne(true);
+						break;
+					case 3:
+						recvMessage = new alterTwo(true);
+						break;
+					case 4:
+						recvMessage = new alterThree(true);
+						break;
+					default:
+						break;
 				}
-				if (navigateNum == 2) {
-					MessageBox.INSTANCE.add(new alterOne());
-				}
-				if (navigateNum == 3) {
-					MessageBox.INSTANCE.add(new alterTwo());
-				}
-				if (navigateNum == 4) {
-					MessageBox.INSTANCE.add(new alterThree());
-				}
+
+				MessageBox.INSTANCE.add(recvMessage);
 			}
 		}
 
 		if (msg instanceof SignatureVerified) {
-			if (navigateNum == 1) {
-				MessageBox.INSTANCE.add(new MoneyTransferred());
+			Object recvMessage = null;
+			switch (navigateNum) {
+				case 1:
+					recvMessage = new MoneyTransferred(false);
+					break;
+				case 2:
+					recvMessage = new alterOne(false);
+					break;
+				case 3:
+					recvMessage = new alterTwo(false);
+					break;
+				case 4:
+					recvMessage = new alterThree(false);
+					break;
 			}
-			if (navigateNum == 2) {
-				MessageBox.INSTANCE.add(new alterOne());
-			}
-			if (navigateNum == 3) {
-				MessageBox.INSTANCE.add(new alterTwo());
-			}
-			if (navigateNum == 4) {
-				MessageBox.INSTANCE.add(new alterThree());
-			}
+
+			MessageBox.INSTANCE.add(recvMessage);
 		}
 
 		if (msg instanceof MoneyTransferred) {
@@ -121,7 +137,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-			MessageBox.INSTANCE.addAndWait(request, new Done());
+            if(((MoneyTransferred) msg).isAuthenticated()){
+                MessageBox.INSTANCE.addAndWait(
+                    new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+                    request,
+                    new Done()
+                );
+            } else {
+                MessageBox.INSTANCE.addAndWait(request, new Done());
+            }
 			step = Step.TransferDone;
 		}
 		if (msg instanceof alterOne) {
@@ -140,7 +164,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-			MessageBox.INSTANCE.addAndWait(request, new Done());
+            if(((alterOne) msg).isAuthenticated()){
+                MessageBox.INSTANCE.addAndWait(
+                        new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+                        request,
+                        new Done()
+                );
+            } else {
+                MessageBox.INSTANCE.addAndWait(request, new Done());
+            }
 			step = Step.TransferDone;
 		}
 		if (msg instanceof alterTwo) {
@@ -159,7 +191,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-			MessageBox.INSTANCE.addAndWait(request, new Done());
+            if(((alterTwo) msg).isAuthenticated()){
+                MessageBox.INSTANCE.addAndWait(
+                        new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+                        request,
+                        new Done()
+                );
+            } else {
+                MessageBox.INSTANCE.addAndWait(request, new Done());
+            }
 			step = Step.TransferDone;
 		}
 
@@ -179,8 +219,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-
-			MessageBox.INSTANCE.addAndWait(request, new Done());
+            if(((alterThree) msg).isAuthenticated()){
+                MessageBox.INSTANCE.addAndWait(
+                        new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+                        request,
+                        new Done()
+                );
+            } else {
+                MessageBox.INSTANCE.addAndWait(request, new Done());
+            }
 			step = Step.TransferDone;
 		}
 		if (msg instanceof Done) {

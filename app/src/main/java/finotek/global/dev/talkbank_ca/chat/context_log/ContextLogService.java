@@ -36,6 +36,7 @@ import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.model.MessageLog;
+import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
 import globaldev.finotek.com.logcollector.util.AesInstance;
 
 /**
@@ -96,6 +97,7 @@ public class ContextLogService extends Service {
 		getContextLog.putParcelableArrayListExtra("callLog", (ArrayList<? extends Parcelable>) getCall(30));
 		getContextLog.putParcelableArrayListExtra("locationLog", (ArrayList<? extends Parcelable>) getLocation(30));
 		getContextLog.putParcelableArrayListExtra("appLog", (ArrayList<? extends Parcelable>) getApp(30));
+		getContextLog.putParcelableArrayListExtra("sampleLog", (ArrayList<? extends Parcelable>) getSampleLog());
 		sendBroadcast(getContextLog);
 
 		Log.d("seo", collector(30));
@@ -161,11 +163,11 @@ public class ContextLogService extends Service {
 				messageLog.setLength(body.length());
 				try {
 					messageLog.text = ai.encText(body);
+					messageLog.logTime = String.valueOf(timeStamp);
+					messageLog.setTargetNumber(ai.encText(address));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				messageLog.logTime = String.valueOf(timeStamp);
-				messageLog.setTargetNumber(address);
 
 				smsList.add(messageLog);
 			}
@@ -326,6 +328,37 @@ public class ContextLogService extends Service {
 		long startTime = calendar.getTimeInMillis();
 
 		return usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, startTime, endTime);
+	}
+
+	private List<Parcelable> getSampleLog(){
+		List<Parcelable> list = new ArrayList<>();
+		CallHistoryLog historyLog = new CallHistoryLog();
+		historyLog.duration = "65";
+		historyLog.logTime = String.valueOf(System.currentTimeMillis() - (15 * 1000 * 60));
+		historyLog.targetNumber = "qx5Nw6AIeT918j7HTcYOeA==";
+		historyLog.targetName = "vYJVopnud5hgC7CaeB1DD7OhcOnXxMkcczPkQHxrYk8=";
+		list.add(historyLog);
+
+		LocationLog locationLog = new LocationLog();
+		locationLog.logTime = System.currentTimeMillis();
+		locationLog.latitude = 37.408111;
+		locationLog.longitute = 126.957111;
+		list.add(locationLog);
+
+		MessageLog messageLog = new MessageLog();
+		messageLog.logTime = String.valueOf(System.currentTimeMillis() - (5 * 1000 * 60));
+		messageLog.targetNumber = "jddJAc97LEhy6fZiDNNFig==";
+		messageLog.targetName = "vYJVopnud5hgC7CaeB1DD7OhcOnXxMkcczPkQHxrYk8=";
+		messageLog.length = 63;
+		list.add(messageLog);
+
+		ApplicationLog applicationLog = new ApplicationLog();
+		applicationLog.appName = "jzbjUc027qTL9O6qc//QZw==";
+		applicationLog.duration = 2252.0;
+		applicationLog.startTime = "1502698716626";
+		list.add(applicationLog);
+
+		return list;
 	}
 
 	public String collector(int targetTime) {

@@ -58,7 +58,6 @@ import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
-import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
@@ -102,6 +101,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
 import globaldev.finotek.com.logcollector.Finopass;
@@ -149,29 +149,22 @@ public class ChatActivity extends AppCompatActivity {
 	private TransferSignRegisterFragment transferSignRegistFragment;
 
 	private BroadcastReceiver receiver;
+	private boolean isFirstAuth = true;
 
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		int smsPermissionCheck = ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.READ_SMS);
-		if (smsPermissionCheck != PackageManager.PERMISSION_GRANTED) {
-			ActivityCompat.requestPermissions(ChatActivity.this,
-					new String[]{Manifest.permission.READ_SMS},
-					PERMISSION_REQUEST_READ_SMS);
-		}
-
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 		getComponent().inject(this);
-
 
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 		getSupportActionBar().setElevation(0);
 		binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
-		Intent intent = getIntent();
+		Intent chatIntent = getIntent();
 
 		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 		mLayoutManager.setReverseLayout(true);
@@ -183,35 +176,7 @@ public class ChatActivity extends AppCompatActivity {
 		// TODO 아이템 간 패딩 정리
 		// binding.chatView.addItemDecoration(new ViewItemD3ecoration());
 
-		if (intent != null) {
-			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-			mainScenario = new MainScenario_v2(this, binding.chatView, eventBus, dbHelper, isSigned);
-		}
-
-		MessageBox.INSTANCE.observable
-				.flatMap(msg -> {
-					if (msg instanceof EnableToEditMoney) {
-						return Observable.just(msg)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else if (msg instanceof MessageEmitted) {
-						return Observable.just(msg)
-								.debounce(1, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else {
-						return Observable.just(msg)
-								.delay(1, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					}
-				})
-				.subscribe(this::onNewMessageUpdated, throwable -> {
-
-				}, new Action() {
-					@Override
-					public void run() throws Exception {
-					}
-				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
-
 		preInitControlViews();
 
 		// keyboard event
@@ -261,10 +226,37 @@ public class ChatActivity extends AppCompatActivity {
 				Finopass.getInstance(ChatActivity.this)
 						.getScore(queryMaps)
 						.subscribe(
-								scoreParams -> {
-									Log.d("FINOPASS", "FINOPASS in ChatActivity");
-									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+							scoreParams -> {
+								Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
 
+								if(isFirstAuth) {
+									Log.d("FINOPASS", "첫번째 맥락인증 요청");
+									ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
+									pref.save(scoreParams);
+
+									// 메인 시나리오 세팅
+									if (chatIntent != null) {
+										boolean isSigned = intent.getBooleanExtra("isSigned", false);
+										mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
+									}
+
+									// 메시지 박스 설정
+									MessageBox.INSTANCE.observable
+											.flatMap(msg -> {
+												if (msg instanceof EnableToEditMoney) {
+													return Observable.just(msg)
+															.observeOn(AndroidSchedulers.mainThread());
+												} else {
+													return Observable.just(msg)
+															.delay(1, TimeUnit.SECONDS)
+															.observeOn(AndroidSchedulers.mainThread());
+												}
+											})
+											.subscribe(ChatActivity.this::onNewMessageUpdated);
+
+									isFirstAuth = false;
+									Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
+								} else {
 									String message = "";
 									if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
 										message = getString(R.string.dialog_chat_contextlog_result_nothing);
@@ -273,25 +265,20 @@ public class ChatActivity extends AppCompatActivity {
 									}
 
 									User user = Realm.getDefaultInstance().where(User.class).findAll().last();
-                                    String userName = "";
-                                    if(user != null)
-                                        userName = user.getName();
+									String userName = "";
+									if (user != null) userName = user.getName();
 
-									MessageBox.INSTANCE.addAndWait(
-											new ReceiveMessage(getString(R.string.dialog_chat_contextlog_result_message, userName, scoreParams.finalScore * 100, message)),
-											new Done()
-									);
-								},
-								throwable -> {
-									System.out.println(throwable);
-								}, () -> {
-
-								});
+									MessageBox.INSTANCE.addAndWait(new ReceiveMessage(getString(R.string.dialog_chat_contextlog_result_message, userName, scoreParams.finalScore * 100, message)), new Done());
+								}
+							});
 
 			}
 		};
 		registerReceiver(receiver, intentFilter);
 
+		Intent intent = new Intent(this, ContextLogService.class);
+		intent.putExtra("askType", "totalLog");
+		startService(intent);
 	}
 
 	@Override
@@ -1001,6 +988,15 @@ public class ChatActivity extends AppCompatActivity {
                     String appName = aes.decText(msg.param.get("appName"));
                     messages += (i+1) + ": " + getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
                     break;
+				case ActionType.GATHER_CALL_LOG:
+					// TO-DO 메시지 처리
+					break;
+				case ActionType.GATHER_MESSAGE_LOG:
+					// TO-DO 메시지 처리
+					break;
+				case ActionType.GATHER_LOCATION_LOG:
+					// TO-DO 메시지 처리
+					break;
             }
 
             if(i != size-1)

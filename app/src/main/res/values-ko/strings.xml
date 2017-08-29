@@ -302,7 +302,7 @@
     <string name="more_button">더보기</string>
     <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
-    <string name="main_string_v2_result_context">맥락정보 분석결과, 총점 73점 \n (통화기록: 85점, 문자기록: 66점, 위치기록:54점)\n 으로 %1$s 님을 확인하였습니다. </string>
+    <string name="main_string_v2_result_context">맥락정보 분석결과, 총점 %2$.1f점\n(통화기록: %3$.1f점, 문자기록: %4$.1f점, 위치기록:%5$.1f점, 앱사용기록: %6$.1f)\n 으로 %1$s 님을 확인하였습니다.\n자세한 내용을 원하시면 \'맥락점수 상세조회\'를 입력하세요.</string>
     <string name="main_string_v2_login_hello">%1$s님 안녕하세요\n</string>
     <string name="main_string_v2_login_hello_M">좋은 아침이에요, 오늘도 즐거운 하루 되세요!!!</string>
     <string name="main_string_v2_login_hello_L">식사는 하셨나요? 활기찬 오후 되세요~</string>
@@ -408,7 +408,7 @@
     <string name="dialog_string_id_card_type">신분증 유형</string>
     <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인을 위해 주민등록증이나 운전면허증이 필요합니다. 준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
 
-    <string name="dialog_chat_contextlog_search">맥락 조회</string>
+    <string name="dialog_chat_contextlog_search">맥락점수 상세조회</string>
     <string name="dialog_chat_contextlog_search_initMessage">원하는 항목을 선택하시면 해당 데이터가 조회가 됩니다.</string>
     <string name="dialog_chat_contextlog_sms">문자 조회</string>
     <string name="dialog_chat_contextlog_call">통화 기록 조회</string>
@@ -416,10 +416,13 @@
     <string name="dialog_chat_contextlog_application">어플리케이션 조회</string>
     <string name="dialog_chat_contextlog_total">전체 조회</string>
     <string name="dialog_chat_contextlog_result">30분 전부터의 맥락 데이터 입니다.</string>
-    <string name="dialog_chat_contextlog_result_message">시스템이 판단한 \'%1$s\' 님일 확률은 %2$.2f%로 사유는 다음과 같습니다.\n\n%3$s</string>
+    <string name="dialog_chat_contextlog_result_message">시스템이 판단한 %1$s 님일 확률은 %2$.2f%%로 사유는 다음과 같습니다.\n\n%3$s</string>
     <string name="dialog_chat_contextlog_result_nothing">사유없음</string>
-    <string name="contextlog_result_message_app_usage">당신은 %1$s앱(친밀도 %2$.0f위)을 %3$.0f분전에 이용하였으므로 %4$.2f 점을 얻었습니다.</string>
-    <string name="contextlog_authentication_succeeded">인증 통과 되었습니다. (최소 본인확률 70%)</string>
-    <string name="contextlog_authentication_waring">이 요청을 하려면 추가인증이 필요합니다. (최소 본인확률 90%)</string>
+    <string name="contextlog_result_message_app_usage">당신은 %1$s 앱(친밀도 %2$.0f위)을 %3$.0f분전에 이용하였으므로 %4$.2f 점을 얻었습니다.</string>
+    <string name="contextlog_result_location">당신은 %1$f, %2$f (친밀도 %3$.0f위)에 %4$.0f분전에 있었으므로 %5$.2f 점을 얻었습니다.</string>
+    <string name="contextlog_result_phone_call">당신은 %1$s(친밀도: %2$.0f위)와 %4$.0f분전에 %3$s간 통화하였으므로 %5$.2f 점을 얻었습니다.</string>
+    <string name="contextlog_result_message">당신은 %1$s(친밀도: %2$.0f위)와 %3$.0f분전에 문자를 주고받았으므로 %4$.2f 점을 얻었습니다.</string>
+    <string name="contextlog_authentication_succeeded">시스템이 판단한 \'%1$s\'님일 확률은 %2$.2f%%입니다\n이 요청의 최소수행조건은 70%%이므로 인증 통과 되었습니다.</string>
+    <string name="contextlog_authentication_waring">시스템이 판단한 \'%1$s\'님일 확률은 %2$.2f%%입니다\n이 요청은 본인 확률이 90%%이상일 때 수행되므로\n현재 이 요청을 진행하려면 추가인증이 필요합니다</string>
 </resources>
 

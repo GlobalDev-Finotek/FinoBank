@@ -170,7 +170,7 @@
     <string name="dialog_chat_bank_select_A1">Pig Bank : 222-432-3323242</string>
     <string name="dialog_chat_bank_select_A2">Speed Bank : 333-424-332112</string>
     <string name="dialog_chat_bank_select_A3">Enjoy Bank : 444-5555-3584254</string>
-    <string name="dialog_chat_bank_balance">Selected account balance is &#8361;%3$s. Are you going to use this account for transfer?</string>
+    <string name="dialog_chat_bank_balance">Selected account balance is &#8361;%1$s. Are you going to use this account for transfer?</string>
     <string name="dialog_chat_bank_select_cancel">Cancel </string>
     <string name="dialog_chat_select_bank_select"> Which account do you want to use for transfer?</string>
 
@@ -306,7 +306,7 @@
     <string name="scenario_transfer">Transfer</string>
     <string name="more_button">More</string>
 
-    <string name="main_string_v2_result_context">Result of Context, %1$s has been confirmed by total 73 points (Call Log: 85p., SMS Log: 66p., Location Log: 54p.) </string>
+    <string name="main_string_v2_result_context">Result of Context, %1$s has been confirmed by total %2$.1f points (Call Log: %3$.1f, SMS Log: %4$.1f, Location Log: %5$.1f, App Usage Log: %6$.1f) </string>
     <string name="main_string_v2_login_hello">%1$s hello~ </string>
     <string name="main_string_v2_login_hello_M">Good Morning, Have a nice day!!! </string>
     <string name="main_string_v2_login_hello_L">Did you eat lunch? Enjoy the rest of your day~</string>
@@ -418,10 +418,14 @@
     <string name="dialog_chat_contextlog_application">Application use history</string>
     <string name="dialog_chat_contextlog_total">Total Context</string>
     <string name="dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
-    <string name="dialog_chat_contextlog_result_message">The system judged the probability of \'$1%s\' to be %1$.1f%, and the reasons are as follows\n\n%3$s</string>
+    <string name="dialog_chat_contextlog_result_message">The system judged the probability of %1$s to be %2$.1f%%, and the reasons are as follows\n\n%3$s</string>
     <string name="dialog_chat_contextlog_result_nothing">There is no reason.</string>
     <string name="contextlog_result_message_app_usage">You used %1$s app(rank:%2$.0f) %3$.0f minute ago. You get %4$.1f points.</string>
-    <string name="contextlog_authentication_succeeded">Authentication succeeded. (minimum probability:70%)</string>
-    <string name="contextlog_authentication_waring">You have to authorize for this request. (minimum probability:90%)</string>
+    <string name="contextlog_result_location">You are in %1$f, %2$f (rank: %3$.0f) %4$.0f minutes ago.\nYou get %5$.2f points.</string>
+    <string name="contextlog_result_phone_call">You called to %1$s(rank: %2$.0f) for %3$s minutes %4$.0f minutes ago\nYou get %5$.2f points.</string>
+    <string name="contextlog_result_message">You send or receive message with %1$s(rank: %2$.0f) %3$.0f minutes before.\nYou get %4$.2f points.</string>
+
+    <string name="contextlog_authentication_succeeded">The system judged the probability of %1$s to be %2$.1f%%\nThis request is served when it is 70%% or more.\nTherefore authentication succeeded.</string>
+    <string name="contextlog_authentication_waring">The system judged the probability of %1$s to be %2$.1f%%\nThis request is served when it is 90%% or more.\nYou have to authorize for this request by signature authentication</string>
 
 </resources>

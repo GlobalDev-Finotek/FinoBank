@@ -15,6 +15,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SucceededMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.WarningMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
@@ -37,6 +39,8 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
 		this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
 		this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
+		this.addChatViewBuilder(ViewType.Warning.ordinal(), new WarningViewBuilder());
+		this.addChatViewBuilder(ViewType.Succeeded.ordinal(), new SucceededViewBuilder());
 
 		this.addChatViewBuilder(ViewType.RecoMenu.ordinal(), new RecoMenuViewBuilder(context));
 		this.addChatViewBuilder(ViewType.IDCard.ordinal(), new IDCardViewBuilder(context));
@@ -66,6 +70,14 @@ public class ChatView extends RecyclerView {
 
 	public void statusMessage(String msg) {
 		addMessage(ViewType.Status.ordinal(), new StatusMessage(msg));
+	}
+
+	public void warningMessage(String msg) {
+		addMessage(ViewType.Warning.ordinal(), new WarningMessage(msg));
+	}
+
+	public void succeededMessage(String msg) {
+		addMessage(ViewType.Succeeded.ordinal(), new SucceededMessage(msg));
 	}
 
 	public void dividerMessage(String msg) {
@@ -121,7 +133,7 @@ public class ChatView extends RecyclerView {
 	}
 
 	public enum ViewType {
-		Send, IconicSend, Receive, Divider, Status,
+		Send, IconicSend, Receive, Divider, Status, Warning, Succeeded,
 		Confirm, RecoMenu,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult,

@@ -163,7 +163,7 @@ public class MainScenario_v2 {
         float appUsageScore = pref.getAppUsageScore();
         float callScore = pref.getCallScore();
         float locationScore = pref.getLocationScore();
-        float total = smsScore + appUsageScore + callScore + locationScore;
+        float total = pref.getTotalScore();
 
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);

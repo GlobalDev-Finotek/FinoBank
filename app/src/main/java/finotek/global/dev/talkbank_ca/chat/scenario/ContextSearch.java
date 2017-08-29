@@ -16,6 +16,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
+import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
+import io.realm.Realm;
 
 public class ContextSearch implements Scenario {
 	private Step step = Step.question;
@@ -92,14 +95,23 @@ public class ContextSearch implements Scenario {
 	}
 
 	private RecoMenuRequest buildRecommendedMenu(){
-        String initMessage = context.getResources().getString(R.string.dialog_chat_contextlog_search_initMessage);
+		ContextAuthPref pref = new ContextAuthPref(context);
+		float smsScore = pref.getMessageScore();
+		float appUsageScore = pref.getAppUsageScore();
+		float callScore = pref.getCallScore();
+		float locationScore = pref.getLocationScore();
+		float total = pref.getTotalScore();
+
+		Realm realm = Realm.getDefaultInstance();
+		User user = realm.where(User.class).findAll().last();
+        String initMessage = context.getResources().getString(R.string.dialog_chat_contextlog_search_initMessage, user.getName(), total, callScore, smsScore, locationScore, appUsageScore);
         RecoMenuRequest req = new RecoMenuRequest();
         req.setDescription(initMessage);
         req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.dialog_chat_contextlog_total), null);
-        req.addMenu(R.drawable.icon_bookmark_selected, context.getResources().getString(R.string.dialog_chat_contextlog_sms), null);
-        req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_contextlog_call), null);
-        req.addMenu(R.drawable.icon_camera, context.getResources().getString(R.string.dialog_chat_contextlog_location), null);
-        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_contextlog_application), null);
+//        req.addMenu(R.drawable.icon_bookmark_selected, context.getResources().getString(R.string.dialog_chat_contextlog_sms), null);
+//        req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_contextlog_call), null);
+//        req.addMenu(R.drawable.icon_camera, context.getResources().getString(R.string.dialog_chat_contextlog_location), null);
+//        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_contextlog_application), null);
 
         return req;
     }

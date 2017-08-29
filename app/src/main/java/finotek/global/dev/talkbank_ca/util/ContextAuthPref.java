@@ -67,4 +67,13 @@ public class ContextAuthPref {
     public float getMessageScore(){
         return pref.getFloat(SCORE_MESSAGE_KEY, 0.0f);
     }
+
+    public float getTotalScore(){
+        float total = 0.0f;
+        total += getAppUsageScore();
+        total += getCallScore();
+        total += getLocationScore();
+        total += getMessageScore();
+        return total;
+    }
 }

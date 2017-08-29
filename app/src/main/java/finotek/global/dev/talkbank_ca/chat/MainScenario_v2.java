@@ -41,6 +41,7 @@ import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.PocketMoney;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.ScoreCalculationScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TravelSaving;
@@ -83,6 +84,8 @@ public class MainScenario_v2 {
 			LeftScenario.scenarioList.add("T");
 		if (!LeftScenario.scenarioList.contains("H"))
 			LeftScenario.scenarioList.add("H");
+        if(!LeftScenario.scenarioList.contains("C"))
+            LeftScenario.scenarioList.add("C");
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -120,6 +123,7 @@ public class MainScenario_v2 {
 		scenarioPool.put("travelSaving", new TravelSaving(context));
 		scenarioPool.put("pocketMoney", new PocketMoney(context));
 		scenarioPool.put("contextSearch", new ContextSearch(context));
+        scenarioPool.put("scoreCalculation", new ScoreCalculationScenario(context));
 
 		currentScenario = null;
 	}

@@ -408,6 +408,8 @@
     <string name="dialog_string_id_card_type">신분증 유형</string>
     <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인을 위해 주민등록증이나 운전면허증이 필요합니다. 준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
 
+    <string name="dialog_chat_how_score_is_computed">맥락점수는 어떻게 산정되나요?</string>
+    <string name="dialog_chat_how_to_compute_score">맥락인증은 빠르고, 편리하고, 안전한 피노텍의 차세대 인증기술입니다.\n\n먼저, 과거의 통화기록, 문자기록, 앱기록, 위치를 통해 사용자의 맥락 기록에 대한 친밀도를 산정합니다.\n\n그리고, 사용자의 최근 30분의 기록이 과거의 기록 대비 얼마나 친밀한 기록인지를 측정합니다.\n\n* 친밀도 산정 요소 :\n - (대상별) 총 통화수, 총 통화량, 최근 통화수, 최근 통화\n - (대상별) 총 문자횟수, 최근 문자 횟수\n - (앱별) 총 사용량, 최근 사용량\n - (위치) 자주가는 위치, 최근 자주가는 위치\n\n* 점수 산정 요소\n - 30분간 맥락 발생 기록 수\n - 각 맥락 기록 발생 시각</string>
     <string name="dialog_chat_contextlog_search">맥락점수 상세조회</string>
     <string name="dialog_chat_contextlog_search_initMessage">원하는 항목을 선택하시면 해당 데이터가 조회가 됩니다.</string>
     <string name="dialog_chat_contextlog_sms">문자 조회</string>

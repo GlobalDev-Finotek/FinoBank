@@ -8,6 +8,7 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.SucceededMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
@@ -95,8 +96,9 @@ public class PocketMoney implements Scenario {
 		}
 
 		MessageBox.INSTANCE.addAndWait(
-				new ReceiveMessage(message),
-				new RecommendScenarioMenuRequest(context)
+			new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+			new ReceiveMessage(message),
+			new RecommendScenarioMenuRequest(context)
 		);
 	}
 

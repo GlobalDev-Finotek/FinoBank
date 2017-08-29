@@ -995,7 +995,7 @@ public class ChatActivity extends AppCompatActivity {
 					// TO-DO 메시지 처리
 					break;
 				case ActionType.GATHER_LOCATION_LOG:
-					// TO-DO 메시지 처리
+					messages += (i+1) + ": " + "location";
 					break;
             }
 

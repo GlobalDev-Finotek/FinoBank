@@ -410,6 +410,8 @@
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="dialog_string_id_card_type">Verification ID type</string>
 
+    <string name="dialog_chat_how_score_is_computed">How is score computed?</string>
+    <string name="dialog_chat_how_to_compute_score">-</string>
     <string name="dialog_chat_contextlog_search">show context Data</string>
     <string name="dialog_chat_contextlog_search_initMessage">Determine what data you want to see</string>
     <string name="dialog_chat_contextlog_sms">SMS history</string>

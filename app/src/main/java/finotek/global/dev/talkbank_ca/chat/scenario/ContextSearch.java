@@ -17,10 +17,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 
-/**
- * Created by jungwon on 7/31/2017.
- */
-
 public class ContextSearch implements Scenario {
 	private Step step = Step.question;
 	private Context context;

@@ -216,8 +216,6 @@ public class ContextLogService extends Service {
 					} else {
 						historyLog.targetName = ai.encText(" ");
 					}
-
-
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -262,7 +260,7 @@ public class ContextLogService extends Service {
 
 			if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
 				LocationLog locationLog = new LocationLog();
-				locationLog.longitute = dLatitude;
+				locationLog.longitude = dLatitude;
 				locationLog.latitude = dLongitude;
 				locationLog.logTime = timeStamp;
 				locationList.add(locationLog);
@@ -342,7 +340,7 @@ public class ContextLogService extends Service {
 		LocationLog locationLog = new LocationLog();
 		locationLog.logTime = System.currentTimeMillis();
 		locationLog.latitude = 37.408111;
-		locationLog.longitute = 126.957111;
+		locationLog.longitude = 126.957111;
 		list.add(locationLog);
 
 		MessageLog messageLog = new MessageLog();

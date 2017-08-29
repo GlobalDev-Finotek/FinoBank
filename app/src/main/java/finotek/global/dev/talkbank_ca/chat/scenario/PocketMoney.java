@@ -1,25 +1,30 @@
 package finotek.global.dev.talkbank_ca.chat.scenario;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.text.NumberFormat;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SucceededMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
+import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
+import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
 
 /**
  * Created by KoDeokyoon on 2017. 5. 27..
  */
 
 public class PocketMoney implements Scenario {
-
+	private int selectedDeposit = 0;
 	private Context context;
 	private Step step = Step.Initial;
 
@@ -41,12 +46,29 @@ public class PocketMoney implements Scenario {
 
 	@Override
 	public void onReceive(Object msg) {
-		if (msg instanceof Done) {
-			MessageBox.INSTANCE.addAndWait(
-					new SendMessage(context.getResources().getString(R.string.main_string_open_account)));
-			step = Step.Initial;
+		if (msg instanceof ContextScoreReceived) {
+			Log.d("FINOTEK", "context score received in pocket money");
+			if (selectedDeposit == 0) {
+				question(TransactionDB.INSTANCE.getMainBalance(), 0, ((ContextScoreReceived) msg).getScoreParams());
+			} else if (selectedDeposit == 1) {
+				question(TransactionDB.INSTANCE.getFirstAlternativeBalance(), 1, ((ContextScoreReceived) msg).getScoreParams());
+			} else if (selectedDeposit == 2) {
+				question(TransactionDB.INSTANCE.getSecondAlternativeBalance(), 2, ((ContextScoreReceived) msg).getScoreParams());
+			} else if (selectedDeposit == 3) {
+				question(TransactionDB.INSTANCE.getThirdAlternativeBalance(), 3, ((ContextScoreReceived) msg).getScoreParams());
+			} else if (selectedDeposit == -1) {
+				MessageBox.INSTANCE.addAndWait(
+						new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_cancle)),
+						new RecommendScenarioMenuRequest(context)
+				);
+			}
 		}
 
+		if (msg instanceof Done) {
+			MessageBox.INSTANCE.addAndWait(new SendMessage(context.getResources().getString(R.string.main_string_open_account)));
+			step = Step.Initial;
+			selectedDeposit = 0;
+		}
 	}
 
 	public RecoMenuRequest getRequestConfirm() {
@@ -70,7 +92,10 @@ public class PocketMoney implements Scenario {
 		return req;
 	}
 
-	public void question(int balance, int deposit) {
+	public void question(int balance, int deposit, ContextScoreResponse scoreParams) {
+		ContextAuthPref pref = new ContextAuthPref(context);
+		pref.save(scoreParams);
+
 		String message;
 		if (balance < 300000)
 			message = context.getResources().getString(
@@ -91,8 +116,11 @@ public class PocketMoney implements Scenario {
 			}
 
 			message = context.getResources().getString(
-					R.string.main_string_recommend_parents_success,
-					NumberFormat.getInstance().format(51490), NumberFormat.getInstance().format(balance));
+                R.string.main_string_recommend_parents_success,
+                NumberFormat.getInstance().format(51490),
+                NumberFormat.getInstance().format(balance),
+                pref.getTotalScore()
+            );
 		}
 
 		MessageBox.INSTANCE.addAndWait(
@@ -130,21 +158,18 @@ public class PocketMoney implements Scenario {
 				break;
 			case bank:
 				if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_main))) {
-					question(TransactionDB.INSTANCE.getMainBalance(), 0);
+					selectedDeposit = 0;
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A1))) {
-					question(TransactionDB.INSTANCE.getFirstAlternativeBalance(), 1);
+					selectedDeposit = 1;
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A2))) {
-					question(TransactionDB.INSTANCE.getSecondAlternativeBalance(), 2);
+					selectedDeposit = 2;
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A3))) {
-					question(TransactionDB.INSTANCE.getThirdAlternativeBalance(), 3);
+					selectedDeposit = 3;
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_cancel))) {
-					MessageBox.INSTANCE.addAndWait(
-							new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_cancle)),
-							new RecommendScenarioMenuRequest(context)
-					);
+					selectedDeposit = -1;
 				}
+				MessageBox.INSTANCE.add(new ContextTotal());
 				break;
-
 		}
 	}
 

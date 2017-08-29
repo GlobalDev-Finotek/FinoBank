@@ -394,7 +394,7 @@
     <string name="main_string_recommend_parents_intro">According to the contextual information, it is a day to give pocket money to parents today every month. Do you want to transfer &#8361;300,000 to your parents?</string>
     <string name="main_string_recommend_parents_yes">Yes, please.</string>
     <string name="main_string_recommend_parents_no">No, thanks.</string>
-    <string name="main_string_recommend_parents_success">Pocket money &#8361;%1$s has been transferred to the mother\'s account. The balance is &#8361;%2$s. Less than 1 million won  has been verified by Contextual Verification.</string>
+    <string name="main_string_recommend_parents_success">Pocket money &#8361;%1$s has been transferred to the mother\'s account. The balance is &#8361;%2$s. Less than 1 million won  has been verified by Contextual Verification. Your score is %3$.1f points</string>
     <string name="main_string_recommend_parents_fail">Not enough deposit.</string>
     <string name="main_string_recommend_parents_cancle">Request is canceled.</string>
 

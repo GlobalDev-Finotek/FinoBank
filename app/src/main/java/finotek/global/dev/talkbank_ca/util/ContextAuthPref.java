@@ -3,6 +3,8 @@ package finotek.global.dev.talkbank_ca.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.google.gson.Gson;
+
 import finotek.global.dev.talkbank_ca.R;
 import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
 import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
@@ -10,6 +12,7 @@ import globaldev.finotek.com.logcollector.model.ActionType;
 
 public class ContextAuthPref {
     private SharedPreferences pref;
+    private final String SCORE_APP_LOG = "score_app_log";
     private final String SCORE_APP_USAGE_KEY = "score_app_usage";
     private final String SCORE_CALL_KEY = "score_call";
     private final String SCORE_MESSAGE_KEY = "score_message";
@@ -21,7 +24,10 @@ public class ContextAuthPref {
 
     public void save(ContextScoreResponse response) {
         SharedPreferences.Editor editor = pref.edit();
-        int size = response.messages.size();
+        int size = 0;
+        if(response.messages != null)
+            size = response.messages.size();
+
         float app_usage_score = 0.0f;
         float app_call_score = 0.0f;
         float app_message_score = 0.0f;
@@ -45,6 +51,8 @@ public class ContextAuthPref {
             }
         }
 
+        Gson gson = new Gson();
+        editor.putString(SCORE_APP_LOG, gson.toJson(response.messages));
         editor.putFloat(SCORE_APP_USAGE_KEY, app_usage_score);
         editor.putFloat(SCORE_CALL_KEY, app_call_score);
         editor.putFloat(SCORE_LOCATION_KEY, app_location_score);

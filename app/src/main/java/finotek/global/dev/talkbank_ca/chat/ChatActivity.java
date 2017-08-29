@@ -70,6 +70,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v1;
@@ -108,6 +109,9 @@ import globaldev.finotek.com.logcollector.Finopass;
 import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
 import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
 import globaldev.finotek.com.logcollector.model.ActionType;
+import globaldev.finotek.com.logcollector.model.ApplicationLog;
+import globaldev.finotek.com.logcollector.model.CallHistoryLog;
+import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.model.MessageLog;
 import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
 import globaldev.finotek.com.logcollector.util.AesInstance;
@@ -206,19 +210,19 @@ public class ChatActivity extends AppCompatActivity {
 				}
 
 				if (askType.equals("callLog") || askType.equals("totalLog")) {
-					List<MessageLog> callLogData = intent.getParcelableArrayListExtra("callLog");
+					List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
 					queryMaps.addAll(callLogData);
 					Log.d("FINOPASS", "call logs: " + callLogData);
 				}
 
 				if (askType.equals("locationLog") || askType.equals("totalLog")) {
-					List<MessageLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
+					List<LocationLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
 					queryMaps.addAll(locationLogData);
 					Log.d("FINOPASS", "location logs: " + locationLogData);
 				}
 
 				if (askType.equals("appLog") || askType.equals("totalLog")) {
-					List<MessageLog> appLogData = intent.getParcelableArrayListExtra("appLog");
+					List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
 					queryMaps.addAll(appLogData);
 					Log.d("FINOPASS", "app logs: " + appLogData);
 				}
@@ -257,18 +261,8 @@ public class ChatActivity extends AppCompatActivity {
 									isFirstAuth = false;
 									Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
 								} else {
-									String message = "";
-									if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
-										message = getString(R.string.dialog_chat_contextlog_result_nothing);
-									} else {
-										message = buildScoreMessages(scoreParams);
-									}
-
-									User user = Realm.getDefaultInstance().where(User.class).findAll().last();
-									String userName = "";
-									if (user != null) userName = user.getName();
-
-									MessageBox.INSTANCE.addAndWait(new ReceiveMessage(getString(R.string.dialog_chat_contextlog_result_message, userName, scoreParams.finalScore * 100, message)), new Done());
+									decodeScoreParams(scoreParams);
+									MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
 								}
 							});
 
@@ -974,40 +968,20 @@ public class ChatActivity extends AppCompatActivity {
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
-	private String buildScoreMessages(ContextScoreResponse scoreResponse) throws Exception {
-        String messages = "";
-        int size = scoreResponse.messages.size();
-        for(int i = 0; i < size; i++) {
-            BaseScoreParam msg = scoreResponse.messages.get(i);
-            Log.d("FINOPASS", msg.toString());
-            UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
-            AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
+	private void decodeScoreParams(ContextScoreResponse scoreParams) throws Exception {
+		UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
+		AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
 
-            switch(msg.type) {
-                case ActionType.GATHER_APP_USAGE_LOG:
-                    String appName = aes.decText(msg.param.get("appName"));
-                    messages += (i+1) + ": " + getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
-                    break;
-				case ActionType.GATHER_CALL_LOG:
-					// TO-DO 메시지 처리
-					break;
-				case ActionType.GATHER_MESSAGE_LOG:
-					// TO-DO 메시지 처리
-					break;
-				case ActionType.GATHER_LOCATION_LOG:
-					messages += (i+1) + ": " + "location";
-					break;
-            }
-
-            if(i != size-1)
-                messages += "\n\n";
-
-            String appName = aes.decText(msg.param.get("appName"));
-            Log.d("FINOPASS", "params: " + msg.param + ", appName: " + appName);
-        }
-
-        return messages;
-    }
+		if (scoreParams.messages != null) {
+			for(BaseScoreParam msg : scoreParams.messages) {
+				switch (msg.type) {
+					case ActionType.GATHER_APP_USAGE_LOG:
+						msg.param.put("appName", aes.decText(msg.param.get("appName")));
+						break;
+				}
+			}
+		}
+	}
 
 	private ChatComponent getComponent() {
 		return DaggerChatComponent

@@ -14,10 +14,17 @@ import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
+import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
+import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
+import globaldev.finotek.com.logcollector.model.ActionType;
+import globaldev.finotek.com.logcollector.util.AesInstance;
+import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
+import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.realm.Realm;
 
 public class ContextSearch implements Scenario {
@@ -39,6 +46,22 @@ public class ContextSearch implements Scenario {
             step = Step.question;
             MessageBox.INSTANCE.addAndWait(new RecommendScenarioMenuRequest(context));
         }
+
+        if(msg instanceof ContextScoreReceived) {
+			String message = "";
+			ContextScoreResponse scoreParams = ((ContextScoreReceived) msg).getScoreParams();
+			if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
+				message = context.getResources().getString(R.string.dialog_chat_contextlog_result_nothing);
+			} else {
+				message = buildScoreMessages(scoreParams);
+			}
+
+			User user = Realm.getDefaultInstance().where(User.class).findAll().last();
+			String userName = "";
+			if (user != null) userName = user.getName();
+
+			MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, userName, scoreParams.finalScore * 100, message)), new Done());
+		}
 	}
 
 	@Override
@@ -115,6 +138,36 @@ public class ContextSearch implements Scenario {
 
         return req;
     }
+
+	private String buildScoreMessages(ContextScoreResponse scoreResponse) {
+		String messages = "";
+		int size = scoreResponse.messages.size();
+		for(int i = 0; i < size; i++) {
+			BaseScoreParam msg = scoreResponse.messages.get(i);
+			Log.d("FINOPASS", msg.toString());
+
+			switch(msg.type) {
+				case ActionType.GATHER_APP_USAGE_LOG:
+					String appName = msg.param.get("appName");
+					messages += (i+1) + ": " + context.getResources().getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
+					break;
+				case ActionType.GATHER_CALL_LOG:
+					// TO-DO 메시지 처리
+					break;
+				case ActionType.GATHER_MESSAGE_LOG:
+					// TO-DO 메시지 처리
+					break;
+				case ActionType.GATHER_LOCATION_LOG:
+					messages += (i+1) + ": " + "location";
+					break;
+			}
+
+			if(i != size-1)
+				messages += "\n\n";
+		}
+
+		return messages;
+	}
 
 	private enum Step {
 		question, ask

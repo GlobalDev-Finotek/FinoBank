@@ -48,24 +48,6 @@ public class PocketMoney implements Scenario {
 
 	@Override
 	public void onReceive(Object msg) {
-		if (msg instanceof ContextScoreReceived) {
-			Log.d("FINOTEK", "context score received in pocket money");
-			if (selectedDeposit == 0) {
-				question(TransactionDB.INSTANCE.getMainBalance(), 0, ((ContextScoreReceived) msg).getScoreParams());
-			} else if (selectedDeposit == 1) {
-				question(TransactionDB.INSTANCE.getFirstAlternativeBalance(), 1, ((ContextScoreReceived) msg).getScoreParams());
-			} else if (selectedDeposit == 2) {
-				question(TransactionDB.INSTANCE.getSecondAlternativeBalance(), 2, ((ContextScoreReceived) msg).getScoreParams());
-			} else if (selectedDeposit == 3) {
-				question(TransactionDB.INSTANCE.getThirdAlternativeBalance(), 3, ((ContextScoreReceived) msg).getScoreParams());
-			} else if (selectedDeposit == -1) {
-				MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_cancle)),
-						new RecommendScenarioMenuRequest(context)
-				);
-			}
-		}
-
 		if (msg instanceof Done) {
 			MessageBox.INSTANCE.addAndWait(new SendMessage(context.getResources().getString(R.string.main_string_open_account)));
 			step = Step.Initial;
@@ -94,10 +76,7 @@ public class PocketMoney implements Scenario {
 		return req;
 	}
 
-	public void question(int balance, int deposit, ContextScoreResponse scoreParams) {
-		ContextAuthPref pref = new ContextAuthPref(context);
-		pref.save(scoreParams);
-
+	public void question(int balance, int deposit) {
 		String message;
 		if (balance < 300000)
 			message = context.getResources().getString(
@@ -121,13 +100,13 @@ public class PocketMoney implements Scenario {
                 R.string.main_string_recommend_parents_success,
                 NumberFormat.getInstance().format(51490),
                 NumberFormat.getInstance().format(balance),
-                pref.getFinalScore()
+                87.2f
             );
 		}
 
         Realm realm = Realm.getDefaultInstance();
         User user = realm.where(User.class).findAll().last();
-		float finalScore = pref.getFinalScore();
+		float finalScore = 87.2f;
 		MessageBox.INSTANCE.addAndWait(
 			new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, user.getName(), finalScore)),
 			new ReceiveMessage(message),
@@ -163,17 +142,20 @@ public class PocketMoney implements Scenario {
 				break;
 			case bank:
 				if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_main))) {
-					selectedDeposit = 0;
+					question(TransactionDB.INSTANCE.getMainBalance(), 0);
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A1))) {
-					selectedDeposit = 1;
+					question(TransactionDB.INSTANCE.getFirstAlternativeBalance(), 1);
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A2))) {
-					selectedDeposit = 2;
+					question(TransactionDB.INSTANCE.getSecondAlternativeBalance(), 2);
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_A3))) {
-					selectedDeposit = 3;
+					question(TransactionDB.INSTANCE.getThirdAlternativeBalance(), 3);
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_chat_bank_select_cancel))) {
-					selectedDeposit = -1;
+					MessageBox.INSTANCE.addAndWait(
+							new ReceiveMessage(context.getResources().getString(R.string.main_string_recommend_parents_cancle)),
+							new RecommendScenarioMenuRequest(context)
+					);
 				}
-				MessageBox.INSTANCE.add(new ContextTotal());
+
 				break;
 		}
 	}

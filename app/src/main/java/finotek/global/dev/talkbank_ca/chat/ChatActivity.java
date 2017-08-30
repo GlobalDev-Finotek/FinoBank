@@ -168,7 +168,30 @@ public class ChatActivity extends AppCompatActivity {
 		getSupportActionBar().setElevation(0);
 		binding.appbar.setOutlineProvider(null);
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
-		Intent chatIntent = getIntent();
+		Intent intent = getIntent();
+
+		// 메인 시나리오 세팅
+		if (intent != null) {
+			boolean isSigned = intent.getBooleanExtra("isSigned", false);
+			mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
+		}
+
+		// 메시지 박스 설정
+		MessageBox.INSTANCE.observable
+			.flatMap(msg -> {
+				if (msg instanceof EnableToEditMoney) {
+					return Observable.just(msg)
+							.observeOn(AndroidSchedulers.mainThread());
+				} else {
+					return Observable.just(msg)
+							.delay(1, TimeUnit.SECONDS)
+							.observeOn(AndroidSchedulers.mainThread());
+				}
+			})
+			.subscribe(ChatActivity.this::onNewMessageUpdated);
+
+		isFirstAuth = false;
+		Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
 
 		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 		mLayoutManager.setReverseLayout(true);
@@ -195,103 +218,6 @@ public class ChatActivity extends AppCompatActivity {
 
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("chat.ContextLog.ContextLogService");
-
-		receiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				String askType = intent.getStringExtra("askType");
-
-				ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
-
-				if (askType.equals("smsLog") || askType.equals("totalLog")) {
-					List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
-					queryMaps.addAll(smsLogData);
-					Log.d("FINOPASS", "sms logs: " + smsLogData);
-				}
-
-				if (askType.equals("callLog") || askType.equals("totalLog")) {
-					List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
-					queryMaps.addAll(callLogData);
-					Log.d("FINOPASS", "call logs: " + callLogData);
-				}
-
-				if (askType.equals("locationLog") || askType.equals("totalLog")) {
-					List<LocationLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
-					queryMaps.addAll(locationLogData);
-					Log.d("FINOPASS", "location logs: " + locationLogData);
-				}
-
-				if (askType.equals("appLog") || askType.equals("totalLog")) {
-					List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
-					if(appLogData != null) {
-						int skyHomeAppId = 0;
-						int size = appLogData.size();
-						for(int i = 0; i < size; i++) {
-							ApplicationLog log = appLogData.get(i);
-							try {
-								UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
-								AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
-
-								if(aes.decText(log.appName).equals("SKY 홈")) {
-									skyHomeAppId = i;
-								}
-							} catch(Exception e){
-								e.printStackTrace();
-							}
-						}
-
-						appLogData.remove(skyHomeAppId);
-					}
-
-					queryMaps.addAll(appLogData);
-					Log.d("FINOPASS", "app logs: " + appLogData);
-				}
-
-				Finopass.getInstance(ChatActivity.this)
-						.getScore(queryMaps)
-						.subscribe(
-							scoreParams -> {
-								Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
-								decodeScoreParams(scoreParams);
-
-								if(isFirstAuth) {
-									Log.d("FINOPASS", "첫번째 맥락인증 요청");
-									ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
-									pref.save(scoreParams);
-
-									// 메인 시나리오 세팅
-									if (chatIntent != null) {
-										boolean isSigned = intent.getBooleanExtra("isSigned", false);
-										mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
-									}
-
-									// 메시지 박스 설정
-									MessageBox.INSTANCE.observable
-											.flatMap(msg -> {
-												if (msg instanceof EnableToEditMoney) {
-													return Observable.just(msg)
-															.observeOn(AndroidSchedulers.mainThread());
-												} else {
-													return Observable.just(msg)
-															.delay(1, TimeUnit.SECONDS)
-															.observeOn(AndroidSchedulers.mainThread());
-												}
-											})
-											.subscribe(ChatActivity.this::onNewMessageUpdated);
-
-									isFirstAuth = false;
-									Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
-								} else {
-									MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
-								}
-							});
-			}
-		};
-		registerReceiver(receiver, intentFilter);
-
-		Intent intent = new Intent(this, ContextLogService.class);
-		intent.putExtra("askType", "totalLog");
-		startService(intent);
 	}
 
 	@Override
@@ -301,35 +227,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		if (msg instanceof ContextTotal) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "totalLog");
-			startService(intent);
-		}
-
-		if (msg instanceof ContextSms) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "smsLog");
-			startService(intent);
-		}
-
-		if (msg instanceof ContextCall) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "callLog");
-			startService(intent);
-		}
-		if (msg instanceof ContextLocation) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "locationLog");
-			startService(intent);
-		}
-		if (msg instanceof ContextApp) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "appLog");
-			startService(intent);
-		}
-
-
 		if (msg instanceof RequestPhoto) {
 
 			hideAppBar();

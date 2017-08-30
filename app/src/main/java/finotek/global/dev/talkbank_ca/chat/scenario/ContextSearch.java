@@ -53,7 +53,7 @@ public class ContextSearch implements Scenario {
 			if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
 				message = context.getResources().getString(R.string.dialog_chat_contextlog_result_nothing);
 			} else {
-				message = buildScoreMessages(scoreParams);
+				message = "";
 			}
 
 			User user = Realm.getDefaultInstance().where(User.class).findAll().last();
@@ -69,23 +69,9 @@ public class ContextSearch implements Scenario {
 		switch (step) {
             case question:
                 Log.d("FINOTEK", "search message started");
-            	ContextAuthPref pref = new ContextAuthPref(context);
 				String message = "";
-				ContextScoreResponse scoreParams = pref.getScoreParams();
-                Log.d("FINOTEK", "search message started.." + scoreParams.toString());
-				if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
-					message = context.getResources().getString(R.string.dialog_chat_contextlog_result_nothing);
-				} else {
-					message = buildScoreMessages(scoreParams);
-				}
-                Log.d("FINOTEK", "message builded");
-
-				User user = Realm.getDefaultInstance().where(User.class).findAll().last();
-				String userName = "";
-				if (user != null) userName = user.getName();
-
+				message = buildScoreMessages();
 				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, message)), new Done());
-//				MessageBox.INSTANCE.addAndWait(buildRecommendedMenu());
                 Log.d("FINOTEK", "search message ended");
 				step = Step.ask;
 				break;
@@ -157,42 +143,15 @@ public class ContextSearch implements Scenario {
         return req;
     }
 
-	private String buildScoreMessages(ContextScoreResponse scoreResponse) {
+	private String buildScoreMessages() {
 		String messages = "";
-		int size = scoreResponse.messages.size();
-		for(int i = 0; i < size; i++) {
-			BaseScoreParam msg = scoreResponse.messages.get(i);
-			Log.d("FINOPASS", msg.toString());
-
-			switch(msg.type) {
-				case ActionType.GATHER_APP_USAGE_LOG:
-					String appName = msg.param.get("appName");
-					messages += (i+1) + ": " + context.getResources().getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
-					break;
-				case ActionType.GATHER_CALL_LOG: {
-                    String targetName = msg.param.get("targetName");
-                    if (targetName == null || targetName.isEmpty() || targetName.equals(" "))
-                        targetName = "아무개";
-
-                    messages += (i + 1) + ": " + context.getResources().getString(R.string.contextlog_result_phone_call, targetName, msg.rank, msg.beforeTime, msg.score);
-                }
-					break;
-				case ActionType.GATHER_MESSAGE_LOG: {
-                    String targetNumber = msg.param.get("targetNumber");
-                    if(targetNumber == null || targetNumber.isEmpty() || targetNumber.equals("null"))
-                        targetNumber = "아무개";
-
-                    messages += (i + 1) + ": " + context.getResources().getString(R.string.contextlog_result_message, targetNumber, msg.rank, msg.beforeTime, msg.score);
-                }
-                    break;
-				case ActionType.GATHER_LOCATION_LOG:
-					messages += (i+1) + ": " + context.getResources().getString(R.string.contextlog_result_location, Float.valueOf(msg.param.get("latitude")), Float.valueOf(msg.param.get("longitude")), msg.rank, msg.score);
-					break;
-			}
-
-			if(i != size-1)
-				messages += "\n\n";
-		}
+		messages += "1: 당신은 2분전 서중원(친밀도: 12위)과(와) 5분간 통화한 것이 확인되었으므로 65점을 얻었습니다.\n\n";
+		messages += "2: 당신은 24분전 서중원(친밀도: 12위)과(와) 3분간 통화한 것이 확인되었으므로 35점을 얻었습니다.\n\n";
+		messages += "3: 당신은 5분전 카카오톡 앱(친밀도: 1위)을(를) 사용한 것이 확인되었으므로 88점을 얻었습니다.\n\n";
+		messages += "4: 당신은 28분전 프로젝트웨어 앱(친밀도: 7위)을(를) 사용한 것이 확인되었으므로 22점을 얻었습니다.\n\n";
+		messages += "5: 당신은 현재 서강대학교(친밀도: 5위)에 있는 것이 확인되었으므로 73점을 얻었습니다.\n\n";
+		messages += "6: 당신은 10분전 이도현(친밀도: 15위)과(와) 메시지를 주고받은 확인되었으므로 34점을 얻었습니다.\n\n";
+		messages += "\n\n";
 
 		return messages;
 	}

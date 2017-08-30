@@ -36,7 +36,6 @@ import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.model.MessageLog;
-import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
 import globaldev.finotek.com.logcollector.util.AesInstance;
 
 /**
@@ -260,8 +259,8 @@ public class ContextLogService extends Service {
 
 			if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
 				LocationLog locationLog = new LocationLog();
-				locationLog.longitude = dLatitude;
-				locationLog.latitude = dLongitude;
+				locationLog.longitute = dLongitude;
+				locationLog.latitude = dLatitude;
 				locationLog.logTime = timeStamp;
 				locationList.add(locationLog);
 			} else {
@@ -287,7 +286,9 @@ public class ContextLogService extends Service {
 				String endTime = DateFormat.format("yyyy-MM-dd HH:mm:ss", u.getLastTimeStamp()).toString();
 
 				if (dataTime(endTime).before(currentTime()) && dataTime(endTime).after(searchZone(targetTime))) {
-					ApplicationLog applicationLog = new ApplicationLog(dataTime(endTime).getTime());
+					ApplicationLog applicationLog = new ApplicationLog();
+					applicationLog.startTime = startTime;
+					applicationLog.lastTimeUsed = dataTime(endTime).toString();
 					applicationLog.packageName = (foregroundAppPackageInfo.packageName);
 					applicationLog.setAppName(label);
 
@@ -340,7 +341,7 @@ public class ContextLogService extends Service {
 		LocationLog locationLog = new LocationLog();
 		locationLog.logTime = System.currentTimeMillis();
 		locationLog.latitude = 37.408111;
-		locationLog.longitude = 126.957111;
+		locationLog.longitute = 126.957111;
 		list.add(locationLog);
 
 		MessageLog messageLog = new MessageLog();

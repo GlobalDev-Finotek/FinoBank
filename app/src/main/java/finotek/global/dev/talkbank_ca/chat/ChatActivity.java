@@ -370,7 +370,6 @@ public class ChatActivity extends AppCompatActivity {
 
 								binding.chatView.scrollToBottom();
 								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 							});
 							dialog.showWithRatio(0.50f);
 						}, throwable -> {
@@ -937,10 +936,8 @@ public class ChatActivity extends AppCompatActivity {
 		Location currentLocation = null;
 		LocationManager manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
-		if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
-				&& checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-		} else {
+		if (!(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+				&& checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
 			boolean isGPSEnabled = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 			boolean isNetworkEnabled = manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 

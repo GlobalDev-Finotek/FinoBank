@@ -46,8 +46,8 @@ public class DonateScenario implements Scenario {
             int coin = (int) (((Integer.valueOf(money.replace(",", "")))/1000) * 1.3);
 
             MessageBox.INSTANCE.addAndWait(
-                new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_donate_result, coin, targetName)),
                 new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, userName, 85.2)),
+                new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_donate_result, coin, targetName)),
                 new Done()
             );
         }

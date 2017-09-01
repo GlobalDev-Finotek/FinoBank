@@ -3,6 +3,7 @@ package finotek.global.dev.talkbank_ca.chat.scenario;
 import android.content.Context;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -32,6 +33,11 @@ import io.realm.Realm;
 public class ContextSearch implements Scenario {
 	private Step step = Step.initial;
 	private Context context;
+	private int counter = 0;
+	private long lastTime = 0;
+
+	private final int[] scores = {65, 35, 88, 22, 34};
+	private final int[] offset = {2, 14, 5, 20, 10};
 
 	public ContextSearch(Context context) {
 		this.context = context;
@@ -84,15 +90,30 @@ public class ContextSearch implements Scenario {
 	}
 
 	private String buildScoreMessages(String address) {
+		if(counter == 0) {
+			lastTime = System.currentTimeMillis();
+		}
+
+		int minutes = (int) ((System.currentTimeMillis() - lastTime)/(1000 * 60));
+
 		String messages = "";
-		messages += "1: 당신은 2분전 서중원(친밀도: 12위)과(와) 5분간 통화한 것이 확인되었으므로 65점을 얻었습니다.\n\n";
-		messages += "2: 당신은 24분전 서중원(친밀도: 12위)과(와) 3분간 통화한 것이 확인되었으므로 35점을 얻었습니다.\n\n";
-		messages += "3: 당신은 5분전 카카오톡 앱(친밀도: 1위)을(를) 사용한 것이 확인되었으므로 88점을 얻었습니다.\n\n";
-		messages += "4: 당신은 28분전 프로젝트웨어 앱(친밀도: 7위)을(를) 사용한 것이 확인되었으므로 22점을 얻었습니다.\n\n";
-		messages += "5: 당신은 " + address + "(친밀도: 100+위)에 있는 것이 확인되었으므로 73점을 얻었습니다.\n\n";
-		messages += "6: 당신은 10분전 이도현(친밀도: 15위)과(와) 메시지를 주고받은 확인되었으므로 34점을 얻었습니다.";
+		messages += "1: 당신은 " + (minutes + offset[0]) + "분전 서중원(친밀도: 12위)과(와) 5분간 통화한이 확인되었으므로 " + getScore(scores[0], minutes) + "점을 얻었습니다.\n\n";
+		messages += "2: 당신은 " + (minutes + offset[1]) + "분전 서중원(친밀도: 12위)과(와) 3분간 통화한 것이 확인되었으므로 " + getScore(scores[1], minutes) + " 점을 얻었습니다.\n\n";
+		messages += "3: 당신은 " + (minutes + offset[2]) + " 분전 카카오톡 앱(친밀도: 1위)을(를) 사용한 것이 확인되었으므로 " + getScore(scores[2], minutes) + " 점을 얻었습니다.\n\n";
+		messages += "4: 당신은 " + (minutes + offset[3]) + " 분전 프로젝트웨어 앱(친밀도: 7위)을(를) 사용한 것이 확인되었으므로 " + getScore(scores[3], minutes) + " 점을 얻었습니다.\n\n";
+		messages += "5: 당신은 현재 " + address + "(친밀도: 100+위)에 있는 것이 확인되었으므로 73점을 얻었습니다.\n\n";
+		messages += "6: 당신은 " + (minutes + offset[4]) + " 분전 이도현(친밀도: 15위)과(와) 메시지를 주고받은 확인되었으므로 " + getScore(scores[4], minutes) + " 점을 얻었습니다.";
+		counter += 1;
 
 		return messages;
+	}
+
+	private int getScore(int score, int minute){
+		if(minute < 2) {
+			return score;
+		} else {
+			return (int) (score / minute * (1 / minute + (minute-1) / (minute * 0.35)));
+		}
 	}
 
 	private enum Step {

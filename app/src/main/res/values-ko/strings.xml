@@ -425,5 +425,19 @@
     <string name="contextlog_result_message">당신은 %1$s(친밀도: %2$.0f위)와 %3$.0f분전에 문자를 주고받았으므로 %4$.2f 점을 얻었습니다.</string>
     <string name="contextlog_authentication_succeeded">시스템이 판단한 \'%1$s\'님일 확률은 %2$.2f%%입니다\n이 요청의 최소수행조건은 70%%이므로 인증 통과 되었습니다.</string>
     <string name="contextlog_authentication_waring">시스템이 판단한 \'%1$s\'님일 확률은 %2$.2f%%입니다\n이 요청은 본인 확률이 90%%이상일 때 수행되므로\n현재 이 요청을 진행하려면 추가인증이 필요합니다</string>
+
+    <!-- donate -->
+    <string name="dialog_chat_donate">기부</string>
+    <string name="dialog_chat_donate_menu">어려운 이웃에게 기부하기</string>
+    <string name="dialog_chat_donate_title">오늘도 당신의 따뜻한 배려가 어려운 아이들에게 행복을 줍니다.</string>
+    <string name="dialog_chat_donate_description">S 기부재단을 통해 당신의 후원자에게 기부됩니다. 어디에 기부를 하시겠습니까?</string>
+    <string name="dialog_chat_donate_menu1">모잠비크 멕세르에게 후원하기\n총기부액 : 3,500,000원\n월평균 기부액 : 220,000원\n최종 기부일 : 2017년 6월 23일</string>
+    <string name="dialog_chat_donate_menu2">방글라데시 메디나에게 후원하기\n총기부액 : 1,250,000원\n월평균 기부액 : 120,000원\n최종 기부일 : 2017년 8월 30일</string>
+    <string name="dialog_chat_donate_menu3">물에잠긴 시에라리온에 후원하기\nS 기부은행 총 모금액 : 23,253,200원\n목표 모금액 : 100,000,000원</string>
+    <string name="dialog_chat_donate_target1">모잠비크 멕세르에게 후원하기</string>
+    <string name="dialog_chat_donate_target2">방글라데시 메디나에게 후원하기</string>
+    <string name="dialog_chat_donate_target3">물에잠긴 시에라리온에 후원하기</string>
+    <string name="dialog_chat_donate_preprocess">후원금의 30%%는 S 기부재단에서 %1$s님 명의로 추가로 기부합니다.\n\n얼마를 후원하시겠습니까?\n(1000원 = 1.3 SB코인)\n\n[SB코인]은 식료품과 의약품으로만 교환가능한 S 기부재단의 코인입니다.</string>
+    <string name="dialog_chat_donate_result">후원자님의 이름으로 %1$d코인이 %2$s에 기부됩니다.</string>
 </resources>
 

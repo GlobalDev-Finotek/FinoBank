@@ -35,7 +35,7 @@ public class ScoreCalculationScenario implements Scenario {
 
     @Override
     public String getName() {
-        return context.getResources().getString(R.string.dialog_chat_contextlog_search);
+        return context.getResources().getString(R.string.dialog_chat_how_to_compute_score);
     }
 
     @Override

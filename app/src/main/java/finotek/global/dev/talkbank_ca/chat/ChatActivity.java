@@ -485,7 +485,13 @@ public class ChatActivity extends AppCompatActivity {
 
 			int balance = TransactionDB.INSTANCE.getMainBalance();
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
-			ctBinding.editMoney.setEnabled(false);
+			ctBinding.editMoney.setEnabled(((RequestTransferUI) msg).isEnabled());
+
+            if(((RequestTransferUI) msg).isEnabled()) {
+                ctBinding.editMoney.requestFocus();
+                ctBinding.gvKeypad.setLengthLimit(7);
+            }
+
 			binding.footer.addView(ctBinding.getRoot());
 		}
 

@@ -27,6 +27,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.WarningMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.DonateRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -34,6 +35,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
 import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
+import finotek.global.dev.talkbank_ca.chat.scenario.DonateScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
@@ -78,6 +80,8 @@ public class MainScenario_v2 {
 			LeftScenario.scenarioList.add("E");
 		if (!LeftScenario.scenarioList.contains("P"))
 			LeftScenario.scenarioList.add("P");
+		if(!LeftScenario.scenarioList.contains("G"))
+			LeftScenario.scenarioList.add("G");
 		if (!LeftScenario.scenarioList.contains("T"))
 			LeftScenario.scenarioList.add("T");
 		if (!LeftScenario.scenarioList.contains("H"))
@@ -122,6 +126,7 @@ public class MainScenario_v2 {
 		scenarioPool.put("pocketMoney", new PocketMoney(context));
 		scenarioPool.put("contextSearch", new ContextSearch(context));
         scenarioPool.put("scoreCalculation", new ScoreCalculationScenario(context));
+		scenarioPool.put("donateScenario", new DonateScenario(context));
 
 		currentScenario = null;
 	}
@@ -265,6 +270,10 @@ public class MainScenario_v2 {
 		// 추천 메뉴 요청
 		if (msg instanceof RecoMenuRequest) {
 			chatView.recoMenu((RecoMenuRequest) msg);
+		}
+
+		if (msg instanceof DonateRequest) {
+			chatView.addDonateView((DonateRequest) msg);
 		}
 
 		// 신분증 스캔 결과

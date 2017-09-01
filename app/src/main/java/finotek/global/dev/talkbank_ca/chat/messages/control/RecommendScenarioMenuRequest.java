@@ -21,6 +21,8 @@ public class RecommendScenarioMenuRequest extends RecoMenuRequest {
 					addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_electric_title), null);
 				if (s.equals("P"))
 					addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_recommend_parents_title), null);
+				if (s.equals("G"))
+					addMenu(R.drawable.icon_like, context.getResources().getString(R.string.dialog_chat_donate_menu), null);
 				if (s.equals("T"))
 					addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
 				if (s.equals("H"))
@@ -31,7 +33,6 @@ public class RecommendScenarioMenuRequest extends RecoMenuRequest {
 			addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
 		} else {
 			setDescription(context.getResources().getString(R.string.main_string_recommend_finished));
-
 		}
 	}
 }

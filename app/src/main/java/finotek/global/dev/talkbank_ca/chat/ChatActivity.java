@@ -916,8 +916,9 @@ public class ChatActivity extends AppCompatActivity {
 		try {
 			Geocoder geo = new Geocoder(this.getApplicationContext(), Locale.getDefault());
 			List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+			Log.d("FINOTEK", "addresses found: " + addresses);
 			if (addresses != null && !addresses.isEmpty()) {
-				return addresses.get(0).getFeatureName() + " " + addresses.get(0).getLocality() + " " + addresses.get(0).getAdminArea();
+				return addresses.get(0).getAddressLine(0);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

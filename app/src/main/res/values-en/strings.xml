@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FinoBank</string>
+    <string name="app_name">FinoBank-DE</string>
     <string name="registration_string_register">Register</string>
     <string name="registration_string_basic_information">My account</string>
     <string name="registration_string_phone_number">Mobile phone number</string>
@@ -27,6 +27,7 @@
     <string name="registration_string_type_all_field">Please type all required field</string>
     <string name="registration_string_write_signature_step_1">Please write signature on displayed area(1/2)</string>
     <string name="registration_string_write_signature_step_2">Please write signature on displayed area(2/2)</string>
+    <string name="registration_string_write_hidden_signature">Please write hidden signature on displayed area</string>
     <string name="registration_string_registering_signature">Registering signature is repeated twice</string>
     <string name="registration_string_fingertip_use"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
     <string name="registration_string_registered_signature">Registered signature will be only used for purpose of lon-in and personal verification</string>
@@ -390,11 +391,11 @@
     <string name="main_string_recommend_travel_yes">Yes, open an account please</string>
 
     <string name="main_string_recommend_parents_title">Parents pocket money</string>
-    <string name="main_string_recommend_parents_ask">Would you like to transfer &#8361;300,000 to your mother\'s account?</string>
+    <string name="main_string_recommend_parents_ask">Would you like to transfer &#8361;1,200,000 to your mother\'s account?</string>
     <string name="main_string_recommend_parents_intro">According to the contextual information, it is a day to give pocket money to parents today every month. Do you want to transfer &#8361;300,000 to your parents?</string>
     <string name="main_string_recommend_parents_yes">Yes, please.</string>
     <string name="main_string_recommend_parents_no">No, thanks.</string>
-    <string name="main_string_recommend_parents_success">Pocket money &#8361;%1$s has been transferred to the mother\'s account. The balance is &#8361;%2$s. Less than 1 million won  has been verified by Contextual Verification. Your score is %3$.1f points</string>
+    <string name="main_string_recommend_parents_success">Pocket money &#8361;%1$s has been transferred to the mother\'s account. The balance is &#8361;%2$s.</string>
     <string name="main_string_recommend_parents_fail">Not enough deposit.</string>
     <string name="main_string_recommend_parents_cancle">Request is canceled.</string>
 
@@ -429,6 +430,7 @@
 
     <string name="contextlog_authentication_succeeded">The system judged the probability of %1$s to be %2$.1f%%\nThis request is served when it is 70%% or more.\nTherefore authentication succeeded.</string>
     <string name="contextlog_authentication_waring">The system judged the probability of %1$s to be %2$.1f%%\nThis request is served when it is 90%% or more.\nYou have to authorize for this request by signature authentication</string>
+    <string name="contextlog_authentication_needed">-</string>
 
     <!-- charity -->
     <string name="dialog_chat_donate">Donate</string>

@@ -44,10 +44,7 @@ import android.widget.Toast;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -57,25 +54,17 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
-import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
-import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived;
 import finotek.global.dev.talkbank_ca.chat.messages.context.CurrentAddressReceived;
 import finotek.global.dev.talkbank_ca.chat.messages.context.RequestCurrentAddress;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
@@ -99,7 +88,6 @@ import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
-import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
@@ -107,7 +95,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
-import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.user.sign.HiddenSignFragment;
 import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.util.ChatLocationListener;
 import finotek.global.dev.talkbank_ca.util.Converter;
@@ -148,7 +136,7 @@ public class ChatActivity extends AppCompatActivity {
 	private MainScenario_v2 mainScenario;
 
 	private CapturePicFragment capturePicFragment;
-	private OneStepSignRegisterFragment signRegistFragment;
+	private HiddenSignFragment signRegistFragment;
 	private TransferSignRegisterFragment transferSignRegistFragment;
 
 	private BroadcastReceiver receiver;
@@ -335,7 +323,7 @@ public class ChatActivity extends AppCompatActivity {
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
 
-			signRegistFragment = new OneStepSignRegisterFragment();
+			signRegistFragment = new HiddenSignFragment();
 
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSaveListener(() -> {

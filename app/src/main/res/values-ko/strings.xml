@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FinoBank</string>
+    <string name="app_name">FinoBank-DE</string>
     <string name="registration_string_register">사용자 등록</string>
     <string name="registration_string_basic_information">기본 정보(필수입력)</string>
     <string name="registration_string_phone_number">휴대전화 번호</string>
@@ -27,6 +27,7 @@
     <string name="registration_string_type_all_field">필수 입력을 모두 입력해주시기 바랍니다.</string>
     <string name="registration_string_write_signature_step_1">표시된 영역 안에 서명해 주세요.(1/2)</string>
     <string name="registration_string_write_signature_step_2">표시된 영역 안에 서명해 주세요.(2/2)</string>
+    <string name="registration_string_write_hidden_signature">표시된 영역 안에 히든 서명을 해주세요</string>
     <string name="registration_string_registering_signature">서명은 2회 등록을 진행하게 됩니다.</string>
     <string name="registration_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="registration_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로 사용됩니다.</string>
@@ -387,10 +388,10 @@
 
     <string name="main_string_recommend_parents_title">부모님 용돈</string>
     <string name="main_string_recommend_parents_intro">맥락 정보에 의하면 매달 오늘 부모님께 용돈을 드리는 날입니다. </string>
-    <string name="main_string_recommend_parents_ask">어머님 계좌로 &#8361;300,000을 이체하시겠습니까?</string>
+    <string name="main_string_recommend_parents_ask">어머님 계좌로 &#8361;1,200,000을 이체하시겠습니까?</string>
     <string name="main_string_recommend_parents_yes">예, 이체해주세요.</string>
     <string name="main_string_recommend_parents_no">아니오, 나중에 하겠습니다.</string>
-    <string name="main_string_recommend_parents_success">용돈 &#8361;%1$s이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 &#8361;%2$s 입니다. \n &#8361;1,000,000 이하이므로 맥락인증으로 인증되었습니다. 맥락점수는 %3$.1f점입니다.</string>
+    <string name="main_string_recommend_parents_success">용돈 &#8361;%1$s이 어머니 계좌로 이체 되었습니다. 이체 후 잔액은 &#8361;%2$s 입니다.</string>
     <string name="main_string_recommend_parents_fail">잔액이 부족합니다.</string>
     <string name="main_string_recommend_parents_cancle">취소되었습니다.</string>
 
@@ -424,7 +425,8 @@
     <string name="contextlog_result_phone_call">당신은 %1$s(친밀도: %2$.0f위)와(과) %3$.0f분전에 통화하였으므로 %4$.2f 점을 얻었습니다.</string>
     <string name="contextlog_result_message">당신은 %1$s(친밀도: %2$.0f위)와 %3$.0f분전에 문자를 주고받았으므로 %4$.2f 점을 얻었습니다.</string>
     <string name="contextlog_authentication_succeeded">시스템이 판단한 \'%1$s\'님일 확률은 %2$.2f%%입니다\n이 요청의 최소수행조건은 70%%이므로 인증 통과 되었습니다.</string>
-    <string name="contextlog_authentication_waring">시스템이 판단한 \'%1$s\'님일 확률은 %2$.2f%%입니다\n이 요청은 본인 확률이 90%%이상일 때 수행되므로\n현재 이 요청을 진행하려면 추가인증이 필요합니다</string>
+    <string name="contextlog_authentication_waring">시스템이 판단한 \'%1$s\'님일 확률은 %2$.2f%%입니다\n이 요청은 본인 확률이 70%%이상일 때 수행되므로\n현재 이 요청을 진행하려면 추가인증이 필요합니다</string>
+    <string name="contextlog_authentication_needed">이체금액이 100만원 이상이므로 서명인증이 필요합니다.</string>
 
     <!-- donate -->
     <string name="dialog_chat_donate">기부</string>
@@ -432,10 +434,10 @@
     <string name="dialog_chat_donate_title">오늘도 당신의 따뜻한 배려가 어려운 아이들에게 행복을 줍니다.</string>
     <string name="dialog_chat_donate_description">S 기부재단을 통해 당신의 후원자에게 기부됩니다. 어디에 기부를 하시겠습니까?</string>
     <string name="dialog_chat_donate_menu1">모잠비크 멕세르에게 후원하기\n총기부액 : 3,500,000원\n월평균 기부액 : 220,000원\n최종 기부일 : 2017년 6월 23일</string>
-    <string name="dialog_chat_donate_menu2">방글라데시 메디나에게 후원하기\n총기부액 : 1,250,000원\n월평균 기부액 : 120,000원\n최종 기부일 : 2017년 8월 30일</string>
+    <string name="dialog_chat_donate_menu2">베트남 메디나에게 후원하기\n총기부액 : 1,250,000원\n월평균 기부액 : 120,000원\n최종 기부일 : 2017년 8월 30일</string>
     <string name="dialog_chat_donate_menu3">물에잠긴 시에라리온에 후원하기\nS 기부은행 총 모금액 : 23,253,200원\n목표 모금액 : 100,000,000원</string>
     <string name="dialog_chat_donate_target1">모잠비크 멕세르에게 후원하기</string>
-    <string name="dialog_chat_donate_target2">방글라데시 메디나에게 후원하기</string>
+    <string name="dialog_chat_donate_target2">베트남 메디나에게 후원하기</string>
     <string name="dialog_chat_donate_target3">물에잠긴 시에라리온에 후원하기</string>
     <string name="dialog_chat_donate_preprocess">후원금의 30%%는 S 기부재단에서 %1$s님 명의로 추가로 기부합니다.\n\n얼마를 후원하시겠습니까?\n(1000원 = 1.3 SB코인)\n\n[SB코인]은 식료품과 의약품으로만 교환가능한 S 기부재단의 코인입니다.</string>
     <string name="dialog_chat_donate_result">후원자님의 이름으로 %1$d코인이 %2$s에 기부됩니다.</string>

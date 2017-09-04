@@ -6,7 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
     defaultConfig {
-        applicationId "finotek.global.dev.talkbank_ca"
+        applicationId "finotek.global.dev.talkbank_ca_demo"
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 19

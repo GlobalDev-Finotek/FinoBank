@@ -88,6 +88,7 @@ import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
+import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
@@ -108,6 +109,7 @@ import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
@@ -228,7 +230,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+						getIdCardInfo(""),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
@@ -257,7 +259,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
+						getIdCardInfo(path),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 				this.returnToInitialControl();
@@ -287,7 +289,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+						getIdCardInfo(""),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
@@ -944,6 +946,15 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		return currentLocation;
+	}
+
+	private IDCardInfo getIdCardInfo(String path){
+		Realm realm = Realm.getDefaultInstance();
+		User user = realm.where(User.class).findAll().last();
+		if(user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
+			return new IDCardInfo("주민등록증", "박승남", "680707-1243132", "2012.11.02", path);
+		else
+			return new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path);
 	}
 
 	private ChatComponent getComponent() {

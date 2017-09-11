@@ -19,8 +19,12 @@ public class HiddenSignFragment extends BaseSignRegisterFragment {
     void initView() {
         String name = TransactionDB.INSTANCE.getTxName();
         String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+        String message = getString(R.string.registration_string_write_signature_step_1);
 
-        binding.tvInst.setText(getString(R.string.dialog_chat_send_transfer, name, moneyAsString));
+        if(name != null && !name.isEmpty() && TransactionDB.INSTANCE.isTransfer())
+            message = getString(R.string.dialog_chat_send_transfer, name, moneyAsString);
+
+        binding.tvInst.setText(message);
     }
 
     @Override

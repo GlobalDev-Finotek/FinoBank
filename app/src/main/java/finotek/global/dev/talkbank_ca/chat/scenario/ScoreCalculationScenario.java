@@ -6,6 +6,7 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 
 
 public class ScoreCalculationScenario implements Scenario {
@@ -29,6 +30,7 @@ public class ScoreCalculationScenario implements Scenario {
     public void onUserSend(String msg) {
         MessageBox.INSTANCE.addAndWait(
             new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_how_to_compute_score)),
+            new RecommendScenarioMenuRequest(context),
             new Done()
         );
     }

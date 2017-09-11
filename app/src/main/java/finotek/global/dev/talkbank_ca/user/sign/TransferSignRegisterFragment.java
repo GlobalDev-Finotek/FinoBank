@@ -24,7 +24,6 @@ public class TransferSignRegisterFragment extends BaseSignRegisterFragment {
 
 		String temp = getResources().getString(R.string.dialog_chat_send_transfer, name, moneyAsString);
 		binding.tvInst.setText(temp);
-
 		binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
 	}
 

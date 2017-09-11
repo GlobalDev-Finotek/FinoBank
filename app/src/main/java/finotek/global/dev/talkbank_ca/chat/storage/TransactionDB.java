@@ -20,6 +20,8 @@ public enum TransactionDB {
 	private String txName;
 	private String txMoney;
 
+	private boolean isTransfer;
+
 	TransactionDB() {
 		DateTimeFormatter f = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -33,6 +35,7 @@ public enum TransactionDB {
 		firstAlternativeBalance = 2015800;
 		secondAlternativeBalance = 11520800;
 		thirdAlternativeBalance = 20000;
+		isTransfer = false;
 	}
 
 	public List<Transaction> getTx() {
@@ -91,6 +94,13 @@ public enum TransactionDB {
 		this.thirdAlternativeBalance += money;
 	}
 
+	public boolean isTransfer() {
+		return isTransfer;
+	}
+
+	public void setTransfer(boolean transfer) {
+		isTransfer = transfer;
+	}
 
 	public String getTxName() {
 		return txName;

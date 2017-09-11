@@ -115,7 +115,7 @@ public class DonateScenario implements Scenario {
             return "모잠비크 멕세르";
 
         if(selected == 2)
-            return "방글라데시 메디나";
+            return "베트남 메디나";
 
         if(selected == 3)
             return "물에잠긴 시에라리온";

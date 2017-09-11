@@ -36,6 +36,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterOne;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterThree;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterTwo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.TransferRequestSignature;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
@@ -74,10 +75,12 @@ public class TransferScenario implements Scenario {
             MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
 
 			if (money >= 1000000) {
+				TransactionDB.INSTANCE.setTransfer(true);
+
 				MessageBox.INSTANCE.addAndWait(
 						new WarningMessage(context.getResources().getString(R.string.contextlog_authentication_waring, "이도현", 85.2)),
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
-						new TransferRequestSignature()
+						new RequestSignature()
 				);
 			} else {
 				Object recvMessage = null;
@@ -103,6 +106,7 @@ public class TransferScenario implements Scenario {
 		}
 
 		if (msg instanceof SignatureVerified) {
+			TransactionDB.INSTANCE.setTransfer(false);
 			Object recvMessage = null;
 			switch (navigateNum) {
 				case 1:

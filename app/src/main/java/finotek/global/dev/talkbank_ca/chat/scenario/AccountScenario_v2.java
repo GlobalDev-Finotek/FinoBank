@@ -12,6 +12,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.User;
 import io.realm.Realm;
 
@@ -59,6 +60,9 @@ public class AccountScenario_v2 implements Scenario {
 	public void onUserSend(String msg) {
 		switch (step) {
 			case Initial:
+				TransactionDB.INSTANCE.setTxName("");
+				TransactionDB.INSTANCE.setTxMoney("");
+
 				MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_open_account_notice)),
 						new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_electricity_open_account)),

@@ -49,6 +49,8 @@ public class PocketMoney implements Scenario {
 		}
 
 		if(msg instanceof SignatureVerified) {
+			TransactionDB.INSTANCE.setTransfer(false);
+
             if (account == 1) {
                 question(TransactionDB.INSTANCE.getMainBalance(), 0);
             } else if (account == 2) {
@@ -150,9 +152,6 @@ public class PocketMoney implements Scenario {
 				break;
 			case question:
 				if (msg.equals(context.getResources().getString(R.string.main_string_recommend_parents_yes))) {
-                    TransactionDB.INSTANCE.setTxName("어머니");
-                    TransactionDB.INSTANCE.setTxMoney("1,200,000");
-
 					MessageBox.INSTANCE.addAndWait(
 							askBank()
 					);
@@ -166,6 +165,10 @@ public class PocketMoney implements Scenario {
 				}
 				break;
 			case sign:
+				TransactionDB.INSTANCE.setTxName("어머니");
+				TransactionDB.INSTANCE.setTxMoney("1,200,000");
+				TransactionDB.INSTANCE.setTransfer(true);
+
 				MessageBox.INSTANCE.addAndWait(
 					new WarningMessage(context.getResources().getString(R.string.contextlog_authentication_needed)),
 					new RequestSignature()

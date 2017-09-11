@@ -112,13 +112,13 @@ public class DonateScenario implements Scenario {
 
     private String getTargetName(){
         if(selected == 1)
-            return "모잠비크 멕세르";
+            return context.getResources().getString(R.string.dialog_chat_donate_target_name1);
 
         if(selected == 2)
-            return "베트남 메디나";
+            return context.getResources().getString(R.string.dialog_chat_donate_target_name2);
 
         if(selected == 3)
-            return "물에잠긴 시에라리온";
+            return context.getResources().getString(R.string.dialog_chat_donate_target_name3);
 
         return "none";
     }

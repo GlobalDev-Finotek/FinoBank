@@ -18,6 +18,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SucceededMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WarningMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.DonateRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 
@@ -43,6 +44,7 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.Succeeded.ordinal(), new SucceededViewBuilder());
 
 		this.addChatViewBuilder(ViewType.RecoMenu.ordinal(), new RecoMenuViewBuilder(context));
+		this.addChatViewBuilder(ViewType.DonateView.ordinal(), new DonateViewBuilder(context));
 		this.addChatViewBuilder(ViewType.IDCard.ordinal(), new IDCardViewBuilder(context));
 
 		this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder(context));
@@ -116,6 +118,10 @@ public class ChatView extends RecyclerView {
 		addMessage(ViewType.RecoMenu.ordinal(), req);
 	}
 
+    public void addDonateView(DonateRequest req) {
+        addMessage(ViewType.DonateView.ordinal(), req);
+    }
+
 	private void addChatViewBuilder(int viewType, ViewBuilder builder) {
 		adapter.addChatViewBuilder(viewType, builder);
 	}
@@ -134,7 +140,7 @@ public class ChatView extends RecyclerView {
 
 	public enum ViewType {
 		Send, IconicSend, Receive, Divider, Status, Warning, Succeeded,
-		Confirm, RecoMenu,
+		Confirm, RecoMenu, DonateView,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult,
 		Wait

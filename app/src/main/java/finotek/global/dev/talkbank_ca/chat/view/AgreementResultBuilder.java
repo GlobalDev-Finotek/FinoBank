@@ -19,10 +19,14 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementResultBinding;
+import finotek.global.dev.talkbank_ca.model.User;
+import io.realm.Realm;
 
 public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 	@Inject
 	MyApplication application;
+
+	Realm realm = Realm.getDefaultInstance();
 
 	@Override
 	public RecyclerView.ViewHolder build(ViewGroup parent) {
@@ -59,7 +63,10 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnLoanServicePreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(loanText, "loan_service.pdf"));
+						String loan_service_pdf = "loan_service.pdf";
+						if(isPark())
+							loan_service_pdf = "loan_service_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(loanText, loan_service_pdf));
 					});
 
 			RxView.clicks(binding.bntLoanServiceSave)
@@ -73,7 +80,10 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnCreditInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, "credit_inform.pdf"));
+						String credit_inform_pdf = "credit_inform.pdf";
+						if(isPark())
+							credit_inform_pdf = "credit_inform_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, credit_inform_pdf));
 					});
 
 			RxView.clicks(binding.btnCreditInforSave)
@@ -87,7 +97,10 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnLoanTransactionPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, "credit_inform.pdf"));
+						String loan_transaction_pdf = "loan_transaction.pdf";
+						if(isPark())
+							loan_transaction_pdf = "loan_transaction_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, loan_transaction_pdf));
 					});
 
 			RxView.clicks(binding.btnLoanTransactionSave)
@@ -102,7 +115,10 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnContractInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, "credit_inform.pdf"));
+						String contract_inform_pdf = "contract_inform.pdf";
+						if(isPark())
+							contract_inform_pdf = "contract_inform_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, contract_inform_pdf));
 					});
 
 			RxView.clicks(binding.btnContractInformSave)
@@ -113,6 +129,11 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 						context.startActivity(i);
 					});
 
+		}
+
+		private boolean isPark(){
+			User user = realm.where(User.class).findAll().last();
+			return user != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남"));
 		}
 	}
 }

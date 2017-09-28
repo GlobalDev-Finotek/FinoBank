@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">FinoBank</string>
+    <string name="app_name">FinoBank-DE</string>
     <string name="registration_string_register">Register</string>
     <string name="registration_string_basic_information">My account</string>
     <string name="registration_string_phone_number">Mobile phone number</string>

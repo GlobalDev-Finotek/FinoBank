@@ -6,7 +6,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
     defaultConfig {
-        applicationId "finotek.global.dev.talkbank_ca"
+        applicationId "finotek.global.dev.talkbank_ca_demo"
         minSdkVersion 23
         targetSdkVersion 23
         versionCode 19
@@ -67,7 +67,6 @@ dependencies {
     compile 'jp.wasabeef:glide-transformations:2.0.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.8'
     provided 'javax.annotation:jsr250-api:1.0'
-
 
     compile project(':log_collector')
 }

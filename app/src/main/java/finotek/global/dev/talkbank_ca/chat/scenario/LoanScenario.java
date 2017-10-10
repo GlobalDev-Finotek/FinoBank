@@ -6,6 +6,7 @@ import org.joda.time.DateTime;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
@@ -124,18 +125,40 @@ public class LoanScenario implements Scenario {
 			case Agreement:
 				ReceiveMessage receive = new ReceiveMessage(context.getResources().getString(R.string.dialog_string_term_agreement_accept));
 
-				List<Agreement> agreements = new ArrayList<>();
-				Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
-				required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "view.pdf"));
-				required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "view2.pdf"));
-				required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement), "view3.pdf"));
-				required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information), "view4.pdf"));
+					List<Agreement> agreements = new ArrayList<>();
 
-				Agreement optional = new Agreement(200, context.getResources().getString(R.string.dialog_string_optional_term_agreement));
-				optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement), "view5.pdf"));
+				if(Locale.getDefault().getLanguage().equals("ko")) {
+					Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
+					required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "view.pdf"));
+					required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "view2.pdf"));
+					required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement), "view3.pdf"));
+					required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information), "view4.pdf"));
 
-				agreements.add(required);
-				agreements.add(optional);
+					Agreement optional = new Agreement(200, context.getResources().getString(R.string.dialog_string_optional_term_agreement));
+					optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement), "view5.pdf"));
+
+					agreements.add(required);
+					agreements.add(optional);
+
+				}
+
+				//// TODO: 10/10/2017
+
+				else{
+					Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
+					required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "loan_service.pdf"));
+					required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "loan_service.pdf"));
+					required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement), "loan_service.pdf"));
+					required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information), "loan_service.pdf"));
+
+					Agreement optional = new Agreement(200, context.getResources().getString(R.string.dialog_string_optional_term_agreement));
+					optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement), "loan_service.pdf"));
+
+					agreements.add(required);
+					agreements.add(optional);
+				}
+
+
 
 				MessageBox.INSTANCE.addAndWait(
 					receive,

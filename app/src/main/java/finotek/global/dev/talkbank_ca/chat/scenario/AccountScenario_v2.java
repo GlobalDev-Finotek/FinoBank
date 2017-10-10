@@ -4,17 +4,18 @@ import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountConfirm;
+import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
+import finotek.global.dev.talkbank_ca.chat.view.AccountConfirmBuilder;
 import finotek.global.dev.talkbank_ca.model.User;
 import io.realm.Realm;
 
@@ -46,6 +47,7 @@ public class AccountScenario_v2 implements Scenario {
             if (step == Step.Last) {
                 MessageBox.INSTANCE.addAndWait(
                     new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_open_account_complete)),
+                    new AccountConfirm(),
                     new Done(),
                     new RecommendScenarioMenuRequest(context)
                 );

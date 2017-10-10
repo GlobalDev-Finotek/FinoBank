@@ -444,5 +444,7 @@
     <string name="dialog_chat_donate_target_name3">물에잠긴 시에라리온</string>
     <string name="dialog_chat_donate_preprocess">후원금의 30%%는 S 기부재단에서 %1$s님 명의로 추가로 기부합니다.\n\n얼마를 후원하시겠습니까?\n(1000원 = 1.3 S코인)\n\n[S코인]은 식료품과 의약품으로만 교환가능한 S 기부재단의 코인입니다.</string>
     <string name="dialog_chat_donate_result">후원자님의 이름으로 %1$d코인이 %2$s에 기부됩니다.</string>
+
+    <string name="dialog_chat_remote_call_request">본인 인증을 위해 상담원과 화상으로 연결합니다.\n계속 진행 하시겠습니까?</string>
 </resources>
 

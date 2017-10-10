@@ -205,7 +205,7 @@
     <string name="dialog_string_optional_term_agreement">Agree to all optional fields</string>
     <string name="dialog_string_customer_information_agreement">Customer\'s information agreement</string>
     <string name="dialog_chat_agreenment_accepted">Agreement have been accepted</string>
-    <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n
+    <string name="dialog_chat_loan_success">The loan will be transferred to your account within two business days.\n The notification will be sent when sending money.\n
     is there anything else I can help you with?</string>
     <string name="dialog_chat_string_confirm_message">All Required Agreement is needed.</string>
     <string name="dialog_message_error">An unknown error has occurred! Please try again later.</string>

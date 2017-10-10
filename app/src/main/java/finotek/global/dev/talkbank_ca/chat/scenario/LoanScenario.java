@@ -62,12 +62,13 @@ public class LoanScenario implements Scenario {
 		if (msg instanceof SignatureVerified) {
 			if (step == Step.Last) {
 				// 입금내역 추가
+				/*
 				TransactionDB.INSTANCE.deposit(50000000);
 				TransactionDB.INSTANCE.addTx(
 						new Transaction(context.getString(R.string.main_string_secured_mirocredit),
 								1, 50000000, TransactionDB.INSTANCE.getMainBalance(), new DateTime()
 						));
-
+				*/
 				MessageBox.INSTANCE.add(new RequestRemoveControls());
 				MessageBox.INSTANCE.addAndWait(
 					new AgreementResult(),

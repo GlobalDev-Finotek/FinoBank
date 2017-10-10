@@ -95,8 +95,14 @@ public class ContextAuthPref {
     public ContextScoreResponse getScoreParams() {
         try {
             Gson gson = new Gson();
-            Log.d("FINOTEK", "context score response stosred as : " + pref.getString(SCORE_APP_LOG, "failed"));
-            return gson.fromJson(pref.getString(SCORE_APP_LOG, ""), ContextScoreResponse.class);
+            Log.d("FINOTEK", "context score response stored as : " + pref.getString(SCORE_APP_LOG, "none"));
+
+            String prefString = pref.getString(SCORE_APP_LOG, "");
+            if(prefString.isEmpty() || prefString.equals("")) {
+                return null;
+            } else {
+                return gson.fromJson(pref.getString(SCORE_APP_LOG, ""), ContextScoreResponse.class);
+            }
         } catch(Exception e) {
             e.printStackTrace();
             return null;

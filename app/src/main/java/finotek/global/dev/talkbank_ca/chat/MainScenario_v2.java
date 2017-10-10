@@ -51,6 +51,7 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -161,10 +162,13 @@ public class MainScenario_v2 {
 	}
 
 	private void firstScenario() {
+		ContextAuthPref pref = new ContextAuthPref(context);
+		float finalScore = pref.getFinalScore();
+
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
         MessageBox.INSTANCE.addAndWait(
-            new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName(), 87.2f)),
+            new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName(), finalScore)),
             new ReceiveMessage(getGreetings()),
             req
         );

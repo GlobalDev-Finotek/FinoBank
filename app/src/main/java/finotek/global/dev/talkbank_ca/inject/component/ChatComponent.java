@@ -9,7 +9,7 @@ import finotek.global.dev.talkbank_ca.inject.scope.PerActivity;
  * Created by magyeong-ug on 2017. 4. 6..
  */
 @PerActivity
-@Component(dependencies = AppComponent.class, modules = ActivityModule.class)
+@Component(dependencies = AppComponent.class, modules = {ActivityModule.class})
 public interface ChatComponent {
 	void inject(ChatActivity activity);
 }

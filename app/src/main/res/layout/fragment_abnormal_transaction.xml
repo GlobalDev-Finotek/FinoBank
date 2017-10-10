@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tb="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="1dp"
-            android:background="@color/white_two">
+            android:background="@color/white_two"
+            android:paddingBottom="1dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -19,6 +22,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:paddingTop="10dp">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -27,32 +31,37 @@
                     android:text="@string/setting_string_suspicious_auth"
                     android:textColor="@color/black"
                     android:theme="@style/Title"
-                    tb:custom_font="noto_medium" />
+                    tb:custom_font="noto_medium"/>
+
                 <com.suke.widget.SwitchButton
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     tb:sb_checked="true"
                     tb:sb_checked_color="@color/colorPrimary"
-                    tb:sb_show_indicator="false" />
+                    tb:sb_show_indicator="false"/>
             </LinearLayout>
         </FrameLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
+
                 <ImageView
                     android:layout_width="5dp"
                     android:layout_height="5dp"
                     android:layout_marginTop="9dp"
-                    android:background="@drawable/bullet" />
+                    android:background="@drawable/bullet"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/talkBankTextView7"
                     android:layout_width="wrap_content"
@@ -62,6 +71,7 @@
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
+
             <TableLayout
                 android:id="@+id/tl_opt_wrapper"
                 android:layout_width="match_parent"
@@ -69,160 +79,175 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/white_two"
                 android:stretchColumns="*">
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/tv_context_au"
                     android:layout_width="match_parent"
                     android:layout_height="40dp"
+                    android:layout_marginEnd="1dp"
+                    android:layout_marginStart="1dp"
+                    android:layout_marginTop="1dp"
                     android:background="@color/info"
                     android:gravity="center"
                     android:text="@string/dialog_string_context_auth"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_normal"
-                    android:layout_marginTop="1dp"
-                    android:layout_marginStart="1dp"
-                    android:layout_marginEnd="1dp"
-                    tb:custom_font="noto_regular" />
+                    tb:custom_font="noto_regular"/>
+
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_Psignature"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_signature"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginEnd="1dp"
                         tb:custom_font="noto_regular"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_PinCode"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_pin_code"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
                         tb:custom_font="noto_regular"/>
                 </TableRow>
+
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/cell_shape">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_emergency_contact"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
-                        android:layout_weight="1"
                         android:layout_gravity="top"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="1dp"
+                        android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_emergency_number"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginEnd="1dp"
                         tb:custom_font="noto_regular"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_au_mail"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_auth_mail"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
                         tb:custom_font="noto_regular"/>
                 </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/cell_shape">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_au_message"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginStart="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_auth_message"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginStart="1dp"
-                        android:layout_marginEnd="1dp"
                         tb:custom_font="noto_regular"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_credit_card_ocr"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_ocr_credit_card"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
                         tb:custom_font="noto_regular"/>
                 </TableRow>
+
                 <TableRow
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/cell_shape">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_au_picture"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_margin="1dp"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_profile_picture"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_margin="1dp"
                         tb:custom_font="noto_regular"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/tv_voice"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
+                        android:layout_marginBottom="1dp"
+                        android:layout_marginEnd="1dp"
+                        android:layout_marginTop="1dp"
                         android:layout_weight="1"
+                        android:background="@color/white"
                         android:gravity="center"
                         android:text="@string/setting_string_voice_recognition"
                         android:textAlignment="center"
                         android:textColor="#80182333"
                         android:textSize="@dimen/text_normal"
-                        android:background="@color/white"
-                        android:layout_marginTop="1dp"
-                        android:layout_marginEnd="1dp"
-                        android:layout_marginBottom="1dp"
                         tb:custom_font="noto_regular"/>
                 </TableRow>
             </TableLayout>
         </LinearLayout>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <finotek.global.dev.talkbank_ca.widget.TalkBankButton
                 android:id="@+id/btn_save"
                 style="@style/RoundButton"
@@ -234,7 +259,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:text="@string/setting_button_save"
-                tb:tb_font="noto_medium" />
+                tb:tb_font="noto_medium"/>
         </RelativeLayout>
     </LinearLayout>
 </layout>

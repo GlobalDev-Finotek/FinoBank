@@ -46,6 +46,9 @@ public class MainActivity extends AppCompatActivity implements MainView {
 			setContentView(R.layout.activity_main_eng);
 		}
 
+		sharedPrefsHelper.put(getString(R.string.user_key), "e26edaae-ebb2-4c14-8575-f2335fc857ae");
+
+
 		tvContextAuthAccuracy = (TextView) findViewById(R.id.tv_context_auth_accuracy);
 		mainButton = (Button) findViewById(R.id.main_button);
 

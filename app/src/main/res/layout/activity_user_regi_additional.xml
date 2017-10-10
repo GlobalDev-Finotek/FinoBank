@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tb="http://schemas.android.com/apk/res-auto">
+
     <LinearLayout
         android:id="@+id/activity_user_regi_additional"
         android:layout_width="match_parent"
@@ -243,6 +244,7 @@
                     tb:tb_font="noto_medium"/>
             </LinearLayout>
         </LinearLayout>
+
         <finotek.global.dev.talkbank_ca.widget.TalkBankButton
             android:id="@+id/btn_save"
             style="@style/RoundButton"
@@ -250,6 +252,6 @@
             android:layout_height="52dp"
             android:layout_margin="16dp"
             android:text="@string/string_save"
-            tb:tb_font="noto_medium" />
+            tb:tb_font="noto_medium"/>
     </LinearLayout>
 </layout>

@@ -89,7 +89,7 @@
             android:layout_centerVertical="true"
             android:textColor="@color/white"
             android:textSize="@dimen/text_normal"
-            tb:custom_font="noto_medium" />
+            tb:custom_font="noto_medium"/>
 
     </RelativeLayout>
 </layout>

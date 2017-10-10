@@ -53,10 +53,10 @@ public class TalkBankButton extends android.support.v7.widget.AppCompatButton {
 		setTypeface(tf);
 	}
 
-	public void setFontType(TalkBankButton.FontType fontType){
+	public void setFontType(TalkBankButton.FontType fontType) {
 		Typeface tf = null;
 
-		switch(fontType){
+		switch (fontType) {
 			case Regular:
 				tf = Typeface.createFromAsset(getContext().getAssets(), "fonts/NotoSansKR-Regular-Hestia.otf");
 				break;

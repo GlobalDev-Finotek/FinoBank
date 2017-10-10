@@ -14,7 +14,7 @@
             android:layout_width="416dp"
             android:layout_height="325dp"
             android:contentDescription="ID Card"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"/>
 
         <TableLayout
             android:id="@+id/id_card_info"
@@ -43,7 +43,7 @@
                     style="@style/table_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_normal"/>
             </TableRow>
 
             <TableRow
@@ -59,14 +59,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_name"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_normal"/>
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/name"
                     style="@style/table_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_normal"/>
             </TableRow>
 
             <TableRow
@@ -82,14 +82,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_id_number"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_normal"/>
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/jumin"
                     style="@style/table_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_normal"/>
             </TableRow>
 
             <TableRow
@@ -105,7 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_date_issued"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_normal"/>
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:id="@+id/issue_date"

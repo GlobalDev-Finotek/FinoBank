@@ -194,6 +194,7 @@
     <string name="dialog_string_term_agreement_accept">약관 확인 및 동의를 진행해 주세요.</string>
     <string name="dialog_string_mandatory_term_accept">필수 항목 전체 동의</string>
     <string name="dialog_string_loan_service_user_agreement">대출 서비스 이용 약관</string>
+    <string name="dialog_string_account_confirmation">계좌 확인서</string>
     <string name="dialog_string_personal_credit_information_access_agreement">개인(신용)정보 조회 및 이용 제공 동의</string>
     <string name="dialog_string_loan_transaction_agreement">대출거래 약정서</string>
     <string name="dialog_string_contact_information">계약 안내사항 및 유의사항</string>

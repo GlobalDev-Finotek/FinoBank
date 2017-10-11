@@ -375,4 +375,5 @@ public class ContextLogService extends Service {
 	public IBinder onBind(Intent intent) {
 		return null;
 	}
+
 }

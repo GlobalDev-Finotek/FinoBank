@@ -4,6 +4,7 @@ import android.content.Context;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountConfirm;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RemoteCallCompleted;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestRemoteCall;
@@ -45,6 +46,7 @@ public class AccountScenario_v2 implements Scenario {
 			if (step == Step.Last) {
 				MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_open_account_complete)),
+						new AccountConfirm(),
 						new Done(),
 						new RecommendScenarioMenuRequest(context)
 				);

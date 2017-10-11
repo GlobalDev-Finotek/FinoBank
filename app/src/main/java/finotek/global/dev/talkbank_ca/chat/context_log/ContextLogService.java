@@ -329,7 +329,7 @@ public class ContextLogService extends Service {
 		return usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, startTime, endTime);
 	}
 
-	private List<Parcelable> getSampleLog(){
+	private List<Parcelable> getSampleLog() {
 		List<Parcelable> list = new ArrayList<>();
 		CallHistoryLog historyLog = new CallHistoryLog();
 		historyLog.duration = "65";

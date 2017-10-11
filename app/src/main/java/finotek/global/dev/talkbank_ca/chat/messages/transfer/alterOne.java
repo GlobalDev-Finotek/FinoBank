@@ -9,5 +9,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class alterOne {
-    public boolean authenticated;
+	public boolean authenticated;
 }

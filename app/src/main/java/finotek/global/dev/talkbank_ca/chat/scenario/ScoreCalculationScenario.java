@@ -10,44 +10,44 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMen
 
 
 public class ScoreCalculationScenario implements Scenario {
-    private Context context;
+	private Context context;
 
-    public ScoreCalculationScenario(Context context) {
-        this.context = context;
-    }
+	public ScoreCalculationScenario(Context context) {
+		this.context = context;
+	}
 
-    @Override
-    public boolean decideOn(String msg) {
-        return msg.equals(context.getResources().getString(R.string.dialog_chat_how_score_is_computed));
-    }
+	@Override
+	public boolean decideOn(String msg) {
+		return msg.equals(context.getResources().getString(R.string.dialog_chat_how_score_is_computed));
+	}
 
-    @Override
-    public void onReceive(Object msg) {
+	@Override
+	public void onReceive(Object msg) {
 
-    }
+	}
 
-    @Override
-    public void onUserSend(String msg) {
-        MessageBox.INSTANCE.addAndWait(
-            new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_how_to_compute_score)),
-            new RecommendScenarioMenuRequest(context),
-            new Done()
-        );
-    }
+	@Override
+	public void onUserSend(String msg) {
+		MessageBox.INSTANCE.addAndWait(
+				new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_how_to_compute_score)),
+				new RecommendScenarioMenuRequest(context),
+				new Done()
+		);
+	}
 
-    @Override
-    public String getName() {
-        return context.getResources().getString(R.string.dialog_chat_how_to_compute_score);
-    }
+	@Override
+	public String getName() {
+		return context.getResources().getString(R.string.dialog_chat_how_to_compute_score);
+	}
 
-    @Override
-    public void clear() {
+	@Override
+	public void clear() {
 
-    }
+	}
 
-    @Override
-    public boolean isProceeding() {
-        return false;
-    }
+	@Override
+	public boolean isProceeding() {
+		return false;
+	}
 }
 

@@ -61,6 +61,7 @@ import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
+import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RemoteCallCompleted;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -101,6 +102,7 @@ import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.AgreementPdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
@@ -571,7 +573,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof ShowPdfView) {
 			ShowPdfView action = (ShowPdfView) msg;
-			PdfViewDialog dialog = new PdfViewDialog(this);
+		    AgreementPdfViewDialog dialog = new AgreementPdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();

@@ -1,10 +1,14 @@
 package finotek.global.dev.talkbank_ca.user.sign;
 
+import android.graphics.Bitmap;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
@@ -37,6 +41,9 @@ public class HiddenSignFragment extends BaseSignRegisterFragment {
                 break;
 
             case 3:
+                Log.d("FINOPASS", "sign is saved");
+                MySignStorage.saveSign(this.getContext(), binding.drawingCanvas);
+
                 binding.drawingCanvas.clear();
                 binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
                 binding.tvInst.setText(getString(R.string.registration_string_write_hidden_signature));
@@ -68,6 +75,5 @@ public class HiddenSignFragment extends BaseSignRegisterFragment {
                         stepSubject.onComplete();
                     }
                 });
-
     }
 }

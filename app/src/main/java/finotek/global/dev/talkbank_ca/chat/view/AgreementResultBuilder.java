@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -19,11 +20,18 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementResultBinding;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
 import io.realm.Realm;
 
 public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
+	private Context context;
+
 	@Inject
 	MyApplication application;
+
+	public AgreementResultBuilder(Context context) {
+		this.context = context;
+	}
 
 	@Override
 	public RecyclerView.ViewHolder build(ViewGroup parent) {
@@ -60,7 +68,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnLoanServicePreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String loan_service_pdf = "view.pdf";
+						String loan_service_pdf = (LocaleHelper.getLanguage(context).equals("ko")) ?  "view.pdf" : "view_eng.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(loanText, loan_service_pdf));
 					});
 
@@ -75,7 +83,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnCreditInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String credit_inform_pdf = "view2.pdf";
+						String credit_inform_pdf = (LocaleHelper.getLanguage(context).equals("ko")) ?  "view2.pdf" : "view2_eng.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, credit_inform_pdf));
 					});
 
@@ -90,7 +98,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnLoanTransactionPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String loan_transaction_pdf = "view3.pdf";
+						String loan_transaction_pdf = (LocaleHelper.getLanguage(context).equals("ko")) ?  "view3.pdf" : "view3_eng.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, loan_transaction_pdf));
 					});
 
@@ -106,7 +114,8 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnContractInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String contract_inform_pdf = "view4.pdf";
+
+						String contract_inform_pdf = (LocaleHelper.getLanguage(context).equals("ko")) ?  "view4.pdf" : "view4_eng.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, contract_inform_pdf));
 					});
 

@@ -27,6 +27,7 @@
     <string name="registration_string_type_all_field">Please type all required field</string>
     <string name="registration_string_write_signature_step_1">Please write signature on displayed area(1/2)</string>
     <string name="registration_string_write_signature_step_2">Please write signature on displayed area(2/2)</string>
+    <string name="registration_string_write_hidden_signature">Please write hidden signature on displayed area</string>
     <string name="registration_string_registering_signature">Registering signature is repeated twice</string>
     <string name="registration_string_fingertip_use"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
     <string name="registration_string_registered_signature">Registered signature will be only used for purpose of lon-in and personal verification</string>
@@ -401,7 +402,7 @@
 
     <string name = "main_string_recommend_house_yes">Yes, give me a house loan.</string>
 
-    <string name = "main_string_recommend_finished">All the recommend tasks are finished. Press \'+\' button .</string>
+    <string name="main_string_recommend_finished">All the recommend tasks are finished. Press \'+\' button .</string>
     <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>
     <string name="registration_button_credit_card_capture">take Credit card</string>
     <string name="registration_string_credit_card_company">Credit card company</string>
@@ -411,14 +412,26 @@
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="dialog_string_id_card_type">Verification ID type</string>
 
-    <string name ="dialog_chat_contextlog_search">show context Data</string>
-    <string name ="dialog_chat_contextlog_search_initMessage">Determine what data you want to see</string>
-    <string name ="dialog_chat_contextlog_sms">SMS history</string>
-    <string name ="dialog_chat_contextlog_call">Call history</string>
-    <string name ="dialog_chat_contextlog_location">Location history</string>
-    <string name ="dialog_chat_contextlog_application">Application use history</string>
-    <string name ="dialog_chat_contextlog_total">Total Context</string>
-    <string name = "dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
+    <string name="dialog_chat_how_score_is_computed">How is score computed?</string>
+    <string name="dialog_chat_how_to_compute_score">Contextual authentication is the fastest, easiest, and most secure next-generation authentication technology in Finotek.\n\nFirst we calculate your intimacy with your past call history, textual history, app history\n\nAnd, measure how closely the user\'s recent 30-minute record is compared to the past record.\n\n* Intimacy factor: \n - total calls, total calls, recent Number of calls, recent calls \n - total number of characters, recent number of characters \n - total usage, recent usage \n - (location) favorite locations, recent favorites \n\n* Element \n - the number of 30-minute context records</string>
+    <string name="dialog_chat_contextlog_search">show context Data</string>
+    <string name="dialog_chat_contextlog_search_initMessage">%1$s\'s score is %2$.1f points, Details are as shown below.\nCall Log: %3$.1f points\nSMS: %4$.1f points\nLocation: %5$.1f points\nApp Usage: %6$.1f points</string>
+    <string name="dialog_chat_contextlog_sms">SMS history</string>
+    <string name="dialog_chat_contextlog_call">Call history</string>
+    <string name="dialog_chat_contextlog_location">Location history</string>
+    <string name="dialog_chat_contextlog_application">Application use history</string>
+    <string name="dialog_chat_contextlog_total">Total Context</string>
+    <string name="dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
+    <string name="dialog_chat_contextlog_result_message">-%1$s</string>
+    <string name="dialog_chat_contextlog_result_nothing">There is no reason.</string>
+    <string name="contextlog_result_message_app_usage">You used %1$s app(rank:%2$.0f) %3$.0f minute ago. You get %4$.1f points.</string>
+    <string name="contextlog_result_location">You are currently in %1$f, %2$f (rank: %3$.0f).\nYou get %4$.2f points.</string>
+    <string name="contextlog_result_phone_call">You called to %1$s(rank: %2$.0f) %3$.0f minutes ago\nYou get %4$.2f points.</string>
+    <string name="contextlog_result_message">You send or receive message with %1$s(rank: %2$.0f) %3$.0f minutes before.\nYou get %4$.2f points.</string>
+
+    <string name="contextlog_authentication_succeeded">The system judged the probability of %1$s to be %2$.1f%%\nThis request is served when it is 70%% or more.\nTherefore authentication succeeded.</string>
+    <string name="contextlog_authentication_waring">The system judged the probability of %1$s to be %2$.1f%%\nThis request is served when it is 90%% or more.\nYou have to authorize for this request by signature authentication</string>
+    <string name="contextlog_authentication_needed">Signature verification is required because the transfer amount is over one million won.</string>
 
     <!-- charity -->
     <string name="dialog_chat_donate">Donate</string>

@@ -236,30 +236,33 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-        if (msg instanceof ContextTotal) {
-            Intent intent = new Intent(this, ContextLogService.class);
+		final String isAgreeWithString = "isAgreeWithContextAuth";
+		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(isAgreeWithString, false);
+
+		if (msg instanceof ContextTotal && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
             intent.putExtra("askType", "totalLog");
             startService(intent);
         }
 
-        if (msg instanceof ContextSms) {
-            Intent intent = new Intent(this, ContextLogService.class);
+		if (msg instanceof ContextSms && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
             intent.putExtra("askType", "smsLog");
             startService(intent);
         }
 
-        if (msg instanceof ContextCall) {
-            Intent intent = new Intent(this, ContextLogService.class);
+		if (msg instanceof ContextCall && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
             intent.putExtra("askType", "callLog");
             startService(intent);
         }
-        if (msg instanceof ContextLocation) {
-            Intent intent = new Intent(this, ContextLogService.class);
+		if (msg instanceof ContextLocation && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
             intent.putExtra("askType", "locationLog");
             startService(intent);
         }
-        if (msg instanceof ContextApp) {
-            Intent intent = new Intent(this, ContextLogService.class);
+		if (msg instanceof ContextApp && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
             intent.putExtra("askType", "appLog");
             startService(intent);
         }
@@ -921,7 +924,9 @@ public class ChatActivity extends AppCompatActivity {
 							}
 						}
 
-						appLogData.remove(skyHomeAppId);
+						if (!appLogData.isEmpty()) {
+							appLogData.remove(skyHomeAppId);
+						}
 					}
 
 					queryMaps.addAll(appLogData);
@@ -969,10 +974,14 @@ public class ChatActivity extends AppCompatActivity {
 			}
 		};
 		registerReceiver(receiver, intentFilter);
+		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+				.getBoolean(getString(R.string.splash_is_auth_agree), false);
 
-		Intent intent = new Intent(this, ContextLogService.class);
-		intent.putExtra("askType", "totalLog");
-		startService(intent);
+		if (isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
+			intent.putExtra("askType", "totalLog");
+			startService(intent);
+		}
 	}
 
 	@Override

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/chat_margin_bottom"
+        android:layout_marginEnd="@dimen/chat_margin_left_right"
+        android:layout_marginStart="@dimen/chat_margin_left_right"
+        android:background="#EDECED"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="1dp"
+            android:background="@android:color/white"
+            android:padding="15dp">
+            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                android:id="@+id/btn_confirm_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:text="1111111111111111111111111111"
+                android:textColor="@color/dark_100"
+                android:textSize="@dimen/text_normal"  />
+            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+                android:id="@+id/btn_confirm_preview"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/btn_confirm_text"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/btn_small_round_default"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/dialog_chat_preview"
+                android:textColor="@color/dark_100"
+                android:textSize="@dimen/text_small"
+                app:tb_font="noto_regular" />
+
+            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+                android:id="@+id/btn_confirm_save"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="60dp"
+                android:layout_height="20dp"
+                android:layout_alignParentStart="true"
+                android:layout_below="@id/btn_confirm_text"
+                android:layout_marginStart="94dp"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/btn_small_round_default"
+                android:paddingEnd="12dp"
+                android:paddingStart="12dp"
+                android:text="@string/dialog_chat_save"
+                android:textColor="@color/dark_100"
+                android:textSize="@dimen/text_small"
+                app:tb_font="noto_regular" />
+        </RelativeLayout>
+
+    </LinearLayout>
+</layout>

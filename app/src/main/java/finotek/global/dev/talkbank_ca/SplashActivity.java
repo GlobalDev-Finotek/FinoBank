@@ -1,9 +1,11 @@
 package finotek.global.dev.talkbank_ca;
 
+import android.content.Context;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -19,13 +21,13 @@ import io.realm.Realm;
  * status bar and navigation/system bar) with user interaction.
  */
 public class SplashActivity extends AppCompatActivity {
+
+	private final String isFirstStr = "isFirst";
 	private Finopass finopass;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
-		finopass = Finopass.getInstance(this);
 
 		if (LocaleHelper.getLanguage(this).equals("ko")) {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash);
@@ -33,11 +35,46 @@ public class SplashActivity extends AppCompatActivity {
 			DataBindingUtil.setContentView(this, R.layout.activity_splash_eng);
 		}
 
+		boolean isFirst = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+				.getBoolean(isFirstStr, true);
 
-		finopass.registerObservable()
-				.subscribe(aBoolean -> moveToNextActivity());
+		if (isFirst) {
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setMessage(getString(R.string.main_string_v2_create_signature_agree_no_confirm))
+					.setPositiveButton(getString(R.string.dialog_button_yes), (dialog, which) -> {
+
+						getSharedPreferences("prefs", Context.MODE_PRIVATE)
+								.edit().putBoolean(isFirstStr, false).apply();
+
+						finopass = Finopass.getInstance(SplashActivity.this);
+
+						finopass.registerObservable()
+								.subscribe(aBoolean -> moveToNextActivity());
+						saveContextAuthAgreement(true);
+
+					})
+					.setNegativeButton(getString(R.string.dialog_button_no), (dialog, which) -> {
+						getSharedPreferences("prefs", Context.MODE_PRIVATE)
+								.edit().putBoolean(isFirstStr, false).apply();
+
+						dialog.dismiss();
+						saveContextAuthAgreement(false);
+						moveToNextActivity();
+					})
+					.setCancelable(false)
+					.show();
 
 
+		} else {
+			moveToNextActivity();
+		}
+	}
+
+	private void saveContextAuthAgreement(boolean flag) {
+		getSharedPreferences("prefs", Context.MODE_PRIVATE)
+				.edit()
+				.putBoolean(getString(R.string.splash_is_auth_agree), flag)
+				.apply();
 	}
 
 	private void moveToNextActivity() {

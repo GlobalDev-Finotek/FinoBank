@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.chat.context_log;
+package finotek.global.dev.talkbank_ca.chat.ContextLog;
 
 import android.Manifest;
 import android.app.Service;
@@ -21,7 +21,6 @@ import android.os.IBinder;
 import android.os.Parcelable;
 import android.provider.CallLog;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.util.Log;
 
@@ -31,7 +30,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-import finotek.global.dev.talkbank_ca.R;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
@@ -76,7 +74,7 @@ public class ContextLogService extends Service {
 		SharedPreferences sharedPreferences = getSharedPreferences("prefs", Context.MODE_PRIVATE);
 
 		String key = sharedPreferences
-				.getString(getString(R.string.user_key, ""), "")
+				.getString(getBaseContext().getString(globaldev.finotek.com.logcollector.R.string.user_key), "")
 				.substring(0, 16);
 
 		try {
@@ -90,17 +88,16 @@ public class ContextLogService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Intent getContextLog = new Intent();
 		getContextLog.setAction("chat.ContextLog.ContextLogService");
-		getContextLog.putExtra("askType", intent.getStringExtra("askType"));
 		getContextLog.putExtra("totalLog", collector(30));
 		getContextLog.putParcelableArrayListExtra("smsLog", (ArrayList<? extends Parcelable>) getSms(30));
 		getContextLog.putParcelableArrayListExtra("callLog", (ArrayList<? extends Parcelable>) getCall(30));
 		getContextLog.putParcelableArrayListExtra("locationLog", (ArrayList<? extends Parcelable>) getLocation(30));
 		getContextLog.putParcelableArrayListExtra("appLog", (ArrayList<? extends Parcelable>) getApp(30));
-		getContextLog.putParcelableArrayListExtra("sampleLog", (ArrayList<? extends Parcelable>) getSampleLog());
 		sendBroadcast(getContextLog);
 
+
 		Log.d("seo", collector(30));
-		stopSelf();
+
 		return START_STICKY;
 	}
 
@@ -130,7 +127,7 @@ public class ContextLogService extends Service {
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentTime());
-		cal.add(Calendar.MINUTE, -inputTime);
+		cal.add(Calendar.MINUTE, - inputTime);
 
 		Date changedTime = cal.getTime();
 
@@ -160,13 +157,9 @@ public class ContextLogService extends Service {
 
 				MessageLog messageLog = new MessageLog();
 				messageLog.setLength(body.length());
-				try {
-					messageLog.text = ai.encText(body);
-					messageLog.logTime = String.valueOf(timeStamp);
-					messageLog.setTargetNumber(ai.encText(address));
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
+				messageLog.text = body;
+				messageLog.setLogTime(String.valueOf(timeStamp));
+				messageLog.setTargetNumber(address);
 
 				smsList.add(messageLog);
 			}
@@ -205,16 +198,10 @@ public class ContextLogService extends Service {
 				CallHistoryLog historyLog = new CallHistoryLog();
 
 				historyLog.duration = duration;
-				historyLog.logTime = String.valueOf(timeStamp);
 
 				try {
-					historyLog.targetNumber = ai.encText(number);
-
-					if (!TextUtils.isEmpty(cachedName)) {
-						historyLog.targetName = ai.encText(cachedName);
-					} else {
-						historyLog.targetName = ai.encText(" ");
-					}
+					historyLog.targetNumber = number;
+					historyLog.targetName = ai.encText(cachedName);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -250,23 +237,21 @@ public class ContextLogService extends Service {
 				currentLocation = l;
 			}
 		}
-		if (currentLocation != null) {
-			long timeStamp = currentLocation.getTime();
-			String date = DateFormat.format("yyyy-MM-dd HH:mm:ss", timeStamp).toString();
 
-			double dLatitude = currentLocation.getLatitude();
-			double dLongitude = currentLocation.getLongitude();
+		long timeStamp = currentLocation.getTime();
+		String date = DateFormat.format("yyyy-MM-dd HH:mm:ss", timeStamp).toString();
 
-			if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
-				LocationLog locationLog = new LocationLog();
-				locationLog.longitute = dLongitude;
-				locationLog.latitude = dLatitude;
-				locationLog.logTime = timeStamp;
-				locationList.add(locationLog);
-			} else {
-				String errorMessage = "there is no location data within" + targetTime;
-				System.out.print(errorMessage);
-			}
+		double dLatitude = currentLocation.getLatitude();
+		double dLongitude = currentLocation.getLongitude();
+
+		if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
+			LocationLog locationLog = new LocationLog();
+			locationLog.longitute = dLatitude;
+			locationLog.latitude = dLongitude;
+			locationList.add(locationLog);
+		} else {
+			String errorMessage = "there is no location data within" + targetTime;
+			System.out.print(errorMessage);
 		}
 
 		return locationList;
@@ -287,8 +272,6 @@ public class ContextLogService extends Service {
 
 				if (dataTime(endTime).before(currentTime()) && dataTime(endTime).after(searchZone(targetTime))) {
 					ApplicationLog applicationLog = new ApplicationLog();
-					applicationLog.startTime = startTime;
-					applicationLog.lastTimeUsed = dataTime(endTime).toString();
 					applicationLog.packageName = (foregroundAppPackageInfo.packageName);
 					applicationLog.setAppName(label);
 
@@ -297,13 +280,10 @@ public class ContextLogService extends Service {
 						applicationLog.appName = ai.encText(applicationLog.appName);
 					}
 
-					applicationLog.setStartTime(String.valueOf(u.getFirstTimeStamp()));
-					applicationLog.lastTimeUsed = String.valueOf(u.getLastTimeStamp());
+					applicationLog.setStartTime(startTime);
 					applicationLog.duration = u.getTotalTimeInForeground();
 
-					if (u.getTotalTimeInForeground() > 0) {
-						appList.add(applicationLog);
-					}
+					appList.add(applicationLog);
 				}
 			} catch (PackageManager.NameNotFoundException e) {
 				e.printStackTrace();
@@ -327,37 +307,6 @@ public class ContextLogService extends Service {
 		long startTime = calendar.getTimeInMillis();
 
 		return usm.queryUsageStats(UsageStatsManager.INTERVAL_BEST, startTime, endTime);
-	}
-
-	private List<Parcelable> getSampleLog(){
-		List<Parcelable> list = new ArrayList<>();
-		CallHistoryLog historyLog = new CallHistoryLog();
-		historyLog.duration = "65";
-		historyLog.logTime = String.valueOf(System.currentTimeMillis() - (15 * 1000 * 60));
-		historyLog.targetNumber = "qx5Nw6AIeT918j7HTcYOeA==";
-		historyLog.targetName = "vYJVopnud5hgC7CaeB1DD7OhcOnXxMkcczPkQHxrYk8=";
-		list.add(historyLog);
-
-		LocationLog locationLog = new LocationLog();
-		locationLog.logTime = System.currentTimeMillis();
-		locationLog.latitude = 37.408111;
-		locationLog.longitute = 126.957111;
-		list.add(locationLog);
-
-		MessageLog messageLog = new MessageLog();
-		messageLog.logTime = String.valueOf(System.currentTimeMillis() - (5 * 1000 * 60));
-		messageLog.targetNumber = "jddJAc97LEhy6fZiDNNFig==";
-		messageLog.targetName = "vYJVopnud5hgC7CaeB1DD7OhcOnXxMkcczPkQHxrYk8=";
-		messageLog.length = 63;
-		list.add(messageLog);
-
-		ApplicationLog applicationLog = new ApplicationLog();
-		applicationLog.appName = "jzbjUc027qTL9O6qc//QZw==";
-		applicationLog.duration = 2252.0;
-		applicationLog.startTime = "1502698716626";
-		list.add(applicationLog);
-
-		return list;
 	}
 
 	public String collector(int targetTime) {

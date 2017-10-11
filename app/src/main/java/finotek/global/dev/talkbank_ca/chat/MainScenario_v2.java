@@ -2,7 +2,6 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
 import android.text.format.DateFormat;
-import android.util.Log;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
@@ -12,22 +11,21 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountConfirm;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
-import finotek.global.dev.talkbank_ca.chat.messages.SucceededMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
-import finotek.global.dev.talkbank_ca.chat.messages.WarningMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.control.DonateRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -35,7 +33,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
 import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
-import finotek.global.dev.talkbank_ca.chat.scenario.DonateScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
@@ -43,7 +40,6 @@ import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.PocketMoney;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
-import finotek.global.dev.talkbank_ca.chat.scenario.ScoreCalculationScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TravelSaving;
@@ -51,7 +47,6 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
-import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -76,19 +71,15 @@ public class MainScenario_v2 {
 		Realm realm = Realm.getDefaultInstance();
 		user = realm.where(User.class).findAll().last();
 
-		//Recommend scenario setup
-		if (!LeftScenario.scenarioList.contains("E"))
-			LeftScenario.scenarioList.add("E");
-		if (!LeftScenario.scenarioList.contains("P"))
+        //Recommend scenario setup
+		if(!LeftScenario.scenarioList.contains("E"))
+        	LeftScenario.scenarioList.add("E");
+		if(!LeftScenario.scenarioList.contains("P"))
 			LeftScenario.scenarioList.add("P");
-		if(!LeftScenario.scenarioList.contains("G"))
-			LeftScenario.scenarioList.add("G");
-		if (!LeftScenario.scenarioList.contains("T"))
-			LeftScenario.scenarioList.add("T");
-		if (!LeftScenario.scenarioList.contains("H"))
-			LeftScenario.scenarioList.add("H");
-        if(!LeftScenario.scenarioList.contains("C"))
-            LeftScenario.scenarioList.add("C");
+		if(!LeftScenario.scenarioList.contains("T"))
+        	LeftScenario.scenarioList.add("T");
+		if(!LeftScenario.scenarioList.contains("H"))
+        	LeftScenario.scenarioList.add("H");
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -99,6 +90,11 @@ public class MainScenario_v2 {
 						return Observable.just(msg)
 								.delay(1, TimeUnit.SECONDS)
 								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.doOnNext(msg -> {
+					if (!isImmediateMessage(msg)) {
+						MessageBox.INSTANCE.add(new MessageEmitted());
 					}
 				})
 				.doOnError(e -> {
@@ -126,13 +122,11 @@ public class MainScenario_v2 {
 		scenarioPool.put("travelSaving", new TravelSaving(context));
 		scenarioPool.put("pocketMoney", new PocketMoney(context));
 		scenarioPool.put("contextSearch", new ContextSearch(context));
-        scenarioPool.put("scoreCalculation", new ScoreCalculationScenario(context));
-		scenarioPool.put("donateScenario", new DonateScenario(context));
 
 		currentScenario = null;
 	}
 
-	private String getGreetings() {
+	private String getGreetings(){
 		long temptime = System.currentTimeMillis();
 		String time = DateFormat.format("HH", temptime).toString();
 		int hour = Integer.parseInt(time);
@@ -144,16 +138,17 @@ public class MainScenario_v2 {
 			greetingString = context.getResources().getString(R.string.main_string_v2_login_hello, user.getName());
 		}
 
-		if (hour >= 6 && 13 > hour) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M) + "\n";
+		if (hour >=6 && 13 > hour){
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M)+"\n";
 
-		} else if (hour >= 12 && 19 > hour) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_L) + "\n";
+		}else if (hour >= 12 && 19 > hour ){
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_L)+"\n";
 
-		} else if (hour >= 18) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_E) + "\n";
-		} else if (hour >= 0 && 7 > hour) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N) + "\n";
+		}else if (hour >= 18) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_E)+"\n";
+		}
+		else if (hour >= 0  && 7 > hour ) {
+			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N)+"\n";
 		}
 
 		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getMainBalance()));
@@ -162,17 +157,83 @@ public class MainScenario_v2 {
 	}
 
 	private void firstScenario() {
-		ContextAuthPref pref = new ContextAuthPref(context);
-		float finalScore = pref.getFinalScore();
 
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
-		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
-        MessageBox.INSTANCE.addAndWait(
-            new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName(), finalScore)),
-            new ReceiveMessage(getGreetings()),
-            req
-        );
+
+        RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
+		/*RecoMenuRequest req = new RecoMenuRequest();
+		//req.setTitle("추천메뉴");
+		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));
+
+		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_pay_electricity), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
+		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_house_loan), null);
+		req.addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
+        */
+		MessageBox.INSTANCE.addAndWait(
+				new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName())),
+				new ReceiveMessage(getGreetings()),
+				req
+		);
+
+
+
+
+
+		/*eventBus.getObservable()
+				.subscribe(iEvent -> {
+					Log.d("FINO-TB", iEvent.getClass().getName());
+
+					if (iEvent instanceof AccuracyMeasureEvent) {
+
+						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
+						if (isSigned) {
+							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.main_string_v2_login_hello, (int) (accuracy * 100))));
+						} else {
+							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, (int) (accuracy * 100))));
+						}
+					}
+					Realm realm = Realm.getDefaultInstance();
+					User user = realm.where(User.class).findAll().last();
+					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello, user.getName())));
+
+                    long temptime = System.currentTimeMillis();
+                    String time = DateFormat.format("HH", temptime).toString();
+                    int hour = Integer.parseInt(time);
+
+                    if (hour >=6 && 13 > hour){
+                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_M)));
+
+                    }else if (hour >= 12 && 19 > hour ){
+                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_L)));
+
+                    }else if (hour >= 18) {
+                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_E)));
+                    }
+                    else if (hour >= 0  && 7 > hour ) {
+                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_N)));
+                    }
+
+                    String [] proposal = {context.getResources().getString(R.string.main_string_v2_login_recommend),
+                            context.getResources().getString(R.string.main_string_v2_login_recommend_list), context.getResources().getString(R.string.main_string_v2_login_recommend_task)
+                    };
+                    String proposalRandom =(proposal[new Random().nextInt(proposal.length)]);
+
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_notify_balance)));
+                    MessageBox.INSTANCE.add(new ReceiveMessage(proposalRandom));
+
+
+                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_ask_step)));
+                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_pay_electricity));
+                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
+                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_loan_car));
+                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
+
+
+                });*/
+
 	}
+
 
 
 	private void onRequest(Object msg) {
@@ -220,7 +281,6 @@ public class MainScenario_v2 {
 	}
 
 	private void updateUIOn(Object msg) {
-        Log.d("FINOTEK", msg.getClass().getName() + " message emitted.");
 
 		chatView.scrollToBottom();
 
@@ -252,16 +312,6 @@ public class MainScenario_v2 {
 			chatView.dividerMessage(recv.getMessage());
 		}
 
-		if (msg instanceof WarningMessage) {
-			WarningMessage recv = (WarningMessage) msg;
-			chatView.warningMessage(recv.getMessage());
-		}
-
-		if(msg instanceof SucceededMessage) {
-			SucceededMessage recv = (SucceededMessage) msg;
-			chatView.succeededMessage(recv.getMessage());
-		}
-
 		// 예, 아니오 선택 요청
 		if (msg instanceof ConfirmRequest) {
 			ConfirmRequest request = (ConfirmRequest) msg;
@@ -274,10 +324,6 @@ public class MainScenario_v2 {
 		// 추천 메뉴 요청
 		if (msg instanceof RecoMenuRequest) {
 			chatView.recoMenu((RecoMenuRequest) msg);
-		}
-
-		if (msg instanceof DonateRequest) {
-			chatView.addDonateView((DonateRequest) msg);
 		}
 
 		// 신분증 스캔 결과
@@ -293,6 +339,10 @@ public class MainScenario_v2 {
 		// 약관 결과
 		if (msg instanceof AgreementResult) {
 			chatView.agreementResult();
+		}
+
+		if (msg instanceof AccountConfirm){
+			chatView.accountConfirm();
 		}
 
 		// 최근 거래 내역
@@ -318,17 +368,16 @@ public class MainScenario_v2 {
 		}
 
 		if (msg instanceof RequestRemoveControls) {
-            Log.d("FINOTEK", "remove controls proceeded.");
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
 		}
 
-		if (msg instanceof WaitResult) {
+		if(msg instanceof WaitResult) {
 			chatView.waiting();
 		}
 
-		if (msg instanceof WaitDone) {
+		if(msg instanceof WaitDone) {
 			chatView.waitingDone();
 		}
 	}
@@ -340,7 +389,8 @@ public class MainScenario_v2 {
 
 	private boolean isImmediateMessage(Object msg) {
 		return msg instanceof SendMessage || msg instanceof RequestRemoveControls ||
-				msg instanceof TransferButtonPressed || msg instanceof DividerMessage;
+				msg instanceof TransferButtonPressed || msg instanceof DividerMessage ||
+			  msg instanceof MessageEmitted;
 	}
 
 	public void release() {

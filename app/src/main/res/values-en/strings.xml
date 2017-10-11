@@ -447,4 +447,6 @@
     <string name="dialog_chat_donate_target_name3">the submerged Sierra Leone</string>
     <string name="dialog_chat_donate_preprocess">30%% of the donations will be donated by the S Donations Foundation in addition to %1$s\n\nHow much do you want to donate?\n(1000 won = 1.3 SB coin)\n\n[SB coin] is the coin of S donation foundation that can be exchanged only with food and medicine.</string>
     <string name="dialog_chat_donate_result">%1$d coins will be donated to %2$s in the name of yours.</string>
+
+    <string name="dialog_chat_remote_call_request">You should connect with the agent for your verification through video call.\nDo you want to continue?</string>
 </resources>

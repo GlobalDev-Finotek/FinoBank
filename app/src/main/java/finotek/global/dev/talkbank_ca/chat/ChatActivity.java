@@ -62,7 +62,9 @@ import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.RemoteCallCompleted;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
@@ -103,6 +105,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
+import finotek.global.dev.talkbank_ca.user.remotecall.RemoteCallFragment;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.HiddenSignFragment;
 import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
@@ -155,6 +158,7 @@ public class ChatActivity extends AppCompatActivity {
 	private CapturePicFragment capturePicFragment;
 	private HiddenSignFragment signRegistFragment;
 	private TransferSignRegisterFragment transferSignRegistFragment;
+    private RemoteCallFragment remoteCallFragment;
 
 	private BroadcastReceiver receiver;
 	private boolean isFirstAuth = true;
@@ -262,12 +266,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 		if (msg instanceof RequestPhoto) {
-
-			hideAppBar();
-			hideStatusBar();
-			binding.footer.setPadding(0, 0, 0, 0);
-			releaseControls();
-			releaseAllControls();
+			this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -292,11 +291,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestTakeAnotherIDCard) {
-			releaseControls();
-			releaseAllControls();
-			binding.footer.setPadding(0, 0, 0, 0);
-			hideStatusBar();
-			hideAppBar();
+            this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -321,12 +316,35 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
+		if(msg instanceof RequestRemoteCall) {
+            this.prepareForFullScreen();
+
+            View captureView = inflate(R.layout.chat_capture);
+            binding.footer.addView(captureView);
+
+            remoteCallFragment = new RemoteCallFragment();
+            remoteCallFragment.setVideoURL("android.resource://"+  getPackageName() + "/" + R.raw.lady_teller);
+            remoteCallFragment.setStopListener(() -> {
+                MessageBox.INSTANCE.add(new RemoteCallCompleted(), 500);
+            });
+
+            FragmentTransaction tx = getFragmentManager().beginTransaction();
+            tx.replace(R.id.chat_capture, remoteCallFragment);
+            tx.commit();
+        }
+
+        if(msg instanceof RemoteCallCompleted) {
+            showAppBar();
+            this.returnToInitialControl();
+            showStatusBar();
+
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.remove(remoteCallFragment).commit();
+            binding.chatView.scrollToBottom();
+        }
+
 		if (msg instanceof RequestTakeIDCard) {
-			releaseControls();
-			releaseAllControls();
-			binding.footer.setPadding(0, 0, 0, 0);
-			hideAppBar();
-			hideStatusBar();
+            this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -360,11 +378,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
 		if (msg instanceof RequestSignature) {
-			releaseControls();
-			releaseAllControls();
-			hideAppBar();
-			hideStatusBar();
-			binding.footer.setPadding(0, 0, 0, 0);
+            this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
@@ -437,11 +451,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof TransferRequestSignature) {
-			releaseControls();
-			releaseAllControls();
-			hideAppBar();
-			hideStatusBar();
-			binding.footer.setPadding(0, 0, 0, 0);
+            this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
@@ -1124,4 +1134,11 @@ public class ChatActivity extends AppCompatActivity {
 		return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
 	}
 
+	private void prepareForFullScreen(){
+        hideAppBar();
+        hideStatusBar();
+        binding.footer.setPadding(0, 0, 0, 0);
+        releaseControls();
+        releaseAllControls();
+    }
 }

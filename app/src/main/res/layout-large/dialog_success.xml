@@ -57,6 +57,6 @@
             android:textColor="@android:color/white"
             android:textSize="@dimen/text_normal"
             android:visibility="gone"
-            app:tb_font="noto_medium" />
+            app:tb_font="noto_medium"/>
     </RelativeLayout>
 </layout>

@@ -7,7 +7,6 @@ import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -18,75 +17,75 @@ import io.realm.Realm;
  */
 
 public class HouseLoan implements Scenario {
-    private Context context;
-    private Step step = Step.Initial;
-    private User user;
+	private Context context;
+	private Step step = Step.Initial;
+	private User user;
 
-    public HouseLoan(Context context) {
-        Realm realm = Realm.getDefaultInstance();
-        this.user = realm.where(User.class).findAll().last();
-        this.context = context;
-    }
+	public HouseLoan(Context context) {
+		Realm realm = Realm.getDefaultInstance();
+		this.user = realm.where(User.class).findAll().last();
+		this.context = context;
+	}
 
-    @Override
-    public String getName() {
-        return context.getString(R.string.main_string_v2_login_house_loan) ;
-    }
+	@Override
+	public String getName() {
+		return context.getString(R.string.main_string_v2_login_house_loan);
+	}
 
 
-    @Override
-    public boolean decideOn(String msg) {
-         return msg.equals(context.getResources().getString(R.string.main_string_v2_login_house_loan));
+	@Override
+	public boolean decideOn(String msg) {
+		return msg.equals(context.getResources().getString(R.string.main_string_v2_login_house_loan));
 
-    }
+	}
 
-    @Override
-    public void onReceive(Object msg) {
-        if(msg instanceof Done){
-            MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_secured_mirocredit)));
-        }
-    }
+	@Override
+	public void onReceive(Object msg) {
+		if (msg instanceof Done) {
+			MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_secured_mirocredit)));
+		}
+	}
 
-    @Override
-    public void onUserSend(String msg) {
-        LeftScenario.scenarioList.remove("H");
-        switch (step) {
-            case Initial:
-                step = Step.question;
+	@Override
+	public void onUserSend(String msg) {
+		LeftScenario.scenarioList.remove("H");
+		switch (step) {
+			case Initial:
+				step = Step.question;
 
-                RecoMenuRequest req = new RecoMenuRequest();
+				RecoMenuRequest req = new RecoMenuRequest();
 
-                req.setDescription(context.getResources().getString(R.string.main_string_v2_login_house_recommend));
-                req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_recommend_house_yes), null);
-                req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.string_no), null);
+				req.setDescription(context.getResources().getString(R.string.main_string_v2_login_house_recommend));
+				req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_recommend_house_yes), null);
+				req.addMenu(R.drawable.icon_sad, context.getResources().getString(R.string.string_no), null);
 
-                MessageBox.INSTANCE.addAndWait(
-                    new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_ask)),
-                        req
-                );
-                break;
-            case question:
-                if (msg.equals(context.getResources().getString(R.string.string_no))) {
-                    MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_no_confirm, user.getName())),
-                            new RecommendScenarioMenuRequest(context));
+				MessageBox.INSTANCE.addAndWait(
+						new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_ask)),
+						req
+				);
+				break;
+			case question:
+				if (msg.equals(context.getResources().getString(R.string.string_no))) {
+					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_house_no_confirm, user.getName())),
+							new RecommendScenarioMenuRequest(context));
 
-                }
-                break;
+				}
+				break;
 
-        }
-    }
+		}
+	}
 
-    @Override
-    public void clear() {
+	@Override
+	public void clear() {
 
-    }
+	}
 
-    @Override
-    public boolean isProceeding() {
-        return false;
-    }
+	@Override
+	public boolean isProceeding() {
+		return false;
+	}
 
-    private enum Step{
-        Initial, question, loan
-    }
+	private enum Step {
+		Initial, question, loan
+	}
 }

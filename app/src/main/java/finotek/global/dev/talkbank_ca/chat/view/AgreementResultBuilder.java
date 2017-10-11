@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
-import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -20,10 +19,14 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementResultBinding;
+import finotek.global.dev.talkbank_ca.model.User;
+import io.realm.Realm;
 
 public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 	@Inject
 	MyApplication application;
+
+	Realm realm = Realm.getDefaultInstance();
 
 	@Override
 	public RecyclerView.ViewHolder build(ViewGroup parent) {
@@ -56,129 +59,81 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			binding.btnCreditInformText.setText(String.format("%s.%s", creditInfoText, "pdf"));
 			binding.btnLoanTransactionText.setText(String.format("%s.%s", loanTransactionText, "pdf"));
 			binding.btnContractInformText.setText(String.format("%s.%s", contractInformText, "pdf"));
-			if(Locale.getDefault().getLanguage().equals("ko")) {
-				RxView.clicks(binding.btnLoanServicePreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(loanText, "loan_service.pdf"));
-						});
 
-				RxView.clicks(binding.bntLoanServiceSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(o -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
-							context.startActivity(i);
-						});
+			RxView.clicks(binding.btnLoanServicePreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						String loan_service_pdf = "loan_service.pdf";
+						if(isPark())
+							loan_service_pdf = "loan_service_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(loanText, loan_service_pdf));
+					});
 
-				RxView.clicks(binding.btnCreditInformPreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, "credit_inform.pdf"));
-						});
+			RxView.clicks(binding.bntLoanServiceSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(o -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
+						context.startActivity(i);
+					});
 
-				RxView.clicks(binding.btnCreditInforSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(o -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/u9wsz2gn35eqfa1/credit_inform.pdf?dl=0"));
-							context.startActivity(i);
-						});
+			RxView.clicks(binding.btnCreditInformPreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						String credit_inform_pdf = "credit_inform.pdf";
+						if(isPark())
+							credit_inform_pdf = "credit_inform_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, credit_inform_pdf));
+					});
 
-				RxView.clicks(binding.btnLoanTransactionPreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, "credit_inform.pdf"));
-						});
+			RxView.clicks(binding.btnCreditInforSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(o -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/u9wsz2gn35eqfa1/credit_inform.pdf?dl=0"));
+						context.startActivity(i);
+					});
 
-				RxView.clicks(binding.btnLoanTransactionSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/tbiyvrvqko959ul/loan_transaction.pdf?dl=0"));
-							context.startActivity(i);
-						});
+			RxView.clicks(binding.btnLoanTransactionPreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						String loan_transaction_pdf = "loan_transaction.pdf";
+						if(isPark())
+							loan_transaction_pdf = "loan_transaction_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, loan_transaction_pdf));
+					});
 
-
-				RxView.clicks(binding.btnContractInformPreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, "credit_inform.pdf"));
-						});
-
-				RxView.clicks(binding.btnContractInformSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/d6155l9zjc53vm1/contract_inform.pdf?dl=0"));
-							context.startActivity(i);
-						});
-			}
-			
-			//// TODO: 10/10/2017  
-				
-			else{
-				RxView.clicks(binding.btnLoanServicePreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(loanText, "loan_service.pdf"));
-						});
-
-				RxView.clicks(binding.bntLoanServiceSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(o -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
-							context.startActivity(i);
-						});
-
-				RxView.clicks(binding.btnCreditInformPreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, "loan_service.pdf"));
-						});
-
-				RxView.clicks(binding.btnCreditInforSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(o -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
-							context.startActivity(i);
-						});
-
-				RxView.clicks(binding.btnLoanTransactionPreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, "loan_service.pdf"));
-						});
-
-				RxView.clicks(binding.btnLoanTransactionSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
-							context.startActivity(i);
-						});
+			RxView.clicks(binding.btnLoanTransactionSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/tbiyvrvqko959ul/loan_transaction.pdf?dl=0"));
+						context.startActivity(i);
+					});
 
 
-				RxView.clicks(binding.btnContractInformPreview)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, "loan_service.pdf"));
-						});
+			RxView.clicks(binding.btnContractInformPreview)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						String contract_inform_pdf = "contract_inform.pdf";
+						if(isPark())
+							contract_inform_pdf = "contract_inform_park.pdf";
+						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, contract_inform_pdf));
+					});
 
-				RxView.clicks(binding.btnContractInformSave)
-						.throttleFirst(200, TimeUnit.MILLISECONDS)
-						.subscribe(aVoid -> {
-							Intent i = new Intent(Intent.ACTION_VIEW);
-							i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
-							context.startActivity(i);
-						});
-			}
+			RxView.clicks(binding.btnContractInformSave)
+					.throttleFirst(200, TimeUnit.MILLISECONDS)
+					.subscribe(aVoid -> {
+						Intent i = new Intent(Intent.ACTION_VIEW);
+						i.setData(Uri.parse("https://www.dropbox.com/s/d6155l9zjc53vm1/contract_inform.pdf?dl=0"));
+						context.startActivity(i);
+					});
 
+		}
 
-
-
+		private boolean isPark(){
+			User user = realm.where(User.class).findAll().last();
+			return user != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남"));
 		}
 	}
 }

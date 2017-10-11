@@ -19,7 +19,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
@@ -72,9 +71,9 @@ public class LoanScenario implements Scenario {
 				*/
 				MessageBox.INSTANCE.add(new RequestRemoveControls());
 				MessageBox.INSTANCE.addAndWait(
-					new AgreementResult(),
-					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
-					new Done()
+						new AgreementResult(),
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_loan_success)),
+						new Done()
 				);
 			}
 		}
@@ -105,14 +104,14 @@ public class LoanScenario implements Scenario {
 			case InputAddress:
 				if (msg.equals(context.getResources().getString(R.string.dialog_button_yes))) {
 					MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.dialog_string_home_address_type)),
-						new RequestKeyboardInput()
+							new ReceiveMessage(context.getResources().getString(R.string.dialog_string_home_address_type)),
+							new RequestKeyboardInput()
 					);
 					step = Step.InputMoney;
 				} else if (msg.equals(context.getResources().getString(R.string.dialog_button_no))) {
 					MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)),
-						new Done()
+							new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_microedit_cancel)),
+							new Done()
 					);
 				} else {
 					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
@@ -161,9 +160,9 @@ public class LoanScenario implements Scenario {
 
 
 				MessageBox.INSTANCE.addAndWait(
-					receive,
-					new AgreementRequest(agreements),
-					new DismissKeyboard()
+						receive,
+						new AgreementRequest(agreements),
+						new DismissKeyboard()
 				);
 				step = Step.Last;
 				break;

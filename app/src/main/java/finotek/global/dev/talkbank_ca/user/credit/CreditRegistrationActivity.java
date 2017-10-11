@@ -84,10 +84,10 @@ public class CreditRegistrationActivity extends AppCompatActivity implements Cre
 //		});
 
 		RxView.clicks(binding.btnSave)
-			.throttleFirst(200, TimeUnit.MILLISECONDS)
-			.subscribe(aVoid -> {
-				finish();
-			});
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					finish();
+				});
 	}
 
 	@Override

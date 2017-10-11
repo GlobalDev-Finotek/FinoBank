@@ -198,14 +198,15 @@
     <string name="dialog_string_term_agreement_accept">Accept to terms of agreement</string>
     <string name="dialog_string_mandatory_term_accept">Agree to all required fields</string>
     <string name="dialog_string_loan_service_user_agreement">Loan service user agreement</string>
+    <string name="dialog_string_account_confirmation">Account confirmation </string>
     <string name="dialog_string_personal_credit_information_access_agreement">Personal credit information access agreement</string>
     <string name="dialog_string_loan_transaction_agreement">Loan transaction agreement</string>
     <string name="dialog_string_contact_information">Contract information and instruction</string>
     <string name="dialog_string_optional_term_agreement">Agree to all optional fields</string>
     <string name="dialog_string_customer_information_agreement">Customer\'s information agreement</string>
     <string name="dialog_chat_agreenment_accepted">Agreement have been accepted</string>
-    <string name="dialog_chat_loan_success">Loan has been successfully processed and it has been deposited to your account\n
-    is there anything else I can help you with?</string>
+    <string name="dialog_chat_loan_success">The loan will be transferred to your account within two business days.\nThe notification will send when sending money.\n
+    Is there anything else I can help you with?</string>
     <string name="dialog_chat_string_confirm_message">All Required Agreement is needed.</string>
     <string name="dialog_message_error">An unknown error has occurred! Please try again later.</string>
     <string name="dialog_contact">Contact</string>

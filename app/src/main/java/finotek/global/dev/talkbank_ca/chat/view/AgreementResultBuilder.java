@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -60,11 +61,86 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			binding.btnLoanTransactionText.setText(String.format("%s.%s", loanTransactionText, "pdf"));
 			binding.btnContractInformText.setText(String.format("%s.%s", contractInformText, "pdf"));
 
+
+			if (Locale.getDefault().getLanguage().equals("ko")) {
+				RxView.clicks(binding.btnLoanServicePreview)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(aVoid -> {
+							String loan_service_pdf = "loan_service.pdf";
+							if (isPark())
+								loan_service_pdf = "loan_service_park.pdf";
+							MessageBox.INSTANCE.add(new ShowPdfView(loanText, loan_service_pdf));
+						});
+
+				RxView.clicks(binding.bntLoanServiceSave)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(o -> {
+							Intent i = new Intent(Intent.ACTION_VIEW);
+							i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
+							context.startActivity(i);
+						});
+
+				RxView.clicks(binding.btnCreditInformPreview)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(aVoid -> {
+							String credit_inform_pdf = "credit_inform.pdf";
+							if (isPark())
+								credit_inform_pdf = "credit_inform_park.pdf";
+							MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, credit_inform_pdf));
+						});
+
+				RxView.clicks(binding.btnCreditInforSave)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(o -> {
+							Intent i = new Intent(Intent.ACTION_VIEW);
+							i.setData(Uri.parse("https://www.dropbox.com/s/u9wsz2gn35eqfa1/credit_inform.pdf?dl=0"));
+							context.startActivity(i);
+						});
+
+				RxView.clicks(binding.btnLoanTransactionPreview)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(aVoid -> {
+							String loan_transaction_pdf = "loan_transaction.pdf";
+							if (isPark())
+								loan_transaction_pdf = "loan_transaction_park.pdf";
+							MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, loan_transaction_pdf));
+						});
+
+				RxView.clicks(binding.btnLoanTransactionSave)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(aVoid -> {
+							Intent i = new Intent(Intent.ACTION_VIEW);
+							i.setData(Uri.parse("https://www.dropbox.com/s/tbiyvrvqko959ul/loan_transaction.pdf?dl=0"));
+							context.startActivity(i);
+						});
+
+
+				RxView.clicks(binding.btnContractInformPreview)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(aVoid -> {
+							String contract_inform_pdf = "contract_inform.pdf";
+							if (isPark())
+								contract_inform_pdf = "contract_inform_park.pdf";
+							MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, contract_inform_pdf));
+						});
+
+				RxView.clicks(binding.btnContractInformSave)
+						.throttleFirst(200, TimeUnit.MILLISECONDS)
+						.subscribe(aVoid -> {
+							Intent i = new Intent(Intent.ACTION_VIEW);
+							i.setData(Uri.parse("https://www.dropbox.com/s/d6155l9zjc53vm1/contract_inform.pdf?dl=0"));
+							context.startActivity(i);
+						});
+
+			}
+
+
+		else{
 			RxView.clicks(binding.btnLoanServicePreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String loan_service_pdf = "loan_service.pdf";
-						if(isPark())
+						String loan_service_pdf = "view_eng.pdf";
+						if (isPark())
 							loan_service_pdf = "loan_service_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(loanText, loan_service_pdf));
 					});
@@ -73,15 +149,15 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(o -> {
 						Intent i = new Intent(Intent.ACTION_VIEW);
-						i.setData(Uri.parse("https://www.dropbox.com/s/ez3s0lk62pqx1ge/loan_service.pdf?dl=0"));
+						i.setData(Uri.parse("https://www.dropbox.com/s/228f8cwdurk6bxx/view_eng.pdf?dl=0"));
 						context.startActivity(i);
 					});
 
 			RxView.clicks(binding.btnCreditInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String credit_inform_pdf = "credit_inform.pdf";
-						if(isPark())
+						String credit_inform_pdf = "view2_eng.pdf";
+						if (isPark())
 							credit_inform_pdf = "credit_inform_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, credit_inform_pdf));
 					});
@@ -90,15 +166,15 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(o -> {
 						Intent i = new Intent(Intent.ACTION_VIEW);
-						i.setData(Uri.parse("https://www.dropbox.com/s/u9wsz2gn35eqfa1/credit_inform.pdf?dl=0"));
+						i.setData(Uri.parse("https://www.dropbox.com/s/py0ju9mpwcjc6f6/view2_eng.pdf?dl=0"));
 						context.startActivity(i);
 					});
 
 			RxView.clicks(binding.btnLoanTransactionPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String loan_transaction_pdf = "loan_transaction.pdf";
-						if(isPark())
+						String loan_transaction_pdf = "view3_eng.pdf";
+						if (isPark())
 							loan_transaction_pdf = "loan_transaction_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, loan_transaction_pdf));
 					});
@@ -107,7 +183,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
 						Intent i = new Intent(Intent.ACTION_VIEW);
-						i.setData(Uri.parse("https://www.dropbox.com/s/tbiyvrvqko959ul/loan_transaction.pdf?dl=0"));
+						i.setData(Uri.parse("https://www.dropbox.com/s/tmw0jw27ob5f0ye/view3_eng.pdf?dl=0"));
 						context.startActivity(i);
 					});
 
@@ -115,8 +191,8 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 			RxView.clicks(binding.btnContractInformPreview)
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
-						String contract_inform_pdf = "contract_inform.pdf";
-						if(isPark())
+						String contract_inform_pdf = "view4_eng.pdf";
+						if (isPark())
 							contract_inform_pdf = "contract_inform_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, contract_inform_pdf));
 					});
@@ -125,11 +201,20 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
 						Intent i = new Intent(Intent.ACTION_VIEW);
-						i.setData(Uri.parse("https://www.dropbox.com/s/d6155l9zjc53vm1/contract_inform.pdf?dl=0"));
+						i.setData(Uri.parse("https://www.dropbox.com/s/ru4w3xhteh51yeg/view4_eng.pdf?dl=0"));
 						context.startActivity(i);
 					});
 
 		}
+
+
+
+		}
+
+
+
+
+
 
 		private boolean isPark(){
 			User user = realm.where(User.class).findAll().last();

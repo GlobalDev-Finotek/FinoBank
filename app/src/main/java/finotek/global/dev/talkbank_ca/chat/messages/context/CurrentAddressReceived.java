@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class CurrentAddressReceived {
-    String address;
+	String address;
 }

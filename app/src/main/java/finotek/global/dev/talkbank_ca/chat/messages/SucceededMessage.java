@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SucceededMessage {
-    String message;
+	String message;
 }

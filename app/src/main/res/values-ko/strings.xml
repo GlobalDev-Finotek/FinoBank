@@ -194,6 +194,7 @@
     <string name="dialog_string_term_agreement_accept">약관 확인 및 동의를 진행해 주세요.</string>
     <string name="dialog_string_mandatory_term_accept">필수 항목 전체 동의</string>
     <string name="dialog_string_loan_service_user_agreement">대출 서비스 이용 약관</string>
+    <string name="dialog_string_account_confirmation">계좌 확인서</string>
     <string name="dialog_string_personal_credit_information_access_agreement">개인(신용)정보 조회 및 이용 제공 동의</string>
     <string name="dialog_string_loan_transaction_agreement">대출거래 약정서</string>
     <string name="dialog_string_contact_information">계약 안내사항 및 유의사항</string>
@@ -244,7 +245,7 @@
     <string name="setting_string_six_digit">6자리 숫자로 PIN 코드를 입력해 주세요.</string>
     <string name="setting_string_secure_keyboard_operating">보안 키보드 작동 중</string>
     <string name="setting_string_registered_signature_purpose">등록한 사진은 필요 시 본인 확인용으로 사용됩니다.</string>
-    <string name="dialog_chat_loan_apply">거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n최대 5천만원 이내, 최저 금리는 2.0%입니다.\n대출을 신청하시겠습니까?</string>
+    <string name="dialog_chat_loan_apply">거래 내역 확인 결과, “원데이 대출”을 추천합니다.\n주택에 따라 금리와 대출 가능금액이 결정됩니다.\n진행 하시겠습니까?</string>
     <string name="dialog_chat_preview">미리보기</string>
     <string name="dialog_chat_save">저장</string>
     <string name="registration_button_pin_code_chanage">PIN 코드 변경</string>
@@ -303,7 +304,7 @@
     <string name="more_button">더보기</string>
     <string name="main_back_exit">\'뒤로\' 버튼을 한 번 더 누르시면 종료됩니다.</string>
 
-    <string name ="main_string_v2_result_context">맥락정보 분석결과, 총점 73점 \n (통화기록: 85점, 문자기록: 66점, 위치기록:54점)\n 으로 %1$s 님을 확인하였습니다. </string>
+    <string name="main_string_v2_result_context">맥락정보 분석결과, %1$s 님을 확인하였습니다.\n자세한 내용을 원하시면 \'맥락점수 상세조회\'를 입력하세요.</string>
     <string name="main_string_v2_login_hello">%1$s님 안녕하세요\n</string>
     <string name ="main_string_v2_login_hello_M">좋은 아침이에요, 오늘도 즐거운 하루 되세요!!!</string>
     <string name ="main_string_v2_login_hello_L">식사는 하셨나요? 활기찬 오후 되세요~</string>

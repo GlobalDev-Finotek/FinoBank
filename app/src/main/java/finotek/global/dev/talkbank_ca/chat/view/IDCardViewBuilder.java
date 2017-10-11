@@ -66,7 +66,7 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 				holder.binding.issueDate.setText(data.getIssueDate());
 
 				User user = realm.where(User.class).findAll().last();
-				if(user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
+				if (user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
 					holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card_park));
 				else
 					holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));

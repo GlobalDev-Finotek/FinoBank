@@ -96,9 +96,10 @@
                 <action android:name="chat.ContextLog.ContextLogService"/>
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyA-lwG0vNzb1VEzdM2EsMpqIU8cSUoK4TQ" />
+            android:value="AIzaSyA-lwG0vNzb1VEzdM2EsMpqIU8cSUoK4TQ"/>
     </application>
 
 </manifest>

@@ -394,4 +394,5 @@
     <string name="setting_string_ocr_credit_card">Credit card OCR</string>
     <string name="dialog_string_id_housed_type">Verification ID type</string>
     <string name="dialog_chat_take_picture_id_housed">To open an account, you need to verify yourself with your personal ID card or driver\'s license. Please take a picture of your ID card</string>
+    <string name="splash_is_auth_agree">IsAuthAgreed</string>
 </resources>

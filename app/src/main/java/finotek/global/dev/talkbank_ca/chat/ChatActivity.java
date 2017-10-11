@@ -215,12 +215,9 @@ public class ChatActivity extends AppCompatActivity {
 		preInitControlViews();
 
 		// keyboard event
-		KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
-			@Override
-			public void onToggleSoftKeyboard(boolean isVisible) {
-				if (isVisible)
-					binding.chatView.scrollToBottom();
-			}
+		KeyboardUtils.addKeyboardToggleListener(this, isVisible -> {
+			if (isVisible)
+				binding.chatView.scrollToBottom();
 		});
 
 		// initialize score receiver
@@ -387,7 +384,7 @@ public class ChatActivity extends AppCompatActivity {
 			signRegistFragment = new HiddenSignFragment();
 
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			signRegistFragment.setOnSaveListener(() -> {
+			signRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
@@ -397,30 +394,41 @@ public class ChatActivity extends AppCompatActivity {
 						.observeOn(AndroidSchedulers.mainThread())
 						.first((long) 1)
 						.subscribe(i -> {
-							loadingDialog.dismiss();
 
-							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-							dialog.setTitle(getString(R.string.setting_string_signature_verified));
-							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-							dialog.setButtonText(getString(R.string.setting_string_yes));
-							dialog.setDoneListener(() -> {
-								MessageBox.INSTANCE.add(new SignatureVerified());
-								returnToInitialControl();
+							// TODO similarity 에 따른 초기화
+							// 싸인 인증 성공
+							if (similarity / 1000 > 30) {
+								loadingDialog.dismiss();
 
-								showAppBar();
-								showStatusBar();
+								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+								dialog.setTitle(getString(R.string.setting_string_signature_verified));
+								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+								dialog.setButtonText(getString(R.string.setting_string_yes));
+								dialog.setDoneListener(() -> {
+									MessageBox.INSTANCE.add(new SignatureVerified());
+									returnToInitialControl();
 
-								FragmentTransaction transaction = getFragmentManager().beginTransaction();
-								transaction.remove(signRegistFragment).commit();
+									showAppBar();
+									showStatusBar();
 
-								dialog.dismiss();
+									FragmentTransaction transaction = getFragmentManager().beginTransaction();
+									transaction.remove(signRegistFragment).commit();
 
-								returnToInitialControl();
+									dialog.dismiss();
 
-								binding.chatView.scrollToBottom();
-								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-							});
-							dialog.showWithRatio(0.50f);
+									returnToInitialControl();
+
+									binding.chatView.scrollToBottom();
+									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+								});
+								dialog.showWithRatio(0.50f);
+							}
+
+							// 싸인 인증 실패
+							else {
+								signRegistFragment.init();
+							}
+
 						}, throwable -> {
 						});
 			});
@@ -460,7 +468,7 @@ public class ChatActivity extends AppCompatActivity {
 			transferSignRegistFragment = new TransferSignRegisterFragment();
 
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			transferSignRegistFragment.setOnSaveListener(() -> {
+			transferSignRegistFragment.setOnSignValidationListener(() -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));

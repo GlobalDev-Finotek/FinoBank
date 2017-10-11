@@ -13,6 +13,8 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Date;
+
 import finotek.global.dev.talkbank_ca.R;
 
 /**
@@ -27,6 +29,7 @@ public class DrawingCanvas extends View {
 	private Bitmap canvasBitmap;
 	private Context context;
 	private OnCanvasTouchListener onCanvasTouchListener;
+	private OnDrawListener onDrawListener;
 
 	public DrawingCanvas(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -54,6 +57,10 @@ public class DrawingCanvas extends View {
 		this.onCanvasTouchListener = onCanvasTouchListener;
 	}
 
+	public void setOnDrawListener(OnDrawListener onDrawListener) {
+		this.onDrawListener = onDrawListener;
+	}
+
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -66,6 +73,8 @@ public class DrawingCanvas extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		float touchX = event.getX();
 		float touchY = event.getY();
+
+		this.onDrawListener.onDraw(touchX, touchY, new Date().getTime());
 
 		if (onCanvasTouchListener == null) {
 			throw new NullPointerException("canvas touch listener null");
@@ -104,5 +113,9 @@ public class DrawingCanvas extends View {
 
 	public interface OnCanvasTouchListener {
 		void onTouchStart();
+	}
+
+	public interface OnDrawListener {
+		void onDraw(float x, float y, float time);
 	}
 }

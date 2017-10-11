@@ -79,7 +79,7 @@ public class SignRegistrationActivity extends AppCompatActivity {
 
 
 			Class nextClass = (Class) intent.getExtras().get("nextClass");
-			signRegistFragment.setOnSaveListener(() -> {
+			signRegistFragment.setOnSignValidationListener(() -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(SignRegistrationActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));

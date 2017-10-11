@@ -64,7 +64,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
 						String loan_service_pdf = "loan_service.pdf";
-						if(isPark())
+						if (isPark())
 							loan_service_pdf = "loan_service_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(loanText, loan_service_pdf));
 					});
@@ -81,7 +81,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
 						String credit_inform_pdf = "credit_inform.pdf";
-						if(isPark())
+						if (isPark())
 							credit_inform_pdf = "credit_inform_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(creditInfoText, credit_inform_pdf));
 					});
@@ -98,7 +98,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
 						String loan_transaction_pdf = "loan_transaction.pdf";
-						if(isPark())
+						if (isPark())
 							loan_transaction_pdf = "loan_transaction_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(loanTransactionText, loan_transaction_pdf));
 					});
@@ -116,7 +116,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 					.throttleFirst(200, TimeUnit.MILLISECONDS)
 					.subscribe(aVoid -> {
 						String contract_inform_pdf = "contract_inform.pdf";
-						if(isPark())
+						if (isPark())
 							contract_inform_pdf = "contract_inform_park.pdf";
 						MessageBox.INSTANCE.add(new ShowPdfView(contractInformText, contract_inform_pdf));
 					});
@@ -131,7 +131,7 @@ public class AgreementResultBuilder implements ChatView.ViewBuilder<Void> {
 
 		}
 
-		private boolean isPark(){
+		private boolean isPark() {
 			User user = realm.where(User.class).findAll().last();
 			return user != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남"));
 		}

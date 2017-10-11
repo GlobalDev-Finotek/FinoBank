@@ -158,7 +158,7 @@ public class ChatActivity extends AppCompatActivity {
 	private CapturePicFragment capturePicFragment;
 	private HiddenSignFragment signRegistFragment;
 	private TransferSignRegisterFragment transferSignRegistFragment;
-    private RemoteCallFragment remoteCallFragment;
+	private RemoteCallFragment remoteCallFragment;
 
 	private BroadcastReceiver receiver;
 	private boolean isFirstAuth = true;
@@ -186,17 +186,17 @@ public class ChatActivity extends AppCompatActivity {
 
 		// 메시지 박스 설정
 		MessageBox.INSTANCE.observable
-			.flatMap(msg -> {
-				if (msg instanceof EnableToEditMoney) {
-					return Observable.just(msg)
-							.observeOn(AndroidSchedulers.mainThread());
-				} else {
-					return Observable.just(msg)
-							.delay(1, TimeUnit.SECONDS)
-							.observeOn(AndroidSchedulers.mainThread());
-				}
-			})
-			.subscribe(ChatActivity.this::onNewMessageUpdated);
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.subscribe(ChatActivity.this::onNewMessageUpdated);
 
 		isFirstAuth = false;
 		Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
@@ -239,31 +239,31 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
-            intent.putExtra("askType", "totalLog");
-            startService(intent);
-        }
+			intent.putExtra("askType", "totalLog");
+			startService(intent);
+		}
 
 		if (msg instanceof ContextSms && isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
-            intent.putExtra("askType", "smsLog");
-            startService(intent);
-        }
+			intent.putExtra("askType", "smsLog");
+			startService(intent);
+		}
 
 		if (msg instanceof ContextCall && isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
-            intent.putExtra("askType", "callLog");
-            startService(intent);
-        }
+			intent.putExtra("askType", "callLog");
+			startService(intent);
+		}
 		if (msg instanceof ContextLocation && isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
-            intent.putExtra("askType", "locationLog");
-            startService(intent);
-        }
+			intent.putExtra("askType", "locationLog");
+			startService(intent);
+		}
 		if (msg instanceof ContextApp && isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
-            intent.putExtra("askType", "appLog");
-            startService(intent);
-        }
+			intent.putExtra("askType", "appLog");
+			startService(intent);
+		}
 
 		if (msg instanceof RequestPhoto) {
 			this.prepareForFullScreen();
@@ -291,7 +291,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestTakeAnotherIDCard) {
-            this.prepareForFullScreen();
+			this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -316,35 +316,35 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
-		if(msg instanceof RequestRemoteCall) {
-            this.prepareForFullScreen();
+		if (msg instanceof RequestRemoteCall) {
+			this.prepareForFullScreen();
 
-            View captureView = inflate(R.layout.chat_capture);
-            binding.footer.addView(captureView);
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
 
-            remoteCallFragment = new RemoteCallFragment();
-            remoteCallFragment.setVideoURL("android.resource://"+  getPackageName() + "/" + R.raw.lady_teller);
-            remoteCallFragment.setStopListener(() -> {
-                MessageBox.INSTANCE.add(new RemoteCallCompleted(), 500);
-            });
+			remoteCallFragment = new RemoteCallFragment();
+			remoteCallFragment.setVideoURL("android.resource://" + getPackageName() + "/" + R.raw.lady_teller);
+			remoteCallFragment.setStopListener(() -> {
+				MessageBox.INSTANCE.add(new RemoteCallCompleted(), 500);
+			});
 
-            FragmentTransaction tx = getFragmentManager().beginTransaction();
-            tx.replace(R.id.chat_capture, remoteCallFragment);
-            tx.commit();
-        }
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			tx.replace(R.id.chat_capture, remoteCallFragment);
+			tx.commit();
+		}
 
-        if(msg instanceof RemoteCallCompleted) {
-            showAppBar();
-            this.returnToInitialControl();
-            showStatusBar();
+		if (msg instanceof RemoteCallCompleted) {
+			showAppBar();
+			this.returnToInitialControl();
+			showStatusBar();
 
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.remove(remoteCallFragment).commit();
-            binding.chatView.scrollToBottom();
-        }
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			transaction.remove(remoteCallFragment).commit();
+			binding.chatView.scrollToBottom();
+		}
 
 		if (msg instanceof RequestTakeIDCard) {
-            this.prepareForFullScreen();
+			this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -378,7 +378,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
 		if (msg instanceof RequestSignature) {
-            this.prepareForFullScreen();
+			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
@@ -451,7 +451,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof TransferRequestSignature) {
-            this.prepareForFullScreen();
+			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
@@ -531,10 +531,10 @@ public class ChatActivity extends AppCompatActivity {
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
 			ctBinding.editMoney.setEnabled(((RequestTransferUI) msg).isEnabled());
 
-            if(((RequestTransferUI) msg).isEnabled()) {
-                ctBinding.editMoney.requestFocus();
-                ctBinding.gvKeypad.setLengthLimit(7);
-            }
+			if (((RequestTransferUI) msg).isEnabled()) {
+				ctBinding.editMoney.requestFocus();
+				ctBinding.gvKeypad.setLengthLimit(7);
+			}
 
 			binding.footer.addView(ctBinding.getRoot());
 		}
@@ -607,11 +607,11 @@ public class ChatActivity extends AppCompatActivity {
 				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
 		}
 
-		if(msg instanceof RequestCurrentAddress) {
-            String address = getAddressName(getCurrentLocation());
-            CurrentAddressReceived send = new CurrentAddressReceived(address);
-            MessageBox.INSTANCE.add(send);
-        }
+		if (msg instanceof RequestCurrentAddress) {
+			String address = getAddressName(getCurrentLocation());
+			CurrentAddressReceived send = new CurrentAddressReceived(address);
+			MessageBox.INSTANCE.add(send);
+		}
 	}
 
 	private void showStatusBar() {
@@ -872,7 +872,7 @@ public class ChatActivity extends AppCompatActivity {
 		return LayoutInflater.from(this).inflate(layoutId, parent, false);
 	}
 
-	private void receiveScore(){
+	private void receiveScore() {
 		Intent chatIntent = getIntent();
 
 		IntentFilter intentFilter = new IntentFilter();
@@ -905,19 +905,19 @@ public class ChatActivity extends AppCompatActivity {
 
 				if (askType.equals("appLog") || askType.equals("totalLog")) {
 					List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
-					if(appLogData != null) {
+					if (appLogData != null) {
 						int skyHomeAppId = 0;
 						int size = appLogData.size();
-						for(int i = 0; i < size; i++) {
+						for (int i = 0; i < size; i++) {
 							ApplicationLog log = appLogData.get(i);
 							try {
 								UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
 								AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
 
-								if(aes.decText(log.appName).equals("SKY 홈")) {
+								if (aes.decText(log.appName).equals("SKY 홈")) {
 									skyHomeAppId = i;
 								}
-							} catch(Exception e){
+							} catch (Exception e) {
 								e.printStackTrace();
 							}
 						}
@@ -938,7 +938,7 @@ public class ChatActivity extends AppCompatActivity {
 									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
 									decodeScoreParams(scoreParams);
 
-									if(isFirstAuth) {
+									if (isFirstAuth) {
 										Log.d("FINOPASS", "첫번째 맥락인증 요청");
 										ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
 										pref.save(scoreParams);
@@ -1054,17 +1054,17 @@ public class ChatActivity extends AppCompatActivity {
 		AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
 
 		if (scoreParams.messages != null) {
-			for(BaseScoreParam msg : scoreParams.messages) {
+			for (BaseScoreParam msg : scoreParams.messages) {
 				switch (msg.type) {
 					case ActionType.GATHER_APP_USAGE_LOG:
 						msg.param.put("appName", aes.decText(msg.param.get("appName")));
 						break;
 					case ActionType.GATHER_CALL_LOG:
-						if(msg.param.get("targetName") != null && !msg.param.get("targetName").isEmpty())
+						if (msg.param.get("targetName") != null && !msg.param.get("targetName").isEmpty())
 							msg.param.put("targetName", aes.decText(msg.param.get("targetName")));
 						break;
 					case ActionType.GATHER_MESSAGE_LOG:
-						if(msg.param.get("targetNumber") != null && !msg.param.get("targetNumber").isEmpty())
+						if (msg.param.get("targetNumber") != null && !msg.param.get("targetNumber").isEmpty())
 							msg.param.put("targetNumber", aes.decText(msg.param.get("targetNumber")));
 						break;
 				}
@@ -1072,7 +1072,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 	}
 
-	private String getAddressName(Location location){
+	private String getAddressName(Location location) {
 		try {
 			Geocoder geo = new Geocoder(this.getApplicationContext(), Locale.getDefault());
 			List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
@@ -1087,7 +1087,7 @@ public class ChatActivity extends AppCompatActivity {
 		return "지역을 찾을 수 없습니다.";
 	}
 
-	private Location getCurrentLocation(){
+	private Location getCurrentLocation() {
 		Location currentLocation = null;
 		LocationManager manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
 
@@ -1113,10 +1113,10 @@ public class ChatActivity extends AppCompatActivity {
 		return currentLocation;
 	}
 
-	private IDCardInfo getIdCardInfo(String path){
+	private IDCardInfo getIdCardInfo(String path) {
 		Realm realm = Realm.getDefaultInstance();
 		User user = realm.where(User.class).findAll().last();
-		if(user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
+		if (user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
 			return new IDCardInfo("주민등록증", "박승남", "680707-1243132", "2012.11.02", path);
 		else
 			return new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path);
@@ -1134,11 +1134,11 @@ public class ChatActivity extends AppCompatActivity {
 		return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
 	}
 
-	private void prepareForFullScreen(){
-        hideAppBar();
-        hideStatusBar();
-        binding.footer.setPadding(0, 0, 0, 0);
-        releaseControls();
-        releaseAllControls();
-    }
+	private void prepareForFullScreen() {
+		hideAppBar();
+		hideStatusBar();
+		binding.footer.setPadding(0, 0, 0, 0);
+		releaseControls();
+		releaseAllControls();
+	}
 }

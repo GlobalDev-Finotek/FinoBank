@@ -18,38 +18,38 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentRemoteCallBinding;
 
 public class RemoteCallFragment extends Fragment {
-    private FragmentRemoteCallBinding binding;
-    private String videoUrl;
-    private Runnable stopListener;
+	private FragmentRemoteCallBinding binding;
+	private String videoUrl;
+	private Runnable stopListener;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        this.binding = DataBindingUtil.inflate(inflater, R.layout.fragment_remote_call, container, false);
-        this.binding.videoView.setVideoURI(Uri.parse(videoUrl));
-        this.binding.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                mp.setLooping(true);
-                binding.videoView.start();
-            }
-        });
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+	                         Bundle savedInstanceState) {
+		this.binding = DataBindingUtil.inflate(inflater, R.layout.fragment_remote_call, container, false);
+		this.binding.videoView.setVideoURI(Uri.parse(videoUrl));
+		this.binding.videoView.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+			@Override
+			public void onPrepared(MediaPlayer mp) {
+				mp.setLooping(true);
+				binding.videoView.start();
+			}
+		});
 
-        RxView.clicks(this.binding.confirmButton)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-                    binding.videoView.stopPlayback();
-                    stopListener.run();
-                });
+		RxView.clicks(this.binding.confirmButton)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+					binding.videoView.stopPlayback();
+					stopListener.run();
+				});
 
-        return binding.getRoot();
-    }
+		return binding.getRoot();
+	}
 
-    public void setStopListener(Runnable stopListener) {
-        this.stopListener = stopListener;
-    }
+	public void setStopListener(Runnable stopListener) {
+		this.stopListener = stopListener;
+	}
 
-    public void setVideoURL(String videoUrl){
-        this.videoUrl = videoUrl;
-    }
+	public void setVideoURL(String videoUrl) {
+		this.videoUrl = videoUrl;
+	}
 }

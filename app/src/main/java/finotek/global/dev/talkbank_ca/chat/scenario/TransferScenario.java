@@ -1,8 +1,6 @@
 package finotek.global.dev.talkbank_ca.chat.scenario;
 
 import android.content.Context;
-import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import org.joda.time.DateTime;
 
@@ -37,7 +35,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterThree;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterTwo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.TransferRequestSignature;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 
@@ -141,15 +138,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-            if(((MoneyTransferred) msg).isAuthenticated()){
-                MessageBox.INSTANCE.addAndWait(
-                    new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
-                    request,
-                    new Done()
-                );
-            } else {
-                MessageBox.INSTANCE.addAndWait(request, new Done());
-            }
+			if (((MoneyTransferred) msg).isAuthenticated()) {
+				MessageBox.INSTANCE.addAndWait(
+						new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+						request,
+						new Done()
+				);
+			} else {
+				MessageBox.INSTANCE.addAndWait(request, new Done());
+			}
 			step = Step.TransferDone;
 		}
 		if (msg instanceof alterOne) {
@@ -168,15 +165,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-            if(((alterOne) msg).isAuthenticated()){
-                MessageBox.INSTANCE.addAndWait(
-                        new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
-                        request,
-                        new Done()
-                );
-            } else {
-                MessageBox.INSTANCE.addAndWait(request, new Done());
-            }
+			if (((alterOne) msg).isAuthenticated()) {
+				MessageBox.INSTANCE.addAndWait(
+						new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+						request,
+						new Done()
+				);
+			} else {
+				MessageBox.INSTANCE.addAndWait(request, new Done());
+			}
 			step = Step.TransferDone;
 		}
 		if (msg instanceof alterTwo) {
@@ -195,15 +192,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-            if(((alterTwo) msg).isAuthenticated()){
-                MessageBox.INSTANCE.addAndWait(
-                        new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
-                        request,
-                        new Done()
-                );
-            } else {
-                MessageBox.INSTANCE.addAndWait(request, new Done());
-            }
+			if (((alterTwo) msg).isAuthenticated()) {
+				MessageBox.INSTANCE.addAndWait(
+						new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+						request,
+						new Done()
+				);
+			} else {
+				MessageBox.INSTANCE.addAndWait(request, new Done());
+			}
 			step = Step.TransferDone;
 		}
 
@@ -223,15 +220,15 @@ public class TransferScenario implements Scenario {
 			request.setTitle("");
 			request.setDescription(context.getString(R.string.dialog_chat_after_transfer, name, moneyAsString, balanceAsString));
 
-            if(((alterThree) msg).isAuthenticated()){
-                MessageBox.INSTANCE.addAndWait(
-                        new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
-                        request,
-                        new Done()
-                );
-            } else {
-                MessageBox.INSTANCE.addAndWait(request, new Done());
-            }
+			if (((alterThree) msg).isAuthenticated()) {
+				MessageBox.INSTANCE.addAndWait(
+						new SucceededMessage(context.getResources().getString(R.string.contextlog_authentication_succeeded, "이도현", 85.2)),
+						request,
+						new Done()
+				);
+			} else {
+				MessageBox.INSTANCE.addAndWait(request, new Done());
+			}
 			step = Step.TransferDone;
 		}
 		if (msg instanceof Done) {

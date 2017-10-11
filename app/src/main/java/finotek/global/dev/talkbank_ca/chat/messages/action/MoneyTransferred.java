@@ -6,5 +6,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class MoneyTransferred {
-    public boolean authenticated;
+	public boolean authenticated;
 }

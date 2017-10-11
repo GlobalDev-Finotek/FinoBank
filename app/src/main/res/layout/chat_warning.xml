@@ -5,6 +5,7 @@
                 android:layout_marginBottom="@dimen/chat_margin_bottom"
                 android:layout_marginEnd="@dimen/chat_margin_left_right"
                 android:layout_marginStart="@dimen/chat_margin_left_right">
+
     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
         android:id="@+id/message"
         android:layout_width="wrap_content"

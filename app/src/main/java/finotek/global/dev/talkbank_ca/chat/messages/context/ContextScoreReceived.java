@@ -11,5 +11,5 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class ContextScoreReceived {
-    public ContextScoreResponse scoreParams;
+	public ContextScoreResponse scoreParams;
 }

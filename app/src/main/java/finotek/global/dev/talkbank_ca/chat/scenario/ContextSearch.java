@@ -37,12 +37,12 @@ public class ContextSearch implements Scenario {
 
 	@Override
 	public void onReceive(Object msg) {
-		if(msg instanceof Done) {
+		if (msg instanceof Done) {
 			step = Step.question;
 			MessageBox.INSTANCE.addAndWait(new RecommendScenarioMenuRequest(context));
 		}
 
-		if(msg instanceof ContextScoreReceived) {
+		if (msg instanceof ContextScoreReceived) {
 			String message = "";
 			ContextScoreResponse scoreParams = ((ContextScoreReceived) msg).getScoreParams();
 			if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
@@ -121,7 +121,7 @@ public class ContextSearch implements Scenario {
 		return false;
 	}
 
-	private RecoMenuRequest buildRecommendedMenu(){
+	private RecoMenuRequest buildRecommendedMenu() {
 		ContextAuthPref pref = new ContextAuthPref(context);
 		float smsScore = pref.getMessageScore();
 		float appUsageScore = pref.getAppUsageScore();
@@ -146,14 +146,14 @@ public class ContextSearch implements Scenario {
 	private String buildScoreMessages(ContextScoreResponse scoreResponse) {
 		String messages = "";
 		int size = scoreResponse.messages.size();
-		for(int i = 0; i < size; i++) {
+		for (int i = 0; i < size; i++) {
 			BaseScoreParam msg = scoreResponse.messages.get(i);
 			Log.d("FINOPASS", msg.toString());
 
-			switch(msg.type) {
+			switch (msg.type) {
 				case ActionType.GATHER_APP_USAGE_LOG:
 					String appName = msg.param.get("appName");
-					messages += (i+1) + ": " + context.getResources().getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
+					messages += (i + 1) + ": " + context.getResources().getString(R.string.contextlog_result_message_app_usage, appName, msg.rank, msg.beforeTime, msg.score);
 					break;
 				case ActionType.GATHER_CALL_LOG: {
 					String targetName = msg.param.get("targetName");
@@ -165,18 +165,18 @@ public class ContextSearch implements Scenario {
 				break;
 				case ActionType.GATHER_MESSAGE_LOG: {
 					String targetNumber = msg.param.get("targetNumber");
-					if(targetNumber == null || targetNumber.isEmpty() || targetNumber.equals("null"))
+					if (targetNumber == null || targetNumber.isEmpty() || targetNumber.equals("null"))
 						targetNumber = "아무개";
 
 					messages += (i + 1) + ": " + context.getResources().getString(R.string.contextlog_result_message, targetNumber, msg.rank, msg.beforeTime, msg.score);
 				}
 				break;
 				case ActionType.GATHER_LOCATION_LOG:
-					messages += (i+1) + ": " + context.getResources().getString(R.string.contextlog_result_location, Float.valueOf(msg.param.get("latitude")), Float.valueOf(msg.param.get("longitude")), msg.rank, msg.score);
+					messages += (i + 1) + ": " + context.getResources().getString(R.string.contextlog_result_location, Float.valueOf(msg.param.get("latitude")), Float.valueOf(msg.param.get("longitude")), msg.rank, msg.score);
 					break;
 			}
 
-			if(i != size-1)
+			if (i != size - 1)
 				messages += "\n\n";
 		}
 

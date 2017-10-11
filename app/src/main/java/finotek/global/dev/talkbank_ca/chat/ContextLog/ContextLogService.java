@@ -158,7 +158,7 @@ public class ContextLogService extends Service {
 				MessageLog messageLog = new MessageLog();
 				messageLog.setLength(body.length());
 				messageLog.text = body;
-				messageLog.setLogTime(String.valueOf(timeStamp));
+
 				messageLog.setTargetNumber(address);
 
 				smsList.add(messageLog);

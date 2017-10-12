@@ -199,6 +199,7 @@
     <string name="dialog_string_term_agreement_accept">Accept to terms of agreement</string>
     <string name="dialog_string_mandatory_term_accept">Agree to all required fields</string>
     <string name="dialog_string_loan_service_user_agreement">Loan service user agreement</string>
+    <string name="dialog_string_account_confirmation">Account Confirmation </string>
     <string name="dialog_string_personal_credit_information_access_agreement">Personal credit information access agreement</string>
     <string name="dialog_string_loan_transaction_agreement">Loan transaction agreement</string>
     <string name="dialog_string_contact_information">Contract information and instruction</string>

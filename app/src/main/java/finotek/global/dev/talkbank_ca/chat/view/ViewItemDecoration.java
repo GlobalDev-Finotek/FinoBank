@@ -2,7 +2,6 @@ package finotek.global.dev.talkbank_ca.chat.view;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.View;
 
 /**
@@ -16,7 +15,7 @@ public class ViewItemDecoration extends RecyclerView.ItemDecoration {
 
 		RecyclerView.ViewHolder vh = parent.getChildViewHolder(view);
 
-		if(vh instanceof ReceiveViewBuilder.ReceiveViewHolder) {
+		if (vh instanceof ReceiveViewBuilder.ReceiveViewHolder) {
 			outRect.set(0, 2, 0, 2);
 		} else if (vh instanceof SendViewBuilder.SendViewHolder) {
 			outRect.set(0, 4, 0, 4);

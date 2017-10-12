@@ -13,6 +13,11 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.Date;
+
+import javax.inject.Inject;
+
+import d2r.checksign.lib.SignData;
 import finotek.global.dev.talkbank_ca.R;
 
 /**
@@ -27,6 +32,7 @@ public class DrawingCanvas extends View {
 	private Bitmap canvasBitmap;
 	private Context context;
 	private OnCanvasTouchListener onCanvasTouchListener;
+	private OnDrawListener onDrawListener;
 
 	public DrawingCanvas(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -54,6 +60,10 @@ public class DrawingCanvas extends View {
 		this.onCanvasTouchListener = onCanvasTouchListener;
 	}
 
+	public void setOnDrawListener(OnDrawListener onDrawListener) {
+		this.onDrawListener = onDrawListener;
+	}
+
 	@Override
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -66,6 +76,20 @@ public class DrawingCanvas extends View {
 	public boolean onTouchEvent(MotionEvent event) {
 		float touchX = event.getX();
 		float touchY = event.getY();
+
+
+		int x = (int) touchX;
+		int y = (int) touchY;
+		int times = Integer.parseInt(
+				String.valueOf(System.currentTimeMillis())
+						.substring(3, 12));
+
+		SignData signData = new SignData();
+		signData.x = x;
+		signData.y = y;
+		signData.time = times;
+
+		onDrawListener.onDraw(signData.toString());
 
 		if (onCanvasTouchListener == null) {
 			throw new NullPointerException("canvas touch listener null");
@@ -82,6 +106,7 @@ public class DrawingCanvas extends View {
 			case MotionEvent.ACTION_UP:
 				drawCanvas.drawPath(drawPath, drawPaint);
 				drawPath.reset();
+				onDrawListener.onDraw("\n");
 				break;
 			default:
 				return false;
@@ -104,5 +129,9 @@ public class DrawingCanvas extends View {
 
 	public interface OnCanvasTouchListener {
 		void onTouchStart();
+	}
+
+	public interface OnDrawListener {
+		void onDraw(String strData);
 	}
 }

@@ -37,10 +37,10 @@ public class RecentTransactionScenario implements Scenario {
 	public void onUserSend(String msg) {
 		dbHelper.get(User.class).subscribe(users -> {
 			MessageBox.INSTANCE.addAndWait(
-				new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
-					users.last().getName())),
-				new RecentTransaction(TransactionDB.INSTANCE.getTx()),
-				new Done()
+					new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
+							users.last().getName())),
+					new RecentTransaction(TransactionDB.INSTANCE.getTx()),
+					new Done()
 			);
 		}, throwable -> {
 

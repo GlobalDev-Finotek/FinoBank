@@ -12,10 +12,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
 import android.graphics.Rect;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.ContactsContract;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -40,7 +45,9 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -48,15 +55,16 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextApp;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextCall;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLocation;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogService;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextSms;
-import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextTotal;
-import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
+import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.RemoteCallCompleted;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
+import finotek.global.dev.talkbank_ca.chat.messages.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
@@ -66,6 +74,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived;
+import finotek.global.dev.talkbank_ca.chat.messages.context.CurrentAddressReceived;
+import finotek.global.dev.talkbank_ca.chat.messages.context.RequestCurrentAddress;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v1;
@@ -87,28 +98,43 @@ import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
+import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.AgreementPdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
-import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
+import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
+import finotek.global.dev.talkbank_ca.user.remotecall.RemoteCallFragment;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
-import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.user.sign.HiddenSignFragment;
 import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.util.ChatLocationListener;
+import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
+import globaldev.finotek.com.logcollector.Finopass;
+import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
+import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
+import globaldev.finotek.com.logcollector.model.ActionType;
 import globaldev.finotek.com.logcollector.model.ApplicationLog;
 import globaldev.finotek.com.logcollector.model.CallHistoryLog;
 import globaldev.finotek.com.logcollector.model.LocationLog;
 import globaldev.finotek.com.logcollector.model.MessageLog;
+import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
+import globaldev.finotek.com.logcollector.util.AesInstance;
+import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
+import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Action;
+import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
+	static final int PERMISSION_REQUEST_READ_SMS = 100;
+	static final int PERMISSION_REQUEST_READ_CALL_LOG = 101;
 	private static final int PERMISSION_CAMERA = 2;
 
 	@Inject
@@ -116,6 +142,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	@Inject
 	RxEventBus eventBus;
+
 
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
@@ -130,15 +157,12 @@ public class ChatActivity extends AppCompatActivity {
 	private MainScenario_v2 mainScenario;
 
 	private CapturePicFragment capturePicFragment;
-	private OneStepSignRegisterFragment signRegistFragment;
+	private HiddenSignFragment signRegistFragment;
 	private TransferSignRegisterFragment transferSignRegistFragment;
+	private RemoteCallFragment remoteCallFragment;
 
 	private BroadcastReceiver receiver;
-	private String totalLogData;
-	private List<MessageLog> smsLogData;
-	private List<CallHistoryLog> callLogData;
-	private List<LocationLog> locationLogData;
-	private List<ApplicationLog> appLogData;
+	private boolean isFirstAuth = true;
 
 
 	@Override
@@ -147,7 +171,6 @@ public class ChatActivity extends AppCompatActivity {
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
 		getComponent().inject(this);
-
 
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
@@ -166,86 +189,18 @@ public class ChatActivity extends AppCompatActivity {
 		// TODO 아이템 간 패딩 정리
 		// binding.chatView.addItemDecoration(new ViewItemD3ecoration());
 
-		if (intent != null) {
-			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-
-			mainScenario = new MainScenario_v2(this, binding.chatView, eventBus, dbHelper, isSigned);
-		}
-
-		MessageBox.INSTANCE.observable
-				.flatMap(msg -> {
-					if (msg instanceof EnableToEditMoney) {
-						return Observable.just(msg)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else if (msg instanceof MessageEmitted) {
-						return Observable.just(msg)
-								.debounce(1, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else {
-						return Observable.just(msg)
-								.delay(1, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					}
-				})
-				.subscribe(this::onNewMessageUpdated, throwable -> {
-
-				}, new Action() {
-					@Override
-					public void run() throws Exception {
-					}
-				});
 		binding.ibMenu.setOnClickListener(v -> startActivity(new Intent(ChatActivity.this, SettingsActivity.class)));
-
 		preInitControlViews();
 
 		// keyboard event
-		KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
-			@Override
-			public void onToggleSoftKeyboard(boolean isVisible) {
-				if (isVisible)
-					binding.chatView.scrollToBottom();
-			}
+		KeyboardUtils.addKeyboardToggleListener(this, isVisible -> {
+			if (isVisible)
+				binding.chatView.scrollToBottom();
 		});
 
-		// bring contextLog Data
-		intent = new Intent(this, ContextLogService.class);
-		startService(intent);
-
-		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("chat.ContextLog.ContextLogService");
-
-		receiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				String totalData = intent.getStringExtra("totalLog");
-				totalLogData = totalData;
-
-				smsLogData = intent.getParcelableArrayListExtra("smsLog");
-
-				callLogData = intent.getParcelableArrayListExtra("callLog");
-
-				locationLogData = intent.getParcelableArrayListExtra("locationLog");
-
-				appLogData = intent.getParcelableArrayListExtra("appLog");
-
-			}
-		};
-		registerReceiver(receiver, intentFilter);
-
+		// initialize score receiver
+		receiveScore();
 	}
-
-
-
-	public String getTotalLogData() {
-		return totalLogData;
-	}
-
-	public void setTotalLogData(String totalLogData) {
-		this.totalLogData = totalLogData;
-	}
-
-
-
 
 	@Override
 	protected void onPause() {
@@ -254,42 +209,38 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		if (msg instanceof ContextTotal) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(getTotalLogData())
-			);
+		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(getString(R.string.splash_is_auth_agree), false);
+
+		if (msg instanceof ContextTotal && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
+			intent.putExtra("askType", "totalLog");
+			startService(intent);
 		}
 
-		if (msg instanceof ContextSms) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(smsLogData.toString())
-			);
+		if (msg instanceof ContextSms && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
+			intent.putExtra("askType", "smsLog");
+			startService(intent);
 		}
 
-		if (msg instanceof ContextCall) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(callLogData.toString())
-			);
+		if (msg instanceof ContextCall && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
+			intent.putExtra("askType", "callLog");
+			startService(intent);
 		}
-		if (msg instanceof ContextLocation) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(locationLogData.toString())
-			);
+		if (msg instanceof ContextLocation && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
+			intent.putExtra("askType", "locationLog");
+			startService(intent);
 		}
-		if (msg instanceof ContextApp) {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(appLogData.toString())
-			);
+		if (msg instanceof ContextApp && isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
+			intent.putExtra("askType", "appLog");
+			startService(intent);
 		}
-
 
 		if (msg instanceof RequestPhoto) {
-
-			hideAppBar();
-			hideStatusBar();
-			binding.footer.setPadding(0, 0, 0, 0);
-			releaseControls();
-			releaseAllControls();
+			this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -297,7 +248,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+						getIdCardInfo(""),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
@@ -314,11 +265,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestTakeAnotherIDCard) {
-			releaseControls();
-			releaseAllControls();
-			binding.footer.setPadding(0, 0, 0, 0);
-			hideStatusBar();
-			hideAppBar();
+			this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -326,7 +273,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path),
+						getIdCardInfo(path),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 				this.returnToInitialControl();
@@ -343,12 +290,35 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
+		if (msg instanceof RequestRemoteCall) {
+			this.prepareForFullScreen();
+
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
+
+			remoteCallFragment = new RemoteCallFragment();
+			remoteCallFragment.setVideoURL("android.resource://" + getPackageName() + "/" + R.raw.lady_teller);
+			remoteCallFragment.setStopListener(() -> {
+				MessageBox.INSTANCE.add(new RemoteCallCompleted(), 500);
+			});
+
+			FragmentTransaction tx = getFragmentManager().beginTransaction();
+			tx.replace(R.id.chat_capture, remoteCallFragment);
+			tx.commit();
+		}
+
+		if (msg instanceof RemoteCallCompleted) {
+			showAppBar();
+			this.returnToInitialControl();
+			showStatusBar();
+
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			transaction.remove(remoteCallFragment).commit();
+			binding.chatView.scrollToBottom();
+		}
+
 		if (msg instanceof RequestTakeIDCard) {
-			releaseControls();
-			releaseAllControls();
-			binding.footer.setPadding(0, 0, 0, 0);
-			hideAppBar();
-			hideStatusBar();
+			this.prepareForFullScreen();
 
 			View captureView = inflate(R.layout.chat_capture);
 			binding.footer.addView(captureView);
@@ -356,7 +326,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", ""),
+						getIdCardInfo(""),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
@@ -382,20 +352,16 @@ public class ChatActivity extends AppCompatActivity {
 
 
 		if (msg instanceof RequestSignature) {
-			releaseControls();
-			releaseAllControls();
-			hideAppBar();
-			hideStatusBar();
-			binding.footer.setPadding(0, 0, 0, 0);
+			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
 
-			signRegistFragment = new OneStepSignRegisterFragment();
+			signRegistFragment = new HiddenSignFragment();
 
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			signRegistFragment.setOnSaveListener(() -> {
+			signRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
@@ -405,31 +371,49 @@ public class ChatActivity extends AppCompatActivity {
 						.observeOn(AndroidSchedulers.mainThread())
 						.first((long) 1)
 						.subscribe(i -> {
+
 							loadingDialog.dismiss();
 
-							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-							dialog.setTitle(getString(R.string.setting_string_signature_verified));
-							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-							dialog.setButtonText(getString(R.string.setting_string_yes));
-							dialog.setDoneListener(() -> {
-								MessageBox.INSTANCE.add(new SignatureVerified());
-								returnToInitialControl();
+							// TODO similarity 에 따른 초기화
+							// 싸인 인증 성공
+							if (similarity / 100 > 30) {
+								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+								dialog.setTitle(getString(R.string.setting_string_signature_verified));
+								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+								dialog.setButtonText(getString(R.string.setting_string_yes));
+								dialog.setDoneListener(() -> {
+									MessageBox.INSTANCE.add(new SignatureVerified());
+									returnToInitialControl();
 
-								showAppBar();
-								showStatusBar();
+									showAppBar();
+									showStatusBar();
 
-								FragmentTransaction transaction = getFragmentManager().beginTransaction();
-								transaction.remove(signRegistFragment).commit();
+									FragmentTransaction transaction = getFragmentManager().beginTransaction();
+									transaction.remove(signRegistFragment).commit();
 
-								dialog.dismiss();
+									dialog.dismiss();
 
-								returnToInitialControl();
+									returnToInitialControl();
 
-								binding.chatView.scrollToBottom();
-								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+									binding.chatView.scrollToBottom();
+									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+								});
+								dialog.showWithRatio(0.50f);
+							}
 
-							});
-							dialog.showWithRatio(0.50f);
+							// 싸인 인증 실패
+							else {
+								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
+								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+								warningDialog.setDoneListener(() -> warningDialog.dismiss());
+								warningDialog.show();
+
+								MessageBox.INSTANCE.addAndWait(new RequestSignature());
+
+
+							}
+
 						}, throwable -> {
 						});
 			});
@@ -460,11 +444,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof TransferRequestSignature) {
-			releaseControls();
-			releaseAllControls();
-			hideAppBar();
-			hideStatusBar();
-			binding.footer.setPadding(0, 0, 0, 0);
+			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 			View signView = inflate(R.layout.chat_capture);
@@ -473,7 +453,7 @@ public class ChatActivity extends AppCompatActivity {
 			transferSignRegistFragment = new TransferSignRegisterFragment();
 
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			transferSignRegistFragment.setOnSaveListener(() -> {
+			transferSignRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
@@ -542,7 +522,13 @@ public class ChatActivity extends AppCompatActivity {
 
 			int balance = TransactionDB.INSTANCE.getMainBalance();
 			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
-			ctBinding.editMoney.setEnabled(false);
+			ctBinding.editMoney.setEnabled(((RequestTransferUI) msg).isEnabled());
+
+			if (((RequestTransferUI) msg).isEnabled()) {
+				ctBinding.editMoney.requestFocus();
+				ctBinding.gvKeypad.setLengthLimit(7);
+			}
+
 			binding.footer.addView(ctBinding.getRoot());
 		}
 
@@ -581,7 +567,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof ShowPdfView) {
 			ShowPdfView action = (ShowPdfView) msg;
-			PdfViewDialog dialog = new PdfViewDialog(this);
+		    AgreementPdfViewDialog dialog = new AgreementPdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();
@@ -612,6 +598,12 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestContactPermission) {
 			if (!hasContactPermission())
 				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
+		}
+
+		if (msg instanceof RequestCurrentAddress) {
+			String address = getAddressName(getCurrentLocation());
+			CurrentAddressReceived send = new CurrentAddressReceived(address);
+			MessageBox.INSTANCE.add(send);
 		}
 	}
 
@@ -873,6 +865,98 @@ public class ChatActivity extends AppCompatActivity {
 		return LayoutInflater.from(this).inflate(layoutId, parent, false);
 	}
 
+	private void receiveScore() {
+		IntentFilter intentFilter = new IntentFilter();
+		intentFilter.addAction("chat.ContextLog.ContextLogService");
+
+		receiver = new BroadcastReceiver() {
+			@Override
+			public void onReceive(Context context, Intent intent) {
+				String askType = intent.getStringExtra("askType");
+
+				ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
+
+				if (askType.equals("smsLog") || askType.equals("totalLog")) {
+					List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
+					queryMaps.addAll(smsLogData);
+					Log.d("FINOPASS", "sms logs: " + smsLogData);
+				}
+
+				if (askType.equals("callLog") || askType.equals("totalLog")) {
+					List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
+					queryMaps.addAll(callLogData);
+					Log.d("FINOPASS", "call logs: " + callLogData);
+				}
+
+				if (askType.equals("locationLog") || askType.equals("totalLog")) {
+					List<LocationLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
+					queryMaps.addAll(locationLogData);
+					Log.d("FINOPASS", "location logs: " + locationLogData);
+				}
+
+				if (askType.equals("appLog") || askType.equals("totalLog")) {
+					List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
+					if (appLogData != null) {
+						int skyHomeAppId = 0;
+						int size = appLogData.size();
+						for (int i = 0; i < size; i++) {
+							ApplicationLog log = appLogData.get(i);
+							try {
+								UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
+								AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
+
+								if (aes.decText(log.appName).equals("SKY 홈")) {
+									skyHomeAppId = i;
+								}
+							} catch (Exception e) {
+								e.printStackTrace();
+							}
+						}
+
+						if (!appLogData.isEmpty()) {
+							appLogData.remove(skyHomeAppId);
+						}
+					}
+
+					queryMaps.addAll(appLogData);
+					Log.d("FINOPASS", "app logs: " + appLogData);
+				}
+
+				Finopass.getInstance(ChatActivity.this)
+						.getScore(queryMaps)
+						.subscribe(
+								scoreParams -> {
+									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+									Log.d("FINOPASS", "Your final score is : " + scoreParams.finalScore);
+									decodeScoreParams(scoreParams);
+
+									if (isFirstAuth) {
+										Log.d("FINOPASS", "첫번째 맥락인증 요청");
+										ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
+										pref.save(scoreParams);
+
+										initializeMessageBox();
+										Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
+									} else {
+										Log.d("FINOPASS", "ContextScoreReceived emitted.");
+										MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
+									}
+								});
+			}
+		};
+		registerReceiver(receiver, intentFilter);
+		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+				.getBoolean(getString(R.string.splash_is_auth_agree), false);
+
+		if (isContextAuthAgreed) {
+			Intent intent = new Intent(this, ContextLogService.class);
+			intent.putExtra("askType", "totalLog");
+			startService(intent);
+		} else {
+			initializeMessageBox();
+		}
+	}
+
 	@Override
 	protected void onResume() {
 		super.onResume();
@@ -907,6 +991,18 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	@Override
+	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+		if (requestCode == PERMISSION_REQUEST_READ_SMS) {
+			int callLogPermissionCheck = ContextCompat.checkSelfPermission(ChatActivity.this, Manifest.permission.READ_CALL_LOG);
+			if (callLogPermissionCheck != PackageManager.PERMISSION_GRANTED) {
+				ActivityCompat.requestPermissions(ChatActivity.this,
+						new String[]{Manifest.permission.READ_CALL_LOG},
+						PERMISSION_REQUEST_READ_CALL_LOG);
+			}
+		}
+	}
+
+	@Override
 	protected void onDestroy() {
 		super.onDestroy();
 		mainScenario.release();
@@ -928,6 +1024,105 @@ public class ChatActivity extends AppCompatActivity {
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
+	private void initializeMessageBox(){
+		Intent chatIntent = getIntent();
+
+		// 메인 시나리오 세팅
+		if (chatIntent != null) {
+			boolean isSigned = chatIntent.getBooleanExtra("isSigned", false);
+			mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
+		}
+
+		// 메시지 박스 설정
+		MessageBox.INSTANCE.observable
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.subscribe(ChatActivity.this::onNewMessageUpdated);
+
+		isFirstAuth = false;
+	}
+
+	private void decodeScoreParams(ContextScoreResponse scoreParams) throws Exception {
+		UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
+		AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
+
+		if (scoreParams.messages != null) {
+			for (BaseScoreParam msg : scoreParams.messages) {
+				switch (msg.type) {
+					case ActionType.GATHER_APP_USAGE_LOG:
+						msg.param.put("appName", aes.decText(msg.param.get("appName")));
+						break;
+					case ActionType.GATHER_CALL_LOG:
+						if (msg.param.get("targetName") != null && !msg.param.get("targetName").isEmpty())
+							msg.param.put("targetName", aes.decText(msg.param.get("targetName")));
+						break;
+					case ActionType.GATHER_MESSAGE_LOG:
+						if (msg.param.get("targetNumber") != null && !msg.param.get("targetNumber").isEmpty())
+							msg.param.put("targetNumber", aes.decText(msg.param.get("targetNumber")));
+						break;
+				}
+			}
+		}
+	}
+
+	private String getAddressName(Location location) {
+		try {
+			Geocoder geo = new Geocoder(this.getApplicationContext(), Locale.getDefault());
+			List<Address> addresses = geo.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+			Log.d("FINOTEK", "addresses found: " + addresses);
+			if (addresses != null && !addresses.isEmpty()) {
+				return addresses.get(0).getAddressLine(0);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return "지역을 찾을 수 없습니다.";
+	}
+
+	private Location getCurrentLocation() {
+		Location currentLocation = null;
+		LocationManager manager = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+
+		if (!(checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+				&& checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
+			boolean isGPSEnabled = manager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+			boolean isNetworkEnabled = manager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+			if (isGPSEnabled)
+				manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10, new ChatLocationListener());
+			else if (isNetworkEnabled)
+				manager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 3000, 10, new ChatLocationListener());
+		}
+
+		List<String> providers = manager.getProviders(true);
+		for (String prov : providers) {
+			Location l = manager.getLastKnownLocation(prov);
+			if (l != null) {
+				currentLocation = l;
+			}
+		}
+
+		return currentLocation;
+	}
+
+	private IDCardInfo getIdCardInfo(String path) {
+		Realm realm = Realm.getDefaultInstance();
+		User user = realm.where(User.class).findAll().last();
+		if (user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
+			return new IDCardInfo("주민등록증", "박승남", "680707-1243132", "2012.11.02", path);
+		else
+			return new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path);
+	}
+
 	private ChatComponent getComponent() {
 		return DaggerChatComponent
 				.builder()
@@ -940,4 +1135,11 @@ public class ChatActivity extends AppCompatActivity {
 		return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
 	}
 
+	private void prepareForFullScreen() {
+		hideAppBar();
+		hideStatusBar();
+		binding.footer.setPadding(0, 0, 0, 0);
+		releaseControls();
+		releaseAllControls();
+	}
 }

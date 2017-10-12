@@ -52,6 +52,11 @@
     <color name="cool_green_dark">#298f44</color>
     <color name="pale_grey">#eceff0</color>
 
+    <color name="chat_succeeded_bg">#D4EDDA</color>
+    <color name="chat_succeeded_text">#155724</color>
+    <color name="chat_warning_bg">#FFF3CD</color>
+    <color name="chat_warning_text">#856404</color>
+
     <color name="chat_status_bg">#fdf3be</color>
     <color name="chat_status_text">#5a5e45</color>
     <color name="chat_divider_bg">#cfe8ed</color>

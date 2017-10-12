@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="finotek.global.dev.talkbank_ca">
-
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -10,8 +9,10 @@
         android:smallScreens="true"
         android:xlargeScreens="true"/>
 
-
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
+    <uses-permission android:name="android.permission.WRITE_SMS"/>
+
     <uses-feature
         android:name="android.hardware.camera2"
         android:required="false"/>
@@ -90,12 +91,15 @@
             </intent-filter>
         </service>
         <service
-            android:name=".chat.ContextLog.ContextLogService">
+            android:name=".chat.context_log.ContextLogService">
             <intent-filter>
-                <action android:name = "chat.ContextLog.ContextLogService"/>
+                <action android:name="chat.ContextLog.ContextLogService"/>
             </intent-filter>
         </service>
 
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA-lwG0vNzb1VEzdM2EsMpqIU8cSUoK4TQ"/>
     </application>
 
 </manifest>

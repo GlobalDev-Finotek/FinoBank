@@ -15,7 +15,7 @@ public class CreditCard extends RealmObject {
 	public Date expirationDate;
 	public String name;
 
-	public CreditCard(){
+	public CreditCard() {
 
 	}
 

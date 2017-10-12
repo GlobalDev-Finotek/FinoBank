@@ -1,7 +1,6 @@
 package finotek.global.dev.talkbank_ca.chat;
 
 import android.content.Context;
-import android.util.Log;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -9,8 +8,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.base.mvp.event.AccuracyMeasureEvent;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountConfirm;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
@@ -29,7 +28,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
-import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
 import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
@@ -224,6 +222,10 @@ public class MainScenario {
 			chatView.agreementResult();
 		}
 
+		if (msg instanceof AccountConfirm){
+			chatView.accountConfirm();
+		}
+
 		// 최근 거래 내역
 		if (msg instanceof RecentTransaction) {
 			chatView.transactionList((RecentTransaction) msg);
@@ -252,11 +254,11 @@ public class MainScenario {
 			chatView.removeOf(ChatView.ViewType.Agreement);
 		}
 
-		if(msg instanceof WaitResult) {
+		if (msg instanceof WaitResult) {
 			chatView.waiting();
 		}
 
-		if(msg instanceof WaitDone) {
+		if (msg instanceof WaitDone) {
 			chatView.waitingDone();
 		}
 	}

@@ -12,77 +12,65 @@ import java.util.HashMap;
  * Based on the following Stackoverflow answer:
  * http://stackoverflow.com/questions/2150078/how-to-check-visibility-of-software-keyboard-in-android
  */
-public class KeyboardUtils implements ViewTreeObserver.OnGlobalLayoutListener
-{
-    @Override
-    public void onGlobalLayout()
-    {
-        Rect r = new Rect();
-        //r will be populated with the coordinates of your view that area still visible.
-        mRootView.getWindowVisibleDisplayFrame(r);
+public class KeyboardUtils implements ViewTreeObserver.OnGlobalLayoutListener {
+	private static HashMap<SoftKeyboardToggleListener, KeyboardUtils> sListenerMap = new HashMap<>();
+	private SoftKeyboardToggleListener mCallback;
+	private View mRootView;
+	private float mScreenDensity = 1;
 
-        int heightDiff = mRootView.getRootView().getHeight() - (r.bottom - r.top);
-        float dp = heightDiff/ mScreenDensity;
+	private KeyboardUtils(Activity act, SoftKeyboardToggleListener listener) {
+		mCallback = listener;
 
-        if(mCallback != null)
-            mCallback.onToggleSoftKeyboard(dp > 200);
-    }
+		mRootView = ((ViewGroup) act.findViewById(android.R.id.content)).getChildAt(0);
+		mRootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
 
-    public interface SoftKeyboardToggleListener
-    {
-        void onToggleSoftKeyboard(boolean isVisible);
-    }
+		mScreenDensity = act.getResources().getDisplayMetrics().density;
+	}
 
-    private SoftKeyboardToggleListener mCallback;
-    private View mRootView;
-    private float mScreenDensity = 1;
-    private static HashMap<SoftKeyboardToggleListener, KeyboardUtils> sListenerMap = new HashMap<>();
+	public static void addKeyboardToggleListener(Activity act, SoftKeyboardToggleListener listener) {
+		removeKeyboardToggleListener(listener);
 
+		sListenerMap.put(listener, new KeyboardUtils(act, listener));
+	}
 
+	public static void removeKeyboardToggleListener(SoftKeyboardToggleListener listener) {
+		if (sListenerMap.containsKey(listener)) {
+			KeyboardUtils k = sListenerMap.get(listener);
+			k.removeListener();
 
-    public static void addKeyboardToggleListener(Activity act, SoftKeyboardToggleListener listener)
-    {
-        removeKeyboardToggleListener(listener);
+			sListenerMap.remove(listener);
+		}
+	}
 
-        sListenerMap.put(listener, new KeyboardUtils(act, listener));
-    }
+	public static void removeAllKeyboardToggleListeners() {
+		for (SoftKeyboardToggleListener l : sListenerMap.keySet())
+			sListenerMap.get(l).removeListener();
 
-    public static void removeKeyboardToggleListener(SoftKeyboardToggleListener listener)
-    {
-        if(sListenerMap.containsKey(listener))
-        {
-            KeyboardUtils k = sListenerMap.get(listener);
-            k.removeListener();
+		sListenerMap.clear();
+	}
 
-            sListenerMap.remove(listener);
-        }
-    }
+	@Override
+	public void onGlobalLayout() {
+		Rect r = new Rect();
+		//r will be populated with the coordinates of your view that area still visible.
+		mRootView.getWindowVisibleDisplayFrame(r);
 
-    public static void removeAllKeyboardToggleListeners()
-    {
-        for(SoftKeyboardToggleListener l : sListenerMap.keySet())
-            sListenerMap.get(l).removeListener();
+		int heightDiff = mRootView.getRootView().getHeight() - (r.bottom - r.top);
+		float dp = heightDiff / mScreenDensity;
 
-        sListenerMap.clear();
-    }
+		if (mCallback != null)
+			mCallback.onToggleSoftKeyboard(dp > 200);
+	}
 
-    private void removeListener()
-    {
-        mCallback = null;
+	private void removeListener() {
+		mCallback = null;
 
-        mRootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
-    }
+		mRootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+	}
 
-    private KeyboardUtils(Activity act, SoftKeyboardToggleListener listener)
-    {
-        mCallback = listener;
-
-        mRootView = ((ViewGroup) act.findViewById(android.R.id.content)).getChildAt(0);
-        mRootView.getViewTreeObserver().addOnGlobalLayoutListener(this);
-
-        mScreenDensity = act.getResources().getDisplayMetrics().density;
-    }
-
+	public interface SoftKeyboardToggleListener {
+		void onToggleSoftKeyboard(boolean isVisible);
+	}
 
 
 }

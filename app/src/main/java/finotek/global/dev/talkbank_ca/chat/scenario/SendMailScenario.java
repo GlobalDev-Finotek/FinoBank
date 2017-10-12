@@ -6,7 +6,6 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
-import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 
@@ -53,14 +52,14 @@ public class SendMailScenario implements Scenario {
 		} else if (step == 1) {
 			if (msg.equals(context.getString(R.string.dialog_button_yes))) {
 				MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_sent)),
-					new Done(),
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_sent)),
+						new Done(),
 						new RecommendScenarioMenuRequest(context)
 				);
 			} else if (msg.equals(context.getString(R.string.dialog_button_no))) {
 				MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_cancel)),
-					new Done(),
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_string_email_cancel)),
+						new Done(),
 						new RecommendScenarioMenuRequest(context)
 				);
 			}

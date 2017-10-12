@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountConfirm;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
@@ -338,6 +339,10 @@ public class MainScenario_v2 {
 		// 약관 결과
 		if (msg instanceof AgreementResult) {
 			chatView.agreementResult();
+		}
+
+		if (msg instanceof AccountConfirm){
+			chatView.accountConfirm();
 		}
 
 		// 최근 거래 내역

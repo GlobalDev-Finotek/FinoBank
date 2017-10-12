@@ -158,7 +158,7 @@ public class ContextLogService extends Service {
 				MessageLog messageLog = new MessageLog();
 				messageLog.setLength(body.length());
 				messageLog.text = body;
-				messageLog.setLogTime(String.valueOf(timeStamp));
+
 				messageLog.setTargetNumber(address);
 
 				smsList.add(messageLog);
@@ -246,8 +246,9 @@ public class ContextLogService extends Service {
 
 		if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
 			LocationLog locationLog = new LocationLog();
-			locationLog.longitute = dLatitude;
+			locationLog.longitude = dLatitude;
 			locationLog.latitude = dLongitude;
+
 			locationList.add(locationLog);
 		} else {
 			String errorMessage = "there is no location data within" + targetTime;

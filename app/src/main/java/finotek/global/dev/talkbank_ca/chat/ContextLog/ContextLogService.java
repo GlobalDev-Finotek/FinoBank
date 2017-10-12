@@ -248,6 +248,7 @@ public class ContextLogService extends Service {
 			LocationLog locationLog = new LocationLog();
 			locationLog.longitude = dLatitude;
 			locationLog.latitude = dLongitude;
+
 			locationList.add(locationLog);
 		} else {
 			String errorMessage = "there is no location data within" + targetTime;

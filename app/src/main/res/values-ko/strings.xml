@@ -334,7 +334,7 @@
     <string name ="main_string_v2_login_electricity_additional_picture">추가로 촬영을 진행하시겠습니까?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">예</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>
-    <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 인증합니다. </string>
+    <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 등록합니다. </string>
     <string name ="main_string_v2_login_electricity_signature">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해주세요 </string>
     <string name ="main_string_v2_login_electricity_account_confirm">전기료 &#8361;%1$s이 공과금 계좌에서 납부 완료 되었습니다. </string>
 

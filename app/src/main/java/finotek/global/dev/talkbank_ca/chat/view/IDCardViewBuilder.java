@@ -19,7 +19,9 @@ import java.io.IOException;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.databinding.ChatIdCardBinding;
+import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.Converter;
+import io.realm.Realm;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
@@ -37,6 +39,7 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 	@Override
 	public void bind(RecyclerView.ViewHolder viewHolder, IDCardInfo data) {
 		IDCardViewHolder holder = (IDCardViewHolder) viewHolder;
+		Realm realm = Realm.getDefaultInstance();
 
 		try {
 			String imgPath = data.getImgPath();
@@ -62,7 +65,11 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 				holder.binding.jumin.setText(data.getJumin());
 				holder.binding.issueDate.setText(data.getIssueDate());
 
-				holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
+				User user = realm.where(User.class).findAll().last();
+				if (user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
+					holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card_park));
+				else
+					holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

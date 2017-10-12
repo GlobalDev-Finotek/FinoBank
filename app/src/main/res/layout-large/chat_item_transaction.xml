@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="item"
             type="finotek.global.dev.talkbank_ca.chat.messages.Transaction"/>
     </data>
+
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="match_parent"
@@ -23,11 +26,11 @@
             android:id="@+id/star_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="5dp"
             android:layout_centerVertical="true"
+            android:layout_marginStart="5dp"
             android:button="@drawable/checkbox_bookmark"
             android:scaleX="1.5"
-            android:scaleY="1.5" />
+            android:scaleY="1.5"/>
 
         <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
             android:id="@+id/name"

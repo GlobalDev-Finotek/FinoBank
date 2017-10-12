@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
+
         <variable
             name="account"
             type="finotek.global.dev.talkbank_ca.chat.messages.Account"/>
     </data>
+
     <RelativeLayout
         android:id="@+id/main"
         android:layout_width="170dp"
@@ -37,7 +40,7 @@
             android:layout_alignParentBottom="true"
             android:text="@{account.history}"
             android:textColor="@color/dark_50"
-            android:textSize="@dimen/text_small" />
+            android:textSize="@dimen/text_small"/>
 
         <CheckBox
             android:layout_width="wrap_content"

@@ -3,24 +3,29 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tb="http://schemas.android.com/apk/res-auto">
+
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/main_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="#F5F5F5"
             android:orientation="vertical">
+
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/appbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:elevation="0dp"
                 android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <android.support.v7.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
@@ -29,6 +34,7 @@
                         android:background="?attr/colorPrimary"
                         app:layout_scrollFlags="scroll|enterAlways|snap"
                         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
                     <ImageButton
                         android:id="@+id/ib_back"
                         android:layout_width="wrap_content"
@@ -38,17 +44,19 @@
                         android:background="@android:color/transparent"
                         android:scaleX="-1"
                         tb:srcCompat="@drawable/vector_drawable_btn_back"/>
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/ib_back"
-                        android:layout_marginStart="0dp"
                         android:layout_centerVertical="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_toEndOf="@id/ib_back"
                         android:theme="@style/Header"
                         tb:custom_font="noto_medium"/>
                 </RelativeLayout>
             </android.support.design.widget.AppBarLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,6 +65,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@drawable/border_white_two_radius"
                 android:orientation="vertical">
+
                 <LinearLayout
                     android:id="@+id/ll_userinfo"
                     android:layout_width="match_parent"
@@ -64,6 +73,7 @@
                     android:background="@drawable/border_white_two_top_radius"
                     android:orientation="horizontal"
                     android:padding="10dp">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:id="@+id/talkBankTextView3"
                         android:layout_width="wrap_content"
@@ -74,6 +84,7 @@
                         android:text="@string/setting_string_user_information"
                         android:textColor="@color/dark_100"
                         tb:custom_font="noto_regular"/>
+
                     <ImageView
                         android:id="@+id/imageView"
                         android:layout_width="wrap_content"
@@ -83,6 +94,7 @@
                         android:tint="#94989e"
                         app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_ca"
                     android:layout_width="match_parent"
@@ -91,6 +103,7 @@
                     android:background="@drawable/border_white_two"
                     android:orientation="horizontal"
                     android:padding="10dp">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -100,6 +113,7 @@
                         android:text="@string/setting_string_context_verification"
                         android:textColor="@color/dark_100"
                         tb:custom_font="noto_regular"/>
+
                     <ImageView
                         android:id="@+id/imageView2"
                         android:layout_width="wrap_content"
@@ -109,6 +123,7 @@
                         android:tint="#94989e"
                         app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_cost"
                     android:layout_width="match_parent"
@@ -117,6 +132,7 @@
                     android:background="@drawable/border_white_two"
                     android:orientation="horizontal"
                     android:padding="10dp">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -126,6 +142,7 @@
                         android:text="@string/setting_string_amount_verification"
                         android:textColor="@color/dark_100"
                         tb:custom_font="noto_regular"/>
+
                     <ImageView
                         android:id="@+id/imageView3"
                         android:layout_width="wrap_content"
@@ -136,6 +153,7 @@
                         android:tint="#94989e"
                         app:srcCompat="@drawable/chevron_right_light"/>
                 </LinearLayout>
+
                 <LinearLayout
                     android:id="@+id/ll_abnormal"
                     android:layout_width="match_parent"
@@ -144,6 +162,7 @@
                     android:background="@drawable/border_white_two_bottom_radius"
                     android:orientation="horizontal"
                     android:padding="10dp">
+
                     <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -153,6 +172,7 @@
                         android:text="@string/setting_string_suspicious_transaction_verification"
                         android:textColor="@color/dark_100"
                         tb:custom_font="noto_regular"/>
+
                     <ImageView
                         android:id="@+id/imageView4"
                         android:layout_width="wrap_content"

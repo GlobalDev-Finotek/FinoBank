@@ -69,6 +69,7 @@ dependencies {
     provided 'javax.annotation:jsr250-api:1.0'
 
     compile project(':log_collector')
+    compile project(path: ':finosign')
 }
 
 

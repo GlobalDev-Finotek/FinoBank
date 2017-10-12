@@ -179,29 +179,6 @@ public class ChatActivity extends AppCompatActivity {
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 		Intent intent = getIntent();
 
-		// 메인 시나리오 세팅
-		if (intent != null) {
-			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-			mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
-		}
-
-		// 메시지 박스 설정
-		MessageBox.INSTANCE.observable
-				.flatMap(msg -> {
-					if (msg instanceof EnableToEditMoney) {
-						return Observable.just(msg)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else {
-						return Observable.just(msg)
-								.delay(1, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					}
-				})
-				.subscribe(ChatActivity.this::onNewMessageUpdated);
-
-		isFirstAuth = false;
-		Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
-
 		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 		mLayoutManager.setReverseLayout(true);
 		mLayoutManager.setStackFromEnd(true);
@@ -232,8 +209,7 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		final String isAgreeWithString = "isAgreeWithContextAuth";
-		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(isAgreeWithString, false);
+		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(getString(R.string.splash_is_auth_agree), false);
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
@@ -886,8 +862,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void receiveScore() {
-		Intent chatIntent = getIntent();
-
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("chat.ContextLog.ContextLogService");
 
@@ -949,6 +923,7 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(
 								scoreParams -> {
 									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+									Log.d("FINOPASS", "Your final score is : " + scoreParams.finalScore);
 									decodeScoreParams(scoreParams);
 
 									if (isFirstAuth) {
@@ -956,29 +931,10 @@ public class ChatActivity extends AppCompatActivity {
 										ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
 										pref.save(scoreParams);
 
-										// 메인 시나리오 세팅
-										if (chatIntent != null) {
-											boolean isSigned = intent.getBooleanExtra("isSigned", false);
-											mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
-										}
-
-										// 메시지 박스 설정
-										MessageBox.INSTANCE.observable
-												.flatMap(msg -> {
-													if (msg instanceof EnableToEditMoney) {
-														return Observable.just(msg)
-																.observeOn(AndroidSchedulers.mainThread());
-													} else {
-														return Observable.just(msg)
-																.delay(1, TimeUnit.SECONDS)
-																.observeOn(AndroidSchedulers.mainThread());
-													}
-												})
-												.subscribe(ChatActivity.this::onNewMessageUpdated);
-
-										isFirstAuth = false;
+										initializeMessageBox();
 										Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
 									} else {
+										Log.d("FINOPASS", "ContextScoreReceived emitted.");
 										MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
 									}
 								});
@@ -992,6 +948,8 @@ public class ChatActivity extends AppCompatActivity {
 			Intent intent = new Intent(this, ContextLogService.class);
 			intent.putExtra("askType", "totalLog");
 			startService(intent);
+		} else {
+			initializeMessageBox();
 		}
 	}
 
@@ -1060,6 +1018,32 @@ public class ChatActivity extends AppCompatActivity {
 		Toast.makeText(this, getString(R.string.main_back_exit), Toast.LENGTH_SHORT).show();
 
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+	}
+
+	private void initializeMessageBox(){
+		Intent chatIntent = getIntent();
+
+		// 메인 시나리오 세팅
+		if (chatIntent != null) {
+			boolean isSigned = chatIntent.getBooleanExtra("isSigned", false);
+			mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
+		}
+
+		// 메시지 박스 설정
+		MessageBox.INSTANCE.observable
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.subscribe(ChatActivity.this::onNewMessageUpdated);
+
+		isFirstAuth = false;
 	}
 
 	private void decodeScoreParams(ContextScoreResponse scoreParams) throws Exception {

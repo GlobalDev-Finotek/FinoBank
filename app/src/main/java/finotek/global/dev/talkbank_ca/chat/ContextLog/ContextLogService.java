@@ -247,7 +247,7 @@ public class ContextLogService extends Service {
 		if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
 			LocationLog locationLog = new LocationLog();
 			locationLog.latitude = dLatitude;
-			locationLog.longitude = dLongitude;
+			locationLog.longitute = dLongitude;
 			locationList.add(locationLog);
 		} else {
 			String errorMessage = "there is no location data within" + targetTime;

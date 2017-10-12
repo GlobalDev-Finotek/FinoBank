@@ -86,9 +86,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPress
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.TransferRequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -375,7 +375,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 
-		if (msg instanceof RequestSignature) {
+		if (msg instanceof RequestSignatureRegister) {
 			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -398,12 +398,9 @@ public class ChatActivity extends AppCompatActivity {
 
 							loadingDialog.dismiss();
 
-							// TODO similarity 에 따른 초기화
-							// 싸인 인증 성공
-							if (similarity / 100 > 30) {
 								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-								dialog.setTitle(getString(R.string.setting_string_signature_verified));
-								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+							dialog.setTitle(getString(R.string.setting_string_registered_signature));
+							dialog.setDescription(getString(R.string.setting_string_signature_twice));
 								dialog.setButtonText(getString(R.string.setting_string_yes));
 								dialog.setDoneListener(() -> {
 									MessageBox.INSTANCE.add(new SignatureVerified());
@@ -423,20 +420,6 @@ public class ChatActivity extends AppCompatActivity {
 									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 								});
 								dialog.showWithRatio(0.50f);
-							}
-
-							// 싸인 인증 실패
-							else {
-								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
-								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
-								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
-								warningDialog.setDoneListener(() -> warningDialog.dismiss());
-								warningDialog.show();
-
-								MessageBox.INSTANCE.addAndWait(new RequestSignature());
-
-
-							}
 
 						}, throwable -> {
 						});
@@ -467,7 +450,7 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
-		if (msg instanceof TransferRequestSignature) {
+		if (msg instanceof RequestSignatureValidation) {
 			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -489,29 +472,42 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(i -> {
 							loadingDialog.dismiss();
 
-							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-							dialog.setTitle(getString(R.string.setting_string_signature_verified));
-							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-							dialog.setButtonText(getString(R.string.setting_string_yes));
-							dialog.setDoneListener(() -> {
-								MessageBox.INSTANCE.add(new SignatureVerified());
-								returnToInitialControl();
+							if (similarity / 100 > 30) {
+								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+								dialog.setTitle(getString(R.string.setting_string_signature_verified));
+								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+								dialog.setButtonText(getString(R.string.setting_string_yes));
+								dialog.setDoneListener(() -> {
+									MessageBox.INSTANCE.add(new SignatureVerified());
+									returnToInitialControl();
 
-								showAppBar();
-								showStatusBar();
+									showAppBar();
+									showStatusBar();
 
-								FragmentTransaction transaction = getFragmentManager().beginTransaction();
-								transaction.remove(transferSignRegistFragment).commit();
+									FragmentTransaction transaction = getFragmentManager().beginTransaction();
+									transaction.remove(transferSignRegistFragment).commit();
 
-								dialog.dismiss();
+									dialog.dismiss();
 
-								returnToInitialControl();
+									returnToInitialControl();
 
-								binding.chatView.scrollToBottom();
-								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+									binding.chatView.scrollToBottom();
+									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-							});
-							dialog.showWithRatio(0.50f);
+								});
+								dialog.showWithRatio(0.50f);
+							} else {
+								transferSignRegistFragment.init();
+								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
+								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+								warningDialog.setDoneListener(warningDialog::dismiss);
+								warningDialog.show();
+
+								MessageBox.INSTANCE.addAndWait(new RequestSignatureValidation());
+							}
+
+
 						}, throwable -> {
 						});
 			});

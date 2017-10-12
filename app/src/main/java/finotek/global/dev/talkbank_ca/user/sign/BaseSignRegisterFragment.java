@@ -26,6 +26,7 @@ import io.reactivex.subjects.PublishSubject;
 
 public abstract class BaseSignRegisterFragment extends Fragment {
 
+	private final String SIGN_FILENAME = "mySign.txt";
 	protected int stepCount = 1;
 	protected PublishSubject<Integer> stepSubject;
 	protected OnSizeControlClick onSizeControlClick;
@@ -96,7 +97,13 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 						() -> {
 							if (onSignValidationListener != null) {
 
-								int similarity = FinoSign.validate(firstDatas.toString(), secondDatas.toString());
+
+								int similarity = -1;
+								if (secondDatas.length() == 0) {
+									similarity = FinoSign.validate(firstDatas.toString(), loadSavedSign());
+								} else {
+									similarity = FinoSign.validate(firstDatas.toString(), secondDatas.toString());
+								}
 
 								onSignValidationListener.onValidate(similarity);
 								firstDatas.setLength(0);
@@ -118,6 +125,14 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 		stepSubject.onNext(stepCount);
 		firstDatas.setLength(0);
 		secondDatas.setLength(0);
+	}
+
+	protected String loadSavedSign() {
+		return FinoSign.loadSign(getContext(), SIGN_FILENAME);
+	}
+
+	protected void saveSign() {
+		FinoSign.saveSign(getContext(), SIGN_FILENAME, firstDatas.toString());
 	}
 
 	public enum CanvasSize {

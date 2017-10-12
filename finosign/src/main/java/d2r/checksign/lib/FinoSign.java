@@ -3,10 +3,12 @@ package d2r.checksign.lib;
 import android.content.Context;
 import android.util.Log;
 
-import java.io.ByteArrayOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileDescriptor;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.util.List;
 
 /**
  * Created by magyeong-ug on 2017. 10. 11..
@@ -21,12 +23,15 @@ public class FinoSign {
 	public static native int checkSign(byte[] p1, byte[] p2);
 
 	public static void saveSign(Context context, String fileName, String datas) {
+
+
 		try {
+			context.deleteFile(fileName);
+
 			OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(fileName, Context.MODE_PRIVATE));
 			outputStreamWriter.write(datas);
 			outputStreamWriter.close();
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			Log.e("Exception", "File write failed: " + e.toString());
 		}
 	}
@@ -43,4 +48,26 @@ public class FinoSign {
 		return similarity;
 	}
 
+	public static String loadSign(Context context, String fileName) {
+
+		String ret = "";
+
+		try {
+			InputStreamReader inputStreamReader = new InputStreamReader(context.openFileInput(fileName));
+			BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+			String receiveString;
+			StringBuilder stringBuilder = new StringBuilder();
+
+			while ((receiveString = bufferedReader.readLine()) != null) {
+				stringBuilder.append(receiveString);
+			}
+
+			ret = stringBuilder.toString() + "\n";
+
+		} catch (IOException e) {
+			Log.e("Exception", "File write failed: " + e.toString());
+		}
+
+		return ret;
+	}
 }

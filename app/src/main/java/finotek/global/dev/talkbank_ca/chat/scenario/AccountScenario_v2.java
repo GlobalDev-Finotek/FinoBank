@@ -14,7 +14,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
 public class AccountScenario_v2 implements Scenario {
@@ -120,7 +120,7 @@ public class AccountScenario_v2 implements Scenario {
 			case TakeSign:
 				if (msg.equals(yes)) {
 					MessageBox.INSTANCE.addAndWait(
-							new RequestSignature()
+							new RequestSignatureRegister()
 					);
 					step = Step.Last;
 				} else if (msg.equals(no)) {

@@ -43,8 +43,7 @@ public class HiddenSignFragment extends BaseSignRegisterFragment {
 			case 3:
 				Log.d("FINOPASS", "sign is saved");
 				MySignStorage.saveSign(this.getContext(), binding.drawingCanvas);
-
-				FinoSign.saveSign(getContext(), "mySign.txt", firstDatas.toString());
+				saveSign();
 				binding.drawingCanvas.clear();
 				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
 				binding.tvInst.setText(getString(R.string.registration_string_write_hidden_signature));

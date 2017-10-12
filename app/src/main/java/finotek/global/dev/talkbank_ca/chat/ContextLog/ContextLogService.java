@@ -246,7 +246,7 @@ public class ContextLogService extends Service {
 
 		if (dataTime(date).before(currentTime()) && dataTime(date).after(searchZone(targetTime))) {
 			LocationLog locationLog = new LocationLog();
-			locationLog.longitute = dLatitude;
+			locationLog.longitude = dLatitude;
 			locationLog.latitude = dLongitude;
 			locationList.add(locationLog);
 		} else {

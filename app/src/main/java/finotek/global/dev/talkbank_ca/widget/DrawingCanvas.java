@@ -15,6 +15,9 @@ import android.view.View;
 
 import java.util.Date;
 
+import javax.inject.Inject;
+
+import d2r.checksign.lib.SignData;
 import finotek.global.dev.talkbank_ca.R;
 
 /**
@@ -74,7 +77,19 @@ public class DrawingCanvas extends View {
 		float touchX = event.getX();
 		float touchY = event.getY();
 
-		this.onDrawListener.onDraw(touchX, touchY, new Date().getTime());
+
+		int x = (int) touchX;
+		int y = (int) touchY;
+		int times = Integer.parseInt(
+				String.valueOf(System.currentTimeMillis())
+						.substring(3, 12));
+
+		SignData signData = new SignData();
+		signData.x = x;
+		signData.y = y;
+		signData.time = times;
+
+		onDrawListener.onDraw(signData.toString());
 
 		if (onCanvasTouchListener == null) {
 			throw new NullPointerException("canvas touch listener null");
@@ -91,6 +106,7 @@ public class DrawingCanvas extends View {
 			case MotionEvent.ACTION_UP:
 				drawCanvas.drawPath(drawPath, drawPaint);
 				drawPath.reset();
+				onDrawListener.onDraw("\n");
 				break;
 			default:
 				return false;
@@ -116,6 +132,6 @@ public class DrawingCanvas extends View {
 	}
 
 	public interface OnDrawListener {
-		void onDraw(float x, float y, float time);
+		void onDraw(String strData);
 	}
 }

@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
-import globaldev.finotek.com.finosign.FinoSign;
+import d2r.checksign.lib.FinoSign;
 
 /**
  * Created by magyeong-ug on 2017. 3. 29..
@@ -44,7 +44,7 @@ public class HiddenSignFragment extends BaseSignRegisterFragment {
 				Log.d("FINOPASS", "sign is saved");
 				MySignStorage.saveSign(this.getContext(), binding.drawingCanvas);
 
-				FinoSign.saveSign(getContext(), "mySign.txt", datas);
+				FinoSign.saveSign(getContext(), "mySign.txt", firstDatas.toString());
 				binding.drawingCanvas.clear();
 				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
 				binding.tvInst.setText(getString(R.string.registration_string_write_hidden_signature));

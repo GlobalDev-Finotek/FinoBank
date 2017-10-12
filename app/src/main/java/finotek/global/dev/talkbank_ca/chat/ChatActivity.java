@@ -105,6 +105,7 @@ import finotek.global.dev.talkbank_ca.user.dialogs.AgreementPdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
+import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
 import finotek.global.dev.talkbank_ca.user.remotecall.RemoteCallFragment;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
 import finotek.global.dev.talkbank_ca.user.sign.HiddenSignFragment;
@@ -395,11 +396,11 @@ public class ChatActivity extends AppCompatActivity {
 						.first((long) 1)
 						.subscribe(i -> {
 
+							loadingDialog.dismiss();
+
 							// TODO similarity 에 따른 초기화
 							// 싸인 인증 성공
-							if (similarity / 1000 > 30) {
-								loadingDialog.dismiss();
-
+							if (similarity / 100 > 30) {
 								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
 								dialog.setTitle(getString(R.string.setting_string_signature_verified));
 								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
@@ -426,7 +427,15 @@ public class ChatActivity extends AppCompatActivity {
 
 							// 싸인 인증 실패
 							else {
-								signRegistFragment.init();
+								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
+								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+								warningDialog.setDoneListener(() -> warningDialog.dismiss());
+								warningDialog.show();
+
+								MessageBox.INSTANCE.addAndWait(new RequestSignature());
+
+
 							}
 
 						}, throwable -> {
@@ -468,7 +477,7 @@ public class ChatActivity extends AppCompatActivity {
 			transferSignRegistFragment = new TransferSignRegisterFragment();
 
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			transferSignRegistFragment.setOnSignValidationListener(() -> {
+			transferSignRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));

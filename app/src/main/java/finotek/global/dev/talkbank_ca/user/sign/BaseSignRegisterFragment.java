@@ -14,9 +14,8 @@ import java.util.List;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentDrawBinding;
-import globaldev.finotek.com.finosign.FinoSign;
-import globaldev.finotek.com.finosign.SignData;
-import globaldev.finotek.com.logcollector.Finopass;
+import d2r.checksign.lib.FinoSign;
+import d2r.checksign.lib.SignData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
 
@@ -32,11 +31,9 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 	protected OnSizeControlClick onSizeControlClick;
 	protected OnSignValidationListener onSignValidationListener;
 	protected CanvasSize currentSize = CanvasSize.SMALL;
+	protected StringBuilder firstDatas = new StringBuilder();
+	protected StringBuilder secondDatas = new StringBuilder();
 	FragmentDrawBinding binding;
-
-	protected List<SignData> datas = new ArrayList<>();
-
-
 
 	public void setOnSignValidationListener(OnSignValidationListener onSignValidationListener) {
 		this.onSignValidationListener = onSignValidationListener;
@@ -81,14 +78,12 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 
 		setOnTouchCount();
 
-		binding.drawingCanvas.setOnDrawListener((x, y, time) -> {
+		binding.drawingCanvas.setOnDrawListener((strData) -> {
 
-			if(stepCount == 2 || stepCount == 4) {
-				SignData drawData = new SignData();
-				drawData.x = x;
-				drawData.y = y;
-				drawData.time = time;
-				datas.add(drawData);
+			if (stepCount == 2) {
+				firstDatas.append(strData);
+			} else if (stepCount == 4) {
+				secondDatas.append(strData);
 			}
 		});
 
@@ -101,10 +96,11 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 						() -> {
 							if (onSignValidationListener != null) {
 
-								int similarity = FinoSign.validate(null, null);
+								int similarity = FinoSign.validate(firstDatas.toString(), secondDatas.toString());
 
 								onSignValidationListener.onValidate(similarity);
-								datas.clear();
+								firstDatas.setLength(0);
+								secondDatas.setLength(0);
 							}
 						});
 
@@ -116,6 +112,14 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 
 	abstract void setOnTouchCount();
 
+	public void init() {
+		binding.drawingCanvas.clear();
+		stepCount = 1;
+		stepSubject.onNext(stepCount);
+		firstDatas.setLength(0);
+		secondDatas.setLength(0);
+	}
+
 	public enum CanvasSize {
 		SMALL(1),
 		LARGE(2);
@@ -125,12 +129,6 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 		CanvasSize(int val) {
 			this.val = val;
 		}
-	}
-
-	public void init() {
-		stepCount = 1;
-		stepSubject.onNext(stepCount);
-		datas.clear();
 	}
 
 	public interface OnSizeControlClick {

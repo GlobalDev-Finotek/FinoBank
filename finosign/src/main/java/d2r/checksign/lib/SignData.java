@@ -1,13 +1,13 @@
-package globaldev.finotek.com.finosign;
+package d2r.checksign.lib;
 
 /**
  * Created by magyeong-ug on 2017. 10. 11..
  */
 
 public class SignData {
-	public float x;
-	public float y;
-	public float time;
+	public int x;
+	public int y;
+	public int time;
 
 	@Override
 	public String toString() {

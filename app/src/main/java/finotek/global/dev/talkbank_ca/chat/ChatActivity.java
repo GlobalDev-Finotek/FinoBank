@@ -128,6 +128,7 @@ import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
@@ -363,7 +364,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
-				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+				loadingDialog.setTitle(getString(R.string.registration_string_signature_registering));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
 				loadingDialog.showWithRatio(0.50f);
 
@@ -374,9 +375,9 @@ public class ChatActivity extends AppCompatActivity {
 
 							loadingDialog.dismiss();
 
-								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+							dialog.setDescription(getString(R.string.registration_string_register_success));
 							dialog.setTitle(getString(R.string.setting_string_registered_signature));
-							dialog.setDescription(getString(R.string.setting_string_signature_twice));
 								dialog.setButtonText(getString(R.string.setting_string_yes));
 								dialog.setDoneListener(() -> {
 									MessageBox.INSTANCE.add(new SignatureVerified());
@@ -398,29 +399,10 @@ public class ChatActivity extends AppCompatActivity {
 								dialog.showWithRatio(0.50f);
 
 						}, throwable -> {
+							Log.d("Sign Register", throwable.getMessage());
 						});
 			});
 
-			signRegistFragment.setOnSizeControlClick(new BaseSignRegisterFragment.OnSizeControlClick() {
-
-				boolean isFullSize = false;
-
-				@Override
-				public void onClick(BaseSignRegisterFragment.CanvasSize size) {
-
-					if (!isFullSize) {
-						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-						signView.setLayoutParams(lp);
-					} else {
-						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-								LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
-						signView.setLayoutParams(lp);
-					}
-
-					isFullSize = !isFullSize;
-				}
-			});
 
 			tx.replace(R.id.chat_capture, signRegistFragment);
 			tx.commit();
@@ -434,15 +416,15 @@ public class ChatActivity extends AppCompatActivity {
 			binding.footer.addView(signView);
 
 			transferSignRegistFragment = new TransferSignRegisterFragment();
-
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
+
 			transferSignRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
 				loadingDialog.showWithRatio(0.50f);
 
-				Observable.interval(1, TimeUnit.SECONDS)
+				Observable.interval(600, TimeUnit.MILLISECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
 						.first((long) 1)
 						.subscribe(i -> {
@@ -474,17 +456,22 @@ public class ChatActivity extends AppCompatActivity {
 								dialog.showWithRatio(0.50f);
 							} else {
 								transferSignRegistFragment.init();
+								MessageBox.INSTANCE.addAndWait(new RequestSignatureValidation());
 								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
 								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
 								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
-								warningDialog.setDoneListener(warningDialog::dismiss);
+								warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
+										.observeOn(AndroidSchedulers.mainThread())
+										.subscribe(aLong -> warningDialog.dismiss()));
+
 								warningDialog.show();
 
-								MessageBox.INSTANCE.addAndWait(new RequestSignatureValidation());
+
 							}
 
 
 						}, throwable -> {
+							Log.d("Sign Validation", throwable.getMessage());
 						});
 			});
 
@@ -1020,7 +1007,7 @@ public class ChatActivity extends AppCompatActivity {
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
-	private void initializeMessageBox(){
+	private void initializeMessageBox() {
 		Intent chatIntent = getIntent();
 
 		// 메인 시나리오 세팅
@@ -1041,7 +1028,8 @@ public class ChatActivity extends AppCompatActivity {
 								.observeOn(AndroidSchedulers.mainThread());
 					}
 				})
-				.subscribe(ChatActivity.this::onNewMessageUpdated);
+				.subscribe(ChatActivity.this::onNewMessageUpdated,
+						throwable -> Log.d("MessageBox", throwable.getMessage()));
 
 		isFirstAuth = false;
 	}

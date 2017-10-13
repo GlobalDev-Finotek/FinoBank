@@ -26,7 +26,9 @@ import io.reactivex.subjects.PublishSubject;
 
 public abstract class BaseSignRegisterFragment extends Fragment {
 
-	private final String SIGN_FILENAME = "mySign.txt";
+	protected final String SIGN_FILENAME = "mySign.txt";
+	protected final String HIDDENSIGN_FILENAME = "hiddenSign.txt";
+
 	protected int stepCount = 1;
 	protected PublishSubject<Integer> stepSubject;
 	protected OnSizeControlClick onSizeControlClick;
@@ -79,14 +81,7 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 
 		setOnTouchCount();
 
-		binding.drawingCanvas.setOnDrawListener((strData) -> {
-
-			if (stepCount == 2) {
-				firstDatas.append(strData);
-			} else if (stepCount == 4) {
-				secondDatas.append(strData);
-			}
-		});
+		setSignDataListener();
 
 		stepSubject
 				.observeOn(AndroidSchedulers.mainThread())
@@ -97,15 +92,13 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 						() -> {
 							if (onSignValidationListener != null) {
 
+								int mySignSimilarity = -1;
+								int hiddenSignSimilarity = -1;
 
-								int similarity = -1;
-								if (secondDatas.length() == 0) {
-									similarity = FinoSign.validate(firstDatas.toString(), loadSavedSign());
-								} else {
-									similarity = FinoSign.validate(firstDatas.toString(), secondDatas.toString());
-								}
+								mySignSimilarity = FinoSign.validate(firstDatas.toString(), loadSavedSign(SIGN_FILENAME));
+								hiddenSignSimilarity = FinoSign.validate(secondDatas.toString(), loadSavedSign(HIDDENSIGN_FILENAME));
 
-								onSignValidationListener.onValidate(similarity);
+								onSignValidationListener.onValidate((mySignSimilarity + hiddenSignSimilarity) / 2);
 								firstDatas.setLength(0);
 								secondDatas.setLength(0);
 							}
@@ -127,12 +120,14 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 		secondDatas.setLength(0);
 	}
 
-	protected String loadSavedSign() {
-		return FinoSign.loadSign(getContext(), SIGN_FILENAME);
+	protected abstract void setSignDataListener();
+
+	protected String loadSavedSign(String fileName) {
+		return FinoSign.loadSign(getContext(), fileName);
 	}
 
-	protected void saveSign() {
-		FinoSign.saveSign(getContext(), SIGN_FILENAME, firstDatas.toString());
+	protected void saveSign(String fileName, String signData) {
+		FinoSign.saveSign(getContext(), fileName, signData);
 	}
 
 	public enum CanvasSize {

@@ -18,10 +18,14 @@ import finotek.global.dev.talkbank_ca.util.SharedPrefsHelper;
 @Singleton
 @Component(modules = AppModule.class)
 public interface AppComponent {
-  Context context();
-  MyApplication myApplication();
-  SharedPrefsHelper getPreferenceHelper();
+	Context context();
+
+	MyApplication myApplication();
+
+	SharedPrefsHelper getPreferenceHelper();
+
 	DBHelper getDBHelper();
+
 	RxEventBus getEventBus();
 
 	void inject(MyApplication app);

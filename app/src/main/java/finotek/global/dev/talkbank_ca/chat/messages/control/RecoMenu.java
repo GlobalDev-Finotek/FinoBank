@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class RecoMenu {
-    int icon = 0;
-    String menuName = "";
-    Runnable listener;
+	int icon = 0;
+	String menuName = "";
+	Runnable listener;
 }

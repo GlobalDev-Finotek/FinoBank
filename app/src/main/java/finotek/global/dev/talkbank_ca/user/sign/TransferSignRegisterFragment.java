@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.user.sign;
 
-import android.content.Context;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 
@@ -9,7 +8,6 @@ import com.jakewharton.rxbinding2.view.RxView;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
 /**
@@ -18,47 +16,70 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
 public class TransferSignRegisterFragment extends BaseSignRegisterFragment {
 
-    @Override
-    void initView() {
+	@Override
+	void initView() {
 
-        String name = TransactionDB.INSTANCE.getTxName();
-        String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
+		String name = TransactionDB.INSTANCE.getTxName();
+		String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
 
-        String temp = getResources().getString(R.string.dialog_chat_send_transfer, name, moneyAsString);
-        binding.tvInst.setText(temp);
+		String temp = getResources().getString(R.string.setting_string_write_signature);
+		binding.tvInst.setText(temp);
+		binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
+	}
 
-        binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
-    }
+	@Override
+	void setNextStepAction(int step) {
+		switch (step) {
 
-    @Override
-    void setNextStepAction(int step) {
-        switch (step) {
-            case 2:
-                binding.tvInst.setText("");
-                binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm));
-                break;
-        }
-    }
+			case 2:
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_next));
+				binding.tvInst.setText("");
+				break;
 
-    @Override
-    void setOnTouchCount() {
+			case 3:
+				binding.drawingCanvas.clear();
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
+				binding.tvInst.setText(getString(R.string.registration_string_write_hidden_signature));
+				break;
 
-        binding.drawingCanvas.setOnCanvasTouchListener(() -> {
-            if (stepCount == 1) {
-                stepSubject.onNext(++stepCount);
-            }
+			case 4:
+				binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm));
+				binding.tvInst.setText("");
+				break;
+		}
+	}
 
-            binding.ibSizeControl.setVisibility(View.GONE);
-        });
+	@Override
+	void setOnTouchCount() {
 
-        RxView.clicks(binding.ibNext)
-                .throttleFirst(200, TimeUnit.MILLISECONDS)
-                .subscribe(aVoid -> {
-                    if (stepCount > 1) {
-                        stepSubject.onNext(3);
-                        stepSubject.onComplete();
-                    }
-                });
+		binding.drawingCanvas.setOnCanvasTouchListener(() -> {
+			if (stepCount == 1 || stepCount == 3) {
+				stepSubject.onNext(++stepCount);
+			}
+			binding.ibSizeControl.setVisibility(View.GONE);
+		});
 
-    }
+		RxView.clicks(binding.ibNext)
+				.throttleFirst(200, TimeUnit.MILLISECONDS)
+				.subscribe(aVoid -> {
+
+					if (stepCount == 2) {
+						stepSubject.onNext(++stepCount);
+					} else if (stepCount == 4) {
+						stepSubject.onComplete();
+					}
+				});
+	}
+
+	@Override
+	protected void setSignDataListener() {
+		binding.drawingCanvas.setOnDrawListener((strData) -> {
+
+			if (stepCount == 2) {
+				firstDatas.append(strData);
+			} else if (stepCount == 4) {
+				secondDatas.append(strData);
+			}
+		});
+	}
 }

@@ -1,12 +1,8 @@
 package finotek.global.dev.talkbank_ca.chat.adapter;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.DisplayMetrics;
 import android.util.SparseArray;
-import android.util.TypedValue;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 
 import java.util.ArrayList;
 
@@ -70,7 +66,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 				builders.get(viewType).onDelete();
 				items.remove(i);
 
-				if(item.getViewType() != ChatView.ViewType.AccountList.ordinal() && item.getViewType() != ChatView.ViewType.Confirm.ordinal())
+				if (item.getViewType() != ChatView.ViewType.AccountList.ordinal() && item.getViewType() != ChatView.ViewType.Confirm.ordinal())
 					notifyItemRemoved(i);
 			}
 		}

@@ -61,7 +61,7 @@ public class WarningDialog extends Dialog {
 		this.setCanceledOnTouchOutside(false);
 		DisplayMetrics displaymetrics = new DisplayMetrics();
 		getWindow().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-		int width = (int) ((int)displaymetrics.widthPixels * 0.85);
+		int width = (int) ((int) displaymetrics.widthPixels * 0.85);
 
 		getWindow().setLayout(width, ViewGroup.LayoutParams.WRAP_CONTENT);
 		getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));

@@ -48,7 +48,8 @@ public class ChatView extends RecyclerView {
 
 		this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder(context));
 		this.addChatViewBuilder(ViewType.Agreement.ordinal(), new AgreementBuilder(context));
-		this.addChatViewBuilder(ViewType.AgreementResult.ordinal(), new AgreementResultBuilder());
+		this.addChatViewBuilder(ViewType.AgreementResult.ordinal(), new AgreementResultBuilder(context));
+		this.addChatViewBuilder(ViewType.AccountConfirm.ordinal(), new AccountConfirmBuilder());
 		this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder(context));
 		this.addChatViewBuilder(ViewType.Wait.ordinal(), new WaitViewBuilder());
 	}
@@ -83,6 +84,10 @@ public class ChatView extends RecyclerView {
 
 	public void agreementResult() {
 		addMessage(ViewType.AgreementResult.ordinal(), null);
+	}
+
+	public void accountConfirm() {
+		addMessage(ViewType.AccountConfirm.ordinal(), null);
 	}
 
 	public void accountList(AccountList accountList) {
@@ -130,7 +135,7 @@ public class ChatView extends RecyclerView {
 		Confirm, RecoMenu,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult,
-        Wait
+        Wait, AccountConfirm
 	}
 
 	public interface ViewBuilder<T> {

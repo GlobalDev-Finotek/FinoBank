@@ -9,8 +9,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentDrawBinding;
+import d2r.checksign.lib.FinoSign;
+import d2r.checksign.lib.SignData;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
 
@@ -21,15 +26,20 @@ import io.reactivex.subjects.PublishSubject;
 
 public abstract class BaseSignRegisterFragment extends Fragment {
 
+	protected final String SIGN_FILENAME = "mySign.txt";
+	protected final String HIDDENSIGN_FILENAME = "hiddenSign.txt";
+
 	protected int stepCount = 1;
 	protected PublishSubject<Integer> stepSubject;
 	protected OnSizeControlClick onSizeControlClick;
-	protected OnSignSaveListener onSaveListener;
+	protected OnSignValidationListener onSignValidationListener;
 	protected CanvasSize currentSize = CanvasSize.SMALL;
+	protected StringBuilder firstDatas = new StringBuilder();
+	protected StringBuilder secondDatas = new StringBuilder();
 	FragmentDrawBinding binding;
 
-	public void setOnSaveListener(OnSignSaveListener onSaveListener) {
-		this.onSaveListener = onSaveListener;
+	public void setOnSignValidationListener(OnSignValidationListener onSignValidationListener) {
+		this.onSignValidationListener = onSignValidationListener;
 	}
 
 	public void setOnSizeControlClick(OnSizeControlClick onSizeControlClick) {
@@ -71,6 +81,8 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 
 		setOnTouchCount();
 
+		setSignDataListener();
+
 		stepSubject
 				.observeOn(AndroidSchedulers.mainThread())
 				.subscribe(
@@ -78,15 +90,45 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 						throwable -> {
 						},
 						() -> {
-							if (onSaveListener != null) onSaveListener.onSave();
+							if (onSignValidationListener != null) {
+
+								int mySignSimilarity = -1;
+								int hiddenSignSimilarity = -1;
+
+								mySignSimilarity = FinoSign.validate(firstDatas.toString(), loadSavedSign(SIGN_FILENAME));
+								hiddenSignSimilarity = FinoSign.validate(secondDatas.toString(), loadSavedSign(HIDDENSIGN_FILENAME));
+
+								onSignValidationListener.onValidate((mySignSimilarity + hiddenSignSimilarity) / 2);
+								firstDatas.setLength(0);
+								secondDatas.setLength(0);
+							}
 						});
 
 		return binding.getRoot();
 	}
 
+
 	abstract void setNextStepAction(int step);
 
 	abstract void setOnTouchCount();
+
+	public void init() {
+		binding.drawingCanvas.clear();
+		stepCount = 1;
+		stepSubject.onNext(stepCount);
+		firstDatas.setLength(0);
+		secondDatas.setLength(0);
+	}
+
+	protected abstract void setSignDataListener();
+
+	protected String loadSavedSign(String fileName) {
+		return FinoSign.loadSign(getContext(), fileName);
+	}
+
+	protected void saveSign(String fileName, String signData) {
+		FinoSign.saveSign(getContext(), fileName, signData);
+	}
 
 	public enum CanvasSize {
 		SMALL(1),
@@ -103,7 +145,8 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 		void onClick(CanvasSize size);
 	}
 
-	public interface OnSignSaveListener {
-		void onSave();
+
+	public interface OnSignValidationListener {
+		void onValidate(int similarity);
 	}
 }

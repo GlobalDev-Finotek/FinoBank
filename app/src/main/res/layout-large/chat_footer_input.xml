@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="70dp">
+
         <LinearLayout
             android:id="@+id/footer_inputs"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="9"
-                android:layout_marginStart="5dp"
                 android:layout_marginEnd="7dp"
+                android:layout_marginStart="5dp"
+                android:layout_weight="9"
                 android:background="@drawable/chat_input_background_large">
 
                 <ImageButton
@@ -29,6 +32,7 @@
                     android:contentDescription="Select request as image."
                     android:tint="@color/colorPrimary"
                     app:srcCompat="@drawable/btn_cplus_30"/>
+
                 <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
                     android:id="@+id/chat_edit_text"
                     android:layout_width="match_parent"
@@ -41,8 +45,9 @@
                     android:padding="0dp"
                     android:textColor="@color/color_text_default"
                     android:textColorHint="@color/dark_30"
-                    android:textSize="@dimen/text_normal" />
+                    android:textSize="@dimen/text_normal"/>
             </RelativeLayout>
+
             <ImageButton
                 android:id="@+id/send_button"
                 android:layout_width="70dp"
@@ -50,7 +55,7 @@
                 android:layout_marginEnd="10dp"
                 android:background="@android:color/transparent"
                 android:scaleType="fitXY"
-                android:src="@drawable/btn_mike_50" />
+                android:src="@drawable/btn_mike_50"/>
         </LinearLayout>
     </RelativeLayout>
 </layout>

@@ -13,12 +13,14 @@ public enum TransactionDB {
 
 	private List<Transaction> tx;
 	private int mainBalance;
-    private int firstAlternativeBalance;
-    private int secondAlternativeBalance;
-    private int thirdAlternativeBalance;
+	private int firstAlternativeBalance;
+	private int secondAlternativeBalance;
+	private int thirdAlternativeBalance;
 
 	private String txName;
 	private String txMoney;
+
+	private boolean isTransfer;
 
 	TransactionDB() {
 		DateTimeFormatter f = DateTimeFormat.forPattern("yyyy-MM-dd HH:mm:ss");
@@ -30,9 +32,10 @@ public enum TransactionDB {
 		tx.add(new Transaction("어머니", 1, 400000, 3733800, f.parseDateTime("2017-04-02 21:12:00")));
 
 		mainBalance = 3033800;
-        firstAlternativeBalance = 2015800;
-        secondAlternativeBalance = 11520800;
-        thirdAlternativeBalance = 20000;
+		firstAlternativeBalance = 2015800;
+		secondAlternativeBalance = 11520800;
+		thirdAlternativeBalance = 20000;
+		isTransfer = false;
 	}
 
 	public List<Transaction> getTx() {
@@ -46,30 +49,58 @@ public enum TransactionDB {
 	public int getMainBalance() {
 		return mainBalance;
 	}
-	public int getFirstAlternativeBalance() {return firstAlternativeBalance;}
-    public int getSecondAlternativeBalance() {return secondAlternativeBalance;}
-    public int getThirdAlternativeBalance() {return thirdAlternativeBalance;}
 
-    public void transferMoney(int money) {
+	public int getFirstAlternativeBalance() {
+		return firstAlternativeBalance;
+	}
+
+	public int getSecondAlternativeBalance() {
+		return secondAlternativeBalance;
+	}
+
+	public int getThirdAlternativeBalance() {
+		return thirdAlternativeBalance;
+	}
+
+	public void transferMoney(int money) {
 		this.mainBalance -= money;
 	}
-	public void transferMoneyV1(int money) {this.firstAlternativeBalance -= money;}
-    public void transferMoneyV2(int money) {this.secondAlternativeBalance -= money;}
-    public void transferMoneyV3(int money) {this.thirdAlternativeBalance -= money;}
+
+	public void transferMoneyV1(int money) {
+		this.firstAlternativeBalance -= money;
+	}
+
+	public void transferMoneyV2(int money) {
+		this.secondAlternativeBalance -= money;
+	}
+
+	public void transferMoneyV3(int money) {
+		this.thirdAlternativeBalance -= money;
+	}
 
 	public void deposit(int money) {
 		this.mainBalance += money;
 	}
-    public void depositV1(int money) {
-        this.firstAlternativeBalance += money;
-    }
-    public void depositV2(int money) {
-        this.secondAlternativeBalance += money;
-    }
-    public void depositV3(int money) {
-        this.thirdAlternativeBalance += money;
-    }
 
+	public void depositV1(int money) {
+		this.firstAlternativeBalance += money;
+	}
+
+	public void depositV2(int money) {
+		this.secondAlternativeBalance += money;
+	}
+
+	public void depositV3(int money) {
+		this.thirdAlternativeBalance += money;
+	}
+
+	public boolean isTransfer() {
+		return isTransfer;
+	}
+
+	public void setTransfer(boolean transfer) {
+		isTransfer = transfer;
+	}
 
 	public String getTxName() {
 		return txName;

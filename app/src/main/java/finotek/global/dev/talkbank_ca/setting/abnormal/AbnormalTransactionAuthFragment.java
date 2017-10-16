@@ -2,15 +2,11 @@ package finotek.global.dev.talkbank_ca.setting.abnormal;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.graphics.drawable.DrawableCompat;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.view.RxView;
@@ -21,22 +17,23 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentAbnormalTransactionBinding;
 
 public class AbnormalTransactionAuthFragment extends android.app.Fragment {
-	View.OnClickListener abnormalOnClickListener = new View.OnClickListener(){
+	View.OnClickListener abnormalOnClickListener = new View.OnClickListener() {
 		private boolean isClicked = false;
 
 		@Override
 		public void onClick(View v) {
-			if(isClicked) {
-                v.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
-                ((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
+			if (isClicked) {
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(), android.R.color.white));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.dark_50));
 			} else {
-                v.setBackgroundColor(ContextCompat.getColor(getActivity(),R.color.info));
-                ((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
+				v.setBackgroundColor(ContextCompat.getColor(getActivity(), R.color.info));
+				((TextView) v).setTextColor(ContextCompat.getColor(getActivity(), R.color.white));
 			}
 
 			isClicked = !isClicked;
 		}
 	};
+
 	public static AbnormalTransactionAuthFragment newInstance(String title) {
 		AbnormalTransactionAuthFragment fragment = new AbnormalTransactionAuthFragment();
 		Bundle args = new Bundle();

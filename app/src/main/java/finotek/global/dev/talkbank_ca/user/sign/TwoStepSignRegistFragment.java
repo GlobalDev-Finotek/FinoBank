@@ -66,4 +66,9 @@ public class TwoStepSignRegistFragment extends BaseSignRegisterFragment {
 
 	}
 
+	@Override
+	protected void setSignDataListener() {
+
+	}
+
 }

@@ -29,6 +29,8 @@ public class RecommendScenarioMenuRequest extends RecoMenuRequest {
 					addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_house_loan), null);
 				if (s.equals("C"))
 					addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_chat_how_score_is_computed), null);
+				if (s.equals("D"))
+					addMenu(R.drawable.icon_love, context.getResources().getString(R.string.dialog_chat_donate_menu), null);
 			}
 			addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
 		} else {

@@ -141,13 +141,13 @@ public class LoanScenario implements Scenario {
 
 				else{
 					Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
-					required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "loan_service.pdf"));
-					required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "loan_service.pdf"));
-					required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement), "loan_service.pdf"));
-					required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information), "loan_service.pdf"));
+					required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "view_eng.pdf"));
+					required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "view2_eng.pdf"));
+					required.addChild(new Agreement(103, context.getResources().getString(R.string.dialog_string_loan_transaction_agreement), "view3_eng.pdf"));
+					required.addChild(new Agreement(104, context.getResources().getString(R.string.dialog_string_contact_information), "view4_eng.pdf"));
 
 					Agreement optional = new Agreement(200, context.getResources().getString(R.string.dialog_string_optional_term_agreement));
-					optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement), "loan_service.pdf"));
+					optional.addChild(new Agreement(201, context.getResources().getString(R.string.dialog_string_customer_information_agreement), "view5_eng.pdf"));
 
 					agreements.add(required);
 					agreements.add(optional);

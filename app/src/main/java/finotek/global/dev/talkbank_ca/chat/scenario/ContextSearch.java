@@ -43,7 +43,7 @@ public class ContextSearch implements Scenario {
 		}
 
 		if (msg instanceof ContextScoreReceived) {
-            Log.d("FINOPASS", "in context search context score received");
+			Log.d("FINOPASS", "in context search context score received");
 			String message = "";
 			ContextScoreResponse scoreParams = ((ContextScoreReceived) msg).getScoreParams();
 			if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
@@ -125,16 +125,16 @@ public class ContextSearch implements Scenario {
 		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.dialog_chat_contextlog_total), () -> {
 			MessageBox.INSTANCE.add(new ContextTotal());
 		});
-        req.addMenu(R.drawable.icon_bookmark_selected, context.getResources().getString(R.string.dialog_chat_contextlog_sms), () -> {
+		req.addMenu(R.drawable.icon_bookmark_selected, context.getResources().getString(R.string.dialog_chat_contextlog_sms), () -> {
 			MessageBox.INSTANCE.add(new ContextSms());
 		});
-        req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_contextlog_call), () -> {
+		req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_contextlog_call), () -> {
 			MessageBox.INSTANCE.add(new ContextCall());
 		});
-        req.addMenu(R.drawable.icon_camera, context.getResources().getString(R.string.dialog_chat_contextlog_location), () -> {
+		req.addMenu(R.drawable.icon_camera, context.getResources().getString(R.string.dialog_chat_contextlog_location), () -> {
 			MessageBox.INSTANCE.add(new ContextLocation());
 		});
-        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_contextlog_application), () -> {
+		req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_contextlog_application), () -> {
 			MessageBox.INSTANCE.add(new ContextApp());
 		});
 

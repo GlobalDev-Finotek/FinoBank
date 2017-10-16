@@ -42,7 +42,6 @@ public class DonateScenario implements Scenario {
 			String money = TransactionDB.INSTANCE.getTxMoney();
 			String targetName = getTargetName();
 			String userName = getUserName();
-			Log.d("FINOTEK", "You donated " + Integer.valueOf(money.replace(",", "")) + " won");
 			int coin = (int) (((Integer.valueOf(money.replace(",", ""))) / 1000) * 1.3);
 
 			MessageBox.INSTANCE.addAndWait(

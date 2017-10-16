@@ -1007,6 +1007,7 @@ public class ChatActivity extends AppCompatActivity {
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
+
 	private void initializeMessageBox() {
 		Intent chatIntent = getIntent();
 

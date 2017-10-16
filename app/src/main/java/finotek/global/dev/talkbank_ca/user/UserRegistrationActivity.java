@@ -27,17 +27,14 @@ import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.model.UserAdditionalInfo;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
-import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
 import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
 
 public class UserRegistrationActivity extends AppCompatActivity implements UserRegisterView {
 
-	private final int REGISTER_SIGN = 1;
 	@Inject
 	UserRegisterImpl presenter;
 	private ActivityUserRegistrationBinding binding;
-	private boolean isSigned;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -77,13 +74,6 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 					startActivity(intent);
 				});
 
-		RxView.clicks(binding.llRegiBasic.btnRegiSign)
-				.subscribe(aVoid -> {
-					Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
-					intent.putExtra("mode", SignRegistrationActivity.SignMode.TWICE);
-					intent.putExtra("nextClass", UserRegistrationActivity.class);
-					startActivityForResult(intent, REGISTER_SIGN);
-				});
 
 		RxView.clicks(binding.llRegiAdditional.btnPinRegistration)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
@@ -137,7 +127,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 		}
 
 		return !isNameEmpty && !isPhoneNumberEmpty && !isEmergencyNumberEmpty
-				&& isRequiredCheck && isSigned;
+				&& isRequiredCheck;
 	}
 
 	private UserAdditionalInfo getAdditionalInfo() {
@@ -166,12 +156,5 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 		binding.llRegiBasic.edtPhoneNumber.setText(user.getPhoneNumber());
 	}
 
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		if (requestCode == REGISTER_SIGN) {
-			isSigned = true;
-		}
 
-	}
 }

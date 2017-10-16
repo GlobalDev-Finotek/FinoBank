@@ -9,10 +9,7 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
-import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
-import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import io.reactivex.Flowable;
-import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.BehaviorSubject;
 
@@ -28,35 +25,35 @@ public enum MessageBox {
 		observable = BehaviorSubject.create();
 	}
 
-    public void addAndWait(ReceiveMessage msg) {
-        Flowable.range(0, 3)
-                .observeOn(AndroidSchedulers.mainThread())
-                .concatMap(i -> {
-                    if(i == 0)
-                        return Flowable.just(new WaitResult());
-
-                    if(i == 1)
-                        return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
-
-                    if(i == 2)
-                        return Flowable.just(msg).delay(600, TimeUnit.MILLISECONDS);
-
-                    return null;
-                })
-                .subscribe(observable::onNext);
-    }
-
-	public void addAndWait(Object... msg) {
-		Flowable.range(0, msg.length+2)
+	public void addAndWait(ReceiveMessage msg) {
+		Flowable.range(0, 3)
 				.observeOn(AndroidSchedulers.mainThread())
 				.concatMap(i -> {
-                    if(i == 0)
-                        return Flowable.just(new WaitResult()); 
-                    if(i == 1)
-                        return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
+					if (i == 0)
+						return Flowable.just(new WaitResult());
 
-                    return Flowable.just(msg[i-2]).delay(600, TimeUnit.MILLISECONDS);
-                })
+					if (i == 1)
+						return Flowable.just(new WaitDone()).delay(600, TimeUnit.MILLISECONDS);
+
+					if (i == 2)
+						return Flowable.just(msg).delay(600, TimeUnit.MILLISECONDS);
+
+					return null;
+				})
+				.subscribe(observable::onNext);
+	}
+
+	public void addAndWait(Object... msg) {
+		Flowable.range(0, msg.length + 2)
+				.observeOn(AndroidSchedulers.mainThread())
+				.concatMap(i -> {
+					if (i == 0)
+						return Flowable.just(new WaitResult());
+					if (i == 1)
+						return Flowable.just(new WaitDone()).delay(600, TimeUnit.MILLISECONDS);
+
+					return Flowable.just(msg[i - 2]).delay(600, TimeUnit.MILLISECONDS);
+				})
 				.subscribe(observable::onNext);
 	}
 

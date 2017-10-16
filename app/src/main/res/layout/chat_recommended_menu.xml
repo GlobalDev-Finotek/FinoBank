@@ -4,8 +4,8 @@
         android:id="@+id/menu"
         android:layout_width="270dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/chat_margin_left_right"
         android:layout_marginBottom="@dimen/chat_margin_bottom"
+        android:layout_marginStart="@dimen/chat_margin_left_right"
         android:background="@drawable/chat_recommended_menu_bg"
         android:orientation="vertical">
     </LinearLayout>

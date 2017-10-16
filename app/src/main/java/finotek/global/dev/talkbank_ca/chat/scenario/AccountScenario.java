@@ -2,16 +2,13 @@ package finotek.global.dev.talkbank_ca.chat.scenario;
 
 import android.content.Context;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.model.User;
 import io.realm.Realm;
@@ -42,8 +39,8 @@ public class AccountScenario implements Scenario {
 		if (msg instanceof SignatureVerified) {
 			if (step == Step.Last) {
 				MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_success)),
-					new Done()
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_success)),
+						new Done()
 				);
 			}
 		}
@@ -58,22 +55,22 @@ public class AccountScenario implements Scenario {
 		switch (step) {
 			case Initial:
 				MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recommandation, user.getName())),
-					ConfirmRequest.buildYesOrNo(context)
+						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recommandation, user.getName())),
+						ConfirmRequest.buildYesOrNo(context)
 				);
 				step = Step.CheckIDCard;
 				break;
 			case CheckIDCard:
 				if (msg.equals(context.getString(R.string.string_yes))) {
 					MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_take_picture_id_card)),
-						new RequestTakeIDCard()
+							new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_take_picture_id_card)),
+							new RequestTakeIDCard()
 					);
 					step = Step.TakeSign;
 				} else if (msg.equals(context.getString(R.string.string_no))) {
 					MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)),
-						new Done()
+							new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_cancel_opening_bank)),
+							new Done()
 					);
 				} else {
 					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));
@@ -83,14 +80,14 @@ public class AccountScenario implements Scenario {
 			case TakeSign:
 				if (msg.equals(context.getString(R.string.string_yes))) {
 					MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_sign_tip)),
-						new RequestSignature()
+							new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_sign_tip)),
+							new RequestSignatureRegister()
 					);
 					step = Step.Last;
 				} else if (msg.equals(context.getString(R.string.string_no))) {
 					MessageBox.INSTANCE.addAndWait(
-						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_id_card_retake)),
-						new RequestTakeIDCard()
+							new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_id_card_retake)),
+							new RequestTakeIDCard()
 					);
 				} else {
 					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_recognize_error)));

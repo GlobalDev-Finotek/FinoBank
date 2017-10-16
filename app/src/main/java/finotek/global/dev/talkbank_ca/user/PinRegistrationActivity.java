@@ -1,6 +1,5 @@
 package finotek.global.dev.talkbank_ca.user;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -49,7 +48,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		setSupportActionBar(binding.toolbar);
 		getSupportActionBar().setTitle("");
 
-        binding.toolbarTitle.setText(getString(R.string.setting_string_pin_code));
+		binding.toolbarTitle.setText(getString(R.string.setting_string_pin_code));
 		binding.appbar.setOutlineProvider(null);
 		binding.ibBack.setOnClickListener(v -> onBackPressed());
 
@@ -63,7 +62,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		// Start animation
 		binding.llSecureKeyboard.startAnimation(slide_up);
 		binding.llPincodeWrapper.setOnClickListener(v -> {
-            binding.llSecureKeyboard.setVisibility(View.VISIBLE);
+			binding.llSecureKeyboard.setVisibility(View.VISIBLE);
 			binding.llSecureKeyboard.startAnimation(slide_up);
 		});
 
@@ -71,11 +70,11 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			TextView tv = generatePwdTextView();
 			tvPwd[i] = tv;
 
-            if(i == 0) {
-                tv.setBackground(getApplicationContext().getDrawable(R.drawable.pin_item_left));
-            } else if(i == PINCODE_LENGTH-1) {
-                tv.setBackground(getApplicationContext().getDrawable(R.drawable.pin_item_right));
-            }
+			if (i == 0) {
+				tv.setBackground(getApplicationContext().getDrawable(R.drawable.pin_item_left));
+			} else if (i == PINCODE_LENGTH - 1) {
+				tv.setBackground(getApplicationContext().getDrawable(R.drawable.pin_item_right));
+			}
 
 			binding.llPincodeWrapper.addView(tv);
 		}
@@ -101,14 +100,14 @@ public class PinRegistrationActivity extends AppCompatActivity {
 			Class nextClass = (Class) intent.getExtras().get("nextClass");
 
 			secureKeyboardAdapter.onCompletePressed(() -> {
-                if(nextClass == null) {
-                    Intent intent2 = new Intent(PinRegistrationActivity.this, nextClass);
-                    intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
-                    startActivity(intent2);
-                    finish();
-                } else {
-                    finish();
-                }
+				if (nextClass == null) {
+					Intent intent2 = new Intent(PinRegistrationActivity.this, nextClass);
+					intent2.addFlags(FLAG_ACTIVITY_REORDER_TO_FRONT);
+					startActivity(intent2);
+					finish();
+				} else {
+					finish();
+				}
 			});
 		} catch (NullPointerException e) {
 			e.printStackTrace();
@@ -117,18 +116,18 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 	@NonNull
 	private TextView generatePwdTextView() {
-        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int width = (int) (dpWidth - Converter.dpToPx(32)) / 6;
+		DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+		float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+		int width = (int) (dpWidth - Converter.dpToPx(32)) / 6;
 
 		TextView tv = new TextView(this);
 		tv.setBackground(ContextCompat.getDrawable(this, R.drawable.pin_item_middle));
 		tv.setGravity(Gravity.CENTER);
 		tv.setTextSize(15.5f);
-        LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
-                Converter.dpToPx(width), Converter.dpToPx(44));
-        param.weight = 1;
-        tv.setLayoutParams(param);
+		LinearLayout.LayoutParams param = new LinearLayout.LayoutParams(
+				Converter.dpToPx(width), Converter.dpToPx(44));
+		param.weight = 1;
+		tv.setLayoutParams(param);
 		return tv;
 	}
 
@@ -137,13 +136,13 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		textColorCircles.add(iv2);
 		binding.glPinTextColor.addView(iv2);
 
-        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int margin = (int) (dpWidth - Converter.dpToPx(62)) / 7;
+		DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+		float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+		int margin = (int) (dpWidth - Converter.dpToPx(62)) / 7;
 
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv2.getLayoutParams();
-        params.setMarginEnd(Converter.dpToPx(margin));
-        iv2.setLayoutParams(params);
+		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv2.getLayoutParams();
+		params.setMarginEnd(Converter.dpToPx(margin));
+		iv2.setLayoutParams(params);
 
 		iv2.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -153,11 +152,11 @@ public class PinRegistrationActivity extends AppCompatActivity {
 					tv.setTextColor((int) iv2.getTag());
 				}
 
-                ImageView icon = (ImageView) iv2.findViewById(R.id.icon);
+				ImageView icon = (ImageView) iv2.findViewById(R.id.icon);
 				icon.setImageDrawable(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.select_color));
 
 				/* 흰색은 검은 체크 표시로 처리 */
-				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int)iv2.getTag()) {
+				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int) iv2.getTag()) {
 					DrawableCompat.setTint(icon.getDrawable(), ContextCompat.getColor(PinRegistrationActivity.this, R.color.black));
 				} else {
 					DrawableCompat.setTint(icon.getDrawable(), ContextCompat.getColor(PinRegistrationActivity.this, R.color.white));
@@ -166,7 +165,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 				ArrayList<View> tmp = new ArrayList<>(textColorCircles);
 				tmp.remove(iv2);
 				for (View iv : tmp) {
-                    ((ImageView) iv.findViewById(R.id.icon)).setImageDrawable(null);
+					((ImageView) iv.findViewById(R.id.icon)).setImageDrawable(null);
 
 					iv.setBackground(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.circle));
 					DrawableCompat.setTint(iv.getBackground(), (Integer) iv.getTag());
@@ -180,24 +179,24 @@ public class PinRegistrationActivity extends AppCompatActivity {
 		bgColorCircles.add(iv);
 		binding.glPinBackground.addView(iv);
 
-        DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
-        float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
-        int margin = (int) (dpWidth - Converter.dpToPx(62)) / 7;
+		DisplayMetrics displayMetrics = getApplicationContext().getResources().getDisplayMetrics();
+		float dpWidth = displayMetrics.widthPixels / displayMetrics.density;
+		int margin = (int) (dpWidth - Converter.dpToPx(62)) / 7;
 
-        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv.getLayoutParams();
-        params.setMarginEnd(Converter.dpToPx(margin));
-        iv.setLayoutParams(params);
+		LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv.getLayoutParams();
+		params.setMarginEnd(Converter.dpToPx(margin));
+		iv.setLayoutParams(params);
 
 		iv.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                DrawableCompat.setTint(binding.llPincodeWrapper.getBackground(), (int) iv.getTag());
+				DrawableCompat.setTint(binding.llPincodeWrapper.getBackground(), (int) iv.getTag());
 
-                ImageView icon = (ImageView) iv.findViewById(R.id.icon);
+				ImageView icon = (ImageView) iv.findViewById(R.id.icon);
 				icon.setImageDrawable(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.select_color));
 
 				/* 흰색은 검은 체크 표시로 처리 */
-				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int)iv.getTag()) {
+				if (ContextCompat.getColor(PinRegistrationActivity.this, Pin.Color.WHITE.getColor()) == (int) iv.getTag()) {
 					DrawableCompat.setTint(icon.getDrawable(), ContextCompat.getColor(PinRegistrationActivity.this, R.color.black));
 				} else {
 					DrawableCompat.setTint(icon.getDrawable(), ContextCompat.getColor(PinRegistrationActivity.this, R.color.white));
@@ -207,7 +206,7 @@ public class PinRegistrationActivity extends AppCompatActivity {
 				tmp.remove(iv);
 
 				for (View iv : tmp) {
-                    ((ImageView) iv.findViewById(R.id.icon)).setImageDrawable(null);
+					((ImageView) iv.findViewById(R.id.icon)).setImageDrawable(null);
 
 					iv.setBackground(ContextCompat.getDrawable(PinRegistrationActivity.this, R.drawable.circle));
 					DrawableCompat.setTint(iv.getBackground(), (Integer) iv.getTag());
@@ -218,10 +217,10 @@ public class PinRegistrationActivity extends AppCompatActivity {
 
 	@NonNull
 	private View generateBackgroundColorCircle(Pin.Color c) {
-        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_pin_color, (ViewGroup) binding.getRoot(), false);
-        view.setBackground(ContextCompat.getDrawable(this, R.drawable.circle));
-        view.setTag(ContextCompat.getColor(this, c.getColor()));
-        DrawableCompat.setTint(view.getBackground(), ContextCompat.getColor(this, c.getColor()));
+		View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.item_pin_color, (ViewGroup) binding.getRoot(), false);
+		view.setBackground(ContextCompat.getDrawable(this, R.drawable.circle));
+		view.setTag(ContextCompat.getColor(this, c.getColor()));
+		DrawableCompat.setTint(view.getBackground(), ContextCompat.getColor(this, c.getColor()));
 		return view;
 	}
 

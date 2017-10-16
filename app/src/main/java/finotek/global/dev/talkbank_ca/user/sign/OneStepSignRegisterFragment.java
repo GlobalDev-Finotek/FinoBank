@@ -51,4 +51,9 @@ public class OneStepSignRegisterFragment extends BaseSignRegisterFragment {
 				});
 
 	}
+
+	@Override
+	protected void setSignDataListener() {
+
+	}
 }

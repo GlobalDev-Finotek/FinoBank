@@ -11,6 +11,7 @@ import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.messages.AccountConfirm;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
@@ -32,6 +33,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
 import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
+import finotek.global.dev.talkbank_ca.chat.scenario.DonateScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
 import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
@@ -79,6 +81,8 @@ public class MainScenario_v2 {
         	LeftScenario.scenarioList.add("T");
 		if(!LeftScenario.scenarioList.contains("H"))
         	LeftScenario.scenarioList.add("H");
+		if(!LeftScenario.scenarioList.contains("D"))
+			LeftScenario.scenarioList.add("D");
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -121,6 +125,7 @@ public class MainScenario_v2 {
 		scenarioPool.put("travelSaving", new TravelSaving(context));
 		scenarioPool.put("pocketMoney", new PocketMoney(context));
 		scenarioPool.put("contextSearch", new ContextSearch(context));
+		scenarioPool.put("donate", new DonateScenario(context));
 
 		currentScenario = null;
 	}
@@ -338,6 +343,10 @@ public class MainScenario_v2 {
 		// 약관 결과
 		if (msg instanceof AgreementResult) {
 			chatView.agreementResult();
+		}
+
+		if (msg instanceof AccountConfirm){
+			chatView.accountConfirm();
 		}
 
 		// 최근 거래 내역

@@ -13,7 +13,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 
 /**
@@ -171,7 +172,7 @@ public class PocketMoney implements Scenario {
 
 				MessageBox.INSTANCE.addAndWait(
 						new WarningMessage(context.getResources().getString(R.string.contextlog_authentication_needed)),
-						new RequestSignature()
+						new RequestSignatureValidation()
 				);
 				break;
 		}

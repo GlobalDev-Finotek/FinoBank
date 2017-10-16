@@ -28,6 +28,9 @@
     <string name="registration_string_write_signature_step_1">Please write signature on displayed area(1/2)</string>
     <string name="registration_string_write_signature_step_2">Please write signature on displayed area(2/2)</string>
     <string name="registration_string_write_hidden_signature">Please write hidden signature on displayed area</string>
+    <string name="registration_string_write_hidden_signature_1">Please write hidden signature on displayed area(1/2)</string>
+    <string name="registration_string_write_hidden_signature_2">Please write hidden signature on displayed area(2/2)</string>
+    <string name="registration_string_signature_registering">Registering e-signature...</string>
     <string name="registration_string_registering_signature">Registering signature is repeated twice</string>
     <string name="registration_string_fingertip_use"> Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
     <string name="registration_string_registered_signature">Registered signature will be only used for purpose of lon-in and personal verification</string>

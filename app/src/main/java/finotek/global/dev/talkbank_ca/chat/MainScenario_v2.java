@@ -49,6 +49,7 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.user.util.AccountImageBuilder;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -162,7 +163,6 @@ public class MainScenario_v2 {
 	}
 
 	private void firstScenario() {
-
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
         RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);

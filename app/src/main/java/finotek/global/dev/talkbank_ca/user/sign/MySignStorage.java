@@ -17,7 +17,7 @@ import java.io.FileOutputStream;
  */
 
 public class MySignStorage {
-    private static String signFileName = "my_sign.png";
+    private static final String signFileName = "my_sign.png";
 
     public static void saveSign(Context context, View view) {
         view.setDrawingCacheEnabled(true);

@@ -14,14 +14,10 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
  * Created by jungwon on 7/18/2017.
  */
 
-public class TransferSignRegisterFragment extends BaseSignRegisterFragment {
+public class SignValidationFragment extends BaseSignRegisterFragment {
 
 	@Override
 	void initView() {
-
-		String name = TransactionDB.INSTANCE.getTxName();
-		String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
-
 		String temp = getResources().getString(R.string.setting_string_write_signature);
 		binding.tvInst.setText(temp);
 		binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), R.drawable.btn_confirm_disable));
@@ -76,9 +72,9 @@ public class TransferSignRegisterFragment extends BaseSignRegisterFragment {
 		binding.drawingCanvas.setOnDrawListener((strData) -> {
 
 			if (stepCount == 2) {
-				firstDatas.append(strData);
+				regularSignWrapper.secondDatas.append(strData);
 			} else if (stepCount == 4) {
-				secondDatas.append(strData);
+				hiddenSignWrapper.secondDatas.append(strData);
 			}
 		});
 	}

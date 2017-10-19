@@ -16,6 +16,7 @@ import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentDrawBinding;
 import d2r.checksign.lib.FinoSign;
 import d2r.checksign.lib.SignData;
+import finotek.global.dev.talkbank_ca.model.SignWrapper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
 
@@ -34,8 +35,8 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 	protected OnSizeControlClick onSizeControlClick;
 	protected OnSignValidationListener onSignValidationListener;
 	protected CanvasSize currentSize = CanvasSize.SMALL;
-	protected StringBuilder firstDatas = new StringBuilder();
-	protected StringBuilder secondDatas = new StringBuilder();
+	protected SignWrapper regularSignWrapper = new SignWrapper();
+	protected SignWrapper hiddenSignWrapper = new SignWrapper();
 	FragmentDrawBinding binding;
 
 	public void setOnSignValidationListener(OnSignValidationListener onSignValidationListener) {
@@ -95,12 +96,12 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 								int mySignSimilarity = -1;
 								int hiddenSignSimilarity = -1;
 
-								mySignSimilarity = FinoSign.validate(firstDatas.toString(), loadSavedSign(SIGN_FILENAME));
-								hiddenSignSimilarity = FinoSign.validate(secondDatas.toString(), loadSavedSign(HIDDENSIGN_FILENAME));
+								mySignSimilarity = FinoSign.validate(regularSignWrapper.firstDatas.toString(), loadSavedSign(SIGN_FILENAME));
+								hiddenSignSimilarity = FinoSign.validate(hiddenSignWrapper.firstDatas.toString(), loadSavedSign(HIDDENSIGN_FILENAME));
 
 								onSignValidationListener.onValidate((mySignSimilarity + hiddenSignSimilarity) / 2);
-								firstDatas.setLength(0);
-								secondDatas.setLength(0);
+								regularSignWrapper.clear();
+								hiddenSignWrapper.clear();
 							}
 						});
 
@@ -116,8 +117,8 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 		binding.drawingCanvas.clear();
 		stepCount = 1;
 		stepSubject.onNext(stepCount);
-		firstDatas.setLength(0);
-		secondDatas.setLength(0);
+		hiddenSignWrapper.clear();
+		regularSignWrapper.clear();
 	}
 
 	protected abstract void setSignDataListener();

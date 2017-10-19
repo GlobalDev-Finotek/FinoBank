@@ -26,6 +26,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.DonateRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
@@ -48,6 +49,7 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.user.util.AccountImageBuilder;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -161,7 +163,6 @@ public class MainScenario_v2 {
 	}
 
 	private void firstScenario() {
-
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
         RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
@@ -328,6 +329,10 @@ public class MainScenario_v2 {
 		// 추천 메뉴 요청
 		if (msg instanceof RecoMenuRequest) {
 			chatView.recoMenu((RecoMenuRequest) msg);
+		}
+
+		if (msg instanceof DonateRequest) {
+			chatView.addDonateView((DonateRequest) msg);
 		}
 
 		// 신분증 스캔 결과

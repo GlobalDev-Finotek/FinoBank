@@ -1,6 +1,9 @@
 package finotek.global.dev.talkbank_ca.chat.scenario;
 
 import android.content.Context;
+import android.util.Log;
+
+import org.joda.time.DateTime;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
@@ -16,6 +19,10 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMen
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
+import finotek.global.dev.talkbank_ca.model.User;
+import finotek.global.dev.talkbank_ca.user.util.AccountImageBuilder;
+import finotek.global.dev.talkbank_ca.util.LocaleHelper;
+import io.realm.Realm;
 
 public class AccountScenario_v2 implements Scenario {
 	private Context context;
@@ -44,6 +51,16 @@ public class AccountScenario_v2 implements Scenario {
 	public void onReceive(Object msg) {
 		if (msg instanceof SignatureVerified) {
 			if (step == Step.Last) {
+				Realm realm = Realm.getDefaultInstance();
+				User user = realm.where(User.class).findAll().last();
+
+				String name = "홍길동";
+				if(user != null)
+					name = user.getName();
+
+				String dateTime = new DateTime().toString("yyyy-MM-dd");
+				AccountImageBuilder.saveAccount(context, name, dateTime, LocaleHelper.getLanguage(context));
+
 				MessageBox.INSTANCE.addAndWait(
 						new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_open_account_complete)),
 						new AccountConfirm(),

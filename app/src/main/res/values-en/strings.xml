@@ -438,8 +438,8 @@
 
     <!-- charity -->
     <string name="dialog_chat_donate">Donate</string>
-    <string name="dialog_chat_donate_menu">Donate to difficult neighbors</string>
-    <string name="dialog_chat_donate_title">Even today, your warm consideration gives happiness to difficult children.</string>
+    <string name="dialog_chat_donate_menu">Donate to unfortunate neighbors</string>
+    <string name="dialog_chat_donate_title">Even today, your warm consideration gives happiness to unfortunate children.</string>
     <string name="dialog_chat_donate_description">It\'ll be donated to your sponsor through the S Foundation.\nWho do you want to donate?</string>
     <string name="dialog_chat_donate_menu1">Sponsoring Mozambique Macheir\nTotal donation: 3,500,000 won\nMonthly average donation: 110,000 won\nLast donation : 2017&#8211;06&#8211;23</string>
     <string name="dialog_chat_donate_menu2">Sponsoring Vietnam Medina\nTotal donation : 1,250,000원\nMonthly average donation : 50,000won\nLast donation: 2017&#8211;08&#8211;30</string>

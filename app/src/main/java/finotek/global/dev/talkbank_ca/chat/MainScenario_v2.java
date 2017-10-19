@@ -81,7 +81,7 @@ public class MainScenario_v2 {
         	LeftScenario.scenarioList.add("T");
 		if(!LeftScenario.scenarioList.contains("H"))
         	LeftScenario.scenarioList.add("H");
-		if(!LeftScenario.scenarioList.contains("D"))
+		if (!LeftScenario.scenarioList.contains("D"))
 			LeftScenario.scenarioList.add("D");
 
 		// 메시지 박스 설정

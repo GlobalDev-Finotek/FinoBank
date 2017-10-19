@@ -108,8 +108,8 @@ import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
 import finotek.global.dev.talkbank_ca.user.remotecall.RemoteCallFragment;
 import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
-import finotek.global.dev.talkbank_ca.user.sign.HiddenSignFragment;
-import finotek.global.dev.talkbank_ca.user.sign.TransferSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.user.sign.SignRegisterFragment;
+import finotek.global.dev.talkbank_ca.user.sign.SignValidationFragment;
 import finotek.global.dev.talkbank_ca.util.ChatLocationListener;
 import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.Converter;
@@ -128,7 +128,6 @@ import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.functions.Consumer;
 import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
@@ -158,8 +157,8 @@ public class ChatActivity extends AppCompatActivity {
 	private MainScenario_v2 mainScenario;
 
 	private CapturePicFragment capturePicFragment;
-	private HiddenSignFragment signRegistFragment;
-	private TransferSignRegisterFragment transferSignRegistFragment;
+	private SignRegisterFragment signRegistFragment;
+	private SignValidationFragment transferSignRegistFragment;
 	private RemoteCallFragment remoteCallFragment;
 
 	private BroadcastReceiver receiver;
@@ -359,7 +358,7 @@ public class ChatActivity extends AppCompatActivity {
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
 
-			signRegistFragment = new HiddenSignFragment();
+			signRegistFragment = new SignRegisterFragment();
 
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSignValidationListener((similarity) -> {
@@ -415,7 +414,7 @@ public class ChatActivity extends AppCompatActivity {
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
 
-			transferSignRegistFragment = new TransferSignRegisterFragment();
+			transferSignRegistFragment = new SignValidationFragment();
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 
 			transferSignRegistFragment.setOnSignValidationListener((similarity) -> {

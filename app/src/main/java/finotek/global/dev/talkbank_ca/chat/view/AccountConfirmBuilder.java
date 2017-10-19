@@ -37,25 +37,25 @@ public class AccountConfirmBuilder implements ChatView.ViewBuilder<Void> {
     public void onDelete() {
 
     }
-    //// TODO: 10/11/2017
+	//// TODO: 10/11/2017
 
-    private class AccountConfirmHolder extends RecyclerView.ViewHolder {
-        ChatAccountConfirmBinding binding;
+	private class AccountConfirmHolder extends RecyclerView.ViewHolder {
+		ChatAccountConfirmBinding binding;
 
         AccountConfirmHolder(View itemView) {
             super(itemView);
             binding = ChatAccountConfirmBinding.bind(itemView);
             Context context = itemView.getContext();
 
-            String confirm = context.getResources().getString(R.string.dialog_string_account_confirmation);
+	        String confirm = context.getResources().getString(R.string.dialog_string_account_confirmation);
 
             binding.btnConfirmText.setText(String.format("%s.%s", confirm, "pdf"));
 
-            if (Locale.getDefault().getLanguage().equals("ko")) {
-                RxView.clicks(binding.btnConfirmPreview)
-                        .throttleFirst(200, TimeUnit.MILLISECONDS)
+	        if (Locale.getDefault().getLanguage().equals("ko")) {
+		        RxView.clicks(binding.btnConfirmPreview)
+				        .throttleFirst(200, TimeUnit.MILLISECONDS)
                         .subscribe(aVoid -> {
-                            MessageBox.INSTANCE.add(new ShowPdfView(confirm, "FinoBank.pdf"));
+	                        MessageBox.INSTANCE.add(new ShowPdfView(confirm, "FinoBank.pdf"));
 
                         });
                 RxView.clicks(binding.btnConfirmSave)
@@ -63,14 +63,14 @@ public class AccountConfirmBuilder implements ChatView.ViewBuilder<Void> {
                         .subscribe(o -> {
                             Intent i = new Intent(Intent.ACTION_VIEW);
 
-                            i.setData(Uri.parse("https://www.dropbox.com/s/um0mroa6zccpj8f/FinoBank.pdf?dl=0"));
-                            context.startActivity(i);
+	                        i.setData(Uri.parse("https://www.dropbox.com/s/um0mroa6zccpj8f/FinoBank.pdf?dl=0"));
+	                        context.startActivity(i);
                         });
-            } else {
-                RxView.clicks(binding.btnConfirmPreview)
-                        .throttleFirst(200, TimeUnit.MILLISECONDS)
+	        } else {
+		        RxView.clicks(binding.btnConfirmPreview)
+				        .throttleFirst(200, TimeUnit.MILLISECONDS)
                         .subscribe(aVoid -> {
-                            MessageBox.INSTANCE.add(new ShowPdfView(confirm, "FinoBank_eng.pdf"));
+	                        MessageBox.INSTANCE.add(new ShowPdfView(confirm, "FinoBank_eng.pdf"));
 
                         });
                 RxView.clicks(binding.btnConfirmSave)
@@ -78,8 +78,8 @@ public class AccountConfirmBuilder implements ChatView.ViewBuilder<Void> {
                         .subscribe(o -> {
                             Intent i = new Intent(Intent.ACTION_VIEW);
 
-                            i.setData(Uri.parse("https://www.dropbox.com/s/z3aiaw418l93lol/FinoBank_eng.pdf?dl=0"));
-                            context.startActivity(i);
+	                        i.setData(Uri.parse("https://www.dropbox.com/s/z3aiaw418l93lol/FinoBank_eng.pdf?dl=0"));
+	                        context.startActivity(i);
                         });
 
             }
@@ -87,5 +87,5 @@ public class AccountConfirmBuilder implements ChatView.ViewBuilder<Void> {
         }
 
 
-    }
+	}
 }

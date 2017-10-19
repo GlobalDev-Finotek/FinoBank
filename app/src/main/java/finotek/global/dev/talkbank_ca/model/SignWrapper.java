@@ -5,4 +5,11 @@ package finotek.global.dev.talkbank_ca.model;
  */
 
 public class SignWrapper {
+	public StringBuilder firstDatas = new StringBuilder();
+	public StringBuilder secondDatas = new StringBuilder();
+
+	public void clear() {
+		firstDatas.setLength(0);
+		secondDatas.setLength(0);
+	}
 }

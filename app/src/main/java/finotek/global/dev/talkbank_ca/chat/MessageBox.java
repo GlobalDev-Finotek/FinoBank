@@ -33,7 +33,7 @@ public enum MessageBox {
 						return Flowable.just(new WaitResult());
 
 					if (i == 1)
-						return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
+						return Flowable.just(new WaitDone()).delay(600, TimeUnit.MILLISECONDS);
 
 					if (i == 2)
 						return Flowable.just(msg).delay(600, TimeUnit.MILLISECONDS);
@@ -50,7 +50,7 @@ public enum MessageBox {
 					if (i == 0)
 						return Flowable.just(new WaitResult());
 					if (i == 1)
-						return Flowable.just(new WaitDone()).delay(1000, TimeUnit.MILLISECONDS);
+						return Flowable.just(new WaitDone()).delay(600, TimeUnit.MILLISECONDS);
 
 					return Flowable.just(msg[i - 2]).delay(600, TimeUnit.MILLISECONDS);
 				})

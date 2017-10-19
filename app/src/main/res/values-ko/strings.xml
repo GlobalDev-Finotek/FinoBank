@@ -27,7 +27,8 @@
     <string name="registration_string_type_all_field">필수 입력을 모두 입력해주시기 바랍니다.</string>
     <string name="registration_string_write_signature_step_1">표시된 영역 안에 서명해 주세요.(1/2)</string>
     <string name="registration_string_write_signature_step_2">표시된 영역 안에 서명해 주세요.(2/2)</string>
-    <string name="registration_string_write_hidden_signature">표시된 영역 안에 히든 서명을 해주세요</string>
+    <string name="registration_string_write_hidden_signature_1">표시된 영역 안에 히든 서명해 주세요.(1/2)</string>
+    <string name="registration_string_write_hidden_signature_2">표시된 영역 안에 히든 서명해 주세요.((2/2)</string>
     <string name="registration_string_registering_signature">서명은 2회 등록을 진행하게 됩니다.</string>
     <string name="registration_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="registration_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로 사용됩니다.</string>
@@ -100,6 +101,7 @@
     <string name="setting_string_pin_code">PIN 코드</string>
     <string name="setting_string_pin_code_will_change">변경할 PIN 코드 입력</string>
     <string name="setting_string_pin_code_will_change_confirm">변경할 PIN 코드 한번 더 입력</string>
+    <string name="registration_string_signature_registering">등록 중...</string>
     <string name="setting_button_pin_code_chanage">PIN 코드 변경</string>
     <string name="setting_button_save">저장</string>
     <string name="setting_string_save_success">저장되었습니다.</string>
@@ -108,6 +110,7 @@
     <string name="setting_string_fingertip_use">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="setting_string_write_signature_step_1">표시된 영역 안에 서명해 주세요.(1/2)</string>
     <string name="setting_string_write_signature_step_2">표시된 영역 안에 서명해 주세요.(2/2)</string>
+    <string name="registration_string_write_hidden_signature">표시된 영역 안에 히든서명해 주세요</string>
     <string name="setting_string_signature_twice">서명은 2회 등록을 진행하게 됩니다.</string>
     <string name="setting_string_registered_signature">등록한 서명은 로그인과 거래 등 본인 확인용으로 사용됩니다.</string>
     <string name="setting_string_next">다음</string>
@@ -334,7 +337,7 @@
     <string name ="main_string_v2_login_electricity_additional_picture">추가로 촬영을 진행하시겠습니까?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">예</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>
-    <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 인증합니다. </string>
+    <string name ="main_string_v2_sign_necessary">계좌 개설을 위해 서명을 등록합니다. </string>
     <string name ="main_string_v2_login_electricity_signature">마지막으로 자필 서명을 표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해주세요 </string>
     <string name ="main_string_v2_login_electricity_account_confirm">전기료 &#8361;%1$s이 공과금 계좌에서 납부 완료 되었습니다. </string>
 

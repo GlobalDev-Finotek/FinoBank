@@ -8,7 +8,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.model.User;
 import io.realm.Realm;
@@ -81,7 +81,7 @@ public class AccountScenario implements Scenario {
 				if (msg.equals(context.getString(R.string.string_yes))) {
 					MessageBox.INSTANCE.addAndWait(
 							new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_open_account_sign_tip)),
-							new RequestSignature()
+							new RequestSignatureRegister()
 					);
 					step = Step.Last;
 				} else if (msg.equals(context.getString(R.string.string_no))) {

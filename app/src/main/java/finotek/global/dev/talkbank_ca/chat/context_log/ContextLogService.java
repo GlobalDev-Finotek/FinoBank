@@ -264,8 +264,7 @@ public class ContextLogService extends Service {
 				locationLog.logTime = timeStamp;
 				locationList.add(locationLog);
 			} else {
-				String errorMessage = "there is no location data within" + targetTime;
-				System.out.print(errorMessage);
+				Log.d("FINOPASS", "There is no location data within" + targetTime);
 			}
 		}
 

@@ -86,9 +86,9 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPress
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.TransferRequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -128,6 +128,7 @@ import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Consumer;
 import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
@@ -179,29 +180,6 @@ public class ChatActivity extends AppCompatActivity {
 		binding.toolbarTitle.setText(getString(R.string.main_string_talkbank));
 		Intent intent = getIntent();
 
-		// 메인 시나리오 세팅
-		if (intent != null) {
-			boolean isSigned = intent.getBooleanExtra("isSigned", false);
-			mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
-		}
-
-		// 메시지 박스 설정
-		MessageBox.INSTANCE.observable
-				.flatMap(msg -> {
-					if (msg instanceof EnableToEditMoney) {
-						return Observable.just(msg)
-								.observeOn(AndroidSchedulers.mainThread());
-					} else {
-						return Observable.just(msg)
-								.delay(1, TimeUnit.SECONDS)
-								.observeOn(AndroidSchedulers.mainThread());
-					}
-				})
-				.subscribe(ChatActivity.this::onNewMessageUpdated);
-
-		isFirstAuth = false;
-		Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
-
 		LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
 		mLayoutManager.setReverseLayout(true);
 		mLayoutManager.setStackFromEnd(true);
@@ -232,8 +210,7 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void onNewMessageUpdated(Object msg) {
-		final String isAgreeWithString = "isAgreeWithContextAuth";
-		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(isAgreeWithString, false);
+		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(getString(R.string.splash_is_auth_agree), false);
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
@@ -375,7 +352,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 
-		if (msg instanceof RequestSignature) {
+		if (msg instanceof RequestSignatureRegister) {
 			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -387,7 +364,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			signRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
-				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
+				loadingDialog.setTitle(getString(R.string.registration_string_signature_registering));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
 				loadingDialog.showWithRatio(0.50f);
 
@@ -398,12 +375,9 @@ public class ChatActivity extends AppCompatActivity {
 
 							loadingDialog.dismiss();
 
-							// TODO similarity 에 따른 초기화
-							// 싸인 인증 성공
-							if (similarity / 100 > 30) {
-								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-								dialog.setTitle(getString(R.string.setting_string_signature_verified));
-								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+							dialog.setDescription(getString(R.string.registration_string_register_success));
+							dialog.setTitle(getString(R.string.setting_string_registered_signature));
 								dialog.setButtonText(getString(R.string.setting_string_yes));
 								dialog.setDoneListener(() -> {
 									MessageBox.INSTANCE.add(new SignatureVerified());
@@ -423,51 +397,18 @@ public class ChatActivity extends AppCompatActivity {
 									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 								});
 								dialog.showWithRatio(0.50f);
-							}
-
-							// 싸인 인증 실패
-							else {
-								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
-								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
-								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
-								warningDialog.setDoneListener(() -> warningDialog.dismiss());
-								warningDialog.show();
-
-								MessageBox.INSTANCE.addAndWait(new RequestSignature());
-
-
-							}
 
 						}, throwable -> {
+							Log.d("Sign Register", throwable.getMessage());
 						});
 			});
 
-			signRegistFragment.setOnSizeControlClick(new BaseSignRegisterFragment.OnSizeControlClick() {
-
-				boolean isFullSize = false;
-
-				@Override
-				public void onClick(BaseSignRegisterFragment.CanvasSize size) {
-
-					if (!isFullSize) {
-						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-						signView.setLayoutParams(lp);
-					} else {
-						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-								LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
-						signView.setLayoutParams(lp);
-					}
-
-					isFullSize = !isFullSize;
-				}
-			});
 
 			tx.replace(R.id.chat_capture, signRegistFragment);
 			tx.commit();
 		}
 
-		if (msg instanceof TransferRequestSignature) {
+		if (msg instanceof RequestSignatureValidation) {
 			this.prepareForFullScreen();
 			setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
@@ -475,44 +416,62 @@ public class ChatActivity extends AppCompatActivity {
 			binding.footer.addView(signView);
 
 			transferSignRegistFragment = new TransferSignRegisterFragment();
-
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
+
 			transferSignRegistFragment.setOnSignValidationListener((similarity) -> {
 				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
 				loadingDialog.setDescription(getString(R.string.registration_string_wait));
 				loadingDialog.showWithRatio(0.50f);
 
-				Observable.interval(1, TimeUnit.SECONDS)
+				Observable.interval(600, TimeUnit.MILLISECONDS)
 						.observeOn(AndroidSchedulers.mainThread())
 						.first((long) 1)
 						.subscribe(i -> {
 							loadingDialog.dismiss();
 
-							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-							dialog.setTitle(getString(R.string.setting_string_signature_verified));
-							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-							dialog.setButtonText(getString(R.string.setting_string_yes));
-							dialog.setDoneListener(() -> {
-								MessageBox.INSTANCE.add(new SignatureVerified());
-								returnToInitialControl();
+							if (similarity / 100 > 30) {
+								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+								dialog.setTitle(getString(R.string.setting_string_signature_verified));
+								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+								dialog.setButtonText(getString(R.string.setting_string_yes));
+								dialog.setDoneListener(() -> {
+									MessageBox.INSTANCE.add(new SignatureVerified());
+									returnToInitialControl();
 
-								showAppBar();
-								showStatusBar();
+									showAppBar();
+									showStatusBar();
 
-								FragmentTransaction transaction = getFragmentManager().beginTransaction();
-								transaction.remove(transferSignRegistFragment).commit();
+									FragmentTransaction transaction = getFragmentManager().beginTransaction();
+									transaction.remove(transferSignRegistFragment).commit();
 
-								dialog.dismiss();
+									dialog.dismiss();
 
-								returnToInitialControl();
+									returnToInitialControl();
 
-								binding.chatView.scrollToBottom();
-								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+									binding.chatView.scrollToBottom();
+									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-							});
-							dialog.showWithRatio(0.50f);
+								});
+								dialog.showWithRatio(0.50f);
+							} else {
+								transferSignRegistFragment.init();
+								MessageBox.INSTANCE.addAndWait(new RequestSignatureValidation());
+								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
+								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+								warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
+										.observeOn(AndroidSchedulers.mainThread())
+										.subscribe(aLong -> warningDialog.dismiss()));
+
+								warningDialog.show();
+
+
+							}
+
+
 						}, throwable -> {
+							Log.d("Sign Validation", throwable.getMessage());
 						});
 			});
 
@@ -890,8 +849,6 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void receiveScore() {
-		Intent chatIntent = getIntent();
-
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("chat.ContextLog.ContextLogService");
 
@@ -953,6 +910,7 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(
 								scoreParams -> {
 									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+									Log.d("FINOPASS", "Your final score is : " + scoreParams.finalScore);
 									decodeScoreParams(scoreParams);
 
 									if (isFirstAuth) {
@@ -960,29 +918,10 @@ public class ChatActivity extends AppCompatActivity {
 										ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
 										pref.save(scoreParams);
 
-										// 메인 시나리오 세팅
-										if (chatIntent != null) {
-											boolean isSigned = intent.getBooleanExtra("isSigned", false);
-											mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
-										}
-
-										// 메시지 박스 설정
-										MessageBox.INSTANCE.observable
-												.flatMap(msg -> {
-													if (msg instanceof EnableToEditMoney) {
-														return Observable.just(msg)
-																.observeOn(AndroidSchedulers.mainThread());
-													} else {
-														return Observable.just(msg)
-																.delay(1, TimeUnit.SECONDS)
-																.observeOn(AndroidSchedulers.mainThread());
-													}
-												})
-												.subscribe(ChatActivity.this::onNewMessageUpdated);
-
-										isFirstAuth = false;
+										initializeMessageBox();
 										Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
 									} else {
+										Log.d("FINOPASS", "ContextScoreReceived emitted.");
 										MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
 									}
 								});
@@ -996,6 +935,8 @@ public class ChatActivity extends AppCompatActivity {
 			Intent intent = new Intent(this, ContextLogService.class);
 			intent.putExtra("askType", "totalLog");
 			startService(intent);
+		} else {
+			initializeMessageBox();
 		}
 	}
 
@@ -1064,6 +1005,34 @@ public class ChatActivity extends AppCompatActivity {
 		Toast.makeText(this, getString(R.string.main_back_exit), Toast.LENGTH_SHORT).show();
 
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+	}
+
+
+	private void initializeMessageBox() {
+		Intent chatIntent = getIntent();
+
+		// 메인 시나리오 세팅
+		if (chatIntent != null) {
+			boolean isSigned = chatIntent.getBooleanExtra("isSigned", false);
+			mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
+		}
+
+		// 메시지 박스 설정
+		MessageBox.INSTANCE.observable
+				.flatMap(msg -> {
+					if (msg instanceof EnableToEditMoney) {
+						return Observable.just(msg)
+								.observeOn(AndroidSchedulers.mainThread());
+					} else {
+						return Observable.just(msg)
+								.delay(1, TimeUnit.SECONDS)
+								.observeOn(AndroidSchedulers.mainThread());
+					}
+				})
+				.subscribe(ChatActivity.this::onNewMessageUpdated,
+						throwable -> Log.d("MessageBox", throwable.getMessage()));
+
+		isFirstAuth = false;
 	}
 
 	private void decodeScoreParams(ContextScoreResponse scoreParams) throws Exception {

@@ -22,7 +22,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
 import finotek.global.dev.talkbank_ca.databinding.ChatAgreementBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatItemAgreementBinding;
 import finotek.global.dev.talkbank_ca.widget.TalkBankTextView;
@@ -148,7 +149,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
 						if (isRequiredFieldClicked) {
 							MessageBox.INSTANCE.addAndWait(
 									new ReceiveMessage(context.getString(R.string.dialog_string_finger_tip_sign_user_register)),
-									new RequestSignature()
+									new RequestSignatureValidation()
 							);
 						} else {
 							// TODO 서명해달라는 메세지 표시

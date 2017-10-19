@@ -32,7 +32,7 @@ public class ContextSearch implements Scenario {
 
 	@Override
 	public boolean decideOn(String msg) {
-		return msg.equals("맥락") || msg.equals("ㅁㄹ") || msg.equals(context.getResources().getString(R.string.dialog_chat_contextlog_search)) || msg.equals("맥락점수상세조회");
+		return msg.equals("맥락") || msg.equals("ㅁㄹㅈㅅ") || msg.equals(context.getResources().getString(R.string.dialog_chat_contextlog_search)) || msg.equals("맥락점수상세조회");
 	}
 
 	@Override
@@ -43,6 +43,7 @@ public class ContextSearch implements Scenario {
 		}
 
 		if (msg instanceof ContextScoreReceived) {
+			Log.d("FINOPASS", "in context search context score received");
 			String message = "";
 			ContextScoreResponse scoreParams = ((ContextScoreReceived) msg).getScoreParams();
 			if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
@@ -59,20 +60,7 @@ public class ContextSearch implements Scenario {
 	public void onUserSend(String msg) {
 		switch (step) {
 			case question:
-				Log.d("FINOTEK", "search message started");
-				ContextAuthPref pref = new ContextAuthPref(context);
-				String message = "";
-				ContextScoreResponse scoreParams = pref.getScoreParams();
-				Log.d("FINOTEK", "search message started.." + scoreParams);
-
-				if (scoreParams == null || scoreParams.messages == null || scoreParams.messages.size() == 0) {
-					message = context.getResources().getString(R.string.dialog_chat_contextlog_result_nothing);
-				} else {
-					message = buildScoreMessages(scoreParams);
-				}
-
-				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, message)), new Done());
-//				MessageBox.INSTANCE.addAndWait(buildRecommendedMenu());
+				MessageBox.INSTANCE.addAndWait(buildRecommendedMenu());
 				step = Step.ask;
 				break;
 			case ask:
@@ -134,11 +122,21 @@ public class ContextSearch implements Scenario {
 		String initMessage = context.getResources().getString(R.string.dialog_chat_contextlog_search_initMessage, user.getName(), total, callScore, smsScore, locationScore, appUsageScore);
 		RecoMenuRequest req = new RecoMenuRequest();
 		req.setDescription(initMessage);
-		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.dialog_chat_contextlog_total), null);
-//        req.addMenu(R.drawable.icon_bookmark_selected, context.getResources().getString(R.string.dialog_chat_contextlog_sms), null);
-//        req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_contextlog_call), null);
-//        req.addMenu(R.drawable.icon_camera, context.getResources().getString(R.string.dialog_chat_contextlog_location), null);
-//        req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_contextlog_application), null);
+		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.dialog_chat_contextlog_total), () -> {
+			MessageBox.INSTANCE.add(new ContextTotal());
+		});
+		req.addMenu(R.drawable.icon_bookmark_selected, context.getResources().getString(R.string.dialog_chat_contextlog_sms), () -> {
+			MessageBox.INSTANCE.add(new ContextSms());
+		});
+		req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_contextlog_call), () -> {
+			MessageBox.INSTANCE.add(new ContextCall());
+		});
+		req.addMenu(R.drawable.icon_camera, context.getResources().getString(R.string.dialog_chat_contextlog_location), () -> {
+			MessageBox.INSTANCE.add(new ContextLocation());
+		});
+		req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_contextlog_application), () -> {
+			MessageBox.INSTANCE.add(new ContextApp());
+		});
 
 		return req;
 	}

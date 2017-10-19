@@ -34,7 +34,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterOne;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterThree;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.alterTwo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 
@@ -77,7 +78,7 @@ public class TransferScenario implements Scenario {
 				MessageBox.INSTANCE.addAndWait(
 						new WarningMessage(context.getResources().getString(R.string.contextlog_authentication_waring, "이도현", 85.2)),
 						new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_finger_tip_sign)),
-						new RequestSignature()
+						new RequestSignatureValidation()
 				);
 			} else {
 				Object recvMessage = null;

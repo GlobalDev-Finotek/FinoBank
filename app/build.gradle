@@ -12,6 +12,8 @@ android {
         versionCode 19
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+
     }
 
     aaptOptions {
@@ -42,6 +44,8 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
+    compile 'com.android.support:multidex:1.0.1'
+
     compile 'joda-time:joda-time:2.9.7'
     compile 'com.github.barteksc:android-pdf-viewer:2.7.0'
     compile 'com.android.support:support-v4:25.3.1'

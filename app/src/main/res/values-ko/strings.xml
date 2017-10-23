@@ -451,6 +451,7 @@
     <string name="dialog_chat_donate_result">후원자님의 이름으로 %1$d코인이 %2$s에 기부됩니다.</string>
 
     <string name="dialog_chat_remote_call_request">본인 인증을 위해 상담원과 화상으로 연결합니다.\n계속 진행 하시겠습니까?</string>
-    <string name="dialog_chat_ocr_failed">신분증 인식이 실패하였습니다. 계좌개설을 다시 시도해 주십시오.</string>
+    <string name="dialog_chat_ocr_failed">신분증 인식을 실패하였습니다. 재시도해주십시오</string>
+
 </resources>
 

@@ -333,7 +333,7 @@
     <string name ="main_string_v2_login_electricity_balance">현재 계좌 잔액은 &#8361;%1$s입니다. 맥락인증 이체 금액은 설정에서 변경 가능합니다.</string>
     <string name ="main_string_v2_login_electricity_yes">예, 통장 개설 후 이체할게요</string>
     <string name ="main_string_v2_login_electricity_open_account">계좌 개설 시 본인 확인을 위해 신분증 (주민등록증, 운전면허증)이나 명함, 학생증이 필요합니다. </string>
-    <string name ="main_string_v2_login_electricity_open_account_2">준비가 되셨으면 촬영을 진행해 주세요. (만약 아무 것도 없다면 손바닥을 전체를 촬영해주세요)</string>
+    <string name ="main_string_v2_login_electricity_open_account_2">신분증이 없으시면 손바닥을 촬영하여 인증해야합니다.\n본인 신분증을 소지하고 계신가요?</string>
     <string name ="main_string_v2_login_electricity_additional_picture">추가로 촬영을 진행하시겠습니까?</string>
     <string name ="main_string_v2_login_electricity_additional_picture_yes">예</string>
     <string name ="main_string_v2_login_electricity_additional_picture_no">아니요</string>
@@ -451,5 +451,6 @@
     <string name="dialog_chat_donate_result">후원자님의 이름으로 %1$d코인이 %2$s에 기부됩니다.</string>
 
     <string name="dialog_chat_remote_call_request">본인 인증을 위해 상담원과 화상으로 연결합니다.\n계속 진행 하시겠습니까?</string>
+    <string name="dialog_chat_ocr_failed">신분증 인식이 실패하였습니다. 계좌개설을 다시 시도해 주십시오.</string>
 </resources>
 

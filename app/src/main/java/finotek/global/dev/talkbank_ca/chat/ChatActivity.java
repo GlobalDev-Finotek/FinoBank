@@ -11,6 +11,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
@@ -41,6 +43,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.finotek.finocr.common.CryptoUtil;
+import com.finotek.finocr.listener.OcrResultLinstener;
+import com.finotek.finocr.manager.LibraryInterface;
+import com.finotek.finocr.vo.OcrParam;
+import com.finotek.finocr.vo.OcrResult;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -61,6 +68,7 @@ import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
+import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RemoteCallCompleted;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -68,6 +76,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestTakeAnotherIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
+import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
@@ -78,6 +87,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived
 import finotek.global.dev.talkbank_ca.chat.messages.context.CurrentAddressReceived;
 import finotek.global.dev.talkbank_ca.chat.messages.context.RequestCurrentAddress;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v1;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v2;
@@ -200,6 +210,9 @@ public class ChatActivity extends AppCompatActivity {
 
 		// initialize score receiver
 		receiveScore();
+
+		// register ocr listener
+		LibraryInterface.registerOcrResultLinstener(ocrResultListener);
 	}
 
 	@Override
@@ -248,7 +261,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						getIdCardInfo(""),
+						getIdCardInfo(LibraryInterface.getOcrResult()),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 
@@ -273,7 +286,7 @@ public class ChatActivity extends AppCompatActivity {
 			FragmentTransaction tx = getFragmentManager().beginTransaction();
 			capturePicFragment.takePicture(path -> {
 				MessageBox.INSTANCE.addAndWait(
-						getIdCardInfo(path),
+						new ImageMessage(path),
 						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 				);
 				this.returnToInitialControl();
@@ -318,32 +331,7 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestTakeIDCard) {
-			this.prepareForFullScreen();
-
-			View captureView = inflate(R.layout.chat_capture);
-			binding.footer.addView(captureView);
-			capturePicFragment = CapturePicFragment.newInstance();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.addAndWait(
-						getIdCardInfo(""),
-						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-				);
-
-				MessageBox.INSTANCE.add(new ReceiveMessage(getString(R.string.dialog_chat_correct_information)));
-
-				showAppBar();
-				this.returnToInitialControl();
-				showStatusBar();
-
-				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				transaction.remove(capturePicFragment).commit();
-
-				binding.chatView.scrollToBottom();
-			});
-
-			tx.replace(R.id.chat_capture, capturePicFragment);
-			tx.commit();
+			startOcrModule();
 		}
 
 		if (msg instanceof RequestKeyboardInput) {
@@ -991,6 +979,7 @@ public class ChatActivity extends AppCompatActivity {
 		eventBus.clear();
 
 		unregisterReceiver(receiver);
+		LibraryInterface.unregisterOcrResultLinstener();
 	}
 
 	@Override
@@ -1098,13 +1087,11 @@ public class ChatActivity extends AppCompatActivity {
 		return currentLocation;
 	}
 
-	private IDCardInfo getIdCardInfo(String path) {
-		Realm realm = Realm.getDefaultInstance();
-		User user = realm.where(User.class).findAll().last();
-		if (user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
-			return new IDCardInfo("주민등록증", "박승남", "680707-1243132", "2012.11.02", path);
-		else
-			return new IDCardInfo("주민등록증", "김우섭", "660103-1111111", "2016.3.10", path);
+	private IDCardInfo getIdCardInfo(OcrResult ocrResult) {
+		byte[] idcardImage = ocrResult.getIdcardImg();
+		Bitmap image = BitmapFactory.decodeByteArray(idcardImage, 0, idcardImage.length);
+		String type = (ocrResult.getIdcardType().equals("1")) ? "주민등록증" : "운전면허증";
+		return new IDCardInfo(type, ocrResult.getName(), CryptoUtil.transJuminStr(ocrResult.getIdcardNum()), ocrResult.getIssueDate(), image);
 	}
 
 	private ChatComponent getComponent() {
@@ -1126,4 +1113,38 @@ public class ChatActivity extends AppCompatActivity {
 		releaseControls();
 		releaseAllControls();
 	}
+
+	private void startOcrModule(){
+		OcrParam ocrParam = new OcrParam();
+		//촬영 시간
+		ocrParam.setRetrytime(15000);
+		//포커스 후 촬영횟수
+		ocrParam.setFocusCount(4);
+		//주민번호 마스크 여부
+		ocrParam.setMaskIdnum(true);
+		//암호일련번호 옵션 (0 = 미적용 , 1 = 적용)
+		ocrParam.setLicenseCode(1);
+
+		LibraryInterface.startOcr(this, "", "", ocrParam);
+	}
+
+	private OcrResultLinstener ocrResultListener = new OcrResultLinstener() {
+		@Override
+		public void onOcrSuccess(OcrResult ocrResult) {
+			LibraryInterface.setOcrResult(ocrResult);
+			MessageBox.INSTANCE.addAndWait(
+				getIdCardInfo(ocrResult),
+				RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+			);
+
+			ocrResult.clear();
+		}
+
+		@Override
+		public void onOcrFail() {
+			MessageBox.INSTANCE.addAndWait(new Done(),
+				new ReceiveMessage(getResources().getString(R.string.dialog_chat_ocr_failed)),
+				new RecommendScenarioMenuRequest(getApplicationContext()));
+		}
+	};
 }

@@ -13,6 +13,7 @@ import finotek.global.dev.talkbank_ca.chat.adapter.DataWithType;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
@@ -43,6 +44,7 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.Status.ordinal(), new StatusViewBuilder());
 		this.addChatViewBuilder(ViewType.Divider.ordinal(), new DividerViewBuilder());
 		this.addChatViewBuilder(ViewType.Confirm.ordinal(), new ConfirmViewBuilder());
+		this.addChatViewBuilder(ViewType.ImageView.ordinal(), new ImageViewBuilder(context));
 
 		this.addChatViewBuilder(ViewType.RecoMenu.ordinal(), new RecoMenuViewBuilder(context));
 		this.addChatViewBuilder(ViewType.DonateView.ordinal(), new DonateViewBuilder(context));
@@ -112,6 +114,10 @@ public class ChatView extends RecyclerView {
 		addMessage(ViewType.Confirm.ordinal(), ev);
 	}
 
+	public void showImage(ImageMessage imageMessage) {
+		addMessage(ViewType.ImageView.ordinal(), imageMessage);
+	}
+
 	public void recoMenu(RecoMenuRequest req) {
         addMessage(ViewType.RecoMenu.ordinal(), req);
     }
@@ -138,7 +144,7 @@ public class ChatView extends RecyclerView {
 
 	public enum ViewType {
 		Send, IconicSend, Receive, Divider, Status,
-		Confirm, RecoMenu, DonateView,
+		Confirm, ImageView, RecoMenu, DonateView,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult,
         Wait, AccountConfirm

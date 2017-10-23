@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.finotek.finocr.manager.LibraryInterface;
 
 import java.io.IOException;
 
@@ -39,41 +40,13 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 	@Override
 	public void bind(RecyclerView.ViewHolder viewHolder, IDCardInfo data) {
 		IDCardViewHolder holder = (IDCardViewHolder) viewHolder;
-		Realm realm = Realm.getDefaultInstance();
 
-		try {
-			String imgPath = data.getImgPath();
-
-			if (!TextUtils.isEmpty(imgPath)) {
-				ExifInterface exifInterface = new ExifInterface(imgPath);
-				int orientation = Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
-				holder.binding.idCardInfo.setVisibility(View.GONE);
-				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-						Converter.dpToPx(200), Converter.dpToPx(240));
-				holder.binding.idCardImg.setLayoutParams(lp);
-				holder.binding.idCardImg.setScaleType(ImageView.ScaleType.FIT_XY);
-
-				Glide.with(context)
-						.load(imgPath)
-						.bitmapTransform(new RoundedCornersTransformation(context, 40, 0, RoundedCornersTransformation.CornerType.ALL))
-						.fitCenter()
-						.into(holder.binding.idCardImg);
-			} else {
-				holder.binding.idCardInfo.setVisibility(View.VISIBLE);
-				holder.binding.cardType.setText(data.getType());
-				holder.binding.name.setText(data.getName());
-				holder.binding.jumin.setText(data.getJumin());
-				holder.binding.issueDate.setText(data.getIssueDate());
-
-				User user = realm.where(User.class).findAll().last();
-				if (user != null && user.getName() != null && !user.getName().isEmpty() && (user.getName().equals("Sen") || user.getName().equals("박승남")))
-					holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card_park));
-				else
-					holder.binding.idCardImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.id_card));
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		holder.binding.idCardInfo.setVisibility(View.VISIBLE);
+		holder.binding.cardType.setText(data.getType());
+		holder.binding.name.setText(data.getName());
+		holder.binding.jumin.setText(data.getJumin());
+		holder.binding.issueDate.setText(data.getIssueDate());
+		holder.binding.idCardImg.setImageBitmap(data.getImage());
 	}
 
 	@Override

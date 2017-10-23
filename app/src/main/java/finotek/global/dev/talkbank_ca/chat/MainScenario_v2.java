@@ -17,6 +17,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementResult;
 import finotek.global.dev.talkbank_ca.chat.messages.ApplyScenario;
 import finotek.global.dev.talkbank_ca.chat.messages.DividerMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
@@ -324,6 +325,10 @@ public class MainScenario_v2 {
 				chatView.removeOf(ChatView.ViewType.Confirm);
 			});
 			chatView.confirm(request);
+		}
+
+		if(msg instanceof ImageMessage) {
+			chatView.showImage((ImageMessage) msg);
 		}
 
 		// 추천 메뉴 요청

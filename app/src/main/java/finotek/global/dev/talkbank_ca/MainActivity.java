@@ -6,6 +6,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.finotek.finocr.listener.OcrResultLinstener;
+import com.finotek.finocr.manager.LibraryInterface;
+import com.finotek.finocr.vo.OcrParam;
+import com.finotek.finocr.vo.OcrResult;
 import com.jakewharton.rxbinding2.view.RxView;
 
 import javax.inject.Inject;

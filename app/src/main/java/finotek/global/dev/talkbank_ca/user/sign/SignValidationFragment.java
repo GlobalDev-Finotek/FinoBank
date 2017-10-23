@@ -72,9 +72,9 @@ public class SignValidationFragment extends BaseSignRegisterFragment {
 		binding.drawingCanvas.setOnDrawListener((strData) -> {
 
 			if (stepCount == 2) {
-				regularSignWrapper.secondDatas.append(strData);
+				regularSignWrapper.firstDatas.append(strData);
 			} else if (stepCount == 4) {
-				hiddenSignWrapper.secondDatas.append(strData);
+				hiddenSignWrapper.firstDatas.append(strData);
 			}
 		});
 	}

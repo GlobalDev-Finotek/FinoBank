@@ -419,6 +419,7 @@
     <string name="dialog_chat_how_to_compute_score">Contextual authentication is the fastest, easiest, and most secure next-generation authentication technology in Finotek.\n\nFirst we calculate your intimacy with your past call history, textual history, app history\n\nAnd, measure how closely the user\'s recent 30-minute record is compared to the past record.\n\n* Intimacy factor: \n - total calls, total calls, recent Number of calls, recent calls \n - total number of characters, recent number of characters \n - total usage, recent usage \n - (location) favorite locations, recent favorites \n\n* Element \n - the number of 30-minute context records</string>
     <string name="dialog_chat_contextlog_search">Show context data</string>
     <string name="dialog_chat_fake_contextlog_search">Show context info</string>
+
     <string name="dialog_chat_contextlog_search_initMessage">%1$s\'s score is %2$.1f points, Details are as shown below.\nCall Log: %3$.1f points\nSMS: %4$.1f points\nLocation: %5$.1f points\nApp Usage: %6$.1f points</string>
     <string name="dialog_chat_contextlog_sms">SMS history</string>
     <string name="dialog_chat_contextlog_call">Call history</string>

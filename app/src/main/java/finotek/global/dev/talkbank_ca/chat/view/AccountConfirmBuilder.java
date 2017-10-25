@@ -24,28 +24,28 @@ import finotek.global.dev.talkbank_ca.user.util.AccountImageBuilder;
  */
 
 public class AccountConfirmBuilder implements ChatView.ViewBuilder<Void> {
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        return new AccountConfirmHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_confirm, parent, false));
-    }
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		return new AccountConfirmHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_account_confirm, parent, false));
+	}
 
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, Void data) {
 
-    }
+	}
 
-    @Override
-    public void onDelete() {
+	@Override
+	public void onDelete() {
 
-    }
+	}
 
-    private class AccountConfirmHolder extends RecyclerView.ViewHolder {
-        ChatAccountConfirmBinding binding;
+	private class AccountConfirmHolder extends RecyclerView.ViewHolder {
+		ChatAccountConfirmBinding binding;
 
-        AccountConfirmHolder(View itemView) {
-            super(itemView);
-            binding = ChatAccountConfirmBinding.bind(itemView);
-            binding.accountImage.setImageBitmap(AccountImageBuilder.getAccount(itemView.getContext()));
-        }
-    }
+		AccountConfirmHolder(View itemView) {
+			super(itemView);
+			binding = ChatAccountConfirmBinding.bind(itemView);
+			binding.accountImage.setImageBitmap(AccountImageBuilder.getAccount(itemView.getContext()));
+		}
+	}
 }

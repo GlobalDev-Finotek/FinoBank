@@ -463,7 +463,6 @@
     <string name="dialog_string_won">Won</string>
     <string name="dialog_chat_select_bank_yes2">Yes</string>
     <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license. Please take a picture of your ID card</string>
-
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>

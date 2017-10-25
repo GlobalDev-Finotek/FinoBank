@@ -97,8 +97,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -108,7 +108,6 @@ import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
-import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.AgreementPdfViewDialog;
@@ -138,7 +137,6 @@ import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
@@ -173,7 +171,25 @@ public class ChatActivity extends AppCompatActivity {
 
 	private BroadcastReceiver receiver;
 	private boolean isFirstAuth = true;
+	private OcrResultLinstener ocrResultListener = new OcrResultLinstener() {
+		@Override
+		public void onOcrSuccess(OcrResult ocrResult) {
+			LibraryInterface.setOcrResult(ocrResult);
+			MessageBox.INSTANCE.addAndWait(
+					getIdCardInfo(ocrResult),
+					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+			);
 
+			ocrResult.clear();
+		}
+
+		@Override
+		public void onOcrFail() {
+			MessageBox.INSTANCE.addAndWait(new Done(),
+					new ReceiveMessage(getResources().getString(R.string.dialog_chat_ocr_failed)),
+					new RecommendScenarioMenuRequest(getApplicationContext()));
+		}
+	};
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -365,25 +381,25 @@ public class ChatActivity extends AppCompatActivity {
 							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
 							dialog.setDescription(getString(R.string.registration_string_register_success));
 							dialog.setTitle(getString(R.string.setting_string_registered_signature));
-								dialog.setButtonText(getString(R.string.setting_string_yes));
-								dialog.setDoneListener(() -> {
-									MessageBox.INSTANCE.add(new SignatureVerified());
-									returnToInitialControl();
+							dialog.setButtonText(getString(R.string.setting_string_yes));
+							dialog.setDoneListener(() -> {
+								MessageBox.INSTANCE.add(new SignatureVerified());
+								returnToInitialControl();
 
-									showAppBar();
-									showStatusBar();
+								showAppBar();
+								showStatusBar();
 
-									FragmentTransaction transaction = getFragmentManager().beginTransaction();
-									transaction.remove(signRegistFragment).commit();
+								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+								transaction.remove(signRegistFragment).commit();
 
-									dialog.dismiss();
+								dialog.dismiss();
 
-									returnToInitialControl();
+								returnToInitialControl();
 
-									binding.chatView.scrollToBottom();
-									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-								});
-								dialog.showWithRatio(0.50f);
+								binding.chatView.scrollToBottom();
+								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+							});
+							dialog.showWithRatio(0.50f);
 
 						}, throwable -> {
 							Log.d("Sign Register", throwable.getMessage());
@@ -537,7 +553,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof ShowPdfView) {
 			ShowPdfView action = (ShowPdfView) msg;
-		    AgreementPdfViewDialog dialog = new AgreementPdfViewDialog(this);
+			AgreementPdfViewDialog dialog = new AgreementPdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();
@@ -995,7 +1011,6 @@ public class ChatActivity extends AppCompatActivity {
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
-
 	private void initializeMessageBox() {
 		Intent chatIntent = getIntent();
 
@@ -1114,7 +1129,7 @@ public class ChatActivity extends AppCompatActivity {
 		releaseAllControls();
 	}
 
-	private void startOcrModule(){
+	private void startOcrModule() {
 		OcrParam ocrParam = new OcrParam();
 		//촬영 시간
 		ocrParam.setRetrytime(15000);
@@ -1127,24 +1142,4 @@ public class ChatActivity extends AppCompatActivity {
 
 		LibraryInterface.startOcr(this, "", "", ocrParam);
 	}
-
-	private OcrResultLinstener ocrResultListener = new OcrResultLinstener() {
-		@Override
-		public void onOcrSuccess(OcrResult ocrResult) {
-			LibraryInterface.setOcrResult(ocrResult);
-			MessageBox.INSTANCE.addAndWait(
-				getIdCardInfo(ocrResult),
-				RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-			);
-
-			ocrResult.clear();
-		}
-
-		@Override
-		public void onOcrFail() {
-			MessageBox.INSTANCE.addAndWait(new Done(),
-				new ReceiveMessage(getResources().getString(R.string.dialog_chat_ocr_failed)),
-				new RecommendScenarioMenuRequest(getApplicationContext()));
-		}
-	};
 }

@@ -458,5 +458,4 @@
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>
-
 </resources>

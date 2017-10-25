@@ -433,7 +433,7 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(i -> {
 							loadingDialog.dismiss();
 
-							if (similarity / 100 > 30) {
+							if (similarity / 100 > 70) {
 								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
 								dialog.setTitle(getString(R.string.setting_string_signature_verified));
 								dialog.setDescription(getString(R.string.setting_string_authentication_complete));

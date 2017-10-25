@@ -120,9 +120,9 @@ public class LoanScenario implements Scenario {
 			case Agreement:
 				ReceiveMessage receive = new ReceiveMessage(context.getResources().getString(R.string.dialog_string_term_agreement_accept));
 
-					List<Agreement> agreements = new ArrayList<>();
+				List<Agreement> agreements = new ArrayList<>();
 
-				if(Locale.getDefault().getLanguage().equals("ko")) {
+				if (Locale.getDefault().getLanguage().equals("ko")) {
 					Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
 					required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "view.pdf"));
 					required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "view2.pdf"));
@@ -139,7 +139,7 @@ public class LoanScenario implements Scenario {
 
 				//// TODO: 10/10/2017
 
-				else{
+				else {
 					Agreement required = new Agreement(100, context.getResources().getString(R.string.dialog_string_mandatory_term_accept));
 					required.addChild(new Agreement(101, context.getResources().getString(R.string.dialog_string_loan_service_user_agreement), "view_eng.pdf"));
 					required.addChild(new Agreement(102, context.getResources().getString(R.string.dialog_string_personal_credit_information_access_agreement), "view2_eng.pdf"));
@@ -152,7 +152,6 @@ public class LoanScenario implements Scenario {
 					agreements.add(required);
 					agreements.add(optional);
 				}
-
 
 
 				MessageBox.INSTANCE.addAndWait(

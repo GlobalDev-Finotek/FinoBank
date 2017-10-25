@@ -38,7 +38,7 @@ public class SplashActivity extends AppCompatActivity {
 				activeNetwork.isConnectedOrConnecting();
 
 		// 네트워크 연결 정보 확인
-		if(!isConnected) {
+		if (!isConnected) {
 			DangerDialog dialog = new DangerDialog(this);
 			dialog.setTitle(getResources().getString(R.string.app_network_status_title));
 			dialog.setDescription(getResources().getString(R.string.app_network_not_connected));

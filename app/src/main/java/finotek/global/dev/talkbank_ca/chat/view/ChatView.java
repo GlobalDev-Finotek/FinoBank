@@ -36,7 +36,7 @@ public class ChatView extends RecyclerView {
 		super(context, attrs);
 
 		this.adapter = new ChatAdapter();
-        setAdapter(adapter);
+		setAdapter(adapter);
 
 		this.addChatViewBuilder(ViewType.Send.ordinal(), new SendViewBuilder());
 		this.addChatViewBuilder(ViewType.IconicSend.ordinal(), new IconicSendViewBuilder(context));
@@ -98,13 +98,13 @@ public class ChatView extends RecyclerView {
 		addMessage(ViewType.AccountList.ordinal(), accountList);
 	}
 
-    public void waiting() {
-        addMessage(ViewType.Wait.ordinal(), null);
-    }
+	public void waiting() {
+		addMessage(ViewType.Wait.ordinal(), null);
+	}
 
-    public void waitingDone() {
-        removeOf(ViewType.Wait);
-    }
+	public void waitingDone() {
+		removeOf(ViewType.Wait);
+	}
 
 	public void transactionList(RecentTransaction data) {
 		addMessage(ViewType.RecentTransaction.ordinal(), data);
@@ -119,8 +119,8 @@ public class ChatView extends RecyclerView {
 	}
 
 	public void recoMenu(RecoMenuRequest req) {
-        addMessage(ViewType.RecoMenu.ordinal(), req);
-    }
+		addMessage(ViewType.RecoMenu.ordinal(), req);
+	}
 
 	public void addDonateView(DonateRequest req) {
 		addMessage(ViewType.DonateView.ordinal(), req);
@@ -147,7 +147,7 @@ public class ChatView extends RecyclerView {
 		Confirm, ImageView, RecoMenu, DonateView,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult,
-        Wait, AccountConfirm
+		Wait, AccountConfirm
 	}
 
 	public interface ViewBuilder<T> {

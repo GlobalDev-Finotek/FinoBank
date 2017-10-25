@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.chat.ContextLog;
+package finotek.global.dev.talkbank_ca.chat.messages.context;
 
 import android.Manifest;
 import android.app.Service;
@@ -127,7 +127,7 @@ public class ContextLogService extends Service {
 
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(currentTime());
-		cal.add(Calendar.MINUTE, - inputTime);
+		cal.add(Calendar.MINUTE, -inputTime);
 
 		Date changedTime = cal.getTime();
 

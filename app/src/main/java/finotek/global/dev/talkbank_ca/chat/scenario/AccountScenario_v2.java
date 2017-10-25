@@ -56,7 +56,7 @@ public class AccountScenario_v2 implements Scenario {
 				User user = realm.where(User.class).findAll().last();
 
 				String name = "홍길동";
-				if(user != null)
+				if (user != null)
 					name = user.getName();
 
 				String dateTime = new DateTime().toString("yyyy-MM-dd");

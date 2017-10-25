@@ -1,4 +1,4 @@
-package finotek.global.dev.talkbank_ca.chat.context_log;
+package finotek.global.dev.talkbank_ca.chat.messages.context;
 
 /**
  * Created by jungwon on 7/31/2017.

@@ -429,6 +429,9 @@
     <string name="dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
     <string name="dialog_chat_contextlog_result_message">-%1$s</string>
     <string name="dialog_chat_contextlog_result_nothing">There is no reason.</string>
+    <string name="dialog_chat_contextlog_network_error_title">Warning</string>
+    <string name="dialog_chat_contextlog_network_failed">Due to the unstable network, fetching context log is failed.\nPlease try again later.</string>
+    <string name="dialog_chat_contextlog_fetching">Fetching context log data, please wait for a second.</string>
     <string name="contextlog_result_message_app_usage">You used %1$s app(rank:%2$.0f) %3$.0f minute ago. You get %4$.1f points.</string>
     <string name="contextlog_result_location">You are currently in %1$f, %2$f (rank: %3$.0f).\nYou get %4$.2f points.</string>
     <string name="contextlog_result_phone_call">You called to %1$s(rank: %2$.0f) %3$.0f minutes ago\nYou get %4$.2f points.</string>

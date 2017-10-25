@@ -62,6 +62,8 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogReceiver;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogType;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
 import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
@@ -225,31 +227,21 @@ public class ChatActivity extends AppCompatActivity {
 		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(getString(R.string.splash_is_auth_agree), false);
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "totalLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.total);
 		}
 
 		if (msg instanceof ContextSms && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "smsLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.sms);
 		}
 
 		if (msg instanceof ContextCall && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "callLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.call);
 		}
 		if (msg instanceof ContextLocation && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "locationLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.location);
 		}
 		if (msg instanceof ContextApp && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "appLog");
-			startService(intent);
+			fetchContextLogData(ContextLogType.app);
 		}
 
 		if (msg instanceof RequestPhoto) {
@@ -839,93 +831,57 @@ public class ChatActivity extends AppCompatActivity {
 		IntentFilter intentFilter = new IntentFilter();
 		intentFilter.addAction("chat.ContextLog.ContextLogService");
 
-		receiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				String askType = intent.getStringExtra("askType");
+		receiver = new ContextLogReceiver(getApplication(), getApplicationContext(), (queryMaps) -> {
+            Finopass.getInstance(ChatActivity.this)
+                .getScore(queryMaps)
+                .subscribe(
+                        scoreParams -> {
+                            Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+                            Log.d("FINOPASS", "Your final score is : " + scoreParams.finalScore);
+                            decodeScoreParams(scoreParams);
 
-				ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
+                            if (isFirstAuth) {
+                                Log.d("FINOPASS", "첫번째 맥락인증 요청");
+                                ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
+                                pref.save(scoreParams);
 
-				if (askType.equals("smsLog") || askType.equals("totalLog")) {
-					List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
-					queryMaps.addAll(smsLogData);
-					Log.d("FINOPASS", "sms logs: " + smsLogData);
-				}
+                                initializeMessageBox();
+                                Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
+                            } else {
+                                Log.d("FINOPASS", "ContextScoreReceived emitted.");
+                                MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
+                            }
+                        },
+                        error -> {
+                            WarningDialog dialog = new WarningDialog(getApplicationContext());
+                            dialog.setTitle(getResources().getString(R.string.dialog_chat_contextlog_network_error_title));
+                            dialog.setDescription(getResources().getString(R.string.dialog_chat_contextlog_network_failed));
+                            dialog.setButtonText(getResources().getString(R.string.app_network_dialog_confirm));
+                            dialog.setDoneListener(() -> {
+                                dialog.dismiss();
+                            });
+                            dialog.show();
+                        });
+        });
 
-				if (askType.equals("callLog") || askType.equals("totalLog")) {
-					List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
-					queryMaps.addAll(callLogData);
-					Log.d("FINOPASS", "call logs: " + callLogData);
-				}
-
-				if (askType.equals("locationLog") || askType.equals("totalLog")) {
-					List<LocationLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
-					queryMaps.addAll(locationLogData);
-					Log.d("FINOPASS", "location logs: " + locationLogData);
-				}
-
-				if (askType.equals("appLog") || askType.equals("totalLog")) {
-					List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
-					if (appLogData != null) {
-						int skyHomeAppId = 0;
-						int size = appLogData.size();
-						for (int i = 0; i < size; i++) {
-							ApplicationLog log = appLogData.get(i);
-							try {
-								UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
-								AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
-
-								if (aes.decText(log.appName).equals("SKY 홈")) {
-									skyHomeAppId = i;
-								}
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-
-						if (!appLogData.isEmpty()) {
-							appLogData.remove(skyHomeAppId);
-						}
-					}
-
-					queryMaps.addAll(appLogData);
-					Log.d("FINOPASS", "app logs: " + appLogData);
-				}
-
-				Finopass.getInstance(ChatActivity.this)
-						.getScore(queryMaps)
-						.subscribe(
-								scoreParams -> {
-									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
-									Log.d("FINOPASS", "Your final score is : " + scoreParams.finalScore);
-									decodeScoreParams(scoreParams);
-
-									if (isFirstAuth) {
-										Log.d("FINOPASS", "첫번째 맥락인증 요청");
-										ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
-										pref.save(scoreParams);
-
-										initializeMessageBox();
-										Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
-									} else {
-										Log.d("FINOPASS", "ContextScoreReceived emitted.");
-										MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
-									}
-								});
-			}
-		};
 		registerReceiver(receiver, intentFilter);
 		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE)
 				.getBoolean(getString(R.string.splash_is_auth_agree), false);
 
 		if (isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "totalLog");
+			intent.putExtra("askType", ContextLogType.total);
 			startService(intent);
 		} else {
 			initializeMessageBox();
 		}
 	}
+
+	private void fetchContextLogData(ContextLogType type) {
+        Intent intent = new Intent(this, ContextLogService.class);
+        intent.putExtra("askType", type);
+        startService(intent);
+    }
 
 	@Override
 	protected void onResume() {

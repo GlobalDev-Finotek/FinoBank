@@ -426,6 +426,9 @@
     <string name="dialog_chat_contextlog_result">30분간 산정한 맥락정보 기록입니다.</string>
     <string name="dialog_chat_contextlog_result_message">방금 전 인증된 사유는 다음과 같습니다.\n\n%1$s</string>
     <string name="dialog_chat_contextlog_result_nothing">사유없음</string>
+    <string name="dialog_chat_contextlog_network_error_title">경고</string>
+    <string name="dialog_chat_contextlog_network_failed">연결이 불안정하여 맥락정보를 가져오는데 실패하였습니다.\n잠시 후 다시 시도해주세요.</string>
+    <string name="dialog_chat_contextlog_fetching">맥락정보를 가져오는 중입니다. 잠시만 기다려주세요</string>
     <string name="contextlog_result_message_app_usage">당신은 %1$s 앱(친밀도 %2$.0f위)을 %3$.0f분전에 이용하였으므로 %4$.2f 점을 얻었습니다.</string>
     <string name="contextlog_result_location">당신은 현재 %1$f, %2$f (친밀도 %3$.0f위)에 있으므로 %4$.2f 점을 얻었습니다.</string>
     <string name="contextlog_result_phone_call">당신은 %1$s(친밀도: %2$.0f위)와(과) %3$.0f분전에 통화하였으므로 %4$.2f 점을 얻었습니다.</string>

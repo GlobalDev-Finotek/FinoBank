@@ -450,7 +450,6 @@
     <string name="dialog_chat_bank_select_cancel">Cancel</string>
     <string name="dialog_chat_bank_select_main">HAPPY BANK : 123-244-33334</string>
     <string name="dialog_chat_before_transfer">I found out your preferred account   HAPPY BANK : 123-244-33334.  Are you going to use this account for transfer?</string>
-
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>

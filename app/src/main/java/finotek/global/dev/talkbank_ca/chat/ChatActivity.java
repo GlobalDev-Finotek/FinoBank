@@ -829,7 +829,8 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void receiveScore() {
 		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("chat.ContextLog.ContextLogService");
+		String name = ContextLogService.class.getCanonicalName();
+		intentFilter.addAction(name);
 
 		receiver = new ContextLogReceiver(getApplication(), getApplicationContext(), (queryMaps) -> {
             Finopass.getInstance(ChatActivity.this)

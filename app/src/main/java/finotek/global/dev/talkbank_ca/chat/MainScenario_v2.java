@@ -47,7 +47,6 @@ import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TravelSaving;
-import finotek.global.dev.talkbank_ca.chat.scenario.TrySignScenario;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
@@ -127,7 +126,6 @@ public class MainScenario_v2 {
 		scenarioPool.put("contextSearch", new ContextSearch(context));
 		scenarioPool.put("fakeContextSearch", new FakeContextSearch(context));
 		scenarioPool.put("donate", new DonateScenario(context));
-		scenarioPool.put("trySign", new TrySignScenario(context));
 
 		currentScenario = null;
 	}

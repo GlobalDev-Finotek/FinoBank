@@ -49,6 +49,7 @@ public class FinoSign {
 	}
 
 	public static String loadSign(Context context, String fileName) {
+
 		String ret = "";
 
 		try {
@@ -61,7 +62,8 @@ public class FinoSign {
 				stringBuilder.append(receiveString);
 			}
 
-			ret = stringBuilder.toString();
+			ret = stringBuilder.toString() + "\n";
+
 		} catch (IOException e) {
 			Log.e("Exception", "File write failed: " + e.toString());
 		}

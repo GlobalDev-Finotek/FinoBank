@@ -8,7 +8,7 @@ android {
     defaultConfig {
         applicationId "finotek.global.dev.talkbank_ca_demo"
         minSdkVersion 24
-        targetSdkVersion 25
+        targetSdkVersion 24
         versionCode 19
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"

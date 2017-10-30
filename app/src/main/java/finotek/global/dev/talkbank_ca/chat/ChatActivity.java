@@ -64,7 +64,6 @@ import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogReceiver;
 import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogType;
-import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RemoteCallCompleted;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -553,7 +552,7 @@ public class ChatActivity extends AppCompatActivity {
 		FragmentTransaction tx = getFragmentManager().beginTransaction();
 		capturePicFragment.takePicture(path -> {
 			MessageBox.INSTANCE.addAndWait(
-					new ImageMessage(path),
+					getIdCardInfo(LibraryInterface.getOcrResult()),
 					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 			);
 

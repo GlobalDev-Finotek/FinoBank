@@ -2,21 +2,15 @@ package finotek.global.dev.talkbank_ca.user.sign;
 
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
-import android.view.View;
 
 import com.jakewharton.rxbinding2.view.RxView;
 
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import d2r.checksign.lib.FinoSign;
 import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.annotations.NonNull;
-import io.reactivex.functions.Consumer;
 
 /**
  * Created by magyeong-ug on 2017. 3. 29..
@@ -163,7 +157,6 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 	@Override
 	protected void setSignDataListener() {
 		binding.drawingCanvas.setOnDrawListener((strData) -> {
-
 			switch (stepCount) {
 				case 2:
 					regularSignWrapper.firstDatas.append(strData);

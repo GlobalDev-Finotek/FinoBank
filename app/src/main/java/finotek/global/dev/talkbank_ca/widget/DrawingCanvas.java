@@ -88,6 +88,7 @@ public class DrawingCanvas extends View {
 		signData.x = x;
 		signData.y = y;
 		signData.time = times;
+		signData.act = event.getAction();
 
 		onDrawListener.onDraw(signData.toString());
 

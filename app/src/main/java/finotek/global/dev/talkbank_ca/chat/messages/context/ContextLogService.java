@@ -87,7 +87,7 @@ public class ContextLogService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Intent getContextLog = new Intent();
-		getContextLog.setAction("chat.ContextLog.ContextLogService");
+		getContextLog.setAction(ContextLogService.class.getCanonicalName());
 		getContextLog.putExtra("totalLog", collector(30));
 		getContextLog.putParcelableArrayListExtra("smsLog", (ArrayList<? extends Parcelable>) getSms(30));
 		getContextLog.putParcelableArrayListExtra("callLog", (ArrayList<? extends Parcelable>) getCall(30));

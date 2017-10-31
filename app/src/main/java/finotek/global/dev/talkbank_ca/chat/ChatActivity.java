@@ -846,7 +846,6 @@ public class ChatActivity extends AppCompatActivity {
                                 ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
                                 pref.save(scoreParams);
 
-                                initializeMessageBox();
                                 Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
                             } else {
                                 Log.d("FINOPASS", "ContextScoreReceived emitted.");
@@ -867,16 +866,7 @@ public class ChatActivity extends AppCompatActivity {
 
 
 		registerReceiver(receiver, intentFilter);
-		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE)
-				.getBoolean(getString(R.string.splash_is_auth_agree), false);
 
-		if (isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", ContextLogType.total);
-			startService(intent);
-		} else {
-			initializeMessageBox();
-		}
 	}
 
 	private void fetchContextLogData(ContextLogType type) {
@@ -956,7 +946,7 @@ public class ChatActivity extends AppCompatActivity {
 	private void initializeMessageBox() {
 
 		// 메인 시나리오 세팅
-		mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView);
+		this.mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView);
 
 		// 메시지 박스 설정
 		MessageBox.INSTANCE.observable

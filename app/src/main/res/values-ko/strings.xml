@@ -460,5 +460,10 @@
     <string name="app_network_status_title">네트워크 에러</string>
     <string name="app_network_not_connected">네트워크에 연결되어 있지 않습니다.</string>
     <string name="app_network_dialog_confirm">확인</string>
+    <string name="greetings">안녕하세요. Xx은행 수표 인증 서비스입니다. 무엇을 도와드릴까요</string>
+    <string name="request_ronaldo_sign">Ronaldo 의 서명을 인증해줘</string>
+    <string name="ronaldo_id">Ronaldo의 사진과 생년월일입니다. 이 분이 맞습니까?</string>
+    <string name="yes">네</string>
+    <string name="ronaldo_signature">Ronaldo의 서명을 해주시기 바랍니다</string>
 </resources>
 

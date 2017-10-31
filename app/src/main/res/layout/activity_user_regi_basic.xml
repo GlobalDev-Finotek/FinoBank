@@ -109,19 +109,15 @@
                 android:inputType="textPersonName"
                 android:textColor="@color/dark_50"
                 android:textSize="@dimen/text_normal"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="46dp"
-                android:layout_marginTop="14dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
+                android:orientation="horizontal">
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:lineSpacingMultiplier="1.5"
+                    android:layout_marginTop="3dp"
                     android:text="\u2022"
                     android:textColor="@color/bullet"
                     android:textSize="24sp"
@@ -130,91 +126,22 @@
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
+                    android:layout_height="46dp"
                     android:layout_marginLeft="7dp"
                     android:layout_weight="1"
-                    android:text="@string/registration_string_signature_reliability_setting"
+                    android:gravity="center_vertical"
+                    android:text="@string/registration_string_signnature"
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
             </LinearLayout>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+                android:id="@+id/btn_regi_sign"
+                style="@style/InverseButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="@string/registration_string_signature_reliability_instruction"
-                android:textSize="@dimen/text_normal"
-                android:theme="@style/Stit"
-                android:visibility="gone"
-                tb:custom_font="noto_regular"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="15dp"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/border_white_three_radius"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:paddingEnd="15dp"
-                android:paddingStart="15dp"
-                android:paddingTop="20dp"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:paddingLeft="8dp">
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:text="0 %"
-                        tb:custom_font="noto_medium"/>
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="50 %"
-                        tb:custom_font="noto_medium"/>
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="100 %"
-                        tb:custom_font="noto_medium"/>
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:layout_width="175dp"
-                        android:layout_height="wrap_content"
-                        android:text="@string/registration_string_complicated_signature"
-                        android:theme="@style/TxtMircro"
-                        tb:custom_font="noto_medium"/>
-
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:text="@string/registration_string_simple_signature"
-                        android:theme="@style/TxtMircro"
-                        tb:custom_font="noto_medium"/>
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_height="46dp"
+                android:text="@string/registration_button_signature_register"
+                app:tb_font="noto_medium"/>
         </LinearLayout>
     </LinearLayout>
 </layout>

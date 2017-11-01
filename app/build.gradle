@@ -75,6 +75,7 @@ dependencies {
     compile project(':log_collector')
     compile project(path: ':finosign')
     compile project(':FinoCr_1.1.4')
+    compile project(':aws_tts')
 }
 
 

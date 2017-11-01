@@ -465,5 +465,6 @@
     <string name="ronaldo_id">Ronaldo의 사진과 생년월일입니다. 이 분이 맞습니까?</string>
     <string name="yes">네</string>
     <string name="ronaldo_signature">Ronaldo의 서명을 해주시기 바랍니다</string>
+    <string name="main_string_v2_greetings">안녕하세요</string>
 </resources>
 

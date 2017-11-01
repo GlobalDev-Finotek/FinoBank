@@ -75,4 +75,5 @@ public class ImageViewBuilder implements ChatView.ViewBuilder<ImageMessage> {
 			binding = DataBindingUtil.bind(itemView);
 		}
 	}
+
 }

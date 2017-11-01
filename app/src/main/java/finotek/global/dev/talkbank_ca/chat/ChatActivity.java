@@ -118,6 +118,7 @@ import finotek.global.dev.talkbank_ca.util.ChatLocationListener;
 import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
+import globaldev.finotek.com.aws_tts.TTSPlayer;
 import globaldev.finotek.com.logcollector.Finopass;
 import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
 import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
@@ -152,7 +153,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View transferView = null;
 
 	private MainScenario_v2 mainScenario;
-
+	private TTSPlayer ttsPlayer;
 	private CapturePicFragment capturePicFragment;
 	private SignRegisterFragment signRegistFragment;
 	private SignValidationFragment transferSignRegistFragment;
@@ -215,6 +216,10 @@ public class ChatActivity extends AppCompatActivity {
 
 		initializeMessageBox();
 
+		// initialize score receiver
+		receiveScore();
+
+		ttsPlayer = new TTSPlayer(this);
 		// register ocr listener
 		LibraryInterface.registerOcrResultLinstener(ocrResultListener);
 	}
@@ -227,6 +232,12 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(getString(R.string.splash_is_auth_agree), false);
+
+		if (msg instanceof ReceiveMessage) {
+			ReceiveMessage sendMessage = (ReceiveMessage) msg;
+			String message = sendMessage.getMessage();
+			ttsPlayer.requestPollyVoice(message);
+		}
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {
             fetchContextLogData(ContextLogType.total);
@@ -254,6 +265,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestTakeAnotherIDCard) {
 			this.prepareForFullScreen();
 			populateCaptureView();
+
 		}
 
 		if (msg instanceof RequestRemoteCall) {
@@ -965,6 +977,7 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void startOcrModule() {
+
 		OcrParam ocrParam = new OcrParam();
 		//촬영 시간
 		ocrParam.setRetrytime(15000);
@@ -977,4 +990,5 @@ public class ChatActivity extends AppCompatActivity {
 
 		LibraryInterface.startOcr(this, "", "", ocrParam);
 	}
+
 }

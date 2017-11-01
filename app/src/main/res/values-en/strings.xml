@@ -465,7 +465,6 @@
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>
-
     <string name="dialog_chat_recognize_error">I do not know what you want. What do you want?</string>
     <string name="brazil_scenario_greeting">Hi Ronaldo, Xx is a bank check authentication service.\nWhat can I do for you?</string>
     <string name="brazil_scenario_request_ronaldo_sign">Please sign Ronaldo\'s signature.</string>

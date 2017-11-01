@@ -439,6 +439,7 @@
     <string name="dialog_chat_contextlog_network_error_title">Warning</string>
     <string name="dialog_chat_contextlog_network_failed">Due to the unstable network, fetching context log is failed.\nPlease try again later.</string>
     <string name="dialog_chat_contextlog_fetching">Fetching context log data, please wait for a second.</string>
+
     <string name="dialog_chat_contextlog_result_message">-%1$s</string>
     <string name="dialog_chat_contextlog_result">Searched data from 30 minutes ago to current time</string>
     <string name="dialog_chat_contextlog_location">Location history</string>

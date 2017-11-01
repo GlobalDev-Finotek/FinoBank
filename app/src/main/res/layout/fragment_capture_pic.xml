@@ -8,7 +8,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <finotek.global.dev.talkbank_ca.widget.AutoFitTextureView
+        <finotek.global.dev.brazil.widget.AutoFitTextureView
             android:id="@+id/texture_cam"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
@@ -81,7 +81,7 @@
 
         </RelativeLayout>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:id="@+id/tv_inst"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -46,7 +46,7 @@
                         android:scaleX="-1"
                         app:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
                 android:layout_marginStart="16dp"
                 android:orientation="horizontal">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="46dp"
                     android:layout_marginTop="3dp"
@@ -76,7 +76,7 @@
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:layout_marginLeft="7dp"
@@ -97,7 +97,7 @@
                 android:layout_marginStart="16dp"
                 android:orientation="horizontal">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="46dp"
                     android:layout_marginTop="3dp"
@@ -109,7 +109,7 @@
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:layout_marginLeft="7dp"
@@ -130,7 +130,7 @@
                 android:layout_marginStart="16dp"
                 android:orientation="horizontal">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="46dp"
                     android:layout_marginTop="3dp"
@@ -142,7 +142,7 @@
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="match_parent"
                     android:layout_height="46dp"
                     android:layout_marginLeft="7dp"
@@ -158,7 +158,7 @@
                 layout="@layout/component_pincode"/>
         </LinearLayout>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+        <finotek.global.dev.brazil.widget.TalkBankButton
             android:id="@+id/btn_save"
             style="@style/RoundButton"
             android:layout_width="match_parent"

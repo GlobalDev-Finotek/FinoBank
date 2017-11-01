@@ -20,7 +20,7 @@
             android:background="@android:color/white"
             android:padding="15dp">
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <finotek.global.dev.brazil.widget.TalkBankTextView
                 android:id="@+id/btn_loan_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 android:textColor="@color/dark_100"
                 android:textSize="@dimen/text_normal"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/btn_loan_service_preview"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
@@ -46,7 +46,7 @@
                 android:textSize="@dimen/text_small"
                 app:tb_font="noto_regular"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/bnt_loan_service_save"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="60dp"
@@ -73,7 +73,7 @@
             android:background="@android:color/white"
             android:padding="15dp">
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <finotek.global.dev.brazil.widget.TalkBankTextView
                 android:id="@+id/btn_credit_inform_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                 android:textColor="@color/dark_100"
                 android:textSize="@dimen/text_normal"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/btn_credit_inform_preview"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                 android:textSize="@dimen/text_small"
                 app:tb_font="noto_regular"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/btn_credit_infor_save"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="60dp"
@@ -126,7 +126,7 @@
             android:background="@android:color/white"
             android:padding="15dp">
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <finotek.global.dev.brazil.widget.TalkBankTextView
                 android:id="@+id/btn_loan_transaction_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -136,7 +136,7 @@
                 android:textColor="@color/dark_100"
                 android:textSize="@dimen/text_normal"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/btn_loan_transaction_preview"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
@@ -152,7 +152,7 @@
                 android:textSize="@dimen/text_small"
                 app:tb_font="noto_regular"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/btn_loan_transaction_save"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="60dp"
@@ -177,7 +177,7 @@
             android:background="@android:color/white"
             android:padding="15dp">
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <finotek.global.dev.brazil.widget.TalkBankTextView
                 android:id="@+id/btn_contract_inform_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -187,7 +187,7 @@
                 android:textColor="@color/dark_100"
                 android:textSize="@dimen/text_normal"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/btn_contract_inform_preview"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="wrap_content"
@@ -203,7 +203,7 @@
                 android:textSize="@dimen/text_small"
                 app:tb_font="noto_regular"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            <finotek.global.dev.brazil.widget.TalkBankButton
                 android:id="@+id/btn_contract_inform_save"
                 style="?android:attr/borderlessButtonStyle"
                 android:layout_width="60dp"

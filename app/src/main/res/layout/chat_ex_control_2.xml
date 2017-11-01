@@ -11,7 +11,7 @@
         android:paddingEnd="16dp"
         android:paddingStart="16dp">
 
-        <finotek.global.dev.talkbank_ca.widget.IconButton
+        <finotek.global.dev.brazil.widget.IconButton
             android:id="@+id/btn_loan"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
@@ -24,7 +24,7 @@
             app:iconPadding="0dp"
             app:tb_font="noto_medium"/>
 
-        <finotek.global.dev.talkbank_ca.widget.IconButton
+        <finotek.global.dev.brazil.widget.IconButton
             android:id="@+id/btn_setting"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
@@ -38,7 +38,7 @@
             app:iconPadding="0dp"
             app:tb_font="noto_medium"/>
 
-        <finotek.global.dev.talkbank_ca.widget.IconButton
+        <finotek.global.dev.brazil.widget.IconButton
             android:id="@+id/btn_send_email"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"

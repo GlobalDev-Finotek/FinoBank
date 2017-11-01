@@ -30,7 +30,7 @@
                 android:contentDescription="Finotek Logo"
                 app:srcCompat="@drawable/logo_finobank"/>
 
-            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+            <finotek.global.dev.brazil.widget.TalkBankTextView
                 android:id="@+id/tv_copyright"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

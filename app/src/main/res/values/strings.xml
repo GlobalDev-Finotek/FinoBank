@@ -464,4 +464,5 @@
     <string name="brazil_scenario_ronaldo_signature">Please sign Ronaldo.</string>
     <string name="brazil_scenario_try_again">Please try signing Ronaldo\'s signature again.</string>
     <string name="brazil_scenario_signature_verified">Your signature has been verified as yours.\nThank you.</string>
+    <string name="main_string_v2_greetings">Bem-vindo. Este é serviço de autenticação de cheque de Xx banco. Em que posso ser útil?</string>
 </resources>

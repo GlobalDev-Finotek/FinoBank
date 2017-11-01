@@ -28,7 +28,7 @@
             android:tint="@color/dark_70"
             android:visibility="gone"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:id="@+id/tv_key"
             android:layout_width="match_parent"
             android:layout_height="80dp"

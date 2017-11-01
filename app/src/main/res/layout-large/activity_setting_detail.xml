@@ -8,7 +8,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="finotek.global.dev.talkbank_ca.setting.SettingDetailActivity">
+        tools:context="finotek.global.dev.brazil.setting.SettingDetailActivity">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -47,13 +47,13 @@
                         android:scaleX="-1"
                         tb:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@id/ib_back"
-                        android:layout_marginStart="0dp"
                         android:layout_centerVertical="true"
+                        android:layout_marginStart="0dp"
+                        android:layout_toEndOf="@id/ib_back"
                         android:theme="@style/Header"
                         tb:custom_font="noto_medium"/>
 

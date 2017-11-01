@@ -39,13 +39,13 @@
                     android:scaleX="-1"
                     app:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@id/ib_back"
-                    android:layout_marginStart="15dp"
                     android:layout_centerVertical="true"
+                    android:layout_marginStart="15dp"
+                    android:layout_toEndOf="@id/ib_back"
                     android:text="@string/registration_string_profile_register"
                     android:theme="@style/Header"
                     tb:custom_font="noto_medium"/>
@@ -75,7 +75,7 @@
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="44dp"
                     android:gravity="center_vertical"
@@ -84,7 +84,7 @@
                     android:theme="@style/Stit"
                     tb:custom_font="noto_medium"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:id="@+id/tv_inst"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

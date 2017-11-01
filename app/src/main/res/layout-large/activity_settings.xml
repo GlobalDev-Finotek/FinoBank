@@ -45,7 +45,7 @@
                         android:scaleX="-1"
                         tb:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -74,7 +74,7 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:id="@+id/talkBankTextView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -105,7 +105,7 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -135,7 +135,7 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
@@ -166,7 +166,7 @@
                     android:orientation="horizontal"
                     android:padding="10dp">
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"

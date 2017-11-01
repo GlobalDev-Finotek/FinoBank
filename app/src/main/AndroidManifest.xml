@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="finotek.global.dev.talkbank_ca">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="finotek.global.dev.brazil">
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -25,15 +25,15 @@
         android:required="false"/>
 
     <application
-        android:name=".app.MyApplication"
+        android:name="finotek.global.dev.brazil.app.MyApplication"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:label="BrazilCheck"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        tools:replace="android:icon,android:allowBackup">
+        tools:replace="android:icon,android:allowBackup,android:label">
         <activity
-            android:name=".SplashActivity"
+            android:name="finotek.global.dev.brazil.SplashActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
@@ -44,65 +44,65 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".user.UserRegistrationActivity"
+            android:name="finotek.global.dev.brazil.user.UserRegistrationActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".user.sign.SignRegistrationActivity"
+            android:name="finotek.global.dev.brazil.user.sign.SignRegistrationActivity"
             android:configChanges="orientation|screenSize|keyboardHidden">
         </activity>
         <activity
-            android:name=".user.profile.CaptureProfilePicActivity"
+            android:name="finotek.global.dev.brazil.user.profile.CaptureProfilePicActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".user.PinRegistrationActivity"
+            android:name="finotek.global.dev.brazil.user.PinRegistrationActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".user.PinChangeActivity"
+            android:name="finotek.global.dev.brazil.user.PinChangeActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".user.credit.CreditRegistrationActivity"
+            android:name="finotek.global.dev.brazil.user.credit.CreditRegistrationActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".setting.SettingsActivity"
+            android:name="finotek.global.dev.brazil.setting.SettingsActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".setting.SettingDetailActivity"
+            android:name="finotek.global.dev.brazil.setting.SettingDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".MainActivity"
+            android:name="finotek.global.dev.brazil.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar.FullScreen">
         </activity>
         <activity
-            android:name=".chat.ChatActivity"
+            android:name="finotek.global.dev.brazil.chat.ChatActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="FinoBank"
             android:windowSoftInputMode="adjustResize">
         </activity>
-        <activity android:name=".chat.TransactionViewMoreActivity">
+        <activity android:name="finotek.global.dev.brazil.chat.TransactionViewMoreActivity">
         </activity>
         <activity android:name="com.finotek.finocr.activity.RecogCameraActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="landscape" />
 
         <service
-            android:name=".TalkBankMessageService">
+            android:name="finotek.global.dev.brazil.TalkBankMessageService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name=".TalkBankInstanceIdService">
+            android:name="finotek.global.dev.brazil.TalkBankInstanceIdService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
         <service
-            android:name=".chat.messages.context.ContextLogService">
+            android:name="finotek.global.dev.brazil.chat.messages.context.ContextLogService">
             <intent-filter>
                 <action android:name="chat.message.context.ContextLogService"/>
             </intent-filter>

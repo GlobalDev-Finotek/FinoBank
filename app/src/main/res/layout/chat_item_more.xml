@@ -10,7 +10,7 @@
         android:layout_marginTop="1dp"
         android:background="@android:color/white">
 
-        <finotek.global.dev.talkbank_ca.widget.IconButton
+        <finotek.global.dev.brazil.widget.IconButton
             android:id="@+id/more_button"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"

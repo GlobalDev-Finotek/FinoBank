@@ -1,0 +1,46 @@
+package finotek.global.dev.brazil;
+
+import android.app.Activity;
+import android.content.Intent;
+
+import javax.inject.Inject;
+
+import finotek.global.dev.brazil.base.mvp.BasePresenter;
+import finotek.global.dev.brazil.chat.ChatActivity;
+import finotek.global.dev.brazil.user.UserRegistrationActivity;
+import finotek.global.dev.brazil.util.SharedPrefsHelper;
+
+/**
+ * Created by magyeong-ug on 21/03/2017.
+ */
+
+public class MainPresenterImpl extends BasePresenter<MainView> implements MainPresenter {
+
+	@Inject
+	SharedPrefsHelper sharedPrefsHelper;
+	private Activity activity;
+
+	@Inject
+	MainPresenterImpl(Activity activity) {
+		this.activity = activity;
+	}
+
+	/**
+	 * 사용자 인증 여부에 따른 화면 전환
+	 */
+	@Override
+	public void moveToNextActivity(boolean isFirst) {
+
+		Intent intent;
+
+		if (isFirst) {
+			intent = new Intent(activity, UserRegistrationActivity.class);
+		} else {
+			intent = new Intent(activity, ChatActivity.class);
+		}
+
+		activity.startActivity(intent);
+		activity.finish();
+	}
+
+}

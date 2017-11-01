@@ -38,7 +38,7 @@
                     android:scaleX="-1"
                     app:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:id="@+id/toolbar_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

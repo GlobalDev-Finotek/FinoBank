@@ -32,7 +32,7 @@
             tb:srcCompat="@drawable/vector_drawable_ci_finotek"/>
 
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+        <finotek.global.dev.brazil.widget.TalkBankButton
             android:id="@+id/main_button"
             style="@style/RoundButton"
             android:layout_width="360dp"
@@ -44,7 +44,7 @@
             android:textSize="26sp"
             app:tb_font="noto_medium"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:id="@+id/tv_context_auth_accuracy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,7 +56,7 @@
             android:textAlignment="center"
             />
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

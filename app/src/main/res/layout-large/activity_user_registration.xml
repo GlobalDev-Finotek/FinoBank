@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tb="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="finotek.global.dev.talkbank_ca.user.UserRegistrationActivity">
+        tools:context="finotek.global.dev.brazil.user.UserRegistrationActivity">
 
     <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
@@ -47,7 +47,7 @@
                         android:scaleX="-1"
                         app:srcCompat="@drawable/vector_drawable_btn_back"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:id="@+id/toolbar_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -92,7 +92,7 @@
                             android:paddingBottom="1dp"
                             android:paddingTop="1dp">
 
-                            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            <finotek.global.dev.brazil.widget.TalkBankTextView
                                 android:id="@+id/talkBankTextView9"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -122,7 +122,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"/>
 
-                            <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                            <finotek.global.dev.brazil.widget.TalkBankTextView
                                 android:id="@+id/textView5"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -133,7 +133,7 @@
                                 tb:custom_font="noto_regular"/>
                         </LinearLayout>
 
-                        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+                        <finotek.global.dev.brazil.widget.TalkBankButton
                             android:id="@+id/btn_register"
                             style="@style/RoundButton"
                             android:layout_width="match_parent"

@@ -11,11 +11,11 @@
 
         <ImageView
             android:id="@+id/id_card_img"
-            android:src="@drawable/ronaldo"
             android:layout_width="320dp"
             android:layout_height="wrap_content"
+            android:contentDescription="ID Card"
             android:scaleType="fitStart"
-            android:contentDescription="ID Card"  />
+            android:src="@drawable/ronaldo"/>
 
         <TableLayout
             android:id="@+id/id_card_info"
@@ -34,13 +34,13 @@
                 android:layout_marginRight="1dp"
                 android:background="#fff">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     style="@style/table_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_name"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:id="@+id/name"
                     style="@style/table_body"
                     android:layout_width="wrap_content"
@@ -55,13 +55,13 @@
                 android:layout_marginRight="1dp"
                 android:background="#fff">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     style="@style/table_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_birth_date"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:id="@+id/birth_date"
                     style="@style/table_body"
                     android:layout_width="wrap_content"

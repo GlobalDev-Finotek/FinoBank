@@ -4,7 +4,7 @@
 
         <variable
             name="item"
-            type="finotek.global.dev.talkbank_ca.chat.messages.Agreement"/>
+            type="finotek.global.dev.brazil.chat.messages.Agreement"/>
     </data>
 
     <RelativeLayout
@@ -27,7 +27,7 @@
             android:scaleX="1"
             android:scaleY="1"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,7 +6,7 @@
 
         <variable
             name="account"
-            type="finotek.global.dev.talkbank_ca.chat.messages.Account"/>
+            type="finotek.global.dev.brazil.chat.messages.Account"/>
     </data>
 
     <RelativeLayout
@@ -17,7 +17,7 @@
         android:background="@drawable/border_round_gray"
         android:padding="15dp">
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{account.name}"
@@ -25,7 +25,7 @@
             android:textSize="@dimen/text_normal"
             app:custom_font="noto_medium"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -34,7 +34,7 @@
             android:textColor="@color/dark_50"
             android:textSize="10sp"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"

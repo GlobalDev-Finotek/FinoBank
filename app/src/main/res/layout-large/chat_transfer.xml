@@ -25,7 +25,7 @@
                 android:orientation="horizontal"
                 android:padding="14dp">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_balance"
@@ -33,7 +33,7 @@
                     android:textSize="20sp"
                     app:custom_font="noto_medium"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:id="@+id/balance"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -43,7 +43,7 @@
                     android:textSize="16sp"
                     app:custom_font="noto_medium"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -63,7 +63,7 @@
                 android:paddingStart="14dp"
                 android:paddingTop="14dp">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/dialog_string_amount_transfer"
@@ -71,7 +71,7 @@
                     android:textSize="20sp"
                     app:custom_font="noto_medium"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+                <finotek.global.dev.brazil.widget.TalkBankEditText
                     android:id="@+id/edit_money"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -83,7 +83,7 @@
                     android:textColor="@color/coral_pink"
                     android:textSize="18sp"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                <finotek.global.dev.brazil.widget.TalkBankTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
@@ -100,7 +100,7 @@
             android:layout_height="240dp"
             android:orientation="vertical">
 
-            <finotek.global.dev.talkbank_ca.widget.NumberKeyboard
+            <finotek.global.dev.brazil.widget.NumberKeyboard
                 android:id="@+id/gv_keypad"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -109,7 +109,7 @@
                 android:layout_weight="1"
                 android:background="@color/pale_grey"
                 android:numColumns="4">
-            </finotek.global.dev.talkbank_ca.widget.NumberKeyboard>
+            </finotek.global.dev.brazil.widget.NumberKeyboard>
         </RelativeLayout>
     </LinearLayout>
 </layout>

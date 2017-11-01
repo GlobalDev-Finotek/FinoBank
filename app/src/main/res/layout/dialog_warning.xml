@@ -18,7 +18,7 @@
             android:scaleType="fitCenter"
             android:src="@drawable/ic_error_outline_white_24dp"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
             android:textSize="18sp"
             app:custom_font="noto_medium"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+        <finotek.global.dev.brazil.widget.TalkBankTextView
             android:id="@+id/description"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -44,7 +44,7 @@
             android:textColor="@color/dark_70"
             android:textSize="16sp"/>
 
-        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+        <finotek.global.dev.brazil.widget.TalkBankButton
             android:id="@+id/done_btn"
             style="?android:attr/borderlessButtonStyle"
             android:layout_width="120dp"

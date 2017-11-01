@@ -41,7 +41,7 @@
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank01"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/icon1"
@@ -67,7 +67,7 @@
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank02"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/icon2"
@@ -93,7 +93,7 @@
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank03"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/icon3"
@@ -130,7 +130,7 @@
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank04"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/icon4"
@@ -159,7 +159,7 @@
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank05"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/icon5"
@@ -185,7 +185,7 @@
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/icon_stankbank06"/>
 
-                    <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
+                    <finotek.global.dev.brazil.widget.TalkBankTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/icon6"

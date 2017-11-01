@@ -88,7 +88,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+                <finotek.global.dev.brazil.widget.TalkBankButton
                     android:id="@+id/btn_cancel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,7 +98,7 @@
                     android:text="@string/main_button_cancel"
                     android:textColor="@android:color/black"/>
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+                <finotek.global.dev.brazil.widget.TalkBankButton
                     android:id="@+id/btn_ok"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

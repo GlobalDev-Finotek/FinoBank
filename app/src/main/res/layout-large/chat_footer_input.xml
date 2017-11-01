@@ -20,7 +20,7 @@
                 android:layout_weight="9"
                 android:background="@drawable/chat_input_background_large">
 
-                <finotek.global.dev.talkbank_ca.widget.TalkBankEditText
+                <finotek.global.dev.brazil.widget.TalkBankEditText
                     android:id="@+id/chat_edit_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

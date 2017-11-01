@@ -140,8 +140,9 @@
     <string name="dialog_chat_ask_help">Hello %s How may I help you?</string>
     <string name="dialog_button_open_account">Open account</string>
     <string name="dialog_chat_recommandation">Based on the results of %1$s\'s context data analysis, we recommend "TalkBang Smart Account".\n"TalkBang Smart Account" is a product that is used by customers with the same age and consumption patterns as %1$s.\nWould you like to open an account?</string>
-    <string name="dialog_button_yes">sim</string>
+    <string name="dialog_button_yes">Sim</string>
     <string name="dialog_button_no">Não</string>
+    <string name="main_string_v2_greetings">Bem-vindo. Este é serviço de autenticação de cheque de Xx banco. Em que posso ser útil?</string>
     <string name="dialog_chat_cancel_opening_bank">Cancel opening bank account.\n What can I do for you?</string>
     <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license. Please take a picture of your ID card</string>
     <string name="dialog_string_id_card_type">Verification ID type</string>

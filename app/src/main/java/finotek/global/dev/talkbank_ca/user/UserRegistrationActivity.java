@@ -27,14 +27,17 @@ import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.model.UserAdditionalInfo;
 import finotek.global.dev.talkbank_ca.user.credit.CreditRegistrationActivity;
 import finotek.global.dev.talkbank_ca.user.profile.CaptureProfilePicActivity;
+import finotek.global.dev.talkbank_ca.user.sign.SignRegistrationActivity;
 import finotek.global.dev.talkbank_ca.util.TelUtil;
 import finotek.global.dev.talkbank_ca.widget.TalkBankEditText;
 
 public class UserRegistrationActivity extends AppCompatActivity implements UserRegisterView {
 
+	private final int REGISTER_SIGN = 1;
 	@Inject
 	UserRegisterImpl presenter;
 	private ActivityUserRegistrationBinding binding;
+	private boolean isSigned;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +70,10 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 					}
 				});
 
-		RxView.clicks(binding.llRegiAdditional.btnCaptureCreidt)
+		RxView.clicks(binding.llRegiBasic.btnRegiSign)
 				.subscribe(aVoid -> {
-					Intent intent = new Intent(UserRegistrationActivity.this, CreditRegistrationActivity.class);
-					intent.putExtra("nextClass", UserRegistrationActivity.class);
-					startActivity(intent);
+					Intent intent = new Intent(UserRegistrationActivity.this, SignRegistrationActivity.class);
+					startActivityForResult(intent, REGISTER_SIGN);
 				});
 
 
@@ -82,6 +84,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 					intent.putExtra("nextClass", UserRegistrationActivity.class);
 					startActivity(intent);
 				});
+
 
 		binding.btnRegister.setOnClickListener(v -> {
 			if (checkRequiredInformationFilled()) {
@@ -127,7 +130,7 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 		}
 
 		return !isNameEmpty && !isPhoneNumberEmpty && !isEmergencyNumberEmpty
-				&& isRequiredCheck;
+				&& isRequiredCheck && isSigned;
 	}
 
 	private UserAdditionalInfo getAdditionalInfo() {
@@ -157,4 +160,12 @@ public class UserRegistrationActivity extends AppCompatActivity implements UserR
 	}
 
 
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == REGISTER_SIGN) {
+			isSigned = true;
+		}
+
+	}
 }

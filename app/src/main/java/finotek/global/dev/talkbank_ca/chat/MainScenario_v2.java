@@ -45,6 +45,7 @@ import finotek.global.dev.talkbank_ca.chat.scenario.PocketMoney;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
+import finotek.global.dev.talkbank_ca.chat.scenario.ShowUserScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.TravelSaving;
 import finotek.global.dev.talkbank_ca.chat.scenario.TrySignScenario;
@@ -115,19 +116,8 @@ public class MainScenario_v2 {
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
-		scenarioPool.put("recentTransaction", new RecentTransactionScenario(context));
-		scenarioPool.put("transfer", new TransferScenario(context));
-		scenarioPool.put("loan", new LoanScenario(context));
-		scenarioPool.put("account", new AccountScenario_v2(context));
-		scenarioPool.put("sendMail", new SendMailScenario(context));
-		scenarioPool.put("electricityCharge", new ElectricityCharge(context));
-		scenarioPool.put("houseLoan", new HouseLoan(context));
-		scenarioPool.put("travelSaving", new TravelSaving(context));
-		scenarioPool.put("pocketMoney", new PocketMoney(context));
-		scenarioPool.put("contextSearch", new ContextSearch(context));
-		scenarioPool.put("fakeContextSearch", new FakeContextSearch(context));
 		scenarioPool.put("trySignScenario", new TrySignScenario(context));
-		scenarioPool.put("donate", new DonateScenario(context));
+		scenarioPool.put("showId", new ShowUserScenario(context));
 
 		currentScenario = null;
 	}
@@ -141,22 +131,9 @@ public class MainScenario_v2 {
 
 		User user = Realm.getDefaultInstance().where(User.class).findAll().last();
 		if (user != null) {
-			greetingString = context.getResources().getString(R.string.main_string_v2_login_hello, user.getName());
+			greetingString = context.getResources().getString(R.string.main_string_v2_greetings);
 		}
 
-		if (hour >= 6 && 13 > hour) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_M) + "\n";
-
-		} else if (hour >= 12 && 19 > hour) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_L) + "\n";
-
-		} else if (hour >= 18) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_E) + "\n";
-		} else if (hour >= 0 && 7 > hour) {
-			greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_hello_N) + "\n";
-		}
-
-		greetingString = greetingString + context.getResources().getString(R.string.main_string_v2_login_notify_balance, NumberFormat.getInstance().format(TransactionDB.INSTANCE.getMainBalance()));
 
 		return greetingString;
 	}
@@ -164,11 +141,8 @@ public class MainScenario_v2 {
 	private void firstScenario() {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
-		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
 		MessageBox.INSTANCE.addAndWait(
-				new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName())),
-				new ReceiveMessage(getGreetings()),
-				req
+				new ReceiveMessage(getGreetings())
 		);
 
 

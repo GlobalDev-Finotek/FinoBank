@@ -4,7 +4,7 @@ apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    buildToolsVersion '26.0.2'
     defaultConfig {
         applicationId "finotek.global.dev.talkbank_ca_demo"
         minSdkVersion 24
@@ -13,7 +13,11 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
-
+        javaCompileOptions {
+            annotationProcessorOptions {
+                includeCompileClasspath = true
+            }
+        }
     }
 
     aaptOptions {
@@ -71,6 +75,7 @@ dependencies {
     compile project(':log_collector')
     compile project(path: ':finosign')
     compile project(':FinoCr_1.1.4')
+    compile project(':aws_tts')
 }
 
 

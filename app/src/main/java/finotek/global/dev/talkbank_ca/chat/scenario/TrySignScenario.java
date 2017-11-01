@@ -16,6 +16,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -45,23 +46,24 @@ public class TrySignScenario implements Scenario {
 
     @Override
     public boolean decideOn(String msg) {
-        return msg.equals("ㅅㅁㅇㅈ");
+        Realm realm = Realm.getDefaultInstance();
+        User user = realm.where(User.class).findAll().last();
+        return msg.equals("ㅅㅁㅇㅈ") || msg.equals("Verificar a assinatura do ".toLowerCase() + user.getName() + " por favor".toLowerCase());
     }
 
     @Override
     public void onReceive(Object msg) {
         if (msg instanceof SignatureVerified) {
             MessageBox.INSTANCE.addAndWait(
-                    new ReceiveMessage("(demo) 서명 끝"),
-                    new Done(),
-                    new RecommendScenarioMenuRequest(context)
+                new ReceiveMessage("É correto sua assinatura escondida. A verificação está completa."),
+                new Done()
             );
         }
     }
 
     @Override
     public void onUserSend(String msg) {
-        MessageBox.INSTANCE.addAndWait(new RequestSignatureRegister());
+        MessageBox.INSTANCE.addAndWait(new RequestSignatureValidation());
     }
 
     @Override

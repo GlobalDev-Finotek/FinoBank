@@ -159,7 +159,6 @@ public class ChatActivity extends AppCompatActivity {
 	private ChatExtendedControlBinding ecBinding;
 	private ChatTransferBinding ctBinding;
 	private boolean isExControlAvailable = false;
-	private View exControlView = null;
 	private View footerInputs = null;
 	private View transferView = null;
 
@@ -591,16 +590,8 @@ public class ChatActivity extends AppCompatActivity {
 		clearInput();
 	}
 
-	private void expandControlClickEvent() {
-		if (isExControlAvailable)
-			runOnUiThread(this::hideExControl);
-		else
-			runOnUiThread(this::showExControl);
-	}
-
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
 		if (hasFocus) {
-			runOnUiThread(this::hideExControl);
 			runOnUiThread(() -> {
 				binding.chatView.scrollToBottom();
 			});
@@ -623,25 +614,6 @@ public class ChatActivity extends AppCompatActivity {
 		fiBinding.chatEditText.setText("");
 	}
 
-	private void hideExControl() {
-		isExControlAvailable = false;
-		binding.footer.removeView(exControlView);
-		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
-		ivCtrl.animate().rotation(0).setInterpolator(new LinearInterpolator())
-				.setDuration(300);
-
-	}
-
-	private void showExControl() {
-		isExControlAvailable = true;
-		binding.footer.addView(exControlView, 0);
-		ImageView ivCtrl = (ImageView) footerInputs.findViewById(R.id.show_ex_control);
-		ivCtrl.animate().rotation(45).setInterpolator(new LinearInterpolator())
-				.setDuration(300);
-
-		binding.chatView.scrollToBottom();
-	}
-
 	private void preInitControlViews() {
 		Log.d("FINOTEK", "preInitControlViews");
 
@@ -658,13 +630,6 @@ public class ChatActivity extends AppCompatActivity {
 		RxTextView.textChanges(fiBinding.chatEditText)
 				.subscribe(this::chatEditFieldTextChanged);
 
-		RxView.clicks(fiBinding.showExControl)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.delay(100, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					expandControlClickEvent();
-				});
-
 		RxView.clicks(fiBinding.sendButton)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(aVoid -> {
@@ -676,53 +641,6 @@ public class ChatActivity extends AppCompatActivity {
 					if (actionId == EditorInfo.IME_ACTION_DONE || actionId == EditorInfo.IME_ACTION_SEND) {
 						this.onSendButtonClickEvent();
 					}
-				});
-
-		exControlView = inflate(R.layout.chat_extended_control);
-		ecBinding = DataBindingUtil.bind(exControlView);
-
-		// 하단 버튼 설정
-		RxView.clicks(ecBinding.button1)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_open_account), R.drawable.icon_stankbank01));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button2)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_transfer), R.drawable.icon_stankbank02));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button3)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_view_account_details), R.drawable.icon_stankbank03));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button4)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_secured_mirocredit), R.drawable.icon_stankbank04));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button5)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					Intent intent = new Intent(ChatActivity.this, SettingsActivity.class);
-					startActivity(intent);
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button6)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_stankbank06));
-					hideExControl();
 				});
 
 		ctBinding = ChatTransferBinding.bind(transferView);
@@ -803,7 +721,6 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void releaseControls() {
 		dismissKeyboard(fiBinding.chatEditText);
-		hideExControl();
 	}
 
 	private void releaseAllControls() {

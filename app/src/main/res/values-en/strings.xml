@@ -466,4 +466,10 @@
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>
+    <string name="greetings">Bem-vindo. Este é serviço de autenticação de cheque de Xx banco. Em que posso ser útil?</string>
+    <string name="request_ronaldo_sign">Verificar a assinatura do Ronaldo, por favor.</string>
+    <string name="ronaldo_id">Aqui têm do photo e a data do nascimento do Ronaldo. São certo?</string>
+    <string name="yes">Sim, são certo</string>
+    <string name="main_string_v2_greetings">Bem-vindo. Este é serviço de autenticação de cheque de Xx banco. Em que posso ser útil?</string>
+    <string name="ronaldo_signature">Coloque a assinatura de Ronaldo aqui, por favor.</string>
 </resources>

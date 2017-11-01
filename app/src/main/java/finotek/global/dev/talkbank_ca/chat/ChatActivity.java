@@ -124,6 +124,7 @@ import finotek.global.dev.talkbank_ca.util.ChatLocationListener;
 import finotek.global.dev.talkbank_ca.util.ContextAuthPref;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
+import globaldev.finotek.com.aws_tts.TTSPlayer;
 import globaldev.finotek.com.logcollector.Finopass;
 import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
 import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
@@ -164,7 +165,7 @@ public class ChatActivity extends AppCompatActivity {
 	private View transferView = null;
 
 	private MainScenario_v2 mainScenario;
-
+	private TTSPlayer ttsPlayer;
 	private CapturePicFragment capturePicFragment;
 	private SignRegisterFragment signRegistFragment;
 	private SignValidationFragment transferSignRegistFragment;
@@ -230,6 +231,8 @@ public class ChatActivity extends AppCompatActivity {
 		// initialize score receiver
 		receiveScore();
 
+		ttsPlayer = new TTSPlayer(this);
+
 		// register ocr listener
 		LibraryInterface.registerOcrResultLinstener(ocrResultListener);
 	}
@@ -242,6 +245,12 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(getString(R.string.splash_is_auth_agree), false);
+
+		if (msg instanceof ReceiveMessage) {
+			ReceiveMessage sendMessage = (ReceiveMessage) msg;
+			String message = sendMessage.getMessage();
+			ttsPlayer.requestPollyVoice(message);
+		}
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {
             fetchContextLogData(ContextLogType.total);

@@ -388,7 +388,6 @@
     <string name="main_string_recommend_parents_cancle">Request is canceled.</string>
 
     <string name="main_string_recommend_house_yes">Yes, give me a house loan.</string>
-    <string name="splash_is_auth_agree" translatable="false">isContextAuthAgreed</string>
 
     <string name="main_string_recommend_finished">All the recommend tasks are finished. Press \'+\' button .</string>
     <string name="dialog_chat_id_card_retake">Re-taking a picture of your ID card</string>

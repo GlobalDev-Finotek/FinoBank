@@ -11,8 +11,6 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.location.Address;
 import android.location.Geocoder;
@@ -35,15 +33,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import com.finotek.finocr.common.CryptoUtil;
 import com.finotek.finocr.listener.OcrResultLinstener;
 import com.finotek.finocr.manager.LibraryInterface;
 import com.finotek.finocr.vo.OcrParam;
@@ -52,7 +47,6 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.text.NumberFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -75,6 +69,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.EnableToEditMoney;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
 import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureFailed;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
@@ -94,7 +89,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v2;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI_v3;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
@@ -128,11 +122,6 @@ import globaldev.finotek.com.logcollector.Finopass;
 import globaldev.finotek.com.logcollector.api.score.BaseScoreParam;
 import globaldev.finotek.com.logcollector.api.score.ContextScoreResponse;
 import globaldev.finotek.com.logcollector.model.ActionType;
-import globaldev.finotek.com.logcollector.model.ApplicationLog;
-import globaldev.finotek.com.logcollector.model.CallHistoryLog;
-import globaldev.finotek.com.logcollector.model.LocationLog;
-import globaldev.finotek.com.logcollector.model.MessageLog;
-import globaldev.finotek.com.logcollector.model.ValueQueryGenerator;
 import globaldev.finotek.com.logcollector.util.AesInstance;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
@@ -168,6 +157,7 @@ public class ChatActivity extends AppCompatActivity {
 	private SignRegisterFragment signRegistFragment;
 	private SignValidationFragment transferSignRegistFragment;
 	private RemoteCallFragment remoteCallFragment;
+	private int signAcceptCounter = 1;
 
 	private BroadcastReceiver receiver;
 	private boolean isFirstAuth = true;
@@ -176,7 +166,6 @@ public class ChatActivity extends AppCompatActivity {
 		public void onOcrSuccess(OcrResult ocrResult) {
 			LibraryInterface.setOcrResult(ocrResult);
 			MessageBox.INSTANCE.addAndWait(
-					getIdCardInfo(ocrResult),
 					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 			);
 
@@ -225,9 +214,6 @@ public class ChatActivity extends AppCompatActivity {
 		});
 
 		initializeMessageBox();
-
-		// initialize score receiver
-		receiveScore();
 
 		// register ocr listener
 		LibraryInterface.registerOcrResultLinstener(ocrResultListener);
@@ -401,26 +387,38 @@ public class ChatActivity extends AppCompatActivity {
 
 									dialog.dismiss();
 
-									returnToInitialControl();
-
 									binding.chatView.scrollToBottom();
 									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
 								});
 								dialog.showWithRatio(0.50f);
 							} else {
-								transferSignRegistFragment.init();
-								MessageBox.INSTANCE.addAndWait(new RequestSignatureValidation());
-								WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
-								warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
-								warningDialog.setButtonText(getString(R.string.setting_string_re_try));
-								warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
-										.observeOn(AndroidSchedulers.mainThread())
-										.subscribe(aLong -> warningDialog.dismiss()));
+								if(signAcceptCounter <= 5) {
+									transferSignRegistFragment.init();
+									MessageBox.INSTANCE.addAndWait(new RequestSignatureValidation());
+									WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
+									warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+									warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+									warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
+											.observeOn(AndroidSchedulers.mainThread())
+											.subscribe(aLong -> warningDialog.dismiss()));
 
-								warningDialog.show();
+									warningDialog.show();
 
+									signAcceptCounter++;
+								} else {
+									signAcceptCounter = 1;
+									MessageBox.INSTANCE.add(new SignatureFailed());
+									returnToInitialControl();
 
+									showAppBar();
+									showStatusBar();
+
+									FragmentTransaction transaction = getFragmentManager().beginTransaction();
+									transaction.remove(transferSignRegistFragment).commit();
+
+									binding.chatView.scrollToBottom();
+									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+								}
 							}
 
 
@@ -551,7 +549,6 @@ public class ChatActivity extends AppCompatActivity {
 		FragmentTransaction tx = getFragmentManager().beginTransaction();
 		capturePicFragment.takePicture(path -> {
 			MessageBox.INSTANCE.addAndWait(
-					getIdCardInfo(LibraryInterface.getOcrResult()),
 					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
 			);
 
@@ -945,13 +942,6 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		return currentLocation;
-	}
-
-	private IDCardInfo getIdCardInfo(OcrResult ocrResult) {
-		byte[] idcardImage = ocrResult.getIdcardImg();
-		Bitmap image = BitmapFactory.decodeByteArray(idcardImage, 0, idcardImage.length);
-		String type = (ocrResult.getIdcardType().equals("1")) ? "주민등록증" : "운전면허증";
-		return new IDCardInfo(type, ocrResult.getName(), CryptoUtil.transJuminStr(ocrResult.getIdcardNum()), ocrResult.getIssueDate(), image);
 	}
 
 	private ChatComponent getComponent() {

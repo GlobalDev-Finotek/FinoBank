@@ -28,7 +28,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
-import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
 import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
 import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
@@ -93,7 +92,6 @@ public class MainScenario {
 		scenarioPool.put("recentTransaction", new RecentTransactionScenario(context));
 		scenarioPool.put("transfer", new TransferScenario(context));
 		scenarioPool.put("loan", new LoanScenario(context));
-		scenarioPool.put("account", new AccountScenario_v2(context));
 		scenarioPool.put("sendMail", new SendMailScenario(context));
 		scenarioPool.put("contextSearch", new ContextSearch(context));
 

@@ -147,7 +147,7 @@
     <string name="dialog_string_id_card_type">Verification ID type</string>
     <string name="dialog_string_name">Name</string>
     <string name="dialog_string_id_number">ID numbers</string>
-    <string name="dialog_string_date_issued">Date issued</string>
+    <string name="dialog_string_birth_date">Birth Date</string>
     <string name="dialog_string_license_number">Driver\'s license number</string>
     <string name="dialog_chat_correct_information">Is the above information correct?</string>
     <string name="dialog_chat_id_housed_retake">Re-taking a picture of your ID card</string>
@@ -258,7 +258,6 @@
     <string name="setting_string_pin_code_type">Type new PIN code</string>
     <string name="setting_string_profile_picture">Authentication picture</string>
     <string name="dialog_string_input_message">Please input a message.</string>
-    <string name="dialog_chat_recognize_error">If you do not have the menu you want, press \'+\' button to select the menu</string>
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
     <string name="dialog_string_email_sent">An email has been sent.</string>
     <string name="dialog_string_email_cancel">Cancel</string>
@@ -453,13 +452,15 @@
     <string name="dialog_chat_bank_select_cancel">Cancel</string>
     <string name="dialog_chat_bank_select_main">HAPPY BANK : 123-244-33334</string>
     <string name="dialog_chat_before_transfer">I found out your preferred account   HAPPY BANK : 123-244-33334.  Are you going to use this account for transfer?</string>
-    <string name="main_string_v2_greetings">Bem-vindo. Este é serviço de autenticação de cheque de Xx banco. Em que posso ser útil?</string>
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>
-    <string name="greetings">Bem-vindo. Este é serviço de autenticação de cheque de Xx banco. Em que posso ser útil?</string>
-    <string name="request_ronaldo_sign">Verificar a assinatura do Ronaldo, por favor.</string>
-    <string name="ronaldo_id">Aqui têm do photo e a data do nascimento do Ronaldo. São certo?</string>
-    <string name="yes">Sim, são certo</string>
-    <string name="ronaldo_signature">Coloque a assinatura de Ronaldo aqui, por favor.</string>
+
+    <string name="dialog_chat_recognize_error">I do not know what you want. What do you want?</string>
+    <string name="brazil_scenario_greeting">Hi Ronaldo, Xx is a bank check authentication service.\nWhat can I do for you?</string>
+    <string name="brazil_scenario_request_ronaldo_sign">Please sign Ronaldo\'s signature.</string>
+    <string name="brazil_scenario_ronaldo_id">Ronaldo\'s picture and date of birth. Is this you?</string>
+    <string name="brazil_scenario_ronaldo_signature">Please sign Ronaldo.</string>
+    <string name="brazil_scenario_try_again">Please try signing Ronaldo\'s signature again.</string>
+    <string name="brazil_scenario_signature_verified">Your signature has been verified as yours.\nThank you.</string>
 </resources>

@@ -3,14 +3,12 @@ package finotek.global.dev.talkbank_ca.chat;
 import android.content.Context;
 import android.text.format.DateFormat;
 
-import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import finotek.global.dev.talkbank_ca.R;
-import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountConfirm;
 import finotek.global.dev.talkbank_ca.chat.messages.AccountList;
 import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
@@ -29,29 +27,14 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.DonateRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
-import finotek.global.dev.talkbank_ca.chat.scenario.AccountScenario_v2;
-import finotek.global.dev.talkbank_ca.chat.scenario.ContextSearch;
-import finotek.global.dev.talkbank_ca.chat.scenario.DonateScenario;
-import finotek.global.dev.talkbank_ca.chat.scenario.ElectricityCharge;
-import finotek.global.dev.talkbank_ca.chat.scenario.FakeContextSearch;
-import finotek.global.dev.talkbank_ca.chat.scenario.HouseLoan;
 import finotek.global.dev.talkbank_ca.chat.scenario.LeftScenario;
-import finotek.global.dev.talkbank_ca.chat.scenario.LoanScenario;
-import finotek.global.dev.talkbank_ca.chat.scenario.PocketMoney;
-import finotek.global.dev.talkbank_ca.chat.scenario.RecentTransactionScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.Scenario;
-import finotek.global.dev.talkbank_ca.chat.scenario.SendMailScenario;
 import finotek.global.dev.talkbank_ca.chat.scenario.ShowUserScenario;
-import finotek.global.dev.talkbank_ca.chat.scenario.TransferScenario;
-import finotek.global.dev.talkbank_ca.chat.scenario.TravelSaving;
-import finotek.global.dev.talkbank_ca.chat.scenario.TrySignScenario;
-import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
+import finotek.global.dev.talkbank_ca.chat.scenario.BrazilSignScenario;
 import finotek.global.dev.talkbank_ca.chat.view.ChatView;
-import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.util.DateUtil;
 import io.reactivex.Observable;
@@ -116,7 +99,7 @@ public class MainScenario_v2 {
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
-		scenarioPool.put("trySignScenario", new TrySignScenario(context));
+		scenarioPool.put("trySignScenario", new BrazilSignScenario(context));
 		scenarioPool.put("showId", new ShowUserScenario(context));
 
 		currentScenario = null;
@@ -131,7 +114,7 @@ public class MainScenario_v2 {
 
 		User user = Realm.getDefaultInstance().where(User.class).findAll().last();
 		if (user != null) {
-			greetingString = context.getResources().getString(R.string.main_string_v2_greetings);
+			greetingString = context.getResources().getString(R.string.brazil_scenario_greeting);
 		}
 
 
@@ -141,13 +124,8 @@ public class MainScenario_v2 {
 	private void firstScenario() {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 
-		MessageBox.INSTANCE.addAndWait(
-				new ReceiveMessage(getGreetings())
-		);
-
-
+		MessageBox.INSTANCE.addAndWait(new ReceiveMessage(getGreetings()));
 	}
-
 
 	private void onRequest(Object msg) {
 		if (msg instanceof SendMessage) {

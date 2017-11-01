@@ -42,11 +42,8 @@ public class IDCardViewBuilder implements ChatView.ViewBuilder<IDCardInfo> {
 		IDCardViewHolder holder = (IDCardViewHolder) viewHolder;
 
 		holder.binding.idCardInfo.setVisibility(View.VISIBLE);
-		holder.binding.cardType.setText(data.getType());
 		holder.binding.name.setText(data.getName());
-		holder.binding.jumin.setText(data.getJumin());
-		holder.binding.issueDate.setText(data.getIssueDate());
-		holder.binding.idCardImg.setImageBitmap(data.getImage());
+		holder.binding.birthDate.setText(data.getBirthDate());
 	}
 
 	@Override

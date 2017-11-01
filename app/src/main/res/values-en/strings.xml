@@ -148,7 +148,7 @@
     <string name="dialog_string_id_housed_type">Verification ID type</string>
     <string name="dialog_string_name">Name</string>
     <string name="dialog_string_id_number">ID numbers</string>
-    <string name="dialog_string_date_issued">Date issued</string>
+    <string name="dialog_string_birth_date">Birth Date</string>
     <string name="dialog_string_license_number">Driver\'s license number</string>
     <string name="dialog_chat_correct_information">Is the above information correct?</string>
     <string name="dialog_chat_id_housed_retake">Re-taking a picture of your ID card</string>
@@ -275,7 +275,6 @@
     <string name="setting_string_pin_code_type">Type new PIN code</string>
     <string name="setting_string_profile_picture">Authentication picture</string>
     <string name="dialog_string_input_message">Please input a message.</string>
-    <string name="dialog_chat_recognize_error">If you do not have the menu you want, press \'+\' button to select the menu</string>
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
     <string name="dialog_string_email_sent">An email has been sent.</string>
     <string name="dialog_string_email_cancel">Cancel</string>
@@ -466,4 +465,12 @@
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>
+
+    <string name="dialog_chat_recognize_error">I do not know what you want. What do you want?</string>
+    <string name="brazil_scenario_greeting">Hi Ronaldo, Xx is a bank check authentication service.\nWhat can I do for you?</string>
+    <string name="brazil_scenario_request_ronaldo_sign">Please sign Ronaldo\'s signature.</string>
+    <string name="brazil_scenario_ronaldo_id">Ronaldo\'s picture and date of birth. Is this you?</string>
+    <string name="brazil_scenario_ronaldo_signature">Please sign Ronaldo.</string>
+    <string name="brazil_scenario_try_again">Please try signing Ronaldo\'s signature again.</string>
+    <string name="brazil_scenario_signature_verified">Your signature has been verified as yours.\nThank you.</string>
 </resources>

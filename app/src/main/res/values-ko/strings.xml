@@ -146,7 +146,7 @@
     <string name="dialog_string_id_housed_type">신분증 유형</string>
     <string name="dialog_string_name">이름</string>
     <string name="dialog_string_id_number">주민등록번호</string>
-    <string name="dialog_string_date_issued">발급일자</string>
+    <string name="dialog_string_birth_date">생년월일</string>
     <string name="dialog_string_license_number">운전면허번호</string>
     <string name="dialog_chat_correct_information">위 내용이 맞으세요?</string>
     <string name="dialog_chat_id_housed_retake">신분증 촬영을 다시 진행합니다.</string>
@@ -272,7 +272,6 @@
     <string name="setting_string_pin_code_type">변경할 PIN 코드 입력</string>
     <string name="setting_string_profile_picture">인증 사진</string>
     <string name="dialog_string_input_message">메세지를 입력해주세요.</string>
-    <string name="dialog_chat_recognize_error">원하시는 메뉴가 없으시면, + 버튼을 눌러주세요.</string>
     <string name="dialog_chat_receive_email">상담 내역을 이메일로 받아보시겠습니까?</string>
     <string name="dialog_string_email_sent">전송되었습니다.</string>
     <string name="dialog_string_email_cancel">취소되었습니다.</string>
@@ -460,10 +459,14 @@
     <string name="app_network_status_title">네트워크 에러</string>
     <string name="app_network_not_connected">네트워크에 연결되어 있지 않습니다.</string>
     <string name="app_network_dialog_confirm">확인</string>
+
+    <string name="dialog_chat_recognize_error">무엇을 원하시는지 잘 모르겠어요. 무엇을 원하세요?</string>
+    <string name="brazil_scenario_greeting">안녕하세요. Xx은행 수표 인증 서비스입니다.\n무엇을 도와드릴까요?</string>
     <string name="greetings">안녕하세요. Xx은행 수표 인증 서비스입니다. 무엇을 도와드릴까요</string>
-    <string name="request_ronaldo_sign">Ronaldo 의 서명을 인증해줘</string>
-    <string name="ronaldo_id">Ronaldo의 사진과 생년월일입니다. 이 분이 맞습니까?</string>
-    <string name="yes">네</string>
-    <string name="ronaldo_signature">Ronaldo의 서명을 해주시기 바랍니다</string>
+    <string name="brazil_scenario_request_ronaldo_sign">Ronaldo 의 서명을 인증해줘</string>
+    <string name="brazil_scenario_ronaldo_id">Ronaldo의 사진과 생년월일입니다. 이 분이 맞습니까?</string>
+    <string name="brazil_scenario_ronaldo_signature">Ronaldo의 서명을 해주시기 바랍니다</string>
+    <string name="brazil_scenario_try_again">Ronaldo씨의 서명인증을 다시 시도해주세요.</string>
+    <string name="brazil_scenario_signature_verified">서명이 본인의 것으로 확인되었습니다.감사합니다.</string>
 </resources>
 

@@ -11,37 +11,20 @@
 
         <ImageView
             android:id="@+id/id_card_img"
+            android:src="@drawable/ronaldo"
             android:layout_width="320dp"
-            android:layout_height="250dp"
-            android:contentDescription="ID Card"
-            android:scaleType="fitCenter"/>
+            android:layout_height="wrap_content"
+            android:scaleType="fitStart"
+            android:contentDescription="ID Card"  />
 
         <TableLayout
             android:id="@+id/id_card_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="#E5E4E4"
             android:orientation="vertical"
             android:visibility="gone">
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="1dp"
-                android:background="#fff">
-
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    style="@style/table_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dialog_string_id_card_type"/>
-
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    android:id="@+id/card_type"
-                    style="@style/table_body"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </TableRow>
 
             <TableRow
                 android:layout_width="match_parent"
@@ -76,31 +59,10 @@
                     style="@style/table_head"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/dialog_string_id_number"/>
+                    android:text="@string/dialog_string_birth_date"/>
 
                 <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    android:id="@+id/jumin"
-                    style="@style/table_body"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="1dp"
-                android:layout_marginLeft="1dp"
-                android:layout_marginRight="1dp"
-                android:background="#fff">
-
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    style="@style/table_head"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/dialog_string_date_issued"/>
-
-                <finotek.global.dev.talkbank_ca.widget.TalkBankTextView
-                    android:id="@+id/issue_date"
+                    android:id="@+id/birth_date"
                     style="@style/table_body"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>

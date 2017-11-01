@@ -13,9 +13,7 @@ public class RecommendScenarioMenuRequest extends RecoMenuRequest {
 		if (!LeftScenario.scenarioList.isEmpty()) {
 			Realm realm = Realm.getDefaultInstance();
 			User user = realm.where(User.class).findAll().last();
-			setDescription(context.getResources().getString(R.string.main_string_v2_greetings));
-
-
+			setDescription(context.getResources().getString(R.string.brazil_scenario_greeting));
 		} else {
 			setDescription(context.getResources().getString(R.string.main_string_recommend_finished));
 		}

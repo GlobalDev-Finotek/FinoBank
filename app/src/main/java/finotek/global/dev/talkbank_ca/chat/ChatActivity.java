@@ -62,13 +62,8 @@ import javax.inject.Inject;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
 import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextLogService;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
-import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogReceiver;
+import finotek.global.dev.talkbank_ca.chat.ContextLog.ContextLogType;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RemoteCallCompleted;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -83,7 +78,13 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextLocation;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextLogService;
 import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextSms;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.context.CurrentAddressReceived;
 import finotek.global.dev.talkbank_ca.chat.messages.context.RequestCurrentAddress;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
@@ -97,8 +98,8 @@ import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestPhoto;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureRegister;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignatureValidation;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
@@ -108,7 +109,6 @@ import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
-import finotek.global.dev.talkbank_ca.model.User;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.AgreementPdfViewDialog;
@@ -138,7 +138,6 @@ import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetter;
 import globaldev.finotek.com.logcollector.util.userinfo.UserInfoGetterImpl;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.realm.Realm;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
 public class ChatActivity extends AppCompatActivity {
@@ -173,7 +172,25 @@ public class ChatActivity extends AppCompatActivity {
 
 	private BroadcastReceiver receiver;
 	private boolean isFirstAuth = true;
+	private OcrResultLinstener ocrResultListener = new OcrResultLinstener() {
+		@Override
+		public void onOcrSuccess(OcrResult ocrResult) {
+			LibraryInterface.setOcrResult(ocrResult);
+			MessageBox.INSTANCE.addAndWait(
+					getIdCardInfo(ocrResult),
+					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+			);
 
+			ocrResult.clear();
+		}
+
+		@Override
+		public void onOcrFail() {
+			MessageBox.INSTANCE.addAndWait(new Done(),
+					new ReceiveMessage(getResources().getString(R.string.dialog_chat_ocr_failed)),
+					new RecommendScenarioMenuRequest(getApplicationContext()));
+		}
+	};
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -208,6 +225,8 @@ public class ChatActivity extends AppCompatActivity {
 				binding.chatView.scrollToBottom();
 		});
 
+		initializeMessageBox();
+
 		// initialize score receiver
 		receiveScore();
 
@@ -225,82 +244,32 @@ public class ChatActivity extends AppCompatActivity {
 		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE).getBoolean(getString(R.string.splash_is_auth_agree), false);
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "totalLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.total);
 		}
 
 		if (msg instanceof ContextSms && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "smsLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.sms);
 		}
 
 		if (msg instanceof ContextCall && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "callLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.call);
 		}
 		if (msg instanceof ContextLocation && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "locationLog");
-			startService(intent);
+            fetchContextLogData(ContextLogType.location);
 		}
 		if (msg instanceof ContextApp && isContextAuthAgreed) {
-			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "appLog");
-			startService(intent);
+			fetchContextLogData(ContextLogType.app);
 		}
 
 		if (msg instanceof RequestPhoto) {
 			this.prepareForFullScreen();
-
-			View captureView = inflate(R.layout.chat_capture);
-			binding.footer.addView(captureView);
-			capturePicFragment = CapturePicFragment.newInstance();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.addAndWait(
-						getIdCardInfo(LibraryInterface.getOcrResult()),
-						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-				);
-
-				showAppBar();
-				showStatusBar();
-				this.returnToInitialControl();
-
-				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				transaction.remove(capturePicFragment).commit();
-			});
-
-			tx.replace(R.id.chat_capture, capturePicFragment);
-			tx.commit();
+			populateCaptureView();
 		}
 
 		if (msg instanceof RequestTakeAnotherIDCard) {
 			this.prepareForFullScreen();
+			populateCaptureView();
 
-			View captureView = inflate(R.layout.chat_capture);
-			binding.footer.addView(captureView);
-			capturePicFragment = CapturePicFragment.newInstance();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			capturePicFragment.takePicture(path -> {
-				MessageBox.INSTANCE.addAndWait(
-						new ImageMessage(path),
-						RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-				);
-				this.returnToInitialControl();
-				showAppBar();
-				showStatusBar();
-
-				FragmentTransaction transaction = getFragmentManager().beginTransaction();
-				transaction.remove(capturePicFragment).commit();
-
-				binding.chatView.scrollToBottom();
-			});
-
-			tx.replace(R.id.chat_capture, capturePicFragment);
-			tx.commit();
 		}
 
 		if (msg instanceof RequestRemoteCall) {
@@ -365,25 +334,25 @@ public class ChatActivity extends AppCompatActivity {
 							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
 							dialog.setDescription(getString(R.string.registration_string_register_success));
 							dialog.setTitle(getString(R.string.setting_string_registered_signature));
-								dialog.setButtonText(getString(R.string.setting_string_yes));
-								dialog.setDoneListener(() -> {
-									MessageBox.INSTANCE.add(new SignatureVerified());
-									returnToInitialControl();
+							dialog.setButtonText(getString(R.string.setting_string_yes));
+							dialog.setDoneListener(() -> {
+								MessageBox.INSTANCE.add(new SignatureVerified());
+								returnToInitialControl();
 
-									showAppBar();
-									showStatusBar();
+								showAppBar();
+								showStatusBar();
 
-									FragmentTransaction transaction = getFragmentManager().beginTransaction();
-									transaction.remove(signRegistFragment).commit();
+								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+								transaction.remove(signRegistFragment).commit();
 
-									dialog.dismiss();
+								dialog.dismiss();
 
-									returnToInitialControl();
+								returnToInitialControl();
 
-									binding.chatView.scrollToBottom();
-									setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-								});
-								dialog.showWithRatio(0.50f);
+								binding.chatView.scrollToBottom();
+								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+							});
+							dialog.showWithRatio(0.50f);
 
 						}, throwable -> {
 							Log.d("Sign Register", throwable.getMessage());
@@ -417,7 +386,7 @@ public class ChatActivity extends AppCompatActivity {
 						.subscribe(i -> {
 							loadingDialog.dismiss();
 
-							if (similarity / 100 > 30) {
+							if (similarity / 100 > 70) {
 								SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
 								dialog.setTitle(getString(R.string.setting_string_signature_verified));
 								dialog.setDescription(getString(R.string.setting_string_authentication_complete));
@@ -537,7 +506,7 @@ public class ChatActivity extends AppCompatActivity {
 
 		if (msg instanceof ShowPdfView) {
 			ShowPdfView action = (ShowPdfView) msg;
-		    AgreementPdfViewDialog dialog = new AgreementPdfViewDialog(this);
+			AgreementPdfViewDialog dialog = new AgreementPdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();
@@ -575,6 +544,29 @@ public class ChatActivity extends AppCompatActivity {
 			CurrentAddressReceived send = new CurrentAddressReceived(address);
 			MessageBox.INSTANCE.add(send);
 		}
+	}
+
+	private void populateCaptureView() {
+		View captureView = inflate(R.layout.chat_capture);
+		binding.footer.addView(captureView);
+		capturePicFragment = CapturePicFragment.newInstance();
+		FragmentTransaction tx = getFragmentManager().beginTransaction();
+		capturePicFragment.takePicture(path -> {
+			MessageBox.INSTANCE.addAndWait(
+					getIdCardInfo(LibraryInterface.getOcrResult()),
+					RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
+			);
+
+			showAppBar();
+			showStatusBar();
+			this.returnToInitialControl();
+
+			FragmentTransaction transaction = getFragmentManager().beginTransaction();
+			transaction.remove(capturePicFragment).commit();
+		});
+
+		tx.replace(R.id.chat_capture, capturePicFragment);
+		tx.commit();
 	}
 
 	private void showStatusBar() {
@@ -835,97 +827,64 @@ public class ChatActivity extends AppCompatActivity {
 		return LayoutInflater.from(this).inflate(layoutId, parent, false);
 	}
 
+
 	private void receiveScore() {
 		IntentFilter intentFilter = new IntentFilter();
-		intentFilter.addAction("chat.ContextLog.ContextLogService");
+		String name = ContextLogService.class.getCanonicalName();
+		intentFilter.addAction(name);
 
-		receiver = new BroadcastReceiver() {
-			@Override
-			public void onReceive(Context context, Intent intent) {
-				String askType = intent.getStringExtra("askType");
+		receiver = new ContextLogReceiver(getApplication(), getApplicationContext(), (queryMaps) -> {
+            Finopass.getInstance(ChatActivity.this)
+                .getScore(queryMaps)
+                .subscribe(
+                        scoreParams -> {
+                            Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
+                            Log.d("FINOPASS", "Your final score is : " + scoreParams.finalScore);
+                            decodeScoreParams(scoreParams);
 
-				ArrayList<ValueQueryGenerator> queryMaps = new ArrayList<>();
+                            if (isFirstAuth) {
+                                Log.d("FINOPASS", "첫번째 맥락인증 요청");
+                                ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
+                                pref.save(scoreParams);
 
-				if (askType.equals("smsLog") || askType.equals("totalLog")) {
-					List<MessageLog> smsLogData = intent.getParcelableArrayListExtra("smsLog");
-					queryMaps.addAll(smsLogData);
-					Log.d("FINOPASS", "sms logs: " + smsLogData);
-				}
+                                initializeMessageBox();
+                                Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
+                            } else {
+                                Log.d("FINOPASS", "ContextScoreReceived emitted.");
+                                MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
+                            }
+                        },
+                        error -> {
+                            WarningDialog dialog = new WarningDialog(getApplicationContext());
+                            dialog.setTitle(getResources().getString(R.string.dialog_chat_contextlog_network_error_title));
+                            dialog.setDescription(getResources().getString(R.string.dialog_chat_contextlog_network_failed));
+                            dialog.setButtonText(getResources().getString(R.string.app_network_dialog_confirm));
+                            dialog.setDoneListener(() -> {
+                                dialog.dismiss();
+                            });
+                            dialog.show();
+                        });
+        });
 
-				if (askType.equals("callLog") || askType.equals("totalLog")) {
-					List<CallHistoryLog> callLogData = intent.getParcelableArrayListExtra("callLog");
-					queryMaps.addAll(callLogData);
-					Log.d("FINOPASS", "call logs: " + callLogData);
-				}
 
-				if (askType.equals("locationLog") || askType.equals("totalLog")) {
-					List<LocationLog> locationLogData = intent.getParcelableArrayListExtra("locationLog");
-					queryMaps.addAll(locationLogData);
-					Log.d("FINOPASS", "location logs: " + locationLogData);
-				}
-
-				if (askType.equals("appLog") || askType.equals("totalLog")) {
-					List<ApplicationLog> appLogData = intent.getParcelableArrayListExtra("appLog");
-					if (appLogData != null) {
-						int skyHomeAppId = 0;
-						int size = appLogData.size();
-						for (int i = 0; i < size; i++) {
-							ApplicationLog log = appLogData.get(i);
-							try {
-								UserInfoGetter uig = new UserInfoGetterImpl(getApplication(), getSharedPreferences("prefs", Context.MODE_PRIVATE));
-								AesInstance aes = AesInstance.getInstance(uig.getUserKey().substring(0, 16).getBytes());
-
-								if (aes.decText(log.appName).equals("SKY 홈")) {
-									skyHomeAppId = i;
-								}
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
-						}
-
-						if (!appLogData.isEmpty()) {
-							appLogData.remove(skyHomeAppId);
-						}
-					}
-
-					queryMaps.addAll(appLogData);
-					Log.d("FINOPASS", "app logs: " + appLogData);
-				}
-
-				Finopass.getInstance(ChatActivity.this)
-						.getScore(queryMaps)
-						.subscribe(
-								scoreParams -> {
-									Log.d("FINOPASS", "FINOPASS in ChatActivity: Score Params: " + scoreParams.toString());
-									Log.d("FINOPASS", "Your final score is : " + scoreParams.finalScore);
-									decodeScoreParams(scoreParams);
-
-									if (isFirstAuth) {
-										Log.d("FINOPASS", "첫번째 맥락인증 요청");
-										ContextAuthPref pref = new ContextAuthPref(getApplicationContext());
-										pref.save(scoreParams);
-
-										initializeMessageBox();
-										Log.d("FINOPASS", "시나리오 및 메시지 박스 생성");
-									} else {
-										Log.d("FINOPASS", "ContextScoreReceived emitted.");
-										MessageBox.INSTANCE.add(new ContextScoreReceived(scoreParams));
-									}
-								});
-			}
-		};
 		registerReceiver(receiver, intentFilter);
 		boolean isContextAuthAgreed = getSharedPreferences("prefs", Context.MODE_PRIVATE)
 				.getBoolean(getString(R.string.splash_is_auth_agree), false);
 
 		if (isContextAuthAgreed) {
 			Intent intent = new Intent(this, ContextLogService.class);
-			intent.putExtra("askType", "totalLog");
+			intent.putExtra("askType", ContextLogType.total);
 			startService(intent);
 		} else {
 			initializeMessageBox();
 		}
 	}
+
+	private void fetchContextLogData(ContextLogType type) {
+        Intent intent = new Intent(this, ContextLogService.class);
+        intent.putExtra("askType", type);
+        startService(intent);
+    }
 
 	@Override
 	protected void onResume() {
@@ -995,15 +954,10 @@ public class ChatActivity extends AppCompatActivity {
 		new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
 	}
 
-
 	private void initializeMessageBox() {
-		Intent chatIntent = getIntent();
 
 		// 메인 시나리오 세팅
-		if (chatIntent != null) {
-			boolean isSigned = chatIntent.getBooleanExtra("isSigned", false);
-			mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView, eventBus, dbHelper, isSigned);
-		}
+		mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView);
 
 		// 메시지 박스 설정
 		MessageBox.INSTANCE.observable
@@ -1114,7 +1068,8 @@ public class ChatActivity extends AppCompatActivity {
 		releaseAllControls();
 	}
 
-	private void startOcrModule(){
+	private void startOcrModule() {
+
 		OcrParam ocrParam = new OcrParam();
 		//촬영 시간
 		ocrParam.setRetrytime(15000);
@@ -1128,23 +1083,4 @@ public class ChatActivity extends AppCompatActivity {
 		LibraryInterface.startOcr(this, "", "", ocrParam);
 	}
 
-	private OcrResultLinstener ocrResultListener = new OcrResultLinstener() {
-		@Override
-		public void onOcrSuccess(OcrResult ocrResult) {
-			LibraryInterface.setOcrResult(ocrResult);
-			MessageBox.INSTANCE.addAndWait(
-				getIdCardInfo(ocrResult),
-				RecoMenuRequest.buildYesOrNo(getApplicationContext(), getResources().getString(R.string.main_string_v2_login_electricity_additional_picture))
-			);
-
-			ocrResult.clear();
-		}
-
-		@Override
-		public void onOcrFail() {
-			MessageBox.INSTANCE.addAndWait(new Done(),
-				new ReceiveMessage(getResources().getString(R.string.dialog_chat_ocr_failed)),
-				new RecommendScenarioMenuRequest(getApplicationContext()));
-		}
-	};
 }

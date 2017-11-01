@@ -29,6 +29,11 @@ public class ContextAuthPref {
 		if (response.messages != null)
 			size = response.messages.size();
 
+		int total_app_usage_log = 0;
+		int total_call_log = 0;
+		int total_message_log = 0;
+		int total_location_log = 0;
+
 		float app_usage_score = 0.0f;
 		float app_call_score = 0.0f;
 		float app_message_score = 0.0f;
@@ -39,18 +44,27 @@ public class ContextAuthPref {
 			switch (msg.type) {
 				case ActionType.GATHER_APP_USAGE_LOG:
 					app_usage_score += msg.score;
+					total_app_usage_log++;
 					break;
 				case ActionType.GATHER_CALL_LOG:
 					app_call_score += msg.score;
+					total_call_log++;
 					break;
 				case ActionType.GATHER_MESSAGE_LOG:
 					app_message_score += msg.score;
+					total_message_log++;
 					break;
 				case ActionType.GATHER_LOCATION_LOG:
 					app_location_score += msg.score;
+					total_location_log++;
 					break;
 			}
 		}
+
+		app_usage_score = (total_app_usage_log == 0) ? 0 : app_usage_score / total_app_usage_log;
+		app_call_score = (total_call_log == 0) ? 0 : app_call_score / total_call_log;
+		app_location_score = (total_location_log == 0) ? 0 : app_location_score / total_location_log;
+		app_message_score = (total_message_log == 0) ? 0 : app_message_score / total_message_log;
 
 		Gson gson = new Gson();
 		editor.putString(SCORE_APP_LOG, gson.toJson(response));
@@ -58,7 +72,7 @@ public class ContextAuthPref {
 		editor.putFloat(SCORE_CALL_KEY, app_call_score);
 		editor.putFloat(SCORE_LOCATION_KEY, app_location_score);
 		editor.putFloat(SCORE_MESSAGE_KEY, app_message_score);
-		editor.putFloat(SCORE_FINAL_SCORE_KEY, (float) (response.finalScore * 100));
+		editor.putFloat(SCORE_FINAL_SCORE_KEY, (float) response.finalScore);
 		editor.apply();
 	}
 

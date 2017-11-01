@@ -40,15 +40,13 @@ import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 
 public class TransferScenario implements Scenario {
-	private DBHelper dbHelper;
 	private Context context;
 	private Step step = Step.BankAsk;
 	private boolean isProceeding = true;
 	private int navigateNum = 0;
 
-	public TransferScenario(Context context, DBHelper dbHelper) {
+	public TransferScenario(Context context) {
 		this.context = context;
-		this.dbHelper = dbHelper;
 	}
 
 	@Override
@@ -69,8 +67,8 @@ public class TransferScenario implements Scenario {
 			String moneyAsString = TransactionDB.INSTANCE.getTxMoney();
 			int money = TransactionDB.INSTANCE.getMoneyAsInt();
 
-            MessageBox.INSTANCE.add(new RequestRemoveControls());
-            MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
+			MessageBox.INSTANCE.add(new RequestRemoveControls());
+			MessageBox.INSTANCE.add(new SendMessage(context.getString(R.string.dialog_chat_send_transfer, name, moneyAsString)));
 
 			if (money >= 1000000) {
 				TransactionDB.INSTANCE.setTransfer(true);

@@ -10,14 +10,13 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.model.User;
+import io.realm.Realm;
 
 public class RecentTransactionScenario implements Scenario {
 	private Context context;
-	private DBHelper dbHelper;
 
-	public RecentTransactionScenario(Context context, DBHelper dbHelper) {
+	public RecentTransactionScenario(Context context) {
 		this.context = context;
-		this.dbHelper = dbHelper;
 	}
 
 	@Override
@@ -35,16 +34,14 @@ public class RecentTransactionScenario implements Scenario {
 
 	@Override
 	public void onUserSend(String msg) {
-		dbHelper.get(User.class).subscribe(users -> {
-			MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
-							users.last().getName())),
-					new RecentTransaction(TransactionDB.INSTANCE.getTx()),
-					new Done()
-			);
-		}, throwable -> {
+		User user = Realm.getDefaultInstance().where(User.class).findFirst();
+		MessageBox.INSTANCE.addAndWait(
+				new ReceiveMessage(context.getString(R.string.dialog_chat_someone_recent_transaction,
+						user.getName())),
+				new RecentTransaction(TransactionDB.INSTANCE.getTx()),
+				new Done()
+		);
 
-		});
 	}
 
 	@Override

@@ -5,14 +5,14 @@ import android.util.Log;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextApp;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextCall;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextLocation;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextSms;
-import finotek.global.dev.talkbank_ca.chat.context_log.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextApp;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextCall;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextLocation;
 import finotek.global.dev.talkbank_ca.chat.messages.context.ContextScoreReceived;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextSms;
+import finotek.global.dev.talkbank_ca.chat.messages.context.ContextTotal;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.model.User;
@@ -23,7 +23,7 @@ import globaldev.finotek.com.logcollector.model.ActionType;
 import io.realm.Realm;
 
 public class ContextSearch implements Scenario {
-	private Step step = Step.question;
+	private Step step = Step.initial;
 	private Context context;
 
 	public ContextSearch(Context context) {
@@ -38,30 +38,33 @@ public class ContextSearch implements Scenario {
 	@Override
 	public void onReceive(Object msg) {
 		if (msg instanceof Done) {
-			step = Step.question;
+			step = Step.initial;
 			MessageBox.INSTANCE.addAndWait(new RecommendScenarioMenuRequest(context));
 		}
 
 		if (msg instanceof ContextScoreReceived) {
-			Log.d("FINOPASS", "in context search context score received");
-			String message = "";
-			ContextScoreResponse scoreParams = ((ContextScoreReceived) msg).getScoreParams();
-			if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
-				message = context.getResources().getString(R.string.dialog_chat_contextlog_result_nothing);
+			if(step == Step.initial) {
+				MessageBox.INSTANCE.addAndWait(buildRecommendedMenu(((ContextScoreReceived) msg).getScoreParams()));
+				step = Step.ask;
 			} else {
-				message = buildScoreMessages(scoreParams);
-			}
+				String message = "";
+				ContextScoreResponse scoreParams = ((ContextScoreReceived) msg).getScoreParams();
+				if (scoreParams.messages == null || scoreParams.messages.size() == 0) {
+					message = context.getResources().getString(R.string.dialog_chat_contextlog_result_nothing);
+				} else {
+					message = buildScoreMessages(scoreParams);
+				}
 
-			MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, message)), new Done());
+				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_result_message, message)), new Done());
+			}
 		}
 	}
 
 	@Override
 	public void onUserSend(String msg) {
 		switch (step) {
-			case question:
-				MessageBox.INSTANCE.addAndWait(buildRecommendedMenu());
-				step = Step.ask;
+			case initial:
+				MessageBox.INSTANCE.add(new ContextTotal());
 				break;
 			case ask:
 				if (msg.equals(context.getResources().getString(R.string.dialog_chat_contextlog_total))) {
@@ -109,33 +112,35 @@ public class ContextSearch implements Scenario {
 		return false;
 	}
 
-	private RecoMenuRequest buildRecommendedMenu() {
+	private RecoMenuRequest buildRecommendedMenu(ContextScoreResponse scoreParams) {
 		ContextAuthPref pref = new ContextAuthPref(context);
+        pref.save(scoreParams);
+
 		float smsScore = pref.getMessageScore();
 		float appUsageScore = pref.getAppUsageScore();
 		float callScore = pref.getCallScore();
 		float locationScore = pref.getLocationScore();
-		float total = pref.getTotalScore();
+		float finalScore = pref.getFinalScore();
 
 		Realm realm = Realm.getDefaultInstance();
 		User user = realm.where(User.class).findAll().last();
-		String initMessage = context.getResources().getString(R.string.dialog_chat_contextlog_search_initMessage, user.getName(), total, callScore, smsScore, locationScore, appUsageScore);
+		String initMessage = context.getResources().getString(R.string.dialog_chat_contextlog_search_initMessage, user.getName(), finalScore, callScore, smsScore, locationScore, appUsageScore);
 		RecoMenuRequest req = new RecoMenuRequest();
 		req.setDescription(initMessage);
 		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.dialog_chat_contextlog_total), () -> {
-			MessageBox.INSTANCE.add(new ContextTotal());
+            MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_fetching)), new ContextTotal());
 		});
 		req.addMenu(R.drawable.icon_bookmark_selected, context.getResources().getString(R.string.dialog_chat_contextlog_sms), () -> {
-			MessageBox.INSTANCE.add(new ContextSms());
+            MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_fetching)), new ContextSms());
 		});
 		req.addMenu(R.drawable.icon_mike, context.getResources().getString(R.string.dialog_chat_contextlog_call), () -> {
-			MessageBox.INSTANCE.add(new ContextCall());
+            MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_fetching)), new ContextCall());
 		});
 		req.addMenu(R.drawable.icon_camera, context.getResources().getString(R.string.dialog_chat_contextlog_location), () -> {
-			MessageBox.INSTANCE.add(new ContextLocation());
+            MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_fetching)), new ContextLocation());
 		});
 		req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.dialog_chat_contextlog_application), () -> {
-			MessageBox.INSTANCE.add(new ContextApp());
+            MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.dialog_chat_contextlog_fetching)), new ContextApp());
 		});
 
 		return req;
@@ -182,6 +187,6 @@ public class ContextSearch implements Scenario {
 	}
 
 	private enum Step {
-		question, ask
+		initial, ask
 	}
 }

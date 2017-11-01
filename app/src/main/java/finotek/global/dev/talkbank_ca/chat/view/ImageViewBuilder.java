@@ -23,56 +23,57 @@ import io.realm.Realm;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ImageViewBuilder implements ChatView.ViewBuilder<ImageMessage> {
-    private final Context context;
+	private final Context context;
 
-    public ImageViewBuilder(Context context) {
-        this.context = context;
-    }
+	public ImageViewBuilder(Context context) {
+		this.context = context;
+	}
 
-    @Override
-    public RecyclerView.ViewHolder build(ViewGroup parent) {
-        return new ImageViewBuilder.ImageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_image_view, parent, false));
-    }
+	@Override
+	public RecyclerView.ViewHolder build(ViewGroup parent) {
+		return new ImageViewBuilder.ImageViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.chat_image_view, parent, false));
+	}
 
-    @Override
-    public void bind(RecyclerView.ViewHolder viewHolder, ImageMessage data) {
-        ImageViewBuilder.ImageViewHolder holder = (ImageViewBuilder.ImageViewHolder) viewHolder;
-        Realm realm = Realm.getDefaultInstance();
+	@Override
+	public void bind(RecyclerView.ViewHolder viewHolder, ImageMessage data) {
+		ImageViewBuilder.ImageViewHolder holder = (ImageViewBuilder.ImageViewHolder) viewHolder;
+		Realm realm = Realm.getDefaultInstance();
 
-        try {
-            String imgPath = data.getPath();
+		try {
+			String imgPath = data.getPath();
 
-            if (!TextUtils.isEmpty(imgPath)) {
-                ExifInterface exifInterface = new ExifInterface(imgPath);
-                int orientation = Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
+			if (!TextUtils.isEmpty(imgPath)) {
+				ExifInterface exifInterface = new ExifInterface(imgPath);
+				int orientation = Integer.parseInt(exifInterface.getAttribute(ExifInterface.TAG_ORIENTATION));
 
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        Converter.dpToPx(200), Converter.dpToPx(240));
-                holder.binding.imageView.setLayoutParams(lp);
-                holder.binding.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+				LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+						Converter.dpToPx(200), Converter.dpToPx(240));
+				holder.binding.imageView.setLayoutParams(lp);
+				holder.binding.imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-                Glide.with(context)
-                        .load(imgPath)
-                        .bitmapTransform(new RoundedCornersTransformation(context, 40, 0, RoundedCornersTransformation.CornerType.ALL))
-                        .fitCenter()
-                        .into(holder.binding.imageView);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+				Glide.with(context)
+						.load(imgPath)
+						.bitmapTransform(new RoundedCornersTransformation(context, 40, 0, RoundedCornersTransformation.CornerType.ALL))
+						.fitCenter()
+						.into(holder.binding.imageView);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    @Override
-    public void onDelete() {
+	@Override
+	public void onDelete() {
 
-    }
+	}
 
-    private class ImageViewHolder extends RecyclerView.ViewHolder {
-        ChatImageViewBinding binding;
+	private class ImageViewHolder extends RecyclerView.ViewHolder {
+		ChatImageViewBinding binding;
 
-        public ImageViewHolder(View itemView) {
-            super(itemView);
-            binding = DataBindingUtil.bind(itemView);
-        }
-    }
+		public ImageViewHolder(View itemView) {
+			super(itemView);
+			binding = DataBindingUtil.bind(itemView);
+		}
+	}
+
 }

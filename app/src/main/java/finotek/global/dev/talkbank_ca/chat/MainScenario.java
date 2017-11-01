@@ -90,8 +90,8 @@ public class MainScenario {
 
 		// 시나리오 저장
 		scenarioPool = new HashMap<>();
-		scenarioPool.put("recentTransaction", new RecentTransactionScenario(context, dbHelper));
-		scenarioPool.put("transfer", new TransferScenario(context, dbHelper));
+		scenarioPool.put("recentTransaction", new RecentTransactionScenario(context));
+		scenarioPool.put("transfer", new TransferScenario(context));
 		scenarioPool.put("loan", new LoanScenario(context));
 		scenarioPool.put("account", new AccountScenario_v2(context));
 		scenarioPool.put("sendMail", new SendMailScenario(context));
@@ -222,7 +222,7 @@ public class MainScenario {
 			chatView.agreementResult();
 		}
 
-		if (msg instanceof AccountConfirm){
+		if (msg instanceof AccountConfirm) {
 			chatView.accountConfirm();
 		}
 

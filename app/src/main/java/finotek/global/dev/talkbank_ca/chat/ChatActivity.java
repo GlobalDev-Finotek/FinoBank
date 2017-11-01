@@ -278,6 +278,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof RequestTakeAnotherIDCard) {
 			this.prepareForFullScreen();
 			populateCaptureView();
+
 		}
 
 		if (msg instanceof RequestRemoteCall) {
@@ -1067,6 +1068,7 @@ public class ChatActivity extends AppCompatActivity {
 	}
 
 	private void startOcrModule() {
+
 		OcrParam ocrParam = new OcrParam();
 		//촬영 시간
 		ocrParam.setRetrytime(15000);
@@ -1079,4 +1081,5 @@ public class ChatActivity extends AppCompatActivity {
 
 		LibraryInterface.startOcr(this, "", "", ocrParam);
 	}
+
 }

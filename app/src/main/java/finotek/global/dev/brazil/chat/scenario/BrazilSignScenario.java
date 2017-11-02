@@ -66,7 +66,7 @@ public class BrazilSignScenario implements Scenario {
         switch (step) {
             case initial:
                 MessageBox.INSTANCE.addAndWait(
-                    new IDCardInfo("Ronaldo", "02.05.1985"),
+                    new IDCardInfo(context.getString(R.string.default_user_name), "02.05.1985"),
                     RecommendScenarioMenuRequest.buildYesOrNo(context, context.getResources().getString(R.string.brazil_scenario_ronaldo_id))
                 );
                 step = Step.receiveSign;

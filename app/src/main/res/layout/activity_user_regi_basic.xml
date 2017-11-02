@@ -16,7 +16,6 @@
             >
 
             <finotek.global.dev.brazil.widget.TalkBankTextView
-                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/setting_title_color"

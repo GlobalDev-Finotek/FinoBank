@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FinoBank</string>
-    <string name="registration_string_register">Register</string>
-    <string name="registration_string_basic_information">My account</string>
-    <string name="registration_string_phone_number">Mobile phone number</string>
-    <string name="registration_string_user_name">User\'s name</string>
-    <string name="registration_string_signnature">E-signature</string>
-    <string name="registration_button_signature_register">Register e-signature</string>
+    <string name="registration_string_register">Registrar</string>
+    <string name="registration_string_basic_information">Minha conta</string>
+    <string name="registration_string_phone_number">Número de celular</string>
+    <string name="registration_string_user_name">Nome do usuário</string>
+    <string name="registration_string_signnature">Assinatura eletrônica</string>
+    <string name="registration_button_signature_register">Registro de assinatura eletrônica</string>
     <string name="registration_string_signature_reliability_setting">Setting reliability rate(demo version)</string>
     <string name="registration_string_signature_reliability_instruction">If reliability rate is high, the sensitivity level of verification goes up</string>
     <string name="registration_string_complicated_signature">Complicated signature</string>
     <string name="registration_string_simple_signature">Simplified signature</string>
     <string name="registration_string_additional_info">Additional information(Optional)</string>
-    <string name="registration_string_emergency_number">Emergency contact number</string>
+    <string name="registration_string_emergency_number">Número de contato de emergência</string>
     <string name="registration_string_number_only">Number only</string>
     <string name="registration_string_email">E-mail</string>
     <string name="registration_string_credit_housed_register">Register credit card</string>
@@ -20,13 +20,13 @@
     <string name="registration_string_profile_register">Register authenticate picture</string>
     <string name="registration_button_profile_capture">Take picture of ID card</string>
     <string name="registration_string_pin_code">PIN code</string>
-    <string name="registration_string_inform_collect_agree">Agreement for collecting information(Required)</string>
-    <string name="registration_string_context_collect_agree">Agreement for collection context data(User authentication mode)</string>
-    <string name="registration_button_register">Register</string>
-    <string name="registration_string_register_success">Register has been succeed</string>
-    <string name="registration_string_type_all_field">Please type all required field</string>
-    <string name="registration_string_write_signature_step_1">Please write signature on displayed area(1/2)</string>
-    <string name="registration_string_write_signature_step_2">Please write signature on displayed area(2/2)</string>
+    <string name="registration_string_inform_collect_agree">Acordo de coleta de informações (Obrigatório)</string>
+    <string name="registration_string_context_collect_agree">Acordo para dados de contexto de coleta (modo de autenticação do usuário)</string>
+    <string name="registration_button_register">Registrar</string>
+    <string name="registration_string_register_success">O registro foi bem sucedido</string>
+    <string name="registration_string_type_all_field">Digite todo o campo obrigatório</string>
+    <string name="registration_string_write_signature_step_1">Escreva a assinatura na área exibida (1/2)</string>
+    <string name="registration_string_write_signature_step_2">Escreva a assinatura na área exibida (2/2)</string>
     <string name="registration_string_write_hidden_signature">Escreva a assinatura escondida na área exibida</string>
     <string name="registration_string_write_hidden_signature_1">Please write hidden signature on displayed area(1/2)</string>
     <string name="registration_string_write_hidden_signature_2">Please write hidden signature on displayed area(2/2)</string>
@@ -36,12 +36,13 @@
     <string name="registration_button_next">Next</string>
     <string name="registration_string_signature_verifying">Verifying e-signature...</string>
     <string name="registration_string_signature_registering">Registering e-signature...</string>
-    <string name="registration_string_wait">Please wait</string>
+    <string name="registration_string_wait">Aguarde</string>
     <string name="registration_string_signature_verified">E-signature has been verified</string>
     <string name="registration_string_authentication_complete">When you click confirm button,\n authentication is completed</string>
     <string name="registration_button_yes">Yes</string>
     <string name="registration_string_signature_fail">E-signature is failed(1/5)</string>
-    <string name="registration_string_click_re_try_button">Please select re-try" to verify your e-signature (maximum 5 times)"</string>
+    <string name="registration_string_click_re_try_button">Selecione re-tentar "para verificar sua assinatura eletrônica (máximo 5 vezes)"
+</string>
     <string name="registration_button_re_try">Re-try</string>
     <string name="registration_string_fits_area_take_picture">Please fit displayed area and take a picture</string>
     <string name="registration_string_warning_backlight">The system may not recognize a ID card under the excessive light</string>
@@ -64,7 +65,7 @@
     <string name="main_actoin_settings">Settings</string>
     <string name="main_action_seach">Seach</string>
     <string name="main_action_edit">Edit</string>
-    <string name="main_button_register">Register</string>
+    <string name="main_button_register">Registrar</string>
     <string name="main_button_login">Log-in</string>
     <string name="main_button_cancel">Cancel</string>
     <string name="main_string_copyright_finotek">Copyright 2017 (c) Finotek Inc. All Rights Reserved</string>
@@ -95,7 +96,7 @@
     <string name="setting_string_complicated_signature">Complicated signature</string>
     <string name="setting_string_simple_signature">Simplified signature</string>
     <string name="setting_string_additional_info">Additional information</string>
-    <string name="setting_string_emergency_number">Emergency contact number</string>
+    <string name="setting_string_emergency_number">Número de contato de emergência</string>
     <string name="setting_string_email">E-mail address</string>
     <string name="setting_button_credit_housed_register">Register credit card</string>
     <string name="setting_button_credit_housed_capture">Take picture of credit card</string>
@@ -108,18 +109,18 @@
     <string name="setting_button_save">Save</string>
     <string name="setting_string_save_success">Have been saved</string>
     <string name="setting_string_type_all_field">Please type all required filed</string>
-    <string name="setting_string_write_signature">Write signature on marked area </string>
+    <string name="setting_string_write_signature">Escreva assinatura na área marcada</string>
     <string name="setting_string_fingertip_use">Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
     <string name="setting_string_write_signature_step_1">Write signature on marked area (1/2)</string>
     <string name="setting_string_write_signature_step_2">Write signature on marked area(2/2)</string>
     <string name="setting_string_signature_twice"> You need to write signature twice to register your e-signature.</string>
-    <string name="setting_string_registered_signature">Registered signature will be used for log-in and self verification purpose</string>
+    <string name="setting_string_registered_signature">A assinatura registrada será usada para log-in e propósito de auto-verificação</string>
     <string name="setting_string_next">Next</string>
     <string name="setting_string_signature_verifying">Register e-signature</string>
-    <string name="setting_string_wait">Please wait</string>
-    <string name="setting_string_signature_verified">E-signature has been verified</string>
-    <string name="setting_string_authentication_complete">Please select Yes \n"to continue to the next step"</string>
-    <string name="setting_string_yes">Yes</string>
+    <string name="setting_string_wait">Por favor, espere</string>
+    <string name="setting_string_signature_verified">A assinatura eletrônica foi verificada</string>
+    <string name="setting_string_authentication_complete">Selecione Yes \ n "para continuar para o próximo passo"</string>
+    <string name="setting_string_yes">Sim</string>
     <string name="setting_string_signature_fail">Fail to verify(1/5)</string>
     <string name="setting_string_click_re_try_button">Please select re-try: to verify your e-signature (Maximu 5 times)"</string>
     <string name="setting_string_re_try">Re-try</string>
@@ -257,7 +258,7 @@
     <string name="setting_string_pin_code_text_color_select">Select PIN code text color</string>
     <string name="setting_string_pin_code_type">Type new PIN code</string>
     <string name="setting_string_profile_picture">Authentication picture</string>
-    <string name="dialog_string_input_message">Please input a message.</string>
+    <string name="dialog_string_input_message">Digite uma mensagem.</string>
     <string name="dialog_chat_receive_email">Do you want to receive a chat contents to your email?</string>
     <string name="dialog_string_email_sent">An email has been sent.</string>
     <string name="dialog_string_email_cancel">Cancel</string>
@@ -275,7 +276,7 @@
     <string name="setting_string_korean">Korean</string>
     <string name="setting_string_english">English</string>
     <string name="string_confirm">Confirm</string>
-    <string name="main_back_exit">When you click the \'back\' button again, the session will be closed</string>
+    <string name="main_back_exit">Quando você clicar no botão \'back \' novamente, a sessão será fechada</string>
 
     <string name="monday">Mon</string>
     <string name="tuesday">Tue</string>
@@ -455,6 +456,7 @@
     <string name="app_network_status_title">Network Warning</string>
     <string name="app_network_not_connected">You are not connected to the internet.</string>
     <string name="app_network_dialog_confirm">OK</string>
+
 
     <!-- strings used in brazil scenario -->
     <string name="dialog_chat_recognize_error">Eu não sei o que você quer. O que você quer?</string>

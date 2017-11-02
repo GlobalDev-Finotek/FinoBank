@@ -236,7 +236,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof ReceiveMessage) {
 			ReceiveMessage sendMessage = (ReceiveMessage) msg;
 			String message = sendMessage.getMessage();
-			ttsPlayer.requestPollyVoice(message);
+			ttsPlayer.requestPollyVoice(message, "pt-BR");
 		}
 
 		if (msg instanceof ContextTotal && isContextAuthAgreed) {

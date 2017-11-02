@@ -11,6 +11,7 @@ import com.amazonaws.regions.Regions;
 import com.amazonaws.services.polly.AmazonPollyPresigningClient;
 import com.amazonaws.services.polly.model.DescribeVoicesRequest;
 import com.amazonaws.services.polly.model.DescribeVoicesResult;
+import com.amazonaws.services.polly.model.LanguageCode;
 import com.amazonaws.services.polly.model.OutputFormat;
 import com.amazonaws.services.polly.model.SynthesizeSpeechPresignRequest;
 import com.amazonaws.services.polly.model.Voice;
@@ -52,7 +53,7 @@ public class TTSPlayer {
 		client = new AmazonPollyPresigningClient(credentialsProvider);
 	}
 
-	public void requestPollyVoice(final String textToRead) {
+	public void requestPollyVoice(final String textToRead, final String languageCode) {
 
 		new Thread(new Runnable() {
 			@Override
@@ -60,6 +61,7 @@ public class TTSPlayer {
 
 				// Create describe voices request.
 				DescribeVoicesRequest describeVoicesRequest = new DescribeVoicesRequest();
+				describeVoicesRequest.setLanguageCode(languageCode);
 
 				DescribeVoicesResult describeVoicesResult = null;
 				try {

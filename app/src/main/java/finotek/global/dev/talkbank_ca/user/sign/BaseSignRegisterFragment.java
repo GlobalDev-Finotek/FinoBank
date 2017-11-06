@@ -14,8 +14,6 @@ import java.util.List;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.FragmentDrawBinding;
-import d2r.checksign.lib.FinoSign;
-import d2r.checksign.lib.SignData;
 import finotek.global.dev.talkbank_ca.model.SignWrapper;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.subjects.PublishSubject;
@@ -96,8 +94,8 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 								int mySignSimilarity = -1;
 								int hiddenSignSimilarity = -1;
 
-								mySignSimilarity = FinoSign.validate(regularSignWrapper.firstDatas.toString(), loadSavedSign(SIGN_FILENAME));
-								hiddenSignSimilarity = FinoSign.validate(hiddenSignWrapper.firstDatas.toString(), loadSavedSign(HIDDENSIGN_FILENAME));
+								mySignSimilarity = 0;
+								hiddenSignSimilarity = 0;
 
 								onSignValidationListener.onValidate((mySignSimilarity + hiddenSignSimilarity) / 2);
 								regularSignWrapper.clear();
@@ -124,11 +122,11 @@ public abstract class BaseSignRegisterFragment extends Fragment {
 	protected abstract void setSignDataListener();
 
 	protected String loadSavedSign(String fileName) {
-		return FinoSign.loadSign(getContext(), fileName);
+		return "";
 	}
 
 	protected void saveSign(String fileName, String signData) {
-		FinoSign.saveSign(getContext(), fileName, signData);
+		// FinoSign.saveSign(getContext(), fileName, signData);
 	}
 
 	public enum CanvasSize {

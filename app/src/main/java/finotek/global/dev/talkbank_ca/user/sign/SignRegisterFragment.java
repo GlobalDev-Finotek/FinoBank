@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.ChatActivity;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
-import d2r.checksign.lib.FinoSign;
 import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
@@ -69,7 +68,7 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 
 			case 5:
 				/* 저장된 1회차 서명과 2회차 서명 비교 검증 */
-				int similarity = FinoSign.validate(loadSavedSign(SIGN_FILENAME), regularSignWrapper.secondDatas.toString());
+				int similarity = 0;
 				if (similarity / 100 < 50) {
 
 					WarningDialog warningDialog = new WarningDialog(getContext());
@@ -112,7 +111,7 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 
 			case 9:
 
-				int hiddenSimilarity = FinoSign.validate(loadSavedSign(HIDDENSIGN_FILENAME), hiddenSignWrapper.secondDatas.toString());
+				int hiddenSimilarity = 0;
 				if (hiddenSimilarity / 100 < 50) {
 
 					WarningDialog warningDialog = new WarningDialog(getContext());

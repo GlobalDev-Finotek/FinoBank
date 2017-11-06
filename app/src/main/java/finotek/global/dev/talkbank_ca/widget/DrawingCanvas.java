@@ -17,7 +17,6 @@ import java.util.Date;
 
 import javax.inject.Inject;
 
-import d2r.checksign.lib.SignData;
 import finotek.global.dev.talkbank_ca.R;
 
 /**
@@ -84,12 +83,7 @@ public class DrawingCanvas extends View {
 				String.valueOf(System.currentTimeMillis())
 						.substring(3, 12));
 
-		SignData signData = new SignData();
-		signData.x = x;
-		signData.y = y;
-		signData.time = times;
 
-		onDrawListener.onDraw(signData.toString());
 
 		if (onCanvasTouchListener == null) {
 			throw new NullPointerException("canvas touch listener null");

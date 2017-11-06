@@ -224,6 +224,8 @@ public class ChatActivity extends AppCompatActivity {
 			if (isVisible)
 				binding.chatView.scrollToBottom();
 		});
+		// 메인 시나리오 세팅
+		mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView);
 
 		initializeMessageBox();
 
@@ -955,8 +957,6 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void initializeMessageBox() {
 
-		// 메인 시나리오 세팅
-		mainScenario = new MainScenario_v2(ChatActivity.this, binding.chatView);
 
 		// 메시지 박스 설정
 		MessageBox.INSTANCE.observable

@@ -9,7 +9,7 @@ import globaldev.finotek.com.finosign.FinoSignService;
 public class FinoSign {
 	private static final FinoSignService finoSignService = new FinoSignServiceImpl();
 
-	public static FinoSignService init() {
+	public static FinoSignService getInstance() {
 		return finoSignService;
 	}
 }

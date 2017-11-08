@@ -12,10 +12,10 @@ import retrofit2.http.POST;
  */
 
 interface FinoSignApi {
-	@POST("/sign")
+	@POST("sign")
 	Flowable<SignRegisterResponse> register(@Body SignRegisterRequest request);
 
-	@POST("/verify")
+	@POST("verify")
 	Flowable<SignRegisterResponse> verify(@Body SignVerifyRequest request);
 
 	class SignRegisterRequest {

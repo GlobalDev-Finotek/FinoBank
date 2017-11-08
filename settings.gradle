@@ -1,3 +1,4 @@
 include ':app', ':FinoCr_1.1.4', ':aws_tts', ':finosign'
 include ':log_collector'
 project(':log_collector').projectDir = new File(settingsDir, '../log_collector')
+

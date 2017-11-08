@@ -23,22 +23,18 @@ public class Agreement extends Fragment {
 		ActivityAgreementBinding binding = DataBindingUtil.inflate(inflater, R.layout.fragment_agreement, container, false);
 		View view = binding.getRoot();
 		// check one -> click all
-		binding.radioButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (binding.radioButton.isChecked()) {
-					binding.radioButton2.setChecked(true);
-					binding.radioButton3.setChecked(true);
-					binding.radioButton4.setChecked(true);
-					binding.radioButton5.setChecked(true);
-				}
-
-				// show_up signature button
-				if (binding.radioButton.isChecked() && binding.radioButton6.isChecked()) {
-					binding.button.setVisibility(View.VISIBLE);
-				}
+		binding.radioButton.setOnCheckedChangeListener((buttonView, isChecked) -> {
+			if (binding.radioButton.isChecked()) {
+				binding.radioButton2.setChecked(true);
+				binding.radioButton3.setChecked(true);
+				binding.radioButton4.setChecked(true);
+				binding.radioButton5.setChecked(true);
 			}
 
+			// show_up signature button
+			if (binding.radioButton.isChecked() && binding.radioButton6.isChecked()) {
+				binding.button.setVisibility(View.VISIBLE);
+			}
 		});
 
 		//individual check makes check_all button to be true

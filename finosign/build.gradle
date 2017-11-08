@@ -15,13 +15,19 @@ android {
 
     buildTypes {
 
+        buildTypes.each {
+            it.buildConfigField 'String', 'FINOSIGN_API_KEY', FINOSIGN_API_KEY
+        }
+
         debug {
-            buildConfigField "String", "BASE_URL", '"http://localhost:8000/"'
+            buildConfigField "String", "FINOSIGN_BASE_URL", '"http://localhost:8000/"'
+
         }
 
         release {
+            buildConfigField "String", "FINOSIGN_BASE_URL", '"http://localhost:8000/"'
+
             minifyEnabled false
-            buildConfigField "String", "BASE_URL", ""
 
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -43,5 +49,6 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.2'
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.0'
 
 }

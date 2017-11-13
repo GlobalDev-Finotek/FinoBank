@@ -8,6 +8,8 @@ import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Rect;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +36,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.finotek.finocr.common.CryptoUtil;
+import com.finotek.finocr.listener.OcrResultLinstener;
+import com.finotek.finocr.manager.LibraryInterface;
+import com.finotek.finocr.vo.OcrParam;
+import com.finotek.finocr.vo.OcrResult;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
@@ -58,6 +65,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.action.ShowPdfView;
 import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.RequestSelectContact;
 import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
+import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
@@ -109,8 +117,6 @@ public class ChatActivity extends AppCompatActivity {
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
-	private ChatExtendedControlBinding ecBinding;
-	private ChatTransferBinding ctBinding;
 	private boolean isExControlAvailable = false;
 	private View exControlView = null;
 	private View footerInputs = null;
@@ -122,6 +128,22 @@ public class ChatActivity extends AppCompatActivity {
 	private OneStepSignRegisterFragment signRegistFragment;
 	private RemoteCallFragment remoteCallFragment;
 	private ContractFragment contractFragment;
+
+	private OcrResultLinstener ocrResultListener = new OcrResultLinstener() {
+		@Override
+		public void onOcrSuccess(OcrResult ocrResult) {
+			LibraryInterface.setOcrResult(ocrResult);
+			MessageBox.INSTANCE.addAndWait(getIdCardInfo(ocrResult));
+			ocrResult.clear();
+		}
+
+		@Override
+		public void onOcrFail() {
+			MessageBox.INSTANCE.addAndWait(new Done(),
+					new ReceiveMessage(getResources().getString(R.string.dialog_chat_ocr_failed)),
+					new RecommendScenarioMenuRequest(getApplicationContext()));
+		}
+	};
 
 	@Override
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -188,6 +210,8 @@ public class ChatActivity extends AppCompatActivity {
                     binding.chatView.scrollToBottom();
             }
         });
+
+		LibraryInterface.registerOcrResultLinstener(ocrResultListener);
 	}
 
 	@Override
@@ -197,34 +221,7 @@ public class ChatActivity extends AppCompatActivity {
 
 	private void onNewMessageUpdated(Object msg) {
 		if (msg instanceof RequestTakeIDCard) {
-			releaseControls();
-			releaseAllControls();
-			binding.footer.setPadding(0, 0, 0, 0);
-			hideAppBar();
-			hideStatusBar();
-
-			View captureView = inflate(R.layout.chat_capture);
-			binding.footer.addView(captureView);
-
-			capturePicFragment = CapturePicFragment.newInstance();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			capturePicFragment.takePicture(path -> {
-                MessageBox.INSTANCE.addAndWait(
-                    new IDCardInfo("Driver's License", "박승남", "680707-1243132", "2012.11.02", ""),
-                    new IDCardShown()
-                );
-
-                showAppBar();
-                this.returnToInitialControl();
-                showStatusBar();
-
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.remove(capturePicFragment).commit();
-                binding.chatView.scrollToBottom();
-			});
-
-			tx.replace(R.id.chat_capture, capturePicFragment);
-			tx.commit();
+			startOcrModule();
 		}
 
 		if(msg instanceof RequestRemoteCall) {
@@ -380,15 +377,6 @@ public class ChatActivity extends AppCompatActivity {
 			tx.commit();
 		}
 
-		if (msg instanceof RequestTransferUI) {
-			releaseAllControls();
-
-			int balance = TransactionDB.INSTANCE.getBalance();
-			ctBinding.balance.setText(NumberFormat.getNumberInstance().format(balance));
-			ctBinding.editMoney.setEnabled(false);
-			binding.footer.addView(ctBinding.getRoot());
-		}
-
 		if (msg instanceof ShowPdfView) {
 			ShowPdfView action = (ShowPdfView) msg;
 
@@ -526,88 +514,6 @@ public class ChatActivity extends AppCompatActivity {
 				});
 
 		exControlView = inflate(R.layout.chat_extended_control);
-		ecBinding = DataBindingUtil.bind(exControlView);
-
-        // 하단 버튼 설정
-		RxView.clicks(ecBinding.button1)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_open_account), R.drawable.icon_stankbank01));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button2)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.dialog_button_transfer), R.drawable.icon_stankbank02));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button3)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_view_account_details), R.drawable.icon_stankbank03));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button4)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_string_secured_mirocredit), R.drawable.icon_stankbank04));
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button5)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					Intent intent = new Intent(ChatActivity.this, SettingsActivity.class);
-                    startActivity(intent);
-					hideExControl();
-				});
-
-		RxView.clicks(ecBinding.button6)
-				.throttleFirst(200, TimeUnit.MILLISECONDS)
-				.subscribe(aVoid -> {
-					MessageBox.INSTANCE.add(new SendMessage(getString(R.string.main_button_send_the_conversation_to_e_mail), R.drawable.icon_stankbank06));
-					hideExControl();
-				});
-
-		ctBinding = ChatTransferBinding.bind(transferView);
-		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
-		ctBinding.gvKeypad.onComplete(() -> {
-            if(!(TransactionDB.INSTANCE.getTxName() == null || TransactionDB.INSTANCE.getTxName().equals(""))) {
-                // 잔액
-                int balance = TransactionDB.INSTANCE.getBalance();
-                String moneyAsString = ctBinding.editMoney.getText().toString();
-                int money = 0;
-                try {
-                    money = Integer.valueOf(moneyAsString.replaceAll(",", ""));
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
-                }
-
-                if (money > balance) {
-                    DangerDialog dialog = new DangerDialog(this);
-                    dialog.setTitle(getString(R.string.common_string_warning));
-                    dialog.setDescription(getString(R.string.dialog_string_lack_of_balance));
-                    dialog.setButtonText(getString(R.string.setting_string_yes));
-                    dialog.setDoneListener(() -> {
-                        ctBinding.editMoney.setText("");
-                        ctBinding.editMoney.requestFocus();
-
-                        dialog.dismiss();
-                    });
-                    dialog.show();
-                } else {
-                    TransactionDB.INSTANCE.setTxMoney(moneyAsString);
-
-                    ctBinding.editMoney.setText("");
-                    this.returnToInitialControl();
-
-                    MessageBox.INSTANCE.add(new TransferButtonPressed());
-                }
-            }
-		});
 
 		binding.footer.addView(footerInputs);
 	}
@@ -634,6 +540,27 @@ public class ChatActivity extends AppCompatActivity {
         }
 
 		return super.dispatchTouchEvent(ev);
+	}
+
+	private IDCardInfo getIdCardInfo(OcrResult ocrResult) {
+		byte[] idcardImage = ocrResult.getIdcardImg();
+		Bitmap image = BitmapFactory.decodeByteArray(idcardImage, 0, idcardImage.length);
+		String type = (ocrResult.getIdcardType().equals("1")) ? "주민등록증" : "운전면허증";
+		return new IDCardInfo(type, ocrResult.getName(), CryptoUtil.transJuminStr(ocrResult.getIdcardNum()), ocrResult.getIssueDate(), image);
+	}
+
+	private void startOcrModule() {
+		OcrParam ocrParam = new OcrParam();
+		//촬영 시간
+		ocrParam.setRetrytime(15000);
+		//포커스 후 촬영횟수
+		ocrParam.setFocusCount(4);
+		//주민번호 마스크 여부
+		ocrParam.setMaskIdnum(true);
+		//암호일련번호 옵션 (0 = 미적용 , 1 = 적용)
+		ocrParam.setLicenseCode(1);
+
+		LibraryInterface.startOcr(this, "", "", ocrParam);
 	}
 
 	private void dismissKeyboard(View v) {
@@ -713,6 +640,8 @@ public class ChatActivity extends AppCompatActivity {
 		super.onDestroy();
 		mainScenario.release();
 		eventBus.clear();
+
+		LibraryInterface.unregisterOcrResultLinstener();
 	}
 
 	@Override

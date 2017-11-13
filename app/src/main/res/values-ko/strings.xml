@@ -390,5 +390,7 @@
     <string name="setting_string_ocr_credit_card">신용카드 OCR</string>
     <string name="dialog_string_id_card_type">신분증 유형</string>
     <string name="dialog_chat_take_picture_id_card">계좌 개설 시 본인 확인을 위해 주민등록증이나 운전면허증이 필요합니다. 준비가 되셨으면 신분증 촬영을 진행해 주세요.</string>
+
+    <string name="dialog_chat_ocr_failed">신분증 인식에 실패하였습니다.\n다시 시도해 주세요.</string>
 </resources>
 

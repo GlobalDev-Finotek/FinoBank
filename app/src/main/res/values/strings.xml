@@ -448,4 +448,6 @@
     <string name="dialog_chat_loan_inform">Cardif\'s Cancer Insurance option covers Gastric, Liver, Lung, Colon, and Prostate cancer. If you want more details, please click to icon below. (More information) Or, click to icon below to resume subscription</string>
     <string name="dialog_chat_cardif_loan_more_inform">More information</string>
     <string name="dialog_chat_cardif_loan_resume_subscription">Resume subscription</string>
+
+    <string name="dialog_chat_ocr_failed">I failed to recognize your id card.\nPlease try again.</string>
 </resources>

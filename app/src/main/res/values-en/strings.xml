@@ -396,4 +396,6 @@
     <string name="dialog_string_id_card_type">Verification ID type</string>
     <string name="dialog_chat_take_picture_id_card">To open an account, you need to verify yourself with your personal ID card or driver\'s license. Please take a picture of your ID card</string>
     <string name="dialog_string_won">Won</string>
+
+    <string name="dialog_chat_ocr_failed">I failed to recognize your id card.\nPlease try again.</string>
 </resources>

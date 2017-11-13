@@ -17,6 +17,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RemoteCallDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
+import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardShown;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
@@ -46,7 +47,7 @@ public class CPIScenario implements Scenario {
 
 	@Override
 	public void onReceive(Object msg) {
-		if(msg instanceof IDCardShown) {
+		if(msg instanceof IDCardInfo) {
 			RecoMenuRequest req = new RecoMenuRequest();
 			req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_authenticate_on_remote_call));
 			req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_authenticate_on_remote_call), () -> {
@@ -114,9 +115,7 @@ public class CPIScenario implements Scenario {
 
 	@Override
 	public void onUserSend(String msg) {
-		LeftScenario.scenarioList.remove("E");
 		switch (step) {
-
 			case Agreement:
 				MessageBox.INSTANCE.addAndWait(getRequestConfirm(R.string.main_string_cardif_CPI_agreement_desc));
 				step = Step.Name;

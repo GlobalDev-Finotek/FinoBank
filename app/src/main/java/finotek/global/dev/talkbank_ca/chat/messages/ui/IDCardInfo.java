@@ -1,5 +1,7 @@
 package finotek.global.dev.talkbank_ca.chat.messages.ui;
 
+import android.graphics.Bitmap;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -10,5 +12,5 @@ public class IDCardInfo {
 	String name;
 	String jumin;
 	String issueDate;
-	String imgPath;
+	Bitmap image;
 }

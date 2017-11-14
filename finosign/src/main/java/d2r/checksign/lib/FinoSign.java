@@ -60,9 +60,10 @@ public class FinoSign {
 
 			while ((receiveString = bufferedReader.readLine()) != null) {
 				stringBuilder.append(receiveString);
+                stringBuilder.append("\n");
 			}
 
-			ret = stringBuilder.toString() + "\n";
+			ret = stringBuilder.toString();
 
 		} catch (IOException e) {
 			Log.e("Exception", "File write failed: " + e.toString());

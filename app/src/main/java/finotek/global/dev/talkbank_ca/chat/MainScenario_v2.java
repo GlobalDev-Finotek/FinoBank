@@ -72,12 +72,6 @@ public class MainScenario_v2 {
         //Recommend scenario setup
 		if(!LeftScenario.scenarioList.contains("E"))
         	LeftScenario.scenarioList.add("E");
-		if(!LeftScenario.scenarioList.contains("P"))
-			LeftScenario.scenarioList.add("P");
-		if(!LeftScenario.scenarioList.contains("T"))
-        	LeftScenario.scenarioList.add("T");
-		if(!LeftScenario.scenarioList.contains("H"))
-        	LeftScenario.scenarioList.add("H");
 
 		// 메시지 박스 설정
 		disposable = MessageBox.INSTANCE.observable
@@ -157,76 +151,11 @@ public class MainScenario_v2 {
 		MessageBox.INSTANCE.add(new DividerMessage(DateUtil.currentDate(context)));
 		RecommendScenarioMenuRequest req = new RecommendScenarioMenuRequest(context);
 
-		/*RecoMenuRequest req = new RecoMenuRequest();
-		//req.setTitle("추천메뉴");
-		req.setDescription(context.getResources().getString(R.string.main_string_v2_login_recommend_task, user.getName()));
-
-		req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_v2_login_pay_electricity), null);
-		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_open_saving_account), null);
-		req.addMenu(R.drawable.icon_love, context.getResources().getString(R.string.main_string_v2_login_house_loan), null);
-		req.addMenu(R.drawable.icon_wow, context.getResources().getString(R.string.main_string_v2_login_notify_again), null);
-        */
 		MessageBox.INSTANCE.addAndWait(
 				new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, user.getName())),
 				new ReceiveMessage(getGreetings()),
 				req
 		);
-
-
-
-
-
-		/*eventBus.getObservable()
-				.subscribe(iEvent -> {
-					Log.d("FINO-TB", iEvent.getClass().getName());
-
-					if (iEvent instanceof AccuracyMeasureEvent) {
-
-						double accuracy = ((AccuracyMeasureEvent) iEvent).getAccuracy();
-						if (isSigned) {
-							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.main_string_v2_login_hello, (int) (accuracy * 100))));
-						} else {
-							MessageBox.INSTANCE.add(new StatusMessage(context.getResources().getString(R.string.main_string_v2_result_context, (int) (accuracy * 100))));
-						}
-					}
-					Realm realm = Realm.getDefaultInstance();
-					User user = realm.where(User.class).findAll().last();
-					MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello, user.getName())));
-
-                    long temptime = System.currentTimeMillis();
-                    String time = DateFormat.format("HH", temptime).toString();
-                    int hour = Integer.parseInt(time);
-
-                    if (hour >=6 && 13 > hour){
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_M)));
-
-                    }else if (hour >= 12 && 19 > hour ){
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_L)));
-
-                    }else if (hour >= 18) {
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_E)));
-                    }
-                    else if (hour >= 0  && 7 > hour ) {
-                        MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_hello_N)));
-                    }
-
-                    String [] proposal = {context.getResources().getString(R.string.main_string_v2_login_recommend),
-                            context.getResources().getString(R.string.main_string_v2_login_recommend_list), context.getResources().getString(R.string.main_string_v2_login_recommend_task)
-                    };
-                    String proposalRandom =(proposal[new Random().nextInt(proposal.length)]);
-
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_notify_balance)));
-                    MessageBox.INSTANCE.add(new ReceiveMessage(proposalRandom));
-
-
-                    MessageBox.INSTANCE.add(new ReceiveMessage(context.getResources().getString(R.string.main_string_v2_login_ask_step)));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_pay_electricity));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_open_saving_account));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_loan_car));
-                    MessageBox.INSTANCE.add(context.getResources().getString(R.string.main_string_v2_login_notify_again));
-
-
-                });*/
 
 	}
 

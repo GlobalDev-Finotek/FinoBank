@@ -13,10 +13,6 @@ public class RecommendScenarioMenuRequest extends RecoMenuRequest{
             for (String s : LeftScenario.scenarioList) {
                 if (s.equals("E"))
                     addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_start_subscription), null);
-                else if (s.equals("P"))
-                    addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_more_inform_CPI), () -> {
-
-                    }, true);
             }
         } else {
             setDescription(context.getResources().getString(R.string.main_string_recommend_finished));

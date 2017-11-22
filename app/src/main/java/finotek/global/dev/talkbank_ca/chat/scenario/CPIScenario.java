@@ -70,26 +70,6 @@ public class CPIScenario implements Scenario {
 			step = Step.SignatureProcess;
 		}
 
-		if(msg instanceof CPIAuthenticationDone) {
-            RecoMenuRequest req = new RecoMenuRequest();
-            req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_option_desc));
-            req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option1), () -> {
-                MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option1_answer)));
-            });
-            req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option2), () -> {
-                MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option2_answer)));
-            });
-            req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option3), () -> {
-                MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option3_answer)));
-            });
-            req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option4), () -> {
-                MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option4)));
-            });
-            MessageBox.INSTANCE.addAndWait(new DismissKeyboard(), req);
-
-            step = Step.UserSelectedOption;            // 사용자가 옵션을 선택함
-        }
-
         if(msg instanceof CPIContractIsDone) {
 			ImageMessage signedContract = new ImageMessage();
 			signedContract.setStringImagePath(context.getExternalFilesDir(null) + "/mySignedContract.png");
@@ -165,35 +145,28 @@ public class CPIScenario implements Scenario {
                     new DismissKeyboard(),
                     getRequestConfirm(R.string.main_string_cardif_CPI_agree_to_check_desc)
                 );
-                step = Step.Authentication;
-                break;
-            case Authentication:
-                if (msg.equals(context.getResources().getString(R.string.main_string_cardif_CPI_agree))) {
-                    RecoMenuRequest req = new RecoMenuRequest();
-
-                    req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_please_select_authentication_certificate));
-                    req.addMenu(R.drawable.icon_haha, "Park Seung Nam\nexpired at: 2017-09-08\ntype: personal usage", () -> {
-                        selectUser("Park Seung Nam");
-                    });
-                    req.addMenu(R.drawable.icon_haha, "Kim Woo Seob\nexpired at: 2017-11-09\ntype: personal usage", () -> {
-                        selectUser("Kim Woo Seob");
-                    });
-                    req.addMenu(R.drawable.icon_haha, "Lee Kyung Jin\nexpired at: 2017-09-25\ntype: personal usage (banking)", () -> {
-                        selectUser("Lee Kyung Jin");
-                    });
-                    MessageBox.INSTANCE.addAndWait(req);
-                } else if (msg.equals(context.getResources().getString(R.string.main_string_cardif_CPI_disagree))) {
-                    MessageBox.INSTANCE.addAndWait(
-                            new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_subscription_canceled)),
-                            new Done()
-                    );
-                }
-
-                break;
-            case AuthenticationPassword:
-                MessageBox.INSTANCE.add(new CPIAuthenticationWait());
                 step = Step.SelectOption;
                 break;
+			case SelectOption: {
+				RecoMenuRequest req = new RecoMenuRequest();
+				req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_option_desc));
+				req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option1), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option1_answer)));
+				});
+				req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option2), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option2_answer)));
+				});
+				req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option3), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option3_answer)));
+				});
+				req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_option4), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_option4)));
+				});
+				MessageBox.INSTANCE.addAndWait(new DismissKeyboard(), req);
+
+				step = Step.UserSelectedOption;
+				}
+				break;
 			case UserSelectedOption:
 				if (msg.equals(context.getResources().getString(R.string.main_string_cardif_CPI_option4))) {
 					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_any_help)));

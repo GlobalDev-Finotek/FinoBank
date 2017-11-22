@@ -62,8 +62,6 @@ public class CardifScenario {
 		//Recommend scenario setup
 		if (!LeftScenario.scenarioList.contains("E"))
 			LeftScenario.scenarioList.add("E");
-		if (!LeftScenario.scenarioList.contains("P"))
-			LeftScenario.scenarioList.add("P");
 
 
 		// 메시지 박스 설정

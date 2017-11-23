@@ -69,12 +69,10 @@ import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RemoteCallDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
-import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
-import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
@@ -86,6 +84,7 @@ import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.cardif.ContractFragment;
 import finotek.global.dev.talkbank_ca.user.cardif.RemoteCallFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.ContractPdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
@@ -315,33 +314,18 @@ public class ChatActivity extends AppCompatActivity {
 							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
 							dialog.setButtonText(getString(R.string.setting_string_yes));
 							dialog.setDoneListener(() -> {
-								MessageBox.INSTANCE.add(new SignatureVerified());
-								dialog.dismiss();
+								showAppBar();
+								this.returnToInitialControl();
+								showStatusBar();
+
+								FragmentTransaction transaction = getFragmentManager().beginTransaction();
+								transaction.remove(signRegistFragment).commit();
+								binding.chatView.scrollToBottom();
 								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
-								contractFragment = new ContractFragment();
-								contractFragment.setConfirmListener(() -> {
-									returnToInitialControl();
-									showAppBar();
-									showStatusBar();
-									binding.chatView.scrollToBottom();
-
-									MessageBox.INSTANCE.add(new CPIContractIsDone());
-								});
-								contractFragment.setCancelListener(() -> {
-									returnToInitialControl();
-									showAppBar();
-									showStatusBar();
-									binding.chatView.scrollToBottom();
-
-									MessageBox.INSTANCE.addAndWait(
-										new ReceiveMessage(getString(R.string.main_string_cardif_CPI_subscription_canceled)),
-										new Done()
-									);
-								});
-								FragmentTransaction transaction = getFragmentManager().beginTransaction();
-								transaction.replace(R.id.chat_capture, contractFragment)
-										   .commit();
+								MessageBox.INSTANCE.add(new RequestRemoveControls());
+								MessageBox.INSTANCE.add(new SignatureVerified());
+								dialog.dismiss();
 							});
 							dialog.showWithRatio(0.50f);
 						}, throwable -> {
@@ -376,7 +360,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (msg instanceof ShowPdfView) {
 			ShowPdfView action = (ShowPdfView) msg;
 
-			PdfViewDialog dialog = new PdfViewDialog(this);
+			ContractPdfViewDialog dialog = new ContractPdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();

@@ -19,6 +19,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ShowContract;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitDone;
 import finotek.global.dev.talkbank_ca.chat.messages.WaitResult;
@@ -233,6 +234,11 @@ public class CardifScenario {
 			chatView.accountList((AccountList) msg);
 		}
 
+		// 계약서 보여주기
+		if (msg instanceof ShowContract) {
+			chatView.showContract((ShowContract) msg);
+		}
+
 		if (msg instanceof ApplyScenario) {
 			ApplyScenario result = (ApplyScenario) msg;
 			String key = result.getName();
@@ -249,6 +255,7 @@ public class CardifScenario {
 			chatView.removeOf(ChatView.ViewType.AccountList);
 			chatView.removeOf(ChatView.ViewType.Confirm);
 			chatView.removeOf(ChatView.ViewType.Agreement);
+			chatView.removeOf(ChatView.ViewType.ShowContract);
 		}
 
 		if (msg instanceof WaitResult) {

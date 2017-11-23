@@ -15,6 +15,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RecentTransaction;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ShowContract;
 import finotek.global.dev.talkbank_ca.chat.messages.StatusMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.control.ConfirmRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
@@ -47,6 +48,8 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.AgreementResult.ordinal(), new AgreementResultBuilder());
 		this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder(context));
 		this.addChatViewBuilder(ViewType.Wait.ordinal(), new WaitViewBuilder());
+
+		this.addChatViewBuilder(ViewType.ShowContract.ordinal(), new ShowContractViewBuilder());
 	}
 
 	public void showIdCardInfo(IDCardInfo info) {
@@ -75,6 +78,10 @@ public class ChatView extends RecyclerView {
 
 	public void agreement(AgreementRequest msg) {
 		addMessage(ViewType.Agreement.ordinal(), msg);
+	}
+
+	public void showContract(ShowContract msg) {
+		addMessage(ViewType.ShowContract.ordinal(), msg);
 	}
 
 	public void agreementResult() {
@@ -130,7 +137,7 @@ public class ChatView extends RecyclerView {
 		Confirm, RecoMenu,
 		IDCard, RecentTransaction, AccountList,
 		Agreement, AgreementResult, Image,
-		Wait
+		Wait, ShowContract
 	}
 
 	public interface ViewBuilder<T> {

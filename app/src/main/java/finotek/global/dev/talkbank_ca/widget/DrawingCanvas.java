@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 
 import finotek.global.dev.talkbank_ca.R;
+import finotek.global.dev.talkbank_ca.user.sign.MySignStorage;
 
 /**
  * Created by magyeong-ug on 21/03/2017.
@@ -60,31 +61,7 @@ public class DrawingCanvas extends View {
 	}
 
 	public void save() {
-		String path = context.getExternalFilesDir(null) + "/mySign.png";
-		Log.d("BNP-APP", "signature is saved.");
-
-//		this.buildDrawingCache();
-//		Bitmap b = Bitmap.createBitmap(this.getDrawingCache());
-//		this.setDrawingCacheEnabled(false);
-
-		Log.d("BNP-APP", "Measured Width: " + this.getMeasuredWidth() + ", Measured Height: " + getMeasuredHeight());
-
-		Bitmap b = Bitmap.createBitmap(this.getMeasuredWidth(), this.getMeasuredHeight(), Bitmap.Config.ARGB_8888);
-		Canvas canvas = new Canvas(b);
-		this.draw(canvas);
-
-		if (b != null) {
-			try {
-				File f = new File(path);
-				FileOutputStream fos = new FileOutputStream(f);
-
-				b.compress(Bitmap.CompressFormat.PNG, 100, fos);
-				fos.close();
-
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+		MySignStorage.saveSign(context, this);
 	}
 
 	@Override

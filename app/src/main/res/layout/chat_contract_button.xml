@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/chat_margin_left_right"
+        android:layout_marginEnd="@dimen/chat_margin_left_right"
+        android:layout_marginBottom="@dimen/chat_margin_bottom">
+        <finotek.global.dev.talkbank_ca.widget.TalkBankButton
+            android:id="@+id/show_contract_button"
+            android:layout_marginTop="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/btn_sign"
+            android:textSize="@dimen/text_normal"
+            android:textColor="@color/primary"
+            android:text="@string/main_string_cardif_CPI_show_contract"
+            app:tb_font="noto_medium" />
+    </LinearLayout>
+</layout>

@@ -425,7 +425,7 @@
     <string name="main_string_cardif_CPI_payment_bank_account">Please enter the bank account.</string>
     <string name="main_string_cardif_CPI_payment_date">Please enter the payment day of month.</string>
 
-    <string name="main_string_cardif_CPI_payment_date">Please enter the payment day of month.</string>
+    <string name="main_string_cardif_CPI_show_contract">Show Contract</string>
 
     <string name="main_string_cardif_CPI_select_option_desc">I\'ve checked your Loan information details and I would like to recommend.\nWhich option do you want?</string>
     <string name="main_string_cardif_CPI_doctor">Let me start Illness Declaration. Have you seen a doctor last 3 months?</string>

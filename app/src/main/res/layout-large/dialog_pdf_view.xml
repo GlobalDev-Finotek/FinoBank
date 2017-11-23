@@ -51,12 +51,12 @@
                 </RelativeLayout>
             </RelativeLayout>
 
-            <ImageView
+            <com.github.barteksc.pdfviewer.PDFView
                 android:id="@+id/pdf_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/title_bg">
-            </ImageView>
+            </com.github.barteksc.pdfviewer.PDFView>
         </RelativeLayout>
     </RelativeLayout>
 </layout>

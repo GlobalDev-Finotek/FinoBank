@@ -8,23 +8,19 @@ import java.util.List;
 
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
-import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
-import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
+import finotek.global.dev.talkbank_ca.chat.messages.ShowContract;
 import finotek.global.dev.talkbank_ca.chat.messages.action.DismissKeyboard;
 import finotek.global.dev.talkbank_ca.chat.messages.action.Done;
 import finotek.global.dev.talkbank_ca.chat.messages.action.RequestKeyboardInput;
+import finotek.global.dev.talkbank_ca.chat.messages.action.SignatureVerified;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecoMenuRequest;
-import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationDone;
-import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RemoteCallDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardShown;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 
@@ -69,12 +65,13 @@ public class CPIScenario implements Scenario {
 			req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_sign_on_contract), () -> {
 				MessageBox.INSTANCE.add(new RequestSignature());
 			});
-			MessageBox.INSTANCE.addAndWait(req);
+			MessageBox.INSTANCE.addAndWait(new ShowContract(1), req);
 			step = Step.SignatureProcess;
 		}
 
-        if(msg instanceof CPIContractIsDone) {
+        if(msg instanceof SignatureVerified) {
             MessageBox.INSTANCE.addAndWait(
+				new ShowContract(2),
                 new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_subscription_completed)),
                 new Done()
             );

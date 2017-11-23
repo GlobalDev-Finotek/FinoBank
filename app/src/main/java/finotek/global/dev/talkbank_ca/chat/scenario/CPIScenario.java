@@ -3,8 +3,13 @@ package finotek.global.dev.talkbank_ca.chat.scenario;
 import android.content.Context;
 import android.text.InputType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.chat.MessageBox;
+import finotek.global.dev.talkbank_ca.chat.messages.Agreement;
+import finotek.global.dev.talkbank_ca.chat.messages.AgreementRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.ImageMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.SendMessage;
@@ -17,6 +22,7 @@ import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RemoteCallDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
+import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardShown;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
@@ -58,24 +64,17 @@ public class CPIScenario implements Scenario {
 		}
 
 		if(msg instanceof RemoteCallDone) {
-			ImageMessage contract = new ImageMessage();
-			contract.setImgPath(R.drawable.contract);
-
 			RecoMenuRequest req = new RecoMenuRequest();
 			req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_sign_on_contract));
 			req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_sign_on_contract), () -> {
 				MessageBox.INSTANCE.add(new RequestSignature());
 			});
-			MessageBox.INSTANCE.addAndWait(contract, req);
+			MessageBox.INSTANCE.addAndWait(req);
 			step = Step.SignatureProcess;
 		}
 
         if(msg instanceof CPIContractIsDone) {
-			ImageMessage signedContract = new ImageMessage();
-			signedContract.setStringImagePath(context.getExternalFilesDir(null) + "/mySignedContract.png");
-
             MessageBox.INSTANCE.addAndWait(
-				signedContract,
                 new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_subscription_completed)),
                 new Done()
             );
@@ -120,33 +119,39 @@ public class CPIScenario implements Scenario {
 					new DismissKeyboard(),
                     new RequestKeyboardInput(InputType.TYPE_CLASS_PHONE)
 				);
-				step = Step.Doctor;
+				step = Step.SelectMyLoan;
 				break;
-			case Doctor:
+			case SelectMyLoan: {
+				RecoMenuRequest req = new RecoMenuRequest();
+				req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_loan_desc));
+				req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_loan1), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_loan1_answer)));
+				});
+				req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_loan2), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_loan2_answer)));
+				});
+				req.addMenu(R.drawable.icon_like, context.getResources().getString(R.string.main_string_cardif_CPI_loan3), () -> {
+					MessageBox.INSTANCE.add(new SendMessage(context.getResources().getString(R.string.main_string_cardif_CPI_loan3_answer)));
+				});
+				MessageBox.INSTANCE.addAndWait(new DismissKeyboard(), req);
+
+				step = Step.TypeInsuranceAmount;
+				}
+				break;
+			case TypeInsuranceAmount:
 				MessageBox.INSTANCE.addAndWait(
-                    new DismissKeyboard(),
-					RecoMenuRequest.buildYesOrNo(context, context.getResources().getString(R.string.main_string_cardif_CPI_doctor))
+					new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_type_insurance_amount)),
+					new RequestTransferUI()
 				);
-				step = Step.LoanQuestion;
+				step = Step.TypeInsurancePeriod;
 				break;
-			case LoanQuestion:
+			case TypeInsurancePeriod:
 				MessageBox.INSTANCE.addAndWait(
-					new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_loan_question)),
+					new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_type_insurance_period)),
 					new RequestKeyboardInput(InputType.TYPE_CLASS_PHONE)
 				);
-				step = Step.PeriodQuestion;
+				step = Step.SelectOption;
 				break;
-			case PeriodQuestion:
-				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_period_question)));
-				step = Step.AgreeToCheck;
-				break;
-            case AgreeToCheck:
-                MessageBox.INSTANCE.addAndWait(
-                    new DismissKeyboard(),
-                    getRequestConfirm(R.string.main_string_cardif_CPI_agree_to_check_desc)
-                );
-                step = Step.SelectOption;
-                break;
 			case SelectOption: {
 				RecoMenuRequest req = new RecoMenuRequest();
 				req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_option_desc));
@@ -177,12 +182,31 @@ public class CPIScenario implements Scenario {
 						new Done()
 					);
 				} else {
+					MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_payment_bank_name)));
+					step = Step.TypePaymentBankName;
+				}
+				break;
+			case TypePaymentBankName:
+				MessageBox.INSTANCE.addAndWait(new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_payment_bank_account)));
+				step = Step.TypePaymentBankAccount;
+				break;
+			case TypePaymentBankAccount:
+				MessageBox.INSTANCE.addAndWait(
+					new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_payment_date)),
+					new RequestKeyboardInput(InputType.TYPE_CLASS_PHONE)
+				);
+				step = Step.TypePaymentDate;
+				break;
+			case TypePaymentDate: {
 					RecoMenuRequest req = new RecoMenuRequest();
 					req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_identification));
 					req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_start_identification), () -> {
 						MessageBox.INSTANCE.add(new RequestTakeIDCard());
 					});
-                    MessageBox.INSTANCE.addAndWait(req);
+					MessageBox.INSTANCE.addAndWait(
+						new DismissKeyboard(),
+						req
+					);
 					step = Step.IdentificationProcess;
 				}
 				break;
@@ -245,9 +269,10 @@ public class CPIScenario implements Scenario {
     }
 
 	private enum Step {
-		Initial, Agreement, Birth, Name,
-		Doctor, LoanQuestion, PeriodQuestion, DateQuestion, AgreeToCheck,
-		Authentication, AuthenticationPassword, SelectOption, UserSelectedOption,
+		Initial, Agreement, Name, Birth, SelectMyLoan, TypeInsuranceAmount, TypeInsurancePeriod,
+		SelectOption, UserSelectedOption,
+		TypePaymentBankName, TypePaymentBankAccount, TypePaymentDate,
+		Authentication, AuthenticationPassword,
 		MoreInformation, MoreInformationAnswer,
 		IdentificationProcess, SignatureProcess
 	}

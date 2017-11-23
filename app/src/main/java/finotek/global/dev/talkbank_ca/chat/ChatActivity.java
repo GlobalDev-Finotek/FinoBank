@@ -28,11 +28,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
-import android.view.animation.LinearInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -44,7 +42,6 @@ import com.finotek.finocr.vo.OcrResult;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
-import java.text.NumberFormat;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -74,13 +71,11 @@ import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.TransferButtonPressed;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardInfo;
-import finotek.global.dev.talkbank_ca.chat.messages.ui.IDCardShown;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestRemoveControls;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestSignature;
 import finotek.global.dev.talkbank_ca.chat.messages.ui.RequestTakeIDCard;
 import finotek.global.dev.talkbank_ca.chat.storage.TransactionDB;
 import finotek.global.dev.talkbank_ca.databinding.ActivityChatBinding;
-import finotek.global.dev.talkbank_ca.databinding.ChatExtendedControlBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatFooterInputBinding;
 import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
@@ -117,6 +112,7 @@ public class ChatActivity extends AppCompatActivity {
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
 	private ChatFooterInputBinding fiBinding;
+	private ChatTransferBinding ctBinding;
 	private boolean isExControlAvailable = false;
 	private View exControlView = null;
 	private View footerInputs = null;
@@ -382,7 +378,6 @@ public class ChatActivity extends AppCompatActivity {
 
 			PdfViewDialog dialog = new PdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
-//			dialog.setSignArea(30, 10);
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();
 		}
@@ -398,6 +393,15 @@ public class ChatActivity extends AppCompatActivity {
 			transaction.commit();
 
 			this.returnToInitialControl();
+		}
+
+		if (msg instanceof RequestTransferUI) {
+			releaseAllControls();
+
+			ctBinding.editMoney.setEnabled(true);
+			ctBinding.editMoney.requestFocus();
+
+			binding.footer.addView(ctBinding.getRoot());
 		}
 
 		if (msg instanceof RequestSelectContact) {
@@ -514,6 +518,19 @@ public class ChatActivity extends AppCompatActivity {
 				});
 
 		exControlView = inflate(R.layout.chat_extended_control);
+
+		ctBinding = ChatTransferBinding.bind(transferView);
+		ctBinding.gvKeypad.addManagableTextField(ctBinding.editMoney);
+		ctBinding.gvKeypad.setLengthLimit(10);
+		ctBinding.gvKeypad.onComplete(() -> {
+			// 잔액
+			String moneyAsString = ctBinding.editMoney.getText().toString();
+
+			ctBinding.editMoney.setText("");
+			this.returnToInitialControl();
+
+			MessageBox.INSTANCE.add(new SendMessage(moneyAsString + " won"));
+		});
 
 		binding.footer.addView(footerInputs);
 	}

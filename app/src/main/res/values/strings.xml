@@ -409,6 +409,24 @@
     <string name="main_string_cardif_CPI_loan_question">Let\'s go to loan information. What is the amount of loan?\n(ex. 1,000,000 KRW)</string>
     <string name="main_string_cardif_CPI_period_question">How long is the loan period? (Years)</string>
     <string name="main_string_cardif_CPI_date_question">When was the start date of loan?\n(DDMMYYYY)</string>
+
+    <string name="main_string_cardif_CPI_select_loan_desc">Your loan information. Please choose one loan.</string>
+    <string name="main_string_cardif_CPI_loan1">1.\nLoan name: SC An employee preferential loan\nLoan account number: 394839-20-339483\nLoan amount: 50,000,000 won\nLoan Date: 02-11-2017\nExpiration Date: 02-08-2019</string>
+    <string name="main_string_cardif_CPI_loan1_answer">Number 1.</string>
+    <string name="main_string_cardif_CPI_loan2">2.\nLoan name: BNY Mellon Mortgage\nLoan account number: 938493948-39-2938\nLoan amount: 130,000,000 won\nLoan Date: 11-03-2016\nExpiration Date: 11-03-2020</string>
+    <string name="main_string_cardif_CPI_loan2_answer">Number 2.</string>
+    <string name="main_string_cardif_CPI_loan3">3.\nLoan name: Citi Bank Life fund loan\nLoan account number: 302839-39-897466\nLoan amount: 3,000,000 won\nLoan Date: 20-06-2017\nExpiration Date: 20-06-2018</string>
+    <string name="main_string_cardif_CPI_loan3_answer">Number 3.</string>
+
+    <string name="main_string_cardif_CPI_type_insurance_amount">Please enter the amount of insurance you have joined.</string>
+    <string name="main_string_cardif_CPI_type_insurance_period">Please enter the number of years you have been insured.</string>
+
+    <string name="main_string_cardif_CPI_payment_bank_name">Please enter the bank name of the account you wish to use for payment</string>
+    <string name="main_string_cardif_CPI_payment_bank_account">Please enter the bank account.</string>
+    <string name="main_string_cardif_CPI_payment_date">Please enter the payment day of month.</string>
+
+    <string name="main_string_cardif_CPI_payment_date">Please enter the payment day of month.</string>
+
     <string name="main_string_cardif_CPI_select_option_desc">I\'ve checked your Loan information details and I would like to recommend.\nWhich option do you want?</string>
     <string name="main_string_cardif_CPI_doctor">Let me start Illness Declaration. Have you seen a doctor last 3 months?</string>
     <string name="main_string_cardif_CPI_option1">1. Base:\nSubscription amount 100M KRW,\nMonthly premium 9,000 KRW</string>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="sign_regi_step1">Please write signature on displayed area(1/2)</string>
+    <string name="sign_regi_step2">Please write signature on displayed area(2/2)</string>
+    <string name="sign_veri_hidden">Please write hidden signature on displayed area</string>
+    <string name="sign_regi_hidden_step1">Please write hidden signature on displayed area(1/2)</string>
+    <string name="sign_regi_hidden_step2">Please write hidden signature on displayed area(2/2)</string>
+    <string name="sign_mark_area">Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
+    <string name="confirm">Confirm</string>
+
+
+</resources>

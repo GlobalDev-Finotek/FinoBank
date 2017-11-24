@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+x
+    <string name="sign_regi_step1">표시된 영역 안에 서명해 주세요.(1/2)</string>
+    <string name="sign_regi_step2">표시된 영역 안에 서명해 주세요.(2/2)</string>
+    <string name="sign_regi_hidden_step1">표시된 영역 안에 히든 서명해 주세요.(1/2)</string>
+    <string name="sign_regi_hidden_step2">표시된 영역 안에 히든 서명해 주세요.(2/2)</string>
+    <string name="sign_veri_hidden">표시된 영역 안에 히든서명해 주세요</string>
+    <string name="sign_mark_area">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
+    <string name="confirm">확인</string>
+
+</resources>
+

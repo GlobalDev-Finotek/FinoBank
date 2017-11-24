@@ -48,17 +48,13 @@ import io.reactivex.disposables.Disposable;
 public class CardifScenario {
 	private final Disposable disposable;
 	private Context context;
-	private RxEventBus eventBus;
 	private ChatView chatView;
 	private Scenario currentScenario = null;
 	private Map<String, Scenario> scenarioPool;
-	private DBHelper dbHelper;
 
-	public CardifScenario(Context context, ChatView chatView, RxEventBus eventBus, DBHelper dbHelper, boolean isSigned) {
+	public CardifScenario(Context context, ChatView chatView, boolean isSigned) {
 		this.context = context;
 		this.chatView = chatView;
-		this.eventBus = eventBus;
-		this.dbHelper = dbHelper;
 
 		//Recommend scenario setup
 		if (!LeftScenario.scenarioList.contains("E"))

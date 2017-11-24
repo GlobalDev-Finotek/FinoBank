@@ -1,0 +1,75 @@
+apply plugin: 'com.android.library'
+
+def getUserKey() {
+    Properties properties = new Properties()
+    properties.load(project.file('local.properties').newDataInputStream())
+    return properties.getProperty("FINOSIGN_USER_KEY")
+}
+
+
+def getAPIKey() {
+    Properties properties = new Properties()
+    properties.load(project.file('local.properties').newDataInputStream())
+    return properties.getProperty("FINOSIGN_API_KEY")
+}
+
+android {
+    compileSdkVersion 25
+
+    defaultConfig {
+        minSdkVersion 23
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+
+
+        debug {
+            buildConfigField "String", "FINOSIGN_BASE_URL", '"http://192.168.0.3:8000/"'
+            buildConfigField "String", "FINOSIGN_USER_KEY", getUserKey()
+            buildConfigField "String", "FINOSIGN_API_KEY", getAPIKey()
+        }
+
+        release {
+            buildConfigField "String", "FINOSIGN_BASE_URL", '"http://finosign.ap-northeast-2.elasticbeanstalk.com/"'
+
+            minifyEnabled false
+            buildConfigField "String", "FINOSIGN_USER_KEY", getUserKey()
+            buildConfigField "String", "FINOSIGN_API_KEY", getAPIKey()
+            consumerProguardFiles 'proguard-rules.pro'
+        }
+    }
+
+
+    dataBinding {
+        enabled = true
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation 'com.android.support:appcompat-v7:25.3.1'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    compile 'com.google.dagger:dagger:2.12'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.12'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.6'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.4.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
+    compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
+}
+

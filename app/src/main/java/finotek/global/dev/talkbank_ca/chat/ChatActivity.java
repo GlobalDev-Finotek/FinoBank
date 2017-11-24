@@ -2,7 +2,6 @@ package finotek.global.dev.talkbank_ca.chat;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -17,6 +16,8 @@ import android.os.Handler;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -31,7 +32,6 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.finotek.finocr.common.CryptoUtil;
@@ -44,11 +44,8 @@ import com.jakewharton.rxbinding2.widget.RxTextView;
 
 import java.util.concurrent.TimeUnit;
 
-import javax.inject.Inject;
-
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.app.MyApplication;
-import finotek.global.dev.talkbank_ca.base.mvp.event.RxEventBus;
 import finotek.global.dev.talkbank_ca.chat.messages.MessageEmitted;
 import finotek.global.dev.talkbank_ca.chat.messages.ReceiveMessage;
 import finotek.global.dev.talkbank_ca.chat.messages.RequestContactPermission;
@@ -65,7 +62,6 @@ import finotek.global.dev.talkbank_ca.chat.messages.contact.SelectedContact;
 import finotek.global.dev.talkbank_ca.chat.messages.control.RecommendScenarioMenuRequest;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIAuthenticationWait;
-import finotek.global.dev.talkbank_ca.chat.messages.cpi.CPIContractIsDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RemoteCallDone;
 import finotek.global.dev.talkbank_ca.chat.messages.cpi.RequestRemoteCall;
 import finotek.global.dev.talkbank_ca.chat.messages.transfer.RequestTransferUI;
@@ -79,34 +75,26 @@ import finotek.global.dev.talkbank_ca.databinding.ChatTransferBinding;
 import finotek.global.dev.talkbank_ca.inject.component.ChatComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerChatComponent;
 import finotek.global.dev.talkbank_ca.inject.module.ActivityModule;
-import finotek.global.dev.talkbank_ca.model.DBHelper;
 import finotek.global.dev.talkbank_ca.setting.SettingsActivity;
 import finotek.global.dev.talkbank_ca.user.CapturePicFragment;
 import finotek.global.dev.talkbank_ca.user.cardif.ContractFragment;
 import finotek.global.dev.talkbank_ca.user.cardif.RemoteCallFragment;
 import finotek.global.dev.talkbank_ca.user.dialogs.ContractPdfViewDialog;
-import finotek.global.dev.talkbank_ca.user.dialogs.DangerDialog;
-import finotek.global.dev.talkbank_ca.user.dialogs.PdfViewDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.PrimaryDialog;
 import finotek.global.dev.talkbank_ca.user.dialogs.SucceededDialog;
-import finotek.global.dev.talkbank_ca.user.sign.BaseSignRegisterFragment;
-import finotek.global.dev.talkbank_ca.user.sign.OneStepSignRegisterFragment;
+import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
 import finotek.global.dev.talkbank_ca.util.Converter;
 import finotek.global.dev.talkbank_ca.util.KeyboardUtils;
+import globaldev.finotek.com.finosign.view.SignValidationFragment;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends AppCompatActivity implements SignValidationFragment.OnSignValidationListener {
 	static final int RESULT_PICK_CONTACT = 1;
 	private static final int PERMISSION_CAMERA = 2;
 
-	@Inject
-	DBHelper dbHelper;
-
-	@Inject
-	RxEventBus eventBus;
 
 	boolean doubleBackToExitPressedOnce = false;
 	private ActivityChatBinding binding;
@@ -120,7 +108,7 @@ public class ChatActivity extends AppCompatActivity {
 	private CardifScenario mainScenario;
 
 	private CapturePicFragment capturePicFragment;
-	private OneStepSignRegisterFragment signRegistFragment;
+	private Fragment signValidationFragment;
 	private RemoteCallFragment remoteCallFragment;
 	private ContractFragment contractFragment;
 
@@ -145,7 +133,7 @@ public class ChatActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 
 		binding = DataBindingUtil.setContentView(this, R.layout.activity_chat);
-		getComponent().inject(this);
+		// getComponent().inject(this);
 
 
 		setSupportActionBar(binding.toolbar);
@@ -168,7 +156,7 @@ public class ChatActivity extends AppCompatActivity {
 		if (intent != null) {
 			boolean isSigned = intent.getBooleanExtra("isSigned", false);
 
-			mainScenario = new CardifScenario(this, binding.chatView, eventBus, dbHelper, isSigned);
+			mainScenario = new CardifScenario(this, binding.chatView, isSigned);
 		}
 
 		MessageBox.INSTANCE.observable
@@ -235,7 +223,7 @@ public class ChatActivity extends AppCompatActivity {
                 MessageBox.INSTANCE.add(new RemoteCallDone(), 500);
             });
 
-            FragmentTransaction tx = getFragmentManager().beginTransaction();
+            FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
             tx.replace(R.id.chat_capture, remoteCallFragment);
             tx.commit();
 		}
@@ -245,7 +233,7 @@ public class ChatActivity extends AppCompatActivity {
             this.returnToInitialControl();
             showStatusBar();
 
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.remove(remoteCallFragment).commit();
             binding.chatView.scrollToBottom();
         }
@@ -295,65 +283,12 @@ public class ChatActivity extends AppCompatActivity {
 
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
-			signRegistFragment = new OneStepSignRegisterFragment();
-			FragmentTransaction tx = getFragmentManager().beginTransaction();
-			signRegistFragment.setOnSaveListener(() -> {
-				PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
-				loadingDialog.setTitle(getString(R.string.registration_string_signature_verifying));
-				loadingDialog.setDescription(getString(R.string.registration_string_wait));
-				loadingDialog.showWithRatio(0.50f);
+			signValidationFragment = new SignValidationFragment();
+			FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
 
-				Observable.interval(1, TimeUnit.SECONDS)
-						.observeOn(AndroidSchedulers.mainThread())
-						.first((long) 1)
-						.subscribe(i -> {
-							loadingDialog.dismiss();
 
-							SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-							dialog.setTitle(getString(R.string.setting_string_signature_verified));
-							dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-							dialog.setButtonText(getString(R.string.setting_string_yes));
-							dialog.setDoneListener(() -> {
-								showAppBar();
-								this.returnToInitialControl();
-								showStatusBar();
 
-								FragmentTransaction transaction = getFragmentManager().beginTransaction();
-								transaction.remove(signRegistFragment).commit();
-								binding.chatView.scrollToBottom();
-								setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-								MessageBox.INSTANCE.add(new RequestRemoveControls());
-								MessageBox.INSTANCE.add(new SignatureVerified());
-								dialog.dismiss();
-							});
-							dialog.showWithRatio(0.50f);
-						}, throwable -> {
-						});
-			});
-
-			signRegistFragment.setOnSizeControlClick(new BaseSignRegisterFragment.OnSizeControlClick() {
-
-				boolean isFullSize = false;
-
-				@Override
-				public void onClick(BaseSignRegisterFragment.CanvasSize size) {
-
-					if (!isFullSize) {
-						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-								LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-						signView.setLayoutParams(lp);
-					} else {
-						LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-								LinearLayout.LayoutParams.MATCH_PARENT, Converter.dpToPx(350));
-						signView.setLayoutParams(lp);
-					}
-
-					isFullSize = !isFullSize;
-				}
-			});
-
-			tx.replace(R.id.chat_capture, signRegistFragment);
+			tx.replace(R.id.chat_capture, signValidationFragment);
 			tx.commit();
 		}
 
@@ -367,12 +302,9 @@ public class ChatActivity extends AppCompatActivity {
 		}
 
 		if (msg instanceof RequestRemoveControls) {
-			FragmentTransaction transaction = getFragmentManager().beginTransaction();
-			if (capturePicFragment != null) {
-				transaction.remove(capturePicFragment);
-			}
-			if (signRegistFragment != null) {
-				transaction.remove(signRegistFragment);
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			if (signValidationFragment != null) {
+				transaction.remove(signValidationFragment);
 			}
 			transaction.commit();
 
@@ -640,7 +572,6 @@ public class ChatActivity extends AppCompatActivity {
 	protected void onDestroy() {
 		super.onDestroy();
 		mainScenario.release();
-		eventBus.clear();
 
 		LibraryInterface.unregisterOcrResultLinstener();
 	}
@@ -670,4 +601,40 @@ public class ChatActivity extends AppCompatActivity {
         return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS ) == PackageManager.PERMISSION_GRANTED;
     }
 
+	@Override
+	public void onValidation(boolean isValid) {
+
+		if (isValid) {
+			SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+			dialog.setTitle(getString(R.string.setting_string_signature_verified));
+			dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+			dialog.setButtonText(getString(R.string.setting_string_yes));
+			dialog.setDoneListener(() -> {
+				showAppBar();
+				returnToInitialControl();
+				showStatusBar();
+
+				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+				transaction.remove(signValidationFragment).commit();
+				binding.chatView.scrollToBottom();
+				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+				MessageBox.INSTANCE.add(new RequestRemoveControls());
+				MessageBox.INSTANCE.add(new SignatureVerified());
+				dialog.dismiss();
+			});
+			dialog.showWithRatio(0.50f);
+		} else {
+
+			WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
+			warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+			warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+			warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
+					.observeOn(AndroidSchedulers.mainThread())
+					.subscribe(aLong -> warningDialog.dismiss()));
+
+			warningDialog.show();
+		}
+
+	}
 }

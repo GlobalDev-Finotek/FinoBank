@@ -362,6 +362,7 @@ public class ChatActivity extends AppCompatActivity {
 
 			ContractPdfViewDialog dialog = new ContractPdfViewDialog(this);
 			dialog.setTitle(action.getTitle());
+			dialog.setStep(action.getStep());
 			dialog.setPdfAssets(action.getPdfAsset());
 			dialog.show();
 		}

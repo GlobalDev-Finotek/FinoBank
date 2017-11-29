@@ -29,7 +29,7 @@ public class ShowContractViewBuilder implements ChatView.ViewBuilder<ShowContrac
         }
 
         holder.showContractButton.setOnClickListener((v) -> {
-            MessageBox.INSTANCE.addAndWait(new ShowPdfView("Contract", "contract.pdf"));
+            MessageBox.INSTANCE.addAndWait(new ShowPdfView("Contract", "contract.pdf", data.getStep()));
         });
     }
 

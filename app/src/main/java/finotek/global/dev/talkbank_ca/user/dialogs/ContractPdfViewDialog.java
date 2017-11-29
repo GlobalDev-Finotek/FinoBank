@@ -11,6 +11,8 @@ import finotek.global.dev.talkbank_ca.user.sign.MySignStorage;
  */
 
 public class ContractPdfViewDialog extends PdfViewDialog {
+    int step = 0;
+
     public ContractPdfViewDialog(Context context) {
         super(context);
     }
@@ -21,18 +23,28 @@ public class ContractPdfViewDialog extends PdfViewDialog {
                 .enableSwipe(true)
                 .enableAntialiasing(true)
                 .onDraw((canvas, pageWidth, pageHeight, displayedPage) -> {
-                    Bitmap signImage = MySignStorage.getSign(getContext());
+                    if( step == 2 ) {
+                        Bitmap signImage = MySignStorage.getSign(getContext());
 
-                    if (signImage != null) {
-                        signImage = Bitmap.createScaledBitmap(signImage, 250, 160, true);
+                        if (signImage != null) {
+                            signImage = Bitmap.createScaledBitmap(signImage, 250, 160, true);
 
-                        float x = pageWidth * 0.49f;
-                        float y = pageHeight * 0.13f;
-                        canvas.drawBitmap(signImage, x, y, null);
+                            float x = pageWidth * 0.49f;
+                            float y = pageHeight * 0.13f;
+                            canvas.drawBitmap(signImage, x, y, null);
+                        }
                     }
                 })
                 .load();
 
         view.pdfView.setMinZoom(5);
+    }
+
+    public int getStep() {
+        return step;
+    }
+
+    public void setStep(int step) {
+        this.step = step;
     }
 }

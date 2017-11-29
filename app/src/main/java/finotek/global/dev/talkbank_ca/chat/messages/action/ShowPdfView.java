@@ -8,4 +8,5 @@ import lombok.Data;
 public class ShowPdfView {
 	String title;
 	String pdfAsset;
+	int step;
 }

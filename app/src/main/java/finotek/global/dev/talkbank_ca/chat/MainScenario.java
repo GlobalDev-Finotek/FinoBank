@@ -217,11 +217,6 @@ public class MainScenario {
 			chatView.agreement((AgreementRequest) msg);
 		}
 
-		// 약관 결과
-		if (msg instanceof AgreementResult) {
-			chatView.agreementResult();
-		}
-
 		// 최근 거래 내역
 		if (msg instanceof RecentTransaction) {
 			chatView.transactionList((RecentTransaction) msg);

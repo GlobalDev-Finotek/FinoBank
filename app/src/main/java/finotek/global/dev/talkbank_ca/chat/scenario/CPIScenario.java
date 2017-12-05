@@ -116,6 +116,13 @@ public class CPIScenario implements Scenario {
 					new DismissKeyboard(),
                     new RequestKeyboardInput(InputType.TYPE_CLASS_PHONE)
 				);
+				step = Step.Doctor;
+				break;
+			case Doctor:
+				MessageBox.INSTANCE.addAndWait(
+						new DismissKeyboard(),
+						RecoMenuRequest.buildYesOrNo(context, context.getResources().getString(R.string.main_string_cardif_CPI_doctor))
+				);
 				step = Step.SelectMyLoan;
 				break;
 			case SelectMyLoan: {
@@ -147,8 +154,15 @@ public class CPIScenario implements Scenario {
 					new ReceiveMessage(context.getResources().getString(R.string.main_string_cardif_CPI_type_insurance_period)),
 					new RequestKeyboardInput(InputType.TYPE_CLASS_PHONE)
 				);
-				step = Step.SelectOption;
+				step = Step.AgreeToCheck;
 				break;
+			case AgreeToCheck:
+					MessageBox.INSTANCE.addAndWait(
+						new DismissKeyboard(),
+						getRequestConfirm(R.string.main_string_cardif_CPI_agree_to_check_desc)
+					);
+					step = Step.SelectOption;
+					break;
 			case SelectOption: {
 				RecoMenuRequest req = new RecoMenuRequest();
 				req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_option_desc));
@@ -197,15 +211,33 @@ public class CPIScenario implements Scenario {
 			case TypePaymentDate: {
 					RecoMenuRequest req = new RecoMenuRequest();
 					req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_select_identification));
-					req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_start_identification), () -> {
-						MessageBox.INSTANCE.add(new RequestTakeIDCard());
-					});
+					req.addMenu(R.drawable.icon_haha, context.getResources().getString(R.string.main_string_cardif_CPI_start_identification), null);
 					MessageBox.INSTANCE.addAndWait(
 						new DismissKeyboard(),
 						req
 					);
-					step = Step.IdentificationProcess;
+					step = Step.Authentication;
 				}
+				break;
+			case Authentication: {
+					RecoMenuRequest req = new RecoMenuRequest();
+
+					req.setDescription(context.getResources().getString(R.string.main_string_cardif_CPI_please_select_authentication_certificate));
+					req.addMenu(R.drawable.icon_haha, "Park Seung Nam\nexpired at: 2017-09-08\ntype: personal usage", () -> {
+						selectUser("Park Seung Nam");
+					});
+					req.addMenu(R.drawable.icon_haha, "Kim Woo Seob\nexpired at: 2017-11-09\ntype: personal usage", () -> {
+						selectUser("Kim Woo Seob");
+					});
+					req.addMenu(R.drawable.icon_haha, "Lee Kyung Jin\nexpired at: 2017-09-25\ntype: personal usage (banking)", () -> {
+						selectUser("Lee Kyung Jin");
+					});
+					MessageBox.INSTANCE.addAndWait(req);
+				}
+				break;
+			case AuthenticationPassword:
+				MessageBox.INSTANCE.add(new RequestTakeIDCard());
+				step = Step.IdentificationProcess;
 				break;
 			case MoreInformation: {
 					RecoMenuRequest req = new RecoMenuRequest();
@@ -266,7 +298,7 @@ public class CPIScenario implements Scenario {
     }
 
 	private enum Step {
-		Initial, Agreement, Name, Birth, SelectMyLoan, TypeInsuranceAmount, TypeInsurancePeriod,
+		Initial, Agreement, Name, Birth, Doctor, SelectMyLoan, TypeInsuranceAmount, TypeInsurancePeriod, AgreeToCheck,
 		SelectOption, UserSelectedOption,
 		TypePaymentBankName, TypePaymentBankAccount, TypePaymentDate,
 		Authentication, AuthenticationPassword,

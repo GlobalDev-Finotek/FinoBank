@@ -82,7 +82,7 @@ public class AgreementBuilder implements ChatView.ViewBuilder<AgreementRequest> 
             binding.textView.setFontType(TalkBankTextView.FontType.Light);
             binding.textView.setTextColor(ContextCompat.getColor(context, R.color.dark_70));
 
-            Runnable r = () -> MessageBox.INSTANCE.add(new ShowPdfView(childAgreement.getName(), childAgreement.getPdfAsset()));
+            Runnable r = () -> MessageBox.INSTANCE.add(new ShowPdfView(childAgreement.getName(), childAgreement.getPdfAsset(), 1));
 
             RxView.clicks(binding.textView)
                     .throttleFirst(2000, TimeUnit.MILLISECONDS)

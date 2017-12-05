@@ -45,7 +45,6 @@ public class ChatView extends RecyclerView {
 		this.addChatViewBuilder(ViewType.Image.ordinal(), new ImageViewBuilder(context));
 		this.addChatViewBuilder(ViewType.AccountList.ordinal(), new AccountListViewBuilder(context));
 		this.addChatViewBuilder(ViewType.Agreement.ordinal(), new AgreementBuilder(context));
-		this.addChatViewBuilder(ViewType.AgreementResult.ordinal(), new AgreementResultBuilder());
 		this.addChatViewBuilder(ViewType.RecentTransaction.ordinal(), new TransactionViewBuilder(context));
 		this.addChatViewBuilder(ViewType.Wait.ordinal(), new WaitViewBuilder());
 
@@ -82,10 +81,6 @@ public class ChatView extends RecyclerView {
 
 	public void showContract(ShowContract msg) {
 		addMessage(ViewType.ShowContract.ordinal(), msg);
-	}
-
-	public void agreementResult() {
-		addMessage(ViewType.AgreementResult.ordinal(), null);
 	}
 
 	public void accountList(AccountList accountList) {
@@ -136,7 +131,7 @@ public class ChatView extends RecyclerView {
 		Send, IconicSend, Receive, Divider, Status,
 		Confirm, RecoMenu,
 		IDCard, RecentTransaction, AccountList,
-		Agreement, AgreementResult, Image,
+		Agreement, Image,
 		Wait, ShowContract
 	}
 

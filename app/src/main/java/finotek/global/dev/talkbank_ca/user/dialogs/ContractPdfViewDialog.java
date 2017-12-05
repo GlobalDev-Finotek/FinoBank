@@ -27,11 +27,13 @@ public class ContractPdfViewDialog extends PdfViewDialog {
                         Bitmap signImage = MySignStorage.getSign(getContext());
 
                         if (signImage != null) {
-                            signImage = Bitmap.createScaledBitmap(signImage, 250, 160, true);
+                            if( displayedPage == 0 ) {
+                                Bitmap sign = Bitmap.createScaledBitmap(signImage, 250, 160, true);
 
-                            float x = pageWidth * 0.49f;
-                            float y = pageHeight * 0.13f;
-                            canvas.drawBitmap(signImage, x, y, null);
+                                float x = pageWidth * 0.79f;
+                                float y = pageHeight * 0.76f;
+                                canvas.drawBitmap(sign, x, y, null);
+                            }
                         }
                     }
                 })

@@ -1,1 +1,1 @@
-include ':app', ':FinoCr_1.1.4'
+include ':app', ':FinoCr_1.1.4', ':finosign'

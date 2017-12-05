@@ -1,6 +1,6 @@
 package finotek.global.dev.talkbank_ca.user.cardif;
 
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.databinding.DataBindingUtil;
 import android.media.MediaPlayer;
 import android.net.Uri;

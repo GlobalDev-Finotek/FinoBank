@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#006233</color>
+    <color name="colorPrimaryDark">#004424</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="primary">@color/colorPrimary</color>
+    <color name="danger">#ff585b</color>
+    <color name="info">#00b9e6</color>
+    <color name="warning">#ffe938</color>
+    <color name="warning_dark">#cfbd28</color>
+    <color name="white_two">#e5e5e5</color>
+    <color name="white_three">#e0e0e0</color>
+    <color name="line">#e0e0e0</color>
+    <color name="bullet">#cfcfcf</color>
+
+    <color name="color_foreground">#FFFFFF</color>
+    <color name="color_foreground_blue_button">#FFFFFF</color>
+    <color name="color_foreground_blue_button_disabled">#BBBBBB</color>
+
+    <color name="chevron_color">#8F97A0</color>
+
+    <color name="color_background_blue_button">#3DC5F6</color>
+    <color name="color_background_blue_button_clicked">#10A5D6</color>
+    <color name="color_background_blue_button_disabled">#EEEEEE</color>
+    <!--<color name="color_background_blue_button_disabled">#D0F5FF</color>-->
+    <color name="color_background_terms_textview">#EEEEEE</color>
+    <color name="pin_red">#ff0000</color>
+    <color name="pin_orange">#fdbf2d</color>
+    <color name="pin_yellow">#ffe938</color>
+    <color name="pin_light_green">#1aae00</color>
+    <color name="pin_green">#0e6139</color>
+    <color name="pin_light_blue">#1eb1ed</color>
+    <color name="pin_blue">#1090bd</color>
+    <color name="pin_purple">#6f359e</color>
+    <color name="pin_white">#ffffff</color>
+    <color name="pin_black">#000000</color>
+
+    <color name="dodger_blue">#4083ff</color>
+    <color name="coral_pink">#ff585b</color>
+    <color name="coral_pink_dark">#ca3639</color>
+    <color name="dark_70">#b21f2f42</color>
+    <color name="grey">#e0e0e0</color>
+    <color name="dark_50">#7f1f2f42</color>
+    <color name="white">#ffffff</color>
+    <color name="dark_100">#000000</color>
+    <color name="aqua_blue">#00b9e6</color>
+    <color name="aqua_blue_dark">#0192b6</color>
+    <color name="dark_30">#4c1f2f42</color>
+    <color name="black">#313131</color>
+    <color name="cool_green">#40cd65</color>
+    <color name="cool_green_dark">#298f44</color>
+    <color name="pale_grey">#eceff0</color>
+
+    <color name="chat_succeeded_bg">#D4EDDA</color>
+    <color name="chat_succeeded_text">#155724</color>
+    <color name="chat_warning_bg">#FFF3CD</color>
+    <color name="chat_warning_text">#856404</color>
+
+    <color name="chat_status_bg">#fdf3be</color>
+    <color name="chat_status_text">#5a5e45</color>
+    <color name="chat_divider_bg">#cfe8ed</color>
+    <color name="chat_divider_text">#546463</color>
+    <color name="chat_background">#EAE7DF</color>
+    <color name="chat_send_bg">#defdc4</color>
+    <color name="chat_recommended_menu_text">#055d4f</color>
+
+    <color name="color_chat_divider">@color/dark_50</color>
+    <color name="color_text_default">@color/dark_100</color>
+    <color name="color_send_disabled">#CFCFCF</color>
+    <color name="color_send_enabled">@color/colorPrimary</color>
+    <color name="color_chat_agreement_border">@color/white_two</color>
+
+    <color name="setting_title_color">#F2F2F2</color>
+
+</resources>

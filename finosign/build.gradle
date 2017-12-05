@@ -1,16 +1,16 @@
 apply plugin: 'com.android.library'
 
-def getUserKey() {
+
+def getCompanyId() {
     Properties properties = new Properties()
     properties.load(project.file('local.properties').newDataInputStream())
-    return properties.getProperty("FINOSIGN_USER_KEY")
-}
 
+    String companyId = properties.getProperty("COMPANY_ID")
+    if (companyId == null || companyId.length() == 0) {
+        throw new IllegalStateException("The provider key is invalid. Please contact the provider")
+    }
 
-def getAPIKey() {
-    Properties properties = new Properties()
-    properties.load(project.file('local.properties').newDataInputStream())
-    return properties.getProperty("FINOSIGN_API_KEY")
+    return companyId
 }
 
 android {
@@ -30,17 +30,15 @@ android {
 
 
         debug {
-            buildConfigField "String", "FINOSIGN_BASE_URL", '"http://192.168.0.3:8000/"'
-            buildConfigField "String", "FINOSIGN_USER_KEY", getUserKey()
-            buildConfigField "String", "FINOSIGN_API_KEY", getAPIKey()
+            buildConfigField "String", "FINOSIGN_BASE_URL", '"http://finosign.ap-northeast-2.elasticbeanstalk.com/"'
+            buildConfigField "String", "COMPANY_ID", getCompanyId()
         }
 
         release {
             buildConfigField "String", "FINOSIGN_BASE_URL", '"http://finosign.ap-northeast-2.elasticbeanstalk.com/"'
 
             minifyEnabled false
-            buildConfigField "String", "FINOSIGN_USER_KEY", getUserKey()
-            buildConfigField "String", "FINOSIGN_API_KEY", getAPIKey()
+            buildConfigField "String", "COMPANY_ID", getCompanyId()
             consumerProguardFiles 'proguard-rules.pro'
         }
     }
@@ -71,5 +69,7 @@ dependencies {
     compile 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-support-v4:2.0.0'
     compile 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
+    implementation 'com.google.gms:google-services:3.1.0'
+
 }
 

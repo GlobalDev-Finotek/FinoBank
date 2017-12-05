@@ -63,6 +63,11 @@ public class FinoSignTestCase extends TestCase {
 					public void accept(Boolean validation) throws Exception {
 						assertEquals(true, validation.booleanValue());
 					}
+				}, new Consumer<Throwable>() {
+					@Override
+					public void accept(Throwable throwable) throws Exception {
+						System.out.println(throwable.getMessage());
+					}
 				});
 	}
 
@@ -78,7 +83,7 @@ public class FinoSignTestCase extends TestCase {
 				}, new Consumer<Throwable>() {
 					@Override
 					public void accept(Throwable throwable) throws Exception {
-
+						System.out.println(throwable.getMessage());
 					}
 				});
 	}

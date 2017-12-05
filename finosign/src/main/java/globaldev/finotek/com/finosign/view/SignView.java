@@ -10,5 +10,6 @@ public interface SignView {
 	void setIconRes(@DrawableRes int resId);
 	void initView();
 	void clearCanvas();
+	void showToast(String text);
 	void setInstructionText(String txt);
 }

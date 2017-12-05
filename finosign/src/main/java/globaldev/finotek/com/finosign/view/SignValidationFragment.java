@@ -2,11 +2,6 @@ package globaldev.finotek.com.finosign.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 
 import com.jakewharton.rxbinding2.view.RxView;
 
@@ -14,6 +9,9 @@ import java.util.concurrent.TimeUnit;
 
 import globaldev.finotek.com.finosign.R;
 import globaldev.finotek.com.finosign.inject.FinoSign;
+import globaldev.finotek.com.finosign.inject.exception.InvalidSignatureException;
+import globaldev.finotek.com.finosign.inject.exception.NotFoundRegisteredSignException;
+import io.reactivex.exceptions.CompositeException;
 import io.reactivex.functions.Consumer;
 
 
@@ -64,20 +62,36 @@ public class SignValidationFragment extends BaseSignRegisterFragment {
 						.subscribe(new Consumer<Boolean>() {
 							@Override
 							public void accept(Boolean isValid) throws Exception {
-								onSignValidationListener = (OnSignValidationListener) SignValidationFragment.this.getActivity();
-								onSignValidationListener.onValidation(isValid);
+
+								if(onSignValidationListener != null) {
+									onSignValidationListener.onValidation(isValid);
+									init();
+								}
 							}
 						}, new Consumer<Throwable>() {
 							@Override
 							public void accept(Throwable throwable) throws Exception {
-								onSignValidationListener = (OnSignValidationListener) SignValidationFragment.this.getActivity();
-								onSignValidationListener.onValidation(false);
-								hiddenSignWrapper.clear();
-								regularSignWrapper.clear();
-								SignValidationFragment.this.clearCanvas();
-								SignValidationFragment.this.setIconRes(R.drawable.btn_next_disable);
-								stepCount = 2;
-								stepSubject.onNext(stepCount);
+
+
+								if (throwable instanceof CompositeException) {
+									CompositeException ce = (CompositeException) throwable;
+									if (isSignExceptionOccured(ce.getExceptions(), InvalidSignatureException.class)) {
+
+										hiddenSignWrapper.clear();
+										regularSignWrapper.clear();
+										SignValidationFragment.this.clearCanvas();
+										SignValidationFragment.this.setIconRes(R.drawable.btn_next_disable);
+										stepCount = 2;
+										stepSubject.onNext(stepCount);
+										showToast("Invalid signature. Please try again");
+
+									} else if (isSignExceptionOccured(ce.getExceptions(), NotFoundRegisteredSignException.class)) {
+										init();
+										showToast("Register a signature first");
+
+									}
+								}
+
 							}
 						});
 				break;
@@ -87,7 +101,7 @@ public class SignValidationFragment extends BaseSignRegisterFragment {
 	@Override
 	protected void setOnTouchCount() {
 
-		binding.drawingCanvas.setOnCanvasTouchListener(new DrawingCanvas.OnCanvasTouchListener() {
+		drawingCanvas.setOnCanvasTouchListener(new DrawingCanvas.OnCanvasTouchListener() {
 			@Override
 			public void onTouchStart() {
 				if (stepCount % 2 == 1) {
@@ -96,7 +110,7 @@ public class SignValidationFragment extends BaseSignRegisterFragment {
 			}
 		});
 
-		RxView.clicks(binding.ibNext)
+		RxView.clicks(ibNext)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(new Consumer<Object>() {
 					@Override
@@ -113,7 +127,7 @@ public class SignValidationFragment extends BaseSignRegisterFragment {
 
 	@Override
 	protected void setSignDataListener() {
-		binding.drawingCanvas.setOnDrawListener(new DrawingCanvas.OnDrawListener() {
+		drawingCanvas.setOnDrawListener(new DrawingCanvas.OnDrawListener() {
 			@Override
 			public void onDraw(String strData) {
 
@@ -132,6 +146,8 @@ public class SignValidationFragment extends BaseSignRegisterFragment {
 
 	@Override
 	public void initView() {
+		super.initView();
+		setIconRes(R.drawable.btn_next_disable);
 		setInstructionText(getString(R.string.sign_mark_area));
 	}
 

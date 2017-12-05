@@ -28,7 +28,7 @@ class MyGsonConverterFactory extends Converter.Factory {
 	 * Create an instance using a default {@link Gson} instance for conversion. Encoding to JSON and
 	 * decoding from JSON (when no charset is specified by a header) will use UTF-8.
 	 */
-	public static MyGsonConverterFactory create() {
+	static MyGsonConverterFactory create() {
 		return create(new Gson());
 	}
 
@@ -36,7 +36,7 @@ class MyGsonConverterFactory extends Converter.Factory {
 	 * Create an instance using {@code gson} for conversion. Encoding to JSON and
 	 * decoding from JSON (when no charset is specified by a header) will use UTF-8.
 	 */
-	public static MyGsonConverterFactory create(Gson gson) {
+	static MyGsonConverterFactory create(Gson gson) {
 		return new MyGsonConverterFactory(gson);
 	}
 

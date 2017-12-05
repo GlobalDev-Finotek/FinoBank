@@ -1,21 +1,32 @@
 package globaldev.finotek.com.finosign.inject;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
 import globaldev.finotek.com.finosign.BuildConfig;
+import globaldev.finotek.com.finosign.R;
+import globaldev.finotek.com.finosign.inject.exception.AlreadyRegisteredException;
+import globaldev.finotek.com.finosign.inject.exception.ExceptionCode;
+import globaldev.finotek.com.finosign.inject.exception.InvalidSignatureException;
+import globaldev.finotek.com.finosign.inject.exception.NotFoundRegisteredSignException;
+import globaldev.finotek.com.finosign.inject.response.BaseResponse;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -25,12 +36,21 @@ import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
  * Dagger module for organizing API service
  */
 @Module
-public class ApiModule {
+class ApiModule {
+	private final Context context;
 
+	public ApiModule(Context context) {
+		this.context = context;
+	}
+
+	@Provides
+	Context context() {
+		return context;
+	}
 
 	@Provides
 	@Singleton
-	OkHttpClient provideOkHttpClient() {
+	OkHttpClient provideOkHttpClient(final Context context) {
 		HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
 		loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BASIC);
 
@@ -40,13 +60,16 @@ public class ApiModule {
 					@Override
 					public Response intercept(Chain chain) throws IOException {
 						Request request = chain.request().newBuilder()
-								.addHeader("Authorization", "Bearer" + " " + BuildConfig.FINOSIGN_API_KEY).build();
+								.addHeader("Authorization", "Bearer" + " " + getToken(context)).build();
+
 						return chain.proceed(request);
 					}
 				})
 				.connectTimeout(1, TimeUnit.MINUTES)
 				.build();
 	}
+
+
 
 	@Provides
 	@Singleton
@@ -72,6 +95,18 @@ public class ApiModule {
 		return retrofit.create(FinoSignApi.class);
 	}
 
+	@Provides
+	@Named("userKey")
+	String getUserKey(Context context) {
+		return context.getSharedPreferences(context.getString(R.string.finosign_prefs), Context.MODE_PRIVATE)
+				.getString(context.getString(R.string.finosign_userkey), "");
+	}
 
+	@Provides
+	@Named("token")
+	String getToken(Context context) {
+		return context.getSharedPreferences(context.getString(R.string.finosign_prefs), Context.MODE_PRIVATE)
+				.getString(context.getString(R.string.finosign_token), "");
+	}
 
 }

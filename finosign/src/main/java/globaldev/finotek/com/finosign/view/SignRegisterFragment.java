@@ -13,6 +13,9 @@ import java.util.concurrent.TimeUnit;
 import globaldev.finotek.com.finosign.R;
 import globaldev.finotek.com.finosign.SignType;
 import globaldev.finotek.com.finosign.inject.FinoSign;
+import globaldev.finotek.com.finosign.inject.exception.AlreadyRegisteredException;
+import globaldev.finotek.com.finosign.inject.exception.InvalidSignatureException;
+import io.reactivex.exceptions.CompositeException;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
@@ -22,7 +25,6 @@ import io.reactivex.functions.Consumer;
  */
 
 public class SignRegisterFragment extends BaseSignRegisterFragment {
-
 
 	private OnSignRegisterListener onSignRegisterLister;
 
@@ -66,7 +68,6 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 
 			case 5:
 				/* 저장된 1회차 서명과 2회차 서명 비교 검증 */
-
 				FinoSign.getInstance()
 						.register(
 								regularSignWrapper.firstDatas.toString(),
@@ -83,14 +84,28 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 								new Consumer<Throwable>() {
 									@Override
 									public void accept(Throwable throwable) throws Exception {
-										regularSignWrapper.clear();
-										SignRegisterFragment.this.clearCanvas();
-										SignRegisterFragment.this.setIconRes(R.drawable.btn_next_disable);
-										stepCount = 2;
-										stepSubject.onNext(stepCount);
 
-										onSignRegisterLister = (OnSignRegisterListener) SignRegisterFragment.this.getActivity();
-										onSignRegisterLister.onRegisterDone(false);
+										regularSignWrapper.clear();
+										if (throwable instanceof CompositeException) {
+											CompositeException ce = (CompositeException) throwable;
+											if (isSignExceptionOccured(ce.getExceptions(), InvalidSignatureException.class)) {
+
+												setIconRes(R.drawable.btn_next_disable);
+												setInstructionText(getString(R.string.sign_regi_step1));
+												stepCount = 2;
+												stepSubject.onNext(stepCount);
+												clearCanvas();
+												showToast("Invalid signature. Please try again");
+											} else if (isSignExceptionOccured(ce.getExceptions(), AlreadyRegisteredException.class)) {
+
+												setIconRes(R.drawable.btn_next_disable);
+												setInstructionText(getString(R.string.sign_regi_hidden_step1));
+												stepSubject.onNext(++stepCount);
+												clearCanvas();
+												showToast("Signature is already registered");
+
+											}
+										}
 
 									}
 								}
@@ -132,19 +147,34 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 									@Override
 									public void accept(Throwable throwable) throws Exception {
 										hiddenSignWrapper.clear();
-										SignRegisterFragment.this.clearCanvas();
-										SignRegisterFragment.this.setIconRes(R.drawable.btn_next_disable);
-										stepCount = 6;
-										stepSubject.onNext(stepCount);
-										onSignRegisterLister = (OnSignRegisterListener) SignRegisterFragment.this.getActivity();
-										onSignRegisterLister.onRegisterDone(false);
+
+										if (throwable instanceof CompositeException) {
+											CompositeException ce = (CompositeException) throwable;
+
+											if (isSignExceptionOccured(ce.getExceptions(), InvalidSignatureException.class)) {
+												clearCanvas();
+												setInstructionText(getString(R.string.sign_regi_hidden_step1));
+												setIconRes(R.drawable.btn_next_disable);
+												stepCount = 6;
+												stepSubject.onNext(stepCount);
+
+												showToast("Invalid signature. Please try again");
+											} else if (isSignExceptionOccured(ce.getExceptions(), AlreadyRegisteredException.class)) {
+												stepSubject.onNext(++stepCount);
+												clearCanvas();
+												showToast("Signature is already registered");
+
+											}
+										}
 									}
 								},
 								new Action() {
 									@Override
 									public void run() throws Exception {
-										onSignRegisterLister = (OnSignRegisterListener) SignRegisterFragment.this.getActivity();
-										onSignRegisterLister.onRegisterDone(true);
+										if (onSignRegisterLister != null) {
+											onSignRegisterLister.onRegisterDone(true);
+											init();
+										}
 									}
 								}
 						);
@@ -161,7 +191,7 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 
 	@Override
 	protected void setOnTouchCount() {
-		binding.drawingCanvas.setOnCanvasTouchListener(new DrawingCanvas.OnCanvasTouchListener() {
+		drawingCanvas.setOnCanvasTouchListener(new DrawingCanvas.OnCanvasTouchListener() {
 			@Override
 			public void onTouchStart() {
 				if (stepCount % 2 == 1) {
@@ -170,7 +200,7 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 			}
 		});
 
-		RxView.clicks(binding.ibNext)
+		RxView.clicks(ibNext)
 				.throttleFirst(200, TimeUnit.MILLISECONDS)
 				.subscribe(new Consumer<Object>() {
 					@Override
@@ -187,7 +217,7 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 
 	@Override
 	protected void setSignDataListener() {
-		binding.drawingCanvas.setOnDrawListener(new DrawingCanvas.OnDrawListener() {
+		drawingCanvas.setOnDrawListener(new DrawingCanvas.OnDrawListener() {
 			@Override
 			public void onDraw(String strData) {
 
@@ -215,11 +245,13 @@ public class SignRegisterFragment extends BaseSignRegisterFragment {
 
 	@Override
 	public void initView() {
+		super.initView();
+		setIconRes(R.drawable.btn_next_disable);
 		setInstructionText(getString(R.string.sign_regi_step1));
 	}
 
 	public interface OnSignRegisterListener {
-		void onRegisterDone(boolean isDone);
+		void onRegisterDone(boolean isDone) throws InvalidSignatureException, AlreadyRegisteredException;
 	}
 
 }

@@ -8,6 +8,8 @@ x
     <string name="sign_veri_hidden">표시된 영역 안에 히든서명해 주세요</string>
     <string name="sign_mark_area">표시된 영역 안에 손톱이 아닌 손가락 끝을 사용하여 서명해 주세요.</string>
     <string name="confirm">확인</string>
+    <string name="already_registered">이미 등록된 서명입니다</string>
+    <string name="invalid_signature">해당 서명은 유효하지 않습니다. 전 과정의 서명에 따라 재시도해주세요</string>
 
 </resources>
 

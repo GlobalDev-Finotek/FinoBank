@@ -8,6 +8,8 @@
     <string name="sign_regi_hidden_step2">Please write hidden signature on displayed area(2/2)</string>
     <string name="sign_mark_area">Don\'t use finger nail. Please use finger tip to sing in the marked area.</string>
     <string name="confirm">Confirm</string>
+    <string name="already_registered">This signature is already registered</string>
+    <string name="invalid_signature">This signature is invalid. Please retry according to your last signature</string>
 
 
 </resources>

@@ -13,12 +13,14 @@ import java.util.concurrent.TimeUnit;
 import finotek.global.dev.talkbank_ca.R;
 import finotek.global.dev.talkbank_ca.databinding.ActivitySignRegistartionBinding;
 import finotek.global.dev.talkbank_ca.user.dialogs.WarningDialog;
+import globaldev.finotek.com.finosign.inject.exception.AlreadyRegisteredException;
+import globaldev.finotek.com.finosign.inject.exception.InvalidSignatureException;
 import globaldev.finotek.com.finosign.view.SignRegisterFragment;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 
 
-public class SignRegistrationActivity extends AppCompatActivity implements SignRegisterFragment.OnSignRegisterListener {
+public class SignRegistrationActivity extends AppCompatActivity  {
 
 	private ActivitySignRegistartionBinding binding;
 	private SignRegisterFragment signRegisterFragment;
@@ -36,6 +38,24 @@ public class SignRegistrationActivity extends AppCompatActivity implements SignR
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
 		signRegisterFragment = new SignRegisterFragment();
+
+		signRegisterFragment.setOnSignRegisterLister(new SignRegisterFragment.OnSignRegisterListener() {
+			@Override
+			public void onRegisterDone(boolean isDone) throws InvalidSignatureException, AlreadyRegisteredException {
+				if (isDone) {
+					finish();
+				} else {
+					WarningDialog warningDialog = new WarningDialog(SignRegistrationActivity.this);
+					warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+					warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+					warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe(aLong -> warningDialog.dismiss()));
+
+					warningDialog.show();
+				}
+			}
+		});
 
 		FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 		transaction.add(R.id.fl_content, signRegisterFragment);
@@ -61,22 +81,6 @@ public class SignRegistrationActivity extends AppCompatActivity implements SignR
 				binding.appbar.setVisibility(View.VISIBLE);
 				break;
 
-		}
-	}
-
-	@Override
-	public void onRegisterDone(boolean isDone) {
-		if (isDone) {
-			finish();
-		} else {
-			WarningDialog warningDialog = new WarningDialog(SignRegistrationActivity.this);
-			warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
-			warningDialog.setButtonText(getString(R.string.setting_string_re_try));
-			warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(aLong -> warningDialog.dismiss()));
-
-			warningDialog.show();
 		}
 	}
 

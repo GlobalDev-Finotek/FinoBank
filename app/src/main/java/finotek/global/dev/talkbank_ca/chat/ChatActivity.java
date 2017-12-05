@@ -91,7 +91,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Action;
 import jp.wasabeef.recyclerview.animators.FadeInAnimator;
 
-public class ChatActivity extends AppCompatActivity implements SignValidationFragment.OnSignValidationListener {
+public class ChatActivity extends AppCompatActivity {
 	static final int RESULT_PICK_CONTACT = 1;
 	private static final int PERMISSION_CAMERA = 2;
 
@@ -108,7 +108,7 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 	private CardifScenario mainScenario;
 
 	private CapturePicFragment capturePicFragment;
-	private Fragment signValidationFragment;
+	private SignValidationFragment signValidationFragment;
 	private RemoteCallFragment remoteCallFragment;
 	private ContractFragment contractFragment;
 
@@ -148,7 +148,7 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 		mLayoutManager.setStackFromEnd(true);
 
 		binding.chatView.setLayoutManager(mLayoutManager);
-        FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
+		FadeInAnimator animator = new FadeInAnimator(new AccelerateInterpolator(1f));
 		binding.chatView.setItemAnimator(animator);
 		// TODO 아이템 간 패딩 정리
 		// binding.chatView.addItemDecoration(new ViewItemD3ecoration());
@@ -185,14 +185,14 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 
 		preInitControlViews();
 
-        // keyboard event
-        KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
-            @Override
-            public void onToggleSoftKeyboard(boolean isVisible) {
-                if(isVisible)
-                    binding.chatView.scrollToBottom();
-            }
-        });
+		// keyboard event
+		KeyboardUtils.addKeyboardToggleListener(this, new KeyboardUtils.SoftKeyboardToggleListener() {
+			@Override
+			public void onToggleSoftKeyboard(boolean isVisible) {
+				if (isVisible)
+					binding.chatView.scrollToBottom();
+			}
+		});
 
 		LibraryInterface.registerOcrResultLinstener(ocrResultListener);
 	}
@@ -207,38 +207,38 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 			startOcrModule();
 		}
 
-		if(msg instanceof RequestRemoteCall) {
-            releaseControls();
-            releaseAllControls();
-            binding.footer.setPadding(0, 0, 0, 0);
-            hideAppBar();
-            hideStatusBar();
+		if (msg instanceof RequestRemoteCall) {
+			releaseControls();
+			releaseAllControls();
+			binding.footer.setPadding(0, 0, 0, 0);
+			hideAppBar();
+			hideStatusBar();
 
-            View captureView = inflate(R.layout.chat_capture);
-            binding.footer.addView(captureView);
+			View captureView = inflate(R.layout.chat_capture);
+			binding.footer.addView(captureView);
 
-            remoteCallFragment = new RemoteCallFragment();
-            remoteCallFragment.setVideoURL("android.resource://"+  getPackageName() + "/" + R.raw.lady_teller);
-            remoteCallFragment.setStopListener(() -> {
-                MessageBox.INSTANCE.add(new RemoteCallDone(), 500);
-            });
+			remoteCallFragment = new RemoteCallFragment();
+			remoteCallFragment.setVideoURL("android.resource://" + getPackageName() + "/" + R.raw.lady_teller);
+			remoteCallFragment.setStopListener(() -> {
+				MessageBox.INSTANCE.add(new RemoteCallDone(), 500);
+			});
 
-            FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-            tx.replace(R.id.chat_capture, remoteCallFragment);
-            tx.commit();
+			FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+			tx.replace(R.id.chat_capture, remoteCallFragment);
+			tx.commit();
 		}
 
-		if(msg instanceof RemoteCallDone) {
-            showAppBar();
-            this.returnToInitialControl();
-            showStatusBar();
+		if (msg instanceof RemoteCallDone) {
+			showAppBar();
+			this.returnToInitialControl();
+			showStatusBar();
 
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.remove(remoteCallFragment).commit();
-            binding.chatView.scrollToBottom();
-        }
+			FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+			transaction.remove(remoteCallFragment).commit();
+			binding.chatView.scrollToBottom();
+		}
 
-		if(msg instanceof CPIAuthenticationWait) {
+		if (msg instanceof CPIAuthenticationWait) {
 			PrimaryDialog loadingDialog = new PrimaryDialog(ChatActivity.this);
 			loadingDialog.setTitle("We are searching your information.");
 			loadingDialog.setDescription("Please wait.");
@@ -254,7 +254,7 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 		}
 
 		if (msg instanceof RequestKeyboardInput) {
-            fiBinding.chatEditText.setInputType(((RequestKeyboardInput) msg).getInputType());
+			fiBinding.chatEditText.setInputType(((RequestKeyboardInput) msg).getInputType());
 			openKeyboard(fiBinding.chatEditText);
 		}
 
@@ -284,8 +284,46 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 			View signView = inflate(R.layout.chat_capture);
 			binding.footer.addView(signView);
 			signValidationFragment = new SignValidationFragment();
-			FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+			signValidationFragment.setOnSignValidationListener(new SignValidationFragment.OnSignValidationListener() {
+				@Override
+				public void onValidation(boolean isValid) {
 
+					if (isValid) {
+						SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
+						dialog.setTitle(getString(R.string.setting_string_signature_verified));
+						dialog.setDescription(getString(R.string.setting_string_authentication_complete));
+						dialog.setButtonText(getString(R.string.setting_string_yes));
+						dialog.setDoneListener(() -> {
+							showAppBar();
+							returnToInitialControl();
+							showStatusBar();
+
+							FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+							transaction.remove(signValidationFragment).commit();
+							binding.chatView.scrollToBottom();
+							setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+							MessageBox.INSTANCE.add(new RequestRemoveControls());
+							MessageBox.INSTANCE.add(new SignatureVerified());
+							dialog.dismiss();
+						});
+						dialog.showWithRatio(0.50f);
+					} else {
+						WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
+						warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
+						warningDialog.setButtonText(getString(R.string.setting_string_re_try));
+						warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
+								.observeOn(AndroidSchedulers.mainThread())
+								.subscribe(aLong -> warningDialog.dismiss()));
+
+						warningDialog.show();
+					}
+
+				}
+			});
+
+
+			FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
 
 
 			tx.replace(R.id.chat_capture, signValidationFragment);
@@ -329,10 +367,10 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 			returnToInitialControl();
 		}
 
-		if(msg instanceof RequestContactPermission) {
-            if(!hasContactPermission())
-                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
-        }
+		if (msg instanceof RequestContactPermission) {
+			if (!hasContactPermission())
+				ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS, Manifest.permission.WRITE_CONTACTS}, 100);
+		}
 	}
 
 	private void showStatusBar() {
@@ -354,8 +392,8 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 
 	public void onSendButtonClickEvent() {
 		String msg = fiBinding.chatEditText.getText().toString();
-        if(fiBinding.chatEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD))
-            msg = msg.replaceAll(".", "*");
+		if (fiBinding.chatEditText.getInputType() == (InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD))
+			msg = msg.replaceAll(".", "*");
 
 		MessageBox.INSTANCE.add(new SendMessage(msg));
 		clearInput();
@@ -371,21 +409,21 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 	private void chatEditFieldFocusChanged(boolean hasFocus) {
 		if (hasFocus) {
 			runOnUiThread(this::hideExControl);
-            runOnUiThread(() -> {
-                binding.chatView.scrollToBottom();
-            });
+			runOnUiThread(() -> {
+				binding.chatView.scrollToBottom();
+			});
 		}
 	}
 
 	private void chatEditFieldTextChanged(CharSequence value) {
-        boolean enabled = !value.toString().isEmpty();
-        fiBinding.sendButton.setEnabled(enabled);
+		boolean enabled = !value.toString().isEmpty();
+		fiBinding.sendButton.setEnabled(enabled);
 
-        if(enabled) {
-            fiBinding.sendButton.setImageResource(R.drawable.btn_send_50);
-        } else {
-            fiBinding.sendButton.setImageResource(R.drawable.btn_mike_50);
-        }
+		if (enabled) {
+			fiBinding.sendButton.setImageResource(R.drawable.btn_send_50);
+		} else {
+			fiBinding.sendButton.setImageResource(R.drawable.btn_mike_50);
+		}
 	}
 
 	private void clearInput() {
@@ -401,7 +439,7 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 	private void showExControl() {
 		isExControlAvailable = true;
 		binding.footer.addView(exControlView, 0);
-        binding.chatView.scrollToBottom();
+		binding.chatView.scrollToBottom();
 	}
 
 	private void preInitControlViews() {
@@ -411,7 +449,7 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 		transferView = inflate(R.layout.chat_transfer);
 
 		fiBinding = ChatFooterInputBinding.bind(footerInputs);
-        fiBinding.sendButton.setEnabled(false);
+		fiBinding.sendButton.setEnabled(false);
 
 		RxView.focusChanges(fiBinding.chatEditText)
 				.delay(100, TimeUnit.MILLISECONDS)
@@ -456,21 +494,21 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 	 */
 	@Override
 	public boolean dispatchTouchEvent(MotionEvent ev) {
-        if(ev.getAction() == MotionEvent.ACTION_UP) {
-            View v = getCurrentFocus();
-            if (v instanceof EditText) {
-                Rect editTextRect = new Rect();
-                v.getGlobalVisibleRect(editTextRect);
+		if (ev.getAction() == MotionEvent.ACTION_UP) {
+			View v = getCurrentFocus();
+			if (v instanceof EditText) {
+				Rect editTextRect = new Rect();
+				v.getGlobalVisibleRect(editTextRect);
 
-                Rect sendButtonRect = new Rect();
-                fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
+				Rect sendButtonRect = new Rect();
+				fiBinding.sendButton.getGlobalVisibleRect(sendButtonRect);
 
-                if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
-                        && !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
-                    dismissKeyboard(v);
-                }
-            }
-        }
+				if (!editTextRect.contains((int) ev.getRawX(), (int) ev.getRawY())
+						&& !sendButtonRect.contains((int) ev.getRawX(), (int) ev.getRawY())) {
+					dismissKeyboard(v);
+				}
+			}
+		}
 
 		return super.dispatchTouchEvent(ev);
 	}
@@ -509,13 +547,13 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 	}
 
 	private void releaseControls() {
-        fiBinding.chatEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+		fiBinding.chatEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 		dismissKeyboard(fiBinding.chatEditText);
 		hideExControl();
 	}
 
 	private void releaseAllControls() {
-        fiBinding.chatEditText.setInputType(InputType.TYPE_CLASS_TEXT);
+		fiBinding.chatEditText.setInputType(InputType.TYPE_CLASS_TEXT);
 		dismissKeyboard(fiBinding.chatEditText);
 		binding.footer.removeAllViews();
 	}
@@ -598,43 +636,7 @@ public class ChatActivity extends AppCompatActivity implements SignValidationFra
 	}
 
 	private boolean hasContactPermission() {
-        return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS ) == PackageManager.PERMISSION_GRANTED;
-    }
-
-	@Override
-	public void onValidation(boolean isValid) {
-
-		if (isValid) {
-			SucceededDialog dialog = new SucceededDialog(ChatActivity.this);
-			dialog.setTitle(getString(R.string.setting_string_signature_verified));
-			dialog.setDescription(getString(R.string.setting_string_authentication_complete));
-			dialog.setButtonText(getString(R.string.setting_string_yes));
-			dialog.setDoneListener(() -> {
-				showAppBar();
-				returnToInitialControl();
-				showStatusBar();
-
-				FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-				transaction.remove(signValidationFragment).commit();
-				binding.chatView.scrollToBottom();
-				setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-
-				MessageBox.INSTANCE.add(new RequestRemoveControls());
-				MessageBox.INSTANCE.add(new SignatureVerified());
-				dialog.dismiss();
-			});
-			dialog.showWithRatio(0.50f);
-		} else {
-
-			WarningDialog warningDialog = new WarningDialog(ChatActivity.this);
-			warningDialog.setTitle(getString(R.string.setting_string_click_re_try_button));
-			warningDialog.setButtonText(getString(R.string.setting_string_re_try));
-			warningDialog.setDoneListener(() -> Observable.interval(1200, TimeUnit.MILLISECONDS)
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe(aLong -> warningDialog.dismiss()));
-
-			warningDialog.show();
-		}
-
+		return ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED;
 	}
+
 }

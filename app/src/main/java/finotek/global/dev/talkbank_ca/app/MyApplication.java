@@ -8,6 +8,7 @@ import finotek.global.dev.talkbank_ca.inject.component.AppComponent;
 import finotek.global.dev.talkbank_ca.inject.component.DaggerAppComponent;
 import finotek.global.dev.talkbank_ca.inject.module.AppModule;
 import finotek.global.dev.talkbank_ca.model.DBHelper;
+import globaldev.finotek.com.finosign.inject.FinoSign;
 import io.realm.Realm;
 
 public class MyApplication extends Application {
@@ -25,6 +26,8 @@ public class MyApplication extends Application {
 		eventBus = new RxEventBus();
 
 		createDaggerInjections();
+
+		FinoSign.init(this);
 	}
 
 	public Context getContext() {

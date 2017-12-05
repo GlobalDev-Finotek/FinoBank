@@ -1,8 +1,5 @@
 package globaldev.finotek.com.finosign.view;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,11 +7,19 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.List;
 
 import globaldev.finotek.com.finosign.R;
 import globaldev.finotek.com.finosign.SignWrapper;
-import globaldev.finotek.com.finosign.databinding.FragmentDrawBinding;
+import globaldev.finotek.com.finosign.inject.exception.InvalidSignatureException;
+import io.reactivex.BackpressureStrategy;
+import io.reactivex.Flowable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.exceptions.CompositeException;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.subjects.PublishSubject;
@@ -26,21 +31,26 @@ import io.reactivex.subjects.PublishSubject;
 
 abstract class BaseSignRegisterFragment extends Fragment implements SignView {
 
-	protected int stepCount = 1;
-	protected PublishSubject<Integer> stepSubject;
-	protected SignWrapper regularSignWrapper = new SignWrapper();
-	protected SignWrapper hiddenSignWrapper = new SignWrapper();
-	protected FragmentDrawBinding binding;
+	int stepCount = 1;
+	PublishSubject<Integer> stepSubject;
+	SignWrapper regularSignWrapper = new SignWrapper();
+	SignWrapper hiddenSignWrapper = new SignWrapper();
+	private TextView tvInst;
+	ImageButton ibNext;
+	DrawingCanvas drawingCanvas;
 
 	@Override
 	public void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 	}
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 	                         Bundle savedInstanceState) {
-		binding = DataBindingUtil.inflate(inflater, R.layout.fragment_draw, container, false);
+
+		View v = inflater.inflate(R.layout.fragment_draw, null);
+		tvInst = (TextView) v.findViewById(R.id.tv_inst);
+		ibNext = (ImageButton) v.findViewById(R.id.ib_next);
+		drawingCanvas = (DrawingCanvas) v.findViewById(R.id.drawingCanvas);
 
 		initView();
 
@@ -71,12 +81,12 @@ abstract class BaseSignRegisterFragment extends Fragment implements SignView {
 							}
 						});
 
-		return binding.getRoot();
+		return v.getRootView();
 	}
 
 	@Override
 	public void clearCanvas() {
-		binding.drawingCanvas.clear();
+		drawingCanvas.clear();
 	}
 
 	protected abstract void setNextStepAction(int step);
@@ -88,20 +98,45 @@ abstract class BaseSignRegisterFragment extends Fragment implements SignView {
 		stepSubject.onNext(stepCount);
 		hiddenSignWrapper.clear();
 		regularSignWrapper.clear();
+		clearCanvas();
+		initView();
+	}
+
+	@Override
+	public void initView() {
 	}
 
 	@Override
 	public void setInstructionText(String txt) {
-		binding.tvInst.setText(txt);
+		tvInst.setText(txt);
 	}
 
 	@Override
 	public void setIconRes(int resId) {
-		binding.ibNext.setBackground(ContextCompat.getDrawable(getActivity(), resId));
+		ibNext.setBackground(ContextCompat.getDrawable(getActivity(), resId));
 	}
 
 	protected abstract void setSignDataListener();
 
+	protected boolean isSignExceptionOccured(List<Throwable> exceptionList, Class<?> cls) {
+		Throwable t = findException(exceptionList, cls);
+		return t != null;
+	}
+
+	protected Throwable findException(List<Throwable> exceptionList, Class<?> cls) {
+
+		for (Throwable t : exceptionList) {
+			if (cls.isInstance(t)) {
+				return t;
+			}
+		}
+		return new IllegalStateException();
+	}
+
+	@Override
+	public void showToast(String text) {
+		Toast.makeText(getContext(), text, Toast.LENGTH_SHORT).show();
+	}
 
 	interface OnDoneClickListener {
 		void onClick();

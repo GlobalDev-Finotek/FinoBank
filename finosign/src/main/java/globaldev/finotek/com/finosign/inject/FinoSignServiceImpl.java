@@ -17,7 +17,6 @@ import globaldev.finotek.com.finosign.SignType;
 import globaldev.finotek.com.finosign.inject.exception.AlreadyRegisteredException;
 import globaldev.finotek.com.finosign.inject.exception.ExceptionCode;
 import globaldev.finotek.com.finosign.inject.exception.InvalidSignatureException;
-import globaldev.finotek.com.finosign.inject.exception.NotFoundRegisteredSignException;
 import globaldev.finotek.com.finosign.inject.request.SignRegisterRequest;
 import globaldev.finotek.com.finosign.inject.request.SignVerifyRequest;
 import globaldev.finotek.com.finosign.inject.request.UserJoinRequest;
@@ -109,8 +108,6 @@ class FinoSignServiceImpl implements FinoSignService {
 							throw new InvalidSignatureException();
 						case ExceptionCode.ALREADY_REGISTERED:
 							throw new AlreadyRegisteredException();
-						case ExceptionCode.NOT_FOUND_REGISTERED_SIGNATURE:
-							throw new NotFoundRegisteredSignException();
 					}
 				}
 			}
